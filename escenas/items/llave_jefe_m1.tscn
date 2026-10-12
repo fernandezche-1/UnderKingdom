@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://otra vez/fourSeasonsPlatformer_ [tileset, version 2.0]/objects_/items_.png" id="1_items"]
+[ext_resource type="Script" path="res://scripts/items/boss_key_pickup.gd" id="2_script"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_key"]
+atlas = ExtResource("1_items")
+region = Rect2(48, 32, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_key"]
+size = Vector2(32, 34)
+
+[node name="LlaveJefeM1" type="Area2D" groups=["collectible", "boss_key", "world1_boss_key"]]
+collision_layer = 0
+collision_mask = 1
+monitoring = true
+monitorable = false
+script = ExtResource("2_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_key")
+scale = Vector2(1.5, 1.5)
+z_index = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_key")

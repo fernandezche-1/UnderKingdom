@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/environment/burn_zone.gd" id="1_burn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_burn"]
+size = Vector2(96, 32)
+
+[node name="BurnZone" type="Area2D" groups=["burn_zone"]]
+collision_layer = 0
+collision_mask = 1
+monitoring = true
+monitorable = true
+script = ExtResource("1_burn")
+damage_per_tick = 0.25
+tick_interval = 0.5
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_burn")
