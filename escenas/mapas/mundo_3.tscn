@@ -1,11 +1,11 @@
 [gd_scene format=4 uid="uid://ckwutxpoceaeg"]
 
-[ext_resource type="PackedScene" uid="uid://cto8fkkxfy58x" path="res://escenas/mino.tscn" id="2_0qeeg"]
-[ext_resource type="PackedScene" uid="uid://bum81cytf4ina" path="res://escenas/kolbo2.tscn" id="3_n3spp"]
+[ext_resource type="PackedScene" uid="uid://cto8fkkxfy58x" path="res://escenas/enemigos/mino.tscn" id="2_0qeeg"]
+[ext_resource type="PackedScene" uid="uid://bum81cytf4ina" path="res://escenas/enemigos/kolbo2.tscn" id="3_n3spp"]
 [ext_resource type="Texture2D" uid="uid://b3poje2vhbmbv" path="res://tile/Dungeon Tile Set.png" id="4_2wql3"]
 [ext_resource type="Texture2D" uid="uid://dmt8tkg8x6mb5" path="res://sprites/Potion 1.png" id="5_wdnhd"]
-[ext_resource type="PackedScene" uid="uid://blu3m50miaf7s" path="res://escenas/reina.tscn" id="6_wdnhd"]
-[ext_resource type="Texture2D" uid="uid://dkycm8ad4ddvf" path="res://mazmorra.png" id="18_eox21"]
+[ext_resource type="PackedScene" uid="uid://blu3m50miaf7s" path="res://escenas/enemigos/reina.tscn" id="6_wdnhd"]
+[ext_resource type="Texture2D" uid="uid://dkycm8ad4ddvf" path="res://fondos/mazmorra.png" id="18_eox21"]
 
 [ext_resource type="Script" path="res://scripts/camera/map_bounds.gd" id="p3_map_bounds_script"]
 
@@ -6447,8 +6447,8 @@ bottom = 1254
 script = ExtResource("p4_spawn_controller")
 [node name="RutaPruebaMundos" type="Node" parent="SistemasMapa"]
 script = ExtResource("p26_test_route")
-previous_scene_path = "res://escenas/mundo_2.tscn"
-next_scene_path = "res://escenas/ruina.tscn"
+previous_scene_path = "res://escenas/mapas/mundo_2.tscn"
+next_scene_path = "res://escenas/mapas/ruina.tscn"
 spawn_position = Vector2(200, 207)
 previous_portal_position = Vector2(130, 207)
 next_portal_position = Vector2(270, 207)

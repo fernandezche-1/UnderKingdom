@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpi7o2dk2xdlt"
-path="res://.godot/imported/cementerio.png-dac9118d030396dac2303d26fb43e542.ctex"
+uid="uid://dlfe3f5dbgn73"
+path="res://.godot/imported/ruina.png-c72d201d920a759430cbf1d385210214.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://cementerio.png"
-dest_files=["res://.godot/imported/cementerio.png-dac9118d030396dac2303d26fb43e542.ctex"]
+source_file="res://fondos/ruina.png"
+dest_files=["res://.godot/imported/ruina.png-c72d201d920a759430cbf1d385210214.ctex"]
 
 [params]
 

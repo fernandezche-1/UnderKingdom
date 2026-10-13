@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bh15j1in2wq2b"
-path="res://.godot/imported/ruina bajo.png-4da5d4564d91700079acd42d97b0e21b.ctex"
+uid="uid://bbqf18y7rdqh8"
+path="res://.godot/imported/mundo_2_variante.png-61ecdc6bb29f8222d074f940298f838e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ruina bajo.png"
-dest_files=["res://.godot/imported/ruina bajo.png-4da5d4564d91700079acd42d97b0e21b.ctex"]
+source_file="res://fondos/mundo_2_variante.png"
+dest_files=["res://.godot/imported/mundo_2_variante.png-61ecdc6bb29f8222d074f940298f838e.ctex"]
 
 [params]
 

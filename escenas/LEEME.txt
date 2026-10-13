@@ -1,9 +1,0 @@
-PARCHE DE COLISIONES PARA jefe.tscn
-
-1. Cierra Godot.
-2. Haz una copia de seguridad de tu proyecto actual.
-3. Extrae este ZIP dentro de la carpeta donde está project.godot.
-4. Acepta reemplazar escenas/jefe.tscn.
-5. Abre Godot y revisa jefe.tscn.
-
-No importes este ZIP como proyecto; es un parche.

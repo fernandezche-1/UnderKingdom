@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dkycm8ad4ddvf"
-path="res://.godot/imported/mazmorra.png-590066f672f9de5e9dfcb01ba32d86cb.ctex"
+uid="uid://dpi7o2dk2xdlt"
+path="res://.godot/imported/cementerio.png-708963f4dcec78f653dd8f97e701d263.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://mazmorra.png"
-dest_files=["res://.godot/imported/mazmorra.png-590066f672f9de5e9dfcb01ba32d86cb.ctex"]
+source_file="res://fondos/cementerio.png"
+dest_files=["res://.godot/imported/cementerio.png-708963f4dcec78f653dd8f97e701d263.ctex"]
 
 [params]
 

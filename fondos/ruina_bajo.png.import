@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c4seq4r4a5jit"
-path="res://.godot/imported/profundidades.png-2c98fd31fd1714310ca2111d57c11409.ctex"
+uid="uid://bh15j1in2wq2b"
+path="res://.godot/imported/ruina_bajo.png-cc89e028e9da84406a23e26871f0f671.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://profundidades.png"
-dest_files=["res://.godot/imported/profundidades.png-2c98fd31fd1714310ca2111d57c11409.ctex"]
+source_file="res://fondos/ruina_bajo.png"
+dest_files=["res://.godot/imported/ruina_bajo.png-cc89e028e9da84406a23e26871f0f671.ctex"]
 
 [params]
 

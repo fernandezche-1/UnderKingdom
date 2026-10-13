@@ -2,13 +2,13 @@
 
 [ext_resource type="Texture2D" uid="uid://dd51r2yuk5tcm" path="res://otra vez/Final/Salt.png" id="6_4cqem"]
 [ext_resource type="Texture2D" uid="uid://b3poje2vhbmbv" path="res://tile/Dungeon Tile Set.png" id="51_pvrwi"]
-[ext_resource type="Texture2D" uid="uid://dpi7o2dk2xdlt" path="res://cementerio.png" id="57_p7gi5"]
+[ext_resource type="Texture2D" uid="uid://dpi7o2dk2xdlt" path="res://fondos/cementerio.png" id="57_p7gi5"]
 [ext_resource type="Texture2D" uid="uid://kgocy3je3sda" path="res://Lively_NPCs_v3.1/Lively_NPCs_v3.1/sprite sheets/medieval/beggar.png" id="58_i50df"]
 [ext_resource type="Texture2D" uid="uid://dcqo5iiobisd0" path="res://Lively_NPCs_v3.1/Lively_NPCs_v3.1/sprite sheets/medieval/captain.png" id="59_5uu6v"]
 [ext_resource type="Texture2D" uid="uid://h4hypdofeebi" path="res://Lively_NPCs_v3.1/Lively_NPCs_v3.1/sprite sheets/medieval/dog.png" id="60_75fd5"]
-[ext_resource type="PackedScene" uid="uid://h3lpw578kh2u" path="res://escenas/aprendis.tscn" id="61_x8mx5"]
+[ext_resource type="PackedScene" uid="uid://h3lpw578kh2u" path="res://escenas/enemigos/aprendis.tscn" id="61_x8mx5"]
 [ext_resource type="PackedScene" uid="uid://crgen4tbgq8y1" path="res://escenas/player.tscn" id="62_wn5mh"]
-[ext_resource type="PackedScene" uid="uid://ext3mp88wk5u" path="res://escenas/vanguardia.tscn" id="63_5uu6v"]
+[ext_resource type="PackedScene" uid="uid://ext3mp88wk5u" path="res://escenas/enemigos/vanguardia.tscn" id="63_5uu6v"]
 [ext_resource type="Texture2D" uid="uid://c4i876ra5uc57" path="res://otra vez/Flying Demon 2D Pixel Art/Sprites/without_outline/IDLE.png" id="64_x8mx5"]
 [ext_resource type="Texture2D" uid="uid://dii8k508pmyns" path="res://otra vez/Red Fire Trap/Red Fire Trap Sprite Sheet.png" id="65_wn5mh"]
 [ext_resource type="Texture2D" uid="uid://bhbhq3jpiumfp" path="res://sprites/spike Trap1.png" id="66_ctw23"]
@@ -16,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://bbo6agc05u1hf" path="res://sprites/spike Trap3.png" id="68_u010y"]
 [ext_resource type="Texture2D" uid="uid://t46ybxti1nqk" path="res://sprites/spike Trap4.png" id="69_2hkxg"]
 [ext_resource type="Texture2D" uid="uid://3gjr42dtu67s" path="res://sprites/spike Trap5.png" id="70_f0oe3"]
-[ext_resource type="PackedScene" uid="uid://b0u6og171twbp" path="res://escenas/capitan.tscn" id="71_gmtv0"]
+[ext_resource type="PackedScene" uid="uid://b0u6og171twbp" path="res://escenas/jefes/capitan.tscn" id="71_gmtv0"]
 [ext_resource type="Texture2D" uid="uid://batif6ty8qb0m" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/spritesheets/fire_FREE_SpriteSheet_288x128.png" id="72_hf4e7"]
 [ext_resource type="Texture2D" uid="uid://lirjj5ma586n" path="res://Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/death/death_13.png" id="73_b52jy"]
 [ext_resource type="Texture2D" uid="uid://c2u6uunp7c4ny" path="res://elementals_wind_hashashin_FREE_v1.1/elementals_wind_hashashin_FREE_v1.1/PNG/death/death_9.png" id="74_mmxa8"]
@@ -7047,7 +7047,7 @@ spawn_id = &"SpawnSalida"
 
 [node name="RutaPruebaMundos" type="Node" parent="SistemasMapa" unique_id=1062947965]
 script = ExtResource("p26_test_route")
-next_scene_path = "res://escenas/primer boss mundo1.tscn"
+next_scene_path = "res://escenas/mapas/primer_boss_mundo_1.tscn"
 spawn_position = Vector2(163, 803)
 previous_portal_position = Vector2(90, 803)
 next_portal_position = Vector2(365, 317)
