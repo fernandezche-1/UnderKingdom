@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://ccgfclox8tb5a" path="res://elementals_wind_hashashin_FREE_v1.1/elementals_wind_hashashin_FREE_v1.1/wind_SpriteSheet_288x128.png" id="1_ocwlu"]
 [ext_resource type="Script" path="res://scripts/bosses/captain_boss.gd" id="2_boss_script"]
+[ext_resource type="PackedScene" path="res://escenas/ui/boss_health_bar.tscn" id="p32_boss_bar"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y3wb5"]
 atlas = ExtResource("1_ocwlu")
@@ -1094,3 +1095,6 @@ frame_progress = 0.8130917
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=216427865]
 position = Vector2(1.5, 47.5)
 shape = SubResource("RectangleShape2D_platf")
+
+[node name="BossHealthBar" parent="." instance=ExtResource("p32_boss_bar")]
+boss_name = "CAPITÁN"
