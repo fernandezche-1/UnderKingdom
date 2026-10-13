@@ -165,6 +165,7 @@
 [ext_resource type="Texture2D" uid="uid://n44co6hu6v0i" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/10_take_hit/take_hit_6.png" id="163_fyre4"]
 [ext_resource type="Script" uid="uid://iuqkl2w2cf3s" path="res://scripts/player/player.gd" id="p2_player_script"]
 [ext_resource type="Script" uid="uid://ouv81xqammtp" path="res://scripts/camera/bounded_camera.gd" id="p3_camera_script"]
+[ext_resource type="PackedScene" path="res://escenas/ui/player_hud.tscn" id="p31_player_hud"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2ixur"]
 atlas = ExtResource("9_w67ep")
@@ -864,9 +865,9 @@ layer = 20
 
 [node name="Panel" type="ColorRect" parent="DebugHUD" unique_id=224841980]
 offset_left = 14.0
-offset_top = 14.0
+offset_top = 84.0
 offset_right = 470.0
-offset_bottom = 142.0
+offset_bottom = 212.0
 mouse_filter = 2
 color = Color(0.015, 0.015, 0.02, 0.78)
 
@@ -881,6 +882,8 @@ text = "PRUEBA PLAYER
 Vida: 4.00 / 4.00 corazones
 A/D mover — ESPACIO saltar
 H daño 1/4 — J daño 1 corazón — K morir — R reaparecer"
+
+[node name="PlayerHUD" parent="." instance=ExtResource("p31_player_hud")]
 
 [node name="AttackHitbox" type="Area2D" parent="." unique_id=1719264447]
 collision_layer = 0

@@ -1043,6 +1043,13 @@ func is_adrenaline_active() -> bool:
     )
 
 
+## 0.0 = recién usada, 1.0 = lista. La usa el HUD.
+func get_ultimate_ready_ratio() -> float:
+    if ultimate_cooldown <= 0.0:
+        return 1.0
+    return 1.0 - clampf(_ultimate_cooldown_left / ultimate_cooldown, 0.0, 1.0)
+
+
 func _animation_duration(animation_name: StringName) -> float:
     if not sprite.sprite_frames.has_animation(animation_name):
         return 0.20
