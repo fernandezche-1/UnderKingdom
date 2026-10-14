@@ -21,6 +21,45 @@ enum PlayerAction {
     HURT
 }
 
+## Cómo se juega cada animación de ataque. Las del combo son acumulativas:
+## "attack 2" empieza repitiendo el tajo de "attack" (cuadros 0-7) y
+## "attack 3" repite todo "attack 2" (0-16) antes de su remate, así que cada
+## etapa arranca en el cuadro donde empieza lo suyo. Cada golpe es una ventana
+## de cuadros [desde, hasta]: un enemigo recibe un impacto por ventana.
+## area: "front" delante, "wide" delante y más grande, "blast" explosión más
+## lejos, "around" alrededor del Player (la ráfaga golpea delante y detrás).
+## knockback: false = daño sin empuje ni aturdir, para que los golpes
+## seguidos de una ráfaga conecten todos; el último de cada ataque empuja.
+const ATTACK_PROFILES := {
+    &"attack": {"start": 0, "end": 10, "hits": [
+        {"frames": Vector2i(4, 6), "ratio": 1.0, "area": "front", "knockback": true},
+    ]},
+    &"attack 2": {"start": 8, "end": 18, "hits": [
+        {"frames": Vector2i(9, 9), "ratio": 0.125, "area": "around", "knockback": false},
+        {"frames": Vector2i(10, 10), "ratio": 0.125, "area": "around", "knockback": false},
+        {"frames": Vector2i(11, 11), "ratio": 0.125, "area": "around", "knockback": false},
+        {"frames": Vector2i(12, 12), "ratio": 0.125, "area": "around", "knockback": false},
+        {"frames": Vector2i(13, 13), "ratio": 0.125, "area": "around", "knockback": false},
+        {"frames": Vector2i(14, 14), "ratio": 0.125, "area": "around", "knockback": false},
+        {"frames": Vector2i(15, 15), "ratio": 0.125, "area": "around", "knockback": false},
+        {"frames": Vector2i(16, 16), "ratio": 0.125, "area": "around", "knockback": true},
+    ]},
+    &"attack 3": {"start": 17, "end": 27, "hits": [
+        {"frames": Vector2i(22, 22), "ratio": 0.4, "area": "wide", "knockback": false},
+        {"frames": Vector2i(23, 25), "ratio": 0.6, "area": "blast", "knockback": true},
+    ]},
+    &"air attack": {"start": 0, "end": 7, "hits": [
+        {"frames": Vector2i(3, 5), "ratio": 1.0, "area": "front", "knockback": true},
+    ]},
+    &"attack ultimate": {"start": 0, "end": 17, "hits": [
+        {"frames": Vector2i(10, 10), "ratio": 0.15, "area": "wide", "knockback": false},
+        {"frames": Vector2i(11, 11), "ratio": 0.15, "area": "wide", "knockback": false},
+        {"frames": Vector2i(12, 12), "ratio": 0.25, "area": "blast", "knockback": false},
+        {"frames": Vector2i(13, 13), "ratio": 0.25, "area": "blast", "knockback": false},
+        {"frames": Vector2i(14, 14), "ratio": 0.2, "area": "blast", "knockback": true},
+    ]},
+}
+
 @export_category("Movimiento")
 @export_range(20.0, 800.0, 5.0) var move_speed: float = 230.0
 @export_range(100.0, 5000.0, 50.0) var acceleration: float = 1800.0
@@ -66,7 +105,10 @@ enum PlayerAction {
 @export_range(0.05, 2.0, 0.05) var combo_queue_window: float = 0.45
 @export_range(1.0, 2.0, 0.05) var combo_base_speed_multiplier: float = 1.20
 @export_range(0, 30, 1) var attack_1_chain_frame: int = 7
-@export_range(0, 40, 1) var attack_2_chain_frame: int = 16
+@export_range(0, 40, 1) var attack_2_chain_frame: int = 17
+## Moverse, saltar o rodar corta attack / attack 2 / attack 3 / air attack.
+## Si ya ibas moviéndote al atacar, el golpe sale y luego sigues caminando.
+@export var movement_cancels_attacks: bool = true
 @export_range(50.0, 1200.0, 10.0) var roll_speed: float = 430.0
 @export_range(0.1, 10.0, 0.1) var ultimate_cooldown: float = 6.0
 
@@ -141,6 +183,7 @@ var _guard_hits_remaining: int = 3
 var _guard_recharge_left: float = 0.0
 var _guard_requires_release: bool = false
 var _roll_collision_exceptions: Array[PhysicsBody2D] = []
+var _attack_held_direction: float = 0.0
 var _fall_limit: float = 1200.0
 
 
@@ -223,6 +266,7 @@ func _physics_process(delta: float) -> void:
     _process_simple_ledge_input()
     _update_attack_hitbox_position()
     _update_defense_state()
+    _try_cancel_attack_by_movement()
 
     if _action == PlayerAction.ROLL:
         _process_roll(delta)
@@ -317,6 +361,8 @@ func request_attack() -> void:
 func request_roll() -> void:
     if dead or _climbing or not is_on_floor():
         return
+    if _action == PlayerAction.ATTACK and movement_cancels_attacks:
+        _finish_action()
     if _action not in [PlayerAction.NORMAL, PlayerAction.DEFEND]:
         return
 
@@ -356,21 +402,25 @@ func request_ultimate() -> void:
 
 
 func _start_attack(animation_name: StringName, damage: float, action_type: PlayerAction) -> void:
+    var profile := _attack_profile(animation_name)
     _action = action_type
     _current_attack_damage = damage
     _current_attack_animation = animation_name
     _current_attack_speed_multiplier = _attack_speed_multiplier_for(animation_name)
     sprite.speed_scale = _current_attack_speed_multiplier
-    _action_total_time = _animation_duration(animation_name) / maxf(_current_attack_speed_multiplier, 0.01)
+    _action_total_time = (
+        _frames_duration(animation_name, int(profile.start), int(profile.end))
+        / maxf(_current_attack_speed_multiplier, 0.01)
+    )
     _action_time_left = _action_total_time
+    _attack_held_direction = _get_horizontal_input()
 
-    # Cada etapa del combo es un golpe independiente. El mismo enemigo puede
-    # recibir attack, attack 2 y attack 3 una vez cada uno, pero nunca dos veces
-    # dentro de la misma ventana de impacto.
     _attack_hit_targets.clear()
     _attack_subwindow_index = -1
     attack_hitbox.scale = Vector2.ONE
     sprite.play(animation_name)
+    sprite.frame = int(profile.start)
+    sprite.frame_progress = 0.0
     attack_started.emit(animation_name, damage)
 
 
@@ -456,11 +506,46 @@ func _can_chain_combo_early() -> bool:
 
     match _current_attack_animation:
         &"attack":
-            return sprite.frame >= attack_1_chain_frame
+            return sprite.frame >= maxi(attack_1_chain_frame, _last_hit_frame() + 1)
         &"attack 2":
-            return sprite.frame >= attack_2_chain_frame
+            return sprite.frame >= maxi(attack_2_chain_frame, _last_hit_frame() + 1)
         _:
             return false
+
+
+func _try_cancel_attack_by_movement() -> void:
+    if not movement_cancels_attacks:
+        return
+    if _action not in [PlayerAction.ATTACK, PlayerAction.AIR_ATTACK]:
+        return
+
+    var direction := _get_horizontal_input()
+    if is_zero_approx(direction):
+        _attack_held_direction = 0.0
+
+    # Una dirección recién pulsada corta al instante. La que ya venías
+    # sosteniendo al atacar solo corta cuando el golpe ya salió, para que
+    # atacar corriendo no se cancele solo.
+    var new_direction := not is_zero_approx(direction) and direction != _attack_held_direction
+    var held_after_hits := not is_zero_approx(direction) and _attack_hits_done()
+    var jump := _action == PlayerAction.ATTACK and _jump_requested and is_on_floor()
+
+    if new_direction or held_after_hits or jump:
+        # _jump_requested se conserva para que el salto ocurra este mismo cuadro.
+        _finish_action()
+
+
+func _attack_hits_done() -> bool:
+    if sprite.animation != _current_attack_animation:
+        return true
+    return sprite.frame > _last_hit_frame()
+
+
+func _last_hit_frame() -> int:
+    var last := -1
+    for hit in _attack_profile(_current_attack_animation).hits:
+        last = maxi(last, (hit.frames as Vector2i).y)
+    return last
 
 
 func _consume_combo_buffer_and_start_next() -> void:
@@ -793,110 +878,86 @@ func _update_attack_hitbox_position() -> void:
 
 
 func _update_attack_damage_window() -> void:
-    if _action not in [
-        PlayerAction.ATTACK,
-        PlayerAction.AIR_ATTACK,
-        PlayerAction.ULTIMATE
-    ]:
-        attack_hitbox.scale = Vector2.ONE
-        _attack_subwindow_index = -1
-        return
-    if _current_attack_animation == &"":
-        attack_hitbox.scale = Vector2.ONE
-        _attack_subwindow_index = -1
-        return
-    if sprite.animation != _current_attack_animation:
-        attack_hitbox.scale = Vector2.ONE
-        _attack_subwindow_index = -1
+    if (
+        _action not in [PlayerAction.ATTACK, PlayerAction.AIR_ATTACK, PlayerAction.ULTIMATE]
+        or _current_attack_animation == &""
+        or sprite.animation != _current_attack_animation
+    ):
+        _reset_attack_hitbox()
         return
 
-    # attack 3 es una animación de varias fases visuales. No puede tratarse
-    # como un único golpe porque el giro, el golpe posterior y el fuego ocurren
-    # en momentos y alcances diferentes.
-    if _current_attack_animation == &"attack 3":
-        _update_attack_3_subwindows()
+    var hits: Array = _attack_profile(_current_attack_animation).hits
+    var index := -1
+    for i in hits.size():
+        var frames: Vector2i = hits[i].frames
+        if sprite.frame >= frames.x and sprite.frame <= frames.y:
+            index = i
+            break
+    if index < 0:
+        _reset_attack_hitbox()
         return
 
-    var active_frames := _attack_active_frame_range(_current_attack_animation)
-    var current_frame := sprite.frame
-    if current_frame < active_frames.x or current_frame > active_frames.y:
-        attack_hitbox.scale = Vector2.ONE
-        _update_attack_hitbox_position()
-        return
-
-    attack_hitbox.scale = (
-        Vector2(1.45, 1.20)
-        if _action == PlayerAction.ULTIMATE
-        else Vector2.ONE
-    )
-    _damage_attack_overlaps(_current_attack_damage)
-
-
-func _update_attack_3_subwindows() -> void:
-    var current_frame := sprite.frame
-    var subwindow := -1
-    var phase_damage := 0.0
-    var phase_scale := Vector2.ONE
-    var facing := -1.0 if sprite.flip_h else 1.0
-    var phase_offset := Vector2(
-        attack_hitbox_offset_x * facing,
-        attack_hitbox_offset_y
-    )
-
-    # GIRO: daño progresivo real. Cada frame visual del giro es una ventana
-    # independiente, de modo que el enemigo puede recibir varios impactos a lo
-    # largo de la vuelta. La detección se hace de forma radial para que el daño
-    # coincida con la espada girando alrededor del Player, incluso detrás.
-    # 15 frames x (80 % / 15) + golpe 10 % + fuego 10 % = daño total ~1.0.
-    if current_frame >= 3 and current_frame <= 17:
-        subwindow = current_frame
-        phase_damage = attack_3_damage * (0.80 / 15.0)
-
-        if subwindow != _attack_subwindow_index:
-            _attack_subwindow_index = subwindow
-            _attack_hit_targets.clear()
-
-        attack_hitbox.position = Vector2(0.0, attack_hitbox_offset_y)
-        attack_hitbox.scale = Vector2(1.90, 1.35)
-        _damage_attack_3_spin_targets(phase_damage)
-        return
-
-    # Golpe posterior y fuego final continúan siendo ventanas independientes.
-    if current_frame >= 18 and current_frame <= 21:
-        subwindow = 100
-        phase_damage = attack_3_damage * 0.10
-        phase_scale = Vector2(1.18, 1.10)
-    elif current_frame >= 22 and current_frame <= 27:
-        subwindow = 101
-        phase_damage = attack_3_damage * 0.10
-        phase_scale = Vector2(1.85, 1.30)
-        phase_offset = Vector2(76.0 * facing, attack_hitbox_offset_y)
-    else:
-        attack_hitbox.scale = Vector2.ONE
-        _update_attack_hitbox_position()
-        return
-
-    if subwindow != _attack_subwindow_index:
-        _attack_subwindow_index = subwindow
+    # Cada golpe es una ventana nueva: el mismo enemigo puede recibir todos
+    # los golpes de una ráfaga, pero solo uno por ventana.
+    if index != _attack_subwindow_index:
+        _attack_subwindow_index = index
         _attack_hit_targets.clear()
 
-    attack_hitbox.position = phase_offset
-    attack_hitbox.scale = phase_scale
-    _damage_attack_overlaps(phase_damage)
+    var hit: Dictionary = hits[index]
+    var damage := _current_attack_damage * float(hit.ratio)
+    var knockback := bool(hit.knockback)
+    var facing := -1.0 if sprite.flip_h else 1.0
+
+    match String(hit.area):
+        "around":
+            attack_hitbox.position = Vector2(0.0, attack_hitbox_offset_y)
+            attack_hitbox.scale = Vector2(1.90, 1.35)
+            _damage_around_targets(damage, knockback)
+            return
+        "wide":
+            _update_attack_hitbox_position()
+            attack_hitbox.scale = Vector2(1.45, 1.20)
+        "blast":
+            attack_hitbox.position = Vector2(76.0 * facing, attack_hitbox_offset_y)
+            attack_hitbox.scale = Vector2(1.85, 1.30)
+        _:
+            _update_attack_hitbox_position()
+            attack_hitbox.scale = Vector2.ONE
+
+    _damage_attack_overlaps(damage, knockback)
 
 
-func _damage_attack_3_spin_targets(damage_amount: float) -> void:
-    # El giro usa una consulta física real centrada en el Player. Así detecta
-    # CollisionShape2D delante y detrás con el mismo alcance, sin depender del
-    # origen visual/root del enemigo.
-    var spin_radius := attack_hitbox_offset_x + 41.0
+func _reset_attack_hitbox() -> void:
+    attack_hitbox.scale = Vector2.ONE
+    _attack_subwindow_index = -1
+    _update_attack_hitbox_position()
+
+
+func _attack_profile(animation_name: StringName) -> Dictionary:
+    if ATTACK_PROFILES.has(animation_name):
+        return ATTACK_PROFILES[animation_name]
+
+    # Animación sin perfil: un único golpe en la parte central.
+    var frame_count := sprite.sprite_frames.get_frame_count(animation_name)
+    var last := maxi(frame_count - 1, 0)
+    var start_frame := int(floor(last * attack_active_start_ratio))
+    var end_frame := maxi(start_frame, int(ceil(last * attack_active_end_ratio)))
+    return {"start": 0, "end": last, "hits": [
+        {"frames": Vector2i(start_frame, end_frame), "ratio": 1.0, "area": "front", "knockback": true},
+    ]}
+
+
+func _damage_around_targets(damage_amount: float, knockback: bool) -> void:
+    # Consulta física real centrada en el Player: detecta enemigos delante y
+    # detrás con el mismo alcance, sin depender del origen del enemigo.
+    var radius := attack_hitbox_offset_x + 41.0
     var hitbox_shape_node := attack_hitbox.get_node_or_null("CollisionShape2D") as CollisionShape2D
     if hitbox_shape_node != null and hitbox_shape_node.shape is RectangleShape2D:
         var rect := hitbox_shape_node.shape as RectangleShape2D
-        spin_radius = attack_hitbox_offset_x + rect.size.x * 0.5
+        radius = attack_hitbox_offset_x + rect.size.x * 0.5
 
     var circle := CircleShape2D.new()
-    circle.radius = spin_radius
+    circle.radius = radius
 
     var query := PhysicsShapeQueryParameters2D.new()
     query.shape = circle
@@ -906,52 +967,35 @@ func _damage_attack_3_spin_targets(damage_amount: float) -> void:
     query.collide_with_areas = false
     query.exclude = [get_rid()]
 
-    var hits := get_world_2d().direct_space_state.intersect_shape(query, 32)
-    for hit in hits:
-        var target := hit.get("collider") as Node
+    for result in get_world_2d().direct_space_state.intersect_shape(query, 32):
+        var target := result.get("collider") as Node
         if target == null or target == self or not target.is_in_group("enemy"):
             continue
-
-        var target_id := target.get_instance_id()
-        if _attack_hit_targets.has(target_id):
-            continue
-
-        if _try_damage_continuous_target(target, damage_amount):
-            _attack_hit_targets.append(target_id)
+        _damage_target_once(target, damage_amount, knockback)
 
 
-func _damage_attack_overlaps(damage_amount: float) -> void:
+func _damage_attack_overlaps(damage_amount: float, knockback: bool) -> void:
     for body in attack_hitbox.get_overlapping_bodies():
         if body == self:
             continue
-
-        var body_id := body.get_instance_id()
-        if _attack_hit_targets.has(body_id):
-            continue
-
-        # Solo consumimos el objetivo si el daño fue aceptado. Si el enemigo
-        # estaba invulnerable, puede volver a intentarse durante la ventana.
-        if _try_damage_attack_target(body, damage_amount):
-            _attack_hit_targets.append(body_id)
+        _damage_target_once(body, damage_amount, knockback)
 
 
-func _attack_active_frame_range(animation_name: StringName) -> Vector2i:
-    match animation_name:
-        &"attack":
-            return Vector2i(3, 7)
-        &"attack 2":
-            return Vector2i(3, 17)
-        &"air attack":
-            return Vector2i(2, 6)
-        &"attack ultimate":
-            return Vector2i(1, 15)
-        _:
-            var frame_count := sprite.sprite_frames.get_frame_count(animation_name)
-            if frame_count <= 1:
-                return Vector2i(0, 0)
-            var start_frame := int(floor((frame_count - 1) * attack_active_start_ratio))
-            var end_frame := int(ceil((frame_count - 1) * attack_active_end_ratio))
-            return Vector2i(start_frame, maxi(start_frame, end_frame))
+func _damage_target_once(body: Node, damage_amount: float, knockback: bool) -> void:
+    var body_id := body.get_instance_id()
+    if _attack_hit_targets.has(body_id):
+        return
+
+    # Solo consumimos el objetivo si el daño fue aceptado. Si el enemigo
+    # estaba invulnerable, puede volver a intentarse durante la ventana.
+    var accepted := (
+        _try_damage_attack_target(body, damage_amount)
+        if knockback
+        else _try_damage_continuous_target(body, damage_amount)
+    )
+    if accepted:
+        _attack_hit_targets.append(body_id)
+        UnderkingdomCombatFX.hit_flash(body)
 
 
 func _try_damage_attack_target(body: Node, damage_amount: float = -1.0) -> bool:
@@ -1037,10 +1081,9 @@ func _register_lifesteal_damage(actual_damage: float) -> void:
 func _attack_speed_multiplier_for(animation_name: StringName) -> float:
     var multiplier := 1.0
 
-    # attack 1 y attack 2 tenian demasiado tiempo muerto. Los aceleramos un
-    # poco incluso con vida normal; attack 3 conserva su velocidad para no
-    # comprimir el giro de dano progresivo.
-    if animation_name in [&"attack", &"attack 2"]:
+    # Las animaciones del pack van lentas (9-10 fps); el combo y el ataque
+    # aéreo se aceleran un poco incluso con vida normal.
+    if animation_name in [&"attack", &"attack 2", &"attack 3", &"air attack"]:
         multiplier *= maxf(combo_base_speed_multiplier, 1.0)
 
     if (
@@ -1086,13 +1129,26 @@ func _animation_duration(animation_name: StringName) -> float:
     return maxf(duration, 0.08)
 
 
-func _is_attack_3_spin_active() -> bool:
+func _frames_duration(animation_name: StringName, from_frame: int, to_frame: int) -> float:
+    if not sprite.sprite_frames.has_animation(animation_name):
+        return 0.20
+    var fps := sprite.sprite_frames.get_animation_speed(animation_name)
+    if fps <= 0.0:
+        return 0.20
+    var last := sprite.sprite_frames.get_frame_count(animation_name) - 1
+    var duration := 0.0
+    for frame_index in range(clampi(from_frame, 0, last), clampi(to_frame, 0, last) + 1):
+        duration += sprite.sprite_frames.get_frame_duration(animation_name, frame_index) / fps
+    return maxf(duration, 0.08)
+
+
+func _is_flurry_active() -> bool:
+    # La ráfaga de attack 2 (cuadros 8-16) no se interrumpe al recibir daño.
     return (
         _action == PlayerAction.ATTACK
-        and _current_attack_animation == &"attack 3"
-        and sprite.animation == &"attack 3"
-        and sprite.frame >= 0
-        and sprite.frame <= 17
+        and _current_attack_animation == &"attack 2"
+        and sprite.animation == &"attack 2"
+        and sprite.frame <= 16
     )
 
 
@@ -1119,15 +1175,15 @@ func take_damage(
         die()
         return true
 
-    # Durante el giro de attack 3 el Player NO es invulnerable: pierde vida
-    # normalmente. Sin embargo, el golpe no interrumpe el giro ni cambia la
-    # animación a take hit. Conservamos la invulnerabilidad breve posterior
-    # para evitar que una sola Hitbox enemiga vacíe toda la vida en un frame.
-    if _is_attack_3_spin_active():
+    # Durante la ráfaga de attack 2 el Player NO es invulnerable: pierde vida
+    # normalmente, pero el golpe no interrumpe la ráfaga ni cambia la animación
+    # a take hit. Conservamos la invulnerabilidad breve posterior para evitar
+    # que una sola Hitbox enemiga vacíe toda la vida en un frame.
+    if _is_flurry_active():
         _invulnerability_left = invulnerability_time
         _blink_accumulator = 0.0
         _blink_visible = true
-        _update_hud("DAÑO -%.2f (GIRO)" % amount)
+        _update_hud("DAÑO -%.2f (RÁFAGA)" % amount)
         return true
 
     _invulnerability_left = invulnerability_time

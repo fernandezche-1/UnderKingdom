@@ -286,7 +286,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("8_7nxk2")
 }],
-"loop": 1,
+"loop": false,
 "name": &"air attack",
 "speed": 9.0
 }, {
@@ -324,7 +324,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_apmas")
 }],
-"loop": 1,
+"loop": false,
 "name": &"attack",
 "speed": 9.0
 }, {
@@ -386,7 +386,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("38_oxyn1")
 }],
-"loop": 1,
+"loop": false,
 "name": &"attack 2",
 "speed": 10.0
 }, {
@@ -475,7 +475,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("66_8r28j")
 }],
-"loop": 1,
+"loop": false,
 "name": &"attack 3",
 "speed": 10.0
 }, {
@@ -534,7 +534,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("84_ust5d")
 }],
-"loop": 1,
+"loop": false,
 "name": &"attack ultimate",
 "speed": 12.0
 }, {

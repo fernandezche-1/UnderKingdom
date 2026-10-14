@@ -8,6 +8,14 @@ class_name UnderkingdomCombatFX
 const BLOCK_COLOR := Color(1.0, 1.0, 0.85)
 const GUARD_BREAK_COLOR := Color(1.0, 0.72, 0.2)
 const HEAL_COLOR := Color(0.45, 1.0, 0.5)
+const HIT_COLOR := Color(1.0, 0.45, 0.4)
+
+
+## Destello corto en el enemigo que recibe un golpe del Player.
+static func hit_flash(body: Node) -> void:
+    if body == null:
+        return
+    _flash(body.get("sprite") as CanvasItem, HIT_COLOR, 0.12)
 
 
 static func block_spark(body: Node2D, sprite: CanvasItem) -> void:
