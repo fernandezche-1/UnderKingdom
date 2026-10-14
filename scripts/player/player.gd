@@ -84,7 +84,10 @@ enum PlayerAction {
 
 @export_category("Respawn")
 @export_range(0.1, 5.0, 0.1) var respawn_delay: float = 0.8
+## Respaldo si el mapa no tiene MapBounds.
 @export var fall_limit_y: float = 1200.0
+## Muere al caer esta distancia por debajo del borde inferior del mapa.
+@export_range(0.0, 400.0, 4.0) var fall_margin_below_map: float = 64.0
 
 @export_category("Pruebas")
 @export var enable_debug_keys: bool = true
@@ -138,6 +141,7 @@ var _guard_hits_remaining: int = 3
 var _guard_recharge_left: float = 0.0
 var _guard_requires_release: bool = false
 var _roll_collision_exceptions: Array[PhysicsBody2D] = []
+var _fall_limit: float = 1200.0
 
 
 func _ready() -> void:
@@ -150,6 +154,9 @@ func _ready() -> void:
     safe_margin = 0.02
 
     spawn_position = global_position
+    _fall_limit = fall_limit_y
+    # MapBounds puede entrar al árbol después del Player.
+    call_deferred("_update_fall_limit_from_map")
     current_health = max_health
     _guard_hits_remaining = guard_max_hits
 
@@ -242,7 +249,7 @@ func _physics_process(delta: float) -> void:
 
     move_and_slide()
 
-    if global_position.y > fall_limit_y:
+    if global_position.y > _fall_limit:
         die()
         return
 
@@ -260,6 +267,17 @@ func _physics_process(delta: float) -> void:
     elif is_invulnerable():
         state_text = "INVULNERABLE"
     _update_hud(state_text)
+
+
+func _update_fall_limit_from_map() -> void:
+    # Cada mapa tiene su propio alto (Mundo 3 mide 1254); un límite fijo
+    # mataba al Player sobre suelo real.
+    var bounds := get_tree().get_first_node_in_group("map_bounds")
+    if bounds == null:
+        return
+    var bottom: Variant = bounds.get("bottom")
+    if bottom != null:
+        _fall_limit = float(bottom) + fall_margin_below_map
 
 
 func request_attack() -> void:
