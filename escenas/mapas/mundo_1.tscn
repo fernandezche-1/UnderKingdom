@@ -6356,21 +6356,6 @@ animations = [{
 "speed": 9.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5vg62"]
-atlas = ExtResource("51_pvrwi")
-region = Rect2(176, 144, 16, 16)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_pew7s"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5vg62")
-}],
-"loop": 1,
-"name": &"default",
-"speed": 5.0
-}]
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_cwjk6"]
 atlas = ExtResource("51_pvrwi")
 region = Rect2(160, 160, 16, 16)
@@ -6763,7 +6748,7 @@ position = Vector2(1514.5, 717)
 shape = SubResource("RectangleShape2D_04nvu")
 
 [node name="ColisionPoligono_04" type="CollisionPolygon2D" parent="ColisionesMapa" unique_id=965082095]
-polygon = PackedVector2Array(121, 340, 293, 341, 294, 417, 438, 418, 438, 440, 380, 440, 380, 508, 437, 508, 437, 518, 849, 518, 848, 565, 437, 561, 351, 491, 309, 493, 123, 372)
+polygon = PackedVector2Array(121, 340, 293, 341, 294, 417, 438, 418, 438, 440, 437, 460, 437, 480, 437, 508, 437, 518, 849, 518, 848, 565, 437, 561, 351, 491, 309, 493, 123, 372)
 
 [node name="ColisionSolida_06" type="CollisionShape2D" parent="ColisionesMapa" unique_id=476560481]
 position = Vector2(896.5, 674)
@@ -6889,13 +6874,12 @@ frame_progress = 0.4494602
 [node name="CharacterBody2D3" parent="." unique_id=1870597147 instance=ExtResource("71_gmtv0")]
 position = Vector2(485, 450)
 
-
-[node name="SpawnLlaveJefeM1" type="Marker2D" parent="." groups=["world1_boss_key_spawn"]]
+[node name="SpawnLlaveJefeM1" type="Marker2D" parent="." unique_id=1315271127 groups=["world1_boss_key_spawn"]]
 position = Vector2(506, 492)
 
-[node name="LlaveJefeM1" parent="." instance=ExtResource("p30_boss_key")]
+[node name="LlaveJefeM1" parent="." unique_id=1513900949 instance=ExtResource("p30_boss_key")]
 position = Vector2(506, 492)
-activate_after_world1_boss_defeated = true
+
 [node name="AnimatedSprite2D9" type="AnimatedSprite2D" parent="." unique_id=652324118]
 position = Vector2(420, 856)
 sprite_frames = SubResource("SpriteFrames_lrcu4")
@@ -7024,8 +7008,6 @@ shape = SubResource("RectangleShape2D_p13_gate_ws")
 
 [node name="MapBounds" type="Node2D" parent="SistemasMapa" unique_id=1272471751 groups=["map_bounds"]]
 script = ExtResource("p3_map_bounds_script")
-left = 0
-top = 0
 right = 1664
 bottom = 928
 

@@ -1,0 +1,65 @@
+A	assets_prueba/dungeon_platformer/ORIGEN.txt
+A	assets_prueba/dungeon_platformer/dungeontileset.png
+A	assets_prueba/dungeon_platformer/dungeontileset.png.import
+A	assets_prueba/dungeon_platformer/dungeontilesetfull.png
+A	assets_prueba/dungeon_platformer/dungeontilesetfull.png.import
+A	assets_prueba/dungeon_platformer/screenshot2.png
+A	assets_prueba/dungeon_platformer/screenshot2.png.import
+D	escenas/LEEME.txt
+R100	escenas/aprendis.tscn	escenas/enemigos/aprendis.tscn
+R100	escenas/demonslime.tscn	escenas/enemigos/demonslime.tscn
+R097	escenas/diablillo.tscn	escenas/enemigos/diablillo.tscn
+R100	escenas/enemis.tscn	escenas/enemigos/enemis.tscn
+R097	escenas/kolbo.tscn	escenas/enemigos/kolbo.tscn
+R097	escenas/kolbo2.tscn	escenas/enemigos/kolbo2.tscn
+R097	escenas/kolbo3.tscn	escenas/enemigos/kolbo3.tscn
+R100	escenas/mino.tscn	escenas/enemigos/mino.tscn
+R100	escenas/reina.tscn	escenas/enemigos/reina.tscn
+R100	escenas/vanguardia.tscn	escenas/enemigos/vanguardia.tscn
+R099	escenas/boss.tscn	escenas/jefes/boss.tscn
+R100	escenas/boss mina.tscn	escenas/jefes/boss_mina.tscn
+R099	escenas/capitan.tscn	escenas/jefes/capitan.tscn
+A	escenas/mapas/ejemplo_cueva.tscn
+R099	escenas/jefe.tscn	escenas/mapas/jefe_final.tscn
+R099	escenas/mundo 1.tscn	escenas/mapas/mundo_1.tscn
+R099	escenas/mundo_2.tscn	escenas/mapas/mundo_2.tscn
+R099	escenas/mundo3.tscn	escenas/mapas/mundo_3.tscn
+R099	escenas/primer boss mundo1.tscn	escenas/mapas/primer_boss_mundo_1.tscn
+R099	escenas/profundidades.tscn	escenas/mapas/profundidades.tscn
+A	escenas/mapas/prueba_tileset.tscn
+R099	escenas/ruina.tscn	escenas/mapas/ruina.tscn
+M	escenas/player.tscn
+A	escenas/ui/boss_health_bar.tscn
+A	escenas/ui/player_hud.tscn
+R100	casa.png	fondos/casa.png
+R078	casa.png.import	fondos/casa.png.import
+R100	cementerio.png	fondos/cementerio.png
+R077	cementerio.png.import	fondos/cementerio.png.import
+R100	jefe.png	fondos/jefe.png
+R078	jefe.png.import	fondos/jefe.png.import
+R100	mazmorra.png	fondos/mazmorra.png
+R077	mazmorra.png.import	fondos/mazmorra.png.import
+R100	mineria.png	fondos/mineria.png
+R078	mineria.png.import	fondos/mineria.png.import
+R100	7375bcb2-6f61-49c5-90bf-a4b3075afeb8.png	fondos/mundo_2_variante.png
+R071	7375bcb2-6f61-49c5-90bf-a4b3075afeb8.png.import	fondos/mundo_2_variante.png.import
+R100	profundidades.png	fondos/profundidades.png
+R076	profundidades.png.import	fondos/profundidades.png.import
+R100	ruina godot.png	fondos/ruina.png
+R077	ruina godot.png.import	fondos/ruina.png.import
+R100	ruina bajo.png	fondos/ruina_bajo.png
+R077	ruina bajo.png.import	fondos/ruina_bajo.png.import
+A	herramientas/constructor_mapas/construir_mapa.gd
+A	herramientas/constructor_mapas/construir_mapa.gd.uid
+A	herramientas/constructor_mapas/construir_mapa.tscn
+A	mapas_texto/ejemplo_cueva.txt
+M	project.godot
+M	scripts/bosses/captain_boss.gd
+M	scripts/combat/enemy_base.gd
+A	scripts/fx/combat_fx.gd
+A	scripts/fx/combat_fx.gd.uid
+M	scripts/player/player.gd
+A	scripts/ui/boss_health_bar.gd
+A	scripts/ui/boss_health_bar.gd.uid
+A	scripts/ui/player_hud.gd
+A	scripts/ui/player_hud.gd.uid
