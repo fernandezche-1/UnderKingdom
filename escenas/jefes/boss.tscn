@@ -685,19 +685,19 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0incx"]
-radius = 37.0
-height = 128.0
+radius = 35.0
+height = 109.0
 
 [node name="boss" type="CharacterBody2D" unique_id=440036481]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=939028440]
-position = Vector2(12.250005, -72.37501)
-scale = Vector2(2.1015625, 2.3504465)
+position = Vector2(12, -58)
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_2h10h")
 animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.4297763
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=801208222]
-position = Vector2(12, -39)
+position = Vector2(12, -29.5)
 shape = SubResource("CapsuleShape2D_0incx")
