@@ -894,7 +894,7 @@ shape = SubResource("RectangleShape2D_attack_hitbox")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=328285642]
 position = Vector2(0, 16)
-zoom = Vector2(3, 3)
+zoom = Vector2(2, 2)
 process_callback = 0
 position_smoothing_speed = 7.0
 script = ExtResource("p3_camera_script")
