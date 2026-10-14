@@ -728,6 +728,20 @@ func take_damage(
     return true
 
 
+## El Player hizo parry a este ataque: se corta y queda aturdido.
+func receive_parry(stun_time: float) -> void:
+    if dead:
+        return
+    _cancel_attack()
+    _cancel_special_state_on_hit()
+    _defense_time_left = 0.0
+    _hurt_time_left = maxf(_hurt_time_left, stun_time)
+    velocity.x = 0.0
+    ai_state = AIState.HOLD
+    _restart_if_exists(_hurt_animation_name())
+    UnderkingdomCombatFX.guard_break(self, sprite)
+
+
 func _can_block_incoming() -> bool:
     if not defense_enabled:
         return false

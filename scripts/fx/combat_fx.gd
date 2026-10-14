@@ -9,6 +9,7 @@ const BLOCK_COLOR := Color(1.0, 1.0, 0.85)
 const GUARD_BREAK_COLOR := Color(1.0, 0.72, 0.2)
 const HEAL_COLOR := Color(0.45, 1.0, 0.5)
 const HIT_COLOR := Color(1.0, 0.45, 0.4)
+const PARRY_COLOR := Color(0.6, 0.95, 1.0)
 
 
 ## Destello corto en el enemigo que recibe un golpe del Player.
@@ -21,6 +22,12 @@ static func hit_flash(body: Node) -> void:
 ## Nube al morir, para enemigos sin animación de muerte.
 static func death_puff(body: Node2D) -> void:
     _burst(body, Color(0.75, 0.7, 0.8), 16, 50.0, 180.0, 0.55, Vector2(0.0, -30.0))
+
+
+## Parry: destello frío más fuerte que un bloqueo normal.
+static func parry(body: Node2D, sprite: CanvasItem) -> void:
+    _burst(body, PARRY_COLOR, 14, 110.0, 180.0, 0.35, Vector2.ZERO)
+    _flash(sprite, PARRY_COLOR, 0.25)
 
 
 static func block_spark(body: Node2D, sprite: CanvasItem) -> void:

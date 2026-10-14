@@ -240,6 +240,14 @@ func _process_special_state(delta: float) -> bool:
     return true
 
 
+func receive_parry(stun_time: float) -> void:
+    # El Ultimate es ininterrumpible: el parry lo bloquea sin gastar guardia,
+    # pero Capitán no queda aturdido.
+    if _current_attack_animation == &"ultimate" and _attack_time_left > 0.0:
+        return
+    super.receive_parry(stun_time)
+
+
 func _cancel_special_state_on_hit() -> void:
     _roll_pending = false
     _roll_time_left = 0.0

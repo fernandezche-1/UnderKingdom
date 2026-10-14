@@ -91,6 +91,15 @@ const ATTACK_PROFILES := {
 @export_range(1, 10, 1) var guard_max_hits: int = 3
 @export_range(0.1, 3.0, 0.05) var guard_break_stun_time: float = 0.75
 @export_range(0.1, 5.0, 0.05) var guard_recharge_delay: float = 1.25
+## Parry: cubrirse como mucho este tiempo antes del golpe no gasta guardia y
+## aturde al atacante.
+@export_range(0.0, 0.5, 0.01) var parry_window: float = 0.15
+@export_range(0.0, 2.0, 0.05) var parry_stun_time: float = 0.8
+## Tiempo sin cubrirse necesario para que el siguiente bloqueo pueda ser
+## parry; evita que machacar Q haga parry siempre.
+@export_range(0.0, 1.5, 0.05) var parry_rearm_time: float = 0.35
+## Empuje hacia atrás al bloquear un golpe normal (no quita vida).
+@export_range(0.0, 400.0, 10.0) var block_pushback: float = 140.0
 
 @export_category("Combate")
 @export_range(0.1, 10.0, 0.05) var attack_1_damage: float = 0.50
@@ -187,6 +196,10 @@ var _lifesteal_damage_bank: float = 0.0
 var _guard_hits_remaining: int = 3
 var _guard_recharge_left: float = 0.0
 var _guard_requires_release: bool = false
+var _defend_elapsed: float = 0.0
+var _time_since_guard: float = 99.0
+var _parry_available: bool = false
+var _block_push_left: float = 0.0
 var _roll_collision_exceptions: Array[PhysicsBody2D] = []
 var _attack_held_direction: float = 0.0
 var _fall_limit: float = 1200.0
@@ -454,6 +467,13 @@ func _update_combat_timers(delta: float) -> void:
         _ultimate_cooldown_left = maxf(_ultimate_cooldown_left - delta, 0.0)
 
     # La guardia solo se recarga después de pasar un tiempo fuera de DEFEND.
+    if _action == PlayerAction.DEFEND:
+        _defend_elapsed += delta
+    else:
+        _time_since_guard += delta
+    if _block_push_left > 0.0:
+        _block_push_left = maxf(_block_push_left - delta, 0.0)
+
     if _guard_recharge_left > 0.0 and _action != PlayerAction.DEFEND:
         _guard_recharge_left = maxf(_guard_recharge_left - delta, 0.0)
         if _guard_recharge_left <= 0.0:
@@ -608,6 +628,8 @@ func _update_defense_state() -> void:
             and _guard_hits_remaining > 0
         ):
             _action = PlayerAction.DEFEND
+            _defend_elapsed = 0.0
+            _parry_available = _time_since_guard >= parry_rearm_time
             _set_static_defense_pose()
         elif _action == PlayerAction.DEFEND:
             _set_static_defense_pose()
@@ -659,7 +681,10 @@ func _process_roll(delta: float) -> void:
 
 
 func _process_defense_movement(delta: float) -> void:
-    velocity.x = move_toward(velocity.x, 0.0, deceleration * 1.5 * delta)
+    # Tras un bloqueo el empuje se frena despacio (unos 15 px); si no, se
+    # para en seco como siempre.
+    var brake := deceleration * (0.3 if _block_push_left > 0.0 else 1.5)
+    velocity.x = move_toward(velocity.x, 0.0, brake * delta)
     if not is_on_floor():
         velocity.y = minf(velocity.y + gravity * delta, max_fall_speed)
     _jump_requested = false
@@ -1178,10 +1203,21 @@ func take_damage(
         return false
 
     if _action == PlayerAction.DEFEND:
+        # Parry: el golpe llegó justo después de cubrirse. No gasta guardia y
+        # aturde al atacante (solo golpes de un enemigo, con origen).
+        if _parry_available and _defend_elapsed <= parry_window and apply_knockback:
+            _perform_parry(source_global_position)
+            return true
+
         # La guardia bloquea por completo hasta tres impactos. El tercer golpe
         # también queda bloqueado, pero rompe la guardia y deja al Player
         # vulnerable durante una breve recuperación.
         _block_guard_hit()
+        if _action == PlayerAction.DEFEND and apply_knockback:
+            var away := signf(global_position.x - source_global_position.x)
+            if not is_zero_approx(away):
+                velocity.x = away * block_pushback
+                _block_push_left = 0.25
         return true
 
     current_health = maxf(current_health - amount, 0.0)
@@ -1271,6 +1307,7 @@ func _restore_sprite_visibility() -> void:
 
 
 func _leave_guard_for_action() -> void:
+    _time_since_guard = 0.0
     if _guard_hits_remaining < guard_max_hits:
         _guard_recharge_left = maxf(_guard_recharge_left, guard_recharge_delay)
 
@@ -1287,6 +1324,23 @@ func _set_static_defense_pose() -> void:
     sprite.frame = clampi(5, 0, maxi(frame_count - 1, 0))
     sprite.frame_progress = 0.0
     sprite.pause()
+
+
+func _perform_parry(source_global_position: Vector2) -> void:
+    _parry_available = false
+    var attacker := _find_attacker(source_global_position)
+    if attacker != null and attacker.has_method("receive_parry"):
+        attacker.call("receive_parry", parry_stun_time)
+    UnderkingdomCombatFX.parry(self, sprite)
+    _update_hud("PARRY")
+
+
+func _find_attacker(source_global_position: Vector2) -> Node:
+    # Los enemigos envían su propia posición como origen del golpe.
+    for node in get_tree().get_nodes_in_group("enemy"):
+        if node is Node2D and (node as Node2D).global_position.distance_to(source_global_position) < 2.0:
+            return node
+    return null
 
 
 func _block_guard_hit() -> void:
@@ -1386,6 +1440,9 @@ func respawn_now() -> void:
     _guard_hits_remaining = guard_max_hits
     _guard_recharge_left = 0.0
     _guard_requires_release = false
+    _parry_available = false
+    _time_since_guard = 99.0
+    _block_push_left = 0.0
     _disable_roll_enemy_passthrough()
     _ledge_transition_cooldown = 0.0
     set_collision_mask_value(one_way_collision_layer, true)
