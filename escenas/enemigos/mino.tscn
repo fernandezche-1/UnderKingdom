@@ -45,6 +45,7 @@
 [ext_resource type="Texture2D" uid="uid://bh2mo8yag0kjl" path="res://mino_v1.1_free/mino_v1.1_free/animations/walk/walk_11.png" id="43_n24gn"]
 [ext_resource type="Texture2D" uid="uid://dqjbyiog1017" path="res://mino_v1.1_free/mino_v1.1_free/animations/walk/walk_12.png" id="44_sgkjr"]
 
+[ext_resource type="Script" path="res://scripts/combat/enemy_base.gd" id="p33_enemy_base"]
 [sub_resource type="SpriteFrames" id="SpriteFrames_2h10h"]
 animations = [{
 "frames": [{
@@ -199,6 +200,30 @@ animations = [{
 size = Vector2(41, 80)
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=468097024]
+collision_layer = 5
+collision_mask = 1
+script = ExtResource("p33_enemy_base")
+max_health = 8.0
+knockback_horizontal = 60.0
+knockback_vertical = -40.0
+patrol_distance = 40.0
+patrol_speed = 20.0
+chase_speed = 45.0
+detection_range = 200.0
+detection_vertical_range = 100.0
+lose_aggro_range = 300.0
+lose_aggro_vertical_range = 160.0
+attack_range = 56.0
+minimum_player_distance = 34.0
+attack_damage = 0.75
+attack_cooldown = 1.8
+attack_hitbox_size = Vector2(110, 60)
+attack_hitbox_offset = Vector2(44, 30)
+attack_hit_windows = Array[Vector2i]([Vector2i(4, 5), Vector2i(10, 11)])
+ledge_check_forward = 24.0
+ledge_check_depth = 40.0
+sprite_faces_right = false
+mirror_sprite_on_flip = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=452997367]
 sprite_frames = SubResource("SpriteFrames_2h10h")
@@ -207,5 +232,5 @@ autoplay = "idle"
 frame_progress = 0.51803154
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2135968433]
-position = Vector2(-9.5, 24)
+position = Vector2(11, 24)
 shape = SubResource("RectangleShape2D_platf")

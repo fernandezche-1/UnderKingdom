@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://croq747mhb0o8" path="res://otra vez/FREE_Kobold Warrior 2D Pixel Art/Sprites/without_outline/ATTACK 1.png" id="2_0cct7"]
 [ext_resource type="Texture2D" uid="uid://r3mfyitjva6a" path="res://otra vez/FREE_Kobold Warrior 2D Pixel Art/Sprites/without_outline/RUN.png" id="3_jfcci"]
 
+[ext_resource type="Script" path="res://scripts/combat/enemy_base.gd" id="p33_enemy_base"]
 [sub_resource type="AtlasTexture" id="AtlasTexture_sqaqg"]
 atlas = ExtResource("1_0rykw")
 region = Rect2(0, 0, 148, 96)
@@ -102,7 +103,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_n8qdt")
 }],
 "loop": 1,
-"name": &"default",
+"name": &"idle",
 "speed": 10.0
 }, {
 "frames": [{
@@ -122,7 +123,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_5c47j")
 }],
 "loop": 1,
-"name": &"new_animation",
+"name": &"attack",
 "speed": 13.0
 }, {
 "frames": [{
@@ -151,7 +152,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_dg87x")
 }],
 "loop": 1,
-"name": &"new_animation_1",
+"name": &"run",
 "speed": 12.0
 }]
 
@@ -159,14 +160,36 @@ animations = [{
 size = Vector2(21, 40)
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=452563021]
+collision_layer = 5
+collision_mask = 1
+script = ExtResource("p33_enemy_base")
+max_health = 2.5
+patrol_distance = 60.0
+patrol_speed = 40.0
+chase_speed = 85.0
+detection_range = 190.0
+detection_vertical_range = 90.0
+lose_aggro_range = 290.0
+lose_aggro_vertical_range = 150.0
+attack_range = 36.0
+minimum_player_distance = 24.0
+attack_damage = 0.5
+attack_cooldown = 1.0
+attack_active_start_frame = 2
+attack_active_end_frame = 3
+attack_hitbox_size = Vector2(60, 34)
+attack_hitbox_offset = Vector2(26, 13)
+ledge_check_forward = 16.0
+ledge_check_depth = 30.0
+mirror_sprite_on_flip = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=231630058]
 position = Vector2(4, -11)
 sprite_frames = SubResource("SpriteFrames_2h10h")
-animation = &"new_animation_1"
-autoplay = "default"
+animation = &"idle"
+autoplay = "idle"
 frame_progress = 0.11597438
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=275550362]
-position = Vector2(-8.5, 9)
+position = Vector2(-17.5, 11)
 shape = SubResource("RectangleShape2D_platf")

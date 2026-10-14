@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dvscnrskt2hd4" path="res://otra vez/FREE_Kobold Warrior 2D Pixel Art/Sprites/with_outline/IDLE.png" id="2_bbcg6"]
 [ext_resource type="Texture2D" uid="uid://dnbheyjg0lqji" path="res://otra vez/FREE_Kobold Warrior 2D Pixel Art/Sprites/with_outline/RUN.png" id="3_wf00b"]
 
+[ext_resource type="Script" path="res://scripts/combat/enemy_base.gd" id="p33_enemy_base"]
 [sub_resource type="AtlasTexture" id="AtlasTexture_bcjp8"]
 atlas = ExtResource("1_oadxw")
 region = Rect2(0, 0, 148, 96)
@@ -159,6 +160,28 @@ animations = [{
 size = Vector2(25.5, 42)
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=12978115]
+collision_layer = 5
+collision_mask = 1
+script = ExtResource("p33_enemy_base")
+max_health = 3.0
+patrol_distance = 50.0
+patrol_speed = 30.0
+chase_speed = 70.0
+detection_range = 180.0
+detection_vertical_range = 90.0
+lose_aggro_range = 280.0
+lose_aggro_vertical_range = 150.0
+attack_range = 36.0
+minimum_player_distance = 24.0
+attack_damage = 0.5
+attack_cooldown = 1.2
+attack_active_start_frame = 2
+attack_active_end_frame = 3
+attack_hitbox_size = Vector2(60, 34)
+attack_hitbox_offset = Vector2(26, 6)
+ledge_check_forward = 16.0
+ledge_check_depth = 30.0
+mirror_sprite_on_flip = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=595196414]
 position = Vector2(-12, -18)
@@ -168,5 +191,5 @@ autoplay = "idle"
 frame_progress = 0.38460797
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1054364020]
-position = Vector2(-25, -2.5)
+position = Vector2(-33.5, 4)
 shape = SubResource("RectangleShape2D_platf")

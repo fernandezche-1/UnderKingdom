@@ -18,6 +18,11 @@ static func hit_flash(body: Node) -> void:
     _flash(body.get("sprite") as CanvasItem, HIT_COLOR, 0.12)
 
 
+## Nube al morir, para enemigos sin animación de muerte.
+static func death_puff(body: Node2D) -> void:
+    _burst(body, Color(0.75, 0.7, 0.8), 16, 50.0, 180.0, 0.55, Vector2(0.0, -30.0))
+
+
 static func block_spark(body: Node2D, sprite: CanvasItem) -> void:
     _burst(body, BLOCK_COLOR, 6, 45.0, 180.0, 0.25, Vector2(0.0, 120.0))
     _flash(sprite, BLOCK_COLOR, 0.12)
