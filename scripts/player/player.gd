@@ -104,6 +104,8 @@ const ATTACK_PROFILES := {
 @export_range(-100.0, 200.0, 1.0) var attack_hitbox_offset_y: float = 34.0
 @export_range(0.05, 2.0, 0.05) var combo_queue_window: float = 0.45
 @export_range(1.0, 2.0, 0.05) var combo_base_speed_multiplier: float = 1.20
+## Velocidad propia del ataque aéreo (la animación del pack va a 9 fps).
+@export_range(1.0, 3.0, 0.05) var air_attack_speed_multiplier: float = 1.80
 @export_range(0, 30, 1) var attack_1_chain_frame: int = 7
 @export_range(0, 40, 1) var attack_2_chain_frame: int = 17
 ## Moverse, saltar o rodar corta attack / attack 2 / attack 3 / air attack.
@@ -474,6 +476,11 @@ func _update_combat_timers(delta: float) -> void:
 
 
 func _update_action_state() -> void:
+    # Al aterrizar, el ataque aéreo termina en cuanto su golpe ya salió.
+    if _action == PlayerAction.AIR_ATTACK and is_on_floor() and _attack_hits_done():
+        _finish_action()
+        return
+
     # Cancelamos solo los frames de recuperacion de attack 1 y attack 2.
     # El siguiente golpe puede arrancar antes de que termine toda la animacion,
     # siempre que el jugador ya lo haya dejado en el buffer.
@@ -634,7 +641,7 @@ func _process_attack_movement(delta: float) -> void:
 
 
 func _process_air_attack_movement(delta: float) -> void:
-    velocity.x = move_toward(velocity.x, 0.0, deceleration * 0.35 * delta)
+    # Conserva el impulso horizontal del salto; solo la caída se suaviza un poco.
     velocity.y = minf(velocity.y + gravity * 0.65 * delta, max_fall_speed)
     _jump_requested = false
 
@@ -1091,8 +1098,10 @@ func _attack_speed_multiplier_for(animation_name: StringName) -> float:
 
     # Las animaciones del pack van lentas (9-10 fps); el combo y el ataque
     # aéreo se aceleran un poco incluso con vida normal.
-    if animation_name in [&"attack", &"attack 2", &"attack 3", &"air attack"]:
+    if animation_name in [&"attack", &"attack 2", &"attack 3"]:
         multiplier *= maxf(combo_base_speed_multiplier, 1.0)
+    elif animation_name == &"air attack":
+        multiplier *= maxf(air_attack_speed_multiplier, 1.0)
 
     if (
         adrenaline_enabled
