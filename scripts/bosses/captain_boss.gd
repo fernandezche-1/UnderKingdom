@@ -15,8 +15,24 @@ const BOSS_KEY_SCENE := preload("res://escenas/items/llave_jefe_m1.tscn")
 @export_range(1, 10, 1) var attacks_before_roll: int = 3
 @export_range(0.1, 1.0, 0.05) var roll_invulnerability_ratio: float = 0.82
 
+@export_category("Capitán - Variación")
+## Probabilidad de repetir el mismo ataque dos veces seguidas.
+@export_range(0.0, 1.0, 0.05) var repeat_attack_chance: float = 0.25
+@export_range(1, 10, 1) var min_attacks_between_ultimates: int = 3
+@export_range(0.0, 1.0, 0.05) var ultimate_chance: float = 0.5
+## El roll llega tras attacks_before_roll ± este valor.
+@export_range(0, 3, 1) var roll_count_variation: int = 1
+
+@export_category("Capitán - Aviso de Ultimate")
+@export var ultimate_warning_color: Color = Color(1.0, 0.35, 0.2)
+@export_range(1.0, 40.0, 0.5) var ultimate_warning_pulse_speed: float = 18.0
+
 var boss_phase: int = 1
-var _attack_cycle_index: int = 0
+var _last_attack: StringName = &""
+var _attacks_since_ultimate: int = 0
+var _next_roll_threshold: int = 3
+var _ultimate_warning_time: float = 0.0
+var _ultimate_warning_active: bool = false
 var _attacks_since_roll: int = 0
 var _roll_pending: bool = false
 var _roll_time_left: float = 0.0
@@ -37,6 +53,7 @@ func _ready() -> void:
     super._ready()
     add_to_group("boss")
     add_to_group("world1_boss")
+    _next_roll_threshold = attacks_before_roll
     health_changed.connect(_on_boss_health_changed)
     _update_boss_phase()
 
@@ -64,19 +81,28 @@ func _update_boss_phase() -> void:
 func _select_attack_animation() -> StringName:
     _update_boss_phase()
 
-    var sequence: Array[StringName]
-    match boss_phase:
-        1:
-            sequence = [&"attack", &"attack2"]
-        2:
-            sequence = [&"attack rapido", &"attack2", &"attack"]
-        _:
-            # Ultimate solo entra en fase 3.
-            sequence = [&"attack rapido", &"attack2", &"ultimate", &"attack"]
+    # Ultimate solo entra en fase 3 y nunca dos veces casi seguidas.
+    if (
+        boss_phase >= 3
+        and _attacks_since_ultimate >= min_attacks_between_ultimates
+        and randf() <= ultimate_chance
+    ):
+        _attacks_since_ultimate = 0
+        _last_attack = &"ultimate"
+        return _last_attack
 
-    var chosen := sequence[_attack_cycle_index % sequence.size()]
-    _attack_cycle_index += 1
-    return chosen
+    var pool: Array[StringName] = [&"attack", &"attack2"]
+    if boss_phase >= 2:
+        pool.append(&"attack rapido")
+
+    # Elección al azar para que el patrón no sea un ciclo fijo; repetir el
+    # mismo golpe es posible pero poco frecuente.
+    if randf() > repeat_attack_chance:
+        pool.erase(_last_attack)
+
+    _attacks_since_ultimate += 1
+    _last_attack = pool.pick_random()
+    return _last_attack
 
 
 func _damage_for_attack(animation_name: StringName) -> float:
@@ -145,9 +171,33 @@ func _cooldown_for_attack(animation_name: StringName) -> float:
 
 func _on_enemy_attack_finished(_animation_name: StringName) -> void:
     _attacks_since_roll += 1
-    if boss_phase >= 2 and _attacks_since_roll >= attacks_before_roll:
+    if boss_phase >= 2 and _attacks_since_roll >= _next_roll_threshold:
         _attacks_since_roll = 0
         _roll_pending = true
+        _next_roll_threshold = maxi(
+            attacks_before_roll + randi_range(-roll_count_variation, roll_count_variation),
+            1
+        )
+
+
+func _process(delta: float) -> void:
+    # Aviso previo al Ultimate: el sprite parpadea en color durante el
+    # windup, hasta el primer frame que hace daño.
+    var warning := (
+        _current_attack_animation == &"ultimate"
+        and _attack_time_left > 0.0
+        and sprite.frame < _active_frame_range_for_attack(&"ultimate").x
+    )
+
+    if warning:
+        _ultimate_warning_active = true
+        _ultimate_warning_time += delta
+        var pulse := 0.5 + 0.5 * sin(_ultimate_warning_time * ultimate_warning_pulse_speed)
+        sprite.modulate = Color.WHITE.lerp(ultimate_warning_color, pulse)
+    elif _ultimate_warning_active:
+        _ultimate_warning_active = false
+        _ultimate_warning_time = 0.0
+        sprite.modulate = Color.WHITE
 
 
 func _process_special_state(delta: float) -> bool:
@@ -188,6 +238,14 @@ func _process_special_state(delta: float) -> bool:
     _face_direction(_roll_direction)
     sprite.play(&"roll")
     return true
+
+
+func receive_parry(stun_time: float) -> void:
+    # El Ultimate es ininterrumpible: el parry lo bloquea sin gastar guardia,
+    # pero Capitán no queda aturdido.
+    if _current_attack_animation == &"ultimate" and _attack_time_left > 0.0:
+        return
+    super.receive_parry(stun_time)
 
 
 func _cancel_special_state_on_hit() -> void:

@@ -62,6 +62,9 @@ enum AIState {
 @export_range(-1, 120, 1) var attack_active_end_frame: int = -1
 @export var attack_hitbox_size: Vector2 = Vector2(48.0, 36.0)
 @export var attack_hitbox_offset: Vector2 = Vector2(30.0, 12.0)
+## Varias ventanas de golpe dentro de una misma animación de ataque
+## (por ejemplo dos hachazos). Vacío = una sola ventana (attack_active_*).
+@export var attack_hit_windows: Array[Vector2i] = []
 
 @export_category("Defensa")
 @export var defense_enabled: bool = false
@@ -74,6 +77,13 @@ enum AIState {
 @export_range(0.1, 3.0, 0.05) var guard_break_stun_time: float = 0.65
 @export_range(0.1, 10.0, 0.05) var guard_break_recovery: float = 2.0
 
+@export_category("IA - Vuelo")
+## Solo para enemigos sin gravedad: al perseguir también se acercan en
+## vertical; sin aggro vuelven a la altura donde aparecieron.
+@export var fly_toward_target: bool = false
+## Altura objetivo respecto al origen del Player (positivo = más abajo).
+@export var fly_target_offset_y: float = 30.0
+
 @export_category("IA - Seguridad de movimiento")
 @export var avoid_ledges: bool = true
 @export_range(2.0, 80.0, 1.0) var ledge_check_forward: float = 14.0
@@ -81,7 +91,17 @@ enum AIState {
 
 @export_category("Orientación")
 @export var sprite_faces_right: bool = true
+## Para escenas cuyo dibujo no está centrado en el nodo: al darse vuelta el
+## sprite se refleja alrededor del centro de la colisión (el cuerpo), y las
+## distancias, el ataque y el borde se miden desde ahí.
+@export var mirror_sprite_on_flip: bool = false
 @export_range(-1.0, 1.0, 2.0) var initial_patrol_direction: float = 1.0
+
+@export_category("Barra de vida")
+## Barra pequeña sobre la cabeza. Los jefes con BossHealthBar no la llevan.
+@export var show_health_bar: bool = true
+## Ajuste fino de la altura de la barra (negativo = más arriba).
+@export var health_bar_offset_y: float = 0.0
 
 @export_category("Prueba")
 @export var remove_on_death: bool = true
@@ -112,9 +132,12 @@ var _attack_shape: RectangleShape2D = null
 var _defense_time_left: float = 0.0
 var _defense_cooldown_left: float = 0.0
 var _defense_hits_remaining: int = 3
+var _attack_window_index: int = -1
+var _sprite_base_x: float = 0.0
 
 
 func _ready() -> void:
+    _sprite_base_x = sprite.position.x
     add_to_group("enemy")
     add_to_group("damageable")
     current_health = max_health
@@ -125,6 +148,7 @@ func _ready() -> void:
     _defense_hits_remaining = defense_max_hits
     _face_direction(_patrol_direction)
     _play_if_exists(&"idle")
+    _ensure_health_bar()
 
 
 func _physics_process(delta: float) -> void:
@@ -169,6 +193,27 @@ func _physics_process(delta: float) -> void:
     move_and_slide()
 
 
+func _ensure_health_bar() -> void:
+    if not show_health_bar or has_node("BossHealthBar") or has_node("BarraVida"):
+        return
+    var bar := UnderkingdomEnemyHealthBar.new()
+    bar.name = "BarraVida"
+    var center_x := body_collision.position.x if body_collision != null else 0.0
+    bar.position = Vector2(roundf(center_x), roundf(_sprite_top_y() - 7.0 + health_bar_offset_y))
+    add_child(bar)
+
+
+## Borde superior del dibujo (cuadro 0 de idle), relativo al enemigo.
+func _sprite_top_y() -> float:
+    var anim: StringName = &"idle" if sprite.sprite_frames.has_animation(&"idle") else sprite.animation
+    var tex := sprite.sprite_frames.get_frame_texture(anim, 0)
+    if tex == null:
+        return -_collision_foot_y()
+    var used := tex.get_image().get_used_rect()
+    var top := float(used.position.y) - (tex.get_size().y * 0.5 if sprite.centered else 0.0)
+    return sprite.position.y + (top + sprite.offset.y) * sprite.scale.y
+
+
 func _update_damage_timers(delta: float) -> void:
     if _invulnerability_left > 0.0:
         _invulnerability_left = maxf(_invulnerability_left - delta, 0.0)
@@ -210,6 +255,12 @@ func _apply_gravity(delta: float) -> void:
 
 
 func _update_ai(delta: float) -> void:
+    if fly_toward_target and not use_gravity:
+        var wanted_y := _spawn_global_position.y
+        if _has_aggro and is_instance_valid(_target):
+            wanted_y = _target.global_position.y + fly_target_offset_y
+        velocity.y = clampf((wanted_y - global_position.y) * 4.0, -chase_speed, chase_speed)
+
     if not is_instance_valid(_target):
         _find_target()
 
@@ -247,7 +298,7 @@ func _update_aggro() -> void:
         _set_aggro(false)
         return
 
-    var offset := _target.global_position - global_position
+    var offset := _target.global_position - Vector2(_body_global_x(), global_position.y)
     var horizontal_distance := absf(offset.x)
     var vertical_distance := absf(offset.y)
 
@@ -272,7 +323,7 @@ func _chase_target(delta: float) -> void:
         _set_aggro(false)
         return
 
-    var offset_x := _target.global_position.x - global_position.x
+    var offset_x := _target.global_position.x - _body_global_x()
     var horizontal_distance := absf(offset_x)
     var direction := _normalized_direction(offset_x)
     _face_direction(direction)
@@ -323,6 +374,7 @@ func _start_enemy_attack(animation_name: StringName) -> void:
     _attack_total_time = _animation_duration(animation_name)
     _attack_time_left = _attack_total_time
     _attack_hit_targets.clear()
+    _attack_window_index = -1
     _update_attack_hitbox_transform(animation_name)
     ai_state = AIState.ATTACK
     sprite.play(animation_name)
@@ -335,9 +387,22 @@ func _update_attack_damage_window() -> void:
     if sprite.animation != _current_attack_animation:
         return
 
-    var active_frames := _active_frame_range_for_attack(_current_attack_animation)
-    if sprite.frame < active_frames.x or sprite.frame > active_frames.y:
-        return
+    if attack_hit_windows.is_empty():
+        var active_frames := _active_frame_range_for_attack(_current_attack_animation)
+        if sprite.frame < active_frames.x or sprite.frame > active_frames.y:
+            return
+    else:
+        var window := -1
+        for i in attack_hit_windows.size():
+            if sprite.frame >= attack_hit_windows[i].x and sprite.frame <= attack_hit_windows[i].y:
+                window = i
+                break
+        if window < 0:
+            return
+        # Cada ventana es un golpe nuevo: el Player puede recibir los dos.
+        if window != _attack_window_index:
+            _attack_window_index = window
+            _attack_hit_targets.clear()
 
     _update_attack_hitbox_transform(_current_attack_animation)
 
@@ -399,7 +464,7 @@ func _update_attack_hitbox_transform(animation_name: StringName) -> void:
     var profile_offset := _hitbox_offset_for_attack(animation_name)
     _attack_shape.size = profile_size
     _attack_hitbox.position = Vector2(
-        profile_offset.x * _facing_direction(),
+        _body_center_x() + profile_offset.x * _facing_direction(),
         profile_offset.y
     )
 
@@ -513,7 +578,7 @@ func _can_move_horizontally(direction: float) -> bool:
 
 func _has_floor_ahead(direction: float) -> bool:
     var foot_y := _collision_foot_y()
-    var ray_from := global_position + Vector2(direction * ledge_check_forward, foot_y - 3.0)
+    var ray_from := Vector2(_body_global_x(), global_position.y) + Vector2(direction * ledge_check_forward, foot_y - 3.0)
     var ray_to := ray_from + Vector2(0.0, ledge_check_depth)
 
     var query := PhysicsRayQueryParameters2D.create(ray_from, ray_to)
@@ -562,6 +627,10 @@ func _face_direction(direction: float) -> void:
         sprite.flip_h = direction < 0.0
     else:
         sprite.flip_h = direction > 0.0
+
+    if mirror_sprite_on_flip:
+        var center := _body_center_x()
+        sprite.position.x = (2.0 * center - _sprite_base_x) if sprite.flip_h else _sprite_base_x
 
     if _current_attack_animation != &"":
         _update_attack_hitbox_transform(_current_attack_animation)
@@ -639,7 +708,14 @@ func take_damage(
         return true
 
     _invulnerability_left = invulnerability_time
-    _hurt_time_left = maxf(_animation_duration(_hurt_animation_name()), 0.18)
+    # Sin animación de daño, _hurt_animation_name() devuelve idle; su duración
+    # completa (hasta 1.6 s en el mino) dejaría al enemigo aturdido de más.
+    var hurt_animation := _hurt_animation_name()
+    _hurt_time_left = (
+        maxf(_animation_duration(hurt_animation), 0.18)
+        if hurt_animation != &"idle"
+        else 0.25
+    )
 
     if apply_knockback:
         var direction := signf(global_position.x - source_global_position.x)
@@ -650,6 +726,20 @@ func take_damage(
 
     _restart_if_exists(_hurt_animation_name())
     return true
+
+
+## El Player hizo parry a este ataque: se corta y queda aturdido.
+func receive_parry(stun_time: float) -> void:
+    if dead:
+        return
+    _cancel_attack()
+    _cancel_special_state_on_hit()
+    _defense_time_left = 0.0
+    _hurt_time_left = maxf(_hurt_time_left, stun_time)
+    velocity.x = 0.0
+    ai_state = AIState.HOLD
+    _restart_if_exists(_hurt_animation_name())
+    UnderkingdomCombatFX.guard_break(self, sprite)
 
 
 func _can_block_incoming() -> bool:
@@ -679,6 +769,7 @@ func _block_defense_hit() -> void:
     _defense_hits_remaining = maxi(_defense_hits_remaining - 1, 0)
 
     if _defense_hits_remaining > 0:
+        UnderkingdomCombatFX.block_spark(self, sprite)
         return
 
     # Guard Break: el golpe que rompe la defensa queda bloqueado, pero el
@@ -689,6 +780,7 @@ func _block_defense_hit() -> void:
     ai_state = AIState.HOLD
     velocity.x = 0.0
     _restart_if_exists(_hurt_animation_name())
+    UnderkingdomCombatFX.guard_break(self, sprite)
     guard_broken.emit()
 
 
@@ -697,7 +789,18 @@ func _is_special_invulnerable() -> bool:
     return false
 
 
+func _body_center_x() -> float:
+    if mirror_sprite_on_flip and body_collision != null:
+        return body_collision.position.x
+    return 0.0
+
+
+func _body_global_x() -> float:
+    return global_position.x + _body_center_x()
+
+
 func _cancel_attack() -> void:
+    _attack_window_index = -1
     _attack_time_left = 0.0
     _attack_total_time = 0.0
     _current_attack_animation = &""
@@ -719,7 +822,13 @@ func die() -> void:
         sprite.play(&"death")
         await get_tree().create_timer(_animation_duration(&"death")).timeout
     else:
-        await get_tree().create_timer(0.20).timeout
+        # Sin animación de muerte: se desvanece con una nube de partículas.
+        _play_if_exists(&"idle")
+        sprite.pause()
+        UnderkingdomCombatFX.death_puff(self)
+        var tween := create_tween()
+        tween.tween_property(sprite, "modulate:a", 0.0, 0.35)
+        await tween.finished
 
     if not is_inside_tree():
         return
