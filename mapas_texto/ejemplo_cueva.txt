@@ -1,0 +1,49 @@
+; MAPA ESCRITO COMO TEXTO: cada letra es una pieza de 16 x 16 px.
+; Para generar la escena, desde la carpeta del proyecto:
+;   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/ejemplo_cueva.txt
+;
+; LEYENDA
+;   .  vacío                      #  bloque sólido (esquinas y bordes automáticos)
+;   =  plataforma de una vía      /  rampa que sube a la derecha    \  rampa que sube a la izquierda
+;   ~  lava (mata al tocarla)     %  agua (decorativa)               H  escalera (se trepa con W/S)
+;   P  inicio del Player          v  Vanguardia                      a  Aprendis
+;   Deja una pieza libre entre una escalera y el bloque al que sube: si están
+;   pegados, el Player se golpea la cabeza con el borde del bloque.
+; Decorados (la letra marca su pieza de abajo a la izquierda):
+;   t antorcha   f fogata   b barril   x caja   h hongos   g pasto   r cristales
+;   T árbol (2x3)   E estantería (3x3)   C tienda de campaña (3x2)
+;
+; OPCIONES
+;   bloques: verde, verde_claro, ladrillo, violeta, oro, oliva o madera
+;   fondo:   cueva (pared de cueva detrás de todo) o ninguno
+;   escena:  dónde se guarda; siempre dentro de res://escenas/mapas/
+
+escena: res://escenas/mapas/ejemplo_cueva.tscn
+bloques: oro
+fondo: cueva
+---
+######################################################################
+######################################################################
+##..................................................................##
+##..................................................................##
+##..................................................................##
+##..................................................................##
+##..................................................................##
+##..................................................................##
+##..................................................................##
+##..................................................................##
+##.............aE...h...............................................##
+##.............######.H...................................=====.....##
+##.............######.H.............................................##
+##....................H.............................................##
+##....................H...........................=====.............##
+##....................H.............................................##
+##....................H.................=====..................#....##
+##....................H.........====...........................#....##
+##....................H..................................r..v..#..r.##
+##....................H.......................t.v...../###############
+##...P..t.f.C....bx...H.g..............T..g./#########################
+#########################%%%%#........################################
+##############################~~~~~~~~################################
+######################################################################
+######################################################################
