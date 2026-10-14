@@ -42,7 +42,7 @@ mouse_filter = 2
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 8.0
-scale = Vector2(4, 4)
+scale = Vector2(3, 3)
 mouse_filter = 2
 max_value = 4.0
 step = 0.25
@@ -53,36 +53,36 @@ texture_progress_offset = Vector2(2, 0)
 
 [node name="DivisionCorazon1" type="ColorRect" parent="Raiz/BarraVida"]
 layout_mode = 0
-offset_left = 8.75
+offset_left = 8.6667
 offset_top = 1.0
-offset_right = 9.25
+offset_right = 9.3333
 offset_bottom = 7.0
 mouse_filter = 2
 color = Color(0.024, 0.024, 0.031, 0.85)
 
 [node name="DivisionCorazon2" type="ColorRect" parent="Raiz/BarraVida"]
 layout_mode = 0
-offset_left = 15.75
+offset_left = 15.6667
 offset_top = 1.0
-offset_right = 16.25
+offset_right = 16.3333
 offset_bottom = 7.0
 mouse_filter = 2
 color = Color(0.024, 0.024, 0.031, 0.85)
 
 [node name="DivisionCorazon3" type="ColorRect" parent="Raiz/BarraVida"]
 layout_mode = 0
-offset_left = 22.75
+offset_left = 22.6667
 offset_top = 1.0
-offset_right = 23.25
+offset_right = 23.3333
 offset_bottom = 7.0
 mouse_filter = 2
 color = Color(0.024, 0.024, 0.031, 0.85)
 
 [node name="BarraUltimate" type="TextureProgressBar" parent="Raiz"]
 layout_mode = 0
-offset_top = 36.0
+offset_top = 28.0
 offset_right = 32.0
-offset_bottom = 44.0
+offset_bottom = 36.0
 scale = Vector2(3, 3)
 mouse_filter = 2
 max_value = 1.0
@@ -95,9 +95,10 @@ texture_progress_offset = Vector2(2, 0)
 [node name="IconoLlave" type="TextureRect" parent="Raiz"]
 visible = false
 layout_mode = 0
-offset_left = 136.0
-offset_right = 152.0
-offset_bottom = 16.0
-scale = Vector2(2, 2)
+offset_left = 104.0
+offset_top = -12.0
+offset_right = 120.0
+offset_bottom = 4.0
+scale = Vector2(3, 3)
 mouse_filter = 2
 texture = SubResource("AtlasTexture_llave")
