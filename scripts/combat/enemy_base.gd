@@ -83,6 +83,12 @@ enum AIState {
 @export var sprite_faces_right: bool = true
 @export_range(-1.0, 1.0, 2.0) var initial_patrol_direction: float = 1.0
 
+@export_category("Barra de vida")
+## Barra pequeña sobre la cabeza. Los jefes con BossHealthBar no la llevan.
+@export var show_health_bar: bool = true
+## Ajuste fino de la altura de la barra (negativo = más arriba).
+@export var health_bar_offset_y: float = 0.0
+
 @export_category("Prueba")
 @export var remove_on_death: bool = true
 
@@ -125,6 +131,7 @@ func _ready() -> void:
     _defense_hits_remaining = defense_max_hits
     _face_direction(_patrol_direction)
     _play_if_exists(&"idle")
+    _ensure_health_bar()
 
 
 func _physics_process(delta: float) -> void:
@@ -167,6 +174,27 @@ func _physics_process(delta: float) -> void:
         _play_if_exists(&"idle")
 
     move_and_slide()
+
+
+func _ensure_health_bar() -> void:
+    if not show_health_bar or has_node("BossHealthBar") or has_node("BarraVida"):
+        return
+    var bar := UnderkingdomEnemyHealthBar.new()
+    bar.name = "BarraVida"
+    var center_x := body_collision.position.x if body_collision != null else 0.0
+    bar.position = Vector2(roundf(center_x), roundf(_sprite_top_y() - 7.0 + health_bar_offset_y))
+    add_child(bar)
+
+
+## Borde superior del dibujo (cuadro 0 de idle), relativo al enemigo.
+func _sprite_top_y() -> float:
+    var anim: StringName = &"idle" if sprite.sprite_frames.has_animation(&"idle") else sprite.animation
+    var tex := sprite.sprite_frames.get_frame_texture(anim, 0)
+    if tex == null:
+        return -_collision_foot_y()
+    var used := tex.get_image().get_used_rect()
+    var top := float(used.position.y) - (tex.get_size().y * 0.5 if sprite.centered else 0.0)
+    return sprite.position.y + (top + sprite.offset.y) * sprite.scale.y
 
 
 func _update_damage_timers(delta: float) -> void:
