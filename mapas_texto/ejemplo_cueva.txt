@@ -7,6 +7,7 @@
 ;   =  plataforma de una vía      /  rampa que sube a la derecha    \  rampa que sube a la izquierda
 ;   ~  lava (mata al tocarla)     %  agua (decorativa)               H  escalera (se trepa con W/S)
 ;   P  inicio del Player          v  Vanguardia                      a  Aprendis
+;   k  kolbo   j  kolbo2 (rápido)   q  kolbo3 (resistente)   d  diablillo   M  mino
 ;   Deja una pieza libre entre una escalera y el bloque al que sube: si están
 ;   pegados, el Player se golpea la cabeza con el borde del bloque.
 ; Decorados (la letra marca su pieza de abajo a la izquierda):

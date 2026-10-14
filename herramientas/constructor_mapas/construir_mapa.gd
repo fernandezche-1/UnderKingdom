@@ -51,6 +51,11 @@ const ANIMATED := {
 const ENEMIES := {
     "v": "res://escenas/enemigos/vanguardia.tscn",
     "a": "res://escenas/enemigos/aprendis.tscn",
+    "k": "res://escenas/enemigos/kolbo.tscn",
+    "j": "res://escenas/enemigos/kolbo2.tscn",
+    "q": "res://escenas/enemigos/kolbo3.tscn",
+    "d": "res://escenas/enemigos/diablillo.tscn",
+    "M": "res://escenas/enemigos/mino.tscn",
 }
 
 var _grid: Array[String] = []
@@ -214,7 +219,7 @@ func _build(text_path: String) -> String:
         return "No se pudo guardar %s (error %d)" % [out_path, err]
     print("CONSTRUCTOR: %s creada (%d x %d piezas, %d x %d px). Bloques: %d, rampas: %d, plataformas: %d, lava: %d, escaleras: %d, enemigos: %d." % [
         out_path, _w, _h, _w * T, _h * T, counts.get("#", 0), counts.get("/", 0) + counts.get("\\", 0),
-        counts.get("=", 0), counts.get("~", 0), counts.get("H", 0), counts.get("v", 0) + counts.get("a", 0)])
+        counts.get("=", 0), counts.get("~", 0), counts.get("H", 0), ENEMIES.keys().reduce(func(total, key): return total + counts.get(key, 0), 0)])
     return ""
 
 
