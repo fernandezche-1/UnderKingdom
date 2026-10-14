@@ -6437,8 +6437,8 @@ position = Vector2(688, 339)
 script = ExtResource("p3_map_bounds_script")
 left = 0
 top = 0
-right = 1254
-bottom = 1254
+right = 1248
+bottom = 1248
 
 [node name="SpawnController" type="Node" parent="SistemasMapa"]
 script = ExtResource("p4_spawn_controller")

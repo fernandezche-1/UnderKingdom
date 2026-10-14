@@ -7024,6 +7024,10 @@ shape = SubResource("RectangleShape2D_p13_gate_ws")
 
 [node name="MapBounds" type="Node2D" parent="SistemasMapa" unique_id=1272471751 groups=["map_bounds"]]
 script = ExtResource("p3_map_bounds_script")
+left = 0
+top = 0
+right = 1664
+bottom = 928
 
 [node name="SpawnController" type="Node" parent="SistemasMapa" unique_id=930834981]
 script = ExtResource("p4_spawn_controller")

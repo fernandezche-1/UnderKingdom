@@ -6418,8 +6418,8 @@ polygon = PackedVector2Array(1260, 656, 1259, 664, 1272, 660, 1284, 656, 1305, 6
 script = ExtResource("p3_map_bounds_script")
 left = 0
 top = 0
-right = 1672
-bottom = 941
+right = 1664
+bottom = 928
 
 [node name="SpawnController" type="Node" parent="SistemasMapa"]
 script = ExtResource("p4_spawn_controller")
