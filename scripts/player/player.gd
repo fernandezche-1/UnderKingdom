@@ -109,7 +109,10 @@ const ATTACK_PROFILES := {
 ## Moverse, saltar o rodar corta attack / attack 2 / attack 3 / air attack.
 ## Si ya ibas moviéndote al atacar, el golpe sale y luego sigues caminando.
 @export var movement_cancels_attacks: bool = true
-@export_range(50.0, 1200.0, 10.0) var roll_speed: float = 430.0
+## Distancia total del roll. Arranca rápido y frena hasta detenerse al
+## final de la animación; 96 px alcanzan para atravesar a cualquier enemigo
+## actual (el más ancho mide 42 px) si se rueda desde cerca.
+@export_range(16.0, 400.0, 4.0) var roll_distance: float = 96.0
 @export_range(0.1, 10.0, 0.1) var ultimate_cooldown: float = 6.0
 
 @export_category("Adrenalina")
@@ -637,7 +640,12 @@ func _process_air_attack_movement(delta: float) -> void:
 
 
 func _process_roll(delta: float) -> void:
-    velocity.x = _roll_direction * roll_speed
+    # Velocidad que cae al cuadrado hasta 0: v0 * (1 - t)^2 recorre v0 * T / 3,
+    # así que v0 = 3 * distancia / duración.
+    var total := maxf(_action_total_time, 0.01)
+    var progress := clampf(1.0 - _action_time_left / total, 0.0, 1.0)
+    var start_speed := 3.0 * roll_distance / total
+    velocity.x = _roll_direction * start_speed * pow(1.0 - progress, 2.0)
     if not is_on_floor():
         velocity.y = minf(velocity.y + gravity * delta, max_fall_speed)
     _jump_requested = false
