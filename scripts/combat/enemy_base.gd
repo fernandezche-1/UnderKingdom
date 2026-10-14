@@ -679,6 +679,7 @@ func _block_defense_hit() -> void:
     _defense_hits_remaining = maxi(_defense_hits_remaining - 1, 0)
 
     if _defense_hits_remaining > 0:
+        UnderkingdomCombatFX.block_spark(self, sprite)
         return
 
     # Guard Break: el golpe que rompe la defensa queda bloqueado, pero el
@@ -689,6 +690,7 @@ func _block_defense_hit() -> void:
     ai_state = AIState.HOLD
     velocity.x = 0.0
     _restart_if_exists(_hurt_animation_name())
+    UnderkingdomCombatFX.guard_break(self, sprite)
     guard_broken.emit()
 
 

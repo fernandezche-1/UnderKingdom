@@ -1028,6 +1028,7 @@ func _register_lifesteal_damage(actual_damage: float) -> void:
     while _lifesteal_damage_bank >= requirement and current_health < max_health:
         _lifesteal_damage_bank -= requirement
         heal(lifesteal_heal_amount)
+        UnderkingdomCombatFX.heal(self, sprite)
 
     if current_health >= max_health:
         _lifesteal_damage_bank = 0.0
@@ -1220,6 +1221,7 @@ func _block_guard_hit() -> void:
     _guard_recharge_left = maxf(_guard_recharge_left, guard_recharge_delay)
 
     if _guard_hits_remaining > 0:
+        UnderkingdomCombatFX.block_spark(self, sprite)
         _update_hud("BLOQUEO %d/%d" % [_guard_hits_remaining, guard_max_hits])
         return
 
@@ -1232,6 +1234,7 @@ func _block_guard_hit() -> void:
     _hurt_time_left = guard_break_stun_time
     velocity.x = 0.0
     sprite.play(&"take hit")
+    UnderkingdomCombatFX.guard_break(self, sprite)
     _update_hud("GUARD BREAK")
 
 
