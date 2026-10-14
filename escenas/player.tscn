@@ -286,7 +286,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("8_7nxk2")
 }],
-"loop": false,
+"loop": 0,
 "name": &"air attack",
 "speed": 9.0
 }, {
@@ -324,7 +324,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_apmas")
 }],
-"loop": false,
+"loop": 0,
 "name": &"attack",
 "speed": 9.0
 }, {
@@ -386,7 +386,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("38_oxyn1")
 }],
-"loop": false,
+"loop": 0,
 "name": &"attack 2",
 "speed": 10.0
 }, {
@@ -475,7 +475,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("66_8r28j")
 }],
-"loop": false,
+"loop": 0,
 "name": &"attack 3",
 "speed": 10.0
 }, {
@@ -534,7 +534,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("84_ust5d")
 }],
-"loop": false,
+"loop": 0,
 "name": &"attack ultimate",
 "speed": 12.0
 }, {
@@ -851,9 +851,9 @@ script = ExtResource("p2_player_script")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=399530285]
 position = Vector2(-8, 0)
 sprite_frames = SubResource("SpriteFrames_br1p4")
-animation = &"idle"
+animation = &"death"
 autoplay = "idle"
-frame_progress = 0.922267
+frame_progress = 0.6812129
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1775031797]
 position = Vector2(-7, 43)
@@ -882,7 +882,7 @@ Vida: 4.00 / 4.00 corazones
 A/D mover — ESPACIO saltar
 H daño 1/4 — J daño 1 corazón — K morir — R reaparecer"
 
-[node name="PlayerHUD" parent="." instance=ExtResource("p31_player_hud")]
+[node name="PlayerHUD" parent="." unique_id=1711111984 instance=ExtResource("p31_player_hud")]
 
 [node name="AttackHitbox" type="Area2D" parent="." unique_id=1719264447]
 collision_layer = 0
@@ -894,7 +894,6 @@ shape = SubResource("RectangleShape2D_attack_hitbox")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=328285642]
 position = Vector2(0, 16)
-zoom = Vector2(1, 1)
 process_callback = 0
 position_smoothing_speed = 7.0
 script = ExtResource("p3_camera_script")

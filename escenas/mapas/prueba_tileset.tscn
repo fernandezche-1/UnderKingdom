@@ -1,11 +1,9 @@
-[gd_scene format=4]
+[gd_scene format=4 uid="uid://m3055omp1cnk"]
 
-[ext_resource type="Texture2D" path="res://assets_prueba/dungeon_platformer/dungeontilesetfull.png" id="1_nyd0m"]
-[ext_resource type="Script" path="res://scripts/camera/map_bounds.gd" id="2_s6n3i"]
-[ext_resource type="PackedScene" path="res://escenas/player.tscn" id="3_xgean"]
-[ext_resource type="Script" path="res://scripts/player/player.gd" id="4_1nx3m"]
-[ext_resource type="PackedScene" path="res://escenas/enemigos/vanguardia.tscn" id="5_vgcf3"]
-[ext_resource type="Script" path="res://scripts/combat/enemy_base.gd" id="6_8o672"]
+[ext_resource type="Texture2D" uid="uid://carrjvpw80884" path="res://assets_prueba/dungeon_platformer/dungeontilesetfull.png" id="1_nyd0m"]
+[ext_resource type="Script" uid="uid://bkvqx03fc60f2" path="res://scripts/camera/map_bounds.gd" id="2_s6n3i"]
+[ext_resource type="PackedScene" uid="uid://crgen4tbgq8y1" path="res://escenas/player.tscn" id="3_xgean"]
+[ext_resource type="PackedScene" uid="uid://ext3mp88wk5u" path="res://escenas/enemigos/vanguardia.tscn" id="5_vgcf3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_24sx3"]
 texture = ExtResource("1_nyd0m")
@@ -2829,7 +2827,7 @@ tile_set = SubResource("TileSet_r6mtn")
 
 [node name="Decorado" type="TileMapLayer" parent="." unique_id=1198399964]
 z_index = 1
-tile_map_data = PackedByteArray("AAAFAB0A//////////8MAB0A//////////8XAB0AAAAAAAoAAAAsAB0AAAABAAoAAAAKAB0AAAAAAAoAAAA=")
+tile_map_data = PackedByteArray("AAAXAB0AAAAAAAoAAAAsAB0AAAABAAoAAAAKAB0AAAAAAAoAAAA=")
 tile_set = SubResource("TileSet_c7gah")
 
 [node name="SistemasMapa" type="Node2D" parent="." unique_id=196836112]
@@ -2839,25 +2837,8 @@ script = ExtResource("2_s6n3i")
 right = 960
 bottom = 544
 
-[node name="player" type="CharacterBody2D" parent="." unique_id=356054260 groups=["player"] instance=ExtResource("3_xgean")]
-position = Vector2(80, 416)
-collision_mask = 3
-script = ExtResource("4_1nx3m")
+[node name="player" parent="." unique_id=356054260 instance=ExtResource("3_xgean")]
+position = Vector2(135, 326)
 
-[node name="vanguardia" type="CharacterBody2D" parent="." unique_id=2095345175 instance=ExtResource("5_vgcf3")]
+[node name="vanguardia" parent="." unique_id=2095345175 instance=ExtResource("5_vgcf3")]
 position = Vector2(400, 440)
-collision_layer = 5
-script = ExtResource("6_8o672")
-max_health = 4.0
-patrol_speed = 32.0
-chase_speed = 68.0
-detection_vertical_range = 95.0
-lose_aggro_range = 285.0
-lose_aggro_vertical_range = 150.0
-attack_range = 36.0
-attack_damage = 0.75
-attack_cooldown = 1.0
-attack_active_start_frame = 2
-attack_active_end_frame = 5
-attack_hitbox_size = Vector2(58, 44)
-attack_hitbox_offset = Vector2(32, 16)
