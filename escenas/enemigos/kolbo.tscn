@@ -156,18 +156,17 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_platf"]
-size = Vector2(19.5, 33.5)
+size = Vector2(25.5, 42)
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=12978115]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=595196414]
-position = Vector2(-17.5, -9.5)
-scale = Vector2(0.7635135, 0.8020833)
+position = Vector2(-12, -18)
 sprite_frames = SubResource("SpriteFrames_2h10h")
 animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.38460797
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1054364020]
-position = Vector2(-27, 3)
+position = Vector2(-25, -2.5)
 shape = SubResource("RectangleShape2D_platf")
