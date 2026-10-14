@@ -6503,37 +6503,34 @@ position = Vector2(1671.5, 165)
 shape = SubResource("RectangleShape2D_pew7s")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=866866962]
-position = Vector2(955.49994, 259.5)
-scale = Vector2(2.3124976, 2.1666665)
+position = Vector2(955, 261)
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_w266m")
 frame_progress = 0.933698
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=1977949880]
-position = Vector2(259.69965, -39.60577)
-scale = Vector2(0.80785257, 0.8878205)
+position = Vector2(300.5, -44)
 sprite_frames = SubResource("SpriteFrames_w266m")
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="." unique_id=330449370]
-position = Vector2(985, 681)
-scale = Vector2(1.375, 1.5)
+position = Vector2(985, 685)
 sprite_frames = SubResource("SpriteFrames_2h10h")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D2" unique_id=1356904788]
-position = Vector2(15.272728, 0.66666675)
+position = Vector2(21, 1)
 sprite_frames = SubResource("SpriteFrames_pksm7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D2/AnimatedSprite2D" unique_id=461287116]
-position = Vector2(-490.1818, -164)
+position = Vector2(-674, -246)
 sprite_frames = SubResource("SpriteFrames_pksm7")
 
 [node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="." unique_id=194190952]
-position = Vector2(994.00006, 661.00006)
-scale = Vector2(1.25, 1.25)
+position = Vector2(994, 663)
 sprite_frames = SubResource("SpriteFrames_nm5h4")
 
 [node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="AnimatedSprite2D3" unique_id=1942010801]
-position = Vector2(413.5999, -47.200027)
-scale = Vector2(1.5812461, 1.7109358)
+position = Vector2(517, -60)
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_nm5h4")
 
 [node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="." unique_id=2103334375]
@@ -6542,13 +6539,12 @@ scale = Vector2(0.6875, 0.6875)
 sprite_frames = SubResource("SpriteFrames_04nvu")
 
 [node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="AnimatedSprite2D4" unique_id=1583681926]
-position = Vector2(-1012.3637, -322.90912)
-scale = Vector2(1.251778, 1.0678248)
+position = Vector2(-1012.3636, -325.81818)
+scale = Vector2(1.4545454, 1.4545454)
 sprite_frames = SubResource("SpriteFrames_04nvu")
 
 [node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="AnimatedSprite2D4/AnimatedSprite2D4" unique_id=1385634165]
-position = Vector2(204.28726, 211.3192)
-scale = Vector2(1.4247508, 1.5555323)
+position = Vector2(175.99994, 158)
 sprite_frames = SubResource("SpriteFrames_04nvu")
 
 [node name="CharacterBody2D" parent="." unique_id=12978115 instance=ExtResource("8_55nhp")]
@@ -6567,8 +6563,7 @@ position = Vector2(1536, 555)
 position = Vector2(1011, 485)
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="CharacterBody2D4" unique_id=1736414474]
-position = Vector2(-4, 200.5)
-scale = Vector2(1.125, 1.0625)
+position = Vector2(-4, 201)
 sprite_frames = SubResource("SpriteFrames_omm7o")
 autoplay = "default"
 

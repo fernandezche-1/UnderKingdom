@@ -6819,36 +6819,34 @@ tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAEAAAAAAAIAAAAAAAI
 tile_set = SubResource("TileSet_omm7o")
 
 [node name="cofre" type="AnimatedSprite2D" parent="." unique_id=2028126055]
-position = Vector2(1648.9999, 868.99994)
-scale = Vector2(1.7499992, 1.5138897)
+position = Vector2(1649, 865)
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_2h10h")
 frame = 1
 frame_progress = 0.64659524
 
 [node name="player2" type="AnimatedSprite2D" parent="." unique_id=1785442934]
-position = Vector2(554, 843.50006)
-scale = Vector2(1.5882355, 1.5588264)
+position = Vector2(554, 837)
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_platf")
 autoplay = "default"
 frame_progress = 0.27704224
 
 [node name="vagabundo" type="AnimatedSprite2D" parent="player2" unique_id=314753225]
-position = Vector2(-162.84216, 0.62497365)
-scale = Vector2(0.89473706, 0.89390665)
+position = Vector2(-129.5, 6.5)
+scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_platf")
 autoplay = "default"
 frame_progress = 0.53627855
 
 [node name="caballero" type="AnimatedSprite2D" parent="." unique_id=640982320]
-position = Vector2(1324.25, 461)
-scale = Vector2(1.0781269, 1.1875019)
+position = Vector2(1324, 464)
 sprite_frames = SubResource("SpriteFrames_pksm7")
 autoplay = "default"
 frame_progress = 0.6515455
 
 [node name="cadaver" type="AnimatedSprite2D" parent="." unique_id=1500062203]
-position = Vector2(1065.5, 847)
-scale = Vector2(1.2812501, 1.0625002)
+position = Vector2(1066, 848)
 sprite_frames = SubResource("SpriteFrames_nm5h4")
 autoplay = "default"
 frame_progress = 0.43976304
@@ -6867,19 +6865,19 @@ position = Vector2(1343, 759)
 
 [node name="diablo" type="AnimatedSprite2D" parent="." unique_id=863504081]
 position = Vector2(541, 153)
-scale = Vector2(0.46202505, 0.48550743)
+scale = Vector2(0.4736207, 0.4736207)
 sprite_frames = SubResource("SpriteFrames_04nvu")
 frame_progress = 0.9056047
 
 [node name="diablo" type="AnimatedSprite2D" parent="diablo" unique_id=1999742422]
-position = Vector2(300.84952, 51.492523)
-scale = Vector2(0.8237487, 0.8723369)
+position = Vector2(293.48376, 54.89624)
+scale = Vector2(0.84769475, 0.84769475)
 sprite_frames = SubResource("SpriteFrames_04nvu")
 frame_progress = 0.44054466
 
 [node name="trampa de fuego" type="AnimatedSprite2D" parent="." unique_id=223797430]
-position = Vector2(919.00006, 635.99994)
-scale = Vector2(0.3177082, 0.390625)
+position = Vector2(919, 638)
+scale = Vector2(0.35228506, 0.35228506)
 sprite_frames = SubResource("SpriteFrames_omm7o")
 frame_progress = 0.43448728
 
@@ -6899,85 +6897,79 @@ position = Vector2(506, 492)
 position = Vector2(506, 492)
 activate_after_world1_boss_defeated = true
 [node name="AnimatedSprite2D9" type="AnimatedSprite2D" parent="." unique_id=652324118]
-position = Vector2(420.00003, 853.99994)
-scale = Vector2(1.1747117, 1.2187554)
+position = Vector2(420, 856)
 sprite_frames = SubResource("SpriteFrames_lrcu4")
 
 [node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="AnimatedSprite2D9" unique_id=1472625229]
-position = Vector2(-0.85129786, -10.666573)
-scale = Vector2(0.6790946, 0.43134284)
+position = Vector2(-1, -16)
+scale = Vector2(0.64759034, 0.64759034)
 sprite_frames = SubResource("SpriteFrames_fhmxj")
 
 [node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="AnimatedSprite2D9/AnimatedSprite2D4" unique_id=1505587705]
-position = Vector2(20.05665, 28.533335)
-scale = Vector2(1.4251237, 2.004132)
+position = Vector2(24.70697, 24.707031)
+scale = Vector2(1.5441861, 1.5441861)
 sprite_frames = SubResource("SpriteFrames_fhmxj")
 
 [node name="AnimatedSprite2D10" type="AnimatedSprite2D" parent="." unique_id=397451974]
-position = Vector2(974, 822)
-scale = Vector2(0.45535728, 0.37500003)
+position = Vector2(974, 818)
+scale = Vector2(0.41322994, 0.41322994)
 sprite_frames = SubResource("SpriteFrames_4cug3")
 
 [node name="AnimatedSprite2D10" type="AnimatedSprite2D" parent="AnimatedSprite2D10" unique_id=1830172510]
-position = Vector2(78.74859, 0.33325577)
-scale = Vector2(0.98593, 1.0029763)
+position = Vector2(87.11865, 0)
+scale = Vector2(0.9944166, 0.9944166)
 sprite_frames = SubResource("SpriteFrames_4cug3")
 frame_progress = 0.95408183
 
 [node name="AnimatedSprite2D11" type="AnimatedSprite2D" parent="." unique_id=717566242]
-position = Vector2(868, 807.99994)
-scale = Vector2(1.051294, 0.9710035)
+position = Vector2(869, 806)
 sprite_frames = SubResource("SpriteFrames_xlqrn")
 
 [node name="AnimatedSprite2D12" type="AnimatedSprite2D" parent="." unique_id=724174118]
-position = Vector2(981, 805)
-scale = Vector2(1.0000002, 1.0312501)
+position = Vector2(981, 807)
 sprite_frames = SubResource("SpriteFrames_0r1yb")
 
 [node name="AnimatedSprite2D13" type="AnimatedSprite2D" parent="." unique_id=1101838696]
-position = Vector2(1570.9999, 568.99994)
-scale = Vector2(1.0138888, 1.015625)
+position = Vector2(1571, 570)
 sprite_frames = SubResource("SpriteFrames_xcvwj")
 
 [node name="AnimatedSprite2D14" type="AnimatedSprite2D" parent="." unique_id=1356860656]
-position = Vector2(860, 574)
-scale = Vector2(1.1319442, 1.1953123)
+position = Vector2(858, 586)
 sprite_frames = SubResource("SpriteFrames_05fqy")
 
 [node name="AnimatedSprite2D15" type="AnimatedSprite2D" parent="." unique_id=1282718495]
-position = Vector2(1643.0001, 863.00006)
-scale = Vector2(0.6640741, 0.67187023)
+position = Vector2(1643, 863)
+scale = Vector2(0.6679608, 0.6679608)
 sprite_frames = SubResource("SpriteFrames_ufend")
 
 [node name="poti cura" type="AnimatedSprite2D" parent="AnimatedSprite2D15" unique_id=1671301688]
-position = Vector2(16.564272, -0.00013279915)
-scale = Vector2(0.92528474, 1.0361527)
+position = Vector2(16.468018, 0)
+scale = Vector2(0.97915083, 0.97915083)
 sprite_frames = SubResource("SpriteFrames_ufend")
 
 [node name="AnimatedSprite2D16" type="AnimatedSprite2D" parent="." unique_id=1048103727]
-position = Vector2(1658, 874)
-scale = Vector2(0.8125, 0.8125)
+position = Vector2(1658, 873)
 sprite_frames = SubResource("SpriteFrames_u1b5m")
 autoplay = "default"
 frame_progress = 0.48127392
 
 [node name="AnimatedSprite2D16" type="AnimatedSprite2D" parent="AnimatedSprite2D16" unique_id=1413834078]
-position = Vector2(-30.769192, 1.230772)
-scale = Vector2(0.8125, 0.8125)
+position = Vector2(-25, 2)
+scale = Vector2(0.66015625, 0.66015625)
 sprite_frames = SubResource("SpriteFrames_u1b5m")
 autoplay = "default"
 frame_progress = 0.99578977
 
 [node name="AnimatedSprite2D17" type="AnimatedSprite2D" parent="AnimatedSprite2D16" unique_id=927411017]
-position = Vector2(-12.307661, 1.2307549)
-scale = Vector2(0.9654596, 0.7827475)
+position = Vector2(-10, 2)
+scale = Vector2(0.70631963, 0.70631963)
 sprite_frames = SubResource("SpriteFrames_u1b5m")
 autoplay = "default"
 frame_progress = 0.7874171
 
 [node name="AnimatedSprite2D16" type="AnimatedSprite2D" parent="AnimatedSprite2D16/AnimatedSprite2D17" unique_id=1173569932]
-position = Vector2(-10.198358, 1.5723636)
-scale = Vector2(0.8402214, 0.83223104)
+position = Vector2(-11.326172, 1.4157715)
+scale = Vector2(0.83621675, 0.83621675)
 sprite_frames = SubResource("SpriteFrames_u1b5m")
 autoplay = "default"
 frame_progress = 0.99578977

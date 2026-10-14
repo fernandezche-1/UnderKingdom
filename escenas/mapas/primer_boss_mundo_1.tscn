@@ -6279,7 +6279,7 @@ tile_set = SubResource("TileSet_2h10h")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=1944592214]
 position = Vector2(303, 357)
-scale = Vector2(0.6772152, 0.64492756)
+scale = Vector2(0.66087425, 0.66087425)
 sprite_frames = SubResource("SpriteFrames_2h10h")
 autoplay = "default"
 frame_progress = 0.5751295
@@ -6291,8 +6291,8 @@ shape = SubResource("RectangleShape2D_2h10h")
 [node name="CharacterBody2D3" type="CharacterBody2D" parent="." unique_id=340606180]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D3" unique_id=769252947]
-position = Vector2(1022.40625, 417.15625)
-scale = Vector2(0.34414467, 0.32336858)
+position = Vector2(1022, 417)
+scale = Vector2(0.33359492, 0.33359492)
 sprite_frames = SubResource("SpriteFrames_2h10h")
 autoplay = "default"
 frame_progress = 0.5751295
@@ -6304,8 +6304,8 @@ shape = SubResource("RectangleShape2D_2h10h")
 [node name="CharacterBody2D3" type="CharacterBody2D" parent="CharacterBody2D3" unique_id=74723781]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D3/CharacterBody2D3" unique_id=443081106]
-position = Vector2(1205.4064, 455.15622)
-scale = Vector2(0.36946094, 0.32336903)
+position = Vector2(1205, 454)
+scale = Vector2(0.34564754, 0.34564754)
 sprite_frames = SubResource("SpriteFrames_2h10h")
 autoplay = "default"
 frame_progress = 0.5751295
@@ -6318,7 +6318,7 @@ shape = SubResource("RectangleShape2D_2h10h")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D2" unique_id=828630421]
 position = Vector2(634, 414)
-scale = Vector2(0.3386076, 0.32246378)
+scale = Vector2(0.33043712, 0.33043712)
 sprite_frames = SubResource("SpriteFrames_2h10h")
 autoplay = "default"
 frame_progress = 0.2487956

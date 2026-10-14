@@ -12376,7 +12376,7 @@ position = Vector2(1210, 675)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D4" unique_id=1701329186]
 position = Vector2(308, 326)
-scale = Vector2(0.6772152, 0.64492756)
+scale = Vector2(0.66087425, 0.66087425)
 sprite_frames = SubResource("SpriteFrames_nrscj")
 autoplay = "default"
 

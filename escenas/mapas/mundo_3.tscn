@@ -6399,24 +6399,21 @@ position = Vector2(624, 174)
 position = Vector2(502, 812)
 
 [node name="cofre" type="AnimatedSprite2D" parent="." unique_id=760160750]
-position = Vector2(541, 824.3125)
-scale = Vector2(2.3749998, 2.36805)
+position = Vector2(541, 828)
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_3xjvt")
 frame_progress = 0.3686057
 
 [node name="poti cura" type="AnimatedSprite2D" parent="." unique_id=1814529312]
 position = Vector2(534, 832)
-scale = Vector2(0.92528474, 1.0361527)
 sprite_frames = SubResource("SpriteFrames_fomxt")
 
 [node name="poti cura2" type="AnimatedSprite2D" parent="." unique_id=1054015963]
-position = Vector2(551, 834)
-scale = Vector2(0.8561519, 1.0736125)
+position = Vector2(551, 835)
 sprite_frames = SubResource("SpriteFrames_fomxt")
 
 [node name="poti cura3" type="AnimatedSprite2D" parent="." unique_id=2061372108]
-position = Vector2(543, 833.99994)
-scale = Vector2(0.8664958, 1.0763164)
+position = Vector2(543, 835)
 sprite_frames = SubResource("SpriteFrames_fomxt")
 
 [node name="CharacterBody2D" parent="." unique_id=374449811 instance=ExtResource("6_wdnhd")]
