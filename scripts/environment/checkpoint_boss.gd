@@ -33,7 +33,7 @@ func _on_body_entered(body: Node2D) -> void:
     if not GameManager.world1_boss_defeated:
         _set_barrier_closed(true)
 
-    monitoring = false
+    set_deferred("monitoring", false)
 
 
 func _on_boss_defeated_changed(defeated: bool) -> void:

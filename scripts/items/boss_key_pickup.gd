@@ -128,7 +128,7 @@ func _collect() -> void:
         return
     _collected = true
     _active = false
-    monitoring = false
+    set_deferred("monitoring", false)
     if pickup_collision != null:
         pickup_collision.set_deferred("disabled", true)
     GameManager.grant_world1_boss_key()
