@@ -335,9 +335,15 @@ func _chase_target(delta: float) -> void:
         var retreat_direction := -direction
         if _can_move_horizontally(retreat_direction):
             velocity.x = retreat_direction * separation_speed
+            _play_if_exists(&"idle")
+            return
+        # Acorralado (pared o borde detrás): ataca en vez de quedarse quieto
+        # bloqueando el paso.
+        velocity.x = 0.0
+        if attacks_enabled and _attack_cooldown_left <= 0.0:
+            _start_enemy_attack(_select_attack_animation())
         else:
-            velocity.x = 0.0
-        _play_if_exists(&"idle")
+            _play_if_exists(&"idle")
         return
 
     # Empezamos a frenar un poco antes del rango exacto. Esto evita que la
