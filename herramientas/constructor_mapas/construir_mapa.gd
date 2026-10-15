@@ -1,52 +1,18 @@
 extends Node
 
-## Convierte un mapa escrito como texto (una letra = una pieza de 16 px) en
-## una escena de Godot con el tileset "2D Dungeon Platformer Tileset".
+## Convierte un mapa escrito como texto (una letra = una pieza) en una escena
+## de Godot hecha con tiles.
 ##
 ## Uso, desde la carpeta del proyecto:
 ##   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/ejemplo_cueva.txt
 ##
-## La leyenda de letras está en mapas_texto/ejemplo_cueva.txt.
+## La leyenda de letras está en mapas_texto/ejemplo_cueva.txt. Las piezas de
+## cada tileset (bloques, decorados, líquidos...) se definen en
+## herramientas/constructor_mapas/tilesets/<nombre>.gd.
 ## Solo sobrescribe escenas que haya creado este mismo constructor.
 
-const TEXTURE_PATH := "res://assets_prueba/dungeon_platformer/dungeontilesetfull.png"
-const T := 16
+const TILESETS_DIR := "res://herramientas/constructor_mapas/tilesets/"
 const GENERATED_META := &"generado_por_constructor"
-
-## Origen del juego de 4x4 piezas de cada estilo y de su rombo de rampas.
-const BLOCK_SETS := {
-    "verde": [Vector2i(0, 0), Vector2i(4, 2)],
-    "verde_claro": [Vector2i(6, 0), Vector2i(10, 2)],
-    "ladrillo": [Vector2i(12, 0), Vector2i(16, 2)],
-    "violeta": [Vector2i(12, 4), Vector2i(16, 6)],
-    "oro": [Vector2i(18, 0), Vector2i(22, 2)],
-    "oliva": [Vector2i(18, 4), Vector2i(22, 6)],
-    "madera": [Vector2i(16, 12), Vector2i(20, 14)],
-}
-
-## Decorados: letra -> [pieza de abajo a la izquierda, tamaño en piezas].
-const DECOR := {
-    "t": [Vector2i(0, 10), Vector2i(1, 1)],    # antorcha (animada)
-    "f": [Vector2i(27, 4), Vector2i(1, 1)],    # fogata (animada)
-    "b": [Vector2i(29, 9), Vector2i(1, 1)],    # barril
-    "x": [Vector2i(26, 10), Vector2i(1, 1)],   # caja
-    "h": [Vector2i(0, 15), Vector2i(1, 1)],    # hongos luminosos
-    "g": [Vector2i(3, 4), Vector2i(1, 1)],     # pasto
-    "r": [Vector2i(22, 9), Vector2i(1, 1)],    # cristales
-    "T": [Vector2i(5, 9), Vector2i(2, 3)],     # árbol verde
-    "E": [Vector2i(24, 15), Vector2i(3, 3)],   # estantería
-    "C": [Vector2i(24, 5), Vector2i(3, 2)],    # tienda de campaña
-}
-
-## Piezas animadas: base -> [cuadros, columnas (0 = en fila), fps].
-const ANIMATED := {
-    Vector2i(0, 10): [4, 0, 8.0],    # antorcha
-    Vector2i(27, 4): [4, 1, 8.0],    # fogata
-    Vector2i(12, 8): [4, 0, 6.0],    # superficie de lava
-    Vector2i(12, 9): [4, 0, 4.0],    # lava
-    Vector2i(0, 11): [4, 0, 6.0],    # superficie del agua
-    Vector2i(0, 12): [4, 0, 4.0],    # agua
-}
 
 const ENEMIES := {
     "v": "res://escenas/enemigos/vanguardia.tscn",
@@ -61,6 +27,10 @@ const ENEMIES := {
 var _grid: Array[String] = []
 var _w := 0
 var _h := 0
+## Tamaño de pieza en píxeles, según el tileset elegido.
+var T := 16
+## Datos del tileset elegido (ver tilesets/mazmorra.gd).
+var _ts: Dictionary = {}
 
 
 func _ready() -> void:
@@ -86,7 +56,7 @@ func _build(text_path: String) -> String:
         return "No se pudo abrir %s" % text_path
 
     # Cabecera "clave: valor" hasta la línea ---, después el mapa.
-    var options := {"bloques": "oro", "fondo": "cueva", "escena": ""}
+    var options := {"tileset": "mazmorra", "bloques": "", "fondo": "cueva", "escena": ""}
     var in_map := false
     while not file.eof_reached():
         var line := file.get_line()
@@ -101,8 +71,17 @@ func _build(text_path: String) -> String:
             _grid.append(line.rstrip(" \t"))
     if _grid.is_empty():
         return "El archivo no tiene mapa después de la línea ---"
-    if not BLOCK_SETS.has(options.bloques):
-        return "bloques: '%s' no existe. Opciones: %s" % [options.bloques, ", ".join(BLOCK_SETS.keys())]
+    var ts_path: String = TILESETS_DIR + options.tileset + ".gd"
+    if not ResourceLoader.exists(ts_path):
+        return "tileset: '%s' no existe (falta %s)" % [options.tileset, ts_path]
+    _ts = (load(ts_path) as GDScript).get_script_constant_map()["DATA"]
+    T = _ts.tile
+    if options.bloques == "":
+        options.bloques = _ts.bloques_por_defecto
+    if not _ts.bloques.has(options.bloques):
+        return "bloques: '%s' no existe. Opciones: %s" % [options.bloques, ", ".join(_ts.bloques.keys())]
+    if options.fondo != "ninguno" and not _ts.fondos.has(options.fondo):
+        return "fondo: '%s' no existe. Opciones: ninguno, %s" % [options.fondo, ", ".join(_ts.fondos.keys())]
     var out_path: String = options.escena
     if not out_path.begins_with("res://escenas/mapas/") or not out_path.ends_with(".tscn"):
         return "escena: debe ser res://escenas/mapas/<nombre>.tscn"
@@ -117,7 +96,7 @@ func _build(text_path: String) -> String:
     for row in _grid:
         _w = maxi(_w, row.length())
 
-    var tex: Texture2D = load(TEXTURE_PATH)
+    var tex: Texture2D = load(_ts.textura)
     var img := tex.get_image()
     img.convert(Image.FORMAT_RGBA8)
 
@@ -137,15 +116,18 @@ func _build(text_path: String) -> String:
     var climb_zones := _child(sistemas, Node2D.new(), "Escaleras")
     var enemies := _child(root, Node2D.new(), "Enemigos")
 
-    var set_base: Vector2i = BLOCK_SETS[options.bloques][0]
-    var slope_base: Vector2i = BLOCK_SETS[options.bloques][1]
+    var set_base: Vector2i = _ts.bloques[options.bloques][0]
+    var slope_base: Vector2i = _ts.bloques[options.bloques][1]
+    var decor: Dictionary = _ts.decorados
     var spawn := Vector2(-1, -1)
     var counts := {}
 
-    if options.fondo == "cueva":
+    if options.fondo != "ninguno":
+        var pattern_base: Vector2i = _ts.fondos[options.fondo][0]
+        var pattern_size: Vector2i = _ts.fondos[options.fondo][1]
         for y in _h:
             for x in _w:
-                fondo.set_cell(Vector2i(x, y), 0, Vector2i(24 + x % 8, y % 4))
+                fondo.set_cell(Vector2i(x, y), 0, pattern_base + Vector2i(x % pattern_size.x, y % pattern_size.y))
 
     for y in _h:
         for x in _w:
@@ -165,21 +147,21 @@ func _build(text_path: String) -> String:
                     var piece := 1 if left and right else (0 if right else (2 if left else 1))
                     plataformas.set_cell(cell, 0, set_base + Vector2i(piece, 3))
                 "~":
-                    liquidos.set_cell(cell, 0, Vector2i(12, 9))
+                    liquidos.set_cell(cell, 0, _ts.lava[1])
                     if not _is_liquid(x, y - 1):
-                        liquidos.set_cell(cell + Vector2i(0, -1), 0, Vector2i(12, 8))
+                        liquidos.set_cell(cell + Vector2i(0, -1), 0, _ts.lava[0])
                 "%":
-                    liquidos.set_cell(cell, 0, Vector2i(0, 12))
+                    liquidos.set_cell(cell, 0, _ts.agua[1])
                     if not _is_liquid(x, y - 1):
-                        liquidos.set_cell(cell + Vector2i(0, -1), 0, Vector2i(0, 11))
+                        liquidos.set_cell(cell + Vector2i(0, -1), 0, _ts.agua[0])
                 "H":
-                    decorado.set_cell(cell, 0, Vector2i(4, 10))
+                    decorado.set_cell(cell, 0, _ts.escalera)
                 "P":
                     spawn = Vector2((x + 0.5) * T, (y + 1) * T)
                 _:
-                    if DECOR.has(ch):
-                        var base: Vector2i = DECOR[ch][0]
-                        var size: Vector2i = DECOR[ch][1]
+                    if decor.has(ch):
+                        var base: Vector2i = decor[ch][0]
+                        var size: Vector2i = decor[ch][1]
                         # La letra marca la pieza de abajo a la izquierda.
                         for dy in size.y:
                             for dx in size.x:
@@ -324,9 +306,10 @@ func _opaque(img: Image, cell: Vector2i, px: Vector2i) -> bool:
 ## Colisión deducida de la pieza: cuadrado si sus 4 esquinas son sólidas,
 ## triángulo (rampa) si son 3, ninguna si son menos.
 func _collision_points(img: Image, cell: Vector2i) -> PackedVector2Array:
+    var h := T * 0.5
     var corners := [
-        [Vector2(-8, -8), Vector2i(1, 1)], [Vector2(8, -8), Vector2i(14, 1)],
-        [Vector2(8, 8), Vector2i(14, 14)], [Vector2(-8, 8), Vector2i(1, 14)],
+        [Vector2(-h, -h), Vector2i(1, 1)], [Vector2(h, -h), Vector2i(T - 2, 1)],
+        [Vector2(h, h), Vector2i(T - 2, T - 2)], [Vector2(-h, h), Vector2i(1, T - 2)],
     ]
     var pts := PackedVector2Array()
     for c in corners:
@@ -349,8 +332,9 @@ func _tileset(tex: Texture2D, img: Image, mode: String) -> TileSet:
 
     var taken := {}
     if mode == "decorado":
-        for base in ANIMATED:
-            var anim: Array = ANIMATED[base]
+        var animated: Dictionary = _ts.animadas
+        for base in animated:
+            var anim: Array = animated[base]
             src.create_tile(base)
             src.set_tile_animation_columns(base, anim[1])
             src.set_tile_animation_frames_count(base, anim[0])
@@ -373,7 +357,8 @@ func _tileset(tex: Texture2D, img: Image, mode: String) -> TileSet:
             var data := src.get_tile_data(cell, 0)
             data.add_collision_polygon(0)
             if mode == "plataforma":
-                pts = PackedVector2Array([Vector2(-8, -8), Vector2(8, -8), Vector2(8, -2), Vector2(-8, -2)])
+                var h := T * 0.5
+                pts = PackedVector2Array([Vector2(-h, -h), Vector2(h, -h), Vector2(h, -h + 6), Vector2(-h, -h + 6)])
                 data.set_collision_polygon_one_way(0, 0, true)
             data.set_collision_polygon_points(0, 0, pts)
     return ts

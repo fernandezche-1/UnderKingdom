@@ -15,7 +15,9 @@
 ;   T árbol (2x3)   E estantería (3x3)   C tienda de campaña (3x2)
 ;
 ; OPCIONES
-;   bloques: verde, verde_claro, ladrillo, violeta, oro, oliva o madera
+;   tileset: mazmorra (por defecto); cada tileset se define en
+;            herramientas/constructor_mapas/tilesets/<nombre>.gd
+;   bloques: en mazmorra: verde, verde_claro, ladrillo, violeta, oro, oliva o madera
 ;   fondo:   cueva (pared de cueva detrás de todo) o ninguno
 ;   escena:  dónde se guarda; siempre dentro de res://escenas/mapas/
 
