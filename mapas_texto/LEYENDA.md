@@ -47,7 +47,7 @@ cofre_pociones: 1
 | `tileset` | Qué juego de piezas usar. Hoy solo existe `mazmorra`; cada tileset nuevo es un archivo en `herramientas/constructor_mapas/tilesets/`. |
 | `bloques` | Estilo de los bloques. En mazmorra: `verde`, `verde_claro`, `ladrillo`, `violeta`, `oro`, `oliva` o `madera`. |
 | `fondo` | Pared detrás de todo: `cueva` o `ninguno`. |
-| `parallax` | Imágenes de fondo que se mueven más lento, de la más lejana a la más cercana: `fondos/cielo.png 0.05; fondos/nubes.png 0.2`. El número es la velocidad (0 = quieta, 1 = como el mapa). Necesita `fondo: ninguno`. |
+| `parallax` | Imágenes de fondo que se mueven más lento, de la más lejana a la más cercana: `fondos/cielo.png 0.05; fondos/nubes.png 0.2`. El número es la velocidad horizontal (0 = quieta, 1 = como el mapa). Si la imagen es más baja que la pantalla (270 px), se agrega `x2` para dibujarla al doble: `fondos/cielo.png 0.05 x2`. En vertical cada imagen recorre el mapa: se ve su borde de arriba con la cámara arriba del todo y el de abajo con la cámara abajo. Necesita `fondo: ninguno`. |
 | `siguiente` / `anterior` | Mapa al que llevan las salidas azules / moradas. Por defecto se llega a su spawn `DesdeAnterior` / `DesdeSiguiente`, que el constructor crea solo. Para llegar a otro spawn: `res://escenas/mapas/mundo_2.tscn#SpawnInicio`. |
 | `cofre_monedas`, `cofre_pociones` | Botín de cada cofre del nivel (por defecto 3 y 1). |
 
@@ -67,6 +67,23 @@ Para ajustar el nivel hay dos caminos:
 Otras órdenes:
 - `-- --paleta` vuelve a escribir `paleta_niveles.gpl` y `paleta_niveles.png`.
 - `-- --a-png mapas_texto/mapa.txt` convierte un mapa de letras en PNG para seguir dibujándolo.
+- `-- --desde-mapa res://escenas/mapas/ruina.tscn mapas_texto/mi_nivel.png` calca un mapa hecho a mano (ver sección 7).
+
+## 7. Rehacer con tiles un mapa hecho a mano
+Los mapas de `fondos/` (casa, cementerio, ruina...) ya tienen sus colisiones probadas jugando. El constructor puede calcarlas como dibujo de piezas para empezar un nivel con tiles con la misma forma:
+
+```
+~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- --desde-mapa res://escenas/mapas/primer_boss_mundo_1.tscn mapas_texto/mi_nivel.png
+```
+
+- Cada pieza de 16 x 16 que las colisiones sólidas cubren a la mitad o más pasa a bloque. Las orillas en diagonal pasan a rampas.
+- Las colisiones one-way pasan a plataformas `=`, las zonas de escalera a `H`, y los enemigos que tienen letra a su letra, sobre el suelo.
+- La P sale del `SpawnInicio`, del Player del mapa o del inicio de la ruta de prueba.
+- Los escalones de una pieza llevan una rampa delante para subirlos caminando.
+- El nivel queda cerrado por los lados y por abajo.
+- Los jefes y personajes sin letra no se calcan; el constructor dice cuáles quedaron fuera.
+
+El mapa original no se toca. El PNG es un punto de partida: faltan las salidas, el checkpoint, los cofres, las trampas y los decorados, y conviene revisar que cada zona tenga por dónde entrar y salir. Las escaleras del dibujo del fondo no son colisiones, así que no se calcan.
 
 ## 5. Colores y letras
 

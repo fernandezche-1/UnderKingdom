@@ -8,6 +8,9 @@ extends Node
 ## Otras órdenes (en lugar del archivo):
 ##   -- --paleta              escribe la paleta de colores en mapas_texto/
 ##   -- --a-png <mapa.txt>    convierte el mapa de texto en un PNG para dibujarlo
+##   -- --desde-mapa <escena.tscn> <salida.png>
+##                            calca un mapa hecho a mano (fondo y colisiones)
+##                            como PNG de piezas, para rehacerlo con tiles
 ##
 ## La leyenda está en mapas_texto/LEYENDA.md. Las piezas de cada tileset
 ## (bloques, decorados, líquidos...) se definen en
@@ -17,6 +20,8 @@ extends Node
 const TILESETS_DIR := "res://herramientas/constructor_mapas/tilesets/"
 const GENERATED_META := &"generado_por_constructor"
 const PALETTE_PATH := "res://mapas_texto/paleta_niveles"
+## Muestras por lado al calcar cada pieza de un mapa hecho a mano.
+const TRACE_SAMPLES := 4
 
 ## Color de cada letra en los mapas dibujados como imagen (blanco o
 ## transparente = vacío). Los colores siguen las marcas del proyecto donde
@@ -104,6 +109,8 @@ func _ready() -> void:
         error = _write_palette()
     elif args[0] == "--a-png":
         error = _text_to_png(args[1] if args.size() > 1 else "")
+    elif args[0] == "--desde-mapa":
+        error = _scene_to_png(args[1] if args.size() > 1 else "", args[2] if args.size() > 2 else "")
     else:
         error = _build(args[0])
     if error != "":
@@ -226,6 +233,253 @@ func _text_to_png(text_path: String) -> String:
     return ""
 
 
+## Calca un mapa hecho a mano como dibujo de piezas: las colisiones sólidas
+## pasan a bloques y rampas, las one-way a plataformas, las zonas de escalera
+## a escaleras, y los enemigos y el inicio del Player a sus letras. Los
+## escalones de una pieza se convierten en rampas para subirlos caminando, y
+## el nivel queda cerrado por los lados y por abajo. Las salidas, cofres,
+## trampas y decorados se dibujan después sobre el PNG.
+func _scene_to_png(scene_path: String, out_path: String) -> String:
+    if scene_path == "" or out_path == "":
+        return "Uso: -- --desde-mapa res://escenas/mapas/<mapa>.tscn mapas_texto/<nivel>.png"
+    scene_path = _res(scene_path)
+    if not ResourceLoader.exists(scene_path):
+        return "No existe %s" % scene_path
+    var root: Node = (load(scene_path) as PackedScene).instantiate()
+    var found := {"solid": [], "one_way": [], "climb": [], "actors": [], "start": Vector2(-1, -1), "route_start": Vector2(-1, -1)}
+    _collect_trace(root, found)
+    var size := Vector2.ZERO
+    var bounds := root.get_node_or_null("SistemasMapa/MapBounds")
+    if bounds != null:
+        size = Vector2(bounds.get("right"), bounds.get("bottom"))
+    root.free()
+    if size == Vector2.ZERO:
+        for poly: PackedVector2Array in found.solid:
+            for p in poly:
+                size = size.max(p)
+    _w = ceili(size.x / T)
+    _h = ceili(size.y / T)
+    if _w < 2 or _h < 2:
+        return "%s no tiene colisiones ni MapBounds que calcar." % scene_path
+
+    var cells := PackedStringArray()
+    cells.resize(_w * _h)
+    cells.fill(".")
+    var n := TRACE_SAMPLES
+    var solid := _trace_masks(found.solid)
+    var one_way := _trace_masks(found.one_way)
+    for i in cells.size():
+        var bits := solid[i]
+        # Rampa: la altura cubierta crece de una columna de muestras a la
+        # siguiente, de casi vacía a casi llena. Un piso a media pieza no cuenta.
+        var heights := []
+        for sx in n:
+            var column := 0
+            for sy in n:
+                column += (bits >> (sy * n + sx)) & 1
+            heights.append(column)
+        if _rising(heights):
+            cells[i] = "/"
+        else:
+            heights.reverse()
+            if _rising(heights):
+                cells[i] = "\\"
+            elif _bit_count(bits) * 2 >= n * n:
+                cells[i] = "#"
+    # Plataformas one-way: solo la fila de arriba de cada una.
+    for y in _h:
+        for x in _w:
+            var i := y * _w + x
+            if cells[i] == "." and _bit_count(one_way[i]) >= n - 1 and (y == 0 or _bit_count(one_way[i - _w]) < n - 1):
+                cells[i] = "="
+    # Escalones de una pieza: una rampa delante, si queda espacio para pasar.
+    var ramps := 0
+    for y in range(3, _h):
+        for x in _w:
+            if not _cell_is(cells, x, y, "#") or not _cell_is(cells, x, y - 1, ".") or not _cell_is(cells, x, y - 2, ".") or not _cell_is(cells, x, y - 3, "."):
+                continue
+            for side in [1, -1]:
+                if _cell_is(cells, x + side, y - 1, "#") and _cell_is(cells, x + side, y - 2, "."):
+                    cells[(y - 1) * _w + x] = "/" if side == 1 else "\\"
+                    ramps += 1
+                    break
+    for y in _h:
+        cells[y * _w] = "#"
+        cells[y * _w + _w - 1] = "#"
+    for x in _w:
+        cells[(_h - 1) * _w + x] = "#"
+    for zone: PackedVector2Array in found.climb:
+        var box := Rect2(zone[0], Vector2.ZERO)
+        for p in zone:
+            box = box.expand(p)
+        # La columna de la zona con más piezas libres (el hueco del piso por el
+        # que pasa la escalera); a igualdad, la más cercana al centro.
+        var x := floori(box.get_center().x / T)
+        var best := -1
+        for column in range(floori(box.position.x / T), ceili(box.end.x / T)):
+            var free_cells := 0
+            for y in range(floori(box.position.y / T), ceili(box.end.y / T)):
+                free_cells += int(_cell_is(cells, column, y, "."))
+            if free_cells > best or (free_cells == best and absf(column + 0.5 - box.get_center().x / T) < absf(x + 0.5 - box.get_center().x / T)):
+                best = free_cells
+                x = column
+        for y in range(floori(box.position.y / T), ceili(box.end.y / T)):
+            if _cell_is(cells, x, y, "."):
+                cells[y * _w + x] = "H"
+
+    var letters := {PLAYER_SCENE: "P"}
+    for letter in ENEMIES:
+        letters[ENEMIES[letter]] = letter
+    var start: Vector2 = found.start
+    var skipped := []
+    var placed := 0
+    for actor in found.actors:
+        if actor[0] == PLAYER_SCENE:
+            if start.x < 0:
+                start = actor[1]
+        elif letters.has(actor[0]):
+            placed += int(_drop_letter(cells, actor[1], letters[actor[0]]))
+        else:
+            skipped.append("%s en %s" % [String(actor[0]).get_file() if actor[0] != "" else "sin escena", actor[1].round()])
+    if start.x < 0:
+        start = found.route_start
+    if start.x >= 0 and not _drop_letter(cells, start, "P"):
+        start = Vector2(-1, -1)
+
+    var img := Image.create(_w, _h, false, Image.FORMAT_RGBA8)
+    img.fill(Color.WHITE)
+    for y in _h:
+        for x in _w:
+            var ch := cells[y * _w + x]
+            if ch != ".":
+                img.set_pixel(x, y, Color.html(COLORS[ch][0]))
+    var out := _res(out_path)
+    if img.save_png(ProjectSettings.globalize_path(out)) != OK:
+        return "No se pudo escribir %s" % out
+    print("CONSTRUCTOR: %s calcado en %s (%d x %d piezas). Rampas añadidas en escalones: %d, enemigos: %d, escaleras: %d." % [
+        scene_path, out, _w, _h, ramps, placed, found.climb.size()])
+    if start.x < 0:
+        print("CONSTRUCTOR: aviso, el mapa no tiene inicio del Player; dibuja la P.")
+    if not skipped.is_empty():
+        print("CONSTRUCTOR: sin letra (jefes, NPC...), no se calcan: %s." % ", ".join(skipped))
+    print("CONSTRUCTOR: falta dibujar las salidas, cofres, trampas y decorados.")
+    return ""
+
+
+## Junta lo que se calca de un mapa: polígonos sólidos y one-way (capas 1 y
+## 2; los rompibles no), zonas de escalera, personajes e inicio del Player.
+func _collect_trace(node: Node, found: Dictionary) -> void:
+    if node is StaticBody2D or node is AnimatableBody2D:
+        var layer: int = (node as CollisionObject2D).collision_layer
+        if layer & 3:
+            for item in _body_polygons(node):
+                found["one_way" if item[1] or not (layer & 1) else "solid"].append(item[0])
+    elif node is Area2D:
+        if node.is_in_group("climb_zone"):
+            for item in _body_polygons(node):
+                found.climb.append(item[0])
+        return
+    elif node is CharacterBody2D:
+        found.actors.append([node.scene_file_path, _global_xf(node).origin])
+        return
+    elif node.get(&"spawn_id") == &"SpawnInicio":
+        found.start = _global_xf(node).origin
+    elif node.get_script() != null and "spawn_position" in node and String(node.get_script().resource_path).ends_with("world_test_route.gd"):
+        found.route_start = node.get("spawn_position")
+    for child in node.get_children():
+        _collect_trace(child, found)
+
+
+## Polígonos de las formas de un cuerpo en coordenadas del mapa: [puntos, one_way].
+func _body_polygons(body: Node) -> Array:
+    var result := []
+    for child in body.get_children():
+        var points := PackedVector2Array()
+        if child is CollisionPolygon2D and not child.disabled:
+            points = child.polygon
+        elif child is CollisionShape2D and not child.disabled and child.shape != null:
+            var shape: Shape2D = child.shape
+            if shape is RectangleShape2D or shape is CapsuleShape2D:
+                var half: Vector2 = shape.size * 0.5 if shape is RectangleShape2D else Vector2(shape.radius, shape.height * 0.5)
+                points = PackedVector2Array([-half, Vector2(half.x, -half.y), half, Vector2(-half.x, half.y)])
+            elif shape is CircleShape2D:
+                for i in 12:
+                    points.append(Vector2.from_angle(TAU * i / 12.0) * shape.radius)
+            elif shape is ConvexPolygonShape2D:
+                points = shape.points
+        if points.size() >= 3:
+            result.append([_global_xf(child) * points, child.one_way_collision])
+    return result
+
+
+## Transformación global sin que la escena esté en el árbol.
+func _global_xf(node: Node) -> Transform2D:
+    var xf := Transform2D.IDENTITY
+    while node != null:
+        if node is Node2D:
+            xf = (node as Node2D).transform * xf
+        node = node.get_parent()
+    return xf
+
+
+## Por cada pieza, una máscara de bits con las muestras que caen dentro de
+## algún polígono (TRACE_SAMPLES x TRACE_SAMPLES muestras por pieza).
+func _trace_masks(polygons: Array) -> PackedInt32Array:
+    var masks := PackedInt32Array()
+    masks.resize(_w * _h)
+    var n := TRACE_SAMPLES
+    for poly: PackedVector2Array in polygons:
+        var box := Rect2(poly[0], Vector2.ZERO)
+        for p in poly:
+            box = box.expand(p)
+        for y in range(clampi(floori(box.position.y / T), 0, _h - 1), clampi(floori(box.end.y / T), 0, _h - 1) + 1):
+            for x in range(clampi(floori(box.position.x / T), 0, _w - 1), clampi(floori(box.end.x / T), 0, _w - 1) + 1):
+                var bits := masks[y * _w + x]
+                for sy in n:
+                    for sx in n:
+                        var p := Vector2((x + (sx + 0.5) / n) * T, (y + (sy + 0.5) / n) * T)
+                        if Geometry2D.is_point_in_polygon(p, poly):
+                            bits |= 1 << (sy * n + sx)
+                masks[y * _w + x] = bits
+    return masks
+
+
+## Alturas por columna que suben de izquierda a derecha como una rampa de 45°.
+func _rising(heights: Array) -> bool:
+    # Un salto brusco entre columnas es una pared a media pieza, no una rampa.
+    for i in range(1, heights.size()):
+        if heights[i] < heights[i - 1] or heights[i] - heights[i - 1] > 2:
+            return false
+    return heights[0] <= 1 and heights[-1] >= TRACE_SAMPLES - 1 and heights[-1] - heights[0] >= TRACE_SAMPLES / 2
+
+
+func _cell_is(cells: PackedStringArray, x: int, y: int, value: String) -> bool:
+    return x >= 0 and y >= 0 and x < _w and y < _h and cells[y * _w + x] == value
+
+
+func _bit_count(bits: int) -> int:
+    var total := 0
+    while bits != 0:
+        bits &= bits - 1
+        total += 1
+    return total
+
+
+## Pone la letra en la pieza libre que queda justo encima del suelo, bajando
+## desde la posición dada (o subiendo si cae dentro de un bloque).
+func _drop_letter(cells: PackedStringArray, pos: Vector2, letter: String) -> bool:
+    var x := clampi(floori(pos.x / T), 1, _w - 2)
+    var y := clampi(floori(pos.y / T), 0, _h - 2)
+    while y > 0 and cells[y * _w + x] != ".":
+        y -= 1
+    while y < _h - 1 and cells[(y + 1) * _w + x] == ".":
+        y += 1
+    if cells[y * _w + x] != "." or not cells[(y + 1) * _w + x] in ["#", "/", "\\", "="]:
+        return false
+    cells[y * _w + x] = letter
+    return true
+
+
 func _build(text_path: String) -> String:
     var options := {
         "tileset": "mazmorra", "bloques": "", "fondo": "cueva", "escena": "", "imagen": "",
@@ -273,18 +527,22 @@ func _build(text_path: String) -> String:
         var target := String(options[option]).get_slice("#", 0)
         if target != "" and not ResourceLoader.exists(target):
             print("CONSTRUCTOR: aviso, %s todavía no existe; la salida funcionará cuando se cree." % target)
-    # parallax: "<imagen> <velocidad>; <imagen> <velocidad>", de la más lejana
-    # a la más cercana. Velocidad 0 = quieta en pantalla, 1 = se mueve con el mapa.
+    # parallax: "<imagen> <velocidad> [x2]; ...", de la más lejana a la más
+    # cercana. Velocidad 0 = quieta en pantalla, 1 = se mueve con el mapa.
+    # x2 dibuja la imagen al doble (escala entera) si es más baja que la pantalla.
     var parallax_layers := []
     for spec in String(options.parallax).split(";", false):
-        spec = spec.strip_edges()
-        var cut := spec.rfind(" ")
-        if cut < 0 or not spec.substr(cut + 1).is_valid_float():
-            return "parallax: falta la velocidad en '%s' (por ejemplo \"fondos/cielo.png 0.2\")." % spec
-        var image_path := _res(spec.substr(0, cut).strip_edges())
+        var words := spec.strip_edges().split(" ", false)
+        var scale := 1
+        if words.size() > 2 and words[-1] in ["x1", "x2", "x3"]:
+            scale = int(words[-1].substr(1))
+            words.remove_at(words.size() - 1)
+        if words.size() < 2 or not words[-1].is_valid_float():
+            return "parallax: falta la velocidad en '%s' (por ejemplo \"fondos/cielo.png 0.2\")." % spec.strip_edges()
+        var image_path := _res(" ".join(words.slice(0, -1)))
         if not ResourceLoader.exists(image_path):
             return "parallax: no existe la imagen %s" % image_path
-        parallax_layers.append([image_path, float(spec.substr(cut + 1))])
+        parallax_layers.append([image_path, float(words[-1]), scale])
     if not parallax_layers.is_empty() and options.fondo != "ninguno":
         print("CONSTRUCTOR: aviso, el fondo '%s' tapa el parallax; usa \"fondo: ninguno\" para verlo." % options.fondo)
 
@@ -297,19 +555,28 @@ func _build(text_path: String) -> String:
     root.set_meta(GENERATED_META, true)
     root.set_meta(&"texto_fuente", text_path)
 
+    var screen := Vector2(ProjectSettings.get_setting("display/window/size/viewport_width"), ProjectSettings.get_setting("display/window/size/viewport_height"))
     for i in parallax_layers.size():
         var layer_tex: Texture2D = load(parallax_layers[i][0])
+        var scale: int = parallax_layers[i][2]
+        var layer_size := layer_tex.get_size() * scale
         var parallax := Parallax2D.new()
-        # Sigue a la cámara en vertical y se desplaza más lento en horizontal.
-        parallax.scroll_scale = Vector2(parallax_layers[i][1], 0.0)
-        parallax.repeat_size = Vector2(layer_tex.get_width(), 0)
-        parallax.repeat_times = 2
+        # En vertical la imagen recorre el mapa: su borde de arriba se ve con la
+        # cámara arriba del todo y el de abajo con la cámara abajo del todo.
+        var spare_y := _h * T - screen.y
+        var follow_y := clampf((layer_size.y - screen.y) / spare_y, 0.0, 1.0) if spare_y > 0 else 0.0
+        parallax.scroll_scale = Vector2(parallax_layers[i][1], follow_y)
+        parallax.repeat_size = Vector2(layer_size.x, 0)
+        parallax.repeat_times = ceili(screen.x / layer_size.x) + 1
         parallax.z_index = -20 + i
         _child(root, parallax, "Parallax%d" % (i + 1))
         var picture := Sprite2D.new()
         picture.texture = layer_tex
         picture.centered = false
+        picture.scale = Vector2(scale, scale)
         _child(parallax, picture, "Imagen")
+        if layer_size.y < screen.y:
+            print("CONSTRUCTOR: aviso, %s mide %d px de alto y la pantalla %d; usa x2." % [parallax_layers[i][0], layer_size.y, screen.y])
 
     var fondo := _layer(root, "Fondo", _tileset(tex, img, "decorado"), -10)
     var liquidos := _layer(root, "Liquidos", _tileset(tex, img, "decorado"), 2)
