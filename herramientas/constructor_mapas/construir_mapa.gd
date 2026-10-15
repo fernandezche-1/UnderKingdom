@@ -57,6 +57,24 @@ const COLORS := {
     "C": ["e0e0a0", "tienda de campaña (3x2)"],
 }
 
+const PLAYER_SCENE := "res://escenas/player.tscn"
+const CHECKPOINT_SCENE := "res://escenas/sistemas/checkpoint.tscn"
+const FIRE_TRAP_SCENE := "res://escenas/sistemas/trampa_fuego.tscn"
+const TRANSITION_SCENE := "res://escenas/sistemas/map_transition.tscn"
+const SPAWN_SCENE := "res://escenas/sistemas/spawn_point.tscn"
+const CHEST_SCENE := "res://escenas/objetos/cofre.tscn"
+const SPIKES_TEXTURE := "res://sprites/trampas/pinchos.png"
+const PICKUPS := {
+    "$": "res://escenas/objetos/coin_pickup.tscn",
+    "!": "res://escenas/objetos/potion_pickup.tscn",
+}
+## Salidas: letra -> [opción con el mapa destino, spawn de llegada en el
+## destino, spawn que se crea aquí para volver desde ese mapa].
+const EXITS := {
+    ">": ["siguiente", "DesdeAnterior", "DesdeSiguiente"],
+    "<": ["anterior", "DesdeSiguiente", "DesdeAnterior"],
+}
+
 const ENEMIES := {
     "v": "res://escenas/enemigos/vanguardia.tscn",
     "a": "res://escenas/enemigos/aprendis.tscn",
@@ -209,7 +227,10 @@ func _text_to_png(text_path: String) -> String:
 
 
 func _build(text_path: String) -> String:
-    var options := {"tileset": "mazmorra", "bloques": "", "fondo": "cueva", "escena": "", "imagen": ""}
+    var options := {
+        "tileset": "mazmorra", "bloques": "", "fondo": "cueva", "escena": "", "imagen": "",
+        "siguiente": "", "anterior": "", "cofre_monedas": "3", "cofre_pociones": "1",
+    }
     var error := _read_map_file(text_path, options)
     if error != "":
         return error
@@ -245,6 +266,13 @@ func _build(text_path: String) -> String:
     _h = _grid.size()
     for row in _grid:
         _w = maxi(_w, row.length())
+    for letter in EXITS:
+        var option: String = EXITS[letter][0]
+        if _count(letter) > 0 and options[option] == "":
+            return "El mapa tiene salidas '%s' pero falta \"%s: res://escenas/mapas/<mapa>.tscn\"." % [letter, option]
+        var target := String(options[option]).get_slice("#", 0)
+        if target != "" and not ResourceLoader.exists(target):
+            print("CONSTRUCTOR: aviso, %s todavía no existe; la salida funcionará cuando se cree." % target)
 
     var tex: Texture2D = load(_ts.textura)
     var img := tex.get_image()
@@ -265,6 +293,7 @@ func _build(text_path: String) -> String:
     var kill_zones := _child(sistemas, Node2D.new(), "KillZones")
     var climb_zones := _child(sistemas, Node2D.new(), "Escaleras")
     var enemies := _child(root, Node2D.new(), "Enemigos")
+    var player_feet := _feet_offset(PLAYER_SCENE)
 
     var set_base: Vector2i = _ts.bloques[options.bloques][0]
     var slope_base: Vector2i = _ts.bloques[options.bloques][1]
@@ -308,6 +337,19 @@ func _build(text_path: String) -> String:
                     decorado.set_cell(cell, 0, _ts.escalera)
                 "P":
                     spawn = Vector2((x + 0.5) * T, (y + 1) * T)
+                "F":
+                    var fire: Node2D = _instance(_group(sistemas, "BurnZones"), FIRE_TRAP_SCENE, "Fuego")
+                    fire.position = Vector2((x + 0.5) * T, (y + 1) * T)
+                "S":
+                    # El checkpoint queda donde reaparece el Player, de pie en la pieza.
+                    decorado.set_cell(cell, 0, _ts.checkpoint)
+                    var checkpoint: Node2D = _instance(_group(sistemas, "Checkpoints"), CHECKPOINT_SCENE, "Checkpoint")
+                    checkpoint.position = Vector2((x + 0.5) * T, (y + 1) * T - player_feet)
+                "c":
+                    var chest: Node2D = _instance(_group(root, "Objetos"), CHEST_SCENE, "Cofre")
+                    chest.position = Vector2((x + 0.5) * T, (y + 1) * T - _sprite_half_height(chest))
+                    chest.set("coin_count", int(options.cofre_monedas))
+                    chest.set("potion_count", int(options.cofre_pociones))
                 _:
                     if decor.has(ch):
                         var base: Vector2i = decor[ch][0]
@@ -322,11 +364,43 @@ func _build(text_path: String) -> String:
                     elif ENEMIES.has(ch):
                         var enemy_name := String(ENEMIES[ch]).get_file().get_basename().capitalize()
                         _place_on_floor(enemies, ENEMIES[ch], x, y, "%s%d" % [enemy_name, enemies.get_child_count() + 1])
+                    elif PICKUPS.has(ch):
+                        var pickup: Node2D = _instance(_group(root, "Objetos"), PICKUPS[ch], "Moneda" if ch == "$" else "Pocion")
+                        pickup.position = Vector2((x + 0.5) * T, (y + 0.5) * T)
 
     # Zonas de muerte sobre cada tramo horizontal de lava.
     _add_runs(kill_zones, "~", true, "res://escenas/sistemas/kill_zone.tscn", "Lava", Vector2(0, 6))
+    # Pinchos: zona de muerte en la parte baja de la pieza y el dibujo repetido.
+    for run in _add_runs(kill_zones, "^", true, "res://escenas/sistemas/kill_zone.tscn", "Pinchos", Vector2(1, T - 8)):
+        var spikes_tex: Texture2D = load(SPIKES_TEXTURE)
+        var zone: Node2D = run[0]
+        var rect: Rect2 = run[1]
+        var sprite := Sprite2D.new()
+        sprite.texture = spikes_tex
+        sprite.centered = false
+        sprite.region_enabled = true
+        sprite.region_rect = Rect2(0, 0, rect.size.x + 2, spikes_tex.get_height())
+        sprite.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
+        sprite.position = Vector2(rect.position.x - 1, rect.end.y - spikes_tex.get_height()) - zone.position
+        _child(zone, sprite, "Dibujo")
     # Zonas para trepar en cada columna de escalera (una pieza extra arriba).
     _add_runs(climb_zones, "H", false, "res://escenas/sistemas/climb_zone.tscn", "Escalera", Vector2.ZERO)
+    # Salidas: una transición por columna y un spawn dos piezas hacia dentro
+    # para llegar desde ese mapa sin volver a tocar la salida.
+    for letter in EXITS:
+        if _count(letter) == 0:
+            continue
+        var exit: Array = EXITS[letter]
+        var target: String = options[exit[0]]
+        for run in _add_runs(_group(sistemas, "Transiciones"), letter, false, TRANSITION_SCENE, "Salida" + String(exit[0]).capitalize(), Vector2.ZERO):
+            var transition: Node2D = run[0]
+            var rect: Rect2 = run[1]
+            transition.set("target_scene_path", target.get_slice("#", 0))
+            transition.set("target_spawn_id", StringName(target.get_slice("#", 1)) if "#" in target else StringName(exit[1]))
+            var inward := 1.0 if rect.get_center().x < _w * T * 0.5 else -1.0
+            var arrival: Node2D = _instance(sistemas, SPAWN_SCENE, String(exit[2]))
+            arrival.set("spawn_id", StringName(exit[2]))
+            arrival.position = Vector2(rect.get_center().x + inward * 2 * T, rect.end.y - player_feet)
 
     var bounds := _child(sistemas, Node2D.new(), "MapBounds")
     bounds.set_script(load("res://scripts/camera/map_bounds.gd"))
@@ -338,9 +412,9 @@ func _build(text_path: String) -> String:
     if spawn.x < 0:
         root.free()
         return "Falta la P (inicio del Player) en el mapa."
-    var marker: Node2D = _child(sistemas, (load("res://escenas/sistemas/spawn_point.tscn") as PackedScene).instantiate(), "SpawnInicio")
-    marker.position = spawn - Vector2(0, _feet_offset("res://escenas/player.tscn"))
-    var player := _place_on_floor(root, "res://escenas/player.tscn", int(spawn.x / T), int(spawn.y / T) - 1, "player")
+    var marker: Node2D = _child(sistemas, (load(SPAWN_SCENE) as PackedScene).instantiate(), "SpawnInicio")
+    marker.position = spawn - Vector2(0, player_feet)
+    var player := _place_on_floor(root, PLAYER_SCENE, int(spawn.x / T), int(spawn.y / T) - 1, "player")
     # Los mapas generados son de prueba: teclas de depuración (R/H/J/K) y panel activos.
     player.set("enable_debug_keys", true)
     player.set("show_debug_hud", true)
@@ -355,6 +429,12 @@ func _build(text_path: String) -> String:
     print("CONSTRUCTOR: %s creada (%d x %d piezas, %d x %d px). Bloques: %d, rampas: %d, plataformas: %d, lava: %d, escaleras: %d, enemigos: %d." % [
         out_path, _w, _h, _w * T, _h * T, counts.get("#", 0), counts.get("/", 0) + counts.get("\\", 0),
         counts.get("=", 0), counts.get("~", 0), counts.get("H", 0), ENEMIES.keys().reduce(func(total, key): return total + counts.get(key, 0), 0)])
+    var extras := []
+    for pair in [["^", "pinchos"], ["F", "fuego"], ["S", "checkpoints"], ["c", "cofres"], ["$", "monedas"], ["!", "pociones"], [">", "salida siguiente"], ["<", "salida anterior"]]:
+        if counts.get(pair[0], 0) > 0:
+            extras.append("%s: %d" % [pair[1], counts[pair[0]]])
+    if not extras.is_empty():
+        print("CONSTRUCTOR: además %s." % ", ".join(extras))
     return ""
 
 
@@ -411,7 +491,10 @@ func _place_on_floor(parent: Node, scene_path: String, x: int, y: int, node_name
     return node
 
 
-func _add_runs(parent: Node, letter: String, horizontal: bool, scene_path: String, base_name: String, inset: Vector2) -> void:
+## Una zona por cada tramo seguido de la letra (horizontal o vertical).
+## Devuelve [zona, rectángulo en píxeles] de cada una.
+func _add_runs(parent: Node, letter: String, horizontal: bool, scene_path: String, base_name: String, inset: Vector2) -> Array:
+    var created := []
     var seen := {}
     var index := 0
     for y in _h:
@@ -432,6 +515,35 @@ func _add_runs(parent: Node, letter: String, horizontal: bool, scene_path: Strin
             var shape := RectangleShape2D.new()
             shape.size = rect.size
             (zone.get_node("CollisionShape2D") as CollisionShape2D).shape = shape
+            # Sin "hijos editables" la escena guardada ignora la forma nueva y
+            # la zona queda con el tamaño por defecto de su escena.
+            zone.owner.set_editable_instance(zone, true)
+            created.append([zone, rect])
+    return created
+
+
+func _count(letter: String) -> int:
+    var total := 0
+    for row in _grid:
+        total += row.count(letter)
+    return total
+
+
+## Contenedor con ese nombre dentro de parent; se crea la primera vez.
+func _group(parent: Node, group_name: String) -> Node:
+    var existing := parent.get_node_or_null(group_name)
+    return existing if existing != null else _child(parent, Node2D.new(), group_name)
+
+
+func _instance(parent: Node, scene_path: String, base_name: String) -> Node:
+    return _child(parent, (load(scene_path) as PackedScene).instantiate(), "%s%d" % [base_name, parent.get_child_count() + 1])
+
+
+func _sprite_half_height(node: Node) -> float:
+    var sprite := node as AnimatedSprite2D
+    if sprite == null or sprite.sprite_frames == null:
+        return T * 0.5
+    return sprite.sprite_frames.get_frame_texture(sprite.animation, 0).get_height() * 0.5
 
 
 func _child(parent: Node, node: Node, node_name: String) -> Node:

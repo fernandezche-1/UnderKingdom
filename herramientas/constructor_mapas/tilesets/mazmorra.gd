@@ -51,6 +51,8 @@ const DATA := {
     "lava": [Vector2i(12, 8), Vector2i(12, 9)],
     "agua": [Vector2i(0, 11), Vector2i(0, 12)],
     "escalera": Vector2i(4, 10),
+    # Pieza que se dibuja en cada checkpoint (S): la fogata, como una hoguera.
+    "checkpoint": Vector2i(27, 4),
 
     # Fondos de pared: nombre -> [origen del patrón, tamaño del patrón].
     "fondos": {
