@@ -143,6 +143,10 @@ const ATTACK_PROFILES := {
 
 @export_category("Respawn")
 @export_range(0.1, 5.0, 0.1) var respawn_delay: float = 0.8
+## Al morir recarga el mapa (enemigos y jefes vuelven a empezar) y reaparece en
+## el último checkpoint o en la entrada del mapa. Sin esto, reaparece en el
+## sitio sin reiniciar nada.
+@export var reload_map_on_death: bool = true
 ## Respaldo si el mapa no tiene MapBounds.
 @export var fall_limit_y: float = 1200.0
 ## Muere al caer esta distancia por debajo del borde inferior del mapa.
@@ -1551,7 +1555,11 @@ func die() -> void:
     var death_wait := maxf(_animation_duration(&"death"), respawn_delay)
     await get_tree().create_timer(death_wait).timeout
 
-    if is_inside_tree():
+    if not is_inside_tree():
+        return
+    if reload_map_on_death:
+        GameManager.respawn_after_death()
+    else:
         respawn_now()
 
 
@@ -1596,6 +1604,7 @@ func respawn_now() -> void:
 
 func set_spawn_point(new_position: Vector2) -> void:
     spawn_position = new_position
+    GameManager.set_respawn_point(new_position)
 
 
 func _action_name() -> String:

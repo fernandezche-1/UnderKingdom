@@ -37,6 +37,9 @@ func _ready() -> void:
     current_health = max_health
     sprite.stop()
     _set_frame(intact_frame)
+    # Si ya se rompió antes de recargar el mapa (muerte), aparece roto y sin botín.
+    if GameManager.is_object_consumed(self):
+        _break_object(false)
 
 
 func take_damage_from(_source_global_position: Vector2, amount: float) -> bool:
@@ -71,7 +74,7 @@ func _refresh_damage_frame() -> void:
         _set_frame(intact_frame)
 
 
-func _break_object() -> void:
+func _break_object(give_drops: bool = true) -> void:
     if is_destroyed:
         return
 
@@ -85,8 +88,10 @@ func _break_object() -> void:
     if disable_collision_when_destroyed and collision_shape != null:
         collision_shape.set_deferred("disabled", true)
 
-    _spawn_configured_drops()
-    destroyed.emit()
+    if give_drops:
+        GameManager.mark_object_consumed(self)
+        _spawn_configured_drops()
+        destroyed.emit()
 
 
 func _set_frame(frame_index: int) -> void:

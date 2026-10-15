@@ -22,7 +22,10 @@ var loot_given: bool = false
 
 func _ready() -> void:
     stop()
-    frame = 0
+    # Si ya se abrió antes de recargar el mapa (muerte), queda abierto y vacío.
+    loot_given = GameManager.is_object_consumed(self)
+    is_open = loot_given
+    frame = 1 if is_open else 0
     frame_progress = 0.0
     add_to_group("interactable")
 
@@ -48,6 +51,7 @@ func _toggle_chest() -> void:
 
     if is_open and not loot_given:
         loot_given = true
+        GameManager.mark_object_consumed(self)
         _spawn_loot()
 
 

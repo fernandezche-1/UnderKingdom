@@ -37,6 +37,14 @@ func _place_player() -> void:
     if player == null:
         return
 
+    # Tras una muerte el mapa se recarga: se vuelve al último checkpoint o a
+    # la entrada por la que se llegó, no al SpawnInicio.
+    if GameManager.consume_death_respawn():
+        player.global_position = GameManager.respawn_position
+        if player.has_method("set_spawn_point"):
+            player.call("set_spawn_point", GameManager.respawn_position)
+        return
+
     if target == null:
         push_warning("No se encontró SpawnPoint '%s' en el mapa actual." % requested)
         return
