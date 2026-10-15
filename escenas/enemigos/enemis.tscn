@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://cgu5ex0b1ug2n"]
 
+[ext_resource type="Script" path="res://scripts/bosses/w2_archer_boss.gd" id="p41_enemy_base"]
+
 [ext_resource type="Texture2D" uid="uid://bsaks1r7515p0" path="res://Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/spritesheets/Elementals_leaf_ranger_288x128_SpriteSheet.png" id="1_3vesq"]
 [ext_resource type="Texture2D" uid="uid://xdf7wehavbjt" path="res://Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/spritesheets/projectiles_and_effects_256x128_SpriteSheet.png" id="2_cmnew"]
 
@@ -1417,6 +1419,22 @@ animations = [{
 }]
 
 [node name="enemis" type="CharacterBody2D" unique_id=308435431]
+collision_layer = 5
+collision_mask = 1
+script = ExtResource("p41_enemy_base")
+max_health = 4.0
+use_gravity = true
+patrol_distance = 55.0
+patrol_speed = 32.0
+chase_speed = 75.0
+detection_range = 220.0
+detection_vertical_range = 120.0
+attack_animation = &"attack inicial"
+attack_damage = 0.75
+attack_cooldown = 1.15
+avoid_ledges = true
+defense_enabled = true
+defense_chance = 0.20
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=535423094]
 position = Vector2(1, 5)

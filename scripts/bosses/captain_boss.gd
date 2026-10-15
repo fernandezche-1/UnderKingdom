@@ -14,11 +14,24 @@ const BOSS_KEY_SCENE := preload("res://escenas/items/llave_jefe_m1.tscn")
 @export_range(0.0, 600.0, 10.0) var boss_roll_speed: float = 170.0
 @export_range(1, 10, 1) var attacks_before_roll: int = 3
 @export_range(0.1, 1.0, 0.05) var roll_invulnerability_ratio: float = 0.82
+@export_range(1.0, 2.0, 0.05) var phase_2_attack_speed_scale: float = 1.30
+@export_range(1.0, 2.5, 0.05) var phase_3_attack_speed_scale: float = 1.50
+@export_range(0.25, 1.0, 0.05) var phase_2_cooldown_multiplier: float = 0.72
+@export_range(0.20, 1.0, 0.05) var phase_3_cooldown_multiplier: float = 0.58
+
+@export_category("Capitán - Anti spam")
+## Si el Player conecta varios ataques básicos distintos en muy poco tiempo,
+## el Capitán entra brevemente en defensa total. Cada animación del combo
+## cuenta una sola vez aunque tenga varios impactos internos.
+@export_range(2, 10, 1) var spam_basic_attacks_to_trigger: int = 4
+@export_range(0.4, 4.0, 0.1) var spam_detection_window: float = 1.60
+@export_range(0.2, 3.0, 0.05) var spam_immunity_duration: float = 1.15
+@export_range(0.5, 10.0, 0.1) var spam_immunity_cooldown: float = 3.50
 
 @export_category("Capitán - Variación")
 ## Probabilidad de repetir el mismo ataque dos veces seguidas.
 @export_range(0.0, 1.0, 0.05) var repeat_attack_chance: float = 0.25
-@export_range(1, 10, 1) var min_attacks_between_ultimates: int = 3
+@export_range(0, 10, 1) var min_attacks_between_ultimates: int = 0
 @export_range(0.0, 1.0, 0.05) var ultimate_chance: float = 0.5
 ## El roll llega tras attacks_before_roll ± este valor.
 @export_range(0, 3, 1) var roll_count_variation: int = 1
@@ -39,6 +52,11 @@ var _roll_time_left: float = 0.0
 var _roll_direction: float = 1.0
 var _key_spawned: bool = false
 var _roll_collision_exception_active: bool = false
+var _spam_basic_attack_count: int = 0
+var _spam_detection_left: float = 0.0
+var _spam_immunity_left: float = 0.0
+var _spam_immunity_cooldown_left: float = 0.0
+var _last_registered_player_attack_sequence: int = -1
 
 
 func _ready() -> void:
@@ -105,6 +123,94 @@ func _select_attack_animation() -> StringName:
     return _last_attack
 
 
+func _start_enemy_attack(animation_name: StringName) -> void:
+    # Desde fase 2 el Capitán ejecuta las animaciones de ataque con mayor
+    # velocidad. Ajustamos también el temporizador interno para que la ventana
+    # de daño y el final del ataque sigan sincronizados con los frames.
+    super._start_enemy_attack(animation_name)
+    if _current_attack_animation != animation_name or _attack_time_left <= 0.0:
+        return
+
+    var speed_scale := _attack_speed_scale_for_phase()
+    sprite.speed_scale = speed_scale
+    _attack_total_time /= speed_scale
+    _attack_time_left /= speed_scale
+
+
+func _attack_speed_scale_for_phase() -> float:
+    if boss_phase >= 3:
+        return phase_3_attack_speed_scale
+    if boss_phase >= 2:
+        return phase_2_attack_speed_scale
+    return 1.0
+
+
+func take_player_attack_from(
+    source_global_position: Vector2,
+    amount: float,
+    player_attack_animation: StringName,
+    player_attack_sequence: int
+) -> bool:
+    var accepted := super.take_damage_from(source_global_position, amount)
+    if accepted and not dead:
+        _register_basic_player_attack(player_attack_animation, player_attack_sequence)
+    return accepted
+
+
+func take_player_continuous_attack_from(
+    source_global_position: Vector2,
+    amount: float,
+    player_attack_animation: StringName,
+    player_attack_sequence: int
+) -> bool:
+    var accepted := super.take_continuous_damage_from(source_global_position, amount)
+    if accepted and not dead:
+        _register_basic_player_attack(player_attack_animation, player_attack_sequence)
+    return accepted
+
+
+func _register_basic_player_attack(animation_name: StringName, attack_sequence: int) -> void:
+    if animation_name not in [&"attack", &"attack 2", &"attack 3"]:
+        return
+    if attack_sequence == _last_registered_player_attack_sequence:
+        return
+
+    _last_registered_player_attack_sequence = attack_sequence
+
+    # Durante la propia inmunidad o su enfriamiento no acumulamos otro disparo
+    # anti-spam. Así el jefe no puede encadenar inmunidad de forma permanente.
+    if _spam_immunity_left > 0.0 or _spam_immunity_cooldown_left > 0.0:
+        return
+
+    if _spam_detection_left <= 0.0:
+        _spam_basic_attack_count = 0
+        _spam_detection_left = spam_detection_window
+
+    _spam_basic_attack_count += 1
+    if _spam_basic_attack_count >= spam_basic_attacks_to_trigger:
+        _activate_spam_immunity()
+
+
+func _activate_spam_immunity() -> void:
+    _spam_basic_attack_count = 0
+    _spam_detection_left = 0.0
+    _spam_immunity_left = spam_immunity_duration
+    _spam_immunity_cooldown_left = spam_immunity_duration + spam_immunity_cooldown
+
+    _cancel_attack()
+    _roll_pending = false
+    _roll_time_left = 0.0
+    _disable_roll_player_passthrough()
+    _defense_time_left = 0.0
+    velocity.x = 0.0
+    ai_state = AIState.DEFEND
+
+    if sprite.sprite_frames.has_animation(defense_animation):
+        _restart_if_exists(defense_animation)
+    else:
+        _play_if_exists(&"idle")
+
+
 func _damage_for_attack(animation_name: StringName) -> float:
     match animation_name:
         &"attack":
@@ -160,16 +266,23 @@ func _hitbox_offset_for_attack(animation_name: StringName) -> Vector2:
 
 
 func _cooldown_for_attack(animation_name: StringName) -> float:
+    var base_cooldown := 0.75
     match animation_name:
         &"ultimate":
-            return 2.20
+            # Las Ultimates enemigas no tienen enfriamiento artificial.
+            base_cooldown = 0.0
         &"attack rapido":
-            return 0.85
-        _:
-            return 0.75
+            base_cooldown = 0.85
+
+    if boss_phase >= 3:
+        return base_cooldown * phase_3_cooldown_multiplier
+    if boss_phase >= 2:
+        return base_cooldown * phase_2_cooldown_multiplier
+    return base_cooldown
 
 
 func _on_enemy_attack_finished(_animation_name: StringName) -> void:
+    sprite.speed_scale = 1.0
     _attacks_since_roll += 1
     if boss_phase >= 2 and _attacks_since_roll >= _next_roll_threshold:
         _attacks_since_roll = 0
@@ -181,6 +294,17 @@ func _on_enemy_attack_finished(_animation_name: StringName) -> void:
 
 
 func _process(delta: float) -> void:
+    if _spam_detection_left > 0.0:
+        _spam_detection_left = maxf(_spam_detection_left - delta, 0.0)
+        if _spam_detection_left <= 0.0:
+            _spam_basic_attack_count = 0
+
+    if _spam_immunity_left > 0.0:
+        _spam_immunity_left = maxf(_spam_immunity_left - delta, 0.0)
+
+    if _spam_immunity_cooldown_left > 0.0:
+        _spam_immunity_cooldown_left = maxf(_spam_immunity_cooldown_left - delta, 0.0)
+
     # Aviso previo al Ultimate: el sprite parpadea en color durante el
     # windup, hasta el primer frame que hace daño.
     var warning := (
@@ -201,6 +325,11 @@ func _process(delta: float) -> void:
 
 
 func _process_special_state(delta: float) -> bool:
+    if _spam_immunity_left > 0.0:
+        velocity.x = move_toward(velocity.x, 0.0, horizontal_deceleration * 2.0 * delta)
+        _play_if_exists(defense_animation)
+        return true
+
     if _roll_time_left > 0.0:
         _roll_time_left = maxf(_roll_time_left - delta, 0.0)
         if _can_move_horizontally(_roll_direction):
@@ -240,6 +369,11 @@ func _process_special_state(delta: float) -> bool:
     return true
 
 
+func _cancel_attack() -> void:
+    super._cancel_attack()
+    sprite.speed_scale = 1.0
+
+
 func _cancel_special_state_on_hit() -> void:
     _roll_pending = false
     _roll_time_left = 0.0
@@ -247,6 +381,10 @@ func _cancel_special_state_on_hit() -> void:
 
 
 func _is_special_invulnerable() -> bool:
+    # Respuesta anti-spam: durante un intervalo breve no acepta ningún daño.
+    if _spam_immunity_left > 0.0:
+        return true
+
     # Ultimate del jefe es ininterrumpible/invulnerable durante toda su ejecución.
     if _current_attack_animation == &"ultimate" and _attack_time_left > 0.0:
         return true

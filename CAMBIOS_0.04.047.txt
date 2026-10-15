@@ -1,0 +1,15 @@
+UNDERKINGDOM 0.04.047 — Cinemáticas y diálogo W1
+
+- Introducción al iniciar por primera vez W1: recuerdo de la promesa al Rey.
+- Capitán es el viejo amigo; conversación solo cuando entra en cámara en su sala.
+- El Capitán espera sin atacar hasta finalizar el reencuentro; recupera exactamente IA/ataque.
+- Cámara temporal hereda zoom, limites y offset del Player; todas las posiciones se limitan al MapBounds.
+- Retratos originales fire_knight.png y wind_hashashin.png en lugar de spritesheet completo.
+- Diálogos almacenados en archivos JSON independientes; emociones con color y transiciones.
+- Cualquier emoción sin retrato propio conserva el neutro; no se inventaron ilustraciones.
+- El Player queda sin controles e invulnerable solo mientras dura la cinemática.
+- Se mantienen HUD de monedas/pociones, combates, pinchos y el resto de mapas.
+- Las cinemáticas vistas se registran en memoria de la sesión (sin guardado persistente).
+
+PRUEBA EN GODOT: no ejecutada. Hacer prueba local de intro, entrada en cámara,
+combate y muerte/reintento antes de considerar la versión definitiva.

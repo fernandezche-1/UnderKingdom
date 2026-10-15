@@ -15,7 +15,9 @@ class_name UnderkingdomMapTransition
 @export var prompt_text: String = "E - VIAJAR"
 @export var marker_color: Color = Color(0.15, 0.55, 1.0, 0.65)
 @export var require_world1_boss_key: bool = false
+@export var require_w2_knight_defeated: bool = false
 @export var locked_prompt_text: String = "DERROTA A CAPITAN Y RECOGE LA LLAVE"
+@export var knight_locked_prompt_text: String = "DERROTA AL CABALLERO DE LA REINA"
 
 var _changing_scene: bool = false
 var _player_inside: Node = null
@@ -82,6 +84,8 @@ func _refresh_prompt_text() -> void:
         return
     if require_world1_boss_key and not GameManager.has_world1_boss_key():
         _prompt.text = locked_prompt_text
+    elif require_w2_knight_defeated and not GameManager.has_w2_knight_been_defeated():
+        _prompt.text = knight_locked_prompt_text
     else:
         _prompt.text = prompt_text
 
@@ -90,6 +94,11 @@ func _request_transition() -> void:
     if not enabled or _changing_scene:
         return
     if require_world1_boss_key and not GameManager.has_world1_boss_key():
+        if _prompt != null:
+            _refresh_prompt_text()
+            _prompt.visible = true
+        return
+    if require_w2_knight_defeated and not GameManager.has_w2_knight_been_defeated():
         if _prompt != null:
             _refresh_prompt_text()
             _prompt.visible = true

@@ -1,7 +1,7 @@
 extends CanvasLayer
 class_name UnderkingdomPlayerHUD
 
-## HUD del Player: vida en cuartos de corazón, carga de Ultimate y llave.
+## HUD del Player: vida, Ultimate, llave y contadores de inventario.
 ## Va como hijo del Player y lee sus señales; no guarda estado propio.
 
 @export_range(0.0, 1.0, 0.05) var ultimate_charging_alpha: float = 0.55
@@ -9,6 +9,8 @@ class_name UnderkingdomPlayerHUD
 @onready var health_bar: TextureProgressBar = $Raiz/BarraVida
 @onready var ultimate_bar: TextureProgressBar = $Raiz/BarraUltimate
 @onready var key_icon: TextureRect = $Raiz/IconoLlave
+@onready var coins_label: Label = $Inventario/MonedasTexto
+@onready var potions_label: Label = $Inventario/PocionesTexto
 
 var _player: Node = null
 
@@ -21,6 +23,10 @@ func _ready() -> void:
 
     GameManager.world1_boss_key_changed.connect(_on_key_changed)
     key_icon.visible = GameManager.has_world1_boss_key()
+    GameManager.coins_changed.connect(_on_coins_changed)
+    GameManager.potions_changed.connect(_on_potions_changed)
+    _on_coins_changed(GameManager.coins)
+    _on_potions_changed(GameManager.potions)
 
 
 func _process(_delta: float) -> void:
@@ -39,3 +45,11 @@ func _on_health_changed(current_health: float, max_health: float) -> void:
 
 func _on_key_changed(has_key: bool) -> void:
     key_icon.visible = has_key
+
+
+func _on_coins_changed(value: int) -> void:
+    coins_label.text = "Monedas: %d" % value
+
+
+func _on_potions_changed(value: int) -> void:
+    potions_label.text = "Pociones: %d" % value

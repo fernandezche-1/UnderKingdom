@@ -1,0 +1,45 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Texture2D" path="res://sprites/environment/estatuta.png" id="1_tex"]
+[ext_resource type="Script" path="res://scripts/environment/breakable_object.gd" id="2_script"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_statue0"]
+atlas = ExtResource("1_tex")
+region = Rect2(0, 0, 434, 724)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_statue1"]
+atlas = ExtResource("1_tex")
+region = Rect2(493, 0, 450, 724)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_statue2"]
+atlas = ExtResource("1_tex")
+region = Rect2(968, 0, 484, 709)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_statue3"]
+atlas = ExtResource("1_tex")
+region = Rect2(1448, 0, 724, 724)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_statue"]
+animations = [{
+"frames": [{"duration": 1.0, "texture": SubResource("AtlasTexture_statue0")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_statue1")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_statue2")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_statue3")}],
+"loop": false,
+"name": &"states",
+"speed": 1.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_statue"]
+size = Vector2(282, 575)
+
+[node name="EstatuaRompible" type="StaticBody2D" groups=["breakable"]]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("2_script")
+max_health = 3.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_statue")
+animation = &"states"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(36, -18.5)
+shape = SubResource("RectangleShape2D_statue")

@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://y87jmv0hwgiu"]
 
+[ext_resource type="Script" path="res://scripts/combat/enemy_base.gd" id="p41_enemy_base"]
+
 [ext_resource type="Texture2D" uid="uid://bothddpsfpvea" path="res://otra vez/FREE_Kobold Warrior 2D Pixel Art/Sprites/with_outline/ATTACK 1.png" id="1_oadxw"]
 [ext_resource type="Texture2D" uid="uid://dvscnrskt2hd4" path="res://otra vez/FREE_Kobold Warrior 2D Pixel Art/Sprites/with_outline/IDLE.png" id="2_bbcg6"]
 [ext_resource type="Texture2D" uid="uid://dnbheyjg0lqji" path="res://otra vez/FREE_Kobold Warrior 2D Pixel Art/Sprites/with_outline/RUN.png" id="3_wf00b"]
@@ -159,6 +161,20 @@ animations = [{
 size = Vector2(25.5, 42)
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=12978115]
+collision_layer = 5
+collision_mask = 1
+script = ExtResource("p41_enemy_base")
+max_health = 2.5
+use_gravity = true
+patrol_distance = 65.0
+patrol_speed = 34.0
+chase_speed = 72.0
+detection_range = 190.0
+detection_vertical_range = 90.0
+attack_animation = &"attack"
+attack_damage = 0.50
+attack_cooldown = 1.15
+avoid_ledges = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=595196414]
 position = Vector2(-12, -18)

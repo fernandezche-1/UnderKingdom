@@ -72,6 +72,7 @@ const ATTACK_PROFILES := {
 @export_range(30.0, 500.0, 5.0) var climb_speed: float = 150.0
 @export_range(30.0, 500.0, 5.0) var climb_horizontal_speed: float = 120.0
 @export_range(30.0, 85.0, 1.0) var max_stair_slope_degrees: float = 65.0
+@export_range(0.30, 1.0, 0.01) var climb_visual_scale_multiplier: float = 0.52
 @export_range(0.0, 40.0, 1.0) var floor_snap_distance: float = 4.0
 
 @export_category("Plataformas One Way")
@@ -149,6 +150,9 @@ const ATTACK_PROFILES := {
 var current_health: float
 var spawn_position: Vector2
 var dead: bool = false
+var controls_locked: bool = false
+var cinematic_invulnerable: bool = false
+var _cinematic_velocity: Vector2 = Vector2.ZERO
 
 var _jump_requested: bool = false
 var _hurt_time_left: float = 0.0
@@ -172,6 +176,7 @@ var _action: PlayerAction = PlayerAction.NORMAL
 var _action_time_left: float = 0.0
 var _action_total_time: float = 0.0
 var _current_attack_damage: float = 0.0
+var _attack_sequence_id: int = 0
 var _current_attack_animation: StringName = &""
 var _combo_step: int = 0
 var _combo_queued: bool = false
@@ -190,10 +195,12 @@ var _guard_requires_release: bool = false
 var _roll_collision_exceptions: Array[PhysicsBody2D] = []
 var _attack_held_direction: float = 0.0
 var _fall_limit: float = 1200.0
+var _base_sprite_scale: Vector2 = Vector2.ONE
 
 
 func _ready() -> void:
     add_to_group("player")
+    _base_sprite_scale = sprite.scale
     floor_max_angle = deg_to_rad(max_stair_slope_degrees)
     floor_snap_length = floor_snap_distance
     _normal_floor_snap_length = floor_snap_distance
@@ -221,7 +228,7 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-    if dead:
+    if dead or controls_locked:
         return
 
     if event is InputEventMouseButton:
@@ -242,7 +249,8 @@ func _unhandled_input(event: InputEvent) -> void:
         KEY_SHIFT:
             request_roll()
         KEY_E:
-            request_ultimate()
+            if not _try_context_interaction():
+                request_ultimate()
         KEY_R:
             if enable_debug_keys:
                 respawn_now()
@@ -264,6 +272,12 @@ func _physics_process(delta: float) -> void:
     _update_ledge_transition_timer(delta)
 
     if dead:
+        return
+
+    if controls_locked:
+        _process_cinematic_movement(delta)
+        move_and_slide()
+        _update_cinematic_animation()
         return
 
     _cleanup_climb_zones()
@@ -329,6 +343,40 @@ func _update_fall_limit_from_map() -> void:
         _fall_limit = float(bottom) + fall_margin_below_map
 
 
+func set_controls_locked(locked: bool) -> void:
+    controls_locked = locked
+    _cinematic_velocity = Vector2.ZERO
+    _jump_requested = false
+    _climbing = false
+    if locked:
+        _finish_action()
+        velocity = Vector2.ZERO
+
+
+func set_cinematic_velocity(new_velocity: Vector2) -> void:
+    _cinematic_velocity = new_velocity
+
+
+func _process_cinematic_movement(delta: float) -> void:
+    velocity.x = _cinematic_velocity.x
+    if is_on_floor():
+        velocity.y = 0.0
+    else:
+        velocity.y = minf(velocity.y + gravity * delta, max_fall_speed)
+
+
+func _update_cinematic_animation() -> void:
+    sprite.scale = _base_sprite_scale
+    sprite.speed_scale = 1.0
+    if absf(velocity.x) > 1.0:
+        sprite.flip_h = velocity.x < 0.0
+        if sprite.animation != &"run" or not sprite.is_playing():
+            sprite.play(&"run")
+    else:
+        if sprite.animation != &"idle" or not sprite.is_playing():
+            sprite.play(&"idle")
+
+
 func request_attack() -> void:
     if dead or _climbing:
         return
@@ -388,6 +436,29 @@ func request_roll() -> void:
     sprite.play(&"roll")
 
 
+func _try_context_interaction() -> bool:
+    var nearest: Node = null
+    var nearest_distance := INF
+
+    for node in get_tree().get_nodes_in_group("interactable"):
+        if node == null or not node.has_method("can_interact") or not node.has_method("interact"):
+            continue
+        if not bool(node.call("can_interact", self)):
+            continue
+        if not (node is Node2D):
+            continue
+
+        var distance := global_position.distance_to((node as Node2D).global_position)
+        if distance < nearest_distance:
+            nearest_distance = distance
+            nearest = node
+
+    if nearest == null:
+        return false
+
+    return bool(nearest.call("interact", self))
+
+
 func request_ultimate() -> void:
     if dead or _climbing or not is_on_floor():
         return
@@ -408,6 +479,7 @@ func request_ultimate() -> void:
 
 func _start_attack(animation_name: StringName, damage: float, action_type: PlayerAction) -> void:
     var profile := _attack_profile(animation_name)
+    _attack_sequence_id += 1
     _action = action_type
     _current_attack_damage = damage
     _current_attack_animation = animation_name
@@ -730,8 +802,22 @@ func _process_climbing() -> void:
     if Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_DOWN):
         vertical += 1.0
 
-    velocity.x = horizontal * climb_horizontal_speed
-    velocity.y = vertical * climb_speed
+    var axis := Vector2.DOWN
+    var allow_horizontal := true
+    if _active_climb_zone != null:
+        var axis_value: Variant = _active_climb_zone.get("climb_axis")
+        if typeof(axis_value) == TYPE_VECTOR2:
+            var configured_axis: Vector2 = axis_value
+            if not configured_axis.is_zero_approx():
+                axis = configured_axis.normalized()
+        var horizontal_value: Variant = _active_climb_zone.get("allow_horizontal_adjustment")
+        if horizontal_value != null:
+            allow_horizontal = bool(horizontal_value)
+
+    # W/arriba se mueve contra el eje (sube); S/abajo a favor (baja).
+    velocity = axis * vertical * climb_speed
+    if allow_horizontal:
+        velocity.x += horizontal * climb_horizontal_speed
     _jump_requested = false
 
 
@@ -868,11 +954,25 @@ func _update_animation(direction: float) -> void:
         return
 
     sprite.speed_scale = 1.0
+    sprite.scale = _base_sprite_scale * climb_visual_scale_multiplier if _climbing else _base_sprite_scale
 
     if direction < 0.0:
         sprite.flip_h = true
     elif direction > 0.0:
         sprite.flip_h = false
+
+    # En escaleras usamos la animación de carrera a menor velocidad. Se ve
+    # más compacta que los sprites de salto, especialmente en niveles altos.
+    if _climbing:
+        if sprite.animation != &"run":
+            sprite.play(&"run")
+        if absf(velocity.y) > 1.0 or absf(velocity.x) > 1.0:
+            sprite.speed_scale = 0.72
+            if not sprite.is_playing():
+                sprite.play(&"run")
+        else:
+            sprite.pause()
+        return
 
     var wanted: StringName = &"idle"
     if not is_on_floor():
@@ -984,7 +1084,9 @@ func _damage_around_targets(damage_amount: float, knockback: bool) -> void:
 
     for result in get_world_2d().direct_space_state.intersect_shape(query, 32):
         var target := result.get("collider") as Node
-        if target == null or target == self or not target.is_in_group("enemy"):
+        if target == null or target == self:
+            continue
+        if not target.is_in_group("enemy") and not target.is_in_group("breakable"):
             continue
         _damage_target_once(target, damage_amount, knockback)
 
@@ -1018,7 +1120,15 @@ func _try_damage_attack_target(body: Node, damage_amount: float = -1.0) -> bool:
     var resolved_damage := _current_attack_damage if damage_amount < 0.0 else damage_amount
     var health_before := _enemy_health_value(body)
 
-    if body.has_method("take_damage_from"):
+    if body.has_method("take_player_attack_from"):
+        result = body.call(
+            "take_player_attack_from",
+            global_position,
+            resolved_damage,
+            _current_attack_animation,
+            _attack_sequence_id
+        )
+    elif body.has_method("take_damage_from"):
         result = body.call("take_damage_from", global_position, resolved_damage)
     elif body.has_method("take_damage"):
         result = body.call("take_damage", resolved_damage)
@@ -1035,7 +1145,15 @@ func _try_damage_continuous_target(body: Node, damage_amount: float) -> bool:
     var result: Variant = null
     var health_before := _enemy_health_value(body)
 
-    if body.has_method("take_continuous_damage_from"):
+    if body.has_method("take_player_continuous_attack_from"):
+        result = body.call(
+            "take_player_continuous_attack_from",
+            global_position,
+            damage_amount,
+            _current_attack_animation,
+            _attack_sequence_id
+        )
+    elif body.has_method("take_continuous_damage_from"):
         result = body.call("take_continuous_damage_from", global_position, damage_amount)
     else:
         return _try_damage_attack_target(body, damage_amount)
@@ -1239,7 +1357,7 @@ func _apply_knockback(source_global_position: Vector2) -> void:
 
 
 func is_invulnerable() -> bool:
-    return _invulnerability_left > 0.0 or _action == PlayerAction.ULTIMATE
+    return cinematic_invulnerable or _invulnerability_left > 0.0 or _action == PlayerAction.ULTIMATE
 
 
 func _update_damage_timers(delta: float) -> void:
@@ -1339,7 +1457,7 @@ func heal(amount: float) -> void:
 
 
 func die() -> void:
-    if dead:
+    if dead or cinematic_invulnerable:
         return
 
     dead = true
@@ -1359,7 +1477,10 @@ func die() -> void:
     sprite.play(&"death")
     _update_hud("MUERTO — reapareciendo...")
 
-    await get_tree().create_timer(respawn_delay).timeout
+    # No cortar la muerte: esperamos como mínimo la duración completa de la
+    # animación antes de reaparecer. respawn_delay solo actúa como mínimo.
+    var death_wait := maxf(_animation_duration(&"death"), respawn_delay)
+    await get_tree().create_timer(death_wait).timeout
 
     if is_inside_tree():
         respawn_now()

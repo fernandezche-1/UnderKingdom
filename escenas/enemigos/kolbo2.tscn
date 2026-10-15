@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://bum81cytf4ina"]
 
+[ext_resource type="Script" path="res://scripts/combat/enemy_base.gd" id="p41_enemy_base"]
+
 [ext_resource type="Texture2D" uid="uid://cpsrb7pl2le1h" path="res://otra vez/FREE_Kobold Warrior 2D Pixel Art/Sprites/without_outline/IDLE.png" id="1_0rykw"]
 [ext_resource type="Texture2D" uid="uid://croq747mhb0o8" path="res://otra vez/FREE_Kobold Warrior 2D Pixel Art/Sprites/without_outline/ATTACK 1.png" id="2_0cct7"]
 [ext_resource type="Texture2D" uid="uid://r3mfyitjva6a" path="res://otra vez/FREE_Kobold Warrior 2D Pixel Art/Sprites/without_outline/RUN.png" id="3_jfcci"]
@@ -102,7 +104,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_n8qdt")
 }],
 "loop": 1,
-"name": &"default",
+"name": &"idle",
 "speed": 10.0
 }, {
 "frames": [{
@@ -122,7 +124,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_5c47j")
 }],
 "loop": 1,
-"name": &"new_animation",
+"name": &"attack",
 "speed": 13.0
 }, {
 "frames": [{
@@ -151,7 +153,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_dg87x")
 }],
 "loop": 1,
-"name": &"new_animation_1",
+"name": &"run",
 "speed": 12.0
 }]
 
@@ -159,12 +161,26 @@ animations = [{
 size = Vector2(21, 40)
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=452563021]
+collision_layer = 5
+collision_mask = 1
+script = ExtResource("p41_enemy_base")
+max_health = 2.5
+use_gravity = true
+patrol_distance = 65.0
+patrol_speed = 36.0
+chase_speed = 74.0
+detection_range = 195.0
+detection_vertical_range = 90.0
+attack_animation = &"attack"
+attack_damage = 0.50
+attack_cooldown = 1.10
+avoid_ledges = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=231630058]
 position = Vector2(4, -11)
 sprite_frames = SubResource("SpriteFrames_2h10h")
-animation = &"new_animation_1"
-autoplay = "default"
+animation = &"run"
+autoplay = "idle"
 frame_progress = 0.11597438
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=275550362]

@@ -1,0 +1,13 @@
+UNDERKINGDOM 0.04.045
+
+- W1 vuelve a ser la escena principal para probar la introducción oficial.
+- Nueva cinemática inicial del cementerio: bloqueo de controles, breve caminata automática, paneo de cámara al viejo amigo, diálogo y devolución de cámara/control al Player.
+- Nuevo sistema reutilizable de cinemáticas: scripts/cinematics/cinematic_controller.gd.
+- Nuevo sistema reutilizable de diálogos: escenas/ui/dialogue_ui.tscn + scripts/dialogue/dialogue_ui.gd.
+- Diálogo W1 almacenado fuera del código: dialogues/w1_intro_cementerio.json.
+- Retratos se toman directamente de los sprites actuales del Player y del viejo amigo; el hablante activo se ilumina y el otro se oscurece.
+- E (también Enter/Espacio como respaldo) avanza el diálogo.
+- GameManager registra cinematics_seen para no repetir w1_intro_cementerio durante la misma partida.
+- Player incluye bloqueo de controles/movimiento cinematográfico sin alterar su sistema normal de combate.
+
+Validación realizada: referencias res:// existentes y JSON válido. No se ejecutó Godot en este entorno.

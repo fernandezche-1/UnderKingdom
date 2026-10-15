@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/projectiles/enemy_projectile.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://otra vez/Flying Demon 2D Pixel Art/Sprites/projectile.png" id="2_fire"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fire"]
+radius = 7.0
+
+[node name="FuegoDiablillo" type="Area2D"]
+collision_layer = 0
+collision_mask = 1
+monitoring = true
+monitorable = false
+script = ExtResource("1_script")
+default_speed = 210.0
+default_damage = 0.5
+lifetime = 4.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+z_index = 25
+texture = ExtResource("2_fire")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_fire")

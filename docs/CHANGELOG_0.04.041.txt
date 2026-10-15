@@ -1,0 +1,7 @@
+UnderKingdom 0.04.041
+
+- W2: cuatro zonas de escalera diagonal; W/Arriba sube y S/Abajo baja siguiendo la inclinacion.
+- Player: animacion de escalada visualmente reducida (78%) y a menor velocidad.
+- Cthulhu en W2: oculto y sin colision/proceso hasta que GameManager.reveal_cthulhu() active el evento narrativo.
+- Enemigos: se activo EnemyBase y animaciones de patrulla/persecucion/ataque/golpe/muerte en diablillo, kobolds, minotauro, reina, enemis y demon slime; W2 reemplaza demonios decorativos por instancias funcionales de diablillo.
+- Cajas y estatuas: ahora estan solo en la capa de golpes (layer 3), por lo que el Player puede atravesarlas pero sus ataques siguen rompiendolas.

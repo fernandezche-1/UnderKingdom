@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://cto8fkkxfy58x"]
 
+[ext_resource type="Script" path="res://scripts/combat/enemy_base.gd" id="p41_enemy_base"]
+
 [ext_resource type="Texture2D" uid="uid://u3gjacjqyfca" path="res://mino_v1.1_free/mino_v1.1_free/animations/atk_1/atk_1_1.png" id="1_ba5ja"]
 [ext_resource type="Texture2D" uid="uid://bikwq661bmqje" path="res://mino_v1.1_free/mino_v1.1_free/animations/atk_1/atk_1_2.png" id="2_st6dw"]
 [ext_resource type="Texture2D" uid="uid://bkocpvilg2fhp" path="res://mino_v1.1_free/mino_v1.1_free/animations/atk_1/atk_1_3.png" id="3_d0kgx"]
@@ -199,6 +201,20 @@ animations = [{
 size = Vector2(41, 80)
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=468097024]
+collision_layer = 5
+collision_mask = 1
+script = ExtResource("p41_enemy_base")
+max_health = 5.0
+use_gravity = true
+patrol_distance = 55.0
+patrol_speed = 28.0
+chase_speed = 62.0
+detection_range = 210.0
+detection_vertical_range = 100.0
+attack_animation = &"attack"
+attack_damage = 0.75
+attack_cooldown = 1.35
+avoid_ledges = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=452997367]
 sprite_frames = SubResource("SpriteFrames_2h10h")
