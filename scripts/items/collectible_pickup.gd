@@ -12,6 +12,12 @@ var _can_pickup: bool = false
 
 
 func _ready() -> void:
+    # Colocado en el mapa y ya recogido antes de recargarlo (muerte): no vuelve.
+    # Los que sueltan cofres y objetos rotos no tienen owner y no se registran.
+    if GameManager.is_object_consumed(self):
+        queue_free()
+        return
+
     monitoring = false
     monitorable = true
 
@@ -38,6 +44,7 @@ func _physics_process(_delta: float) -> void:
     for body in get_overlapping_bodies():
         if body != null and body.is_in_group("player"):
             if _try_collect(body):
+                GameManager.mark_object_consumed(self)
                 queue_free()
                 return
 
