@@ -119,4 +119,6 @@ func _request_transition() -> void:
     if trigger_delay > 0.0:
         await get_tree().create_timer(trigger_delay).timeout
 
-    get_tree().change_scene_to_file(target_scene_path)
+    # Diferido: al entrar tocando la zona estamos dentro de una señal de física
+    # y Godot no permite quitar la escena en ese momento.
+    get_tree().call_deferred("change_scene_to_file", target_scene_path)
