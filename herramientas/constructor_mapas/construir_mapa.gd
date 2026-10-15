@@ -1,18 +1,61 @@
 extends Node
 
-## Convierte un mapa escrito como texto (una letra = una pieza) en una escena
-## de Godot hecha con tiles.
+## Convierte un mapa escrito como texto (una letra = una pieza) o dibujado como
+## imagen (un píxel = una pieza) en una escena de Godot hecha con tiles.
 ##
 ## Uso, desde la carpeta del proyecto:
 ##   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/ejemplo_cueva.txt
+## Otras órdenes (en lugar del archivo):
+##   -- --paleta              escribe la paleta de colores en mapas_texto/
+##   -- --a-png <mapa.txt>    convierte el mapa de texto en un PNG para dibujarlo
 ##
-## La leyenda de letras está en mapas_texto/ejemplo_cueva.txt. Las piezas de
-## cada tileset (bloques, decorados, líquidos...) se definen en
+## La leyenda está en mapas_texto/LEYENDA.md. Las piezas de cada tileset
+## (bloques, decorados, líquidos...) se definen en
 ## herramientas/constructor_mapas/tilesets/<nombre>.gd.
 ## Solo sobrescribe escenas que haya creado este mismo constructor.
 
 const TILESETS_DIR := "res://herramientas/constructor_mapas/tilesets/"
 const GENERATED_META := &"generado_por_constructor"
+const PALETTE_PATH := "res://mapas_texto/paleta_niveles"
+
+## Color de cada letra en los mapas dibujados como imagen (blanco o
+## transparente = vacío). Los colores siguen las marcas del proyecto donde
+## existen: verde one-way, rojo/rosado muerte, azul siguiente, morado anterior.
+const COLORS := {
+    "#": ["000000", "bloque sólido"],
+    "/": ["404040", "rampa que sube a la derecha"],
+    "\\": ["808080", "rampa que sube a la izquierda"],
+    "=": ["00ff00", "plataforma de una vía"],
+    "~": ["ff0000", "lava (mata)"],
+    "^": ["ff80c0", "pinchos (matan)"],
+    "F": ["ff8000", "trampa de fuego (quema)"],
+    "%": ["0080ff", "agua (decorativa)"],
+    "H": ["8b4513", "escalera"],
+    "P": ["00ffff", "inicio del Player"],
+    ">": ["0000ff", "salida al mapa siguiente"],
+    "<": ["8000ff", "salida al mapa anterior"],
+    "S": ["007000", "checkpoint"],
+    "c": ["c06000", "cofre"],
+    "$": ["ffd700", "moneda"],
+    "!": ["ff00ff", "poción"],
+    "v": ["800000", "Vanguardia"],
+    "a": ["808000", "Aprendis"],
+    "k": ["008080", "kolbo"],
+    "j": ["000080", "kolbo2 (rápido)"],
+    "q": ["800080", "kolbo3 (resistente)"],
+    "d": ["c00060", "diablillo"],
+    "M": ["503000", "mino"],
+    "t": ["ffc090", "antorcha"],
+    "f": ["c03000", "fogata"],
+    "b": ["a08060", "barril"],
+    "x": ["e0b060", "caja"],
+    "h": ["c0ffc0", "hongos"],
+    "g": ["60c060", "pasto"],
+    "r": ["c0c0ff", "cristales"],
+    "T": ["206020", "árbol (2x3)"],
+    "E": ["604080", "estantería (3x3)"],
+    "C": ["e0e0a0", "tienda de campaña (3x2)"],
+}
 
 const ENEMIES := {
     "v": "res://escenas/enemigos/vanguardia.tscn",
@@ -38,7 +81,13 @@ func _ready() -> void:
     if args.is_empty():
         _fail("Falta el archivo de texto. Uso: ... construir_mapa.tscn -- mapas_texto/mi_mapa.txt")
         return
-    var error := _build(args[0])
+    var error := ""
+    if args[0] == "--paleta":
+        error = _write_palette()
+    elif args[0] == "--a-png":
+        error = _text_to_png(args[1] if args.size() > 1 else "")
+    else:
+        error = _build(args[0])
     if error != "":
         _fail(error)
         return
@@ -50,13 +99,15 @@ func _fail(message: String) -> void:
     get_tree().quit(1)
 
 
-func _build(text_path: String) -> String:
-    var file := FileAccess.open(text_path if text_path.begins_with("res://") else "res://" + text_path, FileAccess.READ)
+func _res(path: String) -> String:
+    return path if path.begins_with("res://") else "res://" + path
+
+
+## Cabecera "clave: valor" hasta la línea ---, después el mapa de texto.
+func _read_map_file(text_path: String, options: Dictionary) -> String:
+    var file := FileAccess.open(_res(text_path), FileAccess.READ)
     if file == null:
         return "No se pudo abrir %s" % text_path
-
-    # Cabecera "clave: valor" hasta la línea ---, después el mapa.
-    var options := {"tileset": "mazmorra", "bloques": "", "fondo": "cueva", "escena": ""}
     var in_map := false
     while not file.eof_reached():
         var line := file.get_line()
@@ -69,8 +120,107 @@ func _build(text_path: String) -> String:
                 options[parts[0].strip_edges()] = parts[1].strip_edges()
         elif line.strip_edges() != "":
             _grid.append(line.rstrip(" \t"))
+    return ""
+
+
+func _color_letters() -> Dictionary:
+    var by_color := {}
+    for letter in COLORS:
+        by_color[COLORS[letter][0]] = letter
+    return by_color
+
+
+## Un píxel = una pieza. Blanco o transparente = vacío; cualquier otro color
+## tiene que estar exactamente en la paleta (sin suavizado al dibujar).
+func _grid_from_image(image_path: String) -> String:
+    var img := Image.load_from_file(ProjectSettings.globalize_path(_res(image_path)))
+    if img == null or img.is_empty():
+        return "No se pudo abrir la imagen %s" % image_path
+    img.convert(Image.FORMAT_RGBA8)
+    var by_color := _color_letters()
+    var unknown := {}
+    for y in img.get_height():
+        var row := ""
+        for x in img.get_width():
+            var c := img.get_pixel(x, y)
+            var hex := c.to_html(false)
+            if c.a < 0.5 or hex == "ffffff":
+                row += "."
+            elif by_color.has(hex):
+                row += by_color[hex]
+            else:
+                row += "."
+                if unknown.size() < 10:
+                    unknown["#%s en (%d, %d)" % [hex, x, y]] = true
+        _grid.append(row)
+    if not unknown.is_empty():
+        return "La imagen tiene colores que no están en la paleta (¿pincel con suavizado?): %s" % ", ".join(unknown.keys())
+    return ""
+
+
+## Paleta para Aseprite, GIMP, Krita o Piskel (.gpl) y una muestra en PNG.
+func _write_palette() -> String:
+    var gpl := "GIMP Palette\nName: UnderKingdom niveles\nColumns: 8\n#\n"
+    gpl += "255 255 255\tvacío (.)\n"
+    var letters := COLORS.keys()
+    var swatches := Image.create(8 * 8, ceili((letters.size() + 1) / 8.0) * 8, false, Image.FORMAT_RGBA8)
+    swatches.fill(Color.WHITE)
+    for i in letters.size():
+        var c := Color.html(COLORS[letters[i]][0])
+        gpl += "%3d %3d %3d\t%s (%s)\n" % [c.r8, c.g8, c.b8, COLORS[letters[i]][1], letters[i]]
+        swatches.fill_rect(Rect2i(((i + 1) % 8) * 8, ((i + 1) / 8) * 8, 8, 8), c)
+    var file := FileAccess.open(PALETTE_PATH + ".gpl", FileAccess.WRITE)
+    if file == null:
+        return "No se pudo escribir %s.gpl" % PALETTE_PATH
+    file.store_string(gpl)
+    file.close()
+    var err := swatches.save_png(ProjectSettings.globalize_path(PALETTE_PATH + ".png"))
+    if err != OK:
+        return "No se pudo escribir %s.png" % PALETTE_PATH
+    print("CONSTRUCTOR: paleta escrita en %s.gpl y %s.png" % [PALETTE_PATH, PALETTE_PATH])
+    return ""
+
+
+## Convierte un mapa de texto en un PNG con los colores de la paleta, para
+## seguir editándolo como dibujo. Escribe <mapa>.png junto al .txt.
+func _text_to_png(text_path: String) -> String:
+    if text_path == "":
+        return "Uso: -- --a-png mapas_texto/mi_mapa.txt"
+    var error := _read_map_file(text_path, {})
+    if error != "":
+        return error
     if _grid.is_empty():
-        return "El archivo no tiene mapa después de la línea ---"
+        return "%s no tiene mapa de texto después de la línea ---" % text_path
+    var width := 0
+    for row in _grid:
+        width = maxi(width, row.length())
+    var img := Image.create(width, _grid.size(), false, Image.FORMAT_RGBA8)
+    img.fill(Color.WHITE)
+    for y in _grid.size():
+        for x in _grid[y].length():
+            var ch := _grid[y][x]
+            if COLORS.has(ch):
+                img.set_pixel(x, y, Color.html(COLORS[ch][0]))
+    var out := _res(text_path).get_basename() + ".png"
+    if img.save_png(ProjectSettings.globalize_path(out)) != OK:
+        return "No se pudo escribir %s" % out
+    print("CONSTRUCTOR: %s escrita (%d x %d). En el .txt cambia el mapa por \"imagen: %s\"." % [out, width, _grid.size(), out.trim_prefix("res://")])
+    return ""
+
+
+func _build(text_path: String) -> String:
+    var options := {"tileset": "mazmorra", "bloques": "", "fondo": "cueva", "escena": "", "imagen": ""}
+    var error := _read_map_file(text_path, options)
+    if error != "":
+        return error
+    if options.imagen != "":
+        if not _grid.is_empty():
+            return "El archivo tiene \"imagen:\" y también un mapa de texto; usa solo uno."
+        error = _grid_from_image(options.imagen)
+        if error != "":
+            return error
+    if _grid.is_empty():
+        return "El archivo no tiene mapa después de la línea --- ni una línea \"imagen:\"."
     var ts_path: String = TILESETS_DIR + options.tileset + ".gd"
     if not ResourceLoader.exists(ts_path):
         return "tileset: '%s' no existe (falta %s)" % [options.tileset, ts_path]
