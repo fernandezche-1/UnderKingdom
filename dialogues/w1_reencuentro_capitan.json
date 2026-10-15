@@ -8,43 +8,19 @@
   {
     "speaker_id": "player",
     "name": "GUERRERO",
-    "text": "Yo tampoco pensaba volver.",
-    "expression": "neutral"
-  },
-  {
-    "speaker_id": "friend",
-    "name": "CAPITÁN",
-    "text": "Entonces ya te enteraste.",
-    "expression": "sad"
-  },
-  {
-    "speaker_id": "player",
-    "name": "GUERRERO",
-    "text": "Sé que está muerta.",
+    "text": "Tampoco pensaba volver. Hasta que supe que la princesa había muerto.",
     "expression": "sad"
   },
   {
     "speaker_id": "friend",
     "name": "CAPITÁN",
-    "text": "¿Y por eso has regresado con la espada en la mano?",
-    "expression": "neutral"
-  },
-  {
-    "speaker_id": "player",
-    "name": "GUERRERO",
-    "text": "Regresé porque le hice una promesa a su padre.",
-    "expression": "neutral"
-  },
-  {
-    "speaker_id": "friend",
-    "name": "CAPITÁN",
-    "text": "Protegerla.",
+    "text": "Sé lo que significaba para ti.",
     "expression": "sad"
   },
   {
     "speaker_id": "player",
     "name": "GUERRERO",
-    "text": "Y fallé.",
+    "text": "Le prometí al rey que la protegería. Y fallé.",
     "expression": "sad"
   },
   {
@@ -56,13 +32,7 @@
   {
     "speaker_id": "player",
     "name": "GUERRERO",
-    "text": "La Reina sí.",
-    "expression": "anger"
-  },
-  {
-    "speaker_id": "player",
-    "name": "GUERRERO",
-    "text": "Ella permitió que la llevaran al ritual.",
+    "text": "La Reina sí. Permitió que la llevaran al ritual.",
     "expression": "anger"
   },
   {
@@ -74,147 +44,70 @@
   {
     "speaker_id": "player",
     "name": "GUERRERO",
-    "text": "¿Estás diciendo que es mentira?",
+    "text": "¿Insinúas que es mentira?",
     "expression": "anger"
   },
   {
     "speaker_id": "friend",
     "name": "CAPITÁN",
-    "text": "Estoy diciendo que desde aquella noche nadie cuenta la historia completa.",
+    "text": "Solo digo que nadie cuenta la historia completa.",
     "expression": "neutral"
   },
   {
     "speaker_id": "friend",
     "name": "CAPITÁN",
-    "text": "El rey desapareció.",
+    "text": "El rey desapareció, los caminos se cerraron y nuestros propios soldados se volvieron contra nosotros.",
     "expression": "fear",
     "camera_cue": "cementery"
   },
   {
-    "speaker_id": "friend",
-    "name": "CAPITÁN",
-    "text": "Los caminos fueron cerrados.",
-    "expression": "neutral"
-  },
-  {
-    "speaker_id": "friend",
-    "name": "CAPITÁN",
-    "text": "Los soldados empezaron a atacar incluso a los suyos.",
-    "expression": "fear"
-  },
-  {
-    "speaker_id": "friend",
-    "name": "CAPITÁN",
-    "text": "Y cada noche aparecen cosas que antes solo existían en cuentos.",
-    "expression": "fear"
-  },
-  {
     "speaker_id": "player",
     "name": "GUERRERO",
-    "text": "No he venido por monstruos.",
-    "expression": "neutral"
-  },
-  {
-    "speaker_id": "friend",
-    "name": "CAPITÁN",
-    "text": "Lo sé.",
-    "expression": "neutral"
-  },
-  {
-    "speaker_id": "player",
-    "name": "GUERRERO",
-    "text": "Voy a encontrar a la Reina.",
+    "text": "Nada de eso cambia lo que le hicieron.",
     "expression": "anger"
   },
   {
     "speaker_id": "friend",
     "name": "CAPITÁN",
-    "text": "Entonces hazme un favor.",
-    "expression": "neutral"
-  },
-  {
-    "speaker_id": "player",
-    "name": "GUERRERO",
-    "text": "¿Cuál?",
-    "expression": "neutral"
-  },
-  {
-    "speaker_id": "friend",
-    "name": "CAPITÁN",
-    "text": "Busca respuestas antes de decidir a quién debes matar.",
-    "expression": "neutral"
-  },
-  {
-    "speaker_id": "player",
-    "name": "GUERRERO",
-    "text": "Ya sé quién es responsable.",
-    "expression": "anger"
-  },
-  {
-    "speaker_id": "friend",
-    "name": "CAPITÁN",
-    "text": "Eso mismo pensábamos todos.",
-    "expression": "sad"
-  },
-  {
-    "speaker_id": "friend",
-    "name": "CAPITÁN",
-    "text": "Hasta que empezamos a encontrar los cuerpos.",
+    "text": "Después encontramos los cuerpos... Y comprendimos que había algo más detrás de todo esto.",
     "expression": "fear",
     "pause_before": 0.5
   },
   {
     "speaker_id": "player",
     "name": "GUERRERO",
-    "text": "¿Qué cuerpos?",
-    "expression": "neutral"
-  },
-  {
-    "speaker_id": "friend",
-    "name": "CAPITÁN",
-    "text": "Sigue el camino hacia el reino. Lo entenderás pronto.",
-    "expression": "neutral"
-  },
-  {
-    "speaker_id": "player",
-    "name": "GUERRERO",
-    "text": "Hablas como si supieras algo.",
-    "expression": "neutral"
-  },
-  {
-    "speaker_id": "friend",
-    "name": "CAPITÁN",
-    "text": "Sé lo suficiente para tener miedo.",
-    "expression": "fear"
-  },
-  {
-    "speaker_id": "friend",
-    "name": "CAPITÁN",
-    "text": "Ten cuidado, viejo amigo.",
-    "expression": "sad"
-  },
-  {
-    "speaker_id": "friend",
-    "name": "CAPITÁN",
-    "text": "Este reino ya no distingue entre héroes y cadáveres.",
-    "expression": "fear"
-  },
-  {
-    "speaker_id": "friend",
-    "name": "CAPITÁN",
-    "text": "Pero no voy a permitir que sigas adelante.",
-    "expression": "neutral"
-  },
-  {
-    "speaker_id": "player",
-    "name": "GUERRERO",
-    "text": "Entonces no me dejas otra elección.",
+    "text": "No vine a perseguir monstruos. Voy a encontrar a la Reina.",
     "expression": "anger"
   },
   {
     "speaker_id": "friend",
     "name": "CAPITÁN",
-    "text": "Ojalá la hubiera.",
-    "expression": "sad"
+    "text": "Entonces busca respuestas antes de decidir a quién matar.",
+    "expression": "neutral"
+  },
+  {
+    "speaker_id": "player",
+    "name": "GUERRERO",
+    "text": "Apártate.",
+    "expression": "anger"
+  },
+  {
+    "speaker_id": "friend",
+    "name": "CAPITÁN",
+    "text": "No puedo dejarte pasar mientras solo busques venganza.",
+    "expression": "neutral"
+  },
+  {
+    "speaker_id": "player",
+    "name": "GUERRERO",
+    "text": "Entonces tendrás que detenerme.",
+    "expression": "anger"
+  },
+  {
+    "speaker_id": "friend",
+    "name": "CAPITÁN",
+    "text": "Eso haré, viejo amigo.",
+    "expression": "sad",
+    "pause_before": 0.6
   }
 ]
