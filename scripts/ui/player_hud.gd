@@ -52,4 +52,4 @@ func _on_coins_changed(value: int) -> void:
 
 
 func _on_potions_changed(value: int) -> void:
-    potions_label.text = "Pociones: %d" % value
+    potions_label.text = "Pociones: %d [C]" % value

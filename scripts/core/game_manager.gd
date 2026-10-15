@@ -77,6 +77,14 @@ func add_potions(amount: int) -> void:
     potions_changed.emit(potions)
 
 
+func use_potion() -> bool:
+    if potions <= 0:
+        return false
+    potions -= 1
+    potions_changed.emit(potions)
+    return true
+
+
 func mark_w2_knight_defeated() -> void:
     if w2_knight_defeated:
         return

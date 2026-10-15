@@ -87,6 +87,8 @@ const ATTACK_PROFILES := {
 @export_range(-1000.0, 0.0, 10.0) var knockback_vertical: float = -220.0
 @export_range(0.0, 1.0, 0.01) var hurt_animation_time: float = 0.22
 @export_range(0.0, 1.0, 0.05) var defense_damage_reduction: float = 1.0
+## Vida que devuelve cada poción (C). 1.0 = un corazón.
+@export_range(0.25, 4.0, 0.25) var potion_heal_amount: float = 1.0
 
 @export_category("Guardia")
 @export_range(1, 10, 1) var guard_max_hits: int = 3
@@ -264,6 +266,8 @@ func _unhandled_input(event: InputEvent) -> void:
         KEY_E:
             if not _try_context_interaction():
                 request_ultimate()
+        KEY_C:
+            drink_potion()
         KEY_R:
             if enable_debug_keys:
                 respawn_now()
@@ -1508,6 +1512,17 @@ func heal(amount: float) -> void:
     current_health = minf(current_health + amount, max_health)
     health_changed.emit(current_health, max_health)
     _update_hud("CURACIÓN")
+
+
+## Toma una poción del inventario. No se gasta con la vida llena.
+func drink_potion() -> bool:
+    if dead or current_health >= max_health:
+        return false
+    if not GameManager.use_potion():
+        return false
+    heal(potion_heal_amount)
+    UnderkingdomCombatFX.heal(self, sprite)
+    return true
 
 
 func die() -> void:

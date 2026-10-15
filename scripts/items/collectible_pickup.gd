@@ -50,7 +50,7 @@ func _try_collect(player: Node) -> bool:
             return true
 
         "potion":
-            # La poción pasa al inventario. Su uso se definirá posteriormente.
+            # La poción pasa al inventario; el Player la toma con C.
             GameManager.add_potions(maxi(1, int(round(amount))))
             return true
 
