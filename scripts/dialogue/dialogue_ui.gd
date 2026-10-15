@@ -87,9 +87,10 @@ func _advance() -> void:
         right_portrait.visible = false
     if _portrait_tween != null and _portrait_tween.is_running():
         _portrait_tween.kill()
-    _portrait_tween = create_tween()
     var active_portrait := left_portrait if player_active else right_portrait
     if player_active or friend_active:
+        # Solo se crea el tween si hay retrato que animar (la narración no tiene).
+        _portrait_tween = create_tween()
         active_portrait.pivot_offset = active_portrait.size * 0.5
         active_portrait.scale = Vector2(0.95, 0.95)
         _portrait_tween.tween_property(active_portrait, "scale", Vector2.ONE, 0.15)

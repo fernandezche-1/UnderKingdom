@@ -71,7 +71,7 @@ func _on_body_entered(body: Node) -> void:
 
     if body.is_in_group(target_group):
         _spent = true
-        monitoring = false
+        set_deferred("monitoring", false)
         var damage := _damage_for_travel_distance()
         if body.has_method("take_damage_from"):
             body.call("take_damage_from", global_position, damage)
@@ -83,7 +83,7 @@ func _on_body_entered(body: Node) -> void:
     # El proyectil también se destruye contra terreno/cuerpos sólidos.
     if body is PhysicsBody2D:
         _spent = true
-        monitoring = false
+        set_deferred("monitoring", false)
         queue_free()
 
 
