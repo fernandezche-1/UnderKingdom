@@ -80,6 +80,14 @@ Esta etapa junta en una sola versión dos líneas de trabajo que salieron de la 
 - **Opción de prueba**: `reload_map_on_death` (en `player.gd`) desactivado vuelve al comportamiento anterior, en el que el Player reaparece en el sitio sin reiniciar nada.
 - **Errores corregidos**: el checkpoint del Capitán y la llave del jefe desactivaban `monitoring` dentro de `body_entered`. Ahora lo hacen con `set_deferred`.
 
+## Diálogo del Capitán y enemigos que bloqueaban
+- **Reencuentro con el Capitán** (`dialogues/w1_reencuentro_capitan.json`): usa el guion de "Cinemática 2" y pasa de 36 a 18 líneas.
+  - La frase larga del Capitán se parte en dos cuadros.
+  - El paneo al reino destruido va en la segunda parte.
+  - Hay pausas breves antes de "Después encontramos los cuerpos..." y de "Eso haré, viejo amigo.".
+- **Enemigos acorralados** (`enemy_base.gd`): si el Player está demasiado cerca y el enemigo no puede retroceder, ataca. Antes se quedaba quieto para siempre, bloqueando el paso.
+- **Cuerpos sin IA**: `boss_mina` y `CharacterBody2D4` de Mundo 2, y Cthulhu del jefe final, pasan a `collision_layer = 0`. Siguen viéndose, pero ya no son paredes invisibles. Al darles IA hay que volver a ponerlos en `collision_layer = 5`.
+
 ## Pendientes, en orden de prioridad
 1. Probar jugando: la intro, el reencuentro con el Capitán, el combate y la muerte con reaparición en el checkpoint. Ninguna de las dos versiones del compañero se había ejecutado en Godot.
 2. Pausa, menú principal y guardado persistente. Hoy todo se pierde al cerrar el juego.
