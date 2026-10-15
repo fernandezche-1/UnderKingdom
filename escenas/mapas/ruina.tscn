@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://3gjr42dtu67s" path="res://sprites/spike Trap5.png" id="6_55nhp"]
 [ext_resource type="Texture2D" uid="uid://b3poje2vhbmbv" path="res://tile/Dungeon Tile Set.png" id="7_cwjk6"]
 [ext_resource type="PackedScene" uid="uid://y87jmv0hwgiu" path="res://escenas/enemigos/kolbo.tscn" id="8_55nhp"]
-[ext_resource type="PackedScene" uid="uid://b0u6og171twbp" path="res://escenas/jefes/capitan.tscn" id="9_hc7wg"]
 [ext_resource type="PackedScene" uid="uid://bum81cytf4ina" path="res://escenas/enemigos/kolbo2.tscn" id="9_hdfiu"]
 [ext_resource type="PackedScene" uid="uid://cto8fkkxfy58x" path="res://escenas/enemigos/mino.tscn" id="10_gij1f"]
 [ext_resource type="PackedScene" uid="uid://d0vs51m66raus" path="res://escenas/enemigos/kolbo3.tscn" id="11_vl7fs"]
@@ -6549,9 +6548,6 @@ sprite_frames = SubResource("SpriteFrames_04nvu")
 
 [node name="CharacterBody2D" parent="." unique_id=12978115 instance=ExtResource("8_55nhp")]
 position = Vector2(141, 186)
-
-[node name="CharacterBody2D3" parent="CharacterBody2D" unique_id=1870597147 instance=ExtResource("9_hc7wg")]
-position = Vector2(510, 83)
 
 [node name="CharacterBody2D2" parent="." unique_id=452563021 instance=ExtResource("9_hdfiu")]
 position = Vector2(386, 443)
