@@ -6188,6 +6188,7 @@ polygon = PackedVector2Array(1, 699, 147, 698, 146, 714, 164, 713, 164, 722, 214
 
 [node name="boss" parent="." unique_id=440036481 instance=ExtResource("2_3t1mq")]
 position = Vector2(758, 618)
+collision_layer = 0
 
 [node name="SistemasMapa" type="Node2D" parent="."]
 
