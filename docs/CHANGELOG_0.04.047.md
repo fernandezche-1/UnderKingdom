@@ -88,6 +88,31 @@ Esta etapa junta en una sola versión dos líneas de trabajo que salieron de la 
 - **Enemigos acorralados** (`enemy_base.gd`): si el Player está demasiado cerca y el enemigo no puede retroceder, ataca. Antes se quedaba quieto para siempre, bloqueando el paso.
 - **Cuerpos sin IA**: `boss_mina` y `CharacterBody2D4` de Mundo 2, y Cthulhu del jefe final, pasan a `collision_layer = 0`. Siguen viéndose, pero ya no son paredes invisibles. Al darles IA hay que volver a ponerlos en `collision_layer = 5`.
 
+## Niveles con tiles (constructor de mapas)
+Los niveles nuevos se hacen con tiles en vez de fondos pintados. Los mapas actuales se quedan como están. La guía para el equipo está en `mapas_texto/LEYENDA.md`.
+
+- **Nivel dibujado como imagen.** Con `imagen:` en el `.txt`, cada píxel es una pieza y cada color una letra.
+  - La paleta está en `mapas_texto/paleta_niveles.gpl`, para Aseprite, GIMP, Krita y Piskel.
+  - `-- --a-png` convierte un mapa de letras en PNG.
+- **Tilesets como datos.** Cada tileset es un archivo en `herramientas/constructor_mapas/tilesets/` (hoy `mazmorra.gd`) y se elige con `tileset:`. Integrar un paquete nuevo es copiar ese archivo y cambiar las coordenadas de sus piezas.
+- **Elementos de juego:**
+  - pinchos `^` (KillZone), trampa de fuego `F` (BurnZone) y checkpoint `S`;
+  - cofre `c`, moneda `$` y poción `!`;
+  - salidas `>` / `<`, con su spawn de llegada.
+- **Fondo con parallax:** opción `parallax:`.
+- **Escenas nuevas:**
+  - `escenas/sistemas/checkpoint.tscn` (`checkpoint.gd`);
+  - `escenas/sistemas/trampa_fuego.tscn`;
+  - `escenas/objetos/cofre.tscn`.
+- **Arte derivado,** sin tocar los originales:
+  - `sprites/trampas/fuego_rojo.png` es la hoja de "Red Fire Trap" reducida a 1/3. El original estaba ampliado x3, y reducido coincide píxel a píxel, así que se usa a escala 1.
+  - `sprites/trampas/pinchos.png` es el recorte de `spike Trap5.png`.
+- **Correcciones:**
+  - Las zonas que genera el constructor (lava, escaleras) quedaban con el tamaño por defecto de su escena. Ahora tienen el de su tramo; se regeneró `ejemplo_cueva`.
+  - `map_transition.gd` cambia de escena en diferido; antes daba error al cruzar una salida automática.
+  - Las monedas y pociones colocadas en un mapa no reaparecen al morir.
+- **Muestra:** `mapas_texto/ejemplo_nivel.txt` + `.png`. Se probó sin ventana con todos los elementos: recoger, abrir el cofre, el checkpoint, quemarse, morir en los pinchos y reaparecer con lo recogido conservado, y cruzar la salida.
+
 ## Pendientes, en orden de prioridad
 1. Probar jugando: la intro, el reencuentro con el Capitán, el combate y la muerte con reaparición en el checkpoint. Ninguna de las dos versiones del compañero se había ejecutado en Godot.
 2. Pausa, menú principal y guardado persistente. Hoy todo se pierde al cerrar el juego.

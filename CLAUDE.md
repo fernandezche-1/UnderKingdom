@@ -18,7 +18,7 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
 - `escenas/enemigos/`, `escenas/jefes/`, `escenas/player.tscn`, `escenas/sistemas/` (one-way, kill zone, burn zone, climb zone, transición, spawn point), `escenas/items/`, `escenas/ui/`.
 - `scripts/`: `player/player.gd`, `combat/enemy_base.gd` (base de todo enemigo con IA), `bosses/captain_boss.gd`, `core/game_manager.gd` (autoload `GameManager`), `ui/` (HUD, barra de jefe, barra de enemigo), `fx/combat_fx.gd`, `transitions/`, `environment/`, `camera/`.
 - `docs/`: historial de cada etapa (P1…P30). Es la fuente de verdad de lo decidido y lo pendiente; documentar etapas nuevas con el mismo formato.
-- Pruebas de mapas con tiles: `assets_prueba/dungeon_platformer/` (tileset CC0), `mapas_texto/*.txt` + `herramientas/constructor_mapas/construir_mapa.tscn` (genera una escena desde texto; leyenda en `mapas_texto/ejemplo_cueva.txt`; nunca sobrescribe mapas hechos a mano).
+- Niveles con tiles: `mapas_texto/<nivel>.txt` (opciones) + `<nivel>.png` (un píxel = una pieza) o mapa de letras, y `herramientas/constructor_mapas/construir_mapa.tscn` genera la escena; guía, colores y letras en `mapas_texto/LEYENDA.md`; cada tileset se define en `herramientas/constructor_mapas/tilesets/<nombre>.gd` (hoy `mazmorra`, CC0 en `assets_prueba/dungeon_platformer/`). Nunca sobrescribe mapas hechos a mano.
 
 ## Combate (resumen)
 

@@ -1,4 +1,6 @@
 ; MAPA ESCRITO COMO TEXTO: cada letra es una pieza de 16 x 16 px.
+; La guía completa (dibujar el nivel como imagen, todas las letras y colores,
+; checkpoints, cofres, salidas, parallax) está en mapas_texto/LEYENDA.md.
 ; Para generar la escena, desde la carpeta del proyecto:
 ;   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/ejemplo_cueva.txt
 ;
