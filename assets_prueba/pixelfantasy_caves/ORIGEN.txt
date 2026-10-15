@@ -1,0 +1,9 @@
+Pixel Fantasy - Caves 1.0
+
+Recibido como "PixelFantasy_Caves_1.0.zip" el 2026-10-15 para los niveles con tiles.
+Licencia: el ZIP no trae archivo de licencia. Confirmar de dónde se descargó y
+sus condiciones antes de usarlo fuera de pruebas.
+
+Solo se copiaron los fondos (fondo1..fondo4a = background1..background4a.png).
+El tileset (mainlev_build.png) y los props no se usan todavía: son piezas
+para componer a mano, no un juego de bloques de 16 px.
