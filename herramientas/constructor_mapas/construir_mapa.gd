@@ -229,7 +229,7 @@ func _text_to_png(text_path: String) -> String:
 func _build(text_path: String) -> String:
     var options := {
         "tileset": "mazmorra", "bloques": "", "fondo": "cueva", "escena": "", "imagen": "",
-        "siguiente": "", "anterior": "", "cofre_monedas": "3", "cofre_pociones": "1",
+        "siguiente": "", "anterior": "", "cofre_monedas": "3", "cofre_pociones": "1", "parallax": "",
     }
     var error := _read_map_file(text_path, options)
     if error != "":
@@ -273,6 +273,20 @@ func _build(text_path: String) -> String:
         var target := String(options[option]).get_slice("#", 0)
         if target != "" and not ResourceLoader.exists(target):
             print("CONSTRUCTOR: aviso, %s todavía no existe; la salida funcionará cuando se cree." % target)
+    # parallax: "<imagen> <velocidad>; <imagen> <velocidad>", de la más lejana
+    # a la más cercana. Velocidad 0 = quieta en pantalla, 1 = se mueve con el mapa.
+    var parallax_layers := []
+    for spec in String(options.parallax).split(";", false):
+        spec = spec.strip_edges()
+        var cut := spec.rfind(" ")
+        if cut < 0 or not spec.substr(cut + 1).is_valid_float():
+            return "parallax: falta la velocidad en '%s' (por ejemplo \"fondos/cielo.png 0.2\")." % spec
+        var image_path := _res(spec.substr(0, cut).strip_edges())
+        if not ResourceLoader.exists(image_path):
+            return "parallax: no existe la imagen %s" % image_path
+        parallax_layers.append([image_path, float(spec.substr(cut + 1))])
+    if not parallax_layers.is_empty() and options.fondo != "ninguno":
+        print("CONSTRUCTOR: aviso, el fondo '%s' tapa el parallax; usa \"fondo: ninguno\" para verlo." % options.fondo)
 
     var tex: Texture2D = load(_ts.textura)
     var img := tex.get_image()
@@ -282,6 +296,20 @@ func _build(text_path: String) -> String:
     root.name = out_path.get_file().get_basename().to_pascal_case()
     root.set_meta(GENERATED_META, true)
     root.set_meta(&"texto_fuente", text_path)
+
+    for i in parallax_layers.size():
+        var layer_tex: Texture2D = load(parallax_layers[i][0])
+        var parallax := Parallax2D.new()
+        # Sigue a la cámara en vertical y se desplaza más lento en horizontal.
+        parallax.scroll_scale = Vector2(parallax_layers[i][1], 0.0)
+        parallax.repeat_size = Vector2(layer_tex.get_width(), 0)
+        parallax.repeat_times = 2
+        parallax.z_index = -20 + i
+        _child(root, parallax, "Parallax%d" % (i + 1))
+        var picture := Sprite2D.new()
+        picture.texture = layer_tex
+        picture.centered = false
+        _child(parallax, picture, "Imagen")
 
     var fondo := _layer(root, "Fondo", _tileset(tex, img, "decorado"), -10)
     var liquidos := _layer(root, "Liquidos", _tileset(tex, img, "decorado"), 2)
