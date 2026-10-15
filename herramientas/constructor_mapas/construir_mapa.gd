@@ -208,7 +208,10 @@ func _build(text_path: String) -> String:
         return "Falta la P (inicio del Player) en el mapa."
     var marker: Node2D = _child(sistemas, (load("res://escenas/sistemas/spawn_point.tscn") as PackedScene).instantiate(), "SpawnInicio")
     marker.position = spawn - Vector2(0, _feet_offset("res://escenas/player.tscn"))
-    _place_on_floor(root, "res://escenas/player.tscn", int(spawn.x / T), int(spawn.y / T) - 1, "player")
+    var player := _place_on_floor(root, "res://escenas/player.tscn", int(spawn.x / T), int(spawn.y / T) - 1, "player")
+    # Los mapas generados son de prueba: teclas de depuración (R/H/J/K) y panel activos.
+    player.set("enable_debug_keys", true)
+    player.set("show_debug_hud", true)
 
     var packed := PackedScene.new()
     var err := packed.pack(root)

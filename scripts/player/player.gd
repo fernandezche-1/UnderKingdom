@@ -147,8 +147,8 @@ const ATTACK_PROFILES := {
 @export_range(0.0, 400.0, 4.0) var fall_margin_below_map: float = 64.0
 
 @export_category("Pruebas")
-@export var enable_debug_keys: bool = true
-@export var show_debug_hud: bool = true
+@export var enable_debug_keys: bool = false
+@export var show_debug_hud: bool = false
 @export var blink_while_invulnerable: bool = true
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
