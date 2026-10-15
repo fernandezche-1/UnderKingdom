@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dnbheyjg0lqji" path="res://otra vez/FREE_Kobold Warrior 2D Pixel Art/Sprites/with_outline/RUN.png" id="3_esoo2"]
 
 [ext_resource type="Script" path="res://scripts/combat/enemy_base.gd" id="p33_enemy_base"]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_j6h1f"]
 atlas = ExtResource("1_gu1p4")
 region = Rect2(0, 0, 148, 96)
@@ -163,18 +164,18 @@ size = Vector2(23.5, 46)
 collision_layer = 5
 collision_mask = 1
 script = ExtResource("p33_enemy_base")
-max_health = 4.0
-patrol_distance = 40.0
-patrol_speed = 25.0
-chase_speed = 55.0
-detection_range = 170.0
-detection_vertical_range = 90.0
+max_health = 3.0
+patrol_distance = 70.0
+patrol_speed = 38.0
+chase_speed = 78.0
+detection_range = 205.0
+detection_vertical_range = 95.0
 lose_aggro_range = 270.0
 lose_aggro_vertical_range = 150.0
 attack_range = 36.0
 minimum_player_distance = 24.0
-attack_damage = 0.75
-attack_cooldown = 1.5
+attack_damage = 0.60
+attack_cooldown = 1.05
 attack_active_start_frame = 2
 attack_active_end_frame = 3
 attack_hitbox_size = Vector2(60, 34)

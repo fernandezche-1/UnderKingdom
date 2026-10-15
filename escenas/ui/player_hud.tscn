@@ -1,8 +1,10 @@
-[gd_scene format=3]
+[gd_scene load_steps=14 format=3]
 
 [ext_resource type="Texture2D" path="res://imagem vidas/imagem vidas/tipo3/3 tipo barra de vida .png" id="1_barras"]
 [ext_resource type="Texture2D" path="res://otra vez/fourSeasonsPlatformer_ [tileset, version 2.0]/objects_/items_.png" id="2_items"]
 [ext_resource type="Script" path="res://scripts/ui/player_hud.gd" id="3_script"]
+[ext_resource type="Texture2D" path="res://sprites/Coin Sheet.png" id="4_coins"]
+[ext_resource type="Texture2D" path="res://sprites/Potion 1.png" id="5_potions"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vida_fondo"]
 atlas = ExtResource("1_barras")
@@ -23,6 +25,26 @@ region = Rect2(34, 4, 28, 8)
 [sub_resource type="AtlasTexture" id="AtlasTexture_llave"]
 atlas = ExtResource("2_items")
 region = Rect2(48, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hud_coin"]
+atlas = ExtResource("4_coins")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hud_potion"]
+atlas = ExtResource("5_potions")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inventory"]
+bg_color = Color(0.025, 0.036, 0.07, 0.82)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.37, 0.48, 0.65, 0.85)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [node name="PlayerHUD" type="CanvasLayer"]
 layer = 10
@@ -99,3 +121,55 @@ offset_right = 52.0
 offset_bottom = 12.0
 mouse_filter = 2
 texture = SubResource("AtlasTexture_llave")
+
+[node name="Inventario" type="Panel" parent="."]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -116.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 45.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_inventory")
+
+[node name="MonedasIcono" type="TextureRect" parent="Inventario"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 2.0
+offset_right = 21.0
+offset_bottom = 18.0
+mouse_filter = 2
+texture = SubResource("AtlasTexture_hud_coin")
+
+[node name="MonedasTexto" type="Label" parent="Inventario"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 2.0
+offset_right = 106.0
+offset_bottom = 18.0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 10
+text = "Monedas: 0"
+
+[node name="PocionesIcono" type="TextureRect" parent="Inventario"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 21.0
+offset_right = 21.0
+offset_bottom = 37.0
+mouse_filter = 2
+texture = SubResource("AtlasTexture_hud_potion")
+
+[node name="PocionesTexto" type="Label" parent="Inventario"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 21.0
+offset_right = 106.0
+offset_bottom = 37.0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 10
+text = "Pociones: 0"

@@ -1,11 +1,12 @@
 [gd_scene format=3 uid="uid://s2u0fyebyg8q"]
 
+[ext_resource type="Script" path="res://scripts/combat/ranged_demon.gd" id="p41_enemy_base"]
+
 [ext_resource type="Texture2D" uid="uid://bhihcgp6juvu6" path="res://otra vez/Flying Demon 2D Pixel Art/Sprites/without_outline/ATTACK.png" id="1_tqovy"]
 [ext_resource type="Texture2D" uid="uid://be4ns2n4oc7eq" path="res://otra vez/Flying Demon 2D Pixel Art/Sprites/without_outline/DEATH.png" id="2_kgj41"]
 [ext_resource type="Texture2D" uid="uid://c4i876ra5uc57" path="res://otra vez/Flying Demon 2D Pixel Art/Sprites/without_outline/IDLE.png" id="3_bxhwv"]
 [ext_resource type="Texture2D" uid="uid://dv4uv0ku6qdr8" path="res://otra vez/Flying Demon 2D Pixel Art/Sprites/without_outline/HURT.png" id="4_rr7nl"]
 
-[ext_resource type="Script" path="res://scripts/combat/enemy_base.gd" id="p33_enemy_base"]
 [sub_resource type="AtlasTexture" id="AtlasTexture_wt140"]
 atlas = ExtResource("1_tqovy")
 region = Rect2(0, 0, 79, 69)
@@ -189,25 +190,24 @@ size = Vector2(26.5, 26)
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=244649786]
 collision_layer = 5
 collision_mask = 1
-script = ExtResource("p33_enemy_base")
+script = ExtResource("p41_enemy_base")
 max_health = 2.0
 use_gravity = false
-patrol_distance = 40.0
-patrol_speed = 25.0
-chase_speed = 60.0
-detection_range = 190.0
-detection_vertical_range = 120.0
-lose_aggro_range = 280.0
-lose_aggro_vertical_range = 200.0
-attack_range = 28.0
-minimum_player_distance = 20.0
-attack_damage = 0.5
-attack_cooldown = 1.4
-attack_active_start_frame = 3
-attack_active_end_frame = 6
-attack_hitbox_size = Vector2(34, 30)
-attack_hitbox_offset = Vector2(18, 8)
+patrol_distance = 55.0
+patrol_speed = 28.0
+chase_speed = 58.0
+detection_range = 260.0
+detection_vertical_range = 190.0
+lose_aggro_range = 380.0
+attack_range = 175.0
+attack_stop_margin = 0.0
+minimum_player_distance = 90.0
+separation_speed = 105.0
+attack_animation = &"attack"
+attack_damage = 0.50
+attack_cooldown = 1.20
 avoid_ledges = false
+lose_aggro_vertical_range = 200.0
 sprite_faces_right = false
 mirror_sprite_on_flip = true
 fly_toward_target = true

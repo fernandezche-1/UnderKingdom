@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://dgucgffiak28r"]
 
+[ext_resource type="Script" path="res://scripts/combat/enemy_base.gd" id="p41_enemy_base"]
+
 [ext_resource type="Texture2D" uid="uid://e13yo6ju4ye3" path="res://boss_demon_slime_FREE_v1.0/boss_demon_slime_FREE_v1.0/individual sprites/01_demon_idle/demon_idle_1.png" id="1_248lf"]
 [ext_resource type="Texture2D" uid="uid://658riv1heay" path="res://boss_demon_slime_FREE_v1.0/boss_demon_slime_FREE_v1.0/individual sprites/01_demon_idle/demon_idle_2.png" id="2_s0y5r"]
 [ext_resource type="Texture2D" uid="uid://dcrkqxk1a7rdd" path="res://boss_demon_slime_FREE_v1.0/boss_demon_slime_FREE_v1.0/individual sprites/01_demon_idle/demon_idle_3.png" id="3_n1agv"]
@@ -124,7 +126,7 @@ animations = [{
 "texture": ExtResource("18_ug3pf")
 }],
 "loop": 1,
-"name": &"new_animation",
+"name": &"walk",
 "speed": 11.0
 }, {
 "frames": [{
@@ -174,7 +176,7 @@ animations = [{
 "texture": ExtResource("33_l4jyu")
 }],
 "loop": 1,
-"name": &"new_animation_1",
+"name": &"attack",
 "speed": 14.0
 }, {
 "frames": [{
@@ -194,7 +196,7 @@ animations = [{
 "texture": ExtResource("38_xepdx")
 }],
 "loop": 1,
-"name": &"new_animation_2",
+"name": &"take hit",
 "speed": 9.0
 }, {
 "frames": [{
@@ -265,7 +267,7 @@ animations = [{
 "texture": ExtResource("60_bp4pc")
 }],
 "loop": 1,
-"name": &"new_animation_3",
+"name": &"death",
 "speed": 9.0
 }]
 
@@ -273,6 +275,20 @@ animations = [{
 size = Vector2(42, 68)
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=616356195]
+collision_layer = 5
+collision_mask = 1
+script = ExtResource("p41_enemy_base")
+max_health = 7.0
+use_gravity = true
+patrol_distance = 45.0
+patrol_speed = 24.0
+chase_speed = 58.0
+detection_range = 210.0
+detection_vertical_range = 110.0
+attack_animation = &"attack"
+attack_damage = 0.75
+attack_cooldown = 1.30
+avoid_ledges = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=191519266]
 sprite_frames = SubResource("SpriteFrames_2h10h")

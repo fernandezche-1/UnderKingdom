@@ -1,0 +1,31 @@
+[
+  {
+    "speaker_id": "king",
+    "name": "REY (RECUERDO)",
+    "text": "Mientras yo no esté, su vida estará en tus manos."
+  },
+  {
+    "speaker_id": "player",
+    "name": "GUERRERO (RECUERDO)",
+    "text": "Te doy mi palabra, majestad.",
+    "expression": "neutral"
+  },
+  {
+    "speaker_id": "narrator",
+    "name": "GUERRERO (PENSAMIENTO)",
+    "text": "Aquí yace el final de una promesa...",
+    "expression": "sad"
+  },
+  {
+    "speaker_id": "narrator",
+    "name": "GUERRERO (PENSAMIENTO)",
+    "text": "...y el comienzo de mi propia guerra.",
+    "expression": "sad"
+  },
+  {
+    "speaker_id": "player",
+    "name": "GUERRERO",
+    "text": "No descansaré hasta encontrar a la Reina.",
+    "expression": "anger"
+  }
+]

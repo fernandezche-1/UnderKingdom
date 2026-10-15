@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Texture2D" path="res://sprites/Potion 1.png" id="1_potion"]
+[ext_resource type="Script" path="res://scripts/items/collectible_pickup.gd" id="2_script"]
+
+[sub_resource type="AtlasTexture" id="potion_tex"]
+atlas = ExtResource("1_potion")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="frames"]
+animations = [{
+"frames": [{"duration": 1.0, "texture": SubResource("potion_tex")}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="shape"]
+radius = 7.0
+
+[node name="PotionPickup" type="Area2D"]
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("2_script")
+pickup_type = "potion"
+amount = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("frames")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("shape")

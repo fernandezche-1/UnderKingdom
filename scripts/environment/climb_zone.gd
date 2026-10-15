@@ -6,6 +6,10 @@ class_name UnderkingdomClimbZone
 
 @export var player_group: StringName = &"player"
 @export var ignore_normal_terrain_while_climbing: bool = false
+## Direccion positiva = bajar (S/abajo). Vector2.DOWN mantiene una escalera vertical.
+@export var climb_axis: Vector2 = Vector2.DOWN
+## En escaleras diagonales se desactiva para mantener al Player sobre la pendiente.
+@export var allow_horizontal_adjustment: bool = true
 
 
 func _ready() -> void:

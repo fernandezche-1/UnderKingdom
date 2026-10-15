@@ -8,6 +8,10 @@ class_name UnderkingdomWorldTestRoute
 @export_file("*.tscn") var previous_scene_path: String
 @export_file("*.tscn") var next_scene_path: String
 @export var spawn_position: Vector2 = Vector2(160.0, 160.0)
+## Opcionales: permiten que entrar desde el mapa anterior y regresar desde el
+## siguiente usen puntos diferentes. Vector2.ZERO conserva spawn_position.
+@export var entrance_spawn_position: Vector2 = Vector2.ZERO
+@export var exit_spawn_position: Vector2 = Vector2.ZERO
 @export var previous_portal_position: Vector2 = Vector2.ZERO
 @export var next_portal_position: Vector2 = Vector2.ZERO
 @export var enabled: bool = true
@@ -15,6 +19,7 @@ class_name UnderkingdomWorldTestRoute
 @export var previous_label: String = "E - MAPA ANTERIOR"
 @export var next_label: String = "E - SIGUIENTE MAPA"
 @export var next_requires_world1_boss_key: bool = false
+@export var next_requires_w2_knight_defeated: bool = false
 
 const PREVIOUS_COLOR := Color(0.68, 0.22, 0.88, 0.72)
 const NEXT_COLOR := Color(0.12, 0.52, 1.0, 0.72)
@@ -25,9 +30,12 @@ func _ready() -> void:
     if not enabled:
         return
 
+    var entrada := spawn_position if entrance_spawn_position == Vector2.ZERO else entrance_spawn_position
+    var salida := spawn_position if exit_spawn_position == Vector2.ZERO else exit_spawn_position
+
     _ensure_spawn_point(&"SpawnInicio", spawn_position)
-    _ensure_spawn_point(&"SpawnEntrada", spawn_position)
-    _ensure_spawn_point(&"SpawnSalida", spawn_position)
+    _ensure_spawn_point(&"SpawnEntrada", entrada)
+    _ensure_spawn_point(&"SpawnSalida", salida)
 
     if not show_portals:
         return
@@ -40,6 +48,7 @@ func _ready() -> void:
             &"SpawnSalida",
             previous_label,
             PREVIOUS_COLOR,
+            false,
             false
         )
 
@@ -51,7 +60,8 @@ func _ready() -> void:
             &"SpawnEntrada",
             next_label,
             NEXT_COLOR,
-            next_requires_world1_boss_key
+            next_requires_world1_boss_key,
+            next_requires_w2_knight_defeated
         )
 
 
@@ -74,7 +84,8 @@ func _create_portal(
     target_spawn: StringName,
     text: String,
     color: Color,
-    requires_world1_key: bool
+    requires_world1_key: bool,
+    requires_w2_knight: bool
 ) -> void:
     if get_parent().get_node_or_null(portal_name) != null:
         return
@@ -88,6 +99,7 @@ func _create_portal(
     portal.prompt_text = text
     portal.marker_color = color
     portal.require_world1_boss_key = requires_world1_key
+    portal.require_w2_knight_defeated = requires_w2_knight
     portal.collision_layer = 0
     portal.collision_mask = 1
     portal.z_index = 50

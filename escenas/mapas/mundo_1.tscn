@@ -31,6 +31,11 @@
 [ext_resource type="Script" uid="uid://b42jdvyaq6tnb" path="res://scripts/environment/world1_boss_gate_blocker.gd" id="p19_boss_gate_blocker"]
 [ext_resource type="Script" uid="uid://eapqpe6icj3q" path="res://scripts/transitions/world_test_route.gd" id="p26_test_route"]
 [ext_resource type="PackedScene" path="res://escenas/items/llave_jefe_m1.tscn" id="p30_boss_key"]
+[ext_resource type="Script" path="res://scripts/environment/checkpoint_boss.gd" id="p37_checkpoint_boss"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/caja_rompible.tscn" id="p37_breakable_box"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/estatua_rompible.tscn" id="p37_breakable_statue"]
+[ext_resource type="Script" path="res://scripts/environment/chest_interactable.gd" id="p38_chest"]
+[ext_resource type="Script" path="res://scripts/cinematics/cinematic_controller.gd" id="p45_cinematic_controller"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2h10h"]
 size = Vector2(1681, 25)
@@ -6716,6 +6721,12 @@ size = Vector2(120, 11)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p13_gate_ws"]
 size = Vector2(120, 48)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xcvwj"]
+size = Vector2(20, 161)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0r1yb"]
+size = Vector2(110, 100)
+
 [node name="Node2D" type="Node2D" unique_id=1120338575]
 
 [node name="ColisionesMapa" type="StaticBody2D" parent="." unique_id=415684480]
@@ -6807,8 +6818,12 @@ tile_set = SubResource("TileSet_omm7o")
 position = Vector2(1649, 865)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_2h10h")
-frame = 1
-frame_progress = 0.64659524
+script = ExtResource("p38_chest")
+interaction_radius = 58.0
+coin_count = 4
+potion_count = 2
+coin_offsets = PackedVector2Array(-16, 5, -9, 5, -1, 5, 9, 5)
+potion_offsets = PackedVector2Array(-6, -6, 5, -6)
 
 [node name="player2" type="AnimatedSprite2D" parent="." unique_id=1785442934]
 position = Vector2(554, 837)
@@ -6838,6 +6853,9 @@ frame_progress = 0.43976304
 
 [node name="aprendis" parent="." unique_id=638184298 instance=ExtResource("61_x8mx5")]
 position = Vector2(989, 458)
+use_gravity = true
+avoid_ledges = true
+patrol_distance = 45.0
 
 [node name="aprendis2" parent="." unique_id=1463881692 instance=ExtResource("61_x8mx5")]
 position = Vector2(1170, 842)
@@ -6874,36 +6892,26 @@ frame_progress = 0.4494602
 [node name="CharacterBody2D3" parent="." unique_id=1870597147 instance=ExtResource("71_gmtv0")]
 position = Vector2(485, 450)
 
+[node name="CinemaVisible" type="VisibleOnScreenNotifier2D" parent="CharacterBody2D3"]
+rect = Rect2(-28, -70, 56, 95)
+
 [node name="SpawnLlaveJefeM1" type="Marker2D" parent="." unique_id=1315271127 groups=["world1_boss_key_spawn"]]
 position = Vector2(506, 492)
 
 [node name="LlaveJefeM1" parent="." unique_id=1513900949 instance=ExtResource("p30_boss_key")]
 position = Vector2(506, 492)
 
-[node name="AnimatedSprite2D9" type="AnimatedSprite2D" parent="." unique_id=652324118]
-position = Vector2(420, 856)
-sprite_frames = SubResource("SpriteFrames_lrcu4")
+[node name="CajaRompible" parent="." instance=ExtResource("p37_breakable_box")]
+position = Vector2(421, 852)
+scale = Vector2(0.079757564, 0.07313451)
 
-[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="AnimatedSprite2D9" unique_id=1472625229]
-position = Vector2(-1, -16)
-scale = Vector2(0.64759034, 0.64759034)
-sprite_frames = SubResource("SpriteFrames_fhmxj")
+[node name="EstatuaRompibleA" parent="." instance=ExtResource("p37_breakable_statue")]
+position = Vector2(967.7969, 825.9375)
+scale = Vector2(0.12536001, 0.13518658)
 
-[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="AnimatedSprite2D9/AnimatedSprite2D4" unique_id=1505587705]
-position = Vector2(24.70697, 24.707031)
-scale = Vector2(1.5441861, 1.5441861)
-sprite_frames = SubResource("SpriteFrames_fhmxj")
-
-[node name="AnimatedSprite2D10" type="AnimatedSprite2D" parent="." unique_id=397451974]
-position = Vector2(974, 818)
-scale = Vector2(0.41322994, 0.41322994)
-sprite_frames = SubResource("SpriteFrames_4cug3")
-
-[node name="AnimatedSprite2D10" type="AnimatedSprite2D" parent="AnimatedSprite2D10" unique_id=1830172510]
-position = Vector2(87.11865, 0)
-scale = Vector2(0.9944166, 0.9944166)
-sprite_frames = SubResource("SpriteFrames_4cug3")
-frame_progress = 0.95408183
+[node name="EstatuaRompibleB" parent="." instance=ExtResource("p37_breakable_statue")]
+position = Vector2(1036.5576, 824.4684)
+scale = Vector2(0.12649162, 0.13665214)
 
 [node name="AnimatedSprite2D11" type="AnimatedSprite2D" parent="." unique_id=717566242]
 position = Vector2(869, 806)
@@ -6920,48 +6928,6 @@ sprite_frames = SubResource("SpriteFrames_xcvwj")
 [node name="AnimatedSprite2D14" type="AnimatedSprite2D" parent="." unique_id=1356860656]
 position = Vector2(858, 586)
 sprite_frames = SubResource("SpriteFrames_05fqy")
-
-[node name="AnimatedSprite2D15" type="AnimatedSprite2D" parent="." unique_id=1282718495]
-position = Vector2(1643, 863)
-scale = Vector2(0.6679608, 0.6679608)
-sprite_frames = SubResource("SpriteFrames_ufend")
-
-[node name="poti cura" type="AnimatedSprite2D" parent="AnimatedSprite2D15" unique_id=1671301688]
-position = Vector2(16.468018, 0)
-scale = Vector2(0.97915083, 0.97915083)
-sprite_frames = SubResource("SpriteFrames_ufend")
-
-[node name="AnimatedSprite2D16" type="AnimatedSprite2D" parent="." unique_id=1048103727]
-position = Vector2(1658, 873)
-sprite_frames = SubResource("SpriteFrames_u1b5m")
-autoplay = "default"
-frame_progress = 0.48127392
-
-[node name="AnimatedSprite2D16" type="AnimatedSprite2D" parent="AnimatedSprite2D16" unique_id=1413834078]
-position = Vector2(-25, 2)
-scale = Vector2(0.66015625, 0.66015625)
-sprite_frames = SubResource("SpriteFrames_u1b5m")
-autoplay = "default"
-frame_progress = 0.99578977
-
-[node name="AnimatedSprite2D17" type="AnimatedSprite2D" parent="AnimatedSprite2D16" unique_id=927411017]
-position = Vector2(-10, 2)
-scale = Vector2(0.70631963, 0.70631963)
-sprite_frames = SubResource("SpriteFrames_u1b5m")
-autoplay = "default"
-frame_progress = 0.7874171
-
-[node name="AnimatedSprite2D16" type="AnimatedSprite2D" parent="AnimatedSprite2D16/AnimatedSprite2D17" unique_id=1173569932]
-position = Vector2(-11.326172, 1.4157715)
-scale = Vector2(0.83621675, 0.83621675)
-sprite_frames = SubResource("SpriteFrames_u1b5m")
-autoplay = "default"
-frame_progress = 0.99578977
-
-[node name="AnimatedSprite2D17" type="AnimatedSprite2D" parent="." unique_id=1170262306]
-position = Vector2(420, 856)
-sprite_frames = SubResource("SpriteFrames_0xnc4")
-autoplay = "default"
 
 [node name="AnimatedSprite2D18" type="AnimatedSprite2D" parent="." unique_id=1584011688]
 sprite_frames = SubResource("SpriteFrames_h4sik")
@@ -6994,6 +6960,33 @@ position = Vector2(368, 363.5)
 shape = SubResource("RectangleShape2D_p19_boss_gate")
 
 [node name="Cinematicas" type="Node2D" parent="SistemasMapa" unique_id=792722109]
+
+[node name="IntroRecuerdo" type="Node2D" parent="SistemasMapa/Cinematicas"]
+script = ExtResource("p45_cinematic_controller")
+cinematic_id = "w1_intro_recuerdo"
+player_path = NodePath("../../../player")
+dialogue_path = "res://dialogues/w1_intro_recuerdo.json"
+start_delay = 0.15
+auto_walk_direction = 0.0
+auto_walk_duration = 0.0
+camera_pan_duration = 1.0
+camera_return_duration = 0.7
+
+[node name="ReencuentroCapitan" type="Node2D" parent="SistemasMapa/Cinematicas"]
+script = ExtResource("p45_cinematic_controller")
+cinematic_id = "w1_reencuentro_capitan"
+activation = 1
+player_path = NodePath("../../../player")
+focus_actor_path = NodePath("../../../CharacterBody2D3")
+visible_notifier_path = NodePath("../../../CharacterBody2D3/CinemaVisible")
+dialogue_path = "res://dialogues/w1_reencuentro_capitan.json"
+start_delay = 0.5
+camera_pan_duration = 0.38
+camera_return_duration = 0.42
+focus_offset = Vector2(0, -5)
+visible_max_distance_x = 145.0
+visible_max_distance_y = 100.0
+freeze_actor_until_dialogue = true
 
 [node name="PasoPuertaWS" type="Area2D" parent="SistemasMapa" unique_id=1134216215 groups=["ledge_transition"]]
 position = Vector2(368, 375)
@@ -7032,3 +7025,20 @@ next_portal_position = Vector2(365, 317)
 previous_label = "E - REGRESAR"
 next_label = "E - CONTINUAR"
 next_requires_world1_boss_key = true
+
+[node name="collisiones jefe mapa" type="StaticBody2D" parent="." unique_id=1370171815]
+position = Vector2(827, 468)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="collisiones jefe mapa" unique_id=1972636950]
+position = Vector2(-1, -26.5)
+shape = SubResource("RectangleShape2D_xcvwj")
+disabled = true
+
+[node name="CheckpointBossArea" type="Area2D" parent="." unique_id=1012320677]
+position = Vector2(728, 497)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("p37_checkpoint_boss")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckpointBossArea" unique_id=2025141820]
+shape = SubResource("RectangleShape2D_0r1yb")
