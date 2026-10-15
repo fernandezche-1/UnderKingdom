@@ -67,15 +67,26 @@ Esta etapa junta en una sola versión dos líneas de trabajo que salieron de la 
 ## A confirmar
 - `ColisionPoligono_04` de Mundo 1: P30 dice que tenía un hueco local para atravesar el arco negro. El commit `ecad67a` ("Corregir colision de pared") y la 0.04.047 rellenaron ese hueco (x 380–437, y 440–508), y ahora la pared es recta en x 437. No se tocó; hay que confirmar con quien hizo el cambio que fue intencional.
 
+## Pociones y muerte
+- **Pociones**: se toman con **C** y cada una cura un corazón (`potion_heal_amount` en `player.gd`). No se gastan con la vida llena. El HUD muestra la tecla.
+- **Muerte**: al terminar la animación, la pantalla se funde a negro con "HAS CAÍDO" y el mapa se recarga.
+  - Enemigos y jefes no derrotados vuelven a su estado inicial.
+  - El Player reaparece con la vida llena en el último checkpoint, o en la entrada por la que llegó al mapa.
+  - Si reaparece en el checkpoint del Capitán, la barrera de la sala se vuelve a cerrar.
+  - No hay vidas ni game over.
+- **Qué se conserva al morir**: la llave, los jefes vencidos, las cinemáticas vistas, las monedas y las pociones.
+  - Los cofres abiertos y los objetos rotos siguen así después de la recarga (`GameManager.consumed_objects`), para que no vuelvan a soltar botín.
+  - Las monedas o pociones que estaban en el suelo sin recoger se pierden.
+- **Opción de prueba**: `reload_map_on_death` (en `player.gd`) desactivado vuelve al comportamiento anterior, en el que el Player reaparece en el sitio sin reiniciar nada.
+- **Errores corregidos**: el checkpoint del Capitán y la llave del jefe desactivaban `monitoring` dentro de `body_entered`. Ahora lo hacen con `set_deferred`.
+
 ## Pendientes, en orden de prioridad
-1. Probar jugando la 0.04.047: la intro, el reencuentro con el Capitán, el combate y la muerte con reintento. Ninguna de las dos versiones del compañero se había ejecutado en Godot.
-2. Pociones usables: se recogen, pero no hay forma de tomarlas.
-3. Muerte y reintento reales. Hoy el Player reaparece con la vida llena, sin reiniciar enemigos ni jefes, y no hay game over.
-4. Pausa, menú principal y guardado persistente. Hoy todo se pierde al cerrar el juego.
-5. Jefe de Mundo 2 (`escenas/jefes/boss_mina.tscn`) y jefe final (Cthulhu, `escenas/jefes/boss.tscn`): los dos son sprites sin script. Nadie llama a `GameManager.reveal_cthulhu()`.
-6. Transiciones definitivas para reemplazar los portales de `world_test_route.gd`, y zonas Kill, Burn y One Way en los mapas. `pinchos` y `trampa de fuego` de Mundo 1 no hacen daño. Las marcas las coloca una persona en el editor o las pasa como coordenadas.
-7. Audio: no hay ningún sonido ni música.
-8. Arte a escala entera:
+1. Probar jugando: la intro, el reencuentro con el Capitán, el combate y la muerte con reaparición en el checkpoint. Ninguna de las dos versiones del compañero se había ejecutado en Godot.
+2. Pausa, menú principal y guardado persistente. Hoy todo se pierde al cerrar el juego.
+3. Jefe de Mundo 2 (`escenas/jefes/boss_mina.tscn`) y jefe final (Cthulhu, `escenas/jefes/boss.tscn`): los dos son sprites sin script. Nadie llama a `GameManager.reveal_cthulhu()`.
+4. Transiciones definitivas para reemplazar los portales de `world_test_route.gd`, y zonas Kill, Burn y One Way en los mapas. `pinchos` y `trampa de fuego` de Mundo 1 no hacen daño. Las marcas las coloca una persona en el editor o las pasa como coordenadas.
+5. Audio: no hay ningún sonido ni música.
+6. Arte a escala entera:
    - la caja y las estatuas rompibles son arte en alta resolución reducido a 0.08–0.13 y necesitan sprites nuevos;
    - los diablillos del castillo están entre 0.34 y 0.66;
    - `trampa de fuego` está a 0.352.
