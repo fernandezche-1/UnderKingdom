@@ -72,7 +72,6 @@ const ATTACK_PROFILES := {
 @export_range(30.0, 500.0, 5.0) var climb_speed: float = 150.0
 @export_range(30.0, 500.0, 5.0) var climb_horizontal_speed: float = 120.0
 @export_range(30.0, 85.0, 1.0) var max_stair_slope_degrees: float = 65.0
-@export_range(0.30, 1.0, 0.01) var climb_visual_scale_multiplier: float = 0.52
 @export_range(0.0, 40.0, 1.0) var floor_snap_distance: float = 4.0
 
 @export_category("Plataformas One Way")
@@ -987,22 +986,21 @@ func _update_animation(direction: float) -> void:
         return
 
     sprite.speed_scale = 1.0
-    sprite.scale = _base_sprite_scale * climb_visual_scale_multiplier if _climbing else _base_sprite_scale
+    sprite.scale = _base_sprite_scale
 
     if direction < 0.0:
         sprite.flip_h = true
     elif direction > 0.0:
         sprite.flip_h = false
 
-    # En escaleras usamos la animación de carrera a menor velocidad. Se ve
-    # más compacta que los sprites de salto, especialmente en niveles altos.
+    # En escaleras, la animación propia (de espaldas). Ya viene angosta, así
+    # que se dibuja a la escala normal; quieto en la escalera se congela.
     if _climbing:
-        if sprite.animation != &"run":
-            sprite.play(&"run")
+        if sprite.animation != &"escaleras":
+            sprite.play(&"escaleras")
         if absf(velocity.y) > 1.0 or absf(velocity.x) > 1.0:
-            sprite.speed_scale = 0.72
             if not sprite.is_playing():
-                sprite.play(&"run")
+                sprite.play(&"escaleras")
         else:
             sprite.pause()
         return
