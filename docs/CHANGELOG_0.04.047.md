@@ -113,6 +113,50 @@ Los niveles nuevos se hacen con tiles en vez de fondos pintados. Los mapas actua
   - Las monedas y pociones colocadas en un mapa no reaparecen al morir.
 - **Muestra:** `mapas_texto/ejemplo_nivel.txt` + `.png`. Se probó sin ventana con todos los elementos: recoger, abrir el cofre, el checkpoint, quemarse, morir en los pinchos y reaparecer con lo recogido conservado, y cruzar la salida.
 
+## Niveles con tiles calcados de los fondos
+Siete niveles nuevos con tiles, uno por cada fondo pintado, con la misma forma que su mapa hecho a mano. Los mapas originales no se tocaron.
+
+| Nivel | Fondo | Mapa calcado | Bloques | Parallax |
+|---|---|---|---|---|
+| `tiles_cementerio` | `cementerio.png` | `mundo_1` | verde | pueblo de noche (Gothicvania) |
+| `tiles_casa` | `casa.png` | `primer_boss_mundo_1` | violeta | interior de castillo viejo (Gothicvania) |
+| `tiles_mineria` | `mineria.png` | `mundo_2` | madera | cuevas (Pixel Fantasy Caves) |
+| `tiles_mazmorra` | `mazmorra.png` | `mundo_3` | oliva | interior de castillo viejo |
+| `tiles_ruina` | `ruina.png` | `ruina` | ladrillo | cavernas (Gothicvania) |
+| `tiles_profundidades` | `profundidades.png` | `profundidades` | oro | lava (Gothicvania) |
+| `tiles_jefe` | `jefe.png` | `jefe_final` | ladrillo | lava |
+
+- **Ruta:** cada nivel lleva al siguiente por las salidas de los bordes, en el orden de la ruta de prueba (cementerio → casa → mineria → mazmorra → ruina → profundidades → jefe). No están conectados con los mapas hechos a mano.
+- **Constructor:**
+  - `-- --desde-mapa <escena> <png>` calca las colisiones de un mapa hecho a mano como PNG de piezas (ver `LEYENDA.md`, sección 7).
+  - `parallax:` admite `x2` para imágenes más bajas que la pantalla, y cada capa recorre el mapa en vertical en vez de quedarse fija arriba.
+- **Lo que se agregó encima del calco.** Son decisiones de diseño, no vienen de los mapas originales; se cambian en el PNG:
+  - salidas en los bordes, con túnel si había pared en medio;
+  - escaleras donde hacían falta para unir zonas;
+  - las escaleras del dibujo del fondo no son colisiones y no se calcan;
+  - un checkpoint a mitad del recorrido, cofres, monedas, pociones, antorchas y decorados del tema;
+  - lava en el fondo de profundidades y jefe;
+  - pinchos en los pozos de mazmorra y jefe de los que no se podía salir;
+  - mazmorra recortada a 71 filas, porque lo de abajo es vacío en el fondo.
+- **Fuera del calco:**
+  - Los jefes y personajes sin letra en el constructor: Capitán, Caballero de la Reina, Reina, Cthulhu, jefe de la mina, demonslime y jefe final.
+  - Algunas cámaras cerradas por roca en mineria, mazmorra y ruina. Quedan como parte del decorado, sin acceso.
+- **Arte nuevo:** solo fondos de parallax, en `assets_prueba/gothicvania/` (CC0) y `assets_prueba/pixelfantasy_caves/` (el ZIP no trae licencia; ver su `ORIGEN.txt`). Los tilesets de esos paquetes no se usan: son piezas para componer a mano, no juegos de bloques de 16 px. El terreno sigue siendo el tileset mazmorra.
+- **Escaleras:** el Player mide 20 px y su caja está corrida 7 px a la izquierda del origen, así que roza una pieza a cada lado de la columna.
+  - Cada escalera lleva libres las dos columnas vecinas en todo su tramo y tres filas libres arriba.
+  - Cuando atraviesa un piso, el hueco es de tres piezas.
+  - Las dos escaleras calcadas de `primer_boss_mundo_1` no cumplían esto en la cuadrícula de 16 px y se reemplazaron.
+- **Verificado:**
+  - Los siete niveles arrancan sin errores.
+  - Las 12 salidas apuntan a un nivel y un spawn que existen.
+  - Prueba sin ventana: el Player sube por las 32 escaleras y queda parado arriba.
+  - Simulación de saltos y caídas con la física del Player:
+    - desde la P se alcanzan las dos salidas, el checkpoint, los cofres, las monedas y las pociones de cada nivel;
+    - no queda ninguna zona de la que no se pueda volver, salvo 3 piezas de mazmorra en la orilla de un pozo con pinchos, que se resuelven cayendo a los pinchos;
+    - un enemigo de mazmorra queda en una cámara cerrada.
+  - Falta jugarlos con ventana: la simulación es aproximada.
+- **A confirmar:** la ruta de prueba de `primer_boss_mundo_1.tscn` tiene dos líneas de comentario (`# W2: ...`) entre sus propiedades. Godot pierde la propiedad que sigue, `spawn_position = Vector2(1535, 650)`, y queda en su valor por defecto, (160, 160): el `SpawnInicio` de ese mapa cae arriba a la izquierda. Las demás propiedades se leen bien. No se tocó.
+
 ## Pendientes, en orden de prioridad
 1. Probar jugando: la intro, el reencuentro con el Capitán, el combate y la muerte con reaparición en el checkpoint. Ninguna de las dos versiones del compañero se había ejecutado en Godot.
 2. Pausa, menú principal y guardado persistente. Hoy todo se pierde al cerrar el juego.

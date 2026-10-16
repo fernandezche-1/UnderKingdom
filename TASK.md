@@ -8,7 +8,12 @@
 
 **Guía para el equipo:** `mapas_texto/LEYENDA.md`. **Historial:** `docs/CHANGELOG_0.04.047.md`, sección "Niveles con tiles".
 
-Estado: **fase 1 terminada.** Las fases 2 y 3 esperan material del equipo.
+Estado: **fase 1 terminada.** Fases 2 y 3 empezadas con los ZIP del 2026-10-15 y los fondos actuales como bocetos: siete niveles `tiles_*` calcados de los mapas hechos a mano, con fondos de parallax de los paquetes (ver "Niveles con tiles calcados de los fondos" en el changelog). Falta que el equipo los juegue.
+
+**Siguiente:**
+- Jugar la ruta `tiles_cementerio` → `tiles_jefe` y ajustar los PNG.
+- Decidir si se confirma la licencia de Pixel Fantasy Caves; el ZIP no la trae.
+- Un tileset propio por tema, en lugar de los estilos de mazmorra. Los paquetes recibidos no traen juegos de bloques de 16 px: habría que componer el atlas a mano (ver Fase 2).
 
 ## Fase 1: ampliar el constructor (hecha)
 Rama `edwin/integrar-0.04.047`, 7 commits por encima de `main`, sin subir a GitHub.
@@ -33,7 +38,12 @@ Correcciones hechas por el camino:
 - Recorrido completo del nivel de muestra sin ventana: recoger objetos, abrir el cofre, checkpoint, quemarse, morir en los pinchos y reaparecer con lo recogido conservado, y cruzar la salida.
 - El juego y todos los mapas arrancan sin errores.
 
-## Fase 2: integrar los paquetes nuevos (pendiente; espera los ZIP)
+## Fase 2: integrar los paquetes nuevos (en curso)
+Recibidos el 2026-10-15: `Legacy Collection.zip` (Ansimuz, CC0), `PixelFantasy_Caves_1.0.zip` (sin licencia en el ZIP) y `Final.zip` (Anokolisa, piezas sueltas de cementerio).
+- Hecho: fondos de parallax en `assets_prueba/gothicvania/` y `assets_prueba/pixelfantasy_caves/`, cada uno con su `ORIGEN.txt`.
+- Sin hacer: tilesets. Gothicvania, Caves y Final traen piezas para componer a mano (bloques de 32 px, bordes irregulares), no un juego de 4x4 como el que espera el constructor. Para usarlos hay que armar un atlas con esa forma a partir de sus piezas.
+- Sin hacer: enemigos de los paquetes.
+
 1. El equipo deja los ZIP en Descargas. Cada uno se descomprime en una carpeta aparte, nunca encima del proyecto.
 2. Por cada paquete:
    - **Revisar la licencia** y anotarla en un `ORIGEN.txt`, como `assets_prueba/dungeon_platformer/ORIGEN.txt`.
@@ -47,7 +57,9 @@ Correcciones hechas por el camino:
 3. **Enemigos nuevos de los paquetes:** escena con `enemy_base.gd` y sus valores (cuadros de golpe, hitbox, `collision_layer = 5`), con el mismo patrón que `kolbo` y `mino`. Se prueban en `arena_enemigos`.
 4. **Letras y colores nuevos:** si un tileset trae decorados o enemigos sin letra, se agregan a `COLORS` / `ENEMIES` del constructor, se regenera la paleta (`-- --paleta`) y se actualiza la tabla de `LEYENDA.md`.
 
-## Fase 3: hacer cada nivel (pendiente; espera los bocetos)
+## Fase 3: hacer cada nivel (en curso)
+Primera tanda: un nivel por fondo, calcado con `-- --desde-mapa`. Las salidas, escaleras, objetos y decorados se agregaron al PNG con un script de Python de una sola vez, que no está en el repo. Ese script simula los saltos del Player para comprobar que todo se alcanza. Los PNG de `mapas_texto/tiles_*.png` son la fuente; se ajustan a mano desde ahí. Falta jugarlos.
+
 1. **Recibir el diseño:** PNG con la paleta o boceto, con lo que pide `LEYENDA.md` sección 6.
 2. **Pasar el boceto a PNG** si hace falta. Ese PNG en `mapas_texto/` es la fuente del nivel.
 3. **Generar el nivel y validarlo sin ventana:**
