@@ -1,80 +1,193 @@
-# Tarea actual: niveles hechos con tiles
+# Tarea actual: niveles con tiles calcados de los fondos
 
-**Objetivo:** que el equipo pueda crear niveles nuevos con tiles, a partir de un dibujo de píxeles o un boceto, en lugar de fondos pintados con colisiones a mano.
+**Objetivo:** convertir los siete niveles `tiles_*` en niveles jugables y bonitos. Tienen la forma de los mapas hechos a mano, pero están hechos con tiles. Más adelante el equipo decide si reemplazan a los mapas pintados.
+
+**Estado (2026-10-16):** los siete niveles existen, están unidos en ruta y pasan las pruebas sin ventana. **Nadie los ha jugado todavía.** Rama `edwin/integrar-0.04.047`, sin subir a GitHub.
+
+**Para probar:** abrir `escenas/mapas/tiles_cementerio.tscn` y pulsar F6. Cada salida azul del borde derecho lleva al siguiente nivel:
+
+`tiles_cementerio` → `tiles_casa` → `tiles_mineria` → `tiles_mazmorra` → `tiles_ruina` → `tiles_profundidades` → `tiles_jefe`
+
+Las teclas de prueba están activas: R reaparecer, H/J daño, K morir.
+
+**Documentación:**
+- Guía para dibujar niveles: `mapas_texto/LEYENDA.md`; la sección 7 explica el calco.
+- Historial: `docs/CHANGELOG_0.04.047.md`, secciones "Niveles con tiles" y "Niveles con tiles calcados de los fondos".
 
 **Decisiones tomadas:**
-- Los mapas actuales se quedan como están y los niveles nuevos se suman. Más adelante se decide cuáles reemplazan a cuáles.
-- El diseño de cada nivel llega como dibujo de píxeles (PNG con la paleta) o como boceto en papel o foto.
+- Los mapas hechos a mano no se tocan. Los niveles con tiles se suman a ellos.
+- **La fuente de cada nivel es su PNG** (`mapas_texto/tiles_<nivel>.png`, un píxel = una pieza). Se cambia el PNG y se regenera la escena. Si alguien pinta tiles a mano en Godot, ese nivel deja de poder regenerarse.
+- El terreno usa el tileset mazmorra, con un estilo de bloque por tema. Los paquetes nuevos solo aportan los fondos de parallax (ver "Tileset propio por tema").
 
-**Guía para el equipo:** `mapas_texto/LEYENDA.md`. **Historial:** `docs/CHANGELOG_0.04.047.md`, sección "Niveles con tiles".
+---
 
-Estado: **fase 1 terminada.** Fases 2 y 3 empezadas con los ZIP del 2026-10-15 y los fondos actuales como bocetos: siete niveles `tiles_*` calcados de los mapas hechos a mano, con fondos de parallax de los paquetes (ver "Niveles con tiles calcados de los fondos" en el changelog). Falta que el equipo los juegue.
+## 1. Jugar los niveles (lo primero)
 
-**Siguiente:**
-- Jugar la ruta `tiles_cementerio` → `tiles_jefe` y ajustar los PNG.
-- Decidir si se confirma la licencia de Pixel Fantasy Caves; el ZIP no la trae.
-- Un tileset propio por tema, en lugar de los estilos de mazmorra. Los paquetes recibidos no traen juegos de bloques de 16 px: habría que componer el atlas a mano (ver Fase 2).
+Hasta ahora todo se comprobó sin ventana, con una simulación aproximada. En cada nivel hay que revisar:
 
-## Fase 1: ampliar el constructor (hecha)
-Rama `edwin/integrar-0.04.047`, 7 commits por encima de `main`, sin subir a GitHub.
+- [ ] Se puede ir de la entrada (borde izquierdo) a la salida (borde derecho) sin trucos.
+- [ ] Al volver por la salida izquierda se llega bien al nivel anterior, junto a su salida derecha.
+- [ ] Se sube bien por las escaleras y se sale arriba de ellas hacia la plataforma.
+- [ ] El checkpoint guarda el punto de reaparición. Morir en lava o pinchos devuelve ahí.
+- [ ] Los cofres se abren y las monedas y pociones se recogen.
+- [ ] Los enemigos quedan sobre el suelo y no se atascan.
+- [ ] El parallax se ve bien al moverse en horizontal y en vertical, sin franjas vacías arriba ni abajo.
+- [ ] La cámara no muestra fuera del mapa.
+- [ ] No hay saltos imposibles ni sitios donde el Player quede encerrado.
 
-| Qué | Dónde | Commit |
-|---|---|---|
-| Tilesets como datos: cada uno en un archivo y se elige con `tileset:` | `herramientas/constructor_mapas/tilesets/mazmorra.gd` | `8bdd2c3` |
-| Nivel dibujado como PNG (un píxel = una pieza), paleta `.gpl` y conversión de texto a PNG | `construir_mapa.gd`, `mapas_texto/paleta_niveles.gpl` | `a40f9cc` |
-| Elementos de juego: pinchos `^`, fuego `F`, checkpoint `S`, cofre `c`, moneda `$`, poción `!` y salidas `>` / `<` con su spawn de llegada | `construir_mapa.gd` | `8403951` |
-| Escenas nuevas: checkpoint genérico, trampa de fuego y cofre a escala 1. Arte derivado a escala entera en `sprites/trampas/` | `escenas/sistemas/`, `escenas/objetos/cofre.tscn` | `6459cf7` |
-| Fondo con parallax (`parallax:`) | `construir_mapa.gd` | `45bc1f9` |
-| Guía para el equipo y nivel de muestra de 46 x 17 | `mapas_texto/LEYENDA.md`, `ejemplo_nivel.txt` / `.png` | `d23392c` |
+Anotar lo que se encuentre en la sección 2 con nivel y coordenadas en piezas (x, fila). Esas coordenadas se ven abriendo el PNG en Aseprite o GIMP.
 
-Correcciones hechas por el camino:
-- Las zonas generadas (lava, escaleras) ya tienen su tamaño real (`8403951`).
-- Las transiciones cambian de escena en diferido (`3806f3e`).
-- Las monedas y pociones colocadas en un mapa no reaparecen al morir (`6459cf7`).
+### Datos de cada nivel
 
-**Verificado:**
-- `ejemplo_cueva` y `arena_enemigos` salen idénticos al regenerarlos, salvo el arreglo de las zonas.
-- `ejemplo_cueva` reconstruido desde PNG es idéntico al de texto.
-- Recorrido completo del nivel de muestra sin ventana: recoger objetos, abrir el cofre, checkpoint, quemarse, morir en los pinchos y reaparecer con lo recogido conservado, y cruzar la salida.
-- El juego y todos los mapas arrancan sin errores.
+| Nivel | Tamaño (piezas) | Bloques | Enemigos | Escaleras | Además |
+|---|---|---|---|---|---|
+| `tiles_cementerio` | 104 x 58 | verde | 2 Aprendis, 1 Vanguardia | 1 | Es el primero: no tiene salida izquierda. |
+| `tiles_casa` | 104 x 58 | violeta | 4 diablillos | 3 | 3 huecos de 3 piezas en pisos. Las 2 escaleras del mapa original se reemplazaron. |
+| `tiles_mineria` | 104 x 58 | madera | 1 diablillo, 2 kolbo2 | 4 | 1 hueco; túnel de 1 pieza hasta la salida izquierda. |
+| `tiles_mazmorra` | 78 x 71 | oliva | 4 kolbo2, 1 mino | 13 | 9 huecos, 29 pinchos en pozos sin salida y túnel de 18 piezas hasta la salida derecha. Recortado: lo de abajo era vacío. |
+| `tiles_ruina` | 104 x 58 | ladrillo | kolbo, kolbo2, kolbo3, mino | 5 | 3 huecos; túnel de 4 piezas hasta la salida derecha. |
+| `tiles_profundidades` | 104 x 58 | oro | 4 diablillos | 2 | 2 huecos, lava en todo el fondo y 3 trampas de fuego. |
+| `tiles_jefe` | 104 x 58 | ladrillo | 2 diablillos, 1 Vanguardia, 1 mino | 4 | 4 huecos, lava en el fondo, 2 trampas de fuego y 1 pinchos. Es el último: no tiene salida derecha. **No tiene jefe** (ver sección 3). |
 
-## Fase 2: integrar los paquetes nuevos (en curso)
-Recibidos el 2026-10-15: `Legacy Collection.zip` (Ansimuz, CC0), `PixelFantasy_Caves_1.0.zip` (sin licencia en el ZIP) y `Final.zip` (Anokolisa, piezas sueltas de cementerio).
-- Hecho: fondos de parallax en `assets_prueba/gothicvania/` y `assets_prueba/pixelfantasy_caves/`, cada uno con su `ORIGEN.txt`.
-- Sin hacer: tilesets. Gothicvania, Caves y Final traen piezas para componer a mano (bloques de 32 px, bordes irregulares), no un juego de 4x4 como el que espera el constructor. Para usarlos hay que armar un atlas con esa forma a partir de sus piezas.
-- Sin hacer: enemigos de los paquetes.
+Todos tienen un checkpoint, dos cofres (jefe uno), 12 monedas, una o dos pociones, antorchas y decorados del tema.
 
-1. El equipo deja los ZIP en Descargas. Cada uno se descomprime en una carpeta aparte, nunca encima del proyecto.
-2. Por cada paquete:
-   - **Revisar la licencia** y anotarla en un `ORIGEN.txt`, como `assets_prueba/dungeon_platformer/ORIGEN.txt`.
-   - **Medir el tamaño de tile.** Si es de 16 px, entra directo. Si es de otro tamaño, el nivel usa esa cuadrícula sin escalar a medias; el constructor ya toma el tamaño del archivo del tileset.
-   - **Crear `tilesets/<nombre>.gd`** copiando `mazmorra.gd` y ubicando en el PNG:
-     - el juego de bloques de 4x4 y las rampas;
-     - los decorados y las piezas animadas;
-     - los líquidos y la escalera;
-     - la pieza del checkpoint y el fondo.
-   - **Probarlo** con un mapa de muestra.
-3. **Enemigos nuevos de los paquetes:** escena con `enemy_base.gd` y sus valores (cuadros de golpe, hitbox, `collision_layer = 5`), con el mismo patrón que `kolbo` y `mino`. Se prueban en `arena_enemigos`.
-4. **Letras y colores nuevos:** si un tileset trae decorados o enemigos sin letra, se agregan a `COLORS` / `ENEMIES` del constructor, se regenera la paleta (`-- --paleta`) y se actualiza la tabla de `LEYENDA.md`.
+---
 
-## Fase 3: hacer cada nivel (en curso)
-Primera tanda: un nivel por fondo, calcado con `-- --desde-mapa`. Las salidas, escaleras, objetos y decorados se agregaron al PNG con un script de Python de una sola vez, que no está en el repo. Ese script simula los saltos del Player para comprobar que todo se alcanza. Los PNG de `mapas_texto/tiles_*.png` son la fuente; se ajustan a mano desde ahí. Falta jugarlos.
+## 2. Bugs y cosas a revisar
 
-1. **Recibir el diseño:** PNG con la paleta o boceto, con lo que pide `LEYENDA.md` sección 6.
-2. **Pasar el boceto a PNG** si hace falta. Ese PNG en `mapas_texto/` es la fuente del nivel.
-3. **Generar el nivel y validarlo sin ventana:**
-   - el Player y los enemigos quedan sobre el suelo;
-   - cada salida lleva a su mapa y spawn;
-   - el checkpoint guarda el punto de reaparición.
-4. **Conectarlo a la ruta:** con `siguiente:` / `anterior:` entre niveles nuevos, y con los mapas hechos a mano a través de un `#Spawn` existente. Los mapas actuales todavía usan los portales provisionales de `world_test_route.gd`.
-5. **Que el equipo lo juegue y ajuste.** Si alguien pinta tiles a mano en Godot, ese nivel deja de regenerarse desde el PNG.
+### En los niveles nuevos
+- [ ] **`tiles_jefe`: hueco junto a la llegada.** El Player aparece en (2, fila 31) y hay un hueco de 3 piezas con escalera en x=3-5, fila 32. Al dar un paso a la derecha cae por él. Mover el hueco o la llegada.
+- [ ] **`tiles_mazmorra`: 3 piezas sin salida** en la orilla de un pozo con pinchos: (26, 58), (31, 59) y (34, 63). No dejan al Player encerrado, porque puede caer a los pinchos y reaparecer, pero queda feo. Revisar al jugar.
+- [ ] **`tiles_mazmorra`: un enemigo en una cámara cerrada.** No se puede llegar a él. Quitarlo del PNG o abrir la cámara.
+- [ ] **`tiles_mazmorra`: demasiadas escaleras y huecos** (13 y 9). Es el nivel que más se alejó del original. Ver si conviene simplificarlo.
+- [ ] **Túneles hacia las salidas.** El de mazmorra mide 18 piezas y atraviesa la cámara de arriba a la derecha. Revisar que se vea bien o mover la salida.
+- [ ] **Zonas sin acceso**, cerradas por roca en el mapa original: unas 21 piezas en mineria, 27 en mazmorra, 12 en ruina y 4 en profundidades. Quedan como decorado. Abrirlas solo si se quieren usar.
+- [ ] **Escaleras sin apoyo visual.** Algunas suben por el aire hasta una plataforma; el dibujo de la escalera queda flotando. Valorar al jugar.
+- [ ] **Antorchas y decorados** se repartieron al azar sobre el suelo alcanzable. Puede haber antorchas en medio de un pasillo o decorados amontonados. Moverlos en el PNG.
+- [ ] **Escala de los enemigos.** El constructor los pone a escala 1, y el diablillo se ve bastante más grande que el Player. En los mapas pintados está entre 0.34 y 0.66, pero esa escala no es entera y no cumple la regla de pixel art. Decidir si hace falta un sprite más pequeño.
+- [ ] **Lava y pinchos** en profundidades, jefe y mazmorra son decisión de diseño, no vienen de los mapas originales. Confirmar que se quieren.
+- [ ] **Las teclas y el panel de depuración** están activos en todos los niveles generados. Apagarlos (`enable_debug_keys`, `show_debug_hud` del Player) cuando dejen de ser de prueba.
 
-## Límites conocidos
-- **Objetos rompibles:** todavía no hay letra para ellos. `caja_rompible` y `estatua_rompible` usan arte en alta resolución que no cumple la regla de pixel art, así que primero hace falta un sprite pequeño.
+### En el resto del proyecto (encontrados durante esta tarea)
+- [ ] **`primer_boss_mundo_1.tscn`:** la ruta de prueba tiene dos líneas `# W2: ...` entre sus propiedades. Godot pierde la propiedad siguiente, `spawn_position = Vector2(1535, 650)`, y el `SpawnInicio` de ese mapa queda en (160, 160), arriba a la izquierda. Arreglo: borrar esas dos líneas del `.tscn`. Es un mapa hecho a mano: confirmar con Armando antes.
+- [ ] **`arena_enemigos.tscn` está desactualizada:** se generó antes del último cambio del diablillo. Al regenerarla cambian sus valores de IA. Regenerarla con `-- mapas_texto/arena_enemigos.txt` y revisar que siga bien.
+- [ ] **`LEYENDA.md`, regla de escaleras:** hoy dice solo "dejar una pieza libre entre la escalera y el bloque". La regla probada es más estricta:
+  - libres las dos columnas vecinas en todo el tramo de la escalera;
+  - tres filas libres encima;
+  - si atraviesa un piso, un hueco de tres piezas.
+
+  El Player mide 20 px y su caja está corrida 7 px a la izquierda del origen. Actualizar la guía.
+
+---
+
+## 3. Cosas a agregar
+
+### Jugabilidad
+- [ ] **Jefes y personajes.** El calco dejó fuera lo que no tiene letra en el constructor:
+  - Capitán (cementerio);
+  - Caballero de la Reina, Reina y Cthulhu (casa);
+  - jefe de la mina (mineria);
+  - Reina (mazmorra);
+  - demonslime (profundidades);
+  - jefe final (jefe).
+
+  Opciones: añadir letras para jefes al constructor, o colocarlos a mano en una escena que herede del nivel generado. `tiles_jefe` necesita al menos su jefe para tener sentido.
+- [ ] **Conectar con los mapas hechos a mano.** Hoy la ruta de tiles es independiente. Con `siguiente: res://escenas/mapas/<mapa>.tscn#<Spawn>` se puede enlazar con un spawn existente.
+- [ ] **Agua decorativa (`%`)** donde el fondo original tiene agua: los estanques de ruina y mazmorra, y el río de mineria.
+- [ ] **Objetos rompibles:** no tienen letra. Primero hace falta un sprite pequeño, porque `caja_rompible` y `estatua_rompible` son arte en alta resolución.
+
+### Arte con los paquetes nuevos
+- [ ] **Tileset propio por tema**, en lugar de los estilos de mazmorra. Los paquetes recibidos no traen un juego de bloques de 16 px listo: hay que armar un atlas con la forma que espera el constructor a partir de sus piezas. Candidatos:
+  - cementerio: `Final.zip` (tumbas, verja, columnas, tierra con pasto) o Gothicvania `Gothic-Horror-Files`;
+  - casa y mazmorra: Gothicvania `Gothic-Castle-Files` u `Old-dark-Castle-tileset-Files`;
+  - mineria: `PixelFantasy_Caves` (`mainlev_build.png`, `props1/2.png`);
+  - profundidades y jefe: Gothicvania `Living-Tissue-Platform-Files` o rocas con lava.
+
+  Pasos en "Receta: integrar un paquete" (abajo).
+- [ ] **Enemigos de Gothicvania** (`Legacy Collection/Assets/Gothicvania/Characters/`): Ghost, Hell-Hound, Hell-Beast, Fire-Skull, flying-eye-demon, Ogre, Nightmare, crow, entre otros. Cada uno necesita una escena con `enemy_base.gd`, una letra en el constructor y una prueba en `arena_enemigos`.
+- [ ] **Decorados de los paquetes:** velas, jaulas, cadenas, estandartes, vagonetas. Necesitan estar en el atlas del tileset y tener letra.
+
+### Herramientas
+- [ ] **Decidir si los scripts de diseño entran al repo.** Las salidas, escaleras, objetos y decorados se pusieron con un script de Python (`disenar.py`). Un verificador (`recorrido.py`) simula los saltos del Player para comprobar que todo se alcanza. Los dos están fuera del repo y necesitan Python con Pillow. Si entran, irían en `herramientas/constructor_mapas/`, con instrucciones en `LEYENDA.md`.
+- [ ] **Prueba de escaleras en Godot** (sin ventana: sube por cada escalera y comprueba que el Player queda arriba). Se usó y se borró. Si se quiere repetir tras cambiar los PNG, guardarla como herramienta.
+
+### Licencias
+- [ ] **Pixel Fantasy Caves:** el ZIP no trae licencia. Confirmar de dónde se bajó y sus condiciones antes de usarlo fuera de pruebas (ver `assets_prueba/pixelfantasy_caves/ORIGEN.txt`).
+- [ ] **`Final.zip`** (Anokolisa): su nota pide no dar crédito si se cambia el arte. Anotarlo en un `ORIGEN.txt` cuando se use.
+
+---
+
+## 4. Cómo ajustar un nivel
+
+1. Abrir `mapas_texto/tiles_<nivel>.png` en Aseprite, GIMP o Krita con la paleta `mapas_texto/paleta_niveles.gpl`.
+   - Lápiz de 1 píxel y sin suavizado.
+   - Los colores y letras están en `LEYENDA.md`, sección 5.
+2. Regenerar desde la carpeta del proyecto:
+   ```
+   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/tiles_<nivel>.txt
+   ```
+3. Si el nivel estaba abierto en el editor, recargarlo sin guardar encima.
+4. Comprobar que arranca sin errores:
+   ```
+   ~/.local/bin/godot --headless res://escenas/mapas/tiles_<nivel>.tscn --quit-after 120
+   ```
+5. Jugarlo con F6.
+
+Para empezar de cero desde un mapa hecho a mano, se usa `-- --desde-mapa` (sección 7 de `LEYENDA.md`). El calco no pone salidas, objetos ni escaleras nuevas.
+
+### Archivos de cada nivel
+| Qué | Dónde |
+|---|---|
+| Dibujo (fuente) | `mapas_texto/tiles_<nivel>.png` |
+| Opciones: tileset, bloques, parallax, salidas | `mapas_texto/tiles_<nivel>.txt` |
+| Escena generada (no editar a mano) | `escenas/mapas/tiles_<nivel>.tscn` |
+| Fondos de parallax | `assets_prueba/gothicvania/`, `assets_prueba/pixelfantasy_caves/` |
+
+---
+
+## Receta: integrar un paquete
+1. El ZIP se descomprime en una carpeta aparte, nunca encima del proyecto.
+2. **Revisar la licencia** y anotarla en un `ORIGEN.txt`, como en `assets_prueba/dungeon_platformer/ORIGEN.txt`.
+3. **Medir el tamaño de tile.** Si es de 16 px, entra directo. Si es de otro tamaño, el nivel usa esa cuadrícula sin escalar a medias; el constructor toma el tamaño del archivo del tileset.
+4. **Crear `herramientas/constructor_mapas/tilesets/<nombre>.gd`** copiando `mazmorra.gd`, y ubicar en el PNG:
+   - el juego de bloques de 4x4 (esquinas, bordes e interior en 3x3, columna a la derecha y plataformas abajo) y las rampas;
+   - los decorados y las piezas animadas;
+   - los líquidos y la escalera;
+   - la pieza del checkpoint y el fondo.
+
+   Si el paquete no trae ese juego de 4x4, se arma un atlas nuevo copiando sus piezas, sin dibujar arte nuevo.
+5. **Probarlo** con un mapa de muestra.
+6. **Letras y colores nuevos:** si trae decorados o enemigos sin letra, se agregan a `COLORS` / `ENEMIES` del constructor. Después se regenera la paleta (`-- --paleta`) y se actualiza la tabla de `LEYENDA.md`.
+7. **Enemigos:** escena con `enemy_base.gd` y sus valores (cuadros de golpe, hitbox, `collision_layer = 5`), siguiendo el patrón de `kolbo` y `mino`. Se prueban en `arena_enemigos`.
+
+## Límites conocidos del constructor
 - **Pinchos:** son estáticos (un recorte de `spike Trap5.png`) y matan al tocarlos. No hay versión animada ni de daño parcial.
-- **Parallax:** solo se comprobó sin ventana. Falta ver en pantalla que la velocidad de cada capa se vea bien.
 - **Salidas:** si un mapa tiene varias salidas en la misma dirección, todas comparten el mismo spawn de llegada.
-- **Arte nuevo:** no se dibuja pixel art nuevo; los niveles se arman con las piezas de los paquetes.
+- **Enemigos:** siempre a la escala de su escena.
+- **Parallax:** se vio en capturas a 480 x 270, pero falta verlo en movimiento.
+- **Arte:** no se dibuja pixel art nuevo; los niveles se arman con piezas de los paquetes.
+
+## Hecho
+- **Fase 1, el constructor:**
+  - tilesets como datos;
+  - nivel dibujado como PNG con paleta;
+  - pinchos, fuego, checkpoint, cofre, monedas, pociones y salidas;
+  - parallax;
+  - guía y nivel de muestra.
+
+  Detalle en el changelog, sección "Niveles con tiles".
+- **Fase 2, en parte:** fondos de parallax de Gothicvania (CC0) y Pixel Fantasy Caves, con su `ORIGEN.txt`.
+- **Fase 3, primera tanda:**
+  - `-- --desde-mapa` y `parallax` con `x2`;
+  - los siete niveles `tiles_*`.
+
+  Comprobado sin ventana:
+  - todos arrancan sin errores;
+  - las 12 salidas llevan a mapas y spawns que existen;
+  - el Player sube por las 32 escaleras y queda arriba;
+  - según la simulación, desde la P se alcanzan las salidas, el checkpoint y los objetos.
+
+  Commits `0ab5a4c`, `a5cc8f7`, `0a45be4` y `9b6f24c`.
 
 ## Otros pendientes del proyecto (fuera de esta tarea)
 Ver "Pendientes" en `docs/CHANGELOG_0.04.047.md`:
