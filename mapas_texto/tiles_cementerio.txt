@@ -1,0 +1,13 @@
+; NIVEL CON TILES calcado de fondos/cementerio.png: la forma sale de las
+; colisiones del mapa hecho a mano (constructor -- --desde-mapa) y encima se
+; dibujaron las salidas, escaleras, objetos y decorados.
+; Generar desde la carpeta del proyecto:
+;   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/tiles_cementerio.txt
+
+escena: res://escenas/mapas/tiles_cementerio.tscn
+imagen: mapas_texto/tiles_cementerio.png
+tileset: mazmorra
+bloques: verde
+fondo: ninguno
+parallax: assets_prueba/gothicvania/pueblo_noche/cielo.png 0 x2; assets_prueba/gothicvania/pueblo_noche/nubes.png 0.05 x2; assets_prueba/gothicvania/pueblo_noche/montes.png 0.15 x2; assets_prueba/gothicvania/pueblo_noche/pueblo.png 0.3 x2
+siguiente: res://escenas/mapas/tiles_casa.tscn

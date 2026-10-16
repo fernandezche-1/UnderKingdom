@@ -1,0 +1,14 @@
+; NIVEL CON TILES calcado de fondos/casa.png: la forma sale de las
+; colisiones del mapa hecho a mano (constructor -- --desde-mapa) y encima se
+; dibujaron las salidas, escaleras, objetos y decorados.
+; Generar desde la carpeta del proyecto:
+;   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/tiles_casa.txt
+
+escena: res://escenas/mapas/tiles_casa.tscn
+imagen: mapas_texto/tiles_casa.png
+tileset: mazmorra
+bloques: violeta
+fondo: ninguno
+parallax: assets_prueba/gothicvania/castillo_viejo/fondo.png 0.2
+siguiente: res://escenas/mapas/tiles_mineria.tscn
+anterior: res://escenas/mapas/tiles_cementerio.tscn
