@@ -155,6 +155,7 @@ Siete niveles nuevos con tiles, uno por cada fondo pintado, con la misma forma q
     - no queda ninguna zona de la que no se pueda volver, salvo 3 piezas de mazmorra en la orilla de un pozo con pinchos, que se resuelven cayendo a los pinchos;
     - un enemigo de mazmorra queda en una cámara cerrada.
   - Falta jugarlos con ventana: la simulación es aproximada.
+- **Corregido después:** en `tiles_jefe`, el Player llegaba junto a un hueco con escalera (x=3-5, fila 32) y caía al dar un paso. Se tapó y la escalera pasó a x=15 (hueco en x=14-16, fila 36), con suelo bajo su pie. Une la bajada con la misma cueva.
 - **A confirmar:** la ruta de prueba de `primer_boss_mundo_1.tscn` tiene dos líneas de comentario (`# W2: ...`) entre sus propiedades. Godot pierde la propiedad que sigue, `spawn_position = Vector2(1535, 650)`, y queda en su valor por defecto, (160, 160): el `SpawnInicio` de ese mapa cae arriba a la izquierda. Las demás propiedades se leen bien. No se tocó.
 
 ## Pendientes, en orden de prioridad

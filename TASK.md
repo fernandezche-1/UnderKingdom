@@ -56,7 +56,7 @@ Todos tienen un checkpoint, dos cofres (jefe uno), 12 monedas, una o dos pocione
 ## 2. Bugs y cosas a revisar
 
 ### En los niveles nuevos
-- [ ] **`tiles_jefe`: hueco junto a la llegada.** El Player aparece en (2, fila 31) y hay un hueco de 3 piezas con escalera en x=3-5, fila 32. Al dar un paso a la derecha cae por él. Mover el hueco o la llegada.
+- [x] **`tiles_jefe`: hueco junto a la llegada.** El Player aparecía en (2, fila 31) y caía por el hueco con escalera de x=3-5, fila 32, al dar un paso a la derecha. La llegada no se puede mover, porque el constructor la pone dos piezas dentro de la salida. Se tapó el hueco y la escalera pasó al valle de la bajada: hueco en x=14-16 de la fila 36, escalera en x=15 de las filas 36 a 43 y suelo nuevo en (15-16, fila 44). Lleva a la misma cueva de abajo a la izquierda. Comprobado sin ventana: llegar y caminar, subir y salir por los dos lados, caer por el hueco y volver a subir, y saltarlo con carrerilla.
 - [ ] **`tiles_mazmorra`: 3 piezas sin salida** en la orilla de un pozo con pinchos: (26, 58), (31, 59) y (34, 63). No dejan al Player encerrado, porque puede caer a los pinchos y reaparecer, pero queda feo. Revisar al jugar.
 - [ ] **`tiles_mazmorra`: un enemigo en una cámara cerrada.** No se puede llegar a él. Quitarlo del PNG o abrir la cámara.
 - [ ] **`tiles_mazmorra`: demasiadas escaleras y huecos** (13 y 9). Es el nivel que más se alejó del original. Ver si conviene simplificarlo.
