@@ -13,49 +13,49 @@ const PLAYER_SCENE := preload("res://escenas/player.tscn")
 
 
 func _ready() -> void:
-    call_deferred("_place_player")
+	call_deferred("_place_player")
 
 
 func _place_player() -> void:
-    # Dar un frame a los sistemas de ruta para registrar sus SpawnPoints.
-    await get_tree().process_frame
-    GameManager.remember_current_scene()
+	# Dar un frame a los sistemas de ruta para registrar sus SpawnPoints.
+	await get_tree().process_frame
+	GameManager.remember_current_scene()
 
-    var requested := GameManager.consume_spawn_id()
-    if requested == &"":
-        requested = default_spawn_id
+	var requested := GameManager.consume_spawn_id()
+	if requested == &"":
+		requested = default_spawn_id
 
-    var target := _find_spawn_point(requested)
-    if target == null and requested != default_spawn_id:
-        target = _find_spawn_point(default_spawn_id)
+	var target := _find_spawn_point(requested)
+	if target == null and requested != default_spawn_id:
+		target = _find_spawn_point(default_spawn_id)
 
-    var player := get_tree().get_first_node_in_group(player_group)
-    if player == null and auto_spawn_player_if_missing:
-        player = PLAYER_SCENE.instantiate()
-        get_tree().current_scene.add_child(player)
+	var player := get_tree().get_first_node_in_group(player_group)
+	if player == null and auto_spawn_player_if_missing:
+		player = PLAYER_SCENE.instantiate()
+		get_tree().current_scene.add_child(player)
 
-    if player == null:
-        return
+	if player == null:
+		return
 
-    # Tras una muerte el mapa se recarga: se vuelve al último checkpoint o a
-    # la entrada por la que se llegó, no al SpawnInicio.
-    if GameManager.consume_death_respawn():
-        player.global_position = GameManager.respawn_position
-        if player.has_method("set_spawn_point"):
-            player.call("set_spawn_point", GameManager.respawn_position)
-        return
+	# Tras una muerte el mapa se recarga: se vuelve al último checkpoint o a
+	# la entrada por la que se llegó, no al SpawnInicio.
+	if GameManager.consume_death_respawn():
+		player.global_position = GameManager.respawn_position
+		if player.has_method("set_spawn_point"):
+			player.call("set_spawn_point", GameManager.respawn_position)
+		return
 
-    if target == null:
-        push_warning("No se encontró SpawnPoint '%s' en el mapa actual." % requested)
-        return
+	if target == null:
+		push_warning("No se encontró SpawnPoint '%s' en el mapa actual." % requested)
+		return
 
-    player.global_position = target.global_position
-    if player.has_method("set_spawn_point"):
-        player.call("set_spawn_point", target.global_position)
+	player.global_position = target.global_position
+	if player.has_method("set_spawn_point"):
+		player.call("set_spawn_point", target.global_position)
 
 
 func _find_spawn_point(id: StringName) -> Marker2D:
-    for node in get_tree().get_nodes_in_group("spawn_point"):
-        if node is Marker2D and node.get("spawn_id") == id:
-            return node
-    return null
+	for node in get_tree().get_nodes_in_group("spawn_point"):
+		if node is Marker2D and node.get("spawn_id") == id:
+			return node
+	return null
