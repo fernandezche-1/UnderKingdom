@@ -22,7 +22,8 @@ func _ready() -> void:
         _player.connect("health_changed", _on_health_changed)
 
     GameManager.world1_boss_key_changed.connect(_on_key_changed)
-    key_icon.visible = GameManager.has_world1_boss_key()
+    GameManager.key_changed.connect(_on_named_key_changed)
+    key_icon.visible = GameManager.has_any_key()
     GameManager.coins_changed.connect(_on_coins_changed)
     GameManager.potions_changed.connect(_on_potions_changed)
     _on_coins_changed(GameManager.coins)
@@ -43,8 +44,12 @@ func _on_health_changed(current_health: float, max_health: float) -> void:
     health_bar.value = current_health
 
 
-func _on_key_changed(has_key: bool) -> void:
-    key_icon.visible = has_key
+func _on_key_changed(_has_key: bool) -> void:
+    key_icon.visible = GameManager.has_any_key()
+
+
+func _on_named_key_changed(_key_id: String, _has_key: bool) -> void:
+    key_icon.visible = GameManager.has_any_key()
 
 
 func _on_coins_changed(value: int) -> void:
