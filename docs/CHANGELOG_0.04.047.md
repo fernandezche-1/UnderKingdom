@@ -284,6 +284,12 @@ No hizo falta código nuevo.
 **Jefe:** `escenas/jefes/caballero_reina.tscn` hereda del elfo arquero (`escenas/enemigos/enemis.tscn`, `w2_archer_boss.gd`, tres fases).
 - Lleva los valores que tenía en `primer_boss_mundo_1` (12 de vida, alcance de detección...) y su `BossHealthBar`.
 - No se le conecta `w2_queen_knight_progress.gd`, así que no toca el progreso del mapa viejo.
+- **IA rehecha** (`scripts/bosses/w2_archer_boss.gd`), tras probarlo: no hacía daño y apenas se movía.
+  - **No hacía daño:** la flecha salía 60 px por encima del arco y apuntaba al origen del Player, que también queda por encima de su colisión, así que siempre pasaba por arriba. Ahora sale del arco y apunta al centro del cuerpo del Player.
+  - **El disparo duraba 2,7 s:** "attack inicial" junta dos ataques, y la flecha salía al final del primero. El disparo termina ahora en el cuadro 12 y suelta la flecha en el 8. La segunda mitad es la lluvia de flechas: desde la fase 2 caen 3 flechas sobre el Player, y 4 en la fase 3.
+  - **Se movía mal:** huía corriendo de espaldas y, contra la pared, se quedaba quieto disparando. Ahora corre de frente, se gira para disparar y rueda cuando el Player se le pega: si tiene espacio, alejándose; si está arrinconado, a través del Player, con invulnerabilidad al principio del roll.
+  - Cada golpe lo dejaba quieto 1,2 s (la animación de daño); ahora 0,3 s.
+  - Daño: 0,5 de cerca a 0,75 de lejos; la lluvia, 0,5 por flecha.
 
 **Ruta:** `tiles_cementerio` → `tiles_mineria` → `tiles_mazmorra` → ...
 - Para no regenerar con cambios de unique_id, se editó solo la línea `target_scene_path` en `tiles_cementerio.tscn` (salida siguiente) y en `tiles_mazmorra.tscn` (salida anterior). Ahora apuntan a `tiles_mineria_combate.tscn`.
