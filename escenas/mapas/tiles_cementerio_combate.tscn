@@ -1,0 +1,127 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://escenas/mapas/tiles_cementerio.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/combat/arena_encounter.gd" id="2_encuentro"]
+[ext_resource type="PackedScene" path="res://escenas/jefes/capitan.tscn" id="3_capitan"]
+[ext_resource type="Script" path="res://scripts/environment/arena_barrier.gd" id="4_barrera"]
+[ext_resource type="Texture2D" path="res://assets_prueba/dungeon_platformer/dungeontilesetfull.png" id="5_tileset"]
+[ext_resource type="Script" path="res://scripts/combat/arena_spawn_point.gd" id="6_punto"]
+[ext_resource type="PackedScene" path="res://escenas/enemigos/vanguardia.tscn" id="7_vanguardia"]
+[ext_resource type="PackedScene" path="res://escenas/enemigos/aprendis.tscn" id="8_aprendis"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_activador"]
+size = Vector2(224, 304)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna_tope"]
+atlas = ExtResource("5_tileset")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna_medio"]
+atlas = ExtResource("5_tileset")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna_base"]
+atlas = ExtResource("5_tileset")
+region = Rect2(48, 32, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_barrera_izq"]
+size = Vector2(16, 368)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_barrera_der"]
+size = Vector2(16, 160)
+
+[node name="TilesCementerioCombate" instance=ExtResource("1_base")]
+
+[node name="EncuentroCementerio" type="Node2D" parent="SistemasMapa"]
+script = ExtResource("2_encuentro")
+encounter_id = "tiles_cementerio_capitan"
+boss_scene = ExtResource("3_capitan")
+boss_overrides = Dictionary[String, Variant]({
+"counts_as_world1_boss": false
+})
+
+[node name="Activador" type="Area2D" parent="SistemasMapa/EncuentroCementerio"]
+position = Vector2(592, 712)
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/EncuentroCementerio/Activador"]
+shape = SubResource("RectangleShape2D_activador")
+
+[node name="Barreras" type="Node2D" parent="SistemasMapa/EncuentroCementerio"]
+
+[node name="BarreraIzquierda" type="StaticBody2D" parent="SistemasMapa/EncuentroCementerio/Barreras"]
+position = Vector2(344, 680)
+script = ExtResource("4_barrera")
+column_top = SubResource("AtlasTexture_columna_tope")
+column_middle = SubResource("AtlasTexture_columna_medio")
+column_bottom = SubResource("AtlasTexture_columna_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/EncuentroCementerio/Barreras/BarreraIzquierda"]
+shape = SubResource("RectangleShape2D_barrera_izq")
+disabled = true
+
+[node name="BarreraDerecha" type="StaticBody2D" parent="SistemasMapa/EncuentroCementerio/Barreras"]
+position = Vector2(872, 784)
+script = ExtResource("4_barrera")
+column_top = SubResource("AtlasTexture_columna_tope")
+column_middle = SubResource("AtlasTexture_columna_medio")
+column_bottom = SubResource("AtlasTexture_columna_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/EncuentroCementerio/Barreras/BarreraDerecha"]
+shape = SubResource("RectangleShape2D_barrera_der")
+disabled = true
+
+[node name="Oleadas" type="Node2D" parent="SistemasMapa/EncuentroCementerio"]
+
+[node name="Oleada1" type="Node2D" parent="SistemasMapa/EncuentroCementerio/Oleadas"]
+
+[node name="Vanguardia1" type="Marker2D" parent="SistemasMapa/EncuentroCementerio/Oleadas/Oleada1"]
+position = Vector2(400, 831)
+script = ExtResource("6_punto")
+enemy_scene = ExtResource("7_vanguardia")
+
+[node name="Vanguardia2" type="Marker2D" parent="SistemasMapa/EncuentroCementerio/Oleadas/Oleada1"]
+position = Vector2(808, 831)
+script = ExtResource("6_punto")
+enemy_scene = ExtResource("7_vanguardia")
+
+[node name="Oleada2" type="Node2D" parent="SistemasMapa/EncuentroCementerio/Oleadas"]
+
+[node name="Aprendis1" type="Marker2D" parent="SistemasMapa/EncuentroCementerio/Oleadas/Oleada2"]
+position = Vector2(416, 840)
+script = ExtResource("6_punto")
+enemy_scene = ExtResource("8_aprendis")
+
+[node name="Vanguardia3" type="Marker2D" parent="SistemasMapa/EncuentroCementerio/Oleadas/Oleada2"]
+position = Vector2(608, 831)
+script = ExtResource("6_punto")
+enemy_scene = ExtResource("7_vanguardia")
+
+[node name="Aprendis2" type="Marker2D" parent="SistemasMapa/EncuentroCementerio/Oleadas/Oleada2"]
+position = Vector2(800, 840)
+script = ExtResource("6_punto")
+enemy_scene = ExtResource("8_aprendis")
+
+[node name="PuntosJefe" type="Node2D" parent="SistemasMapa/EncuentroCementerio"]
+
+[node name="JefeIzquierda" type="Marker2D" parent="SistemasMapa/EncuentroCementerio/PuntosJefe"]
+position = Vector2(424, 798)
+
+[node name="JefeDerecha" type="Marker2D" parent="SistemasMapa/EncuentroCementerio/PuntosJefe"]
+position = Vector2(792, 798)
+
+[node name="UI" type="CanvasLayer" parent="SistemasMapa/EncuentroCementerio"]
+layer = 9
+
+[node name="Aviso" type="Label" parent="SistemasMapa/EncuentroCementerio/UI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 60.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+vertical_alignment = 1

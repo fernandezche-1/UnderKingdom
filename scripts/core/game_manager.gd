@@ -11,6 +11,7 @@ signal potions_changed(potions: int)
 signal cthulhu_revealed_changed(revealed: bool)
 signal w2_knight_defeated_changed(defeated: bool)
 signal cinematic_seen(cinematic_id: String)
+signal encounter_completed(encounter_id: String)
 
 var pending_spawn_id: StringName = &""
 var previous_scene_path: String = ""
@@ -23,6 +24,9 @@ var potions: int = 0
 var cthulhu_revealed: bool = false
 var w2_knight_defeated: bool = false
 var cinematics_seen: Dictionary = {}
+## Encuentros de arena (oleadas + jefe) ya superados, por encounter_id. Se
+## conservan al morir para que el combate no se repita al recargar el mapa.
+var completed_encounters: Dictionary = {}
 
 ## Muerte: el mapa se recarga y el Player reaparece en el último punto de
 ## reaparición (entrada del mapa o checkpoint). Enemigos y jefes no derrotados
@@ -242,6 +246,21 @@ func has_seen_cinematic(cinematic_id: String) -> bool:
     if cinematic_id.is_empty():
         return false
     return bool(cinematics_seen.get(cinematic_id, false))
+
+
+func mark_encounter_completed(encounter_id: String) -> void:
+    if encounter_id.is_empty():
+        return
+    if completed_encounters.get(encounter_id, false):
+        return
+    completed_encounters[encounter_id] = true
+    encounter_completed.emit(encounter_id)
+
+
+func is_encounter_completed(encounter_id: String) -> bool:
+    if encounter_id.is_empty():
+        return false
+    return bool(completed_encounters.get(encounter_id, false))
 
 
 ## Para una futura opción de Partida nueva; nunca se llama en respawn.

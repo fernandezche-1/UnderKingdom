@@ -158,6 +158,40 @@ Siete niveles nuevos con tiles, uno por cada fondo pintado, con la misma forma q
 - **Corregido después:** en `tiles_jefe`, el Player llegaba junto a un hueco con escalera (x=3-5, fila 32) y caía al dar un paso. Se tapó y la escalera pasó a x=15 (hueco en x=14-16, fila 36), con suelo bajo su pie. Une la bajada con la misma cueva.
 - **A confirmar:** la ruta de prueba de `primer_boss_mundo_1.tscn` tiene dos líneas de comentario (`# W2: ...`) entre sus propiedades. Godot pierde la propiedad que sigue, `spawn_position = Vector2(1535, 650)`, y queda en su valor por defecto, (160, 160): el `SpawnInicio` de ese mapa cae arriba a la izquierda. Las demás propiedades se leen bien. No se tocó.
 
+## Encuentro del cementerio: oleadas y Capitán
+El primer nivel con tiles tiene ahora un combate obligatorio. En el pasillo del suelo se enfrentan dos oleadas de esbirros y después al Capitán, y hasta derrotarlo no se puede seguir.
+
+- **Escena:** `escenas/mapas/tiles_cementerio_combate.tscn` hereda de `tiles_cementerio.tscn` y solo añade `SistemasMapa/EncuentroCementerio`. La generada sigue saliendo del PNG y se puede regenerar sin perder el encuentro. Para jugar el nivel se abre la heredada; la salida izquierda de `tiles_casa` ya lleva a ella.
+- **Flujo:**
+  1. El Player entra en `Activador` (x 480–704, y 560–864).
+  2. Se cierran `BarreraIzquierda` (columna 21) y `BarreraDerecha` (columna 54).
+  3. Sale la oleada 1 (2 Vanguardia) y, al caer, la 2 (2 Aprendis y 1 Vanguardia).
+  4. Aparece el Capitán en el `PuntosJefe` más lejano al Player.
+  5. Al terminar su animación de muerte se abren las barreras y aparece el aviso "ZONA DESPEJADA".
+- **Arena:** usa el techo que ya tiene el pasillo (filas 34 y 43), así que no se tocó ninguna colisión. El salto del Player (unos 104 px) no alcanza el bloque flotante de arriba. Las barreras se dibujan con la columna del juego de bloques verde del tileset mazmorra, sin arte nuevo.
+- **Scripts nuevos:**
+  - `scripts/combat/arena_encounter.gd` (`UnderkingdomArenaEncounter`):
+    - estados: inactivo → oleadas → entre oleadas → presentación del jefe → jefe → completado;
+    - señales: `combat_started`, `wave_started`, `wave_cleared`, `boss_spawned`, `boss_defeated` y `encounter_completed`;
+    - cada enemigo se sigue por su señal `died`, o por `tree_exiting` si desaparece sin morir;
+    - los enemigos y el jefe se agregan al nodo `Enemigos` del mapa.
+  - `scripts/combat/arena_spawn_point.gd`: un `Marker2D` por enemigo, con su `enemy_scene`. Cada hijo de `Oleadas` es una oleada.
+  - `scripts/environment/arena_barrier.gd`: muro que se abre y se cierra con un fundido.
+- **Capitán reutilizado:** se instancia `escenas/jefes/capitan.tscn` sin cambios en stats, IA, fases ni barra de vida. El `@export` nuevo `counts_as_world1_boss` (activo por defecto, así Mundo 1 no cambia) se apaga en el cementerio con `boss_overrides`: ese Capitán no lee ni marca el progreso de Mundo 1 y no suelta la llave de la reja.
+- **Progreso:** `GameManager.completed_encounters` guarda los encuentros superados; métodos `mark_encounter_completed()` e `is_encounter_completed()` y señal `encounter_completed`. Si el Player muere durante el combate, el mapa se recarga y el encuentro empieza de cero. Una vez superado no se repite, ni al morir ni al volver desde `tiles_casa`.
+- **Sin audio:** el proyecto no tiene sistema de sonido ni música. Cuando exista, la música de jefe puede colgarse de `boss_spawned` y `encounter_completed`.
+- **Verificado sin ventana:**
+  - arranque de la escena nueva, de la generada, de `tiles_casa` y de Mundo 1 sin errores;
+  - el flujo completo con sus señales en orden y cada oleada una sola vez;
+  - las barreras detienen al Player a los dos lados y no se pueden saltar; abiertas dejan pasar;
+  - tras la victoria `world1_boss_defeated` sigue en falso y no aparece la llave;
+  - al recargar el mapa, el encuentro sigue completado;
+  - el Capitán de Mundo 1 conserva `counts_as_world1_boss` y el grupo `world1_boss`.
+- **Falta jugarlo con ventana:**
+  - si el Capitán (sprite de 288 px) se ve bien en una arena de 512 px;
+  - la dificultad de las oleadas;
+  - que los Aprendis, que vuelan, no se queden fuera del alcance del Player.
+
 ## Pendientes, en orden de prioridad
 1. Probar jugando: la intro, el reencuentro con el Capitán, el combate y la muerte con reaparición en el checkpoint. Ninguna de las dos versiones del compañero se había ejecutado en Godot.
 2. Pausa, menú principal y guardado persistente. Hoy todo se pierde al cerrar el juego.

@@ -5,6 +5,8 @@
 ;   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/tiles_cementerio.txt
 
 escena: res://escenas/mapas/tiles_cementerio.tscn
+; El encuentro (oleadas + Capitán) vive en tiles_cementerio_combate.tscn, que
+; hereda de esta escena: regenerarla no lo borra. Jugar el nivel desde esa.
 imagen: mapas_texto/tiles_cementerio.png
 tileset: mazmorra
 bloques: verde
