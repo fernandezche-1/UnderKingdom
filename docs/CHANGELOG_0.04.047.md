@@ -158,39 +158,78 @@ Siete niveles nuevos con tiles, uno por cada fondo pintado, con la misma forma q
 - **Corregido después:** en `tiles_jefe`, el Player llegaba junto a un hueco con escalera (x=3-5, fila 32) y caía al dar un paso. Se tapó y la escalera pasó a x=15 (hueco en x=14-16, fila 36), con suelo bajo su pie. Une la bajada con la misma cueva.
 - **A confirmar:** la ruta de prueba de `primer_boss_mundo_1.tscn` tiene dos líneas de comentario (`# W2: ...`) entre sus propiedades. Godot pierde la propiedad que sigue, `spawn_position = Vector2(1535, 650)`, y queda en su valor por defecto, (160, 160): el `SpawnInicio` de ese mapa cae arriba a la izquierda. Las demás propiedades se leen bien. No se tocó.
 
-## Encuentro del cementerio: oleadas y Capitán
-El primer nivel con tiles tiene ahora un combate obligatorio. En el pasillo del suelo se enfrentan dos oleadas de esbirros y después al Capitán, y hasta derrotarlo no se puede seguir.
+## Cementerio con tiles: primer mundo estilo Hollow Knight
+`tiles_cementerio` pasa a ser un mundo para explorar. Hay un hub con caminos, una cripta opcional, catacumbas, una sala del jefe que se cierra al entrar, una llave y una puerta que la pide para llegar a la salida. Reemplaza al primer intento con oleadas, que se descartó.
 
-- **Escena:** `escenas/mapas/tiles_cementerio_combate.tscn` hereda de `tiles_cementerio.tscn` y solo añade `SistemasMapa/EncuentroCementerio`. La generada sigue saliendo del PNG y se puede regenerar sin perder el encuentro. Para jugar el nivel se abre la heredada; la salida izquierda de `tiles_casa` ya lleva a ella.
-- **Flujo:**
-  1. El Player entra en `Activador` (x 480–704, y 560–864).
-  2. Se cierran `BarreraIzquierda` (columna 21) y `BarreraDerecha` (columna 54).
-  3. Sale la oleada 1 (2 Vanguardia) y, al caer, la 2 (2 Aprendis y 1 Vanguardia).
-  4. Aparece el Capitán en el `PuntosJefe` más lejano al Player.
-  5. Al terminar su animación de muerte se abren las barreras y aparece el aviso "ZONA DESPEJADA".
-- **Arena:** usa el techo que ya tiene el pasillo (filas 34 y 43), así que no se tocó ninguna colisión. El salto del Player (unos 104 px) no alcanza el bloque flotante de arriba. Las barreras se dibujan con la columna del juego de bloques verde del tileset mazmorra, sin arte nuevo.
-- **Scripts nuevos:**
-  - `scripts/combat/arena_encounter.gd` (`UnderkingdomArenaEncounter`):
-    - estados: inactivo → oleadas → entre oleadas → presentación del jefe → jefe → completado;
-    - señales: `combat_started`, `wave_started`, `wave_cleared`, `boss_spawned`, `boss_defeated` y `encounter_completed`;
-    - cada enemigo se sigue por su señal `died`, o por `tree_exiting` si desaparece sin morir;
-    - los enemigos y el jefe se agregan al nodo `Enemigos` del mapa.
-  - `scripts/combat/arena_spawn_point.gd`: un `Marker2D` por enemigo, con su `enemy_scene`. Cada hijo de `Oleadas` es una oleada.
-  - `scripts/environment/arena_barrier.gd`: muro que se abre y se cierra con un fundido.
-- **Capitán reutilizado:** se instancia `escenas/jefes/capitan.tscn` sin cambios en stats, IA, fases ni barra de vida. El `@export` nuevo `counts_as_world1_boss` (activo por defecto, así Mundo 1 no cambia) se apaga en el cementerio con `boss_overrides`: ese Capitán no lee ni marca el progreso de Mundo 1 y no suelta la llave de la reja.
-- **Progreso:** `GameManager.completed_encounters` guarda los encuentros superados; métodos `mark_encounter_completed()` e `is_encounter_completed()` y señal `encounter_completed`. Si el Player muere durante el combate, el mapa se recarga y el encuentro empieza de cero. Una vez superado no se repite, ni al morir ni al volver desde `tiles_casa`.
-- **Sin audio:** el proyecto no tiene sistema de sonido ni música. Cuando exista, la música de jefe puede colgarse de `boss_spawned` y `encounter_completed`.
-- **Verificado sin ventana:**
-  - arranque de la escena nueva, de la generada, de `tiles_casa` y de Mundo 1 sin errores;
-  - el flujo completo con sus señales en orden y cada oleada una sola vez;
-  - las barreras detienen al Player a los dos lados y no se pueden saltar; abiertas dejan pasar;
-  - tras la victoria `world1_boss_defeated` sigue en falso y no aparece la llave;
-  - al recargar el mapa, el encuentro sigue completado;
-  - el Capitán de Mundo 1 conserva `counts_as_world1_boss` y el grupo `world1_boss`.
-- **Falta jugarlo con ventana:**
-  - si el Capitán (sprite de 288 px) se ve bien en una arena de 512 px;
-  - la dificultad de las oleadas;
-  - que los Aprendis, que vuelan, no se queden fuera del alcance del Player.
+**Trazado** (`mapas_texto/tiles_cementerio.png`, 120 x 60 piezas; coordenadas en piezas):
+```
+ fila 7-14                 [CRIPTA: cofre, poción, Aprendis]
+                            ↑ plataformas one-way desde el mausoleo
+ fila 29  P ENTRADA ── HUB (mausoleo, S) ──┃PUERTA CON LLAVE┃── ZONA DE SALIDA ──>
+          ════════╤══════════════════════╤═══┃ (columna 81)
+                  │ atajo (x 25)          │ pozo (x 64)
+ fila 40-47       │        CATACUMBAS 1 (enemigos, cofre)
+                  │          │ escalera (x 45)
+ fila 46-56  [SALA DEL JEFE]┃ S  CATACUMBAS 2 (enemigos, poción)
+             x 6-36  puerta (columna 37)
+```
+- **Recorrido:**
+  1. Se explora el hub y la cripta, y se baja por el pozo a las catacumbas.
+  2. En las catacumbas 2 hay un checkpoint justo antes de la sala del jefe.
+  3. Al entrar en la sala se cierra la puerta y aparece el Capitán.
+  4. Al vencerlo se abre la puerta, cae la llave y se abre la trampilla del atajo, que sube directo al hub.
+  5. Con la llave se abre la puerta de la columna 81 y se llega a la salida hacia `tiles_casa`.
+- **Contenido:** 9 enemigos (Vanguardia y Aprendis), 2 checkpoints (hub y antesala del jefe), 2 cofres, 11 monedas y 2 pociones.
+- **Comprobado con una simulación aproximada de saltos sobre el PNG** (escalones de 4 piezas como máximo y huecos de 5):
+  - con la puerta y la trampilla cerradas se alcanza todo menos la zona de salida;
+  - desde la sala del jefe se vuelve al hub por las catacumbas y por el atajo;
+  - quien baja por el atajo antes del jefe puede volver a subir;
+  - con la sala cerrada no se sale de ella.
+  El script de diseño y el verificador están fuera del repo, igual que los anteriores (ver TASK.md).
+
+**Escena:** `escenas/mapas/tiles_cementerio_combate.tscn` hereda de la generada y añade:
+- `SistemasMapa/SalaJefe`, con `scripts/combat/boss_arena.gd` (`UnderkingdomBossArena`):
+  - `Activador`;
+  - `Puertas/PuertaEntrada`: se cierra durante el combate;
+  - `Atajos/Trampilla`: cerrada hasta vencer al jefe;
+  - `PuntosJefe`: el jefe sale en el más lejano al Player;
+  - `PuntoLlave`;
+  - el aviso en pantalla;
+  - señales `combat_started`, `boss_spawned`, `boss_defeated`, `encounter_completed` y `key_dropped`.
+- `SistemasMapa/PuertaLlave`, con `scripts/environment/locked_door.gd`:
+  - se abre al llegar con la llave `cementerio_capitan`;
+  - sin ella muestra "NECESITAS LA LLAVE DEL CAPITÁN";
+  - una vez abierta queda abierta, guardada como objeto consumido igual que los cofres.
+
+Las puertas y la trampilla (`scripts/environment/arena_barrier.gd`) se dibujan con piezas del bloque verde del tileset: la columna para las verticales y la losa para la horizontal.
+
+**Capitán y llave:**
+- **Capitán:** se instancia `escenas/jefes/capitan.tscn` sin cambios. El `@export` `counts_as_world1_boss` (activo por defecto) se apaga con `boss_overrides`, así que este Capitán no toca el progreso de Mundo 1.
+- **Llaves genéricas en `GameManager`:**
+  - `collected_keys`, `grant_key()`, `has_key()`, `has_any_key()` y la señal `key_changed`;
+  - la llave de Mundo 1 sigue con sus funciones propias;
+  - `boss_key_pickup.gd` tiene un `key_id`: vacío se comporta como antes; con valor da esa llave;
+  - el HUD muestra el icono con cualquier llave.
+- **Persistencia:**
+  - `GameManager.completed_encounters` guarda la sala superada;
+  - si se muere antes de recoger la llave, al recargar la llave vuelve a estar en la sala;
+  - si se muere durante el combate, la sala se reinicia y se reaparece en el checkpoint de la antesala.
+
+**Verificado sin ventana:**
+- arranque de Mundo 1, `primer_boss_mundo_1`, `tiles_casa`, la escena generada y la heredada sin errores;
+- el flujo completo, con las señales en orden;
+- la puerta con llave y la trampilla bloquean al Player y, abiertas, dejan pasar;
+- la puerta de la sala lo encierra durante el combate;
+- la llave reaparece tras recargar si no se recogió;
+- la puerta sigue abierta tras recargar;
+- `world1_boss_defeated` y la llave de Mundo 1 no cambian.
+
+**Falta jugarlo con ventana:**
+- la dificultad y el reparto de enemigos;
+- si el Capitán se ve bien en una sala de 496 x 176 px con dos plataformas;
+- que la escalera del atajo dentro de la sala no estorbe el combate;
+- el parallax de cielo se ve también en las catacumbas, porque el constructor no tiene fondo por zonas;
+- la llave (`llave_jefe_m1.tscn`) tiene el sprite a escala 1,5, que no es entera.
 
 ## Pendientes, en orden de prioridad
 1. Probar jugando: la intro, el reencuentro con el Capitán, el combate y la muerte con reaparición en el checkpoint. Ninguna de las dos versiones del compañero se había ejecutado en Godot.

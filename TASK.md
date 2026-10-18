@@ -4,7 +4,7 @@
 
 **Estado (2026-10-16):** los siete niveles existen, están unidos en ruta y pasan las pruebas sin ventana. **Nadie los ha jugado todavía.** Rama `edwin/integrar-0.04.047`, sin subir a GitHub.
 
-**Para probar:** abrir `escenas/mapas/tiles_cementerio_combate.tscn` y pulsar F6. Es el cementerio generado más el encuentro de oleadas y Capitán. Cada salida azul del borde derecho lleva al siguiente nivel:
+**Para probar:** abrir `escenas/mapas/tiles_cementerio_combate.tscn` y pulsar F6. Es el cementerio generado más la sala del Capitán, su llave y la puerta que la pide. Cada salida azul del borde derecho lleva al siguiente nivel:
 
 `tiles_cementerio` → `tiles_casa` → `tiles_mineria` → `tiles_mazmorra` → `tiles_ruina` → `tiles_profundidades` → `tiles_jefe`
 
@@ -41,7 +41,7 @@ Anotar lo que se encuentre en la sección 2 con nivel y coordenadas en piezas (x
 
 | Nivel | Tamaño (piezas) | Bloques | Enemigos | Escaleras | Además |
 |---|---|---|---|---|---|
-| `tiles_cementerio` | 104 x 58 | verde | 2 Aprendis, 1 Vanguardia | 1 | Es el primero: no tiene salida izquierda. Se juega desde `tiles_cementerio_combate.tscn`, que añade 2 oleadas y el Capitán en el pasillo del suelo. |
+| `tiles_cementerio` | 120 x 60 | verde | 6 Vanguardia, 3 Aprendis + Capitán | 3 | Primer mundo estilo Hollow Knight: hub, cripta, catacumbas, sala del jefe, llave y puerta. Se juega desde `tiles_cementerio_combate.tscn`. Ya no es un calco de `mundo_1`. |
 | `tiles_casa` | 104 x 58 | violeta | 4 diablillos | 3 | 3 huecos de 3 piezas en pisos. Las 2 escaleras del mapa original se reemplazaron. |
 | `tiles_mineria` | 104 x 58 | madera | 1 diablillo, 2 kolbo2 | 4 | 1 hueco; túnel de 1 pieza hasta la salida izquierda. |
 | `tiles_mazmorra` | 78 x 71 | oliva | 4 kolbo2, 1 mino | 13 | 9 huecos, 29 pinchos en pozos sin salida y túnel de 18 piezas hasta la salida derecha. Recortado: lo de abajo era vacío. |
@@ -84,7 +84,7 @@ Todos tienen un checkpoint, dos cofres (jefe uno), 12 monedas, una o dos pocione
 
 ### Jugabilidad
 - [ ] **Jefes y personajes.** El calco dejó fuera lo que no tiene letra en el constructor:
-  - ~~Capitán (cementerio)~~: hecho en `tiles_cementerio_combate.tscn`, una escena que hereda del nivel generado (ver changelog, "Encuentro del cementerio");
+  - ~~Capitán (cementerio)~~: hecho en `tiles_cementerio_combate.tscn`, una escena que hereda del nivel generado (ver changelog, "Cementerio con tiles: primer mundo estilo Hollow Knight");
   - Caballero de la Reina, Reina y Cthulhu (casa);
   - jefe de la mina (mineria);
   - Reina (mazmorra);

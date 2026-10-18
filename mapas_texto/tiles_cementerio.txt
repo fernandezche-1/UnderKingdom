@@ -1,11 +1,13 @@
-; NIVEL CON TILES calcado de fondos/cementerio.png: la forma sale de las
-; colisiones del mapa hecho a mano (constructor -- --desde-mapa) y encima se
-; dibujaron las salidas, escaleras, objetos y decorados.
+; PRIMER MUNDO (cementerio) estilo Hollow Knight: hub, cripta, catacumbas y
+; sala del jefe. La sala del jefe ocupa x 6-36, filas 46-56; su puerta va en la
+; columna 37, la trampilla del atajo en x 24-26 fila 45 y la puerta con llave en
+; la columna 81, filas 26-29. Si se mueven en el PNG, mover también los nodos de
+; tiles_cementerio_combate.tscn.
 ; Generar desde la carpeta del proyecto:
 ;   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/tiles_cementerio.txt
 
 escena: res://escenas/mapas/tiles_cementerio.tscn
-; El encuentro (oleadas + Capitán) vive en tiles_cementerio_combate.tscn, que
+; La sala del jefe y la puerta con llave viven en tiles_cementerio_combate.tscn, que
 ; hereda de esta escena: regenerarla no lo borra. Jugar el nivel desde esa.
 imagen: mapas_texto/tiles_cementerio.png
 tileset: mazmorra
