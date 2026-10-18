@@ -1,0 +1,13 @@
+; NIVEL CON TILES calcado de fondos/jefe.png: la forma sale de las
+; colisiones del mapa hecho a mano (constructor -- --desde-mapa) y encima se
+; dibujaron las salidas, escaleras, objetos y decorados.
+; Generar desde la carpeta del proyecto:
+;   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/tiles_jefe.txt
+
+escena: res://escenas/mapas/tiles_jefe.tscn
+imagen: mapas_texto/tiles_jefe.png
+tileset: mazmorra
+bloques: ladrillo
+fondo: ninguno
+parallax: assets_prueba/gothicvania/lava/fondo.png 0.05 x2; assets_prueba/gothicvania/lava/rocas.png 0.2 x2
+anterior: res://escenas/mapas/tiles_profundidades.tscn

@@ -1,0 +1,19 @@
+; SEGUNDO MUNDO (minas) estilo Hollow Knight, de bajada: se llega desde el fondo
+; del cementerio a la bocamina y se baja por galerías hasta la veta ardiente.
+; La sala del jefe ocupa x 6-36, filas 48-60; su puerta va en la columna 37,
+; filas 56-60, la trampilla del atajo en x 24-26 fila 47 y la puerta con llave
+; en la columna 92, filas 82-85.
+; Si se mueven en el PNG, mover también los nodos de tiles_mineria_combate.tscn.
+; Generar desde la carpeta del proyecto:
+;   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/tiles_mineria.txt
+
+escena: res://escenas/mapas/tiles_mineria.tscn
+; La sala del jefe y la puerta con llave viven en tiles_mineria_combate.tscn, que
+; hereda de esta escena: regenerarla no lo borra. Jugar el nivel desde esa.
+imagen: mapas_texto/tiles_mineria.png
+tileset: mazmorra
+bloques: madera
+fondo: ninguno
+parallax: assets_prueba/pixelfantasy_caves/fondo1.png 0; assets_prueba/pixelfantasy_caves/fondo2.png 0.1; assets_prueba/pixelfantasy_caves/fondo3.png 0.2; assets_prueba/pixelfantasy_caves/fondo4a.png 0.3
+siguiente: res://escenas/mapas/tiles_mazmorra.tscn
+anterior: res://escenas/mapas/tiles_cementerio_combate.tscn

@@ -1,15 +1,19 @@
 extends Area2D
 class_name UnderkingdomBossKeyPickup
 
-## Llave obligatoria del primer jefe.
-## Puede existir ya colocada en Mundo 1, pero permanece oculta/inactiva hasta
-## que Capitán sea derrotado. Esto hace fiable la aparición y la recogida.
+## Llave obligatoria de un jefe.
+## Sin key_id es la llave de Mundo 1: puede existir ya colocada en el mapa,
+## pero permanece oculta/inactiva hasta que Capitán sea derrotado. Con key_id
+## es una llave genérica de GameManager (p. ej. la del cementerio con tiles),
+## que aparece activa y la suelta quien la instancia.
 
 @export var player_group: StringName = &"player"
 @export_range(0.0, 20.0, 0.5) var bob_height: float = 3.0
 @export_range(0.0, 10.0, 0.1) var bob_speed: float = 2.5
 @export_range(8.0, 100.0, 1.0) var pickup_radius: float = 42.0
 @export var activate_after_world1_boss_defeated: bool = true
+## Vacío = llave de Mundo 1. Con valor, GameManager.grant_key(key_id).
+@export var key_id: String = ""
 
 var _base_y: float = 0.0
 var _time: float = 0.0
@@ -27,12 +31,16 @@ func _ready() -> void:
 
     if not body_entered.is_connected(_on_body_entered):
         body_entered.connect(_on_body_entered)
-    if not GameManager.world1_boss_defeated_changed.is_connected(_on_boss_defeated_changed):
-        GameManager.world1_boss_defeated_changed.connect(_on_boss_defeated_changed)
-
-    if GameManager.world1_boss_key_collected:
+    if _already_collected():
         queue_free()
         return
+
+    if not key_id.is_empty():
+        activate_pickup()
+        return
+
+    if not GameManager.world1_boss_defeated_changed.is_connected(_on_boss_defeated_changed):
+        GameManager.world1_boss_defeated_changed.connect(_on_boss_defeated_changed)
 
     if activate_after_world1_boss_defeated and not GameManager.world1_boss_defeated:
         _set_pickup_active(false)
@@ -41,7 +49,7 @@ func _ready() -> void:
 
 
 func activate_pickup() -> void:
-    if _collected or GameManager.world1_boss_key_collected:
+    if _collected or _already_collected():
         return
 
     _active = true
@@ -131,5 +139,14 @@ func _collect() -> void:
     set_deferred("monitoring", false)
     if pickup_collision != null:
         pickup_collision.set_deferred("disabled", true)
-    GameManager.grant_world1_boss_key()
+    if key_id.is_empty():
+        GameManager.grant_world1_boss_key()
+    else:
+        GameManager.grant_key(key_id)
     queue_free()
+
+
+func _already_collected() -> bool:
+    if key_id.is_empty():
+        return GameManager.world1_boss_key_collected
+    return GameManager.has_key(key_id)

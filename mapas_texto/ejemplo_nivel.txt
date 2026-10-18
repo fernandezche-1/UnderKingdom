@@ -1,0 +1,19 @@
+; NIVEL DE MUESTRA con todos los elementos de juego. La leyenda completa
+; (letras y colores) está en mapas_texto/LEYENDA.md.
+;
+; Este mapa se dibuja como imagen: ejemplo_nivel.png (un píxel = una pieza).
+; Para generarlo, desde la carpeta del proyecto:
+;   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/ejemplo_nivel.txt
+;
+; Las dos salidas llevan a este mismo nivel solo para probarlas; en un nivel
+; real apuntan al mapa anterior y al siguiente.
+
+escena: res://escenas/mapas/ejemplo_nivel.tscn
+tileset: mazmorra
+bloques: ladrillo
+fondo: cueva
+siguiente: res://escenas/mapas/ejemplo_nivel.tscn
+anterior: res://escenas/mapas/ejemplo_nivel.tscn
+cofre_monedas: 4
+cofre_pociones: 1
+imagen: mapas_texto/ejemplo_nivel.png

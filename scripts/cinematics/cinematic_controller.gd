@@ -2,8 +2,10 @@ extends Node2D
 class_name UnderkingdomCinematicController
 
 ## INTRO: empieza al cargar W1; REENCUENTRO: solo cuando el jefe entra en cámara.
+## ON_BOSS_SPAWN: el jefe lo crea una sala (UnderkingdomBossArena) y el diálogo
+## empieza en cuanto aparece; el actor es ese jefe.
 ## No modifica mapas, animaciones de combate ni estadísticas del jefe.
-enum Activation {ON_START, ON_VISIBLE}
+enum Activation {ON_START, ON_VISIBLE, ON_BOSS_SPAWN}
 
 @export var cinematic_id: String = ""
 @export var play_once: bool = true
@@ -11,6 +13,8 @@ enum Activation {ON_START, ON_VISIBLE}
 @export var player_path: NodePath
 @export var focus_actor_path: NodePath
 @export var visible_notifier_path: NodePath
+## Solo para ON_BOSS_SPAWN: la sala cuya señal boss_spawned abre el diálogo.
+@export var boss_arena_path: NodePath
 @export_file("*.json") var dialogue_path: String = ""
 
 @export_category("Cámara / Ritmo")
@@ -66,7 +70,13 @@ func _ready() -> void:
         return
     if freeze_actor_until_dialogue and _actor != null:
         _freeze_actor()
-    if activation == Activation.ON_START:
+    if activation == Activation.ON_BOSS_SPAWN:
+        var arena := get_node_or_null(boss_arena_path)
+        if arena == null or not arena.has_signal(&"boss_spawned"):
+            push_warning("Falta la sala del jefe para: " + cinematic_id)
+            return
+        arena.connect(&"boss_spawned", _on_boss_spawned, CONNECT_ONE_SHOT)
+    elif activation == Activation.ON_START:
         call_deferred("_begin")
     else:
         set_process(true)
@@ -85,6 +95,16 @@ func _process(_delta: float) -> void:
         return
     if absf(_player.global_position.y - _actor.global_position.y) > visible_max_distance_y:
         return
+    _begin()
+
+
+func _on_boss_spawned(boss: Node2D) -> void:
+    if _done or _running or not is_instance_valid(boss):
+        return
+    _actor = boss
+    # Se congela en el mismo cuadro en que aparece, antes de que ataque.
+    if freeze_actor_until_dialogue:
+        _freeze_actor()
     _begin()
 
 
@@ -202,6 +222,11 @@ func _play_encounter() -> void:
         if anim.sprite_frames.has_animation(&"idle"):
             anim.play(&"idle")
     var both_in_view := (_player.global_position + _actor.global_position) * 0.5
+    # Si no caben los dos en pantalla (el jefe de una sala sale en el extremo
+    # opuesto), la cámara enfoca al actor.
+    var half_view_x := get_viewport_rect().size.x / (_camera.zoom.x * 2.0)
+    if absf(_player.global_position.x - _actor.global_position.x) * 0.5 > half_view_x - 24.0:
+        both_in_view = _actor.global_position
     both_in_view.y += focus_offset.y
     await _move_camera(both_in_view, camera_pan_duration)
     if not is_inside_tree():
@@ -303,7 +328,8 @@ func _restore_everything() -> void:
     if _restored:
         return
     _restored = true
-    if is_instance_valid(_normal_camera):
+    # Al cerrar el mapa la cámara del Player puede salir del árbol antes.
+    if is_instance_valid(_normal_camera) and _normal_camera.is_inside_tree():
         _normal_camera.make_current()
     if is_instance_valid(_player):
         _player.call("set_cinematic_velocity", Vector2.ZERO)

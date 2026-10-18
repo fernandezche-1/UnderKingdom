@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="UnderKingdom"
-run/main_scene="uid://duop58kvqwgnc"
+run/main_scene="res://escenas/mapas/tiles_cementerio_combate.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 

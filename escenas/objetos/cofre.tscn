@@ -1,0 +1,33 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://tile/Dungeon Tile Set.png" id="1_tiles"]
+[ext_resource type="Script" path="res://scripts/environment/chest_interactable.gd" id="2_chest"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cerrado"]
+atlas = ExtResource("1_tiles")
+region = Rect2(192, 144, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_abierto"]
+atlas = ExtResource("1_tiles")
+region = Rect2(208, 144, 16, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cofre"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cerrado")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_abierto")
+}],
+"loop": false,
+"name": &"default",
+"speed": 1.0
+}]
+
+[node name="Cofre" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_cofre")
+script = ExtResource("2_chest")
+interaction_radius = 64.0
+coin_count = 3
+potion_count = 1

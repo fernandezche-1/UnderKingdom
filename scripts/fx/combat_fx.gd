@@ -24,6 +24,11 @@ static func death_puff(body: Node2D) -> void:
     _burst(body, Color(0.75, 0.7, 0.8), 16, 50.0, 180.0, 0.55, Vector2(0.0, -30.0))
 
 
+## Nube oscura al aparecer un enemigo de oleada o un jefe de arena.
+static func spawn_puff(body: Node2D) -> void:
+    _burst(body, Color(0.45, 0.35, 0.6), 18, 60.0, 180.0, 0.5, Vector2(0.0, -40.0))
+
+
 ## Parry: destello frío más fuerte que un bloqueo normal.
 static func parry(body: Node2D, sprite: CanvasItem) -> void:
     _burst(body, PARRY_COLOR, 14, 110.0, 180.0, 0.35, Vector2.ZERO)

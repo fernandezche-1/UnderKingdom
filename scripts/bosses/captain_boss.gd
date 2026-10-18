@@ -36,6 +36,12 @@ const BOSS_KEY_SCENE := preload("res://escenas/items/llave_jefe_m1.tscn")
 ## El roll llega tras attacks_before_roll ± este valor.
 @export_range(0, 3, 1) var roll_count_variation: int = 1
 
+@export_category("Capitán - Progreso")
+## Activo en Mundo 1: no reaparece si ya fue derrotado y, al morir, marca el
+## progreso de Mundo 1 y suelta la llave de la reja. Se apaga cuando el Capitán
+## se reutiliza en otro mapa (p. ej. el encuentro del cementerio con tiles).
+@export var counts_as_world1_boss: bool = true
+
 @export_category("Capitán - Aviso de Ultimate")
 @export var ultimate_warning_color: Color = Color(1.0, 0.35, 0.2)
 @export_range(1.0, 40.0, 0.5) var ultimate_warning_pulse_speed: float = 18.0
@@ -62,7 +68,7 @@ var _last_registered_player_attack_sequence: int = -1
 func _ready() -> void:
     # Si el jefe ya fue derrotado en esta ejecución, no reaparece. Si murió
     # antes de que se recogiera la llave, la llave vuelve a quedar disponible.
-    if GameManager.world1_boss_defeated:
+    if counts_as_world1_boss and GameManager.world1_boss_defeated:
         if not GameManager.world1_boss_key_collected:
             _spawn_boss_key()
         queue_free()
@@ -70,7 +76,8 @@ func _ready() -> void:
 
     super._ready()
     add_to_group("boss")
-    add_to_group("world1_boss")
+    if counts_as_world1_boss:
+        add_to_group("world1_boss")
     _next_roll_threshold = attacks_before_roll
     health_changed.connect(_on_boss_health_changed)
     _update_boss_phase()
@@ -428,6 +435,8 @@ func _disable_roll_player_passthrough() -> void:
 
 
 func _on_enemy_death_finished() -> void:
+    if not counts_as_world1_boss:
+        return
     GameManager.mark_world1_boss_defeated()
     _spawn_boss_key()
 

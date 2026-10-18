@@ -1,0 +1,17 @@
+Gothicvania - Legacy Collection de Luis Zuno (Ansimuz)
+
+Recibido como "Legacy Collection.zip" el 2026-10-15 para los niveles con tiles.
+Licencia: CC0 (public-license.pdf del paquete): uso libre, personal o
+comercial, sin crédito obligatorio; se puede modificar y redistribuir.
+Página del autor: https://ansimuz.itch.io
+
+Solo se copiaron los fondos que usan los niveles:
+- castillo_viejo/fondo.png   Old-dark-Castle-tileset-Files/PNG/old-dark-castle-interior-background.png
+- cavernas/fondo.png         caverns-files-web/layers/background.png
+- cavernas/paredes.png       caverns-files-web/layers/back-walls.png
+- lava/fondo.png             lava-background/PNG/background.png
+- lava/rocas.png             lava-background/PNG/middle-rocks.png
+- pueblo_noche/*.png         night-town-background-files/layers: cada capa se
+  armó a 224 px de alto, alineada abajo y repetida a lo ancho, sin cambiar el
+  arte (cielo = sky; nubes = clouds; montes = mountains + mountains-lights;
+  pueblo = town).

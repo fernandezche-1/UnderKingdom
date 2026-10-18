@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://escenas/enemigos/enemis.tscn" id="1_elfo"]
+[ext_resource type="PackedScene" path="res://escenas/ui/boss_health_bar.tscn" id="2_barra"]
+
+[node name="CaballeroDeLaReina" instance=ExtResource("1_elfo")]
+max_health = 12.0
+patrol_distance = 48.0
+patrol_speed = 34.0
+chase_speed = 90.0
+detection_range = 520.0
+detection_vertical_range = 220.0
+lose_aggro_range = 680.0
+lose_aggro_vertical_range = 260.0
+attack_damage = 0.0
+attack_cooldown = 1.1
+defense_enabled = true
+defense_chance = 0.22
+defense_duration = 0.5
+defense_cooldown = 2.0
+defense_max_hits = 3
+show_health_bar = false
+
+[node name="BossHealthBar" parent="." instance=ExtResource("2_barra")]
+boss_name = "CABALLERO DE LA REINA"
+show_only_with_aggro = true
