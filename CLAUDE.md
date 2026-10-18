@@ -15,7 +15,8 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
 - **Primer mundo, el cementerio:** se juega desde `tiles_cementerio_combate.tscn`, que hereda de la escena generada `tiles_cementerio.tscn`.
   - Trazado y coordenadas: `mapas_texto/tiles_cementerio.txt` y `docs/CHANGELOG_0.04.047.md`, sección "Cementerio con tiles".
   - Es el modelo para los mundos siguientes.
-- **Ruta actual:** `tiles_cementerio` → `tiles_casa` → `tiles_mineria` → `tiles_mazmorra` → `tiles_ruina` → `tiles_profundidades` → `tiles_jefe`. Salvo el cementerio, todavía no siguen la idea de bajar ni tienen sala de jefe (ver `TASK.md`).
+- **Segundo mundo, las minas:** se juega desde `tiles_mineria_combate.tscn`, que hereda de `tiles_mineria.tscn`. Su jefe es el Caballero de la Reina (`escenas/jefes/caballero_reina.tscn`). Trazado en `mapas_texto/tiles_mineria.txt` y en el changelog, sección "Minas con tiles".
+- **Ruta actual:** `tiles_cementerio` → `tiles_mineria` → `tiles_mazmorra` → `tiles_ruina` → `tiles_profundidades` → `tiles_jefe`. Desde la mazmorra, los mapas todavía no siguen la idea de bajar ni tienen sala de jefe (ver `TASK.md`). `tiles_casa` quedó fuera de la ruta.
 - **Cómo se monta un mundo:**
   - El trazado se dibuja en el PNG y la escena base la genera el constructor; no se edita a mano.
   - Jefe, puertas y llave van en una escena que hereda de la base. Así se puede regenerar sin perderlos.
@@ -24,7 +25,8 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
     - `scripts/environment/locked_door.gd`: puerta con llave;
     - `scripts/environment/arena_barrier.gd`: puertas y trampillas;
     - en `GameManager`, las llaves genéricas (`grant_key` / `has_key`) y `completed_encounters`.
-  - Los jefes se reutilizan por su `.tscn`. El Capitán va con `counts_as_world1_boss = false`.
+  - Los jefes se reutilizan por su `.tscn`. El Capitán va con `counts_as_world1_boss = false`. Si un jefe necesita otros valores o su `BossHealthBar`, se le hace una escena heredada en `escenas/jefes/`, como `caballero_reina.tscn`.
+  - Las salidas se cambian en el `.txt` del mapa y, para no regenerar, solo en la línea `target_scene_path` del `.tscn`. Apuntan a la escena `_combate` cuando el mapa la tiene.
   - La llave y el progreso de Mundo 1 (`world1_*`) son del mapa viejo: no usarlos en los mapas nuevos.
 
 ## Reglas del proyecto

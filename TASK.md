@@ -4,9 +4,9 @@
 
 **Estado (2026-10-16):** los siete niveles existen, están unidos en ruta y pasan las pruebas sin ventana. **Nadie los ha jugado todavía.** Rama `edwin/integrar-0.04.047`, sin subir a GitHub.
 
-**Para probar:** abrir `escenas/mapas/tiles_cementerio_combate.tscn` y pulsar F6. Es el cementerio generado más la sala del Capitán, su llave y la puerta que la pide. Cada salida azul del borde derecho lleva al siguiente nivel:
+**Para probar:** abrir `escenas/mapas/tiles_cementerio_combate.tscn` y pulsar F6. Es el cementerio generado más la sala del Capitán, su llave y la puerta que la pide. Las minas se juegan igual desde `tiles_mineria_combate.tscn`. Cada salida azul del borde derecho lleva al siguiente nivel:
 
-`tiles_cementerio` → `tiles_casa` → `tiles_mineria` → `tiles_mazmorra` → `tiles_ruina` → `tiles_profundidades` → `tiles_jefe`
+`tiles_cementerio` → `tiles_mineria` → `tiles_mazmorra` → `tiles_ruina` → `tiles_profundidades` → `tiles_jefe`
 
 Las teclas de prueba están activas: R reaparecer, H/J daño, K morir.
 
@@ -42,8 +42,8 @@ Anotar lo que se encuentre en la sección 2 con nivel y coordenadas en piezas (x
 | Nivel | Tamaño (piezas) | Bloques | Enemigos | Escaleras | Además |
 |---|---|---|---|---|---|
 | `tiles_cementerio` | 120 x 78 | verde | 9 Vanguardia, 4 Aprendis + Capitán | 4 | Primer mundo estilo Hollow Knight, de bajada: superficie, cripta, catacumbas, sala del jefe y abismo con la puerta con llave y la salida en el fondo. Se juega desde `tiles_cementerio_combate.tscn`. Ya no es un calco de `mundo_1`. |
-| `tiles_casa` | 104 x 58 | violeta | 4 diablillos | 3 | 3 huecos de 3 piezas en pisos. Las 2 escaleras del mapa original se reemplazaron. |
-| `tiles_mineria` | 104 x 58 | madera | 1 diablillo, 2 kolbo2 | 4 | 1 hueco; túnel de 1 pieza hasta la salida izquierda. |
+| `tiles_casa` | 104 x 58 | violeta | 4 diablillos | 3 | 3 huecos de 3 piezas en pisos. Las 2 escaleras del mapa original se reemplazaron. **Fuera de la ruta:** el cementerio lleva ahora a las minas. |
+| `tiles_mineria` | 104 x 90 | madera | 4 kolbo, 3 kolbo2, 2 kolbo3, 2 mino, 2 diablillos + Caballero de la Reina | 4 | Segundo mundo, con la misma estructura que el cementerio: bocamina, galerías, sala del jefe y veta ardiente con la puerta con llave y la salida en el fondo. Se juega desde `tiles_mineria_combate.tscn`. Ya no es un calco. |
 | `tiles_mazmorra` | 78 x 71 | oliva | 4 kolbo2, 1 mino | 13 | 9 huecos, 29 pinchos en pozos sin salida y túnel de 18 piezas hasta la salida derecha. Recortado: lo de abajo era vacío. |
 | `tiles_ruina` | 104 x 58 | ladrillo | kolbo, kolbo2, kolbo3, mino | 5 | 3 huecos; túnel de 4 piezas hasta la salida derecha. |
 | `tiles_profundidades` | 104 x 58 | oro | 4 diablillos | 2 | 2 huecos, lava en todo el fondo y 3 trampas de fuego. |
@@ -86,7 +86,7 @@ Todos tienen un checkpoint, dos cofres (jefe uno), 12 monedas, una o dos pocione
 - [ ] **Jefes y personajes.** El calco dejó fuera lo que no tiene letra en el constructor:
   - ~~Capitán (cementerio)~~: hecho en `tiles_cementerio_combate.tscn`, una escena que hereda del nivel generado (ver changelog, "Cementerio con tiles: primer mundo estilo Hollow Knight");
   - Caballero de la Reina, Reina y Cthulhu (casa);
-  - jefe de la mina (mineria);
+  - ~~jefe de las minas~~: el Caballero de la Reina, en `tiles_mineria_combate.tscn` (ver changelog, "Minas con tiles: segundo mundo");
   - Reina (mazmorra);
   - demonslime (profundidades);
   - jefe final (jefe).

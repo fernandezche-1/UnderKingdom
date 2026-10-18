@@ -14,4 +14,4 @@ tileset: mazmorra
 bloques: verde
 fondo: ninguno
 parallax: assets_prueba/gothicvania/pueblo_noche/cielo.png 0 x2; assets_prueba/gothicvania/pueblo_noche/nubes.png 0.05 x2; assets_prueba/gothicvania/pueblo_noche/montes.png 0.15 x2; assets_prueba/gothicvania/pueblo_noche/pueblo.png 0.3 x2
-siguiente: res://escenas/mapas/tiles_casa.tscn
+siguiente: res://escenas/mapas/tiles_mineria_combate.tscn

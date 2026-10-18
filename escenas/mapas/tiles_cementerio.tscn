@@ -3575,7 +3575,7 @@ metadata/_edit_group_ = true
 position = Vector2(1912, 1184)
 collision_layer = 0
 script = ExtResource("11_7d2jo")
-target_scene_path = "res://escenas/mapas/tiles_casa.tscn"
+target_scene_path = "res://escenas/mapas/tiles_mineria_combate.tscn"
 target_spawn_id = &"DesdeAnterior"
 metadata/_edit_group_ = true
 

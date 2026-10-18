@@ -241,6 +241,71 @@ Las puertas y la trampilla (`scripts/environment/arena_barrier.gd`) se dibujan c
 - los mapas siguientes de la ruta (`tiles_casa`...) no siguen todavía la idea de bajar;
 - la llave (`llave_jefe_m1.tscn`) tiene el sprite a escala 1,5, que no es entera.
 
+## Minas con tiles: segundo mundo
+`tiles_mineria` deja de ser un calco y pasa a ser el segundo mundo, con la misma estructura que el cementerio: bocamina, galerías, sala del jefe que se cierra al entrar, llave y puerta en el fondo del mapa. La salida del abismo del cementerio lleva ahora aquí, así que la ruta sigue bajando. `tiles_casa` queda fuera de la ruta por ahora: es una casa y no encaja bajo tierra. El archivo se conserva.
+
+**Trazado** (`mapas_texto/tiles_mineria.png`, 104 x 90 piezas; coordenadas en piezas):
+```
+ fila 3-11  < BOCAMINA: campamento minero, S ─────────────┐
+                                                          │ pozo principal (x 49)
+ fila 21-27      GALERÍA 1: taller, S ── gruta de cristales, cofre
+                 │ atajo (x 25)          │
+ fila 36-43      │                       GALERÍA 2: mino ──┐
+                 │                       │                 │ pozo este (x 85)
+ fila 48-60 [SALA DEL JEFE]┃ ANTECÁMARA, S ──┐             │
+            x 6-36  puerta (columna 37)      │ pozo (x 67)  │
+ fila 72-85                 VETA ARDIENTE: lava, fuego, diablillos, S ┃PUERTA CON LLAVE┃──> tiles_mazmorra
+                                                              (columna 92, filas 82-85)
+```
+- **Recorrido:**
+  1. Se llega desde el fondo del cementerio a la bocamina, por el borde izquierdo de arriba. La salida morada lleva de vuelta.
+  2. El pozo principal baja por la galería 1 y la galería 2 hasta la antecámara, que tiene un checkpoint junto a la sala del jefe.
+  3. Al entrar en la sala se cierra la puerta y aparece el Caballero de la Reina.
+  4. Al vencerlo se abre la puerta, cae la llave y se abre la trampilla del atajo, que sube al checkpoint de la galería 1.
+  5. A la veta ardiente se baja por el pozo de la antecámara o por el pozo este de la galería 2. Tiene dos fosos de lava con plataformas, trampas de fuego, diablillos y un checkpoint junto a la puerta: el calor anuncia que se baja hacia el infierno.
+  6. Con la llave se abre la puerta y se llega a la salida, en el borde derecho del fondo, hacia `tiles_mazmorra`.
+- **Contenido:**
+  - 13 enemigos: 4 kolbo, 3 kolbo2, 2 kolbo3, 2 mino y 2 diablillos;
+  - 4 checkpoints: bocamina, galería 1, antecámara y veta ardiente;
+  - 1 cofre, 12 monedas, 3 pociones y 2 trampas de fuego;
+  - 4 escaleras;
+  - bloques `madera` y el parallax de cuevas que ya tenía el nivel.
+- **Comprobado con la simulación de saltos sobre el PNG:**
+  - sin la llave se alcanza todo menos la salida;
+  - con la trampilla abierta se sube de la sala del jefe a la galería 1;
+  - desde la llegada del mapa siguiente se vuelve a la bocamina.
+
+**Escena:** `escenas/mapas/tiles_mineria_combate.tscn` hereda de la generada y tiene las mismas piezas que la del cementerio:
+- `SistemasMapa/SalaJefe` (`encounter_id` y `key_id` `minas_caballero`);
+- `SistemasMapa/PuertaLlave`, que pide esa llave y muestra "NECESITAS LA LLAVE DEL CABALLERO".
+
+No hizo falta código nuevo.
+
+**Jefe:** `escenas/jefes/caballero_reina.tscn` hereda del elfo arquero (`escenas/enemigos/enemis.tscn`, `w2_archer_boss.gd`, tres fases).
+- Lleva los valores que tenía en `primer_boss_mundo_1` (12 de vida, alcance de detección...) y su `BossHealthBar`.
+- No se le conecta `w2_queen_knight_progress.gd`, así que no toca el progreso del mapa viejo.
+
+**Ruta:** `tiles_cementerio` → `tiles_mineria` → `tiles_mazmorra` → ...
+- Para no regenerar con cambios de unique_id, se editó solo la línea `target_scene_path` en `tiles_cementerio.tscn` (salida siguiente) y en `tiles_mazmorra.tscn` (salida anterior). Ahora apuntan a `tiles_mineria_combate.tscn`.
+- También se actualizaron sus `.txt`.
+
+**Verificado sin ventana:**
+- el arranque de la escena sin errores;
+- el Player queda de pie en las dos llegadas;
+- los enemigos se asientan en el suelo;
+- la puerta del fondo bloquea sin llave;
+- al entrar en la sala se cierra la puerta y no deja salir al Player;
+- el Caballero aparece en el punto más lejano, con barra de vida, y queda en el suelo;
+- al vencerlo se abren la puerta y la trampilla, se guarda la sala y cae la llave;
+- al recargar, la llave vuelve si no se recogió y el jefe no reaparece;
+- con la llave la puerta se abre y sigue abierta tras recargar;
+- la llave de Mundo 1 no cambia.
+
+**Falta jugarlo con ventana:**
+- el combate contra el arquero en una sala de 496 x 208 px con tres plataformas, y si la escalera del atajo dentro de la sala estorba;
+- la dificultad de la veta ardiente: fuego, diablillos y mino juntos;
+- el icono de llave del HUD sigue encendido con la llave del cementerio, porque las puertas no gastan la llave. No avisa de que se ha conseguido la nueva.
+
 ## Pendientes, en orden de prioridad
 1. Probar jugando: la intro, el reencuentro con el Capitán, el combate y la muerte con reaparición en el checkpoint. Ninguna de las dos versiones del compañero se había ejecutado en Godot.
 2. Pausa, menú principal y guardado persistente. Hoy todo se pierde al cerrar el juego.
