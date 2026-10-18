@@ -1,8 +1,8 @@
-; PRIMER MUNDO (cementerio) estilo Hollow Knight: hub, cripta, catacumbas y
-; sala del jefe. La sala del jefe ocupa x 6-36, filas 46-56; su puerta va en la
-; columna 37, la trampilla del atajo en x 24-26 fila 45 y la puerta con llave en
-; la columna 81, filas 26-29. Si se mueven en el PNG, mover también los nodos de
-; tiles_cementerio_combate.tscn.
+; PRIMER MUNDO (cementerio) estilo Hollow Knight, de bajada: superficie, cripta,
+; catacumbas, sala del jefe y abismo con la salida en el fondo. La sala del jefe
+; ocupa x 6-36, filas 46-56; su puerta va en la columna 37, la trampilla del
+; atajo en x 24-26 fila 45 y la puerta con llave en la columna 109, filas 72-75.
+; Si se mueven en el PNG, mover también los nodos de tiles_cementerio_combate.tscn.
 ; Generar desde la carpeta del proyecto:
 ;   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/tiles_cementerio.txt
 

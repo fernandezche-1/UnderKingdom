@@ -161,28 +161,35 @@ Siete niveles nuevos con tiles, uno por cada fondo pintado, con la misma forma q
 ## Cementerio con tiles: primer mundo estilo Hollow Knight
 `tiles_cementerio` pasa a ser un mundo para explorar. Hay un hub con caminos, una cripta opcional, catacumbas, una sala del jefe que se cierra al entrar, una llave y una puerta que la pide para llegar a la salida. Reemplaza al primer intento con oleadas, que se descartó.
 
-**Trazado** (`mapas_texto/tiles_cementerio.png`, 120 x 60 piezas; coordenadas en piezas):
+**Trazado** (`mapas_texto/tiles_cementerio.png`, 120 x 78 piezas; coordenadas en piezas). Siguiendo el lore, el mundo se recorre bajando: se empieza en la superficie y la puerta al siguiente mundo está en el fondo del mapa.
 ```
  fila 7-14                 [CRIPTA: cofre, poción, Aprendis]
                             ↑ plataformas one-way desde el mausoleo
- fila 29  P ENTRADA ── HUB (mausoleo, S) ──┃PUERTA CON LLAVE┃── ZONA DE SALIDA ──>
-          ════════╤══════════════════════╤═══┃ (columna 81)
+ fila 29  P ENTRADA ── HUB (mausoleo, S) ── SUPERFICIE ESTE
+          ════════╤══════════════════════╤════════════════
                   │ atajo (x 25)          │ pozo (x 64)
  fila 40-47       │        CATACUMBAS 1 (enemigos, cofre)
                   │          │ escalera (x 45)
- fila 46-56  [SALA DEL JEFE]┃ S  CATACUMBAS 2 (enemigos, poción)
-             x 6-36  puerta (columna 37)
+ fila 46-56  [SALA DEL JEFE]┃ S  CATACUMBAS 2 ──┐
+             x 6-36  puerta (columna 37)        │ pozo del abismo (x 67)
+ fila 62-75                 ABISMO: plataformas, foso de lava, S ┃PUERTA CON LLAVE┃──> siguiente mundo
+                                                         (columna 109, filas 72-75)
 ```
 - **Recorrido:**
-  1. Se explora el hub y la cripta, y se baja por el pozo a las catacumbas.
+  1. Se explora la superficie y la cripta, y se baja por el pozo a las catacumbas.
   2. En las catacumbas 2 hay un checkpoint justo antes de la sala del jefe.
   3. Al entrar en la sala se cierra la puerta y aparece el Capitán.
   4. Al vencerlo se abre la puerta, cae la llave y se abre la trampilla del atajo, que sube directo al hub.
-  5. Con la llave se abre la puerta de la columna 81 y se llega a la salida hacia `tiles_casa`.
-- **Contenido:** 9 enemigos (Vanguardia y Aprendis), 2 checkpoints (hub y antesala del jefe), 2 cofres, 11 monedas y 2 pociones.
-- **Comprobado con una simulación aproximada de saltos sobre el PNG** (escalones de 4 piezas como máximo y huecos de 5):
-  - con la puerta y la trampilla cerradas se alcanza todo menos la zona de salida;
-  - desde la sala del jefe se vuelve al hub por las catacumbas y por el atajo;
+  5. Desde el este de las catacumbas 2 se baja por el pozo del abismo hasta la caverna del fondo. Tiene plataformas, un foso de lava y un checkpoint junto a la puerta.
+  6. Con la llave se abre la puerta y se llega a la salida, en el borde derecho del fondo del mapa, hacia `tiles_casa`.
+
+  Al abismo se puede bajar antes de vencer al jefe: se ve la puerta cerrada y se puede volver a subir.
+- **Contenido:** 13 enemigos (Vanguardia y Aprendis), 3 checkpoints (hub, antesala del jefe y fondo del abismo), 2 cofres, 13 monedas y 3 pociones.
+- **Por qué la salida es lateral:** el constructor solo crea salidas en los bordes izquierdo y derecho. La salida está en el borde derecho, pero en el punto más profundo del mapa. Una salida en el suelo necesitaría cambiar el constructor y decidir cómo se vuelve hacia arriba desde el mapa siguiente.
+- **Comprobado con una simulación aproximada de saltos sobre el PNG** (escalones de 4 piezas como máximo, huecos de 5 y lava mortal):
+  - sin la llave se alcanza todo menos la salida;
+  - desde la sala del jefe se llega a la puerta del abismo y, con la llave, a la salida;
+  - desde la puerta del abismo, o al llegar desde `tiles_casa`, se vuelve a la superficie;
   - quien baja por el atajo antes del jefe puede volver a subir;
   - con la sala cerrada no se sale de ella.
   El script de diseño y el verificador están fuera del repo, igual que los anteriores (ver TASK.md).
@@ -196,7 +203,7 @@ Siete niveles nuevos con tiles, uno por cada fondo pintado, con la misma forma q
   - `PuntoLlave`;
   - el aviso en pantalla;
   - señales `combat_started`, `boss_spawned`, `boss_defeated`, `encounter_completed` y `key_dropped`.
-- `SistemasMapa/PuertaLlave`, con `scripts/environment/locked_door.gd`:
+- `SistemasMapa/PuertaLlave` (fondo del abismo), con `scripts/environment/locked_door.gd`:
   - se abre al llegar con la llave `cementerio_capitan`;
   - sin ella muestra "NECESITAS LA LLAVE DEL CAPITÁN";
   - una vez abierta queda abierta, guardada como objeto consumido igual que los cofres.
@@ -217,6 +224,7 @@ Las puertas y la trampilla (`scripts/environment/arena_barrier.gd`) se dibujan c
 
 **Verificado sin ventana:**
 - arranque de Mundo 1, `primer_boss_mundo_1`, `tiles_casa`, la escena generada y la heredada sin errores;
+- la puerta del fondo bloquea sin llave y se abre con ella;
 - el flujo completo, con las señales en orden;
 - la puerta con llave y la trampilla bloquean al Player y, abiertas, dejan pasar;
 - la puerta de la sala lo encierra durante el combate;
@@ -228,7 +236,9 @@ Las puertas y la trampilla (`scripts/environment/arena_barrier.gd`) se dibujan c
 - la dificultad y el reparto de enemigos;
 - si el Capitán se ve bien en una sala de 496 x 176 px con dos plataformas;
 - que la escalera del atajo dentro de la sala no estorbe el combate;
-- el parallax de cielo se ve también en las catacumbas, porque el constructor no tiene fondo por zonas;
+- el parallax de cielo se ve también en las catacumbas y el abismo, porque el constructor no tiene fondo por zonas;
+- el foso de lava del abismo es decisión de diseño: avisa de que se baja hacia el infierno;
+- los mapas siguientes de la ruta (`tiles_casa`...) no siguen todavía la idea de bajar;
 - la llave (`llave_jefe_m1.tscn`) tiene el sprite a escala 1,5, que no es entera.
 
 ## Pendientes, en orden de prioridad

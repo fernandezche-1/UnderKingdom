@@ -41,7 +41,7 @@ Anotar lo que se encuentre en la sección 2 con nivel y coordenadas en piezas (x
 
 | Nivel | Tamaño (piezas) | Bloques | Enemigos | Escaleras | Además |
 |---|---|---|---|---|---|
-| `tiles_cementerio` | 120 x 60 | verde | 6 Vanguardia, 3 Aprendis + Capitán | 3 | Primer mundo estilo Hollow Knight: hub, cripta, catacumbas, sala del jefe, llave y puerta. Se juega desde `tiles_cementerio_combate.tscn`. Ya no es un calco de `mundo_1`. |
+| `tiles_cementerio` | 120 x 78 | verde | 9 Vanguardia, 4 Aprendis + Capitán | 4 | Primer mundo estilo Hollow Knight, de bajada: superficie, cripta, catacumbas, sala del jefe y abismo con la puerta con llave y la salida en el fondo. Se juega desde `tiles_cementerio_combate.tscn`. Ya no es un calco de `mundo_1`. |
 | `tiles_casa` | 104 x 58 | violeta | 4 diablillos | 3 | 3 huecos de 3 piezas en pisos. Las 2 escaleras del mapa original se reemplazaron. |
 | `tiles_mineria` | 104 x 58 | madera | 1 diablillo, 2 kolbo2 | 4 | 1 hueco; túnel de 1 pieza hasta la salida izquierda. |
 | `tiles_mazmorra` | 78 x 71 | oliva | 4 kolbo2, 1 mino | 13 | 9 huecos, 29 pinchos en pozos sin salida y túnel de 18 piezas hasta la salida derecha. Recortado: lo de abajo era vacío. |

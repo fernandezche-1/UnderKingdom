@@ -117,7 +117,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="PuertaLlave" type="StaticBody2D" parent="SistemasMapa"]
-position = Vector2(1304, 448)
+position = Vector2(1752, 1184)
 script = ExtResource("6_puerta_llave")
 piece_start = SubResource("AtlasTexture_columna_tope")
 piece_middle = SubResource("AtlasTexture_columna_medio")
