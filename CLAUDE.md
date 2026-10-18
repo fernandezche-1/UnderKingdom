@@ -40,7 +40,7 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
 ## Estructura
 
 - `escenas/mapas/tiles_*`: los mapas en uso. Cada uno se genera con el constructor y tiene un nodo `SistemasMapa` (MapBounds, spawns, escaleras, checkpoints, transiciones). Los que llevan jefe o puertas tienen además una escena heredada, como `tiles_cementerio_combate.tscn`.
-- `escenas/mapas/` (mapas viejos, sin uso por ahora): mundo_1 (sigue siendo la escena principal del proyecto), primer_boss_mundo_1, mundo_2, mundo_3, ruina, profundidades, jefe_final. Cada uno es un PNG de `fondos/` cortado en tiles de 16 px más colisiones dibujadas a mano.
+- `escenas/mapas/` (mapas viejos, sin uso por ahora): mundo_1, primer_boss_mundo_1, mundo_2, mundo_3, ruina, profundidades, jefe_final. Cada uno es un PNG de `fondos/` cortado en tiles de 16 px más colisiones dibujadas a mano.
 - `escenas/enemigos/`, `escenas/jefes/`, `escenas/player.tscn`, `escenas/sistemas/` (one-way, kill zone, burn zone, climb zone, transición, spawn point), `escenas/items/`, `escenas/ui/`.
 - `scripts/`: `player/player.gd`, `combat/enemy_base.gd` (base de todo enemigo con IA), `bosses/captain_boss.gd`, `core/game_manager.gd` (autoload `GameManager`), `ui/` (HUD, barra de jefe, barra de enemigo), `fx/combat_fx.gd`, `transitions/`, `environment/`, `camera/`.
 - `docs/`: historial de cada etapa (P1…P30). Es la fuente de verdad de lo decidido y lo pendiente; documentar etapas nuevas con el mismo formato.
@@ -54,8 +54,8 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
 
 ## Validar cambios
 
-- Mapa en uso: `godot --headless res://escenas/mapas/tiles_cementerio_combate.tscn --quit-after 120`.
-- Arranque del proyecto: `godot --headless --quit-after 120` desde la raíz. Ejecuta Mundo 1, el mapa viejo, porque sigue siendo la escena principal; comprobarlo cuando se toquen scripts compartidos (Player, enemigos, GameManager, Capitán).
+- Arranque sin errores: `godot --headless --quit-after 120` desde la raíz del proyecto. Ejecuta el cementerio (`tiles_cementerio_combate.tscn`), que es la escena principal.
+- Mundo 1, el mapa viejo: `godot --headless res://escenas/mapas/mundo_1.tscn --quit-after 120`. Comprobarlo cuando se toquen scripts compartidos (Player, enemigos, GameManager, Capitán).
 - Un mapa concreto: `godot --headless res://escenas/mapas/<mapa>.tscn --quit-after 60`.
 - Tras crear un script con `class_name` nuevo, correr `godot --headless --import` para actualizar la caché de clases.
 - `godot --check-only --script <archivo>` da un falso "Identifier not found: GameManager" en scripts que usan el autoload; no usarlo como prueba.
