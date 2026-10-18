@@ -2,6 +2,31 @@
 
 Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando Che; colaboradores trabajan en ramas propias. Responder en español.
 
+## Mapas en uso (leer primero)
+
+- **La estructura del juego a partir de ahora son los niveles con tiles (`escenas/mapas/tiles_*`).** Todo trabajo nuevo de mapas, progresión, jefes y ruta va ahí.
+- **Mapas aparte, por el momento sin uso:** `mundo_1.tscn` y los demás mapas hechos a mano (`primer_boss_mundo_1`, `mundo_2`, `mundo_3`, `ruina`, `profundidades`, `jefe_final`, ejemplos y arenas de prueba).
+  - No se borran ni se modifican salvo que se pida.
+  - No se toman como referencia de diseño.
+  - No se conectan con la ruta de tiles.
+- **Lore y diseño: el juego se recorre bajando**, de la tierra a los abismos y al infierno, al estilo de Terraria.
+  - Cada mundo es un mapa para explorar al estilo Hollow Knight: zonas, atajos, checkpoints, enemigos repartidos y una sala de jefe.
+  - La sala del jefe se cierra al entrar. Al vencerlo cae una llave, y esa llave abre la puerta al mundo siguiente, que está en la parte más profunda del mapa.
+- **Primer mundo, el cementerio:** se juega desde `tiles_cementerio_combate.tscn`, que hereda de la escena generada `tiles_cementerio.tscn`.
+  - Trazado y coordenadas: `mapas_texto/tiles_cementerio.txt` y `docs/CHANGELOG_0.04.047.md`, sección "Cementerio con tiles".
+  - Es el modelo para los mundos siguientes.
+- **Ruta actual:** `tiles_cementerio` → `tiles_casa` → `tiles_mineria` → `tiles_mazmorra` → `tiles_ruina` → `tiles_profundidades` → `tiles_jefe`. Salvo el cementerio, todavía no siguen la idea de bajar ni tienen sala de jefe (ver `TASK.md`).
+- **Cómo se monta un mundo:**
+  - El trazado se dibuja en el PNG y la escena base la genera el constructor; no se edita a mano.
+  - Jefe, puertas y llave van en una escena que hereda de la base. Así se puede regenerar sin perderlos.
+  - Piezas a reutilizar:
+    - `scripts/combat/boss_arena.gd`: sala de jefe, con `Puertas`, `Atajos`, `PuntosJefe` y `PuntoLlave`;
+    - `scripts/environment/locked_door.gd`: puerta con llave;
+    - `scripts/environment/arena_barrier.gd`: puertas y trampillas;
+    - en `GameManager`, las llaves genéricas (`grant_key` / `has_key`) y `completed_encounters`.
+  - Los jefes se reutilizan por su `.tscn`. El Capitán va con `counts_as_world1_boss = false`.
+  - La llave y el progreso de Mundo 1 (`world1_*`) son del mapa viejo: no usarlos en los mapas nuevos.
+
 ## Reglas del proyecto
 
 - Las colisiones sólidas de los mapas que ya se validaron jugando no se redibujan ni se eliminan. Si un cambio las afecta, preguntar antes.
@@ -9,12 +34,13 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
 - La vida se mide en cuartos de corazón: 4 corazones máximo, 0.25 es el daño mínimo.
 - Colores de las marcas en los mapas: verde = plataforma one-way, rojo/rosado = kill zone, blanco = burn zone, azul = transición al mapa siguiente, morado = transición al mapa anterior, amarillo = puerta interna.
 - Las zonas que dependen de marcas visuales las coloca una persona en el editor o pasa coordenadas; no inferir su posición por la forma o el color de una colisión.
-- `PuertaJefeM1Bloqueo`, `PasoPuertaWS` y `OneWayPasoPuertaWS` de Mundo 1 no se mueven ni se modifican (secuencia Capitán → llave → reja).
+- (Mapa viejo) `PuertaJefeM1Bloqueo`, `PasoPuertaWS` y `OneWayPasoPuertaWS` de Mundo 1 no se mueven ni se modifican (secuencia Capitán → llave → reja).
 - Pixel art: filtro nearest, resolución base 480x270 con escalado entero, sprites a escala entera (1 o 2). No usar escalas no enteras ni estirar sprites.
 
 ## Estructura
 
-- `escenas/mapas/`: mundo_1 (escena principal), primer_boss_mundo_1, mundo_2, mundo_3, ruina, profundidades, jefe_final. Cada mapa es un PNG de `fondos/` cortado en tiles de 16 px más colisiones dibujadas a mano, y un nodo `SistemasMapa` (MapBounds, spawns, zonas, ruta de prueba).
+- `escenas/mapas/tiles_*`: los mapas en uso. Cada uno se genera con el constructor y tiene un nodo `SistemasMapa` (MapBounds, spawns, escaleras, checkpoints, transiciones). Los que llevan jefe o puertas tienen además una escena heredada, como `tiles_cementerio_combate.tscn`.
+- `escenas/mapas/` (mapas viejos, sin uso por ahora): mundo_1 (sigue siendo la escena principal del proyecto), primer_boss_mundo_1, mundo_2, mundo_3, ruina, profundidades, jefe_final. Cada uno es un PNG de `fondos/` cortado en tiles de 16 px más colisiones dibujadas a mano.
 - `escenas/enemigos/`, `escenas/jefes/`, `escenas/player.tscn`, `escenas/sistemas/` (one-way, kill zone, burn zone, climb zone, transición, spawn point), `escenas/items/`, `escenas/ui/`.
 - `scripts/`: `player/player.gd`, `combat/enemy_base.gd` (base de todo enemigo con IA), `bosses/captain_boss.gd`, `core/game_manager.gd` (autoload `GameManager`), `ui/` (HUD, barra de jefe, barra de enemigo), `fx/combat_fx.gd`, `transitions/`, `environment/`, `camera/`.
 - `docs/`: historial de cada etapa (P1…P30). Es la fuente de verdad de lo decidido y lo pendiente; documentar etapas nuevas con el mismo formato.
@@ -28,7 +54,8 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
 
 ## Validar cambios
 
-- Arranque sin errores: `godot --headless --quit-after 120` desde la raíz del proyecto (ejecuta Mundo 1).
+- Mapa en uso: `godot --headless res://escenas/mapas/tiles_cementerio_combate.tscn --quit-after 120`.
+- Arranque del proyecto: `godot --headless --quit-after 120` desde la raíz. Ejecuta Mundo 1, el mapa viejo, porque sigue siendo la escena principal; comprobarlo cuando se toquen scripts compartidos (Player, enemigos, GameManager, Capitán).
 - Un mapa concreto: `godot --headless res://escenas/mapas/<mapa>.tscn --quit-after 60`.
 - Tras crear un script con `class_name` nuevo, correr `godot --headless --import` para actualizar la caché de clases.
 - `godot --check-only --script <archivo>` da un falso "Identifier not found: GameManager" en scripts que usan el autoload; no usarlo como prueba.
@@ -39,3 +66,4 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
 - Un commit por cambio que funcione. No hacer push sin que se pida.
 - Al editar un `.tscn`, avisar cuál para que se recargue en el editor sin guardar encima.
 - Armando ha pasado versiones en ZIP: nunca extraer una versión encima de la carpeta de trabajo; traerla a una rama aparte y fusionar.
+- Aplica siempre Static Typing (var speed: float = 200.0, func take_damage(amount: int) -> void:)
