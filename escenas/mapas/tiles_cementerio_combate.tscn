@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/environment/arena_barrier.gd" id="5_barrera"]
 [ext_resource type="Script" path="res://scripts/environment/locked_door.gd" id="6_puerta_llave"]
 [ext_resource type="Texture2D" path="res://assets_prueba/dungeon_platformer/dungeontilesetfull.png" id="7_tileset"]
+[ext_resource type="Script" path="res://scripts/cinematics/cinematic_controller.gd" id="8_cinematica"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_columna_tope"]
 atlas = ExtResource("7_tileset")
@@ -127,3 +128,27 @@ locked_message = "NECESITAS LA LLAVE DEL CAPITÁN"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/PuertaLlave"]
 shape = SubResource("RectangleShape2D_puerta_llave")
+
+[node name="Cinematicas" type="Node2D" parent="SistemasMapa"]
+
+[node name="IntroRecuerdo" type="Node2D" parent="SistemasMapa/Cinematicas"]
+script = ExtResource("8_cinematica")
+cinematic_id = "cementerio_intro_recuerdo"
+player_path = NodePath("../../../player")
+dialogue_path = "res://dialogues/w1_intro_recuerdo.json"
+start_delay = 0.15
+camera_pan_duration = 1.0
+camera_return_duration = 0.7
+
+[node name="ReencuentroCapitan" type="Node2D" parent="SistemasMapa/Cinematicas"]
+script = ExtResource("8_cinematica")
+cinematic_id = "cementerio_reencuentro_capitan"
+activation = 2
+player_path = NodePath("../../../player")
+boss_arena_path = NodePath("../../SalaJefe")
+dialogue_path = "res://dialogues/w1_reencuentro_capitan.json"
+start_delay = 0.5
+camera_pan_duration = 0.6
+camera_return_duration = 0.6
+focus_offset = Vector2(0, -5)
+freeze_actor_until_dialogue = true

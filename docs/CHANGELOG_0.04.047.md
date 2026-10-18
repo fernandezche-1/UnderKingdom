@@ -312,6 +312,26 @@ No hizo falta código nuevo.
 - la dificultad de la veta ardiente: fuego, diablillos y mino juntos;
 - el icono de llave del HUD sigue encendido con la llave del cementerio, porque las puertas no gastan la llave. No avisa de que se ha conseguido la nueva.
 
+## Cinemáticas en el cementerio con tiles
+- `tiles_cementerio_combate.tscn` tiene ahora las dos cinemáticas de Mundo 1, con los mismos diálogos (`dialogues/w1_intro_recuerdo.json` y `dialogues/w1_reencuentro_capitan.json`):
+  - `IntroRecuerdo`: fundido y diálogo del recuerdo al cargar el mapa;
+  - `ReencuentroCapitan`: diálogo con el Capitán antes del combate.
+- Están en `SistemasMapa/Cinematicas` de la escena de combate, no en `tiles_cementerio.tscn`, para que el constructor pueda seguir regenerando la base.
+- Tienen identificadores propios (`cementerio_intro_recuerdo`, `cementerio_reencuentro_capitan`). Verlas en Mundo 1 no las salta aquí, ni al revés.
+- `cinematic_controller.gd` tiene un modo nuevo, `ON_BOSS_SPAWN`, porque aquí la sala crea al Capitán al entrar y no hay un actor colocado en la escena:
+  - escucha la señal `boss_spawned` de la sala indicada en `boss_arena_path`;
+  - congela al jefe en el mismo cuadro en que aparece y abre el diálogo;
+  - si el jefe está demasiado lejos para que quepan los dos en pantalla, la cámara lo enfoca a él. En Mundo 1 caben los dos y la cámara se comporta igual que antes.
+- Al cerrar el mapa a mitad de una cinemática ya no sale el error de `make_current`. Pasaba cuando el Player está después de `SistemasMapa` en el árbol.
+
+**Verificado sin ventana:**
+- la intro bloquea los controles y los devuelve al terminar;
+- al entrar en la sala, el Capitán aparece sin IA ni ataques mientras dura el diálogo;
+- al terminar el diálogo el Capitán pelea y el Player recupera los controles y deja de ser invulnerable;
+- Mundo 1 arranca sin errores.
+
+**Falta jugarlo con ventana:** el encuadre de la cámara en la sala y el ritmo del diálogo antes del combate.
+
 ## Pendientes, en orden de prioridad
 1. Probar jugando: la intro, el reencuentro con el Capitán, el combate y la muerte con reaparición en el checkpoint. Ninguna de las dos versiones del compañero se había ejecutado en Godot.
 2. Pausa, menú principal y guardado persistente. Hoy todo se pierde al cerrar el juego.
