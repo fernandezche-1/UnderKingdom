@@ -1,13 +1,16 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://b1n8i8d45b365"]
 
 [ext_resource type="PackedScene" path="res://escenas/mapas/tiles_cementerio.tscn" id="1_base"]
-[ext_resource type="Script" path="res://scripts/combat/boss_arena.gd" id="2_sala"]
-[ext_resource type="PackedScene" path="res://escenas/jefes/capitan.tscn" id="3_capitan"]
+[ext_resource type="Script" uid="uid://b8swqtsoxxxya" path="res://scripts/combat/boss_arena.gd" id="2_sala"]
+[ext_resource type="PackedScene" uid="uid://b0u6og171twbp" path="res://escenas/jefes/capitan.tscn" id="3_capitan"]
 [ext_resource type="PackedScene" path="res://escenas/items/llave_jefe_m1.tscn" id="4_llave"]
-[ext_resource type="Script" path="res://scripts/environment/arena_barrier.gd" id="5_barrera"]
-[ext_resource type="Script" path="res://scripts/environment/locked_door.gd" id="6_puerta_llave"]
-[ext_resource type="Texture2D" path="res://assets_prueba/dungeon_platformer/dungeontilesetfull.png" id="7_tileset"]
-[ext_resource type="Script" path="res://scripts/cinematics/cinematic_controller.gd" id="8_cinematica"]
+[ext_resource type="Script" uid="uid://b1wbjge6trnxt" path="res://scripts/environment/arena_barrier.gd" id="5_barrera"]
+[ext_resource type="Script" uid="uid://c5vs20q6x5qa5" path="res://scripts/environment/locked_door.gd" id="6_puerta_llave"]
+[ext_resource type="Texture2D" uid="uid://carrjvpw80884" path="res://assets_prueba/dungeon_platformer/dungeontilesetfull.png" id="7_tileset"]
+[ext_resource type="Script" uid="uid://dsy5vbjhmxc2" path="res://scripts/cinematics/cinematic_controller.gd" id="8_cinematica"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_activador"]
+size = Vector2(368, 176)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_columna_tope"]
 atlas = ExtResource("7_tileset")
@@ -21,6 +24,9 @@ region = Rect2(48, 16, 16, 16)
 atlas = ExtResource("7_tileset")
 region = Rect2(48, 32, 16, 16)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_puerta_entrada"]
+size = Vector2(16, 80)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_losa_izq"]
 atlas = ExtResource("7_tileset")
 region = Rect2(0, 48, 16, 16)
@@ -33,21 +39,15 @@ region = Rect2(16, 48, 16, 16)
 atlas = ExtResource("7_tileset")
 region = Rect2(32, 48, 16, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_activador"]
-size = Vector2(368, 176)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_puerta_entrada"]
-size = Vector2(16, 80)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trampilla"]
 size = Vector2(48, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_puerta_llave"]
 size = Vector2(16, 64)
 
-[node name="TilesCementerioCombate" instance=ExtResource("1_base")]
+[node name="TilesCementerioCombate" unique_id=2126966449 instance=ExtResource("1_base")]
 
-[node name="SalaJefe" type="Node2D" parent="SistemasMapa"]
+[node name="SalaJefe" type="Node2D" parent="SistemasMapa" parent_id_path=PackedInt32Array(1342171580) index="8" unique_id=2129028863]
 script = ExtResource("2_sala")
 encounter_id = "cementerio_capitan"
 boss_scene = ExtResource("3_capitan")
@@ -57,30 +57,30 @@ boss_overrides = Dictionary[String, Variant]({
 key_scene = ExtResource("4_llave")
 key_id = "cementerio_capitan"
 
-[node name="Activador" type="Area2D" parent="SistemasMapa/SalaJefe"]
+[node name="Activador" type="Area2D" parent="SistemasMapa/SalaJefe" index="0" unique_id=817542820]
 position = Vector2(344, 824)
 collision_layer = 0
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaJefe/Activador"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaJefe/Activador" index="0" unique_id=1007695722]
 shape = SubResource("RectangleShape2D_activador")
 
-[node name="Puertas" type="Node2D" parent="SistemasMapa/SalaJefe"]
+[node name="Puertas" type="Node2D" parent="SistemasMapa/SalaJefe" index="1" unique_id=1532251448]
 
-[node name="PuertaEntrada" type="StaticBody2D" parent="SistemasMapa/SalaJefe/Puertas"]
+[node name="PuertaEntrada" type="StaticBody2D" parent="SistemasMapa/SalaJefe/Puertas" index="0" unique_id=197724510]
 position = Vector2(600, 872)
 script = ExtResource("5_barrera")
 piece_start = SubResource("AtlasTexture_columna_tope")
 piece_middle = SubResource("AtlasTexture_columna_medio")
 piece_end = SubResource("AtlasTexture_columna_base")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaJefe/Puertas/PuertaEntrada"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaJefe/Puertas/PuertaEntrada" index="0" unique_id=746363229]
 shape = SubResource("RectangleShape2D_puerta_entrada")
 disabled = true
 
-[node name="Atajos" type="Node2D" parent="SistemasMapa/SalaJefe"]
+[node name="Atajos" type="Node2D" parent="SistemasMapa/SalaJefe" index="2" unique_id=1660337806]
 
-[node name="Trampilla" type="StaticBody2D" parent="SistemasMapa/SalaJefe/Atajos"]
+[node name="Trampilla" type="StaticBody2D" parent="SistemasMapa/SalaJefe/Atajos" index="0" unique_id=1800080064]
 position = Vector2(408, 728)
 script = ExtResource("5_barrera")
 piece_start = SubResource("AtlasTexture_losa_izq")
@@ -88,24 +88,24 @@ piece_middle = SubResource("AtlasTexture_losa_medio")
 piece_end = SubResource("AtlasTexture_losa_der")
 start_closed = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaJefe/Atajos/Trampilla"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaJefe/Atajos/Trampilla" index="0" unique_id=1624814464]
 shape = SubResource("RectangleShape2D_trampilla")
 
-[node name="PuntosJefe" type="Node2D" parent="SistemasMapa/SalaJefe"]
+[node name="PuntosJefe" type="Node2D" parent="SistemasMapa/SalaJefe" index="3" unique_id=137003781]
 
-[node name="JefeOeste" type="Marker2D" parent="SistemasMapa/SalaJefe/PuntosJefe"]
+[node name="JefeOeste" type="Marker2D" parent="SistemasMapa/SalaJefe/PuntosJefe" index="0" unique_id=1004538411]
 position = Vector2(152, 846)
 
-[node name="JefeEste" type="Marker2D" parent="SistemasMapa/SalaJefe/PuntosJefe"]
+[node name="JefeEste" type="Marker2D" parent="SistemasMapa/SalaJefe/PuntosJefe" index="1" unique_id=1006594534]
 position = Vector2(536, 846)
 
-[node name="PuntoLlave" type="Marker2D" parent="SistemasMapa/SalaJefe"]
+[node name="PuntoLlave" type="Marker2D" parent="SistemasMapa/SalaJefe" index="4" unique_id=865247982]
 position = Vector2(344, 880)
 
-[node name="UI" type="CanvasLayer" parent="SistemasMapa/SalaJefe"]
+[node name="UI" type="CanvasLayer" parent="SistemasMapa/SalaJefe" index="5" unique_id=1513036167]
 layer = 9
 
-[node name="Aviso" type="Label" parent="SistemasMapa/SalaJefe/UI"]
+[node name="Aviso" type="Label" parent="SistemasMapa/SalaJefe/UI" index="0" unique_id=484936063]
 anchors_preset = 10
 anchor_right = 1.0
 offset_top = 40.0
@@ -117,21 +117,21 @@ theme_override_font_sizes/font_size = 16
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PuertaLlave" type="StaticBody2D" parent="SistemasMapa"]
+[node name="PuertaLlave" type="StaticBody2D" parent="SistemasMapa" parent_id_path=PackedInt32Array(1342171580) index="9" unique_id=1216880942]
 position = Vector2(1752, 1184)
 script = ExtResource("6_puerta_llave")
+key_id = "cementerio_capitan"
+locked_message = "NECESITAS LA LLAVE DEL CAPITÁN"
 piece_start = SubResource("AtlasTexture_columna_tope")
 piece_middle = SubResource("AtlasTexture_columna_medio")
 piece_end = SubResource("AtlasTexture_columna_base")
-key_id = "cementerio_capitan"
-locked_message = "NECESITAS LA LLAVE DEL CAPITÁN"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/PuertaLlave"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/PuertaLlave" index="0" unique_id=1092408113]
 shape = SubResource("RectangleShape2D_puerta_llave")
 
-[node name="Cinematicas" type="Node2D" parent="SistemasMapa"]
+[node name="Cinematicas" type="Node2D" parent="SistemasMapa" parent_id_path=PackedInt32Array(1342171580) index="10" unique_id=1101519284]
 
-[node name="IntroRecuerdo" type="Node2D" parent="SistemasMapa/Cinematicas"]
+[node name="IntroRecuerdo" type="Node2D" parent="SistemasMapa/Cinematicas" index="0" unique_id=899738187]
 script = ExtResource("8_cinematica")
 cinematic_id = "cementerio_intro_recuerdo"
 player_path = NodePath("../../../player")
@@ -140,7 +140,7 @@ start_delay = 0.15
 camera_pan_duration = 1.0
 camera_return_duration = 0.7
 
-[node name="ReencuentroCapitan" type="Node2D" parent="SistemasMapa/Cinematicas"]
+[node name="ReencuentroCapitan" type="Node2D" parent="SistemasMapa/Cinematicas" index="1" unique_id=1751707266]
 script = ExtResource("8_cinematica")
 cinematic_id = "cementerio_reencuentro_capitan"
 activation = 2
@@ -152,3 +152,10 @@ camera_pan_duration = 0.6
 camera_return_duration = 0.6
 focus_offset = Vector2(0, -5)
 freeze_actor_until_dialogue = true
+
+[editable path="SistemasMapa/KillZones/Lava1"]
+[editable path="SistemasMapa/Escaleras/Escalera1"]
+[editable path="SistemasMapa/Escaleras/Escalera2"]
+[editable path="SistemasMapa/Escaleras/Escalera3"]
+[editable path="SistemasMapa/Escaleras/Escalera4"]
+[editable path="SistemasMapa/Transiciones/SalidaSiguiente1"]
