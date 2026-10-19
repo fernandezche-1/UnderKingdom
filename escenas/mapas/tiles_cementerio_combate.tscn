@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://c5vs20q6x5qa5" path="res://scripts/environment/locked_door.gd" id="6_puerta_llave"]
 [ext_resource type="Texture2D" uid="uid://carrjvpw80884" path="res://assets_prueba/dungeon_platformer/dungeontilesetfull.png" id="7_tileset"]
 [ext_resource type="Script" uid="uid://dsy5vbjhmxc2" path="res://scripts/cinematics/cinematic_controller.gd" id="8_cinematica"]
+[ext_resource type="Script" path="res://scripts/environment/map_ambience.gd" id="9_ambiente"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_activador"]
 size = Vector2(368, 176)
@@ -152,6 +153,9 @@ camera_pan_duration = 0.6
 camera_return_duration = 0.6
 focus_offset = Vector2(0, -5)
 freeze_actor_until_dialogue = true
+
+[node name="Ambientacion" type="Node2D" parent="." unique_id=1873402615]
+script = ExtResource("9_ambiente")
 
 [editable path="SistemasMapa/KillZones/Lava1"]
 [editable path="SistemasMapa/Escaleras/Escalera1"]
