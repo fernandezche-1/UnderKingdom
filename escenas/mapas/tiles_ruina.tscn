@@ -3762,8 +3762,6 @@ script = ExtResource("20_65bxr")
 position = Vector2(40, 545)
 collision_mask = 3
 script = ExtResource("26_tqspg")
-enable_debug_keys = true
-show_debug_hud = true
 
 [editable path="SistemasMapa/Escaleras/Escalera1"]
 [editable path="SistemasMapa/Escaleras/Escalera2"]

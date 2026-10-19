@@ -4042,8 +4042,6 @@ pickup_type = "potion"
 position = Vector2(56, 129)
 collision_mask = 3
 script = ExtResource("27_1c8kc")
-enable_debug_keys = true
-show_debug_hud = true
 
 [editable path="SistemasMapa/KillZones/Lava1"]
 [editable path="SistemasMapa/KillZones/Lava2"]

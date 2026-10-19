@@ -8,7 +8,7 @@
 
 `tiles_cementerio` → `tiles_mineria` → `tiles_mazmorra` → `tiles_ruina` → `tiles_profundidades` → `tiles_jefe`
 
-Las teclas de prueba están activas: R reaparecer, H/J daño, K morir.
+Para probar, el Modo dev (tecla º): vida, pociones y monedas infinitas, llaves de jefe. Las teclas R/H/J/K y el panel de depuración del Player ya no están en los niveles de la ruta; se activan con `depuracion: si` en el `.txt` (lo llevan `arena_enemigos` y los ejemplos).
 
 **Documentación:**
 - Guía para dibujar niveles: `mapas_texto/LEYENDA.md`; la sección 7 explica el calco.
@@ -66,17 +66,12 @@ Todos tienen un checkpoint, dos cofres (jefe uno), 12 monedas, una o dos pocione
 - [ ] **Antorchas y decorados** se repartieron al azar sobre el suelo alcanzable. Puede haber antorchas en medio de un pasillo o decorados amontonados. Moverlos en el PNG.
 - [ ] **Escala de los enemigos.** El constructor los pone a escala 1, y el diablillo se ve bastante más grande que el Player. En los mapas pintados está entre 0.34 y 0.66, pero esa escala no es entera y no cumple la regla de pixel art. Decidir si hace falta un sprite más pequeño.
 - [ ] **Lava y pinchos** en profundidades, jefe y mazmorra son decisión de diseño, no vienen de los mapas originales. Confirmar que se quieren.
-- [ ] **Las teclas y el panel de depuración** están activos en todos los niveles generados. Apagarlos (`enable_debug_keys`, `show_debug_hud` del Player) cuando dejen de ser de prueba.
+- [x] **Las teclas y el panel de depuración** estaban activos en todos los niveles generados. Ahora el constructor solo los pone con la opción `depuracion: si`, y se quitaron de las escenas `tiles_*`.
 
 ### En el resto del proyecto (encontrados durante esta tarea)
 - [ ] **`primer_boss_mundo_1.tscn`:** la ruta de prueba tiene dos líneas `# W2: ...` entre sus propiedades. Godot pierde la propiedad siguiente, `spawn_position = Vector2(1535, 650)`, y el `SpawnInicio` de ese mapa queda en (160, 160), arriba a la izquierda. Arreglo: borrar esas dos líneas del `.tscn`. Es un mapa hecho a mano: confirmar con Armando antes.
 - [ ] **`arena_enemigos.tscn` está desactualizada:** se generó antes del último cambio del diablillo. Al regenerarla cambian sus valores de IA. Regenerarla con `-- mapas_texto/arena_enemigos.txt` y revisar que siga bien.
-- [ ] **`LEYENDA.md`, regla de escaleras:** hoy dice solo "dejar una pieza libre entre la escalera y el bloque". La regla probada es más estricta:
-  - libres las dos columnas vecinas en todo el tramo de la escalera;
-  - tres filas libres encima;
-  - si atraviesa un piso, un hueco de tres piezas.
-
-  El Player mide 20 px y su caja está corrida 7 px a la izquierda del origen. Actualizar la guía.
+- [x] **`LEYENDA.md`, regla de escaleras:** decía solo "dejar una pieza libre entre la escalera y el bloque". Ahora la sección 2 tiene la regla probada: columnas vecinas libres, tres filas libres encima y hueco de tres piezas al atravesar un piso.
 
 ---
 

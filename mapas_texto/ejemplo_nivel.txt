@@ -9,6 +9,8 @@
 ; real apuntan al mapa anterior y al siguiente.
 
 escena: res://escenas/mapas/ejemplo_nivel.tscn
+; Mapa de prueba: teclas R/H/J/K y panel de depuración del Player.
+depuracion: si
 tileset: mazmorra
 bloques: ladrillo
 fondo: cueva

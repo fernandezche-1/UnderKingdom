@@ -484,6 +484,7 @@ func _build(text_path: String) -> String:
     var options := {
         "tileset": "mazmorra", "bloques": "", "fondo": "cueva", "escena": "", "imagen": "",
         "siguiente": "", "anterior": "", "cofre_monedas": "3", "cofre_pociones": "1", "parallax": "",
+        "depuracion": "no",
     }
     var error := _read_map_file(text_path, options)
     if error != "":
@@ -710,9 +711,10 @@ func _build(text_path: String) -> String:
     var marker: Node2D = _child(sistemas, (load(SPAWN_SCENE) as PackedScene).instantiate(), "SpawnInicio")
     marker.position = spawn - Vector2(0, player_feet)
     var player := _place_on_floor(root, PLAYER_SCENE, int(spawn.x / T), int(spawn.y / T) - 1, "player")
-    # Los mapas generados son de prueba: teclas de depuración (R/H/J/K) y panel activos.
-    player.set("enable_debug_keys", true)
-    player.set("show_debug_hud", true)
+    # Teclas de depuración (R/H/J/K) y panel solo en mapas de prueba ("depuracion: si").
+    if String(options.depuracion) == "si":
+        player.set("enable_debug_keys", true)
+        player.set("show_debug_hud", true)
 
     var packed := PackedScene.new()
     var err := packed.pack(root)

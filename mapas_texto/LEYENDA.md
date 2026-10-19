@@ -21,7 +21,10 @@ Ejemplo completo: `ejemplo_nivel.txt` + `ejemplo_nivel.png`.
 - **Qué se apoya en el suelo.** El Player, los enemigos, el cofre, el fuego y el checkpoint se dibujan en el píxel **justo encima del suelo**. Los pinchos también, encima del bloque sobre el que están.
 - **Monedas y pociones** pueden ir flotando.
 - **Decorados grandes** (árbol, estantería, tienda): el píxel marca su pieza de **abajo a la izquierda**.
-- **Escaleras.** Dejar una pieza libre entre la escalera y el bloque al que sube; si están pegados, el Player se golpea la cabeza.
+- **Escaleras.** El Player mide 20 px y su caja está corrida 7 px a la izquierda de su origen. Para que suba y salga arriba sin atascarse:
+  - libres las dos columnas vecinas (izquierda y derecha) en todo el tramo de la escalera;
+  - tres filas libres encima de la escalera;
+  - si atraviesa un piso, un hueco de tres piezas en ese piso, con la escalera en la del medio.
 - **Salidas.** Una columna de 2 o 3 píxeles azules (siguiente) o morados (anterior) en el borde izquierdo o derecho. El Player llega a cada mapa dos piezas hacia dentro de la salida, así que no vuelve a cruzarla sin querer.
 - **Inicio del Player.** Tiene que haber exactamente un píxel de inicio (`P`).
 
@@ -50,6 +53,7 @@ cofre_pociones: 1
 | `parallax` | Imágenes de fondo que se mueven más lento, de la más lejana a la más cercana: `fondos/cielo.png 0.05; fondos/nubes.png 0.2`. El número es la velocidad horizontal (0 = quieta, 1 = como el mapa). Si la imagen es más baja que la pantalla (270 px), se agrega `x2` para dibujarla al doble: `fondos/cielo.png 0.05 x2`. En vertical cada imagen recorre el mapa: se ve su borde de arriba con la cámara arriba del todo y el de abajo con la cámara abajo. Necesita `fondo: ninguno`. |
 | `siguiente` / `anterior` | Mapa al que llevan las salidas azules / moradas. Por defecto se llega a su spawn `DesdeAnterior` / `DesdeSiguiente`, que el constructor crea solo. Para llegar a otro spawn: `res://escenas/mapas/mundo_2.tscn#SpawnInicio`. |
 | `cofre_monedas`, `cofre_pociones` | Botín de cada cofre del nivel (por defecto 3 y 1). |
+| `depuracion` | `si` activa las teclas de prueba del Player (R reaparecer, H/J daño, K morir) y su panel de depuración. Solo para mapas de prueba como `arena_enemigos`; por defecto `no`. Para probar los niveles de la ruta está el Modo dev (tecla º). |
 
 ## 4. Generar el nivel
 Desde la carpeta del proyecto:
