@@ -252,7 +252,7 @@ func _update_upgrade_row(upgrade_id: String, label: String, unit: String, button
 	var next_value: String = _format_upgrade_value(upgrade_id, float(info.next_value))
 	info_label.text = "%s\nNivel %d/%d · %s → %s %s" % [label, info.level, info.max_level, current_value, next_value, unit]
 	button.text = "Mejorar · %d monedas" % int(info.cost)
-	button.disabled = GameManager.coins < int(info.cost)
+	button.disabled = not GameManager.can_spend_coins(int(info.cost))
 
 
 func _row_container(button_name: String) -> String:

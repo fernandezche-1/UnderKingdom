@@ -215,9 +215,15 @@ func add_coins(amount: int) -> void:
     coins_changed.emit(coins)
 
 
+func can_spend_coins(amount: int) -> bool:
+    return amount > 0 and (DevMode.infinite_coins or coins >= amount)
+
+
 func try_spend_coins(amount: int) -> bool:
-    if amount <= 0 or coins < amount:
+    if not can_spend_coins(amount):
         return false
+    if DevMode.infinite_coins:
+        return true
     coins -= amount
     coins_changed.emit(coins)
     return true

@@ -491,7 +491,7 @@ func request_ultimate() -> void:
     if _action == PlayerAction.DEFEND:
         _leave_guard_for_action()
 
-    _ultimate_cooldown_left = ultimate_cooldown
+    _ultimate_cooldown_left = 0.0 if DevMode.no_ultimate_cooldown else ultimate_cooldown
     _combo_step = 0
     _combo_queued = false
     _combo_buffered_inputs = 0
@@ -1359,7 +1359,10 @@ func take_damage(
                 _block_push_left = 0.25
         return true
 
-    current_health = maxf(current_health - amount, 0.0)
+    # Modo dev: el golpe se recibe (animación, empuje, invulnerabilidad) pero
+    # no quita vida.
+    if not DevMode.infinite_health:
+        current_health = maxf(current_health - amount, 0.0)
     damaged.emit(amount)
     health_changed.emit(current_health, max_health)
 
@@ -1535,7 +1538,7 @@ func heal(amount: float) -> void:
 func drink_potion() -> bool:
     if dead or current_health >= max_health:
         return false
-    if not GameManager.use_potion():
+    if not DevMode.infinite_potions and not GameManager.use_potion():
         return false
     heal(potion_heal_amount)
     UnderkingdomCombatFX.heal(self, sprite)
@@ -1544,6 +1547,11 @@ func drink_potion() -> bool:
 
 func die() -> void:
     if dead or cinematic_invulnerable:
+        return
+    # Modo dev: los vacíos y las kill zones devuelven al último punto de
+    # reaparición sin recargar el mapa.
+    if DevMode.infinite_health:
+        respawn_now()
         return
 
     dead = true
