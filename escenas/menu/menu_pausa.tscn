@@ -1,0 +1,241 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/pause_menu_overlay.gd" id="1_pause"]
+[ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/fire_knight.png" id="2_portrait"]
+[ext_resource type="Texture2D" path="res://prueba/FantasyUIfree/FantasyUIfree/freefantasy.png" id="3_atlas"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_MenuFrame"]
+atlas = ExtResource("3_atlas")
+region = Rect2(163, 48, 83, 127)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_WoodButton"]
+atlas = ExtResource("3_atlas")
+region = Rect2(138, 5, 45, 23)
+
+[node name="MenuPausa" type="CanvasLayer"]
+layer = 100
+process_mode = 3
+script = ExtResource("1_pause")
+
+[node name="Interfaz" type="Control" parent="."]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OscurecerEscenario" type="ColorRect" parent="Interfaz"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+color = Color(0.015, 0.02, 0.045, 0.72)
+
+[node name="PanelJugador" type="NinePatchRect" parent="Interfaz"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 9.0
+offset_right = 238.0
+offset_bottom = 261.0
+texture = SubResource("AtlasTexture_MenuFrame")
+patch_margin_left = 10.0
+patch_margin_top = 14.0
+patch_margin_right = 10.0
+patch_margin_bottom = 14.0
+texture_filter = 1
+
+[node name="PanelMenu" type="NinePatchRect" parent="Interfaz"]
+layout_mode = 0
+offset_left = 242.0
+offset_top = 9.0
+offset_right = 472.0
+offset_bottom = 261.0
+texture = SubResource("AtlasTexture_MenuFrame")
+patch_margin_left = 10.0
+patch_margin_top = 14.0
+patch_margin_right = 10.0
+patch_margin_bottom = 14.0
+texture_filter = 1
+
+[node name="EncabezadoJugador" type="Label" parent="Interfaz"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 18.0
+offset_right = 226.0
+offset_bottom = 37.0
+text = "PERSONAJE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Retrato" type="TextureRect" parent="Interfaz"]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 42.0
+offset_right = 72.0
+offset_bottom = 91.0
+texture = ExtResource("2_portrait")
+expand_mode = 1
+stretch_mode = 5
+texture_filter = 1
+
+[node name="NombrePersonaje" type="Label" parent="Interfaz"]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 43.0
+offset_right = 224.0
+offset_bottom = 90.0
+text = "Guerrero de la Llama Ancestral"
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="TituloVida" type="Label" parent="Interfaz"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 96.0
+offset_right = 226.0
+offset_bottom = 110.0
+text = "VIDA"
+
+[node name="BarraVida" type="ProgressBar" parent="Interfaz"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 110.0
+offset_right = 226.0
+offset_bottom = 124.0
+show_percentage = false
+
+[node name="ValorVida" type="Label" parent="Interfaz"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 124.0
+offset_right = 226.0
+offset_bottom = 138.0
+text = "— / —"
+
+[node name="TituloLlaves" type="Label" parent="Interfaz"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 140.0
+offset_right = 226.0
+offset_bottom = 153.0
+text = "LLAVES"
+
+[node name="EstadoLlaves" type="Label" parent="Interfaz"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 153.0
+offset_right = 226.0
+offset_bottom = 192.0
+text = "Consultando GameManager…"
+autowrap_mode = 2
+
+[node name="TituloRoboVida" type="Label" parent="Interfaz"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 192.0
+offset_right = 226.0
+offset_bottom = 205.0
+text = "ROBO DE VIDA"
+
+[node name="EstadoRoboVida" type="Label" parent="Interfaz"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 205.0
+offset_right = 226.0
+offset_bottom = 228.0
+text = "Consultando jugador…"
+autowrap_mode = 2
+
+[node name="TituloEstadisticas" type="Label" parent="Interfaz"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 225.0
+offset_right = 226.0
+offset_bottom = 238.0
+text = "COMBATE"
+
+[node name="Estadisticas" type="Label" parent="Interfaz"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 238.0
+offset_right = 226.0
+offset_bottom = 260.0
+text = "Daño y velocidad del personaje"
+autowrap_mode = 2
+
+[node name="TituloMenu" type="Label" parent="Interfaz"]
+layout_mode = 0
+offset_left = 252.0
+offset_top = 18.0
+offset_right = 462.0
+offset_bottom = 38.0
+text = "PAUSA"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BotonesPausa" type="VBoxContainer" parent="Interfaz"]
+layout_mode = 0
+offset_left = 262.0
+offset_top = 56.0
+offset_right = 452.0
+offset_bottom = 190.0
+theme_override_constants/separation = 5
+
+[node name="Reanudar" type="Button" parent="Interfaz/BotonesPausa"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 28)
+text = "Reanudar"
+
+[node name="Opciones" type="Button" parent="Interfaz/BotonesPausa"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 28)
+text = "Opciones"
+
+[node name="MenuPrincipal" type="Button" parent="Interfaz/BotonesPausa"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 28)
+text = "Menú principal"
+
+[node name="Salir" type="Button" parent="Interfaz/BotonesPausa"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 28)
+text = "Salir"
+
+[node name="ControlesOpciones" type="VBoxContainer" parent="Interfaz"]
+visible = false
+layout_mode = 0
+offset_left = 262.0
+offset_top = 58.0
+offset_right = 452.0
+offset_bottom = 203.0
+theme_override_constants/separation = 5
+
+[node name="VolumenLabel" type="Label" parent="Interfaz/ControlesOpciones"]
+layout_mode = 2
+text = "VOLUMEN GENERAL"
+
+[node name="Volumen" type="HSlider" parent="Interfaz/ControlesOpciones"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 22)
+min_value = 0.0
+max_value = 1.0
+step = 0.01
+
+[node name="PantallaCompleta" type="CheckButton" parent="Interfaz/ControlesOpciones"]
+layout_mode = 2
+text = "Pantalla completa"
+
+[node name="Volver" type="Button" parent="Interfaz/ControlesOpciones"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 28)
+text = "Volver"

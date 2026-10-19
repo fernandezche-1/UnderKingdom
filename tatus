@@ -1,0 +1,27 @@
+ "Tilesets\357\200\242"                             |  74 [32m+++++[m
+ escenas/mapas/cavernas_nuevas/README.md            |  22 [32m++[m
+ .../cavernas_nuevas/salas/01_entrada_cavernas.tscn |  89 [32m++++++[m
+ .../salas/02_cavernas_naturales.tscn               | 108 [32m++++++++[m
+ .../cavernas_nuevas/salas/03_gruta_vertical.tscn   |  96 [32m+++++++[m
+ .../salas/04_caverna_de_los_ecos.tscn              | 113 [32m++++++++[m
+ .../salas/05_ruinas_subterraneas.tscn              | 118 [32m++++++++[m
+ .../salas/06_galeria_abandonada.tscn               |  99 [32m+++++++[m
+ .../scripts/generador_sala_caverna.gd              | 134 [32m+++++++++[m
+ .../scripts/generador_sala_caverna.gd.uid          |   1 [32m+[m
+ .../cavernas_nuevas/tilesets/cavernas_tileset.tres |  72 [32m+++++[m
+ .../cementerio_redisenado/cementerio_exterior.tres |  72 [32m+++++[m
+ .../cementerio_redisenado/entrada_cementerio.tscn  | 117 [32m++++++++[m
+ .../mapas/cementerio_redisenado/plaza_tumbas.tscn  | 157 [32m+++++++++++[m
+ escenas/mapas/tiles_casa.tscn                      | 222 [32m+++[m[31m------------[m
+ escenas/menu/menu_pausa.tscn                       | 242 [32m+++++++++++++++++[m
+ escenas/menu/menu_principal.gd                     | 301 [32m+++++++++++++++++++++[m
+ escenas/menu/menu_principal.gd.uid                 |   1 [32m+[m
+ escenas/menu/menu_principal.tscn                   |  12 [32m+[m
+ project.godot                                      |   3 [32m+[m[31m-[m
+ project.godot.backup-20261018                      |  42 [32m+++[m
+ project.godot.backup-pause-20261018                |  42 [32m+++[m
+ scripts/combat/ranged_demon.gd                     |  72 [32m++[m[31m---[m
+ scripts/ui/pause_menu_manager.gd                   |  60 [32m++++[m
+ scripts/ui/pause_menu_overlay.gd                   | 250 [32m+++++++++++++++++[m
+ tiles_cementerio_combate.tscn                      | 160 [32m+++++++++++[m
+ 26 files changed, 2458 insertions(+), 221 deletions(-)

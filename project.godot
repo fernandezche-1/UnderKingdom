@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="UnderKingdom"
-run/main_scene="res://escenas/mapas/tiles_cementerio_combate.tscn"
+run/main_scene="res://escenas/menu/menu_principal.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
 GameManager="*res://scripts/core/game_manager.gd"
+PauseMenu="*res://scripts/ui/pause_menu_manager.gd"
 
 [display]
 
