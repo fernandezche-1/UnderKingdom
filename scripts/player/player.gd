@@ -1283,6 +1283,11 @@ func get_ultimate_cooldown_left() -> float:
     return _ultimate_cooldown_left
 
 
+## Daño acumulado hacia la próxima curación del robo de vida.
+func get_lifesteal_progress() -> float:
+    return _lifesteal_damage_bank
+
+
 func set_ultimate_cooldown_progress(ready_ratio: float) -> void:
     var remaining_ratio := 1.0 - clampf(ready_ratio, 0.0, 1.0)
     _ultimate_cooldown_left = ultimate_cooldown * remaining_ratio

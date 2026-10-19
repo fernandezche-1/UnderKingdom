@@ -42,9 +42,11 @@ const UPGRADE_DEFINITIONS := {
         "name": "Vida máxima", "max_level": 2,
         "costs": [5, 10], "base": 4.0, "step": 1.0, "unit": "corazones",
     },
+    ## La curación sigue siendo de un cuarto de corazón: la mejora baja el daño
+    ## que hay que hacer para ganarlo (Player.lifesteal_damage_required).
     "lifesteal": {
         "name": "Robo de vida", "max_level": 3,
-        "costs": [8, 16, 24], "base": 0.25, "step": 0.05, "unit": "vida por 2 daño",
+        "costs": [8, 16, 24], "base": 2.0, "step": -0.25, "unit": "daño",
     },
     "ultimate_cooldown": {
         "name": "Enfriamiento de Ultimate", "max_level": 3,
@@ -254,37 +256,30 @@ func purchase_upgrade(upgrade_id: String) -> bool:
     if not try_spend_coins(cost):
         return false
     upgrade_levels[upgrade_id] = int(info.level) + 1
-    var player := get_tree().get_first_node_in_group("player")
+    var player := get_tree().get_first_node_in_group("player") as UnderkingdomPlayer
     if is_instance_valid(player):
         apply_upgrades_to_player(player, true)
     upgrades_changed.emit()
     return true
 
 
-func apply_upgrades_to_player(player: Node, heal_max_health_increase: bool = false) -> void:
+func apply_upgrades_to_player(player: UnderkingdomPlayer, heal_max_health_increase: bool = false) -> void:
     if not is_instance_valid(player):
         return
-    var old_max := float(player.get("max_health"))
-    var health_info := get_upgrade_info("max_health")
-    var lifesteal_info := get_upgrade_info("lifesteal")
-    var ultimate_info := get_upgrade_info("ultimate_cooldown")
-    var old_cooldown := float(player.get("ultimate_cooldown"))
-    var ready_ratio := 1.0
-    if player.has_method("get_ultimate_ready_ratio"):
-        ready_ratio = float(player.call("get_ultimate_ready_ratio"))
+    var old_max: float = player.max_health
+    var new_max: float = float(get_upgrade_info("max_health").value)
+    var old_cooldown: float = player.ultimate_cooldown
+    var ready_ratio: float = player.get_ultimate_ready_ratio()
 
-    player.set("max_health", float(health_info.value))
-    player.set("lifesteal_heal_amount", float(lifesteal_info.value))
-    player.set("ultimate_cooldown", float(ultimate_info.value))
+    player.max_health = new_max
+    player.lifesteal_damage_required = float(get_upgrade_info("lifesteal").value)
+    player.ultimate_cooldown = float(get_upgrade_info("ultimate_cooldown").value)
 
-    var max_health_increased := heal_max_health_increase and float(health_info.value) > old_max
-    if max_health_increased:
-        var current := float(player.get("current_health"))
-        player.set("current_health", minf(current + float(health_info.value) - old_max, float(health_info.value)))
-    if old_cooldown > 0.0 and player.has_method("set_ultimate_cooldown_progress"):
-        player.call("set_ultimate_cooldown_progress", ready_ratio)
-    if max_health_increased and player.has_signal("health_changed"):
-        player.emit_signal("health_changed", float(player.get("current_health")), float(player.get("max_health")))
+    if old_cooldown > 0.0:
+        player.set_ultimate_cooldown_progress(ready_ratio)
+    if heal_max_health_increase and new_max > old_max:
+        player.current_health = minf(player.current_health + new_max - old_max, new_max)
+        player.health_changed.emit(player.current_health, player.max_health)
 
 
 func reset_upgrades_for_new_game() -> void:
@@ -385,7 +380,32 @@ func has_any_key() -> bool:
     return world1_boss_key_collected or not collected_keys.is_empty()
 
 
-## El flujo existente de Partida nueva llama a este reset; nunca se llama en respawn.
 func reset_cinematics_for_new_game() -> void:
     cinematics_seen.clear()
+
+
+## Partida nueva desde el menú principal; nunca se llama en respawn. Toda
+## variable de progreso nueva se reinicia aquí.
+func reset_for_new_game() -> void:
+    pending_spawn_id = &""
+    previous_scene_path = ""
+    current_scene_path = ""
+    world1_boss_defeated = false
+    world1_boss_key_collected = false
+    coins = 0
+    potions = 0
+    cthulhu_revealed = false
+    w2_knight_defeated = false
+    completed_encounters.clear()
+    collected_keys.clear()
+    respawn_scene_path = ""
+    respawn_position = Vector2.ZERO
+    consumed_objects.clear()
+    reset_cinematics_for_new_game()
     reset_upgrades_for_new_game()
+    world1_boss_defeated_changed.emit(false)
+    world1_boss_key_changed.emit(false)
+    coins_changed.emit(coins)
+    potions_changed.emit(potions)
+    cthulhu_revealed_changed.emit(false)
+    w2_knight_defeated_changed.emit(false)

@@ -25,10 +25,10 @@ const COLOR_PRESSED := Color(0.76, 0.63, 0.43)
 @onready var keys_value: Label = $Interfaz/PaginaLlaves/ListaLlaves/EstadoLlaves
 @onready var coins_value: Label = $Interfaz/PaginaMejoras/MonedasMejoras
 
-var _player: Node
-var _options_open := false
-var _master_bus := -1
-var _refresh_elapsed := 0.0
+var _player: UnderkingdomPlayer
+var _options_open: bool = false
+var _master_bus: int = -1
+var _refresh_elapsed: float = 0.0
 
 
 func _ready() -> void:
@@ -48,6 +48,8 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	if not is_pause_open():
+		return
 	_refresh_elapsed += delta
 	if _refresh_elapsed < 0.2:
 		return
@@ -57,7 +59,7 @@ func _process(delta: float) -> void:
 	_refresh_upgrades()
 
 
-func open_pause(player: Node) -> void:
+func open_pause(player: UnderkingdomPlayer) -> void:
 	set_player(player)
 	_options_open = false
 	header.text = "PAUSA"
@@ -102,14 +104,15 @@ func _apply_button_styles() -> void:
 		button.add_theme_stylebox_override("pressed", _button_style(COLOR_PRESSED))
 		button.add_theme_stylebox_override("focus", _button_style(COLOR_HOVER))
 		button.focus_mode = Control.FOCUS_ALL
-	for label in [
+	var labels: Array[Label] = [
 		$Interfaz/PaginaEstadisticas/StatsScroll/Estadisticas,
 		$Interfaz/PaginaLlaves/ListaLlaves/EstadoLlaves,
 		$Interfaz/PaginaMejoras/MonedasMejoras,
 		$Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/VidaMejora/VidaInfo,
 		$Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/RoboMejora/RoboInfo,
 		$Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/UltimateMejora/UltimateInfo,
-	]:
+	]
+	for label in labels:
 		label.add_theme_font_size_override("font_size", 8)
 		label.add_theme_color_override("font_color", Color(0.94, 0.88, 0.75))
 		label.add_theme_color_override("font_outline_color", Color(0.08, 0.06, 0.055))
@@ -173,43 +176,36 @@ func _slider_fill_style() -> StyleBoxFlat:
 	return style
 
 
-func set_player(player: Node) -> void:
-	if is_instance_valid(_player) and _player.has_signal("health_changed"):
-		var old_callback := Callable(self, "_on_health_changed")
-		if _player.is_connected("health_changed", old_callback):
-			_player.disconnect("health_changed", old_callback)
+func set_player(player: UnderkingdomPlayer) -> void:
+	if is_instance_valid(_player) and _player.health_changed.is_connected(_on_health_changed):
+		_player.health_changed.disconnect(_on_health_changed)
 	_player = player
-	if is_instance_valid(_player) and _player.has_signal("health_changed"):
-		var callback := Callable(self, "_on_health_changed")
-		if not _player.is_connected("health_changed", callback):
-			_player.connect("health_changed", callback)
+	if is_instance_valid(_player) and not _player.health_changed.is_connected(_on_health_changed):
+		_player.health_changed.connect(_on_health_changed)
 	_update_player_info()
 
 
 func _update_player_info() -> void:
 	if not is_instance_valid(_player):
 		return
-	var current := float(_player.get("current_health"))
-	var maximum := maxf(float(_player.get("max_health")), 0.01)
-	_on_health_changed(current, maximum)
-	var lifesteal_enabled := bool(_player.get("lifesteal_enabled"))
-	var lifesteal_amount := float(_player.get("lifesteal_heal_amount"))
-	var bank := float(_player.get("_lifesteal_damage_bank"))
-	var damage_required := maxf(float(_player.get("lifesteal_damage_required")), 0.01)
-	var ult_left := float(_player.call("get_ultimate_cooldown_left"))
-	var ult_cooldown := float(_player.get("ultimate_cooldown"))
-	var ult_state := "Lista" if ult_left <= 0.0 else "Enfriamiento: %.1f / %.1f s" % [ult_left, ult_cooldown]
+	_on_health_changed(_player.current_health, _player.max_health)
+	var damage_required: float = maxf(_player.lifesteal_damage_required, 0.01)
+	var lifesteal_text: String = "Desactivado"
+	if _player.lifesteal_enabled:
+		lifesteal_text = "%.2f de vida por cada %.2f de daño" % [_player.lifesteal_heal_amount, damage_required]
+	var ult_left: float = _player.get_ultimate_cooldown_left()
+	var ult_state: String = "Lista" if ult_left <= 0.0 else "Enfriamiento: %.1f / %.1f s" % [ult_left, _player.ultimate_cooldown]
 	stats_value.text = (
 		"Robo de vida: %s\nProgreso: %.2f / %.2f daño\n"
 		+ "Combo: %.2f / %.2f / %.2f daño\nVelocidad: %.0f px/s\n"
 		+ "Ultimate: %s"
 	) % [
-		("%.2f por cada 2 daño" % lifesteal_amount) if lifesteal_enabled else "Desactivado",
-		bank, damage_required,
-		float(_player.get("attack_1_damage")),
-		float(_player.get("attack_2_damage")),
-		float(_player.get("attack_3_damage")),
-		float(_player.get("move_speed")), ult_state,
+		lifesteal_text,
+		_player.get_lifesteal_progress(), damage_required,
+		_player.attack_1_damage,
+		_player.attack_2_damage,
+		_player.attack_3_damage,
+		_player.move_speed, ult_state,
 	]
 
 
@@ -222,12 +218,10 @@ func _on_health_changed(current: float, maximum: float) -> void:
 
 func _refresh_keys() -> void:
 	var rows := PackedStringArray()
-	rows.append("Llave del Jefe de Mundo 1: %s" % _key_status(GameManager.world1_boss_key_collected))
-	for key_id in KEY_NAMES:
-		var acquired := GameManager.has_key(key_id)
-		rows.append("%s: %s" % [KEY_NAMES[key_id], _key_status(acquired)])
-	for key_variant in GameManager.collected_keys.keys():
-		var key_id := String(key_variant)
+	for key_id: String in KEY_NAMES:
+		rows.append("%s: %s" % [KEY_NAMES[key_id], _key_status(GameManager.has_key(key_id))])
+	for key_variant: Variant in GameManager.collected_keys.keys():
+		var key_id: String = String(key_variant)
 		if KEY_NAMES.has(key_id):
 			continue
 		rows.append("%s: obtenida" % key_id.replace("_", " ").capitalize())
@@ -240,22 +234,22 @@ func _key_status(acquired: bool) -> String:
 
 func _refresh_upgrades() -> void:
 	_update_upgrade_row("max_health", "Vida máxima", "corazones", "VidaComprar", "VidaInfo")
-	_update_upgrade_row("lifesteal", "Robo de vida por cada 2 daño", "vida", "RoboComprar", "RoboInfo")
+	_update_upgrade_row("lifesteal", "Robo de vida: daño por cuarto de corazón", "daño", "RoboComprar", "RoboInfo")
 	_update_upgrade_row("ultimate_cooldown", "Cooldown de Ultimate", "s", "UltimateComprar", "UltimateInfo")
 
 
 func _update_upgrade_row(upgrade_id: String, label: String, unit: String, button_name: String, info_name: String) -> void:
-	var info := GameManager.get_upgrade_info(upgrade_id)
-	var row_path := "Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/"
-	var button := get_node(row_path + _row_container(button_name) + "/" + button_name) as Button
-	var info_label := get_node(row_path + _row_container(button_name) + "/" + info_name) as Label
-	var current_value := _format_upgrade_value(upgrade_id, float(info.value))
+	var info: Dictionary = GameManager.get_upgrade_info(upgrade_id)
+	var row_path: String = "Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/" + _row_container(button_name) + "/"
+	var button := get_node(row_path + button_name) as Button
+	var info_label := get_node(row_path + info_name) as Label
+	var current_value: String = _format_upgrade_value(upgrade_id, float(info.value))
 	if bool(info.at_max):
 		info_label.text = "%s\nNivel %d/%d · Actual: %s %s\nNivel máximo" % [label, info.level, info.max_level, current_value, unit]
 		button.text = "Nivel máximo"
 		button.disabled = true
 		return
-	var next_value := _format_upgrade_value(upgrade_id, float(info.next_value))
+	var next_value: String = _format_upgrade_value(upgrade_id, float(info.next_value))
 	info_label.text = "%s\nNivel %d/%d · %s → %s %s" % [label, info.level, info.max_level, current_value, next_value, unit]
 	button.text = "Mejorar · %d monedas" % int(info.cost)
 	button.disabled = GameManager.coins < int(info.cost)

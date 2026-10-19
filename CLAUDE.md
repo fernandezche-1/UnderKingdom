@@ -33,7 +33,7 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
 
 - Las colisiones sólidas de los mapas que ya se validaron jugando no se redibujan ni se eliminan. Si un cambio las afecta, preguntar antes.
 - No tocar los ajustes que quitaron el temblor al caminar salvo que se pida: smoothing de la Camera2D (desactivado, proceso en física), pixel snapping 2D, `floor_snap_length` (4) y `safe_margin` (0.02) del Player.
-- La vida se mide en cuartos de corazón: 4 corazones máximo, 0.25 es el daño mínimo.
+- La vida se mide en cuartos de corazón: 4 corazones al empezar y hasta 6 con la mejora de vida máxima; 0.25 es el daño mínimo. Toda curación y todo daño van en múltiplos de 0.25.
 - Colores de las marcas en los mapas: verde = plataforma one-way, rojo/rosado = kill zone, blanco = burn zone, azul = transición al mapa siguiente, morado = transición al mapa anterior, amarillo = puerta interna.
 - Las zonas que dependen de marcas visuales las coloca una persona en el editor o pasa coordenadas; no inferir su posición por la forma o el color de una colisión.
 - (Mapa viejo) `PuertaJefeM1Bloqueo`, `PasoPuertaWS` y `OneWayPasoPuertaWS` de Mundo 1 no se mueven ni se modifican (secuencia Capitán → llave → reja).
@@ -43,6 +43,7 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
 
 - `escenas/mapas/tiles_*`: los mapas en uso. Cada uno se genera con el constructor y tiene un nodo `SistemasMapa` (MapBounds, spawns, escaleras, checkpoints, transiciones). Los que llevan jefe o puertas tienen además una escena heredada, como `tiles_cementerio_combate.tscn`.
 - `escenas/mapas/` (mapas viejos, sin uso por ahora): mundo_1, primer_boss_mundo_1, mundo_2, mundo_3, ruina, profundidades, jefe_final. Cada uno es un PNG de `fondos/` cortado en tiles de 16 px más colisiones dibujadas a mano.
+- `escenas/menu/`: menú principal y menú de pausa (autoload `PauseMenu`, `scripts/ui/pause_menu_*.gd`; pestañas de estadísticas, llaves y mejoras compradas con monedas, definidas en `GameManager.UPGRADE_DEFINITIONS`). "Nueva partida" llama a `GameManager.reset_for_new_game()`: toda variable de progreso nueva se reinicia ahí.
 - `escenas/enemigos/`, `escenas/jefes/`, `escenas/player.tscn`, `escenas/sistemas/` (one-way, kill zone, burn zone, climb zone, transición, spawn point), `escenas/items/`, `escenas/ui/`.
 - `scripts/`: `player/player.gd`, `combat/enemy_base.gd` (base de todo enemigo con IA), `bosses/captain_boss.gd`, `core/game_manager.gd` (autoload `GameManager`), `ui/` (HUD, barra de jefe, barra de enemigo), `fx/combat_fx.gd`, `transitions/`, `environment/`, `camera/`.
 - `docs/`: historial de cada etapa (P1…P30). Es la fuente de verdad de lo decidido y lo pendiente; documentar etapas nuevas con el mismo formato.
@@ -56,7 +57,8 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
 
 ## Validar cambios
 
-- Arranque sin errores: `godot --headless --quit-after 120` desde la raíz del proyecto. Ejecuta el cementerio (`tiles_cementerio_combate.tscn`), que es la escena principal.
+- Arranque sin errores: `godot --headless --quit-after 120` desde la raíz del proyecto. Abre el menú principal (`escenas/menu/menu_principal.tscn`), que es la escena principal.
+- El cementerio, donde arranca "Nueva partida": `godot --headless res://escenas/mapas/tiles_cementerio_combate.tscn --quit-after 120`.
 - Mundo 1, el mapa viejo: `godot --headless res://escenas/mapas/mundo_1.tscn --quit-after 120`. Comprobarlo cuando se toquen scripts compartidos (Player, enemigos, GameManager, Capitán).
 - Un mapa concreto: `godot --headless res://escenas/mapas/<mapa>.tscn --quit-after 60`.
 - Tras crear un script con `class_name` nuevo, correr `godot --headless --import` para actualizar la caché de clases.

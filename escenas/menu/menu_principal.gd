@@ -251,39 +251,10 @@ func _on_new_game_pressed() -> void:
 	if not ResourceLoader.exists(GAME_SCENE):
 		push_error("No existe la escena inicial: %s" % GAME_SCENE)
 		return
-	_reset_new_game_progress()
+	GameManager.reset_for_new_game()
 	var error := get_tree().change_scene_to_file(GAME_SCENE)
 	if error != OK:
 		push_error("No se pudo iniciar la partida. Error de escena: %s" % error)
-
-
-func _reset_new_game_progress() -> void:
-	var manager: Variant = get_node_or_null("/root/GameManager")
-	if manager == null:
-		return
-
-	manager.pending_spawn_id = &""
-	manager.previous_scene_path = ""
-	manager.current_scene_path = ""
-	manager.world1_boss_defeated = false
-	manager.world1_boss_key_collected = false
-	manager.coins = 0
-	manager.potions = 0
-	manager.cthulhu_revealed = false
-	manager.w2_knight_defeated = false
-	manager.cinematics_seen.clear()
-	manager.completed_encounters.clear()
-	manager.collected_keys.clear()
-	manager.respawn_scene_path = ""
-	manager.respawn_position = Vector2.ZERO
-	manager.consumed_objects.clear()
-	manager.reset_cinematics_for_new_game()
-	manager.world1_boss_defeated_changed.emit(false)
-	manager.world1_boss_key_changed.emit(false)
-	manager.coins_changed.emit(0)
-	manager.potions_changed.emit(0)
-	manager.cthulhu_revealed_changed.emit(false)
-	manager.w2_knight_defeated_changed.emit(false)
 
 
 func _on_master_volume_changed(value: float) -> void:
