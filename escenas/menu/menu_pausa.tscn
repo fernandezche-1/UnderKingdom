@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/pause_menu_overlay.gd" id="1_pause"]
 [ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/fire_knight.png" id="2_portrait"]
 [ext_resource type="Texture2D" path="res://prueba/FantasyUIfree/FantasyUIfree/freefantasy.png" id="3_atlas"]
+[ext_resource type="Texture2D" path="res://otra vez/fourSeasonsPlatformer_ [tileset, version 2.0]/objects_/items_.png" id="4_items"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_MenuFrame"]
 atlas = ExtResource("3_atlas")
@@ -11,6 +12,10 @@ region = Rect2(163, 48, 83, 127)
 [sub_resource type="AtlasTexture" id="AtlasTexture_WoodButton"]
 atlas = ExtResource("3_atlas")
 region = Rect2(138, 5, 45, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_KeyIcon"]
+atlas = ExtResource("4_items")
+region = Rect2(48, 32, 16, 16)
 
 [node name="MenuPausa" type="CanvasLayer"]
 layer = 100
@@ -62,111 +67,197 @@ patch_margin_right = 10.0
 patch_margin_bottom = 14.0
 texture_filter = 1
 
-[node name="EncabezadoJugador" type="Label" parent="Interfaz"]
+[node name="TituloPersonaje" type="Label" parent="Interfaz"]
 layout_mode = 0
 offset_left = 20.0
-offset_top = 18.0
+offset_top = 16.0
 offset_right = 226.0
-offset_bottom = 37.0
+offset_bottom = 34.0
 text = "PERSONAJE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Retrato" type="TextureRect" parent="Interfaz"]
+[node name="Pestanas" type="HBoxContainer" parent="Interfaz"]
 layout_mode = 0
-offset_left = 23.0
-offset_top = 42.0
-offset_right = 72.0
-offset_bottom = 91.0
+offset_left = 15.0
+offset_top = 38.0
+offset_right = 231.0
+offset_bottom = 58.0
+theme_override_constants/separation = 2
+
+[node name="TabEstadisticas" type="Button" parent="Interfaz/Pestanas"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Datos"
+
+[node name="TabLlaves" type="Button" parent="Interfaz/Pestanas"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Llaves"
+
+[node name="TabMejoras" type="Button" parent="Interfaz/Pestanas"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Mejoras"
+
+[node name="PaginaEstadisticas" type="Control" parent="Interfaz"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 61.0
+offset_right = 231.0
+offset_bottom = 255.0
+
+[node name="Retrato" type="TextureRect" parent="Interfaz/PaginaEstadisticas"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 texture = ExtResource("2_portrait")
 expand_mode = 1
 stretch_mode = 5
 texture_filter = 1
 
-[node name="NombrePersonaje" type="Label" parent="Interfaz"]
+[node name="NombrePersonaje" type="Label" parent="Interfaz/PaginaEstadisticas"]
 layout_mode = 0
-offset_left = 80.0
-offset_top = 43.0
-offset_right = 224.0
-offset_bottom = 90.0
+offset_left = 45.0
+offset_top = 2.0
+offset_right = 212.0
+offset_bottom = 39.0
 text = "Guerrero de la Llama Ancestral"
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="TituloVida" type="Label" parent="Interfaz"]
+[node name="BarraVida" type="ProgressBar" parent="Interfaz/PaginaEstadisticas"]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 96.0
-offset_right = 226.0
-offset_bottom = 110.0
-text = "VIDA"
-
-[node name="BarraVida" type="ProgressBar" parent="Interfaz"]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 110.0
-offset_right = 226.0
-offset_bottom = 124.0
+offset_top = 44.0
+offset_right = 211.0
+offset_bottom = 57.0
 show_percentage = false
 
-[node name="ValorVida" type="Label" parent="Interfaz"]
+[node name="ValorVida" type="Label" parent="Interfaz/PaginaEstadisticas"]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 124.0
-offset_right = 226.0
-offset_bottom = 138.0
-text = "— / —"
+offset_top = 58.0
+offset_right = 211.0
+offset_bottom = 72.0
+text = "Vida: — / —"
+horizontal_alignment = 1
 
-[node name="TituloLlaves" type="Label" parent="Interfaz"]
+[node name="StatsScroll" type="ScrollContainer" parent="Interfaz/PaginaEstadisticas"]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 140.0
-offset_right = 226.0
-offset_bottom = 153.0
-text = "LLAVES"
+offset_top = 76.0
+offset_right = 211.0
+offset_bottom = 193.0
+horizontal_scroll_mode = 0
 
-[node name="EstadoLlaves" type="Label" parent="Interfaz"]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 153.0
-offset_right = 226.0
-offset_bottom = 192.0
-text = "Consultando GameManager…"
+[node name="Estadisticas" type="Label" parent="Interfaz/PaginaEstadisticas/StatsScroll"]
+custom_minimum_size = Vector2(202, 0)
+layout_mode = 2
+text = "Consultando estadísticas…"
 autowrap_mode = 2
 
-[node name="TituloRoboVida" type="Label" parent="Interfaz"]
+[node name="PaginaLlaves" type="Control" parent="Interfaz"]
+visible = false
 layout_mode = 0
-offset_left = 20.0
-offset_top = 192.0
-offset_right = 226.0
-offset_bottom = 205.0
-text = "ROBO DE VIDA"
+offset_left = 15.0
+offset_top = 61.0
+offset_right = 231.0
+offset_bottom = 255.0
 
-[node name="EstadoRoboVida" type="Label" parent="Interfaz"]
+[node name="LlaveIcono" type="TextureRect" parent="Interfaz/PaginaLlaves"]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 205.0
-offset_right = 226.0
-offset_bottom = 228.0
-text = "Consultando jugador…"
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 17.0
+offset_bottom = 17.0
+texture = SubResource("AtlasTexture_KeyIcon")
+texture_filter = 1
+
+[node name="ListaLlaves" type="ScrollContainer" parent="Interfaz/PaginaLlaves"]
+layout_mode = 0
+offset_top = 20.0
+offset_right = 211.0
+offset_bottom = 193.0
+horizontal_scroll_mode = 0
+
+[node name="EstadoLlaves" type="Label" parent="Interfaz/PaginaLlaves/ListaLlaves"]
+custom_minimum_size = Vector2(202, 0)
+layout_mode = 2
+text = "Consultando llaves…"
 autowrap_mode = 2
 
-[node name="TituloEstadisticas" type="Label" parent="Interfaz"]
+[node name="PaginaMejoras" type="Control" parent="Interfaz"]
+visible = false
 layout_mode = 0
-offset_left = 20.0
-offset_top = 225.0
-offset_right = 226.0
-offset_bottom = 238.0
-text = "COMBATE"
+offset_left = 15.0
+offset_top = 61.0
+offset_right = 231.0
+offset_bottom = 255.0
 
-[node name="Estadisticas" type="Label" parent="Interfaz"]
+[node name="MonedasMejoras" type="Label" parent="Interfaz/PaginaMejoras"]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 238.0
-offset_right = 226.0
-offset_bottom = 260.0
-text = "Daño y velocidad del personaje"
+offset_right = 211.0
+offset_bottom = 17.0
+text = "Monedas: 0"
+horizontal_alignment = 1
+
+[node name="MejorasScroll" type="ScrollContainer" parent="Interfaz/PaginaMejoras"]
+layout_mode = 0
+offset_top = 20.0
+offset_right = 211.0
+offset_bottom = 193.0
+horizontal_scroll_mode = 0
+
+[node name="ListaMejoras" type="VBoxContainer" parent="Interfaz/PaginaMejoras/MejorasScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="VidaMejora" type="VBoxContainer" parent="Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+
+[node name="VidaInfo" type="Label" parent="Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/VidaMejora"]
+custom_minimum_size = Vector2(202, 0)
+layout_mode = 2
+text = "Vida máxima"
 autowrap_mode = 2
+
+[node name="VidaComprar" type="Button" parent="Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/VidaMejora"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Mejorar"
+
+[node name="RoboMejora" type="VBoxContainer" parent="Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+
+[node name="RoboInfo" type="Label" parent="Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/RoboMejora"]
+custom_minimum_size = Vector2(202, 0)
+layout_mode = 2
+text = "Robo de vida"
+autowrap_mode = 2
+
+[node name="RoboComprar" type="Button" parent="Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/RoboMejora"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Mejorar"
+
+[node name="UltimateMejora" type="VBoxContainer" parent="Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+
+[node name="UltimateInfo" type="Label" parent="Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/UltimateMejora"]
+custom_minimum_size = Vector2(202, 0)
+layout_mode = 2
+text = "Enfriamiento Ultimate"
+autowrap_mode = 2
+
+[node name="UltimateComprar" type="Button" parent="Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/UltimateMejora"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Mejorar"
 
 [node name="TituloMenu" type="Label" parent="Interfaz"]
 layout_mode = 0

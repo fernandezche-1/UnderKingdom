@@ -230,6 +230,7 @@ func _ready() -> void:
     _fall_limit = fall_limit_y
     # MapBounds puede entrar al árbol después del Player.
     call_deferred("_update_fall_limit_from_map")
+    GameManager.apply_upgrades_to_player(self)
     current_health = max_health
     _guard_hits_remaining = guard_max_hits
 
@@ -1276,6 +1277,15 @@ func get_ultimate_ready_ratio() -> float:
     if ultimate_cooldown <= 0.0:
         return 1.0
     return 1.0 - clampf(_ultimate_cooldown_left / ultimate_cooldown, 0.0, 1.0)
+
+
+func get_ultimate_cooldown_left() -> float:
+    return _ultimate_cooldown_left
+
+
+func set_ultimate_cooldown_progress(ready_ratio: float) -> void:
+    var remaining_ratio := 1.0 - clampf(ready_ratio, 0.0, 1.0)
+    _ultimate_cooldown_left = ultimate_cooldown * remaining_ratio
 
 
 func _animation_duration(animation_name: StringName) -> float:

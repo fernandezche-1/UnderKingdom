@@ -13,6 +13,7 @@ signal w2_knight_defeated_changed(defeated: bool)
 signal cinematic_seen(cinematic_id: String)
 signal encounter_completed(encounter_id: String)
 signal key_changed(key_id: String, has_key: bool)
+signal upgrades_changed
 
 var pending_spawn_id: StringName = &""
 var previous_scene_path: String = ""
@@ -30,6 +31,26 @@ var cinematics_seen: Dictionary = {}
 var completed_encounters: Dictionary = {}
 ## Llaves de jefe recogidas, por key_id (la de Mundo 1 sigue aparte, arriba).
 var collected_keys: Dictionary = {}
+var upgrade_levels: Dictionary = {
+    "max_health": 0,
+    "lifesteal": 0,
+    "ultimate_cooldown": 0,
+}
+
+const UPGRADE_DEFINITIONS := {
+    "max_health": {
+        "name": "Vida máxima", "max_level": 2,
+        "costs": [5, 10], "base": 4.0, "step": 1.0, "unit": "corazones",
+    },
+    "lifesteal": {
+        "name": "Robo de vida", "max_level": 3,
+        "costs": [8, 16, 24], "base": 0.25, "step": 0.05, "unit": "vida por 2 daño",
+    },
+    "ultimate_cooldown": {
+        "name": "Enfriamiento de Ultimate", "max_level": 3,
+        "costs": [10, 15, 20], "base": 6.0, "step": -0.5, "unit": "segundos",
+    },
+}
 
 ## Muerte: el mapa se recarga y el Player reaparece en el último punto de
 ## reaparición (entrada del mapa o checkpoint). Enemigos y jefes no derrotados
@@ -192,6 +213,86 @@ func add_coins(amount: int) -> void:
     coins_changed.emit(coins)
 
 
+func try_spend_coins(amount: int) -> bool:
+    if amount <= 0 or coins < amount:
+        return false
+    coins -= amount
+    coins_changed.emit(coins)
+    return true
+
+
+func get_upgrade_info(upgrade_id: String) -> Dictionary:
+    if not UPGRADE_DEFINITIONS.has(upgrade_id):
+        return {}
+    var definition: Dictionary = UPGRADE_DEFINITIONS[upgrade_id]
+    var level := int(upgrade_levels.get(upgrade_id, 0))
+    var max_level := int(definition.max_level)
+    var value := float(definition.base) + float(definition.step) * level
+    var next_value := value
+    var cost := -1
+    if level < max_level:
+        next_value = value + float(definition.step)
+        cost = int(definition.costs[level])
+    return {
+        "id": upgrade_id,
+        "name": String(definition.name),
+        "level": level,
+        "max_level": max_level,
+        "value": value,
+        "next_value": next_value,
+        "cost": cost,
+        "unit": String(definition.unit),
+        "at_max": level >= max_level,
+    }
+
+
+func purchase_upgrade(upgrade_id: String) -> bool:
+    var info := get_upgrade_info(upgrade_id)
+    if info.is_empty() or bool(info.at_max):
+        return false
+    var cost := int(info.cost)
+    if not try_spend_coins(cost):
+        return false
+    upgrade_levels[upgrade_id] = int(info.level) + 1
+    var player := get_tree().get_first_node_in_group("player")
+    if is_instance_valid(player):
+        apply_upgrades_to_player(player, true)
+    upgrades_changed.emit()
+    return true
+
+
+func apply_upgrades_to_player(player: Node, heal_max_health_increase: bool = false) -> void:
+    if not is_instance_valid(player):
+        return
+    var old_max := float(player.get("max_health"))
+    var health_info := get_upgrade_info("max_health")
+    var lifesteal_info := get_upgrade_info("lifesteal")
+    var ultimate_info := get_upgrade_info("ultimate_cooldown")
+    var old_cooldown := float(player.get("ultimate_cooldown"))
+    var ready_ratio := 1.0
+    if player.has_method("get_ultimate_ready_ratio"):
+        ready_ratio = float(player.call("get_ultimate_ready_ratio"))
+
+    player.set("max_health", float(health_info.value))
+    player.set("lifesteal_heal_amount", float(lifesteal_info.value))
+    player.set("ultimate_cooldown", float(ultimate_info.value))
+
+    var max_health_increased := heal_max_health_increase and float(health_info.value) > old_max
+    if max_health_increased:
+        var current := float(player.get("current_health"))
+        player.set("current_health", minf(current + float(health_info.value) - old_max, float(health_info.value)))
+    if old_cooldown > 0.0 and player.has_method("set_ultimate_cooldown_progress"):
+        player.call("set_ultimate_cooldown_progress", ready_ratio)
+    if max_health_increased and player.has_signal("health_changed"):
+        player.emit_signal("health_changed", float(player.get("current_health")), float(player.get("max_health")))
+
+
+func reset_upgrades_for_new_game() -> void:
+    for upgrade_id in UPGRADE_DEFINITIONS.keys():
+        upgrade_levels[upgrade_id] = 0
+    upgrades_changed.emit()
+
+
 func add_potions(amount: int) -> void:
     if amount <= 0:
         return
@@ -284,6 +385,7 @@ func has_any_key() -> bool:
     return world1_boss_key_collected or not collected_keys.is_empty()
 
 
-## Para una futura opción de Partida nueva; nunca se llama en respawn.
+## El flujo existente de Partida nueva llama a este reset; nunca se llama en respawn.
 func reset_cinematics_for_new_game() -> void:
     cinematics_seen.clear()
+    reset_upgrades_for_new_game()
