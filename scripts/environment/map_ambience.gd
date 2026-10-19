@@ -90,17 +90,21 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	_time += delta
-	for entry: Array in _flickering:
-		var light := entry[0] as PointLight2D
-		if not is_instance_valid(light):
+	# De atrás hacia delante para poder quitar las luces liberadas (la de la
+	# llave desaparece con ella al recogerla). Se comprueba antes del "as":
+	# convertir un objeto liberado es un error de script y para el juego.
+	for index: int in range(_flickering.size() - 1, -1, -1):
+		var entry: Array = _flickering[index]
+		if not is_instance_valid(entry[0]):
+			_flickering.remove_at(index)
 			continue
+		var light := entry[0] as PointLight2D
 		var phase: float = entry[2]
 		var wave: float = sin(_time * 7.0 + phase) * 0.6 + sin(_time * 13.0 + phase * 1.7) * 0.4
 		var factor: float = 1.0 + wave * flicker_amount
 		light.energy = float(entry[1]) * factor
-		var halo := entry[3] as Sprite2D
-		if halo != null:
-			halo.self_modulate.a = halo_strength * factor
+		if is_instance_valid(entry[3]):
+			(entry[3] as Sprite2D).self_modulate.a = halo_strength * factor
 
 
 func _add_canvas_modulate() -> void:
