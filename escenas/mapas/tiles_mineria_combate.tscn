@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/environment/arena_barrier.gd" id="5_barrera"]
 [ext_resource type="Script" path="res://scripts/environment/locked_door.gd" id="6_puerta_llave"]
 [ext_resource type="Texture2D" path="res://assets_prueba/dungeon_platformer/dungeontilesetfull.png" id="7_tileset"]
+[ext_resource type="Script" path="res://scripts/environment/map_ambience.gd" id="8_ambiente"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_columna_tope"]
 atlas = ExtResource("7_tileset")
@@ -125,3 +126,9 @@ locked_message = "NECESITAS LA LLAVE DEL CABALLERO"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/PuertaLlave"]
 shape = SubResource("RectangleShape2D_puerta_llave")
+
+[node name="Ambientacion" type="Node2D" parent="."]
+script = ExtResource("8_ambiente")
+ambient_color = Color(0.3, 0.28, 0.36, 1)
+player_light_radius = 112
+vignette_strength = 0.6

@@ -25,5 +25,5 @@
 ## Pendiente
 
 - Ajuste de brillo en el menú de pausa, para monitores oscuros.
-- Ambientación de las minas y de los mundos siguientes, cada vez más oscuros conforme se baja.
+- Ambientación de los mundos siguientes, cada vez más oscuros conforme se baja. Las minas ya la tienen: nodo `Ambientacion` en `tiles_mineria_combate.tscn` con `ambient_color` `(0.3, 0.28, 0.36)`, más oscuro y terroso que el cementerio, luz del Player de 112 px y viñeta 0.6. Encienden 39 luces (antorchas, fogatas y lava de la veta ardiente).
 - Niebla y partículas (polvo, brasas) por mundo.
