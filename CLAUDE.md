@@ -58,6 +58,7 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
 - Golpes intermedios de una ráfaga usan `take_continuous_damage_from` (sin empuje ni invulnerabilidad); el último usa `take_damage_from` (empuja).
 - Los enemigos deben estar en la capa de colisión 3 (valor 4, `collision_layer = 5`): la AttackHitbox del Player solo detecta esa capa.
 - Las habilidades del Player (roll, etapas del combo, ataque aéreo, parry, Ultimate, robo de vida, adrenalina) se desbloquean con `GameManager.unlock_ability` y se consultan con `has_ability`. Solo bloquean en una partida empezada con "Nueva partida"; al abrir un mapa directo, el Player tiene todo. Una habilidad nueva se añade a `ABILITY_DEFINITIONS`. Se dan con una reliquia (`escenas/items/reliquia_habilidad.tscn`) o con `ability_reward` de `boss_arena.gd`. Nada necesario para avanzar se vende en la tienda. Detalle en `docs/P35_DESBLOQUEO_DE_HABILIDADES.md`.
+- Sin la Ráfaga, el primer tajo se encadena consigo mismo. Al conectar, `UnderkingdomCombatFX.hit_stop` y `shake()` de la cámara (solo `offset`) dan peso al golpe. Ajustes en la categoría "Impacto" del Player; detalle en `docs/P36_PESO_DEL_GOLPE.md`.
 
 ## Validar cambios
 

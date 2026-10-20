@@ -21,6 +21,36 @@ const SPRITE_FX := {
 }
 
 static var _sprite_frames_cache: Dictionary = {}
+## Hitstop en curso: cuál es el último (cada uno suma 1) y cuándo termina
+## (Time.get_ticks_msec).
+static var _hit_stop_serial: int = 0
+static var _hit_stop_active: bool = false
+static var _hit_stop_until_msec: int = 0
+
+
+## Hitstop: frena todo el juego (Engine.time_scale) durante duration segundos
+## reales. Si ya hay uno más largo en curso, se queda ese. El temporizador es
+## del SceneTree, así que la velocidad vuelve a 1 aunque el Player desaparezca
+## o se cambie de mapa entretanto.
+static func hit_stop(duration: float, time_scale: float = 0.05) -> void:
+    var tree := Engine.get_main_loop() as SceneTree
+    if duration <= 0.0 or tree == null:
+        return
+    var until := Time.get_ticks_msec() + int(duration * 1000.0)
+    if _hit_stop_active and until <= _hit_stop_until_msec:
+        return
+    _hit_stop_active = true
+    _hit_stop_until_msec = until
+    _hit_stop_serial += 1
+    var serial := _hit_stop_serial
+    Engine.time_scale = clampf(time_scale, 0.0, 1.0)
+    # Solo el último temporizador devuelve la velocidad: uno anterior que
+    # termine antes no corta el hitstop que lo sustituyó.
+    tree.create_timer(duration, true, false, true).timeout.connect(func() -> void:
+        if serial == _hit_stop_serial:
+            _hit_stop_active = false
+            Engine.time_scale = 1.0
+    )
 
 
 ## Destello corto y chispa en el enemigo que recibe un golpe del Player.
