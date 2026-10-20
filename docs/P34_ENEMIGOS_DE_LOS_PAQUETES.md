@@ -204,3 +204,32 @@ Todas son cámaras que ya existían en los calcos. Se cierran con trampillas y r
 - Los cuatro mapas `_combate` de la mazmorra en adelante cargan y sus enemigos siguen en su sitio a los 3 s.
 - Capturas de pantalla con el juego abierto de las tres peleas: tamaño de los jefes, rejas y barra de jefe correctos.
 - **Pendiente de jugar a mano:** la dificultad de cada jefe y la posición exacta de las rejas.
+
+## 7. Personajes con los que se habla y el Barquero
+
+- **`scripts/npc/npc.gd` (`UnderkingdomNPC`)**, un `AnimatedSprite2D` del grupo `interactable`, como el cofre.
+  - Con el Player cerca muestra "E  Hablar". Con E abre su diálogo: un JSON de `dialogues/`, con el mismo formato que las cinemáticas, y sus líneas con `speaker_id` "friend" sin retrato.
+  - Mientras habla, el Player queda quieto e invulnerable (`set_controls_locked`, `cinematic_invulnerable`).
+  - Tras cerrar el diálogo, la misma E no lo vuelve a abrir (espera 0,4 s).
+  - Mira hacia el Player.
+  - Las subclases deciden qué pasa al terminar (`_after_dialogue`).
+- **`scripts/npc/merchant_npc.gd` (`UnderkingdomMerchantNPC`): el Barquero.**
+  - Es la Muerte con lámpara de la Legacy (`assets_prueba/gothicvania/personajes/`, cuadros de 32x48).
+  - Está enterrado hasta que el Player se acerca y entonces sale de la tierra con su animación.
+  - La primera charla de la partida es su presentación (`dialogues/barquero_presentacion.json`); después dice una línea corta (`barquero_otra_vez.json`). Lo recuerda con `GameManager.mark_cinematic_seen("barquero_presentado")`, que "Nueva partida" ya reinicia.
+  - Al terminar de hablar abre la tienda: el menú de pausa en la pestaña Mejoras, con "EL BARQUERO" como título (`PauseMenu.open_shop`). Las mejoras se siguen pudiendo comprar desde el menú de pausa como antes.
+- **El anciano** (`escenas/npc/anciano.tscn`, el elder de Lively NPCs) está en la superficie del cementerio, a la izquierda del inicio, en (1, 29). Da pistas: la tierra removida (esqueletos de tumba), los murciélagos que se quedan quietos antes de lanzarse y el Barquero.
+- **Barqueros:** uno junto a la puerta con llave de cada mundo, del lado de dentro. Están en el nodo `Personajes` de cada escena `_combate`:
+  - cementerio (106, 75);
+  - minas (89, 85);
+  - mazmorra (73, 11);
+  - ruina (99, 24);
+  - profundidades (98, 37).
+- **Aviso de la puerta con llave** (`locked_door.gd`): sale hacia el lado del Player. Antes se centraba en la puerta y, con las puertas junto al borde del mapa, quedaba cortado.
+- **Comprobado:**
+  - sin ventana y con la tecla E simulada:
+    - el Barquero sale de la tierra, muestra "E Hablar", su diálogo bloquea al Player, y al terminar se abre la tienda pausada con título "EL BARQUERO" y la pestaña Mejoras;
+    - la compra descuenta 5 monedas y al cerrar se reanuda;
+    - el anciano habla y no abre la tienda;
+  - captura con el juego abierto del Barquero y el aviso de la puerta;
+  - el menú, Mundo 1 y los cinco mapas `_combate` arrancan sin errores.

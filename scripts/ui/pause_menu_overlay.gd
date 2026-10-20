@@ -71,6 +71,13 @@ func open_pause(player: UnderkingdomPlayer) -> void:
 	focus_resume()
 
 
+## La pestaña de mejoras con el nombre del vendedor como título.
+func open_shop(player: UnderkingdomPlayer, title: String) -> void:
+	open_pause(player)
+	header.text = title
+	_show_tab("upgrades")
+
+
 func close_pause() -> void:
 	interface.visible = false
 	visible = false

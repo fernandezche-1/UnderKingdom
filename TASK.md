@@ -102,6 +102,11 @@ Todos tienen un checkpoint, dos cofres (jefe uno), 12 monedas, una o dos pocione
 - [x] **Enemigos que faltan para la progresión por profundidad** (`docs/P33_ENEMIGOS_POR_PROFUNDIDAD.md`): murciélagos para el cementerio y las minas, esqueletos para la mazmorra y la ruina. Hechos con Super Grotto Escape y Gothicvania Cemetery (ver `docs/P34_ENEMIGOS_DE_LOS_PAQUETES.md`).
 - [ ] **Decorados de los paquetes:** velas, jaulas, cadenas, estandartes, vagonetas. Necesitan estar en el atlas del tileset y tener letra.
 
+### Hecho en P34 (paquetes nuevos)
+- [x] Murciélagos, esqueletos, efectos con sprites, jefes de la mazmorra a la profundidad final, tileset del cementerio, NPC que hablan y el Barquero (`docs/P34_ENEMIGOS_DE_LOS_PAQUETES.md`).
+- [ ] Jugar a mano los cinco jefes nuevos y ajustar su dificultad.
+- [ ] Que el parallax del cielo no se vea en las cuevas (el constructor pone un solo parallax por mapa).
+
 ### Herramientas
 - [ ] **Decidir si los scripts de diseño entran al repo.** Las salidas, escaleras, objetos y decorados se pusieron con un script de Python (`disenar.py`). Un verificador (`recorrido.py`) simula los saltos del Player para comprobar que todo se alcanza. Los dos están fuera del repo y necesitan Python con Pillow. Si entran, irían en `herramientas/constructor_mapas/`, con instrucciones en `LEYENDA.md`.
 - [ ] **Prueba de escaleras en Godot** (sin ventana: sube por cada escalera y comprueba que el Player queda arriba). Se usó y se borró. Si se quiere repetir tras cambiar los PNG, guardarla como herramienta.

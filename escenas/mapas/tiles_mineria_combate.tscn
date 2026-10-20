@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://scripts/environment/locked_door.gd" id="6_puerta_llave"]
 [ext_resource type="Texture2D" path="res://assets_prueba/dungeon_platformer/dungeontilesetfull.png" id="7_tileset"]
 [ext_resource type="Script" path="res://scripts/environment/map_ambience.gd" id="8_ambiente"]
+[ext_resource type="PackedScene" path="res://escenas/npc/barquero.tscn" id="npc_0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_columna_tope"]
 atlas = ExtResource("7_tileset")
@@ -132,3 +133,8 @@ script = ExtResource("8_ambiente")
 ambient_color = Color(0.3, 0.28, 0.36, 1)
 player_light_radius = 112
 vignette_strength = 0.6
+
+[node name="Personajes" type="Node2D" parent="."]
+
+[node name="Barquero" parent="Personajes" instance=ExtResource("npc_0")]
+position = Vector2(1432, 1352)

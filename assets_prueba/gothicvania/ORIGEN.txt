@@ -23,3 +23,8 @@ los usa scripts/fx/combat_fx.gd:
                               muerte de enemigos sin animación de muerte
 - efectos/explosion_suelo.png Ground Explosion/spritesheet/explosion-animation.png
                               (9 cuadros de 112x128): golpes fuertes de los jefes
+
+Personajes (Legacy Collection/Assets/Gothicvania/Characters/), sin cambiar el arte:
+- personajes/barquero_lampara.png  death/Spritesheets/death-lamp-walk.png (6 cuadros de 32x48)
+- personajes/barquero_sale.png     death/Spritesheets/death-lamp-rise.png (11 cuadros de 32x48)
+  El Barquero, mercader de mejoras (escenas/npc/barquero.tscn).

@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/environment/arena_barrier.gd" id="5_barrera"]
 [ext_resource type="Script" path="res://scripts/environment/locked_door.gd" id="6_puerta_llave"]
 [ext_resource type="Texture2D" path="res://assets_prueba/dungeon_platformer/dungeontilesetfull.png" id="7_tileset"]
+[ext_resource type="PackedScene" path="res://escenas/npc/barquero.tscn" id="npc_0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_columna_tope"]
 atlas = ExtResource("7_tileset")
@@ -123,3 +124,8 @@ locked_message = "NECESITAS LA LLAVE DEL DEMON SLIME"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/PuertaLlave"]
 shape = SubResource("Shape_puerta_llave")
+
+[node name="Personajes" type="Node2D" parent="."]
+
+[node name="Barquero" parent="Personajes" instance=ExtResource("npc_0")]
+position = Vector2(1576, 584)

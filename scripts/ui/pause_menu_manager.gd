@@ -37,6 +37,18 @@ func _input(event: InputEvent) -> void:
 	get_viewport().set_input_as_handled()
 
 
+## Abre el menú de pausa en la pestaña de mejoras, como tienda de un NPC.
+func open_shop(title: String) -> void:
+	var player := get_tree().get_first_node_in_group("player") as UnderkingdomPlayer
+	if player == null or player.dead:
+		return
+	if not is_instance_valid(_overlay):
+		_overlay = PAUSE_SCENE.instantiate() as UnderkingdomPauseOverlay
+		get_tree().root.add_child(_overlay)
+	_overlay.open_shop(player, title)
+	get_tree().paused = true
+
+
 func resume_game() -> void:
 	get_tree().paused = false
 	if is_instance_valid(_overlay):
