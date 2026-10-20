@@ -210,8 +210,9 @@ func _build_options() -> void:
 	var fullscreen := CheckButton.new()
 	fullscreen.name = "PantallaCompleta"
 	fullscreen.text = "Pantalla completa"
-	fullscreen.button_pressed = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
-	fullscreen.toggled.connect(_on_fullscreen_toggled)
+	fullscreen.button_pressed = DisplaySettings.is_fullscreen()
+	fullscreen.toggled.connect(DisplaySettings.set_fullscreen)
+	DisplaySettings.fullscreen_changed.connect(fullscreen.set_pressed_no_signal)
 	_options_panel.add_child(fullscreen)
 
 	var back := _make_button("Volver")
@@ -300,11 +301,6 @@ func _on_master_volume_changed(value: float) -> void:
 
 func _update_volume_label(value: float) -> void:
 	_volume_value.text = "%d%%" % roundi(value * 100.0)
-
-
-func _on_fullscreen_toggled(enabled: bool) -> void:
-	var mode := DisplayServer.WINDOW_MODE_FULLSCREEN if enabled else DisplayServer.WINDOW_MODE_WINDOWED
-	DisplayServer.window_set_mode(mode)
 
 
 func _on_quit_pressed() -> void:

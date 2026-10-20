@@ -221,7 +221,8 @@ func _connect_controls() -> void:
 	$Interfaz/PanelMenu/Margen/BotonesPausa/Salir.pressed.connect(Callable(pause_manager, "quit_game"))
 	$Interfaz/PanelMenu/Margen/ControlesOpciones/Volver.pressed.connect(show_pause_menu)
 	volume_slider.value_changed.connect(_on_master_volume_changed)
-	fullscreen_toggle.toggled.connect(_on_fullscreen_toggled)
+	fullscreen_toggle.toggled.connect(DisplaySettings.set_fullscreen)
+	DisplaySettings.fullscreen_changed.connect(fullscreen_toggle.set_pressed_no_signal)
 
 
 func set_player(player: UnderkingdomPlayer) -> void:
@@ -407,7 +408,7 @@ func _refresh_options() -> void:
 	else:
 		volume_slider.set_value_no_signal(AudioServer.get_bus_volume_linear(_master_bus))
 	_update_volume_label(volume_slider.value)
-	fullscreen_toggle.set_pressed_no_signal(DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN)
+	fullscreen_toggle.set_pressed_no_signal(DisplaySettings.is_fullscreen())
 
 
 func _on_master_volume_changed(value: float) -> void:
@@ -418,8 +419,3 @@ func _on_master_volume_changed(value: float) -> void:
 
 func _update_volume_label(value: float) -> void:
 	volume_value.text = "%d%%" % roundi(value * 100.0)
-
-
-func _on_fullscreen_toggled(enabled: bool) -> void:
-	var mode := DisplayServer.WINDOW_MODE_FULLSCREEN if enabled else DisplayServer.WINDOW_MODE_WINDOWED
-	DisplayServer.window_set_mode(mode)
