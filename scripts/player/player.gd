@@ -1507,6 +1507,12 @@ func is_invulnerable() -> bool:
     return cinematic_invulnerable or _invulnerability_left > 0.0 or _action == PlayerAction.ULTIMATE
 
 
+## Colgado de una escalera. Lo usan los jefes para saber si el Player está
+## quieto en el aire (no saltando) y vale la pena ir a buscarlo.
+func is_climbing() -> bool:
+    return _climbing
+
+
 func _update_damage_timers(delta: float) -> void:
     if _hurt_time_left > 0.0:
         _hurt_time_left = maxf(_hurt_time_left - delta, 0.0)
