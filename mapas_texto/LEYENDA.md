@@ -118,6 +118,8 @@ El mapa original no se toca. El PNG es un punto de partida: faltan las salidas, 
 | `d` | #c00060 | 192, 0, 96 | diablillo (vuela y lanza fuego) |
 | `M` | #503000 | 80, 48, 0 | mino |
 | `m` | #402060 | 64, 32, 96 | murciélago (vuela y embiste; se dibuja donde flota) |
+| `e` | #d0d0b0 | 208, 208, 176 | esqueleto (camina y embiste) |
+| `u` | #706050 | 112, 96, 80 | esqueleto de tumba (enterrado hasta que el Player se acerca) |
 | `t` | #ffc090 | 255, 192, 144 | antorcha |
 | `f` | #c03000 | 192, 48, 0 | fogata (decorado) |
 | `b` | #a08060 | 160, 128, 96 | barril |

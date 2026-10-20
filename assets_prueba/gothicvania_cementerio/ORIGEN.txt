@@ -1,0 +1,16 @@
+Gothicvania Cemetery de Luis Zuno (Ansimuz)
+
+Recibido como "gothicvania-cemetery-files.zip" el 2026-10-20.
+Licencia: CC0 (public-license.pdf del paquete): uso libre, personal o
+comercial, sin crédito obligatorio; se puede modificar y redistribuir.
+Página del autor: https://ansimuz.itch.io
+
+Solo se copió lo que usa el juego, sin cambiar el arte:
+- esqueleto.png   cuadros sueltos de Assets/Characters/Enemies/ juntados en
+                  una hoja de 44x52 por cuadro, una fila por animación:
+                  1. skeleton/Sprites/Walk (8)
+                  2. skeleton/Sprites/walk-clothed (8)
+                  3. skeleton/skeleton-rise (6)
+                  4. skeleton/skeleton-rise-clothed (6)
+                  5. EnemyDeath/Sprites (5), nube de muerte
+                  (enemigos/esqueleto.tscn y enemigos/esqueleto_tumba.tscn)

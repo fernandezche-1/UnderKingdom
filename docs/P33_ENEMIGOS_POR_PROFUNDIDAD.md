@@ -11,10 +11,10 @@
 
 | Profundidad | Mundo | Enemigos (letra) | Faltan (sin arte todavía) |
 |---|---|---|---|
-| 1 | `tiles_cementerio` (superficie) | Vanguardia `v` (el viejito), murciélago `m` (cripta y abismo) | |
+| 1 | `tiles_cementerio` (superficie) | Vanguardia `v` (el viejito), murciélago `m` (cripta y abismo), esqueleto de tumba `u` | |
 | 2 | `tiles_mineria` (bajo tierra) | kolbo `k`, kolbo2 `j`, kolbo3 `q`, murciélago `m` | |
-| 3 | `tiles_mazmorra` | Aprendis `a` (esqueleto de fuego), mino `M`, kolbo3 `q` | más esqueletos |
-| 4 | `tiles_ruina` | Aprendis `a` (esqueleto de fuego), mino `M`, kolbo3 `q` | más esqueletos |
+| 3 | `tiles_mazmorra` | Aprendis `a` (esqueleto de fuego), mino `M`, kolbo3 `q`, esqueleto `e` | |
+| 4 | `tiles_ruina` | Aprendis `a` (esqueleto de fuego), mino `M`, kolbo3 `q`, esqueleto `e` | |
 | 5 | `tiles_profundidades` (abismo) | diablillo `d` | |
 | 6 | `tiles_jefe` (infierno) | diablillo `d` | demonslime como enemigo común (hoy sin letra) |
 
