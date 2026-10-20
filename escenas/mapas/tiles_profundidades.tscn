@@ -3550,7 +3550,7 @@ metadata/_edit_group_ = true
 position = Vector2(1656, 576)
 collision_layer = 0
 script = ExtResource("13_yqtnv")
-target_scene_path = "res://escenas/mapas/tiles_jefe.tscn"
+target_scene_path = "res://escenas/mapas/tiles_jefe_combate.tscn"
 target_spawn_id = &"DesdeAnterior"
 metadata/_edit_group_ = true
 
@@ -3561,7 +3561,7 @@ shape = SubResource("RectangleShape2D_ia68b")
 position = Vector2(8, 160)
 collision_layer = 0
 script = ExtResource("13_yqtnv")
-target_scene_path = "res://escenas/mapas/tiles_ruina.tscn"
+target_scene_path = "res://escenas/mapas/tiles_ruina_combate.tscn"
 target_spawn_id = &"DesdeSiguiente"
 metadata/_edit_group_ = true
 

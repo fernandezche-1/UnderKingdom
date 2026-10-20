@@ -21,3 +21,5 @@ los usa scripts/fx/combat_fx.gd:
 - efectos/impacto.png         Hit/hit.png (3 cuadros de 31x32): golpe del Player
 - efectos/muerte_enemigo.png  EnemyDeath/spritesheet.png (8 cuadros de 48x48):
                               muerte de enemigos sin animación de muerte
+- efectos/explosion_suelo.png Ground Explosion/spritesheet/explosion-animation.png
+                              (9 cuadros de 112x128): golpes fuertes de los jefes

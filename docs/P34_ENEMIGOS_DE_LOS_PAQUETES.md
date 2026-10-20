@@ -142,3 +142,65 @@
   - captura de pantalla con el juego abierto: pasto, lápidas y el fondo nuevo se ven bien;
   - el cementerio carga y los 22 enemigos siguen en su sitio a los 3 s;
   - las colisiones no cambiaron.
+
+## 6. Jefes de la ruina, las profundidades y el infierno
+
+### Script genérico `scripts/bosses/simple_boss.gd` (`UnderkingdomSimpleBoss`)
+
+- Es para arte con pocos ataques. Cada animación de ataque tiene su perfil en `attack_profiles`:
+  - cuadros de golpe;
+  - daño;
+  - tamaño y posición del golpe;
+  - fase mínima;
+  - cuadro de la explosión en el suelo.
+- **Fase 2**, por debajo de la mitad de vida:
+  - ataca un 25 % más rápido;
+  - persigue más rápido;
+  - espera menos entre ataques;
+  - puede pasar a volar (`phase_2_flies`).
+- **Explosión en el suelo:** el efecto Ground Explosion de la Legacy (`assets_prueba/gothicvania/efectos/explosion_suelo.png`) aparece delante del jefe y hace daño en un área. No sale mientras vuela.
+- **Armadura durante el ataque:** un golpe del Player le quita vida pero no le corta el ataque ni lo empuja. Fuera del ataque recibe el golpe normal. Sin esto se le podía interrumpir cada golpe.
+- No usan la animación de daño, para que no se les pueda aturdir sin fin; el golpe se ve con el destello y la chispa.
+- Las escenas se generaron desde las hojas de sprites que ya estaban en el repo, sin tocar el arte.
+
+### Jefes
+
+| Jefe | Escena | Vida | Ataque | Fase 2 |
+|---|---|---|---|---|
+| Guardián de hielo (Frost Guardian, sin usar hasta ahora) | `escenas/jefes/guardian_hielo.tscn` | 16 | Manotazo, cuadros 6-8, 1 corazón | Explosión en el suelo (¾) |
+| Demon Slime | `escenas/jefes/demon_slime_jefe.tscn` | 18 | Tajo, cuadros 9-11, alcance 126 px, 1 corazón | Explosión en el suelo (1) |
+| Cthulhu (jefe final) | `escenas/jefes/cthulhu_jefe.tscn` | 20 | Dos golpes: ¾ (cuadros 2-5) y 1 con explosión (cuadros 3-6) | Vuela y persigue al Player en el aire |
+
+- La escena enemiga `enemigos/demonslime.tscn` y el `jefes/boss.tscn` viejo de Cthulhu no cambian.
+
+### Salas
+
+Todas son cámaras que ya existían en los calcos. Se cierran con trampillas y rejas (`arena_barrier.gd`) que solo existen durante el combate, sin dibujar ni quitar colisiones.
+
+- **Ruina** (`tiles_ruina_combate.tscn`):
+  - la cueva de abajo a la derecha, x 65-102, filas 46-56;
+  - única entrada en x 67-69, fila 43 (trampilla);
+  - puerta con llave en la salida derecha, columna 102, filas 22-24;
+  - el esqueleto que quedaba dentro, en (85, 56), pasó a (86, 27).
+- **Profundidades** (`tiles_profundidades_combate.tscn`):
+  - la cámara de abajo a la derecha, x 81-102, filas 43-51;
+  - dos entradas: trampilla en x 97-102, fila 42, y reja en la columna 81, filas 47-51, junto a la escalera;
+  - puerta con llave en la salida derecha, columna 102, filas 33-37.
+- **Infierno** (`tiles_jefe_combate.tscn`):
+  - no hay cámara cerrada de buen tamaño, así que la pelea es en el pasillo central, entre rejas en las columnas 46 y 74, filas 30-39;
+  - desde el suelo del pasillo (fila 40) el Player salta unos 104 px y no alcanza las plataformas de la fila 29, así que las dos rejas bastan;
+  - no hay llave: es el final, y al vencer sale "HAS VENCIDO A CTHULHU".
+- **Ruta:** cada mapa apunta ahora a la escena `_combate` del siguiente y del anterior. Se cambió en los `.txt` y en `target_scene_path`; la ruina se regeneró por el esqueleto.
+
+### Comprobado
+
+- **Frente al Player en un suelo de prueba**, los tres atacan y hacen daño. Con la armadura, el ataque sigue aunque los golpeen. Pasan a fase 2: el Guardián y el Demon Slime levantan la explosión en el suelo, y Cthulhu se pone a volar.
+- **En cada mapa:**
+  - la puerta con llave sigue cerrada sin llave;
+  - al entrar en la sala se cierran sus puertas y el jefe aparece en el extremo más lejano;
+  - al vencerlo se abren y la sala queda completada;
+  - la llave cae, se recoge y abre la salida;
+  - en el infierno, la pelea termina sin llave.
+- Los cuatro mapas `_combate` de la mazmorra en adelante cargan y sus enemigos siguen en su sitio a los 3 s.
+- Capturas de pantalla con el juego abierto de las tres peleas: tamaño de los jefes, rejas y barra de jefe correctos.
+- **Pendiente de jugar a mano:** la dificultad de cada jefe y la posición exacta de las rejas.

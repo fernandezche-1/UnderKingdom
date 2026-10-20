@@ -45,9 +45,9 @@ Si se vuelve a jugar tras un cambio, anotar lo que se encuentre en la sección 2
 | `tiles_casa` | 104 x 58 | violeta | 4 diablillos | 3 | 3 huecos de 3 piezas en pisos. Las 2 escaleras del mapa original se reemplazaron. **Fuera de la ruta:** el cementerio lleva ahora a las minas. |
 | `tiles_mineria` | 104 x 90 | madera | 4 kolbo, 4 kolbo2, 4 kolbo3 + Caballero de la Reina | 4 | Segundo mundo, con la misma estructura que el cementerio: bocamina, galerías, sala del jefe y veta ardiente con la puerta con llave y la salida en el fondo. Se juega desde `tiles_mineria_combate.tscn`. Ya no es un calco. |
 | `tiles_mazmorra` | 78 x 71 | oliva | 2 Aprendis, 2 kolbo3, 1 mino, 3 esqueletos + la Reina | 13 | 9 huecos, 29 pinchos en pozos sin salida y túnel de 18 piezas hasta la salida derecha. Recortado: lo de abajo era vacío. Se juega desde `tiles_mazmorra_combate.tscn`: la Reina está en la cámara del fondo a la derecha y la puerta con llave tapa la salida (P34). |
-| `tiles_ruina` | 104 x 58 | ladrillo | 2 Aprendis, 1 kolbo3, 1 mino | 5 | 3 huecos; túnel de 4 piezas hasta la salida derecha. |
-| `tiles_profundidades` | 104 x 58 | oro | 4 diablillos | 2 | 2 huecos, lava en todo el fondo y 3 trampas de fuego. |
-| `tiles_jefe` | 104 x 58 | ladrillo | 4 diablillos | 4 | 4 huecos, lava en el fondo, 2 trampas de fuego y 1 pinchos. Es el último: no tiene salida derecha. **No tiene jefe** (ver sección 3). |
+| `tiles_ruina` | 104 x 58 | ladrillo | 2 Aprendis, 1 kolbo3, 1 mino, 3 esqueletos + Guardián de hielo | 5 | 3 huecos; túnel de 4 piezas hasta la salida derecha. Se juega desde `tiles_ruina_combate.tscn` (P34). |
+| `tiles_profundidades` | 104 x 58 | oro | 4 diablillos + Demon Slime | 2 | 2 huecos, lava en todo el fondo y 3 trampas de fuego. Se juega desde `tiles_profundidades_combate.tscn` (P34). |
+| `tiles_jefe` | 104 x 58 | ladrillo | 4 diablillos | 4 | 4 huecos, lava en el fondo, 2 trampas de fuego y 1 pinchos. Es el último: no tiene salida derecha. Se juega desde `tiles_jefe_combate.tscn`, con Cthulhu en el pasillo central (P34). |
 
 Todos tienen un checkpoint, dos cofres (jefe uno), 12 monedas, una o dos pociones, antorchas y decorados del tema.
 
@@ -83,8 +83,7 @@ Todos tienen un checkpoint, dos cofres (jefe uno), 12 monedas, una o dos pocione
   - Caballero de la Reina, Reina y Cthulhu (casa);
   - ~~jefe de las minas~~: el Caballero de la Reina, en `tiles_mineria_combate.tscn` (ver changelog, "Minas con tiles: segundo mundo");
   - ~~Reina (mazmorra)~~: en `tiles_mazmorra_combate.tscn` (ver `docs/P34_ENEMIGOS_DE_LOS_PAQUETES.md`);
-  - demonslime (profundidades);
-  - jefe final (jefe).
+  - ~~demonslime (profundidades)~~ y ~~jefe final (jefe)~~: Demon Slime y Cthulhu, más el Guardián de hielo en la ruina (ver `docs/P34_ENEMIGOS_DE_LOS_PAQUETES.md`).
 
   Opciones: añadir letras para jefes al constructor, o colocarlos a mano en una escena que herede del nivel generado. `tiles_jefe` necesita al menos su jefe para tener sentido.
 - [ ] **Conectar con los mapas hechos a mano.** Hoy la ruta de tiles es independiente. Con `siguiente: res://escenas/mapas/<mapa>.tscn#<Spawn>` se puede enlazar con un spawn existente.

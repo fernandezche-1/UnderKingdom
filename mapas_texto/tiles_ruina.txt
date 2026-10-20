@@ -1,3 +1,11 @@
+; CUARTO MUNDO (ruina). La sala del Guardián de hielo es la cueva de abajo a la
+; derecha, x 65-102, filas 46-56; su única entrada es el hueco de x 67-69 en la
+; fila 43, por donde baja la escalera, y ahí va la trampilla que se cierra. La
+; puerta con llave tapa la salida derecha en la columna 102, filas 22-24.
+; Si se mueven en el PNG, mover también los nodos de tiles_ruina_combate.tscn.
+; La sala y la puerta viven en tiles_ruina_combate.tscn, que hereda de esta
+; escena: regenerarla no lo borra. Jugar el nivel desde esa.
+;
 ; NIVEL CON TILES calcado de fondos/ruina.png: la forma sale de las
 ; colisiones del mapa hecho a mano (constructor -- --desde-mapa) y encima se
 ; dibujaron las salidas, escaleras, objetos y decorados.
@@ -10,5 +18,5 @@ tileset: mazmorra
 bloques: ladrillo
 fondo: ninguno
 parallax: assets_prueba/gothicvania/cavernas/fondo.png 0.05; assets_prueba/gothicvania/cavernas/paredes.png 0.2
-siguiente: res://escenas/mapas/tiles_profundidades.tscn
+siguiente: res://escenas/mapas/tiles_profundidades_combate.tscn
 anterior: res://escenas/mapas/tiles_mazmorra_combate.tscn

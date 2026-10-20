@@ -3586,7 +3586,7 @@ metadata/_edit_group_ = true
 position = Vector2(8, 480)
 collision_layer = 0
 script = ExtResource("9_lmjrx")
-target_scene_path = "res://escenas/mapas/tiles_profundidades.tscn"
+target_scene_path = "res://escenas/mapas/tiles_profundidades_combate.tscn"
 target_spawn_id = &"DesdeSiguiente"
 metadata/_edit_group_ = true
 

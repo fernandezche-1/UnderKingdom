@@ -18,7 +18,8 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
   - Es el modelo para los mundos siguientes.
 - **Segundo mundo, las minas:** se juega desde `tiles_mineria_combate.tscn`, que hereda de `tiles_mineria.tscn`. Su jefe es el Caballero de la Reina (`escenas/jefes/caballero_reina.tscn`). Trazado en `mapas_texto/tiles_mineria.txt` y en el changelog, sección "Minas con tiles".
 - **Tercer mundo, la mazmorra:** se juega desde `tiles_mazmorra_combate.tscn`, que hereda de `tiles_mazmorra.tscn`. Su jefa es la Reina (`escenas/jefes/reina_jefe.tscn`), en la cámara del fondo a la derecha. Sigue siendo un calco: no baja como los dos primeros. Detalle en `docs/P34_ENEMIGOS_DE_LOS_PAQUETES.md`.
-- **Ruta actual:** `tiles_cementerio` → `tiles_mineria` → `tiles_mazmorra` → `tiles_ruina` → `tiles_profundidades` → `tiles_jefe`. Desde la ruina, los mapas todavía no siguen la idea de bajar ni tienen sala de jefe (ver `TASK.md`). `tiles_casa` quedó fuera de la ruta.
+- **Mundos 4 a 6:** la ruina (Guardián de hielo, `escenas/jefes/guardian_hielo.tscn`), las profundidades (Demon Slime, `demon_slime_jefe.tscn`) y el infierno (Cthulhu, `cthulhu_jefe.tscn`, jefe final sin llave) se juegan desde su escena `_combate`. Los tres jefes usan `scripts/bosses/simple_boss.gd`. Siguen siendo calcos: la sala es una cámara que ya existía, cerrada con trampillas y rejas, sin tocar colisiones. Detalle en `docs/P34_ENEMIGOS_DE_LOS_PAQUETES.md`.
+- **Ruta actual:** `tiles_cementerio` → `tiles_mineria` → `tiles_mazmorra` → `tiles_ruina` → `tiles_profundidades` → `tiles_jefe`, cada uno por su escena `_combate`. Desde la mazmorra, los mapas todavía no siguen la idea de bajar (ver `TASK.md`). `tiles_casa` quedó fuera de la ruta.
 - **Cómo se monta un mundo:**
   - El trazado se dibuja en el PNG y la escena base la genera el constructor; no se edita a mano.
   - Jefe, puertas y llave van en una escena que hereda de la base. Así se puede regenerar sin perderlos.
