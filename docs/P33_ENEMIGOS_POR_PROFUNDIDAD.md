@@ -11,10 +11,10 @@
 
 | Profundidad | Mundo | Enemigos (letra) | Faltan (sin arte todavía) |
 |---|---|---|---|
-| 1 | `tiles_cementerio` (superficie) | Vanguardia `v` (el viejito), Aprendis `a` | murciélagos |
+| 1 | `tiles_cementerio` (superficie) | Vanguardia `v` (el viejito) | murciélagos |
 | 2 | `tiles_mineria` (bajo tierra) | kolbo `k`, kolbo2 `j`, kolbo3 `q` | murciélagos |
-| 3 | `tiles_mazmorra` | mino `M`, kolbo3 `q` | esqueletos |
-| 4 | `tiles_ruina` | mino `M`, kolbo3 `q` | esqueletos |
+| 3 | `tiles_mazmorra` | Aprendis `a` (esqueleto de fuego), mino `M`, kolbo3 `q` | más esqueletos |
+| 4 | `tiles_ruina` | Aprendis `a` (esqueleto de fuego), mino `M`, kolbo3 `q` | más esqueletos |
 | 5 | `tiles_profundidades` (abismo) | diablillo `d` | |
 | 6 | `tiles_jefe` (infierno) | diablillo `d` | demonslime como enemigo común (hoy sin letra) |
 
@@ -32,7 +32,23 @@ Coordenadas en piezas (x, fila) del PNG.
 - **Jefe:** el Vanguardia (96, 32) y el mino (76, 40) pasan a diablillo.
 - **Mazmorra:** los 4 kolbo2 pasan a kolbo3, en (39, 12), (48, 12), (73, 48) y (31, 59).
 - **Ruina:** el kolbo (8, 12) y el kolbo2 (24, 29) pasan a kolbo3.
-- **Cementerio y profundidades:** ya cumplían la tabla y no cambiaron.
+- **Profundidades:** ya cumplía la tabla y no cambió.
+
+### Segunda tanda: el Aprendis baja
+
+- El Aprendis es un mago pálido con calavera que lanza fuego y se lee como un esqueleto, así que sale del cementerio y pasa a la profundidad de los esqueletos.
+- Flota (`use_gravity = false`), así que puede ir en el aire.
+- **Cementerio** (13 Vanguardia, 0 Aprendis):
+  - (52, 13) y (52, 29) pasan a Vanguardia en el mismo sitio;
+  - los dos que flotaban, en (58, 45) y (80, 73), se quitan;
+  - en su lugar, Vanguardias sobre el suelo en (58, 47) y (75, 75); el de (75, 75) queda lejos del pozo de lava de x 83-86.
+- **Mazmorra:** los kolbo3 de (48, 12) y (73, 48) pasan a Aprendis. Quedan 2 Aprendis, 2 kolbo3 y 1 mino.
+- **Ruina:** los kolbo3 de (8, 12) y (24, 29) pasan a Aprendis. Quedan 2 Aprendis, 1 kolbo3 y 1 mino.
+- Comprobado igual que la primera tanda:
+  - el cementerio, regenerado con su PNG anterior, salía idéntico a su escena;
+  - tras regenerar solo cambian los nodos de `Enemigos`;
+  - tras 3 segundos de física los enemigos nuevos siguen en su sitio;
+  - en el cementerio ya no queda ningún Aprendis.
 
 ## Comprobado sin ventana
 
