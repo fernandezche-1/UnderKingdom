@@ -1,25 +1,20 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/pause_menu_overlay.gd" id="1_pause"]
 [ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/fire_knight.png" id="2_portrait"]
-[ext_resource type="Texture2D" path="res://prueba/FantasyUIfree/FantasyUIfree/freefantasy.png" id="3_atlas"]
-[ext_resource type="Texture2D" path="res://otra vez/fourSeasonsPlatformer_ [tileset, version 2.0]/objects_/items_.png" id="4_items"]
+[ext_resource type="Texture2D" path="res://sprites/Coin Sheet.png" id="3_coins"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_MenuFrame"]
-atlas = ExtResource("3_atlas")
-region = Rect2(163, 48, 83, 127)
+[sub_resource type="ButtonGroup" id="ButtonGroup_Pestanas"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_WoodButton"]
-atlas = ExtResource("3_atlas")
-region = Rect2(138, 5, 45, 23)
+[sub_resource type="AtlasTexture" id="AtlasTexture_Moneda"]
+atlas = ExtResource("3_coins")
+region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_KeyIcon"]
-atlas = ExtResource("4_items")
-region = Rect2(48, 32, 16, 16)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_Pagina"]
 
 [node name="MenuPausa" type="CanvasLayer"]
-layer = 100
 process_mode = 3
+layer = 100
 script = ExtResource("1_pause")
 
 [node name="Interfaz" type="Control" parent="."]
@@ -38,295 +33,275 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 0
-color = Color(0.015, 0.02, 0.045, 0.72)
-
-[node name="PanelJugador" type="NinePatchRect" parent="Interfaz"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 9.0
-offset_right = 238.0
-offset_bottom = 261.0
-texture = SubResource("AtlasTexture_MenuFrame")
-patch_margin_left = 10.0
-patch_margin_top = 14.0
-patch_margin_right = 10.0
-patch_margin_bottom = 14.0
-texture_filter = 1
-
-[node name="PanelMenu" type="NinePatchRect" parent="Interfaz"]
-layout_mode = 0
-offset_left = 242.0
-offset_top = 9.0
-offset_right = 472.0
-offset_bottom = 261.0
-texture = SubResource("AtlasTexture_MenuFrame")
-patch_margin_left = 10.0
-patch_margin_top = 14.0
-patch_margin_right = 10.0
-patch_margin_bottom = 14.0
-texture_filter = 1
-
-[node name="TituloPersonaje" type="Label" parent="Interfaz"]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 16.0
-offset_right = 226.0
-offset_bottom = 34.0
-text = "PERSONAJE"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Pestanas" type="HBoxContainer" parent="Interfaz"]
-layout_mode = 0
-offset_left = 15.0
-offset_top = 38.0
-offset_right = 231.0
-offset_bottom = 58.0
-theme_override_constants/separation = 2
-
-[node name="TabEstadisticas" type="Button" parent="Interfaz/Pestanas"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Datos"
-
-[node name="TabLlaves" type="Button" parent="Interfaz/Pestanas"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Llaves"
-
-[node name="TabMejoras" type="Button" parent="Interfaz/Pestanas"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Mejoras"
-
-[node name="PaginaEstadisticas" type="Control" parent="Interfaz"]
-layout_mode = 0
-offset_left = 15.0
-offset_top = 61.0
-offset_right = 231.0
-offset_bottom = 255.0
-
-[node name="Retrato" type="TextureRect" parent="Interfaz/PaginaEstadisticas"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("2_portrait")
-expand_mode = 1
-stretch_mode = 5
-texture_filter = 1
-
-[node name="NombrePersonaje" type="Label" parent="Interfaz/PaginaEstadisticas"]
-layout_mode = 0
-offset_left = 45.0
-offset_top = 2.0
-offset_right = 212.0
-offset_bottom = 39.0
-text = "Guerrero de la Llama Ancestral"
-vertical_alignment = 1
-autowrap_mode = 2
-
-[node name="BarraVida" type="ProgressBar" parent="Interfaz/PaginaEstadisticas"]
-layout_mode = 0
-offset_top = 44.0
-offset_right = 211.0
-offset_bottom = 57.0
-show_percentage = false
-
-[node name="ValorVida" type="Label" parent="Interfaz/PaginaEstadisticas"]
-layout_mode = 0
-offset_top = 58.0
-offset_right = 211.0
-offset_bottom = 72.0
-text = "Vida: — / —"
-horizontal_alignment = 1
-
-[node name="StatsScroll" type="ScrollContainer" parent="Interfaz/PaginaEstadisticas"]
-layout_mode = 0
-offset_top = 76.0
-offset_right = 211.0
-offset_bottom = 193.0
-horizontal_scroll_mode = 0
-
-[node name="Estadisticas" type="Label" parent="Interfaz/PaginaEstadisticas/StatsScroll"]
-custom_minimum_size = Vector2(202, 0)
-layout_mode = 2
-text = "Consultando estadísticas…"
-autowrap_mode = 2
-
-[node name="PaginaLlaves" type="Control" parent="Interfaz"]
-visible = false
-layout_mode = 0
-offset_left = 15.0
-offset_top = 61.0
-offset_right = 231.0
-offset_bottom = 255.0
-
-[node name="LlaveIcono" type="TextureRect" parent="Interfaz/PaginaLlaves"]
-layout_mode = 0
-offset_left = 1.0
-offset_top = 1.0
-offset_right = 17.0
-offset_bottom = 17.0
-texture = SubResource("AtlasTexture_KeyIcon")
-texture_filter = 1
-
-[node name="ListaLlaves" type="ScrollContainer" parent="Interfaz/PaginaLlaves"]
-layout_mode = 0
-offset_top = 20.0
-offset_right = 211.0
-offset_bottom = 193.0
-horizontal_scroll_mode = 0
-
-[node name="EstadoLlaves" type="Label" parent="Interfaz/PaginaLlaves/ListaLlaves"]
-custom_minimum_size = Vector2(202, 0)
-layout_mode = 2
-text = "Consultando llaves…"
-autowrap_mode = 2
-
-[node name="PaginaMejoras" type="Control" parent="Interfaz"]
-visible = false
-layout_mode = 0
-offset_left = 15.0
-offset_top = 61.0
-offset_right = 231.0
-offset_bottom = 255.0
-
-[node name="MonedasMejoras" type="Label" parent="Interfaz/PaginaMejoras"]
-layout_mode = 0
-offset_right = 211.0
-offset_bottom = 17.0
-text = "Monedas: 0"
-horizontal_alignment = 1
-
-[node name="MejorasScroll" type="ScrollContainer" parent="Interfaz/PaginaMejoras"]
-layout_mode = 0
-offset_top = 20.0
-offset_right = 211.0
-offset_bottom = 193.0
-horizontal_scroll_mode = 0
-
-[node name="ListaMejoras" type="VBoxContainer" parent="Interfaz/PaginaMejoras/MejorasScroll"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 5
-
-[node name="VidaMejora" type="VBoxContainer" parent="Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 1
-
-[node name="VidaInfo" type="Label" parent="Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/VidaMejora"]
-custom_minimum_size = Vector2(202, 0)
-layout_mode = 2
-text = "Vida máxima"
-autowrap_mode = 2
-
-[node name="VidaComprar" type="Button" parent="Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/VidaMejora"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Mejorar"
-
-[node name="RoboMejora" type="VBoxContainer" parent="Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 1
-
-[node name="RoboInfo" type="Label" parent="Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/RoboMejora"]
-custom_minimum_size = Vector2(202, 0)
-layout_mode = 2
-text = "Robo de vida"
-autowrap_mode = 2
-
-[node name="RoboComprar" type="Button" parent="Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/RoboMejora"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Mejorar"
-
-[node name="UltimateMejora" type="VBoxContainer" parent="Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 1
-
-[node name="UltimateInfo" type="Label" parent="Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/UltimateMejora"]
-custom_minimum_size = Vector2(202, 0)
-layout_mode = 2
-text = "Enfriamiento Ultimate"
-autowrap_mode = 2
-
-[node name="UltimateComprar" type="Button" parent="Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/UltimateMejora"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Mejorar"
+color = Color(0.01, 0.01, 0.03, 0.8)
 
 [node name="TituloMenu" type="Label" parent="Interfaz"]
 layout_mode = 0
-offset_left = 252.0
-offset_top = 18.0
-offset_right = 462.0
-offset_bottom = 38.0
-text = "PAUSA"
+offset_left = 16.0
+offset_top = 6.0
+offset_right = 464.0
+offset_bottom = 30.0
+theme_type_variation = &"Encabezado"
+text = "Pausa"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BotonesPausa" type="VBoxContainer" parent="Interfaz"]
+[node name="PanelJugador" type="PanelContainer" parent="Interfaz"]
 layout_mode = 0
-offset_left = 262.0
-offset_top = 56.0
-offset_right = 452.0
-offset_bottom = 190.0
+offset_left = 16.0
+offset_top = 34.0
+offset_right = 300.0
+offset_bottom = 258.0
+
+[node name="Contenido" type="VBoxContainer" parent="Interfaz/PanelJugador"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Pestanas" type="HBoxContainer" parent="Interfaz/PanelJugador/Contenido"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TabEstadisticas" type="Button" parent="Interfaz/PanelJugador/Contenido/Pestanas"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"BotonPestana"
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("ButtonGroup_Pestanas")
+text = "Datos"
+
+[node name="TabLlaves" type="Button" parent="Interfaz/PanelJugador/Contenido/Pestanas"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"BotonPestana"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_Pestanas")
+text = "Llaves"
+
+[node name="TabMejoras" type="Button" parent="Interfaz/PanelJugador/Contenido/Pestanas"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"BotonPestana"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_Pestanas")
+text = "Mejoras"
+
+[node name="PaginaEstadisticas" type="VBoxContainer" parent="Interfaz/PanelJugador/Contenido"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 6
+
+[node name="Cabecera" type="HBoxContainer" parent="Interfaz/PanelJugador/Contenido/PaginaEstadisticas"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="MarcoRetrato" type="PanelContainer" parent="Interfaz/PanelJugador/Contenido/PaginaEstadisticas/Cabecera"]
+layout_mode = 2
+theme_type_variation = &"PanelRanura"
+
+[node name="Retrato" type="TextureRect" parent="Interfaz/PanelJugador/Contenido/PaginaEstadisticas/Cabecera/MarcoRetrato"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("2_portrait")
+stretch_mode = 3
+
+[node name="Resumen" type="VBoxContainer" parent="Interfaz/PanelJugador/Contenido/PaginaEstadisticas/Cabecera"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="NombrePersonaje" type="Label" parent="Interfaz/PanelJugador/Contenido/PaginaEstadisticas/Cabecera/Resumen"]
+layout_mode = 2
+theme_type_variation = &"TextoFuerte"
+text = "Guerrero de la Llama Ancestral"
+autowrap_mode = 2
+
+[node name="FilaVida" type="HBoxContainer" parent="Interfaz/PanelJugador/Contenido/PaginaEstadisticas/Cabecera/Resumen"]
+layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="Reanudar" type="Button" parent="Interfaz/BotonesPausa"]
+[node name="EtiquetaVida" type="Label" parent="Interfaz/PanelJugador/Contenido/PaginaEstadisticas/Cabecera/Resumen/FilaVida"]
+layout_mode = 2
+theme_type_variation = &"TextoTenue"
+text = "Vida"
+
+[node name="BarraVida" type="ProgressBar" parent="Interfaz/PanelJugador/Contenido/PaginaEstadisticas/Cabecera/Resumen/FilaVida"]
+custom_minimum_size = Vector2(0, 7)
 layout_mode = 2
 size_flags_horizontal = 3
-custom_minimum_size = Vector2(0, 28)
-text = "Reanudar"
+size_flags_vertical = 4
+max_value = 4.0
+step = 0.25
+value = 4.0
+show_percentage = false
 
-[node name="Opciones" type="Button" parent="Interfaz/BotonesPausa"]
+[node name="ValorVida" type="Label" parent="Interfaz/PanelJugador/Contenido/PaginaEstadisticas/Cabecera/Resumen/FilaVida"]
+custom_minimum_size = Vector2(44, 0)
 layout_mode = 2
-size_flags_horizontal = 3
-custom_minimum_size = Vector2(0, 28)
-text = "Opciones"
+text = "4 / 4"
+horizontal_alignment = 2
 
-[node name="MenuPrincipal" type="Button" parent="Interfaz/BotonesPausa"]
+[node name="EstadoUltimate" type="Label" parent="Interfaz/PanelJugador/Contenido/PaginaEstadisticas/Cabecera/Resumen"]
 layout_mode = 2
-size_flags_horizontal = 3
-custom_minimum_size = Vector2(0, 28)
-text = "Menú principal"
+theme_type_variation = &"TextoAcento"
+text = "Ultimate lista"
 
-[node name="Salir" type="Button" parent="Interfaz/BotonesPausa"]
+[node name="Separador" type="HSeparator" parent="Interfaz/PanelJugador/Contenido/PaginaEstadisticas"]
 layout_mode = 2
-size_flags_horizontal = 3
-custom_minimum_size = Vector2(0, 28)
-text = "Salir"
 
-[node name="ControlesOpciones" type="VBoxContainer" parent="Interfaz"]
+[node name="Estadisticas" type="GridContainer" parent="Interfaz/PanelJugador/Contenido/PaginaEstadisticas"]
+layout_mode = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 4
+columns = 2
+
+[node name="SeparadorHabilidades" type="HSeparator" parent="Interfaz/PanelJugador/Contenido/PaginaEstadisticas"]
+layout_mode = 2
+
+[node name="TituloHabilidades" type="Label" parent="Interfaz/PanelJugador/Contenido/PaginaEstadisticas"]
+layout_mode = 2
+theme_type_variation = &"TextoTenue"
+text = "Habilidades"
+
+[node name="Habilidades" type="HFlowContainer" parent="Interfaz/PanelJugador/Contenido/PaginaEstadisticas"]
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 4
+
+[node name="PaginaLlaves" type="ScrollContainer" parent="Interfaz/PanelJugador/Contenido"]
 visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_Pagina")
+horizontal_scroll_mode = 0
+
+[node name="ListaLlaves" type="VBoxContainer" parent="Interfaz/PanelJugador/Contenido/PaginaLlaves"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+
+[node name="PaginaMejoras" type="VBoxContainer" parent="Interfaz/PanelJugador/Contenido"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 4
+
+[node name="FilaMonedas" type="HBoxContainer" parent="Interfaz/PanelJugador/Contenido/PaginaMejoras"]
+layout_mode = 2
+theme_override_constants/separation = 3
+alignment = 2
+
+[node name="EtiquetaMonedas" type="Label" parent="Interfaz/PanelJugador/Contenido/PaginaMejoras/FilaMonedas"]
+layout_mode = 2
+theme_type_variation = &"TextoTenue"
+text = "Monedas"
+
+[node name="IconoMoneda" type="TextureRect" parent="Interfaz/PanelJugador/Contenido/PaginaMejoras/FilaMonedas"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = SubResource("AtlasTexture_Moneda")
+stretch_mode = 3
+
+[node name="MonedasMejoras" type="Label" parent="Interfaz/PanelJugador/Contenido/PaginaMejoras/FilaMonedas"]
+layout_mode = 2
+theme_type_variation = &"TextoAcento"
+text = "0"
+
+[node name="MejorasScroll" type="ScrollContainer" parent="Interfaz/PanelJugador/Contenido/PaginaMejoras"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_Pagina")
+horizontal_scroll_mode = 0
+
+[node name="ListaMejoras" type="VBoxContainer" parent="Interfaz/PanelJugador/Contenido/PaginaMejoras/MejorasScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+
+[node name="PanelMenu" type="PanelContainer" parent="Interfaz"]
 layout_mode = 0
-offset_left = 262.0
-offset_top = 58.0
-offset_right = 452.0
-offset_bottom = 203.0
+offset_left = 310.0
+offset_top = 34.0
+offset_right = 464.0
+offset_bottom = 60.0
+
+[node name="Margen" type="MarginContainer" parent="Interfaz/PanelMenu"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+
+[node name="BotonesPausa" type="VBoxContainer" parent="Interfaz/PanelMenu/Margen"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Reanudar" type="Button" parent="Interfaz/PanelMenu/Margen/BotonesPausa"]
+layout_mode = 2
+theme_type_variation = &"BotonMenu"
+text = "Reanudar"
+alignment = 0
+
+[node name="Opciones" type="Button" parent="Interfaz/PanelMenu/Margen/BotonesPausa"]
+layout_mode = 2
+theme_type_variation = &"BotonMenu"
+text = "Opciones"
+alignment = 0
+
+[node name="MenuPrincipal" type="Button" parent="Interfaz/PanelMenu/Margen/BotonesPausa"]
+layout_mode = 2
+theme_type_variation = &"BotonMenu"
+text = "Menú principal"
+alignment = 0
+
+[node name="Salir" type="Button" parent="Interfaz/PanelMenu/Margen/BotonesPausa"]
+layout_mode = 2
+theme_type_variation = &"BotonMenu"
+text = "Salir"
+alignment = 0
+
+[node name="ControlesOpciones" type="VBoxContainer" parent="Interfaz/PanelMenu/Margen"]
+visible = false
+layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="VolumenLabel" type="Label" parent="Interfaz/ControlesOpciones"]
+[node name="VolumenLabel" type="Label" parent="Interfaz/PanelMenu/Margen/ControlesOpciones"]
 layout_mode = 2
-text = "VOLUMEN GENERAL"
+text = "Volumen"
 
-[node name="Volumen" type="HSlider" parent="Interfaz/ControlesOpciones"]
+[node name="FilaVolumen" type="HBoxContainer" parent="Interfaz/PanelMenu/Margen/ControlesOpciones"]
 layout_mode = 2
-custom_minimum_size = Vector2(0, 22)
-min_value = 0.0
+theme_override_constants/separation = 4
+
+[node name="Volumen" type="HSlider" parent="Interfaz/PanelMenu/Margen/ControlesOpciones/FilaVolumen"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
 max_value = 1.0
-step = 0.01
+step = 0.05
+value = 1.0
 
-[node name="PantallaCompleta" type="CheckButton" parent="Interfaz/ControlesOpciones"]
+[node name="ValorVolumen" type="Label" parent="Interfaz/PanelMenu/Margen/ControlesOpciones/FilaVolumen"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+theme_type_variation = &"TextoTenue"
+text = "100%"
+horizontal_alignment = 2
+
+[node name="PantallaCompleta" type="CheckButton" parent="Interfaz/PanelMenu/Margen/ControlesOpciones"]
 layout_mode = 2
 text = "Pantalla completa"
 
-[node name="Volver" type="Button" parent="Interfaz/ControlesOpciones"]
+[node name="Volver" type="Button" parent="Interfaz/PanelMenu/Margen/ControlesOpciones"]
 layout_mode = 2
-size_flags_horizontal = 3
-custom_minimum_size = Vector2(0, 28)
+theme_type_variation = &"BotonMenu"
 text = "Volver"
+alignment = 0
+
+[node name="Ayuda" type="Label" parent="Interfaz"]
+layout_mode = 0
+offset_left = 310.0
+offset_top = 244.0
+offset_right = 464.0
+offset_bottom = 256.0
+theme_type_variation = &"TextoTenue"
+text = "Esc / Start  volver"
+horizontal_alignment = 2

@@ -41,12 +41,13 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
 - Las zonas que dependen de marcas visuales las coloca una persona en el editor o pasa coordenadas; no inferir su posición por la forma o el color de una colisión.
 - (Mapa viejo) `PuertaJefeM1Bloqueo`, `PasoPuertaWS` y `OneWayPasoPuertaWS` de Mundo 1 no se mueven ni se modifican (secuencia Capitán → llave → reja).
 - Pixel art: filtro nearest, resolución base 480x270 con escalado entero, sprites a escala entera (1 o 2). No usar escalas no enteras ni estirar sprites.
+- Texto: lo viste el tema global `escenas/ui/tema_underkingdom.tres` (Pixel Operator 8 y, para títulos, Jacquard 12, en `fuentes/`). Solo tamaños 8 o 16 (Jacquard: 21 o 42); otros deforman la letra. Para cambiar estilo, usar sus variaciones (`Titulo`, `Encabezado`, `TextoTenue`, `BotonMenu`…) en vez de overrides. Detalle en `docs/P37_MENUS_Y_TIPOGRAFIA.md`.
 
 ## Estructura
 
 - `escenas/mapas/tiles_*`: los mapas en uso. Cada uno se genera con el constructor y tiene un nodo `SistemasMapa` (MapBounds, spawns, escaleras, checkpoints, transiciones). Los que llevan jefe o puertas tienen además una escena heredada, como `tiles_cementerio_combate.tscn`.
 - `escenas/mapas/` (mapas viejos, sin uso por ahora): mundo_1, primer_boss_mundo_1, mundo_2, mundo_3, ruina, profundidades, jefe_final. Cada uno es un PNG de `fondos/` cortado en tiles de 16 px más colisiones dibujadas a mano.
-- `escenas/menu/`: menú principal y menú de pausa (autoload `PauseMenu`, `scripts/ui/pause_menu_*.gd`; pestañas de estadísticas, llaves y mejoras compradas con monedas, definidas en `GameManager.UPGRADE_DEFINITIONS`). "Nueva partida" llama a `GameManager.reset_for_new_game()`: toda variable de progreso nueva se reinicia ahí.
+- `escenas/menu/`: menú principal y menú de pausa (autoload `PauseMenu`, `scripts/ui/pause_menu_*.gd`, flecha de selección `scripts/ui/menu_selector.gd`; pestañas de estadísticas, llaves y mejoras compradas con monedas, definidas en `GameManager.UPGRADE_DEFINITIONS`). "Nueva partida" llama a `GameManager.reset_for_new_game()`: toda variable de progreso nueva se reinicia ahí.
 - `escenas/enemigos/`, `escenas/jefes/`, `escenas/player.tscn`, `escenas/sistemas/` (one-way, kill zone, burn zone, climb zone, transición, spawn point), `escenas/items/`, `escenas/ui/`.
 - `scripts/`: `player/player.gd`, `combat/enemy_base.gd` (base de todo enemigo con IA), `bosses/captain_boss.gd`, `core/game_manager.gd` (autoload `GameManager`), `ui/` (HUD, barra de jefe, barra de enemigo), `fx/combat_fx.gd`, `transitions/`, `environment/`, `camera/`.
 - `docs/`: historial de cada etapa (P1…P30). Es la fuente de verdad de lo decidido y lo pendiente; documentar etapas nuevas con el mismo formato.

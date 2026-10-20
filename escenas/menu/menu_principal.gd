@@ -2,29 +2,43 @@ extends Control
 
 const GAME_SCENE := "res://escenas/mapas/tiles_cementerio_combate.tscn"
 const BACKGROUND := preload("res://fondos/cementerio.png")
-const UI_ATLAS := preload("res://prueba/FantasyUIfree/FantasyUIfree/freefantasy.png")
-const BUTTON_REGION := Rect2(138, 5, 45, 23)
-const FRAME_REGION := Rect2(163, 48, 83, 127)
+const ORNAMENT := preload("res://escenas/ui/texturas/adorno_linea.png")
 
-const COLOR_TEXT := Color(1.0, 0.9, 0.68)
-const COLOR_HOVER := Color(1.22, 1.1, 0.82)
-const COLOR_PRESSED := Color(0.76, 0.63, 0.43)
-const COLOR_DISABLED := Color(0.48, 0.44, 0.38)
+const MENU_LEFT: float = 40.0
+const MENU_TOP: float = 104.0
+const FADE_IN_TIME: float = 0.6
+const FADE_OUT_TIME: float = 0.35
 
 var _main_buttons: VBoxContainer
 var _options_panel: VBoxContainer
-var _master_bus := -1
+var _volume_value: Label
+var _fade: ColorRect
+var _master_bus: int = -1
+var _starting: bool = false
 
 
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	_master_bus = AudioServer.get_bus_index("Master")
 	_build_background()
-	_build_menu_frame()
+	_build_wisps()
 	_build_title()
 	_build_main_menu()
 	_build_options()
+	_build_footer()
+	var selector := UnderkingdomMenuSelector.new()
+	selector.name = "Selector"
+	add_child(selector)
+	selector.watch(_main_buttons)
+	selector.watch(_options_panel)
+	_build_fade()
 	_show_main_menu()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if _options_panel.visible and event.is_action_pressed("ui_cancel"):
+		_show_main_menu()
+		get_viewport().set_input_as_handled()
 
 
 func _build_background() -> void:
@@ -36,98 +50,114 @@ func _build_background() -> void:
 	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	background.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(background)
-	move_child(background, 0)
 
-	var shade := ColorRect.new()
-	shade.name = "SombraFondo"
-	shade.color = Color(0.015, 0.02, 0.045, 0.46)
-	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(shade)
+	# Oscurece el lado del menú y deja ver el cementerio a la derecha.
+	var side_shade := TextureRect.new()
+	side_shade.name = "SombraLateral"
+	side_shade.texture = _gradient_texture(Vector2(1.0, 0.0), [
+		Color(0.012, 0.012, 0.035, 0.94),
+		Color(0.012, 0.012, 0.035, 0.84),
+		Color(0.012, 0.012, 0.035, 0.0),
+	], PackedFloat32Array([0.0, 0.5, 1.0]))
+	side_shade.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	side_shade.stretch_mode = TextureRect.STRETCH_SCALE
+	side_shade.set_anchors_and_offsets_preset(Control.PRESET_LEFT_WIDE)
+	side_shade.offset_right = 320.0
+	side_shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(side_shade)
+
+	var bottom_shade := TextureRect.new()
+	bottom_shade.name = "SombraInferior"
+	bottom_shade.texture = _gradient_texture(Vector2(0.0, 1.0), [
+		Color(0.012, 0.012, 0.035, 0.0),
+		Color(0.012, 0.012, 0.035, 0.75),
+	], PackedFloat32Array([0.0, 1.0]))
+	bottom_shade.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	bottom_shade.stretch_mode = TextureRect.STRETCH_SCALE
+	bottom_shade.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
+	bottom_shade.offset_top = -70.0
+	bottom_shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(bottom_shade)
 
 
-func _build_menu_frame() -> void:
-	var frame := TextureRect.new()
-	frame.name = "MarcoMenu"
-	frame.texture = _atlas_texture(FRAME_REGION)
-	frame.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	frame.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	frame.anchor_left = 1.0
-	frame.anchor_right = 1.0
-	frame.anchor_top = 0.0
-	frame.anchor_bottom = 1.0
-	frame.offset_left = -176.0
-	frame.offset_right = -10.0
-	frame.offset_top = 7.0
-	frame.offset_bottom = -7.0
-	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(frame)
+func _gradient_texture(direction: Vector2, colors: Array[Color], offsets: PackedFloat32Array) -> GradientTexture2D:
+	var gradient := Gradient.new()
+	gradient.colors = PackedColorArray(colors)
+	gradient.offsets = offsets
+	var texture := GradientTexture2D.new()
+	texture.gradient = gradient
+	texture.fill_from = Vector2.ZERO
+	texture.fill_to = direction
+	texture.width = 64
+	texture.height = 64
+	return texture
+
+
+## Ánimas: lucecitas frías que suben despacio entre las tumbas.
+func _build_wisps() -> void:
+	var ramp := Gradient.new()
+	ramp.colors = PackedColorArray([
+		Color(0.62, 0.92, 1.0, 0.0),
+		Color(0.62, 0.92, 1.0, 0.75),
+		Color(0.62, 0.92, 1.0, 0.45),
+		Color(0.62, 0.92, 1.0, 0.0),
+	])
+	ramp.offsets = PackedFloat32Array([0.0, 0.2, 0.75, 1.0])
+	var wisps := CPUParticles2D.new()
+	wisps.name = "Animas"
+	wisps.amount = 30
+	wisps.lifetime = 10.0
+	wisps.preprocess = 10.0
+	wisps.position = Vector2(240.0, 285.0)
+	wisps.emission_shape = CPUParticles2D.EMISSION_SHAPE_RECTANGLE
+	wisps.emission_rect_extents = Vector2(250.0, 12.0)
+	wisps.direction = Vector2.UP
+	wisps.spread = 25.0
+	wisps.gravity = Vector2(0.0, -1.5)
+	wisps.initial_velocity_min = 6.0
+	wisps.initial_velocity_max = 15.0
+	wisps.tangential_accel_min = -2.0
+	wisps.tangential_accel_max = 2.0
+	wisps.scale_amount_min = 2.0
+	wisps.scale_amount_max = 2.0
+	wisps.color_ramp = ramp
+	add_child(wisps)
 
 
 func _build_title() -> void:
 	var title := Label.new()
 	title.name = "Titulo"
-	title.text = "UNDERKINGDOM"
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	title.anchor_left = 1.0
-	title.anchor_right = 1.0
-	title.anchor_top = 0.0
-	title.anchor_bottom = 0.0
-	title.offset_left = -177.0
-	title.offset_right = -9.0
-	title.offset_top = 47.0
-	title.offset_bottom = 77.0
-	title.add_theme_font_size_override("font_size", 18)
-	title.add_theme_color_override("font_color", COLOR_TEXT)
-	title.add_theme_color_override("font_outline_color", Color(0.12, 0.035, 0.025))
-	title.add_theme_constant_override("outline_size", 3)
+	title.theme_type_variation = &"Titulo"
+	title.text = "Underkingdom"
+	title.position = Vector2(28.0, 30.0)
 	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(title)
 
+	var ornament := NinePatchRect.new()
+	ornament.name = "Adorno"
+	ornament.texture = ORNAMENT
+	ornament.patch_margin_left = 8
+	ornament.patch_margin_right = 8
+	ornament.position = Vector2(26.0, 80.0)
+	ornament.size = Vector2(232.0, 5.0)
+	ornament.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(ornament)
+
 
 func _build_main_menu() -> void:
-	_main_buttons = VBoxContainer.new()
-	_main_buttons.name = "BotonesPrincipales"
-	_main_buttons.anchor_left = 1.0
-	_main_buttons.anchor_right = 1.0
-	_main_buttons.anchor_top = 0.0
-	_main_buttons.anchor_bottom = 0.0
-	_main_buttons.offset_left = -146.0
-	_main_buttons.offset_right = -28.0
-	_main_buttons.offset_top = 91.0
-	_main_buttons.offset_bottom = 213.0
-	_main_buttons.add_theme_constant_override("separation", 4)
-	add_child(_main_buttons)
+	_main_buttons = _make_list("BotonesPrincipales")
 
 	var new_game := _make_button("Nueva partida")
 	new_game.name = "NuevaPartida"
 	new_game.pressed.connect(_on_new_game_pressed)
 	_main_buttons.add_child(new_game)
 
-	var continue_row := HBoxContainer.new()
-	continue_row.name = "ContinuarNoDisponible"
-	continue_row.add_theme_constant_override("separation", 2)
-	_main_buttons.add_child(continue_row)
-
 	var continue_button := _make_button("Continuar")
 	continue_button.name = "Continuar"
 	continue_button.disabled = true
 	continue_button.focus_mode = Control.FOCUS_NONE
 	continue_button.tooltip_text = "No hay un sistema de guardado implementado."
-	continue_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	continue_row.add_child(continue_button)
-
-	var unavailable := Label.new()
-	unavailable.name = "EstadoContinuar"
-	unavailable.text = "SIN\nGUARDADO"
-	unavailable.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	unavailable.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	unavailable.add_theme_font_size_override("font_size", 7)
-	unavailable.add_theme_color_override("font_color", COLOR_DISABLED)
-	unavailable.custom_minimum_size.x = 32.0
-	unavailable.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	continue_row.add_child(unavailable)
+	_main_buttons.add_child(continue_button)
 
 	var options := _make_button("Opciones")
 	options.name = "Opciones"
@@ -141,45 +171,45 @@ func _build_main_menu() -> void:
 
 
 func _build_options() -> void:
-	_options_panel = VBoxContainer.new()
-	_options_panel.name = "ControlesOpciones"
-	_options_panel.anchor_left = 1.0
-	_options_panel.anchor_right = 1.0
-	_options_panel.anchor_top = 0.0
-	_options_panel.anchor_bottom = 0.0
-	_options_panel.offset_left = -146.0
-	_options_panel.offset_right = -28.0
-	_options_panel.offset_top = 88.0
-	_options_panel.offset_bottom = 219.0
-	_options_panel.add_theme_constant_override("separation", 3)
-	add_child(_options_panel)
+	_options_panel = _make_list("ControlesOpciones")
+	_options_panel.add_theme_constant_override("separation", 5)
+	_options_panel.visible = false
+
+	var volume_row := HBoxContainer.new()
+	volume_row.name = "FilaVolumen"
+	volume_row.add_theme_constant_override("separation", 6)
+	_options_panel.add_child(volume_row)
 
 	var volume_label := Label.new()
-	volume_label.text = "VOLUMEN GENERAL"
-	volume_label.add_theme_font_size_override("font_size", 9)
-	volume_label.add_theme_color_override("font_color", COLOR_TEXT)
-	_options_panel.add_child(volume_label)
+	volume_label.text = "Volumen"
+	volume_row.add_child(volume_label)
 
 	var volume_slider := HSlider.new()
 	volume_slider.name = "VolumenGeneral"
 	volume_slider.min_value = 0.0
 	volume_slider.max_value = 1.0
-	volume_slider.step = 0.01
+	volume_slider.step = 0.05
 	volume_slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	volume_slider.custom_minimum_size.y = 18.0
+	volume_slider.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	if _master_bus >= 0:
 		volume_slider.value = AudioServer.get_bus_volume_linear(_master_bus)
 	else:
 		volume_slider.editable = false
 		volume_slider.tooltip_text = "No existe el bus Master."
 	volume_slider.value_changed.connect(_on_master_volume_changed)
-	_options_panel.add_child(volume_slider)
+	volume_row.add_child(volume_slider)
+
+	_volume_value = Label.new()
+	_volume_value.name = "ValorVolumen"
+	_volume_value.theme_type_variation = &"TextoTenue"
+	_volume_value.custom_minimum_size.x = 24.0
+	_volume_value.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	volume_row.add_child(_volume_value)
+	_update_volume_label(volume_slider.value)
 
 	var fullscreen := CheckButton.new()
 	fullscreen.name = "PantallaCompleta"
 	fullscreen.text = "Pantalla completa"
-	fullscreen.add_theme_font_size_override("font_size", 9)
-	fullscreen.add_theme_color_override("font_color", COLOR_TEXT)
 	fullscreen.button_pressed = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
 	fullscreen.toggled.connect(_on_fullscreen_toggled)
 	_options_panel.add_child(fullscreen)
@@ -190,67 +220,71 @@ func _build_options() -> void:
 	_options_panel.add_child(back)
 
 
+func _build_footer() -> void:
+	var hint := Label.new()
+	hint.name = "Ayuda"
+	hint.theme_type_variation = &"TextoTenue"
+	hint.text = "Enter / A  aceptar      Esc / B  volver"
+	hint.position = Vector2(28.0, 252.0)
+	hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(hint)
+
+
+func _build_fade() -> void:
+	_fade = ColorRect.new()
+	_fade.name = "Fundido"
+	_fade.color = Color(0.0, 0.0, 0.0, 1.0)
+	_fade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_fade)
+	create_tween().tween_property(_fade, "color:a", 0.0, FADE_IN_TIME)
+
+
+func _make_list(list_name: String) -> VBoxContainer:
+	var list := VBoxContainer.new()
+	list.name = list_name
+	list.position = Vector2(MENU_LEFT, MENU_TOP)
+	list.custom_minimum_size.x = 170.0
+	list.add_theme_constant_override("separation", 3)
+	add_child(list)
+	return list
+
+
 func _make_button(label_text: String) -> Button:
 	var button := Button.new()
 	button.text = label_text
-	button.custom_minimum_size.y = 25.0
-	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	button.theme_type_variation = &"BotonMenu"
+	button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 	button.focus_mode = Control.FOCUS_ALL
-	button.add_theme_font_size_override("font_size", 10)
-	button.add_theme_color_override("font_color", COLOR_TEXT)
-	button.add_theme_color_override("font_hover_color", Color(1.0, 0.98, 0.82))
-	button.add_theme_color_override("font_pressed_color", Color(1.0, 0.86, 0.57))
-	button.add_theme_color_override("font_disabled_color", Color(0.55, 0.48, 0.39))
-	button.add_theme_stylebox_override("normal", _button_style(Color.WHITE))
-	button.add_theme_stylebox_override("hover", _button_style(COLOR_HOVER))
-	button.add_theme_stylebox_override("pressed", _button_style(COLOR_PRESSED))
-	button.add_theme_stylebox_override("focus", _button_style(COLOR_HOVER))
-	button.add_theme_stylebox_override("disabled", _button_style(COLOR_DISABLED))
 	return button
-
-
-func _button_style(tint: Color) -> StyleBoxTexture:
-	var style := StyleBoxTexture.new()
-	style.texture = _atlas_texture(BUTTON_REGION)
-	style.texture_margin_left = 5.0
-	style.texture_margin_right = 5.0
-	style.texture_margin_top = 4.0
-	style.texture_margin_bottom = 4.0
-	style.content_margin_left = 4.0
-	style.content_margin_right = 4.0
-	style.content_margin_top = 1.0
-	style.content_margin_bottom = 1.0
-	style.modulate_color = tint
-	return style
-
-
-func _atlas_texture(region: Rect2) -> AtlasTexture:
-	var texture := AtlasTexture.new()
-	texture.atlas = UI_ATLAS
-	texture.region = region
-	return texture
 
 
 func _show_main_menu() -> void:
 	if _main_buttons == null:
 		return
+	var target := "Opciones" if _options_panel.visible else "NuevaPartida"
 	_main_buttons.visible = true
 	_options_panel.visible = false
-	var start_button := _main_buttons.get_node("NuevaPartida") as Button
-	start_button.grab_focus()
+	(_main_buttons.get_node(target) as Button).grab_focus()
 
 
 func _show_options() -> void:
 	_main_buttons.visible = false
 	_options_panel.visible = true
-	var slider := _options_panel.get_node("VolumenGeneral") as HSlider
-	slider.grab_focus()
+	(_options_panel.get_node("FilaVolumen/VolumenGeneral") as HSlider).grab_focus()
 
 
 func _on_new_game_pressed() -> void:
+	if _starting:
+		return
 	if not ResourceLoader.exists(GAME_SCENE):
 		push_error("No existe la escena inicial: %s" % GAME_SCENE)
 		return
+	_starting = true
+	_fade.mouse_filter = Control.MOUSE_FILTER_STOP
+	var tween := create_tween()
+	tween.tween_property(_fade, "color:a", 1.0, FADE_OUT_TIME)
+	await tween.finished
 	GameManager.reset_for_new_game()
 	var error := get_tree().change_scene_to_file(GAME_SCENE)
 	if error != OK:
@@ -258,9 +292,14 @@ func _on_new_game_pressed() -> void:
 
 
 func _on_master_volume_changed(value: float) -> void:
+	_update_volume_label(value)
 	if _master_bus < 0:
 		return
 	AudioServer.set_bus_volume_db(_master_bus, linear_to_db(maxf(value, 0.0001)))
+
+
+func _update_volume_label(value: float) -> void:
+	_volume_value.text = "%d%%" % roundi(value * 100.0)
 
 
 func _on_fullscreen_toggled(enabled: bool) -> void:

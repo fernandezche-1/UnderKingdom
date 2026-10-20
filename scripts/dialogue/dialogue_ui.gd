@@ -66,7 +66,7 @@ func _advance() -> void:
     var emotion := String(line.get("expression", "neutral"))
     speaker_label.text = String(line.get("name", ""))
     dialogue_label.text = String(line.get("text", ""))
-    continue_label.text = "E  ▶"
+    continue_label.text = "E  »"
     _pause_serial += 1
     var this_serial := _pause_serial
     _pause_advance = float(line.get("pause_before", 0.0)) > 0.0
@@ -101,7 +101,7 @@ func _release_pause_after(seconds: float, serial: int) -> void:
     await get_tree().create_timer(seconds).timeout
     if _active and _pause_serial == serial:
         _pause_advance = false
-        continue_label.text = "E  ▶"
+        continue_label.text = "E  »"
 
 
 func _set_portrait(view: TextureRect, actor_id: String, expression: String) -> void:

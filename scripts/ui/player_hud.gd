@@ -60,11 +60,11 @@ func _on_named_key_changed(_key_id: String, _has_key: bool) -> void:
 
 
 func _on_coins_changed(value: int) -> void:
-    coins_label.text = "Monedas: %d" % value
+    coins_label.text = str(value)
 
 
 func _on_potions_changed(value: int) -> void:
-    potions_label.text = "Pociones: %d [C]" % value
+    potions_label.text = "%d  [C]" % value
 
 
 func _on_ability_unlocked(ability_id: String) -> void:
