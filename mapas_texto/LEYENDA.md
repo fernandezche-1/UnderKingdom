@@ -47,8 +47,8 @@ cofre_pociones: 1
 |---|---|
 | `escena` | Dónde se guarda el nivel; siempre en `res://escenas/mapas/`. **Nunca sobrescribe** un mapa hecho a mano. |
 | `imagen` | El PNG del nivel. Si en vez de imagen se escribe el mapa con letras después de una línea `---`, se omite. |
-| `tileset` | Qué juego de piezas usar. Hoy solo existe `mazmorra`; cada tileset nuevo es un archivo en `herramientas/constructor_mapas/tilesets/`. |
-| `bloques` | Estilo de los bloques. En mazmorra: `verde`, `verde_claro`, `ladrillo`, `violeta`, `oro`, `oliva` o `madera`. |
+| `tileset` | Qué juego de piezas usar: `mazmorra` o `cementerio` (el de mazmorra más piezas de Gothicvania Cemetery; en él `T` es una lápida, `g` puntas de pasto y `r` zarzas). Cada tileset es un archivo en `herramientas/constructor_mapas/tilesets/`. |
+| `bloques` | Estilo de los bloques. En mazmorra: `verde`, `verde_claro`, `ladrillo`, `violeta`, `oro`, `oliva` o `madera`. En cementerio, además, `cementerio`. |
 | `fondo` | Pared detrás de todo: `cueva` o `ninguno`. |
 | `parallax` | Imágenes de fondo que se mueven más lento, de la más lejana a la más cercana: `fondos/cielo.png 0.05; fondos/nubes.png 0.2`. El número es la velocidad horizontal (0 = quieta, 1 = como el mapa). Si la imagen es más baja que la pantalla (270 px), se agrega `x2` para dibujarla al doble: `fondos/cielo.png 0.05 x2`. En vertical cada imagen recorre el mapa: se ve su borde de arriba con la cámara arriba del todo y el de abajo con la cámara abajo. Necesita `fondo: ninguno`. |
 | `siguiente` / `anterior` | Mapa al que llevan las salidas azules / moradas. Por defecto se llega a su spawn `DesdeAnterior` / `DesdeSiguiente`, que el constructor crea solo. Para llegar a otro spawn: `res://escenas/mapas/mundo_2.tscn#SpawnInicio`. |

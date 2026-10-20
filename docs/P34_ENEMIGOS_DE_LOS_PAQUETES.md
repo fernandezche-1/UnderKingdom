@@ -121,3 +121,24 @@
     - al vencerla se abre la trampilla y la sala queda completada;
     - la llave cae, se recoge y abre la puerta de la salida;
   - la mazmorra, las minas y la ruina arrancan sin errores.
+
+## 5. Tileset y fondo del cementerio
+
+- **Tileset nuevo `cementerio`** (`herramientas/constructor_mapas/tilesets/cementerio.gd`), con atlas `assets_prueba/gothicvania_cementerio/tileset_cementerio.png`:
+  - filas 0-15: el atlas de mazmorra sin cambios, por las antorchas, la lava, la escalera y la fogata del checkpoint;
+  - filas 16-19: piezas del tileset de Gothicvania Cemetery copiadas en el orden del juego de 4x4:
+    - pasto arriba;
+    - tierra con calaveras en paredes y techos;
+    - interior oscuro;
+    - plataformas de pasto;
+  - decorados: `T` pasa de árbol a lápida (stone-1, 2x3), `g` a puntas de pasto y `r` a zarzas secas. No hubo que tocar el PNG del mapa.
+- **Colisiones:** el constructor deduce la colisión de cada pieza por la opacidad de sus esquinas, y el Cemetery trae muchas piezas con bordes redondeados y transparentes.
+  - Solo se usaron piezas macizas, así que cada bloque sigue siendo un cuadrado completo.
+  - Se comprobó volcando el polígono de colisión de cada celda de `Terreno` y `Plataformas` antes y después de regenerar: las 4261 celdas son idénticas.
+- **Parallax:** el pueblo nocturno se cambió por el cielo con luna, las montañas y el cementerio del paquete (`assets_prueba/gothicvania_cementerio/fondo/`). Cada capa va en un lienzo de 224 px alineada abajo, como el pueblo.
+  - Sigue pendiente que el cielo no se vea dentro de las cuevas: el constructor pone un solo parallax por mapa.
+- `tiles_cementerio.txt` usa `tileset: cementerio` y `bloques: cementerio`.
+- **Comprobado:**
+  - captura de pantalla con el juego abierto: pasto, lápidas y el fondo nuevo se ven bien;
+  - el cementerio carga y los 22 enemigos siguen en su sitio a los 3 s;
+  - las colisiones no cambiaron.
