@@ -12,6 +12,7 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
 - **Lore y diseño: el juego se recorre bajando**, de la tierra a los abismos y al infierno, al estilo de Terraria.
   - Cada mundo es un mapa para explorar al estilo Hollow Knight: zonas, atajos, checkpoints, enemigos repartidos y una sala de jefe.
   - La sala del jefe se cierra al entrar. Al vencerlo cae una llave, y esa llave abre la puerta al mundo siguiente, que está en la parte más profunda del mapa.
+  - Los enemigos cambian conforme se baja: personas y bichos comunes arriba, criaturas en medio, demonios al fondo. Cada mundo usa solo los de su profundidad (tabla en `docs/P33_ENEMIGOS_POR_PROFUNDIDAD.md`); no mezclar enemigos de otro nivel.
 - **Primer mundo, el cementerio:** se juega desde `tiles_cementerio_combate.tscn`, que hereda de la escena generada `tiles_cementerio.tscn`.
   - Trazado y coordenadas: `mapas_texto/tiles_cementerio.txt` y `docs/CHANGELOG_0.04.047.md`, sección "Cementerio con tiles".
   - Es el modelo para los mundos siguientes.
