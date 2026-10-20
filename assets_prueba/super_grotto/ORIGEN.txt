@@ -1,0 +1,10 @@
+Super Grotto Escape de Luis Zuno (Ansimuz)
+
+Recibido como "Super Grotto Escape Files.zip" el 2026-10-20.
+Licencia: CC0 (public-license.pdf del paquete): uso libre, personal o
+comercial, sin crédito obligatorio; se puede modificar y redistribuir.
+Página del autor: https://ansimuz.itch.io
+
+Solo se copió lo que usa el juego, sin cambiar el arte:
+- murcielago.png   Assets/Characters/Enemies/Bat/Spritesheet.png
+                   (5 cuadros de 48x48; enemigos/murcielago.tscn)

@@ -11,8 +11,8 @@
 
 | Profundidad | Mundo | Enemigos (letra) | Faltan (sin arte todavía) |
 |---|---|---|---|
-| 1 | `tiles_cementerio` (superficie) | Vanguardia `v` (el viejito) | murciélagos |
-| 2 | `tiles_mineria` (bajo tierra) | kolbo `k`, kolbo2 `j`, kolbo3 `q` | murciélagos |
+| 1 | `tiles_cementerio` (superficie) | Vanguardia `v` (el viejito), murciélago `m` (cripta y abismo) | |
+| 2 | `tiles_mineria` (bajo tierra) | kolbo `k`, kolbo2 `j`, kolbo3 `q`, murciélago `m` | |
 | 3 | `tiles_mazmorra` | Aprendis `a` (esqueleto de fuego), mino `M`, kolbo3 `q` | más esqueletos |
 | 4 | `tiles_ruina` | Aprendis `a` (esqueleto de fuego), mino `M`, kolbo3 `q` | más esqueletos |
 | 5 | `tiles_profundidades` (abismo) | diablillo `d` | |
@@ -61,7 +61,7 @@ Coordenadas en piezas (x, fila) del PNG.
 
 - **Plataformas verdes:** los enemigos no las pisan. Son de la capa 2, y los enemigos solo chocan con la capa 1 (`collision_mask = 1`), así que se caen a través. Los enemigos de suelo van siempre sobre bloque sólido.
 - **Lava:** no daña a los enemigos (la kill zone solo mira al grupo `player`). Además, `avoid_ledges` no ve un pozo de lava de una pieza como borde. Conviene no poner enemigos de suelo junto a esos pozos.
-- **Huecos para murciélagos:** los de los diablillos quitados de las minas, en el aire de la veta ardiente, son buen sitio cuando haya murciélagos.
+- **Huecos para murciélagos:** los de los diablillos quitados de las minas, en el aire de la veta ardiente, ya tienen murciélago (ver `P34_ENEMIGOS_DE_LOS_PAQUETES.md`).
 - **Mundo nuevo:** al montarlo, elegir sus enemigos de esta tabla. Para un enemigo nuevo:
   - crear su escena con `enemy_base.gd`;
   - darle una letra en `COLORS` / `ENEMIES` del constructor;

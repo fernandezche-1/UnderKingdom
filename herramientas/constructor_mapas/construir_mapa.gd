@@ -50,6 +50,7 @@ const COLORS := {
     "q": ["800080", "kolbo3 (resistente)"],
     "d": ["c00060", "diablillo"],
     "M": ["503000", "mino"],
+    "m": ["402060", "murciélago"],
     "t": ["ffc090", "antorcha"],
     "f": ["c03000", "fogata"],
     "b": ["a08060", "barril"],
@@ -88,6 +89,7 @@ const ENEMIES := {
     "q": "res://escenas/enemigos/kolbo3.tscn",
     "d": "res://escenas/enemigos/diablillo.tscn",
     "M": "res://escenas/enemigos/mino.tscn",
+    "m": "res://escenas/enemigos/murcielago.tscn",
 }
 
 var _grid: Array[String] = []

@@ -117,6 +117,7 @@ El mapa original no se toca. El PNG es un punto de partida: faltan las salidas, 
 | `q` | #800080 | 128, 0, 128 | kolbo3 (resistente) |
 | `d` | #c00060 | 192, 0, 96 | diablillo (vuela y lanza fuego) |
 | `M` | #503000 | 80, 48, 0 | mino |
+| `m` | #402060 | 64, 32, 96 | murciélago (vuela y embiste; se dibuja donde flota) |
 | `t` | #ffc090 | 255, 192, 144 | antorcha |
 | `f` | #c03000 | 192, 48, 0 | fogata (decorado) |
 | `b` | #a08060 | 160, 128, 96 | barril |
