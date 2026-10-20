@@ -8,3 +8,5 @@ Página del autor: https://ansimuz.itch.io
 Solo se copió lo que usa el juego, sin cambiar el arte:
 - murcielago.png   Assets/Characters/Enemies/Bat/Spritesheet.png
                    (5 cuadros de 48x48; enemigos/murcielago.tscn)
+- recoger.png      Assets/Fx/Spritesheets/pick-feedback-2.png
+                   (5 cuadros de 16x16; destello al recoger monedas y pociones)

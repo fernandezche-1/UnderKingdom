@@ -66,3 +66,18 @@
   - frente al Player, el esqueleto se acerca, embiste y quita ½ corazón;
   - el de tumba lejos del Player sigue dormido 7 s y rechaza un golpe; cerca, sale de la tierra y pelea;
   - tras regenerar, cementerio, mazmorra y ruina cargan, y los 11 esqueletos siguen sobre el suelo a los 3 s (los de tumba, dormidos).
+
+## 3. Efectos de muerte, impacto y recogida
+
+- **`scripts/fx/combat_fx.gd` reproduce efectos con sprites** con `play_sprite(origen, nombre, posición)`.
+  - Cada efecto de `SPRITE_FX` es una hoja horizontal con el tamaño de cuadro y su velocidad.
+  - Se reproduce una vez, colgado de la escena, y se borra solo.
+  - Las `SpriteFrames` se arman una vez y se guardan en caché.
+- **Impacto** (`impacto`, Hit de la Legacy, 3 cuadros de 31x32): una chispa en el centro del enemigo cada vez que un golpe del Player hace daño. Sale de `hit_flash`, que ya se llamaba desde `player.gd`, así que no hubo que tocar al Player.
+- **Muerte** (`muerte`, EnemyDeath de la Legacy, 8 cuadros de 48x48): fogonazo y humo. Sustituye a la nube de partículas de `death_puff`, que solo usan los enemigos sin animación de muerte (hoy el murciélago). Los que tienen la suya la siguen usando.
+- **Recoger** (`recoger`, pick-feedback-2 de Super Grotto, 5 cuadros de 16x16): destello al recoger una moneda o una poción, desde `collectible_pickup.gd`.
+- Los archivos están en `assets_prueba/gothicvania/efectos/` y `assets_prueba/super_grotto/recoger.png`, anotados en sus `ORIGEN.txt`.
+- La explosión en el suelo de la Legacy (Ground Explosion) queda para los golpes fuertes de los jefes (paso 6).
+- **Comprobado sin ventana:**
+  - la chispa, el fogonazo del murciélago y el destello de la moneda aparecen y a los 2,5 s ya no queda ninguno;
+  - el menú, Mundo 1 y el cementerio arrancan sin errores.

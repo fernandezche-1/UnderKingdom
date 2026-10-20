@@ -1,7 +1,7 @@
 extends RefCounted
 class_name UnderkingdomCombatFX
 
-## Efectos visuales sencillos de combate (bloqueo, Guard Break, curación).
+## Efectos visuales de combate (impacto, muerte, bloqueo, Guard Break, curación).
 ## Usa self_modulate para no pisar el parpadeo de invulnerabilidad ni el aviso
 ## de Ultimate, que trabajan sobre modulate.
 
@@ -11,17 +11,78 @@ const HEAL_COLOR := Color(0.45, 1.0, 0.5)
 const HIT_COLOR := Color(1.0, 0.45, 0.4)
 const PARRY_COLOR := Color(0.6, 0.95, 1.0)
 
+## Efectos con sprites de los paquetes: hoja horizontal, ancho y alto de cada
+## cuadro y cuadros por segundo. Se reproducen una vez y se borran solos.
+const SPRITE_FX := {
+    &"impacto": ["res://assets_prueba/gothicvania/efectos/impacto.png", 31, 32, 18.0],
+    &"muerte": ["res://assets_prueba/gothicvania/efectos/muerte_enemigo.png", 48, 48, 14.0],
+    &"recoger": ["res://assets_prueba/super_grotto/recoger.png", 16, 16, 16.0],
+}
 
-## Destello corto en el enemigo que recibe un golpe del Player.
+static var _sprite_frames_cache: Dictionary = {}
+
+
+## Destello corto y chispa en el enemigo que recibe un golpe del Player.
 static func hit_flash(body: Node) -> void:
     if body == null:
         return
     _flash(body.get("sprite") as CanvasItem, HIT_COLOR, 0.12)
+    if body is Node2D:
+        play_sprite(body as Node2D, &"impacto", _body_center(body as Node2D))
 
 
-## Nube al morir, para enemigos sin animación de muerte.
+## Explosión al morir, para enemigos sin animación de muerte.
 static func death_puff(body: Node2D) -> void:
-    _burst(body, Color(0.75, 0.7, 0.8), 16, 50.0, 180.0, 0.55, Vector2(0.0, -30.0))
+    play_sprite(body, &"muerte", _body_center(body))
+
+
+## Destello al recoger una moneda o una poción.
+static func pickup_sparkle(item: Node2D) -> void:
+    play_sprite(item, &"recoger", item.global_position)
+
+
+## Reproduce una vez un efecto de SPRITE_FX centrado en global_pos. Se cuelga
+## de la escena, no de quien lo pide: así sobrevive si este desaparece.
+static func play_sprite(source: Node2D, fx_name: StringName, global_pos: Vector2) -> void:
+    if not is_instance_valid(source) or not source.is_inside_tree():
+        return
+    var frames := _sprite_frames(fx_name)
+    if frames == null:
+        return
+    var fx := AnimatedSprite2D.new()
+    fx.sprite_frames = frames
+    fx.z_index = 20
+    var host := source.get_tree().current_scene
+    if host == null:
+        host = source.get_parent()
+    host.add_child(fx)
+    fx.global_position = global_pos.round()
+    fx.animation_finished.connect(fx.queue_free)
+    fx.play(&"fx")
+
+
+static func _sprite_frames(fx_name: StringName) -> SpriteFrames:
+    if _sprite_frames_cache.has(fx_name):
+        return _sprite_frames_cache[fx_name]
+    if not SPRITE_FX.has(fx_name):
+        return null
+    var data: Array = SPRITE_FX[fx_name]
+    var sheet := load(data[0]) as Texture2D
+    if sheet == null:
+        return null
+    var frames := SpriteFrames.new()
+    frames.remove_animation(&"default")
+    frames.add_animation(&"fx")
+    frames.set_animation_loop(&"fx", false)
+    frames.set_animation_speed(&"fx", data[3])
+    var frame_size := Vector2i(data[1], data[2])
+    for i in floori(float(sheet.get_width()) / frame_size.x):
+        var atlas := AtlasTexture.new()
+        atlas.atlas = sheet
+        atlas.region = Rect2(Vector2(i * frame_size.x, 0), Vector2(frame_size))
+        frames.add_frame(&"fx", atlas)
+    _sprite_frames_cache[fx_name] = frames
+    return frames
 
 
 ## Nube oscura al aparecer un enemigo de oleada o un jefe de arena.

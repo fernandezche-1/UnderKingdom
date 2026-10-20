@@ -45,6 +45,7 @@ func _physics_process(_delta: float) -> void:
 		if body != null and body.is_in_group("player"):
 			if _try_collect(body):
 				GameManager.mark_object_consumed(self)
+				UnderkingdomCombatFX.pickup_sparkle(self)
 				queue_free()
 				return
 

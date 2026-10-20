@@ -15,3 +15,9 @@ Solo se copiaron los fondos que usan los niveles:
   armó a 224 px de alto, alineada abajo y repetida a lo ancho, sin cambiar el
   arte (cielo = sky; nubes = clouds; montes = mountains + mountains-lights;
   pueblo = town).
+
+Efectos (Legacy Collection/Assets/Explosions and Magic/), sin cambiar el arte;
+los usa scripts/fx/combat_fx.gd:
+- efectos/impacto.png         Hit/hit.png (3 cuadros de 31x32): golpe del Player
+- efectos/muerte_enemigo.png  EnemyDeath/spritesheet.png (8 cuadros de 48x48):
+                              muerte de enemigos sin animación de muerte
