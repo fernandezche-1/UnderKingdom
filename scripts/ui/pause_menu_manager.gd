@@ -10,8 +10,7 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	var key_event := event as InputEventKey
-	if key_event == null or key_event.keycode != KEY_ESCAPE or not key_event.pressed or key_event.echo:
+	if not event.is_action_pressed("pause"):
 		return
 
 	if is_instance_valid(_overlay) and _overlay.is_pause_open():

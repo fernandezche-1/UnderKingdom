@@ -250,40 +250,31 @@ func _unhandled_input(event: InputEvent) -> void:
     if dead or controls_locked:
         return
 
-    if event is InputEventMouseButton:
-        if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-            request_attack()
-        return
-
-    if not (event is InputEventKey):
-        return
-    if not event.pressed or event.echo:
-        return
-
-    match event.keycode:
-        KEY_SPACE, KEY_W, KEY_UP:
-            _jump_requested = true
-        KEY_F, KEY_Z:
-            request_attack()
-        KEY_SHIFT:
-            request_roll()
-        KEY_E:
-            if not _try_context_interaction():
-                request_ultimate()
-        KEY_C:
-            drink_potion()
-        KEY_R:
-            if enable_debug_keys:
-                respawn_now()
-        KEY_H:
-            if enable_debug_keys:
-                take_damage(0.25)
-        KEY_J:
-            if enable_debug_keys:
-                take_damage(1.0)
-        KEY_K:
-            if enable_debug_keys:
-                die()
+    if event.is_action_pressed("attack"):
+        request_attack()
+    elif event.is_action_pressed("jump"):
+        _jump_requested = true
+    elif event.is_action_pressed("roll"):
+        request_roll()
+    elif event.is_action_pressed("interact"):
+        if not _try_context_interaction():
+            request_ultimate()
+    elif event.is_action_pressed("potion"):
+        drink_potion()
+    elif event is InputEventKey and event.pressed and not event.echo:
+        match event.keycode:
+            KEY_R:
+                if enable_debug_keys:
+                    respawn_now()
+            KEY_H:
+                if enable_debug_keys:
+                    take_damage(0.25)
+            KEY_J:
+                if enable_debug_keys:
+                    take_damage(1.0)
+            KEY_K:
+                if enable_debug_keys:
+                    die()
 
 
 func _physics_process(delta: float) -> void:
@@ -699,10 +690,7 @@ func _finish_action() -> void:
 
 
 func _update_defense_state() -> void:
-    var wants_defense := (
-        Input.is_key_pressed(KEY_Q)
-        or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)
-    )
+    var wants_defense := Input.is_action_pressed("defend")
 
     if not wants_defense:
         _guard_requires_release = false
@@ -792,7 +780,7 @@ func _try_start_drop_through() -> void:
     if not is_on_floor():
         return
 
-    var wants_down := Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_DOWN)
+    var wants_down := Input.is_action_pressed("move_down")
     if not wants_down:
         return
 
@@ -839,9 +827,9 @@ func _process_climbing() -> void:
     var horizontal := _get_horizontal_input()
     var vertical := 0.0
 
-    if Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_UP):
+    if Input.is_action_pressed("move_up"):
         vertical -= 1.0
-    if Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_DOWN):
+    if Input.is_action_pressed("move_down"):
         vertical += 1.0
 
     var axis := Vector2.DOWN
@@ -900,10 +888,8 @@ func _can_climb() -> bool:
 
 func _has_climb_input() -> bool:
     return (
-        Input.is_key_pressed(KEY_W)
-        or Input.is_key_pressed(KEY_UP)
-        or Input.is_key_pressed(KEY_S)
-        or Input.is_key_pressed(KEY_DOWN)
+        Input.is_action_pressed("move_up")
+        or Input.is_action_pressed("move_down")
     )
 
 
@@ -955,8 +941,8 @@ func _process_simple_ledge_input() -> void:
     if not is_on_floor():
         return
 
-    var wants_up := Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_UP)
-    var wants_down := Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_DOWN)
+    var wants_up := Input.is_action_pressed("move_up")
+    var wants_down := Input.is_action_pressed("move_down")
 
     # SUBIR: un solo impulso físico; después actúan la gravedad y move_and_slide().
     if wants_up and _active_ledge_transition_zone.has_method("can_go_up"):
@@ -982,9 +968,9 @@ func _process_simple_ledge_input() -> void:
 
 func _get_horizontal_input() -> float:
     var direction := 0.0
-    if Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_LEFT):
+    if Input.is_action_pressed("move_left"):
         direction -= 1.0
-    if Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT):
+    if Input.is_action_pressed("move_right"):
         direction += 1.0
     return direction
 
