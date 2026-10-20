@@ -44,7 +44,7 @@ Si se vuelve a jugar tras un cambio, anotar lo que se encuentre en la sección 2
 | `tiles_cementerio` | 120 x 78 | verde | 13 Vanguardia + Capitán | 4 | Primer mundo estilo Hollow Knight, de bajada: superficie, cripta, catacumbas, sala del jefe y abismo con la puerta con llave y la salida en el fondo. Se juega desde `tiles_cementerio_combate.tscn`. Ya no es un calco de `mundo_1`. |
 | `tiles_casa` | 104 x 58 | violeta | 4 diablillos | 3 | 3 huecos de 3 piezas en pisos. Las 2 escaleras del mapa original se reemplazaron. **Fuera de la ruta:** el cementerio lleva ahora a las minas. |
 | `tiles_mineria` | 104 x 90 | madera | 4 kolbo, 4 kolbo2, 4 kolbo3 + Caballero de la Reina | 4 | Segundo mundo, con la misma estructura que el cementerio: bocamina, galerías, sala del jefe y veta ardiente con la puerta con llave y la salida en el fondo. Se juega desde `tiles_mineria_combate.tscn`. Ya no es un calco. |
-| `tiles_mazmorra` | 78 x 71 | oliva | 2 Aprendis, 2 kolbo3, 1 mino | 13 | 9 huecos, 29 pinchos en pozos sin salida y túnel de 18 piezas hasta la salida derecha. Recortado: lo de abajo era vacío. |
+| `tiles_mazmorra` | 78 x 71 | oliva | 2 Aprendis, 2 kolbo3, 1 mino, 3 esqueletos + la Reina | 13 | 9 huecos, 29 pinchos en pozos sin salida y túnel de 18 piezas hasta la salida derecha. Recortado: lo de abajo era vacío. Se juega desde `tiles_mazmorra_combate.tscn`: la Reina está en la cámara del fondo a la derecha y la puerta con llave tapa la salida (P34). |
 | `tiles_ruina` | 104 x 58 | ladrillo | 2 Aprendis, 1 kolbo3, 1 mino | 5 | 3 huecos; túnel de 4 piezas hasta la salida derecha. |
 | `tiles_profundidades` | 104 x 58 | oro | 4 diablillos | 2 | 2 huecos, lava en todo el fondo y 3 trampas de fuego. |
 | `tiles_jefe` | 104 x 58 | ladrillo | 4 diablillos | 4 | 4 huecos, lava en el fondo, 2 trampas de fuego y 1 pinchos. Es el último: no tiene salida derecha. **No tiene jefe** (ver sección 3). |
@@ -82,7 +82,7 @@ Todos tienen un checkpoint, dos cofres (jefe uno), 12 monedas, una o dos pocione
   - ~~Capitán (cementerio)~~: hecho en `tiles_cementerio_combate.tscn`, una escena que hereda del nivel generado (ver changelog, "Cementerio con tiles: primer mundo estilo Hollow Knight");
   - Caballero de la Reina, Reina y Cthulhu (casa);
   - ~~jefe de las minas~~: el Caballero de la Reina, en `tiles_mineria_combate.tscn` (ver changelog, "Minas con tiles: segundo mundo");
-  - Reina (mazmorra);
+  - ~~Reina (mazmorra)~~: en `tiles_mazmorra_combate.tscn` (ver `docs/P34_ENEMIGOS_DE_LOS_PAQUETES.md`);
   - demonslime (profundidades);
   - jefe final (jefe).
 
@@ -100,7 +100,7 @@ Todos tienen un checkpoint, dos cofres (jefe uno), 12 monedas, una o dos pocione
 
   Pasos en "Receta: integrar un paquete" (abajo).
 - [ ] **Enemigos de Gothicvania** (`Legacy Collection/Assets/Gothicvania/Characters/`): Ghost, Hell-Hound, Hell-Beast, Fire-Skull, flying-eye-demon, Ogre, Nightmare, crow, entre otros. Cada uno necesita una escena con `enemy_base.gd`, una letra en el constructor y una prueba en `arena_enemigos`.
-- [ ] **Enemigos que faltan para la progresión por profundidad** (`docs/P33_ENEMIGOS_POR_PROFUNDIDAD.md`): murciélagos para el cementerio y las minas, esqueletos para la mazmorra y la ruina. No hay sprites en el proyecto; hace falta el arte (por ejemplo, de la Legacy Collection de Gothicvania, que no está en disco).
+- [x] **Enemigos que faltan para la progresión por profundidad** (`docs/P33_ENEMIGOS_POR_PROFUNDIDAD.md`): murciélagos para el cementerio y las minas, esqueletos para la mazmorra y la ruina. Hechos con Super Grotto Escape y Gothicvania Cemetery (ver `docs/P34_ENEMIGOS_DE_LOS_PAQUETES.md`).
 - [ ] **Decorados de los paquetes:** velas, jaulas, cadenas, estandartes, vagonetas. Necesitan estar en el atlas del tileset y tener letra.
 
 ### Herramientas

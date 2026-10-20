@@ -1,3 +1,11 @@
+; TERCER MUNDO (mazmorra). La sala de la Reina es la cámara del fondo a la
+; derecha, x 54-76, filas 53-69; su única entrada es el hueco de x 60-62 en la
+; fila 52, por donde baja la escalera, y ahí va la trampilla que se cierra. La
+; puerta con llave tapa la salida derecha en la columna 76, filas 5-11.
+; Si se mueven en el PNG, mover también los nodos de tiles_mazmorra_combate.tscn.
+; La sala y la puerta viven en tiles_mazmorra_combate.tscn, que hereda de esta
+; escena: regenerarla no lo borra. Jugar el nivel desde esa.
+;
 ; NIVEL CON TILES calcado de fondos/mazmorra.png: la forma sale de las
 ; colisiones del mapa hecho a mano (constructor -- --desde-mapa) y encima se
 ; dibujaron las salidas, escaleras, objetos y decorados.

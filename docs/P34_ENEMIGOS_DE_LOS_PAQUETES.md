@@ -81,3 +81,43 @@
 - **Comprobado sin ventana:**
   - la chispa, el fogonazo del murciélago y el destello de la moneda aparecen y a los 2,5 s ya no queda ninguno;
   - el menú, Mundo 1 y el cementerio arrancan sin errores.
+
+## 4. La Reina, jefa de la mazmorra
+
+- **Escena del mundo:** `escenas/mapas/tiles_mazmorra_combate.tscn` hereda de la generada `tiles_mazmorra.tscn`, como la del cementerio y la de las minas.
+  - Las minas llevan ahora a esta escena: línea `siguiente` del `.txt` y `target_scene_path` del `.tscn`, sin regenerar.
+  - La salida izquierda de la ruina vuelve a ella de la misma forma.
+- **Sala:** la cámara del fondo a la derecha, x 54-76, filas 53-69.
+  - Su única entrada es el hueco de x 60-62 en la fila 52, por donde baja la escalera.
+  - No se dibujó ni se quitó ninguna colisión. La sala se cierra con una trampilla horizontal en ese hueco (`TrampillaEntrada`, `arena_barrier.gd`), que solo existe mientras dura el combate.
+  - Activador: el suelo de la cámara (filas 63-69).
+  - La Reina sale en el extremo más lejano al Player: (56, 69) o (74, 69).
+  - La llave cae en el centro.
+- **Puerta con llave:** `PuertaLlave` (`locked_door.gd`, llave `mazmorra_reina`) tapa la salida derecha, columna 76, filas 5-11.
+  - El punto de llegada desde la ruina queda en la columna 75, del lado de dentro.
+  - Este mundo es un calco y no baja: la salida está arriba, no en lo más hondo. Queda pendiente rehacer el trazado como en los dos primeros.
+- **El esqueleto de (68, 69)**, que quedaba dentro de la sala, pasó a (66, 51).
+- **`escenas/jefes/reina_jefe.tscn`** hereda de `enemigos/reina.tscn` (Water Priestess). Lleva 14 de vida, `BossHealthBar` "LA REINA" y `counts_as_world1_boss = false`. La Reina enemiga de los mapas viejos no cambia.
+- **Script `scripts/bosses/queen_boss.gd`** (`UnderkingdomQueenBoss`), que extiende el del Capitán.
+  - Hereda las fases, el roll, el anti spam y la Ultimate con aviso: la Reina ya tenía animaciones con esos nombres.
+  - Cambia las ventanas de golpe, medidas por el alcance del dibujo en cada cuadro:
+    - attack basic: 2-3;
+    - attack: 3-6;
+    - attack2: 2-4 y 14-17;
+    - attack rapido: 2-4, 14-17 y 20-26;
+    - ultimate: 12-31.
+  - Daño:
+    - ½ corazón con el tajo corto y la ráfaga, por golpe;
+    - ¾ con los otros dos ataques;
+    - 1½ con la Ultimate.
+  - Las animaciones de la Reina enemiga eran muy lentas para un jefe. Se aceleran solo en una copia propia de sus cuadros.
+  - Suma el tajo corto (`attack basic`) al azar de ataques.
+  - **Curación:** al entrar en fase 3 se cura 2 corazones una vez, con su animación `curacion`. Si el Player la golpea mientras se cura, la pierde.
+- **Comprobado sin ventana:**
+  - frente al Player, la Reina usa los cinco ataques, rueda, se defiende y se cura;
+  - en el mapa:
+    - la puerta con llave sigue cerrada sin llave;
+    - al bajar a la cámara se cierra la trampilla y la Reina aparece en el extremo más lejano;
+    - al vencerla se abre la trampilla y la sala queda completada;
+    - la llave cae, se recoge y abre la puerta de la salida;
+  - la mazmorra, las minas y la ruina arrancan sin errores.

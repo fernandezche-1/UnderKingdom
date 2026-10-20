@@ -3550,7 +3550,7 @@ shape = SubResource("RectangleShape2D_uk65x")
 position = Vector2(8, 576)
 collision_layer = 0
 script = ExtResource("9_l2ai8")
-target_scene_path = "res://escenas/mapas/tiles_mazmorra.tscn"
+target_scene_path = "res://escenas/mapas/tiles_mazmorra_combate.tscn"
 target_spawn_id = &"DesdeSiguiente"
 metadata/_edit_group_ = true
 

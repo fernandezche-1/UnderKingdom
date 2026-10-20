@@ -3611,7 +3611,7 @@ metadata/_edit_group_ = true
 position = Vector2(1656, 1344)
 collision_layer = 0
 script = ExtResource("11_7jyh1")
-target_scene_path = "res://escenas/mapas/tiles_mazmorra.tscn"
+target_scene_path = "res://escenas/mapas/tiles_mazmorra_combate.tscn"
 target_spawn_id = &"DesdeAnterior"
 metadata/_edit_group_ = true
 
