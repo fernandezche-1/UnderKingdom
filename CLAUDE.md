@@ -57,6 +57,7 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
 - Las animaciones del combo del Player son acumulativas: "attack 2" repite el tajo de "attack" y "attack 3" repite todo "attack 2". `ATTACK_PROFILES` en `player.gd` define en qué cuadro arranca cada etapa y sus ventanas de golpe.
 - Golpes intermedios de una ráfaga usan `take_continuous_damage_from` (sin empuje ni invulnerabilidad); el último usa `take_damage_from` (empuja).
 - Los enemigos deben estar en la capa de colisión 3 (valor 4, `collision_layer = 5`): la AttackHitbox del Player solo detecta esa capa.
+- Las habilidades del Player (roll, etapas del combo, ataque aéreo, parry, Ultimate, robo de vida, adrenalina) se desbloquean con `GameManager.unlock_ability` y se consultan con `has_ability`. Solo bloquean en una partida empezada con "Nueva partida"; al abrir un mapa directo, el Player tiene todo. Una habilidad nueva se añade a `ABILITY_DEFINITIONS`. Se dan con una reliquia (`escenas/items/reliquia_habilidad.tscn`) o con `ability_reward` de `boss_arena.gd`. Nada necesario para avanzar se vende en la tienda. Detalle en `docs/P35_DESBLOQUEO_DE_HABILIDADES.md`.
 
 ## Validar cambios
 

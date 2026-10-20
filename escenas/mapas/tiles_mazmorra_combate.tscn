@@ -50,6 +50,7 @@ encounter_id = "mazmorra_reina"
 boss_scene = ExtResource("3_reina")
 key_scene = ExtResource("4_llave")
 key_id = "mazmorra_reina"
+ability_reward = "ultimate"
 boss_message = "LA REINA"
 
 [node name="Activador" type="Area2D" parent="SistemasMapa/SalaJefe"]

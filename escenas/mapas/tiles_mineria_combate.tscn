@@ -54,6 +54,7 @@ encounter_id = "minas_caballero"
 boss_scene = ExtResource("3_caballero")
 key_scene = ExtResource("4_llave")
 key_id = "minas_caballero"
+ability_reward = "combo_3"
 boss_message = "CABALLERO DE LA REINA"
 
 [node name="Activador" type="Area2D" parent="SistemasMapa/SalaJefe"]

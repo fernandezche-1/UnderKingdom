@@ -198,10 +198,12 @@ func _update_player_info() -> void:
 	_on_health_changed(_player.current_health, _player.max_health)
 	var damage_required: float = maxf(_player.lifesteal_damage_required, 0.01)
 	var lifesteal_text: String = "Desactivado"
-	if _player.lifesteal_enabled:
+	if _player.is_lifesteal_active():
 		lifesteal_text = "%.2f de vida por cada %.2f de daño" % [_player.lifesteal_heal_amount, damage_required]
 	var ult_left: float = _player.get_ultimate_cooldown_left()
 	var ult_state: String = "Lista" if ult_left <= 0.0 else "Enfriamiento: %.1f / %.1f s" % [ult_left, _player.ultimate_cooldown]
+	if not GameManager.has_ability("ultimate"):
+		ult_state = "Sin conseguir"
 	stats_value.text = (
 		"Robo de vida: %s\nProgreso: %.2f / %.2f daño\n"
 		+ "Combo: %.2f / %.2f / %.2f daño\nVelocidad: %.0f px/s\n"

@@ -8,7 +8,7 @@ class_name UnderkingdomDevMode
 ## "Nueva partida" no los cambia.
 ##
 ## Tecla º (debajo de Esc; ` en teclado inglés): abre o cierra el panel.
-## Con el panel abierto, las teclas 1-8 o un clic activan cada opción.
+## Con el panel abierto, las teclas 1-9 o un clic activan cada opción.
 
 ## Llaves de jefe de la ruta de tiles. Añadir aquí la de cada mundo nuevo.
 const BOSS_KEY_IDS: Array[String] = ["cementerio_capitan", "minas_caballero"]
@@ -29,6 +29,7 @@ const OPTIONS: Array[Dictionary] = [
     {"text": "+%d monedas" % COINS_PER_GRANT, "action": "_grant_coins"},
     {"text": "+%d pociones" % POTIONS_PER_GRANT, "action": "_grant_potions"},
     {"text": "Dar llaves de jefe", "action": "_grant_boss_keys"},
+    {"text": "Desbloquear habilidades", "action": "_unlock_all_abilities"},
 ]
 
 var available: bool = false
@@ -121,6 +122,11 @@ func _grant_potions() -> void:
 func _grant_boss_keys() -> void:
     for key_id in BOSS_KEY_IDS:
         GameManager.grant_key(key_id)
+
+
+func _unlock_all_abilities() -> void:
+    for ability_id: String in GameManager.ABILITY_DEFINITIONS:
+        GameManager.unlock_ability(ability_id)
 
 
 func _build_ui() -> void:

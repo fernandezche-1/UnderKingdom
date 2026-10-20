@@ -14,6 +14,7 @@ signal cinematic_seen(cinematic_id: String)
 signal encounter_completed(encounter_id: String)
 signal key_changed(key_id: String, has_key: bool)
 signal upgrades_changed
+signal ability_unlocked(ability_id: String)
 
 var pending_spawn_id: StringName = &""
 var previous_scene_path: String = ""
@@ -53,6 +54,29 @@ const UPGRADE_DEFINITIONS := {
         "costs": [10, 15, 20], "base": 6.0, "step": -0.5, "unit": "segundos",
     },
 }
+
+## Habilidades del Player que se ganan jugando: reliquias del mapa
+## (UnderkingdomAbilityPickup), jefes (BossArena.ability_reward) o la tienda.
+## "hint" es la tecla o la forma de usarla; sale en el aviso al conseguirla.
+const ABILITY_DEFINITIONS := {
+    "roll": {"name": "Rodar", "hint": "Shift: esquiva y atraviesa enemigos"},
+    "combo_2": {"name": "Ráfaga", "hint": "Ataca otra vez durante el primer golpe"},
+    "combo_3": {"name": "Golpe final", "hint": "Tercer ataque seguido del combo"},
+    "air_attack": {"name": "Tajo aéreo", "hint": "Ataca en el aire"},
+    "parry": {"name": "Parry", "hint": "Cúbrete [Q] justo antes del golpe"},
+    "ultimate": {"name": "Ultimate", "hint": "E"},
+    "lifesteal": {"name": "Robo de vida", "hint": "Golpear te cura"},
+    "adrenaline": {"name": "Adrenalina", "hint": "Con media vida o menos atacas más rápido"},
+}
+## Con las que empieza una partida nueva. Las que todavía no tienen dónde
+## conseguirse (minijefe del tajo aéreo, reliquia de la adrenalina, tienda de
+## parry y robo de vida) siguen aquí hasta que se coloque su fuente.
+const STARTING_ABILITIES: Array[String] = ["air_attack", "parry", "lifesteal", "adrenaline"]
+
+## Solo una partida empezada desde "Nueva partida" exige desbloquear. Al abrir
+## un mapa directo desde el editor (o el Mundo 1 viejo) el Player tiene todo.
+var abilities_locked: bool = false
+var unlocked_abilities: Dictionary = {}
 
 ## Muerte: el mapa se recarga y el Player reaparece en el último punto de
 ## reaparición (entrada del mapa o checkpoint). Enemigos y jefes no derrotados
@@ -386,6 +410,41 @@ func has_any_key() -> bool:
     return world1_boss_key_collected or not collected_keys.is_empty()
 
 
+## Si el Player puede usar la habilidad ahora (siempre, fuera de una partida).
+func has_ability(ability_id: String) -> bool:
+    return not abilities_locked or is_ability_unlocked(ability_id)
+
+
+## Si ya se consiguió en esta partida; las reliquias lo usan para no reaparecer.
+func is_ability_unlocked(ability_id: String) -> bool:
+    return bool(unlocked_abilities.get(ability_id, false))
+
+
+func unlock_ability(ability_id: String) -> void:
+    if not ABILITY_DEFINITIONS.has(ability_id):
+        push_warning("GameManager: habilidad desconocida '%s'." % ability_id)
+        return
+    if is_ability_unlocked(ability_id):
+        return
+    unlocked_abilities[ability_id] = true
+    ability_unlocked.emit(ability_id)
+
+
+func get_ability_name(ability_id: String) -> String:
+    return String(ABILITY_DEFINITIONS.get(ability_id, {}).get("name", ability_id))
+
+
+func get_ability_hint(ability_id: String) -> String:
+    return String(ABILITY_DEFINITIONS.get(ability_id, {}).get("hint", ""))
+
+
+func reset_abilities_for_new_game() -> void:
+    abilities_locked = true
+    unlocked_abilities.clear()
+    for ability_id: String in STARTING_ABILITIES:
+        unlocked_abilities[ability_id] = true
+
+
 func reset_cinematics_for_new_game() -> void:
     cinematics_seen.clear()
 
@@ -408,6 +467,7 @@ func reset_for_new_game() -> void:
     respawn_position = Vector2.ZERO
     consumed_objects.clear()
     reset_cinematics_for_new_game()
+    reset_abilities_for_new_game()
     reset_upgrades_for_new_game()
     world1_boss_defeated_changed.emit(false)
     world1_boss_key_changed.emit(false)

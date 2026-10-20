@@ -403,11 +403,11 @@ func request_attack() -> void:
         return
 
     if _action == PlayerAction.ATTACK:
-        if _combo_step < 3:
+        if _combo_step < _max_combo_step():
             # Guardamos pulsaciones reales, no solo un booleano. Asi, si el
             # jugador pulsa dos veces durante attack 1, quedan preparados
             # attack 2 Y attack 3 en vez de perderse la tercera pulsacion.
-            var remaining_steps := maxi(3 - _combo_step, 0)
+            var remaining_steps := maxi(_max_combo_step() - _combo_step, 0)
             _combo_buffered_inputs = mini(_combo_buffered_inputs + 1, remaining_steps)
             _combo_queued = _combo_buffered_inputs > 0
             _combo_queue_left = maxf(
@@ -423,7 +423,8 @@ func request_attack() -> void:
         _leave_guard_for_action()
 
     if not is_on_floor():
-        _start_attack(&"air attack", air_attack_damage, PlayerAction.AIR_ATTACK)
+        if GameManager.has_ability("air_attack"):
+            _start_attack(&"air attack", air_attack_damage, PlayerAction.AIR_ATTACK)
         return
 
     _combo_step = 1
@@ -433,7 +434,7 @@ func request_attack() -> void:
 
 
 func request_roll() -> void:
-    if dead or _climbing or not is_on_floor():
+    if dead or _climbing or not is_on_floor() or not GameManager.has_ability("roll"):
         return
     if _action == PlayerAction.ATTACK and movement_cancels_attacks:
         _finish_action()
@@ -481,7 +482,7 @@ func _try_context_interaction() -> bool:
 
 
 func request_ultimate() -> void:
-    if dead or _climbing or not is_on_floor():
+    if dead or _climbing or not is_on_floor() or not GameManager.has_ability("ultimate"):
         return
     if _ultimate_cooldown_left > 0.0:
         return
@@ -586,7 +587,7 @@ func _update_action_state() -> void:
     # siempre que el jugador ya lo haya dejado en el buffer.
     if (
         _action == PlayerAction.ATTACK
-        and _combo_step < 3
+        and _combo_step < _max_combo_step()
         and _combo_buffered_inputs > 0
         and _can_chain_combo_early()
     ):
@@ -597,7 +598,7 @@ func _update_action_state() -> void:
         return
 
     if _action == PlayerAction.ATTACK:
-        if _combo_buffered_inputs > 0 and _combo_step < 3:
+        if _combo_buffered_inputs > 0 and _combo_step < _max_combo_step():
             _consume_combo_buffer_and_start_next()
         else:
             _finish_action()
@@ -659,12 +660,20 @@ func _last_hit_frame() -> int:
 
 
 func _consume_combo_buffer_and_start_next() -> void:
-    if _combo_buffered_inputs <= 0 or _combo_step >= 3:
+    if _combo_buffered_inputs <= 0 or _combo_step >= _max_combo_step():
         return
 
     _combo_buffered_inputs -= 1
     _combo_queued = _combo_buffered_inputs > 0
     _start_combo_step(_combo_step + 1)
+
+
+## Etapas del combo en suelo que el Player ya tiene (GameManager: combo_2,
+## combo_3). Sin la Ráfaga, el Golpe final tampoco se encadena.
+func _max_combo_step() -> int:
+    if not GameManager.has_ability("combo_2"):
+        return 1
+    return 3 if GameManager.has_ability("combo_3") else 2
 
 
 func _finish_action() -> void:
@@ -1218,7 +1227,7 @@ func _register_actual_damage_for_lifesteal(body: Node, health_before: float) -> 
 
 
 func _register_lifesteal_damage(actual_damage: float) -> void:
-    if not lifesteal_enabled or actual_damage <= 0.0 or dead:
+    if not is_lifesteal_active() or actual_damage <= 0.0 or dead:
         return
 
     # No se guarda curación mientras la vida está llena; hay que combatir
@@ -1253,11 +1262,7 @@ func _attack_speed_multiplier_for(animation_name: StringName) -> float:
     elif animation_name == &"air attack":
         multiplier *= maxf(air_attack_speed_multiplier, 1.0)
 
-    if (
-        adrenaline_enabled
-        and max_health > 0.0
-        and current_health <= max_health * adrenaline_health_ratio
-    ):
+    if is_adrenaline_active():
         if animation_name != &"attack ultimate" or adrenaline_affects_ultimate:
             multiplier *= maxf(adrenaline_attack_speed_multiplier, 1.0)
 
@@ -1267,9 +1272,14 @@ func _attack_speed_multiplier_for(animation_name: StringName) -> float:
 func is_adrenaline_active() -> bool:
     return (
         adrenaline_enabled
+        and GameManager.has_ability("adrenaline")
         and max_health > 0.0
         and current_health <= max_health * adrenaline_health_ratio
     )
+
+
+func is_lifesteal_active() -> bool:
+    return lifesteal_enabled and GameManager.has_ability("lifesteal")
 
 
 ## 0.0 = recién usada, 1.0 = lista. La usa el HUD.
@@ -1344,7 +1354,12 @@ func take_damage(
     if _action == PlayerAction.DEFEND:
         # Parry: el golpe llegó justo después de cubrirse. No gasta guardia y
         # aturde al atacante (solo golpes de un enemigo, con origen).
-        if _parry_available and _defend_elapsed <= parry_window and apply_knockback:
+        if (
+            _parry_available
+            and _defend_elapsed <= parry_window
+            and apply_knockback
+            and GameManager.has_ability("parry")
+        ):
             _perform_parry(source_global_position)
             return true
 

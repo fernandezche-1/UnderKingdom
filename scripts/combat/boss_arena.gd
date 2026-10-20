@@ -3,9 +3,10 @@ class_name UnderkingdomBossArena
 
 ## Sala de jefe: al entrar el Player en el Activador se cierran las Puertas y
 ## aparece el jefe. Al derrotarlo se abren las Puertas y los Atajos, y cae la
-## llave en PuntoLlave. El resultado queda guardado en GameManager, así que al
-## morir o volver al mapa la sala sigue abierta y el jefe no reaparece; si la
-## llave no se recogió, vuelve a estar en su sitio.
+## llave en PuntoLlave, junto con la reliquia de ability_reward si la tiene. El
+## resultado queda guardado en GameManager, así que al morir o volver al mapa
+## la sala sigue abierta y el jefe no reaparece; si la llave o la reliquia no
+## se recogieron, vuelven a estar en su sitio.
 ##
 ## Hijos esperados:
 ##   Activador (Area2D)        zona que inicia el combate
@@ -20,6 +21,9 @@ signal boss_spawned(boss: Node2D)
 signal boss_defeated
 signal encounter_completed(encounter_id: String)
 signal key_dropped(key: Node2D)
+signal ability_dropped(relic: Node2D)
+
+const ABILITY_RELIC_SCENE := preload("res://escenas/items/reliquia_habilidad.tscn")
 
 enum State { IDLE, BOSS_INTRO, BOSS, COMPLETED }
 
@@ -40,6 +44,11 @@ enum State { IDLE, BOSS_INTRO, BOSS, COMPLETED }
 ## Escena de la llave (UnderkingdomBossKeyPickup); se le asigna key_id.
 @export var key_scene: PackedScene
 @export var key_id: String = ""
+## Habilidad que da el jefe (id de GameManager.ABILITY_DEFINITIONS); cae como
+## reliquia junto a la llave. Vacío = ninguna.
+@export var ability_reward: String = ""
+## Separación de la reliquia respecto a PuntoLlave, para no taparse con la llave.
+@export var ability_offset: Vector2 = Vector2(-24, 0)
 
 @export_category("Avisos")
 @export var boss_message: String = "CAPITÁN"
@@ -72,6 +81,7 @@ func _ready() -> void:
         trigger.monitoring = false
         # Murió o salió del mapa sin recoger la llave: vuelve a estar ahí.
         call_deferred("_drop_key")
+        call_deferred("_drop_ability")
         return
 
     _set_closed(shortcuts_root, true, false)
@@ -132,6 +142,7 @@ func _complete() -> void:
     _set_closed(shortcuts_root, false)
     _show_notice(victory_message)
     _drop_key()
+    _drop_ability()
     encounter_completed.emit(encounter_id)
 
 
@@ -142,6 +153,15 @@ func _drop_key() -> void:
     var key := _spawn_at(key_scene, key_position, {"key_id": key_id})
     if key != null:
         key_dropped.emit(key)
+
+
+func _drop_ability() -> void:
+    if ability_reward.is_empty() or GameManager.is_ability_unlocked(ability_reward):
+        return
+    var base_position := key_point.global_position if key_point != null else global_position
+    var relic := _spawn_at(ABILITY_RELIC_SCENE, base_position + ability_offset, {"ability_id": ability_reward})
+    if relic != null:
+        ability_dropped.emit(relic)
 
 
 func _spawn_at(scene: PackedScene, world_position: Vector2, overrides: Dictionary[String, Variant] = {}) -> Node2D:
