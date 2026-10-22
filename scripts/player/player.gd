@@ -401,22 +401,14 @@ func _update_cinematic_animation() -> void:
 func request_attack() -> void:
     if dead or _climbing:
         return
-
-    if GameManager.soul_fragmentation_active:
-        if _action == PlayerAction.ATTACK:
-            return
-        if _action not in [PlayerAction.NORMAL, PlayerAction.DEFEND] or not is_on_floor():
-            return
-        if _action == PlayerAction.DEFEND:
-            _leave_guard_for_action()
-        _combo_step = 1
-        _combo_queued = false
-        _combo_buffered_inputs = 0
-        _start_attack(&"attack", attack_1_damage, PlayerAction.ATTACK)
+    if not GameManager.is_skill_unlocked(&"attack_1"):
         return
 
     if _action == PlayerAction.ATTACK:
         if _combo_step < 3:
+            var next_skill: StringName = &"attack_2" if _combo_step == 1 else &"attack_3"
+            if not GameManager.is_skill_unlocked(next_skill):
+                return
             # Guardamos pulsaciones reales, no solo un booleano. Asi, si el
             # jugador pulsa dos veces durante attack 1, quedan preparados
             # attack 2 Y attack 3 en vez de perderse la tercera pulsacion.
@@ -436,6 +428,8 @@ func request_attack() -> void:
         _leave_guard_for_action()
 
     if not is_on_floor():
+        if not GameManager.is_skill_unlocked(&"air_attack"):
+            return
         _start_attack(&"air attack", air_attack_damage, PlayerAction.AIR_ATTACK)
         return
 
@@ -496,7 +490,7 @@ func _try_context_interaction() -> bool:
 func request_ultimate() -> void:
     if dead or _climbing or not is_on_floor():
         return
-    if GameManager.soul_fragmentation_active:
+    if not GameManager.is_skill_unlocked(&"ultimate"):
         return
     if _ultimate_cooldown_left > 0.0:
         return
@@ -538,6 +532,10 @@ func _start_attack(animation_name: StringName, damage: float, action_type: Playe
 
 
 func _start_combo_step(step: int) -> void:
+    var required_skill: StringName = &"attack_2" if step == 2 else &"attack_3"
+    if not GameManager.is_skill_unlocked(required_skill):
+        _finish_action()
+        return
     _combo_step = step
     _combo_queued = _combo_buffered_inputs > 0
     _combo_queue_left = 0.0

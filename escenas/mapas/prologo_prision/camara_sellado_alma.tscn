@@ -1161,7 +1161,7 @@ end_cap_mode = 2
 [node name="SalidaPrision" parent="." instance=ExtResource("6_exit")]
 position = Vector2(996, 320)
 enabled = false
-target_scene_path = "res://escenas/mapas/mundo_1.tscn"
+target_scene_path = "res://escenas/mapas/tiles_cementerio_combate.tscn"
 target_spawn_id = &"SpawnInicio"
 require_interaction = true
 prompt_text = "E - ESCAPAR"

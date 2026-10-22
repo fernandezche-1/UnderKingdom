@@ -19,11 +19,16 @@ const COLOR_PRESSED := Color(0.76, 0.63, 0.43)
 @onready var stats_page: Control = $Interfaz/PaginaEstadisticas
 @onready var keys_page: Control = $Interfaz/PaginaLlaves
 @onready var upgrades_page: Control = $Interfaz/PaginaMejoras
+@onready var skills_page: Control = $Interfaz/PaginaHabilidades
 @onready var health_bar: ProgressBar = $Interfaz/PaginaEstadisticas/BarraVida
 @onready var health_value: Label = $Interfaz/PaginaEstadisticas/ValorVida
 @onready var stats_value: Label = $Interfaz/PaginaEstadisticas/StatsScroll/Estadisticas
 @onready var keys_value: Label = $Interfaz/PaginaLlaves/ListaLlaves/EstadoLlaves
 @onready var coins_value: Label = $Interfaz/PaginaMejoras/MonedasMejoras
+@onready var soul_status: Label = $Interfaz/PaginaHabilidades/EstadoAlma
+@onready var skill_info: Label = $Interfaz/PaginaHabilidades/DetalleHabilidad
+
+var _selected_skill: StringName = &"attack_1"
 
 var _player: Node
 var _options_open := false
@@ -42,8 +47,10 @@ func _ready() -> void:
 	_refresh_options()
 	GameManager.coins_changed.connect(_on_coins_changed)
 	GameManager.upgrades_changed.connect(_refresh_upgrades)
+	GameManager.skills_changed.connect(_refresh_skills)
 	_on_coins_changed(GameManager.coins)
 	_refresh_upgrades()
+	_refresh_skills()
 	_refresh_keys()
 
 
@@ -83,14 +90,21 @@ func _apply_button_styles() -> void:
 		$Interfaz/Pestanas/TabEstadisticas,
 		$Interfaz/Pestanas/TabLlaves,
 		$Interfaz/Pestanas/TabMejoras,
+		$Interfaz/Pestanas/TabHabilidades,
 		$Interfaz/BotonesPausa/Reanudar,
 		$Interfaz/BotonesPausa/Opciones,
 		$Interfaz/BotonesPausa/MenuPrincipal,
+		$Interfaz/BotonesPausa/Guardar,
 		$Interfaz/BotonesPausa/Salir,
 		$Interfaz/ControlesOpciones/Volver,
 		$Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/VidaMejora/VidaComprar,
 		$Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/RoboMejora/RoboComprar,
 		$Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/UltimateMejora/UltimateComprar,
+		$Interfaz/PaginaHabilidades/HabilidadesScroll/ListaHabilidades/Ataque1,
+		$Interfaz/PaginaHabilidades/HabilidadesScroll/ListaHabilidades/Ataque2,
+		$Interfaz/PaginaHabilidades/HabilidadesScroll/ListaHabilidades/Ataque3,
+		$Interfaz/PaginaHabilidades/HabilidadesScroll/ListaHabilidades/AtaqueAereo,
+		$Interfaz/PaginaHabilidades/HabilidadesScroll/ListaHabilidades/LlamaAncestral,
 	]
 	for button in buttons:
 		button.add_theme_font_size_override("font_size", 8)
@@ -109,6 +123,13 @@ func _apply_button_styles() -> void:
 		$Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/VidaMejora/VidaInfo,
 		$Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/RoboMejora/RoboInfo,
 		$Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/UltimateMejora/UltimateInfo,
+		$Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/FuerzaInfo,
+		$Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/ResistenciaInfo,
+		$Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/LlamaInfo,
+		$Interfaz/PaginaHabilidades/NombrePersonaje,
+		$Interfaz/PaginaHabilidades/EstadoAlma,
+		$Interfaz/PaginaHabilidades/DetalleHabilidad,
+		$Interfaz/PaginaHabilidades/GuiaFragmentos,
 	]:
 		label.add_theme_font_size_override("font_size", 8)
 		label.add_theme_color_override("font_color", Color(0.94, 0.88, 0.75))
@@ -143,9 +164,16 @@ func _connect_controls() -> void:
 	$Interfaz/Pestanas/TabEstadisticas.pressed.connect(_on_stats_tab_pressed)
 	$Interfaz/Pestanas/TabLlaves.pressed.connect(_on_keys_tab_pressed)
 	$Interfaz/Pestanas/TabMejoras.pressed.connect(_on_upgrades_tab_pressed)
+	$Interfaz/Pestanas/TabHabilidades.pressed.connect(_on_skills_tab_pressed)
+	$Interfaz/PaginaHabilidades/HabilidadesScroll/ListaHabilidades/Ataque1.pressed.connect(_on_skill_selected.bind(&"attack_1"))
+	$Interfaz/PaginaHabilidades/HabilidadesScroll/ListaHabilidades/Ataque2.pressed.connect(_on_skill_selected.bind(&"attack_2"))
+	$Interfaz/PaginaHabilidades/HabilidadesScroll/ListaHabilidades/Ataque3.pressed.connect(_on_skill_selected.bind(&"attack_3"))
+	$Interfaz/PaginaHabilidades/HabilidadesScroll/ListaHabilidades/AtaqueAereo.pressed.connect(_on_skill_selected.bind(&"air_attack"))
+	$Interfaz/PaginaHabilidades/HabilidadesScroll/ListaHabilidades/LlamaAncestral.pressed.connect(_on_skill_selected.bind(&"ultimate"))
 	$Interfaz/BotonesPausa/Reanudar.pressed.connect(Callable(pause_manager, "resume_game"))
 	$Interfaz/BotonesPausa/Opciones.pressed.connect(show_options)
 	$Interfaz/BotonesPausa/MenuPrincipal.pressed.connect(Callable(pause_manager, "return_to_main_menu"))
+	$Interfaz/BotonesPausa/Guardar.pressed.connect(_save_from_pause)
 	$Interfaz/BotonesPausa/Salir.pressed.connect(Callable(pause_manager, "quit_game"))
 	$Interfaz/ControlesOpciones/Volver.pressed.connect(show_pause_menu)
 	$Interfaz/ControlesOpciones/Volumen.value_changed.connect(_on_master_volume_changed)
@@ -187,6 +215,9 @@ func set_player(player: Node) -> void:
 
 
 func _update_player_info() -> void:
+	$Interfaz/PaginaEstadisticas/NombrePersonaje.text = GameManager.get_player_display_name()
+	$Interfaz/PaginaHabilidades/NombrePersonaje.text = GameManager.get_player_display_name()
+	$Interfaz/BotonesPausa/Guardar.disabled = not GameManager.has_active_save_slot()
 	if not is_instance_valid(_player):
 		return
 	var current := float(_player.get("current_health"))
@@ -211,6 +242,17 @@ func _update_player_info() -> void:
 		float(_player.get("attack_3_damage")),
 		float(_player.get("move_speed")), ult_state,
 	]
+
+
+func _save_from_pause() -> void:
+	if GameManager.save_active_game({}, _player):
+		$Interfaz/BotonesPausa/Guardar.text = "Partida guardada"
+	else:
+		$Interfaz/BotonesPausa/Guardar.text = "No se pudo guardar"
+		$Interfaz/BotonesPausa/Guardar.tooltip_text = GameManager.last_save_error
+	await get_tree().create_timer(1.3).timeout
+	if is_instance_valid(self):
+		$Interfaz/BotonesPausa/Guardar.text = "Guardar partida"
 
 
 func _on_health_changed(current: float, maximum: float) -> void:
@@ -242,6 +284,9 @@ func _refresh_upgrades() -> void:
 	_update_upgrade_row("max_health", "Vida máxima", "corazones", "VidaComprar", "VidaInfo")
 	_update_upgrade_row("lifesteal", "Robo de vida por cada 2 daño", "vida", "RoboComprar", "RoboInfo")
 	_update_upgrade_row("ultimate_cooldown", "Cooldown de Ultimate", "s", "UltimateComprar", "UltimateInfo")
+	$Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/FuerzaInfo.text = "Fuerza: el daño existe por ataque; no hay mejora funcional."
+	$Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/ResistenciaInfo.text = "Resistencia: hay reducción al bloquear; no hay mejora funcional."
+	$Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/LlamaInfo.text = "Llama Ancestral: habilidad bloqueada; mejora de poder no implementada."
 
 
 func _update_upgrade_row(upgrade_id: String, label: String, unit: String, button_name: String, info_name: String) -> void:
@@ -256,9 +301,11 @@ func _update_upgrade_row(upgrade_id: String, label: String, unit: String, button
 		button.disabled = true
 		return
 	var next_value := _format_upgrade_value(upgrade_id, float(info.next_value))
-	info_label.text = "%s\nNivel %d/%d · %s → %s %s" % [label, info.level, info.max_level, current_value, next_value, unit]
-	button.text = "Mejorar · %d monedas" % int(info.cost)
-	button.disabled = GameManager.coins < int(info.cost)
+	var skill_locked := upgrade_id == "ultimate_cooldown" and not GameManager.is_skill_unlocked(&"ultimate")
+	var availability := "Bloqueada hasta recuperar la habilidad" if skill_locked else "Mejora disponible"
+	info_label.text = "%s\nNivel %d/%d · %s → %s %s\n%s" % [label, info.level, info.max_level, current_value, next_value, unit, availability]
+	button.text = "Habilidad bloqueada" if skill_locked else "Mejorar · %d monedas" % int(info.cost)
+	button.disabled = skill_locked or GameManager.coins < int(info.cost)
 
 
 func _row_container(button_name: String) -> String:
@@ -306,18 +353,58 @@ func _on_upgrades_tab_pressed() -> void:
 	_show_tab("upgrades")
 
 
+func _on_skills_tab_pressed() -> void:
+	_show_tab("skills")
+
+
+func _refresh_skills() -> void:
+	soul_status.text = "ALMA: FRAGMENTADA" if GameManager.soul_fragmentation_active else "ALMA: RESTAURADA"
+	var buttons := {
+		&"attack_1": $Interfaz/PaginaHabilidades/HabilidadesScroll/ListaHabilidades/Ataque1 as Button,
+		&"attack_2": $Interfaz/PaginaHabilidades/HabilidadesScroll/ListaHabilidades/Ataque2 as Button,
+		&"attack_3": $Interfaz/PaginaHabilidades/HabilidadesScroll/ListaHabilidades/Ataque3 as Button,
+		&"air_attack": $Interfaz/PaginaHabilidades/HabilidadesScroll/ListaHabilidades/AtaqueAereo as Button,
+		&"ultimate": $Interfaz/PaginaHabilidades/HabilidadesScroll/ListaHabilidades/LlamaAncestral as Button,
+	}
+	for skill_id in buttons:
+		var info := GameManager.get_skill_info(skill_id)
+		var button: Button = buttons[skill_id]
+		button.text = "%s  [%s]" % [info.name, "DISPONIBLE" if info.unlocked else "BLOQUEADA"]
+		button.tooltip_text = String(info.description)
+	_update_selected_skill()
+
+
+func _on_skill_selected(skill_id: StringName) -> void:
+	_selected_skill = skill_id
+	_update_selected_skill()
+
+
+func _update_selected_skill() -> void:
+	var info := GameManager.get_skill_info(_selected_skill)
+	if info.is_empty():
+		return
+	if bool(info.unlocked):
+		skill_info.text = "%s\nDISPONIBLE\n%s" % [info.name, info.description]
+	else:
+		skill_info.text = "%s\nBLOQUEADA\nTu alma está fragmentada. Debes recuperar tu poder ancestral para utilizar esta habilidad." % info.name
+
+
 func _show_tab(tab: String) -> void:
 	stats_page.visible = tab == "stats"
 	keys_page.visible = tab == "keys"
 	upgrades_page.visible = tab == "upgrades"
+	skills_page.visible = tab == "skills"
 	if tab == "keys":
 		_refresh_keys()
 	elif tab == "upgrades":
 		_refresh_upgrades()
+	elif tab == "skills":
+		_refresh_skills()
 	match tab:
 		"stats": $Interfaz/Pestanas/TabEstadisticas.grab_focus()
 		"keys": $Interfaz/Pestanas/TabLlaves.grab_focus()
 		"upgrades": $Interfaz/Pestanas/TabMejoras.grab_focus()
+		"skills": $Interfaz/Pestanas/TabHabilidades.grab_focus()
 
 
 func show_options() -> void:

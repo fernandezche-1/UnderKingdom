@@ -101,7 +101,14 @@ func _advance() -> void:
 	var line: Dictionary = _lines[_index]
 	var speaker_id := String(line.get("speaker_id", ""))
 	var emotion := String(line.get("expression", "neutral"))
-	speaker_label.text = String(line.get("name", ""))
+	var displayed_name := String(line.get("name", ""))
+	if speaker_id == "player":
+		var thought_suffix := ""
+		var suffix_start := displayed_name.find("(")
+		if suffix_start >= 0:
+			thought_suffix = " " + displayed_name.substr(suffix_start)
+		displayed_name = GameManager.get_player_display_name() + thought_suffix
+	speaker_label.text = displayed_name
 	dialogue_label.text = String(line.get("text", ""))
 	continue_label.text = "E  ▶"
 	_pause_serial += 1

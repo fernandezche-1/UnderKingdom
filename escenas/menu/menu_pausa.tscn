@@ -100,6 +100,11 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Mejoras"
 
+[node name="TabHabilidades" type="Button" parent="Interfaz/Pestanas"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Poderes"
+
 [node name="PaginaEstadisticas" type="Control" parent="Interfaz"]
 layout_mode = 0
 offset_left = 15.0
@@ -259,6 +264,101 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Mejorar"
 
+[node name="FuerzaInfo" type="Label" parent="Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras"]
+custom_minimum_size = Vector2(202, 20)
+layout_mode = 2
+text = "Fuerza: no implementada como mejora funcional."
+autowrap_mode = 2
+
+[node name="ResistenciaInfo" type="Label" parent="Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras"]
+custom_minimum_size = Vector2(202, 20)
+layout_mode = 2
+text = "Resistencia: no implementada como mejora funcional."
+autowrap_mode = 2
+
+[node name="LlamaInfo" type="Label" parent="Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras"]
+custom_minimum_size = Vector2(202, 28)
+layout_mode = 2
+text = "Poder de la Llama Ancestral: bloqueado; mejora no implementada."
+autowrap_mode = 2
+
+[node name="PaginaHabilidades" type="Control" parent="Interfaz"]
+visible = false
+layout_mode = 0
+offset_left = 15.0
+offset_top = 61.0
+offset_right = 231.0
+offset_bottom = 255.0
+
+[node name="NombrePersonaje" type="Label" parent="Interfaz/PaginaHabilidades"]
+layout_mode = 0
+offset_right = 211.0
+offset_bottom = 15.0
+text = "GUERRERO DE LA LLAMA ANCESTRAL"
+horizontal_alignment = 1
+
+[node name="EstadoAlma" type="Label" parent="Interfaz/PaginaHabilidades"]
+layout_mode = 0
+offset_top = 16.0
+offset_right = 211.0
+offset_bottom = 30.0
+text = "ALMA: FRAGMENTADA"
+horizontal_alignment = 1
+
+[node name="HabilidadesScroll" type="ScrollContainer" parent="Interfaz/PaginaHabilidades"]
+layout_mode = 0
+offset_top = 32.0
+offset_right = 211.0
+offset_bottom = 125.0
+horizontal_scroll_mode = 0
+
+[node name="ListaHabilidades" type="VBoxContainer" parent="Interfaz/PaginaHabilidades/HabilidadesScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+
+[node name="Ataque1" type="Button" parent="Interfaz/PaginaHabilidades/HabilidadesScroll/ListaHabilidades"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Ataque básico 1"
+
+[node name="Ataque2" type="Button" parent="Interfaz/PaginaHabilidades/HabilidadesScroll/ListaHabilidades"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Ataque básico 2"
+
+[node name="Ataque3" type="Button" parent="Interfaz/PaginaHabilidades/HabilidadesScroll/ListaHabilidades"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Ataque básico 3"
+
+[node name="AtaqueAereo" type="Button" parent="Interfaz/PaginaHabilidades/HabilidadesScroll/ListaHabilidades"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Ataque aéreo"
+
+[node name="LlamaAncestral" type="Button" parent="Interfaz/PaginaHabilidades/HabilidadesScroll/ListaHabilidades"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Llama Ancestral"
+
+[node name="DetalleHabilidad" type="Label" parent="Interfaz/PaginaHabilidades"]
+custom_minimum_size = Vector2(211, 40)
+layout_mode = 0
+offset_top = 128.0
+offset_right = 211.0
+offset_bottom = 174.0
+text = "Información de habilidad"
+autowrap_mode = 2
+
+[node name="GuiaFragmentos" type="Label" parent="Interfaz/PaginaHabilidades"]
+layout_mode = 0
+offset_top = 176.0
+offset_right = 211.0
+offset_bottom = 193.0
+text = "Recupera fragmentos mediante la historia para devolver tus poderes."
+autowrap_mode = 2
+
 [node name="TituloMenu" type="Label" parent="Interfaz"]
 layout_mode = 0
 offset_left = 252.0
@@ -274,7 +374,7 @@ layout_mode = 0
 offset_left = 262.0
 offset_top = 56.0
 offset_right = 452.0
-offset_bottom = 190.0
+offset_bottom = 225.0
 theme_override_constants/separation = 5
 
 [node name="Reanudar" type="Button" parent="Interfaz/BotonesPausa"]
@@ -294,6 +394,12 @@ layout_mode = 2
 size_flags_horizontal = 3
 custom_minimum_size = Vector2(0, 28)
 text = "Menú principal"
+
+[node name="Guardar" type="Button" parent="Interfaz/BotonesPausa"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 28)
+text = "Guardar partida"
 
 [node name="Salir" type="Button" parent="Interfaz/BotonesPausa"]
 layout_mode = 2

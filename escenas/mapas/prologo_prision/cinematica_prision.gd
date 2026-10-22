@@ -58,9 +58,15 @@ func _ready() -> void:
 	_build_lower_corridor()
 	if not _resolve_nodes():
 		return
-	if get_tree().get_meta(ONCE_KEY, false):
+	if get_tree().get_meta(ONCE_KEY, false) or GameManager.has_seen_cinematic(GameManager.PRISON_CINEMATIC_ID):
 		_restore_completed_scene()
+		var saved_state := GameManager.consume_pending_save_restore(get_tree().current_scene.scene_file_path)
+		if not saved_state.is_empty():
+			GameManager.restore_saved_player(prisoner, saved_state, true)
 		return
+	var pending_state := GameManager.consume_pending_save_restore(get_tree().current_scene.scene_file_path)
+	if not pending_state.is_empty():
+		GameManager.restore_saved_player(prisoner, pending_state, false)
 	_prepare_scene()
 	call_deferred("_run_cinematic")
 
@@ -224,6 +230,8 @@ func _transition_to_player() -> void:
 	var camera_follow := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	camera_follow.tween_property(_player_camera, "position", Vector2(0.0, 16.0), 0.9)
 	get_tree().set_meta(ONCE_KEY, true)
+	GameManager.mark_cinematic_seen(GameManager.PRISON_CINEMATIC_ID)
+	GameManager.request_autosave({"scene_path": GameManager.PRISON_SCENE_PATH, "spawn_id": "PrisonStart", "position": prisoner.global_position})
 	if is_instance_valid(_dialogue):
 		_dialogue.queue_free()
 
