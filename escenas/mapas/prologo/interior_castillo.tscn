@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://bywoxmwtmef1r"]
+[gd_scene load_steps=11 format=4 uid="uid://bywoxmwtmef1r"]
 
 [ext_resource type="TileSet" uid="uid://dtycv5j43bwjv" path="res://escenas/mapas/prologo/tileset_dark_castle.tres" id="1_tileset"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/spawn_point.tscn" id="2_spawn"]
@@ -9,9 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://broyod3l3wymd" path="res://prueba/dungeon_sidescroller-Raou/spr_torch.png" id="7_torch"]
 [ext_resource type="Texture2D" uid="uid://c07ov8a036g6h" path="res://prueba/dungeon_sidescroller-Raou/Tilesetv3.png" id="8_raou"]
 [ext_resource type="Script" uid="uid://bkvqx03fc60f2" path="res://scripts/camera/map_bounds.gd" id="9_bounds"]
-
-[sub_resource type="RectangleShape2D" id="ExitShape"]
-size = Vector2(24, 72)
+[ext_resource type="PackedScene" path="res://escenas/objetos/coin_pickup.tscn" id="10_coin"]
 
 [node name="InteriorCastillo" type="Node2D" unique_id=1211009787]
 script = ExtResource("3_spawn_controller")
@@ -245,11 +243,23 @@ region_rect = Rect2(192, 432, 48, 64)
 
 [node name="SalidaCementerio" parent="." unique_id=84408604 instance=ExtResource("4_transition")]
 position = Vector2(1120, 209)
-target_scene_path = "res://escenas/mapas/tiles_cementerio_combate.tscn"
+target_scene_path = "res://escenas/mapas/prologo/castillo_oscuro.tscn"
 trigger_delay = 0.2
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="SalidaCementerio" unique_id=750346518]
-shape = SubResource("ExitShape")
+[node name="MonedaSalaTrono" parent="." instance=ExtResource("10_coin")]
+position = Vector2(200, 246)
+
+[node name="MonedaGaleriaOeste" parent="." instance=ExtResource("10_coin")]
+position = Vector2(420, 216)
+
+[node name="MonedaGaleriaCentral" parent="." instance=ExtResource("10_coin")]
+position = Vector2(560, 192)
+
+[node name="MonedaGaleriaEste" parent="." instance=ExtResource("10_coin")]
+position = Vector2(780, 214)
+
+[node name="MonedaPuerta" parent="." instance=ExtResource("10_coin")]
+position = Vector2(1030, 246)
 
 [node name="MapBounds" type="Node2D" parent="." unique_id=1483249163]
 script = ExtResource("9_bounds")

@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://crgen4tbgq8y1" path="res://escenas/player.tscn" id="4_mx85g"]
 [ext_resource type="Script" uid="uid://b08k5445s8jqv" path="res://escenas/mapas/prologo_prision/cinematica_prision.gd" id="5_cinematic"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/map_transition.tscn" id="6_exit"]
+[ext_resource type="Texture2D" uid="uid://wwbhrvybsgy8" path="res://111.png" id="11_2ng17"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_je6g5"]
 texture = ExtResource("2_b3x2g")
@@ -863,6 +864,35 @@ size = Vector2(1024, 16)
 atlas = ExtResource("1_atlas")
 region = Rect2(0, 192, 112, 16)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_je6g5"]
+atlas = ExtResource("11_2ng17")
+region = Rect2(0, 0, 21, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x1ish"]
+atlas = ExtResource("11_2ng17")
+region = Rect2(21, 0, 21, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ywjvd"]
+atlas = ExtResource("11_2ng17")
+region = Rect2(42, 0, 21, 22)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2h10h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_je6g5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x1ish")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ywjvd")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="CamaraSelladoAlma" type="Node2D" unique_id=326591430]
 modulate = Color(0.78, 0.84, 1, 1)
 script = ExtResource("5_cinematic")
@@ -1045,36 +1075,6 @@ polygon = PackedVector2Array(46.67, -50.67, 49.67, -46.67, 46.67, -42.67, 43.67,
 [node name="Antorchas" type="Node2D" parent="." unique_id=220647071]
 z_index = 2
 
-[node name="AntorchaIzquierda" type="Node2D" parent="Antorchas" unique_id=1795478851]
-position = Vector2(176, 208)
-
-[node name="Soporte" type="Polygon2D" parent="Antorchas/AntorchaIzquierda" unique_id=412009689]
-color = Color(0.22, 0.25, 0.34, 1)
-polygon = PackedVector2Array(-5, 2, 5, 2, 5, 18, 10, 23, -10, 23, -5, 18)
-
-[node name="Llama" type="Polygon2D" parent="Antorchas/AntorchaIzquierda" unique_id=1358377950]
-color = Color(0.9, 0.42, 0.12, 0.95)
-polygon = PackedVector2Array(0, -18, 6, -8, 5, 0, 0, 5, -5, 0, -6, -8)
-
-[node name="Nucleo" type="Polygon2D" parent="Antorchas/AntorchaIzquierda" unique_id=841805264]
-color = Color(1, 0.78, 0.35, 1)
-polygon = PackedVector2Array(0, -11, 2, -5, 0, 1, -2, -5)
-
-[node name="AntorchaDerecha" type="Node2D" parent="Antorchas" unique_id=1690831426]
-position = Vector2(848, 208)
-
-[node name="Soporte" type="Polygon2D" parent="Antorchas/AntorchaDerecha" unique_id=319065549]
-color = Color(0.22, 0.25, 0.34, 1)
-polygon = PackedVector2Array(-5, 2, 5, 2, 5, 18, 10, 23, -10, 23, -5, 18)
-
-[node name="Llama" type="Polygon2D" parent="Antorchas/AntorchaDerecha" unique_id=1635365348]
-color = Color(0.9, 0.42, 0.12, 0.95)
-polygon = PackedVector2Array(0, -18, 6, -8, 5, 0, 0, 5, -5, 0, -6, -8)
-
-[node name="Nucleo" type="Polygon2D" parent="Antorchas/AntorchaDerecha" unique_id=1431415248]
-color = Color(1, 0.78, 0.35, 1)
-polygon = PackedVector2Array(0, -11, 2, -5, 0, 1, -2, -5)
-
 [node name="ColisionParedes" type="StaticBody2D" parent="." unique_id=1588697023]
 collision_mask = 0
 
@@ -1171,3 +1171,15 @@ theme_override_colors/font_color = Color(0.92, 0.9, 0.8, 1)
 theme_override_font_sizes/font_size = 8
 text = "E - ESCAPAR"
 horizontal_alignment = 1
+
+[node name="antorhca" type="AnimatedSprite2D" parent="." unique_id=1766302794]
+position = Vector2(178.62498, 210.5)
+scale = Vector2(2.035714, 1.7727267)
+sprite_frames = SubResource("SpriteFrames_2h10h")
+frame_progress = 0.8287247
+
+[node name="antorhca2" type="AnimatedSprite2D" parent="." unique_id=651040089]
+position = Vector2(810, 219.00002)
+scale = Vector2(2.0720656, 1.9803706)
+sprite_frames = SubResource("SpriteFrames_2h10h")
+frame_progress = 0.21527736
