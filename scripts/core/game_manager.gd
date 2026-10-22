@@ -261,6 +261,43 @@ func get_save_slot_info(slot_id: int) -> Dictionary:
 	}
 
 
+func delete_save_slot(slot_id: int) -> bool:
+	if slot_id < 1 or slot_id > SAVE_SLOT_COUNT:
+		last_save_error = "Ranura invalida."
+		return false
+	var save_path := _save_slot_path(slot_id)
+	var temp_path := save_path + ".tmp"
+	var files_to_remove: Array[String] = []
+	var directory := DirAccess.open(SAVE_DIRECTORY)
+	if directory != null:
+		var backup_prefix := "slot_%d_" % slot_id
+		for file_name in directory.get_files():
+			if not file_name.begins_with(backup_prefix) or not file_name.ends_with(".bak"):
+				continue
+			var components := file_name.trim_prefix(backup_prefix).trim_suffix(".bak").split("_")
+			if components.size() == 2 and components[0].is_valid_int() and components[1].is_valid_int():
+				files_to_remove.append("%s/%s" % [SAVE_DIRECTORY, file_name])
+	if FileAccess.file_exists(temp_path):
+		files_to_remove.append(temp_path)
+	for path in files_to_remove:
+		var error := DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
+		if error != OK:
+			last_save_error = "No se pudo eliminar un archivo de respaldo (%d)." % error
+			return false
+	if FileAccess.file_exists(save_path):
+		var error := DirAccess.remove_absolute(ProjectSettings.globalize_path(save_path))
+		if error != OK:
+			last_save_error = "No se pudo eliminar la partida (%d)." % error
+			return false
+	if active_save_slot == slot_id:
+		cancel_pending_autosave()
+		active_save_slot = 0
+		pending_save_restore.clear()
+	last_save_error = ""
+	save_slots_changed.emit()
+	return true
+
+
 func region_name_for_scene(scene_path: String) -> String:
 	if scene_path.contains("prologo_prision"):
 		return "Cámara del Sellado"

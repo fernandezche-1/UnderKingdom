@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+UserSettings="*res://scripts/core/user_settings.gd"
 GameManager="*res://scripts/core/game_manager.gd"
 PauseMenu="*res://scripts/ui/pause_menu_manager.gd"
 

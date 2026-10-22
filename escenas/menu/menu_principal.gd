@@ -13,6 +13,7 @@ const COLOR_DISABLED := Color(0.48, 0.44, 0.38)
 
 var _main_buttons: VBoxContainer
 var _continue_button: Button
+var _delete_button: Button
 var _options_panel: VBoxContainer
 var _master_bus := -1
 var _profile_panel: PanelContainer
@@ -23,6 +24,10 @@ var _profile_slots: VBoxContainer
 var _profile_mode := "new"
 var _pending_slot := 0
 var _overwrite_dialog: ConfirmationDialog
+var _delete_confirmation: PanelContainer
+var _delete_confirmation_message: Label
+var _delete_cancel_button: Button
+var _pending_delete_slot := 0
 
 
 func _ready() -> void:
@@ -34,6 +39,7 @@ func _ready() -> void:
 	_build_main_menu()
 	_build_options()
 	_build_profile_panel()
+	_build_delete_confirmation()
 	_show_main_menu()
 
 
@@ -105,8 +111,8 @@ func _build_main_menu() -> void:
 	_main_buttons.anchor_bottom = 0.0
 	_main_buttons.offset_left = -146.0
 	_main_buttons.offset_right = -28.0
-	_main_buttons.offset_top = 91.0
-	_main_buttons.offset_bottom = 213.0
+	_main_buttons.offset_top = 83.0
+	_main_buttons.offset_bottom = 224.0
 	_main_buttons.add_theme_constant_override("separation", 4)
 	add_child(_main_buttons)
 
@@ -119,6 +125,11 @@ func _build_main_menu() -> void:
 	_continue_button.name = "Continuar"
 	_continue_button.pressed.connect(_show_continue_profiles)
 	_main_buttons.add_child(_continue_button)
+
+	_delete_button = _make_button("Eliminar partida")
+	_delete_button.name = "EliminarPartida"
+	_delete_button.pressed.connect(_show_delete_profiles)
+	_main_buttons.add_child(_delete_button)
 
 	var options := _make_button("Opciones")
 	options.name = "Opciones"
@@ -171,7 +182,7 @@ func _build_options() -> void:
 	fullscreen.text = "Pantalla completa"
 	fullscreen.add_theme_font_size_override("font_size", 9)
 	fullscreen.add_theme_color_override("font_color", COLOR_TEXT)
-	fullscreen.button_pressed = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
+	fullscreen.button_pressed = UserSettings.is_fullscreen()
 	fullscreen.toggled.connect(_on_fullscreen_toggled)
 	_options_panel.add_child(fullscreen)
 
@@ -231,6 +242,51 @@ func _build_profile_panel() -> void:
 	add_child(_overwrite_dialog)
 
 
+func _build_delete_confirmation() -> void:
+	_delete_confirmation = PanelContainer.new()
+	_delete_confirmation.name = "ConfirmarEliminarPartida"
+	_delete_confirmation.visible = false
+	_delete_confirmation.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	_delete_confirmation.offset_left = -155.0
+	_delete_confirmation.offset_top = -55.0
+	_delete_confirmation.offset_right = 155.0
+	_delete_confirmation.offset_bottom = 55.0
+	var panel_style := StyleBoxFlat.new()
+	panel_style.bg_color = Color(0.035, 0.045, 0.075, 0.98)
+	panel_style.border_color = Color(0.45, 0.34, 0.23, 1.0)
+	panel_style.set_border_width_all(2)
+	panel_style.set_content_margin_all(7.0)
+	_delete_confirmation.add_theme_stylebox_override("panel", panel_style)
+	add_child(_delete_confirmation)
+	var contents := VBoxContainer.new()
+	contents.add_theme_constant_override("separation", 4)
+	_delete_confirmation.add_child(contents)
+	var title := Label.new()
+	title.text = "¿Eliminar partida guardada?"
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.add_theme_font_size_override("font_size", 11)
+	title.add_theme_color_override("font_color", COLOR_TEXT)
+	contents.add_child(title)
+	_delete_confirmation_message = Label.new()
+	_delete_confirmation_message.text = "Se eliminará todo el progreso de esta partida. Esta acción no se puede deshacer."
+	_delete_confirmation_message.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_delete_confirmation_message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_delete_confirmation_message.add_theme_font_size_override("font_size", 8)
+	_delete_confirmation_message.add_theme_color_override("font_color", COLOR_TEXT)
+	contents.add_child(_delete_confirmation_message)
+	var buttons := HBoxContainer.new()
+	buttons.add_theme_constant_override("separation", 6)
+	contents.add_child(buttons)
+	_delete_cancel_button = _make_button("Cancelar")
+	_delete_cancel_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_delete_cancel_button.pressed.connect(_cancel_delete_confirmation)
+	buttons.add_child(_delete_cancel_button)
+	var confirm := _make_button("Eliminar definitivamente")
+	confirm.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	confirm.pressed.connect(_confirm_delete_slot)
+	buttons.add_child(confirm)
+
+
 func _show_new_profiles() -> void:
 	_profile_mode = "new"
 	_profile_panel.visible = true
@@ -255,6 +311,17 @@ func _show_continue_profiles() -> void:
 	_refresh_profile_slots()
 
 
+func _show_delete_profiles() -> void:
+	_profile_mode = "delete"
+	_profile_panel.visible = true
+	_profile_title.text = "ELIMINAR PARTIDA"
+	_profile_name.visible = false
+	_profile_message.text = "Selecciona la ranura que deseas eliminar."
+	_main_buttons.visible = false
+	_options_panel.visible = false
+	_refresh_profile_slots()
+
+
 func _refresh_profile_slots() -> void:
 	for child in _profile_slots.get_children():
 		child.queue_free()
@@ -270,10 +337,19 @@ func _refresh_profile_slots() -> void:
 		button.pressed.connect(_on_profile_slot_pressed.bind(slot_id, info))
 		if _profile_mode == "continue" and not bool(info.get("valid", false)):
 			button.disabled = true
+		elif _profile_mode == "delete" and not bool(info.get("exists", false)):
+			button.disabled = true
 		_profile_slots.add_child(button)
 
 
 func _on_profile_slot_pressed(slot_id: int, info: Dictionary) -> void:
+	if _profile_mode == "delete":
+		if not bool(info.get("exists", false)):
+			return
+		_pending_delete_slot = slot_id
+		_delete_confirmation.visible = true
+		_delete_cancel_button.grab_focus()
+		return
 	if _profile_mode == "continue":
 		if GameManager.load_save_slot(slot_id):
 			return
@@ -289,6 +365,26 @@ func _on_profile_slot_pressed(slot_id: int, info: Dictionary) -> void:
 		_overwrite_dialog.popup_centered()
 		return
 	_start_new_profile(slot_id, false)
+
+
+func _cancel_delete_confirmation() -> void:
+	_delete_confirmation.visible = false
+	_pending_delete_slot = 0
+
+
+func _confirm_delete_slot() -> void:
+	if _pending_delete_slot < 1:
+		return
+	var slot_id := _pending_delete_slot
+	_delete_confirmation.visible = false
+	_pending_delete_slot = 0
+	if not GameManager.delete_save_slot(slot_id):
+		_profile_message.text = GameManager.last_save_error
+		return
+	_profile_message.text = "Partida eliminada correctamente"
+	_refresh_profile_slots()
+	_continue_button.disabled = not GameManager.has_any_valid_save_slot()
+	_delete_button.disabled = not _has_existing_save_slot()
 
 
 func _confirm_overwrite() -> void:
@@ -362,13 +458,23 @@ func _show_main_menu() -> void:
 	_options_panel.visible = false
 	_profile_panel.visible = false
 	_continue_button.disabled = not GameManager.has_any_valid_save_slot()
+	_delete_button.disabled = not _has_existing_save_slot()
 	var start_button := _main_buttons.get_node("NuevaPartida") as Button
 	start_button.grab_focus()
+
+
+func _has_existing_save_slot() -> bool:
+	for slot_id in range(1, GameManager.SAVE_SLOT_COUNT + 1):
+		if bool(GameManager.get_save_slot_info(slot_id).get("exists", false)):
+			return true
+	return false
 
 
 func _show_options() -> void:
 	_main_buttons.visible = false
 	_options_panel.visible = true
+	var fullscreen := _options_panel.get_node("PantallaCompleta") as CheckButton
+	fullscreen.set_pressed_no_signal(UserSettings.is_fullscreen())
 	var slider := _options_panel.get_node("VolumenGeneral") as HSlider
 	slider.grab_focus()
 
@@ -417,8 +523,7 @@ func _on_master_volume_changed(value: float) -> void:
 
 
 func _on_fullscreen_toggled(enabled: bool) -> void:
-	var mode := DisplayServer.WINDOW_MODE_FULLSCREEN if enabled else DisplayServer.WINDOW_MODE_WINDOWED
-	DisplayServer.window_set_mode(mode)
+	UserSettings.set_fullscreen(enabled)
 
 
 func _on_quit_pressed() -> void:

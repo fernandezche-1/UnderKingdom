@@ -439,7 +439,7 @@ func _refresh_options() -> void:
 	else:
 		volume.value = AudioServer.get_bus_volume_linear(_master_bus)
 	var fullscreen := $Interfaz/ControlesOpciones/PantallaCompleta as CheckButton
-	fullscreen.set_pressed_no_signal(DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN)
+	fullscreen.set_pressed_no_signal(UserSettings.is_fullscreen())
 
 
 func _on_master_volume_changed(value: float) -> void:
@@ -448,5 +448,4 @@ func _on_master_volume_changed(value: float) -> void:
 
 
 func _on_fullscreen_toggled(enabled: bool) -> void:
-	var mode := DisplayServer.WINDOW_MODE_FULLSCREEN if enabled else DisplayServer.WINDOW_MODE_WINDOWED
-	DisplayServer.window_set_mode(mode)
+	UserSettings.set_fullscreen(enabled)
