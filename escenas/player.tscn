@@ -941,9 +941,8 @@ script = ExtResource("p2_player_script")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=399530285]
 position = Vector2(-8, 0)
 sprite_frames = SubResource("SpriteFrames_br1p4")
-animation = &"escaleras"
+animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.82240295
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1775031797]
 position = Vector2(-7, 43)

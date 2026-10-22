@@ -21,6 +21,8 @@ var current_scene_path: String = ""
 
 var world1_boss_defeated: bool = false
 var world1_boss_key_collected: bool = false
+## El prologo limita los ataques avanzados hasta recuperar un fragmento del alma.
+var soul_fragmentation_active: bool = false
 var coins: int = 0
 var potions: int = 0
 var cthulhu_revealed: bool = false
@@ -78,6 +80,15 @@ func set_transition(target_spawn_id: StringName) -> void:
     var current_scene := get_tree().current_scene
     if current_scene != null:
         previous_scene_path = current_scene.scene_file_path
+
+
+func mark_soul_fragmented() -> void:
+    soul_fragmentation_active = true
+
+
+## Hook para futuras recompensas de fragmentos; no crea poderes nuevos.
+func restore_soul_fragment() -> void:
+    soul_fragmentation_active = false
 
 
 func consume_spawn_id() -> StringName:

@@ -267,6 +267,7 @@ func _reset_new_game_progress() -> void:
 	manager.current_scene_path = ""
 	manager.world1_boss_defeated = false
 	manager.world1_boss_key_collected = false
+	manager.soul_fragmentation_active = false
 	manager.coins = 0
 	manager.potions = 0
 	manager.cthulhu_revealed = false

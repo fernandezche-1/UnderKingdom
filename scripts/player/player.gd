@@ -402,6 +402,19 @@ func request_attack() -> void:
     if dead or _climbing:
         return
 
+    if GameManager.soul_fragmentation_active:
+        if _action == PlayerAction.ATTACK:
+            return
+        if _action not in [PlayerAction.NORMAL, PlayerAction.DEFEND] or not is_on_floor():
+            return
+        if _action == PlayerAction.DEFEND:
+            _leave_guard_for_action()
+        _combo_step = 1
+        _combo_queued = false
+        _combo_buffered_inputs = 0
+        _start_attack(&"attack", attack_1_damage, PlayerAction.ATTACK)
+        return
+
     if _action == PlayerAction.ATTACK:
         if _combo_step < 3:
             # Guardamos pulsaciones reales, no solo un booleano. Asi, si el
@@ -482,6 +495,8 @@ func _try_context_interaction() -> bool:
 
 func request_ultimate() -> void:
     if dead or _climbing or not is_on_floor():
+        return
+    if GameManager.soul_fragmentation_active:
         return
     if _ultimate_cooldown_left > 0.0:
         return

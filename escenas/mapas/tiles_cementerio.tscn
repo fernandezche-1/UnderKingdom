@@ -1,33 +1,24 @@
-[gd_scene format=4]
+[gd_scene format=4 uid="uid://csh8h1h1rwjb6"]
 
-[ext_resource type="Texture2D" path="res://assets_prueba/gothicvania/pueblo_noche/cielo.png" id="1_g507b"]
-[ext_resource type="Texture2D" path="res://assets_prueba/gothicvania/pueblo_noche/nubes.png" id="2_65dvn"]
-[ext_resource type="Texture2D" path="res://assets_prueba/gothicvania/pueblo_noche/montes.png" id="3_dv3tx"]
-[ext_resource type="Texture2D" path="res://assets_prueba/gothicvania/pueblo_noche/pueblo.png" id="4_ihr5y"]
-[ext_resource type="Texture2D" path="res://assets_prueba/dungeon_platformer/dungeontilesetfull.png" id="5_1py21"]
+[ext_resource type="Texture2D" uid="uid://jn358n85k0qf" path="res://assets_prueba/gothicvania/pueblo_noche/cielo.png" id="1_g507b"]
+[ext_resource type="Texture2D" uid="uid://fk0q8ilg2ivo" path="res://assets_prueba/gothicvania/pueblo_noche/nubes.png" id="2_65dvn"]
+[ext_resource type="Texture2D" uid="uid://bo41g664dfkqf" path="res://assets_prueba/gothicvania/pueblo_noche/montes.png" id="3_dv3tx"]
+[ext_resource type="Texture2D" uid="uid://cvebdry51fyjy" path="res://assets_prueba/gothicvania/pueblo_noche/pueblo.png" id="4_ihr5y"]
+[ext_resource type="Texture2D" uid="uid://carrjvpw80884" path="res://assets_prueba/dungeon_platformer/dungeontilesetfull.png" id="5_1py21"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/kill_zone.tscn" id="6_dv3tx"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/climb_zone.tscn" id="6_fb6qw"]
-[ext_resource type="Script" path="res://scripts/environment/kill_zone.gd" id="7_ihr5y"]
-[ext_resource type="Script" path="res://scripts/environment/climb_zone.gd" id="7_tl2tt"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/checkpoint.tscn" id="8_rm26g"]
-[ext_resource type="Script" path="res://scripts/environment/checkpoint.gd" id="9_jtrlv"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/map_transition.tscn" id="10_8bp4p"]
-[ext_resource type="Script" path="res://scripts/transitions/map_transition.gd" id="11_7d2jo"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/spawn_point.tscn" id="12_rpfd3"]
-[ext_resource type="Script" path="res://scripts/transitions/spawn_point.gd" id="13_l7hc0"]
-[ext_resource type="Script" path="res://scripts/camera/map_bounds.gd" id="14_koiy3"]
-[ext_resource type="Script" path="res://scripts/transitions/map_spawn_controller.gd" id="15_qvf6h"]
-[ext_resource type="PackedScene" path="res://escenas/enemigos/aprendis.tscn" id="16_stcg7"]
-[ext_resource type="Script" path="res://scripts/combat/enemy_base.gd" id="17_0jreg"]
-[ext_resource type="PackedScene" path="res://escenas/enemigos/vanguardia.tscn" id="18_3gjdt"]
+[ext_resource type="Script" uid="uid://bkvqx03fc60f2" path="res://scripts/camera/map_bounds.gd" id="14_koiy3"]
+[ext_resource type="Script" uid="uid://2hxvdw0c4cgk" path="res://scripts/transitions/map_spawn_controller.gd" id="15_qvf6h"]
+[ext_resource type="PackedScene" uid="uid://h3lpw578kh2u" path="res://escenas/enemigos/aprendis.tscn" id="16_stcg7"]
+[ext_resource type="PackedScene" uid="uid://ext3mp88wk5u" path="res://escenas/enemigos/vanguardia.tscn" id="18_3gjdt"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/cofre.tscn" id="19_bfqls"]
-[ext_resource type="Texture2D" path="res://tile/Dungeon Tile Set.png" id="20_7ij8l"]
-[ext_resource type="Script" path="res://scripts/environment/chest_interactable.gd" id="21_iuhvc"]
+[ext_resource type="Texture2D" uid="uid://b3poje2vhbmbv" path="res://tile/Dungeon Tile Set.png" id="20_7ij8l"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/coin_pickup.tscn" id="22_65s0h"]
-[ext_resource type="Script" path="res://scripts/items/collectible_pickup.gd" id="23_lc1j6"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/potion_pickup.tscn" id="24_guhso"]
-[ext_resource type="PackedScene" path="res://escenas/player.tscn" id="25_yes1p"]
-[ext_resource type="Script" path="res://scripts/player/player.gd" id="26_cqqx4"]
+[ext_resource type="PackedScene" uid="uid://crgen4tbgq8y1" path="res://escenas/player.tscn" id="25_yes1p"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1py21"]
 texture = ExtResource("5_1py21")
@@ -3502,89 +3493,61 @@ tile_set = SubResource("TileSet_koiy3")
 
 [node name="KillZones" type="Node2D" parent="SistemasMapa" unique_id=1195236343]
 
-[node name="Lava1" parent="SistemasMapa/KillZones" unique_id=1261104024 groups=["kill_zone"] instance=ExtResource("6_dv3tx")]
+[node name="Lava1" parent="SistemasMapa/KillZones" unique_id=1261104024 instance=ExtResource("6_dv3tx")]
 position = Vector2(1360, 1227)
-collision_layer = 0
-script = ExtResource("7_ihr5y")
-metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" parent="SistemasMapa/KillZones/Lava1" index="0"]
 shape = SubResource("RectangleShape2D_qvf6h")
 
 [node name="Escaleras" type="Node2D" parent="SistemasMapa" unique_id=940365701]
 
-[node name="Escalera1" parent="SistemasMapa/Escaleras" unique_id=1562186270 groups=["climb_zone"] instance=ExtResource("6_fb6qw")]
+[node name="Escalera1" parent="SistemasMapa/Escaleras" unique_id=1562186270 instance=ExtResource("6_fb6qw")]
 position = Vector2(408, 688)
-collision_layer = 0
-script = ExtResource("7_tl2tt")
-metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" parent="SistemasMapa/Escaleras/Escalera1" index="0"]
 shape = SubResource("RectangleShape2D_stcg7")
 
-[node name="Escalera2" parent="SistemasMapa/Escaleras" unique_id=1182489513 groups=["climb_zone"] instance=ExtResource("6_fb6qw")]
+[node name="Escalera2" parent="SistemasMapa/Escaleras" unique_id=1182489513 instance=ExtResource("6_fb6qw")]
 position = Vector2(1032, 616)
-collision_layer = 0
-script = ExtResource("7_tl2tt")
-metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" parent="SistemasMapa/Escaleras/Escalera2" index="0"]
 shape = SubResource("RectangleShape2D_0jreg")
 
-[node name="Escalera3" parent="SistemasMapa/Escaleras" unique_id=790187851 groups=["climb_zone"] instance=ExtResource("6_fb6qw")]
+[node name="Escalera3" parent="SistemasMapa/Escaleras" unique_id=790187851 instance=ExtResource("6_fb6qw")]
 position = Vector2(728, 832)
-collision_layer = 0
-script = ExtResource("7_tl2tt")
-metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" parent="SistemasMapa/Escaleras/Escalera3" index="0"]
 shape = SubResource("RectangleShape2D_3gjdt")
 
-[node name="Escalera4" parent="SistemasMapa/Escaleras" unique_id=1937660621 groups=["climb_zone"] instance=ExtResource("6_fb6qw")]
+[node name="Escalera4" parent="SistemasMapa/Escaleras" unique_id=1937660621 instance=ExtResource("6_fb6qw")]
 position = Vector2(1080, 1056)
-collision_layer = 0
-script = ExtResource("7_tl2tt")
-metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" parent="SistemasMapa/Escaleras/Escalera4" index="0"]
 shape = SubResource("RectangleShape2D_bfqls")
 
 [node name="Checkpoints" type="Node2D" parent="SistemasMapa" unique_id=452802880]
 
-[node name="Checkpoint1" type="Area2D" parent="SistemasMapa/Checkpoints" unique_id=1142267930 groups=["checkpoint"] instance=ExtResource("8_rm26g")]
+[node name="Checkpoint1" parent="SistemasMapa/Checkpoints" unique_id=1142267930 instance=ExtResource("8_rm26g")]
 position = Vector2(904, 417)
-collision_layer = 0
-script = ExtResource("9_jtrlv")
-metadata/_edit_group_ = true
 
-[node name="Checkpoint2" type="Area2D" parent="SistemasMapa/Checkpoints" unique_id=2053653135 groups=["checkpoint"] instance=ExtResource("8_rm26g")]
+[node name="Checkpoint2" parent="SistemasMapa/Checkpoints" unique_id=2053653135 instance=ExtResource("8_rm26g")]
 position = Vector2(664, 849)
-collision_layer = 0
-script = ExtResource("9_jtrlv")
-metadata/_edit_group_ = true
 
-[node name="Checkpoint3" type="Area2D" parent="SistemasMapa/Checkpoints" unique_id=898753298 groups=["checkpoint"] instance=ExtResource("8_rm26g")]
+[node name="Checkpoint3" parent="SistemasMapa/Checkpoints" unique_id=898753298 instance=ExtResource("8_rm26g")]
 position = Vector2(1672, 1153)
-collision_layer = 0
-script = ExtResource("9_jtrlv")
-metadata/_edit_group_ = true
 
 [node name="Transiciones" type="Node2D" parent="SistemasMapa" unique_id=284584939]
 
 [node name="SalidaSiguiente1" parent="SistemasMapa/Transiciones" unique_id=1047889134 instance=ExtResource("10_8bp4p")]
 position = Vector2(1912, 1184)
-collision_layer = 0
-script = ExtResource("11_7d2jo")
 target_scene_path = "res://escenas/mapas/tiles_mineria_combate.tscn"
 target_spawn_id = &"DesdeAnterior"
-metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" parent="SistemasMapa/Transiciones/SalidaSiguiente1" index="0"]
 shape = SubResource("RectangleShape2D_7ij8l")
 
-[node name="DesdeSiguiente5" type="Marker2D" parent="SistemasMapa" unique_id=9907837 groups=["spawn_point"] instance=ExtResource("12_rpfd3")]
+[node name="DesdeSiguiente5" parent="SistemasMapa" unique_id=9907837 instance=ExtResource("12_rpfd3")]
 position = Vector2(1880, 1153)
-script = ExtResource("13_l7hc0")
 spawn_id = &"DesdeSiguiente"
 
 [node name="MapBounds" type="Node2D" parent="SistemasMapa" unique_id=1199143415]
@@ -3595,367 +3558,114 @@ bottom = 1248
 [node name="SpawnController" type="Node" parent="SistemasMapa" unique_id=848479700]
 script = ExtResource("15_qvf6h")
 
-[node name="SpawnInicio" type="Marker2D" parent="SistemasMapa" unique_id=1293452348 groups=["spawn_point"] instance=ExtResource("12_rpfd3")]
+[node name="SpawnInicio" parent="SistemasMapa" unique_id=1293452348 instance=ExtResource("12_rpfd3")]
 position = Vector2(104, 417)
-script = ExtResource("13_l7hc0")
 
 [node name="Enemigos" type="Node2D" parent="." unique_id=1964652358]
 
-[node name="Aprendis1" type="CharacterBody2D" parent="Enemigos" unique_id=638184298 instance=ExtResource("16_stcg7")]
+[node name="Aprendis1" parent="Enemigos" unique_id=638184298 instance=ExtResource("16_stcg7")]
 position = Vector2(840, 200)
-collision_layer = 5
-script = ExtResource("17_0jreg")
-max_health = 2.5
-use_gravity = false
-patrol_distance = 55.0
-patrol_speed = 24.0
-chase_speed = 48.0
-detection_range = 220.0
-detection_vertical_range = 125.0
-lose_aggro_range = 310.0
-lose_aggro_vertical_range = 190.0
-attack_range = 90.0
-attack_cooldown = 1.4
-attack_active_start_frame = 2
-attack_active_end_frame = 5
-attack_hitbox_size = Vector2(116, 54)
-attack_hitbox_offset = Vector2(58, 4)
-avoid_ledges = false
 
-[node name="Vanguardia2" type="CharacterBody2D" parent="Enemigos" unique_id=2095345175 instance=ExtResource("18_3gjdt")]
+[node name="Vanguardia2" parent="Enemigos" unique_id=2095345175 instance=ExtResource("18_3gjdt")]
 position = Vector2(264, 447)
-collision_layer = 5
-script = ExtResource("17_0jreg")
-max_health = 4.0
-patrol_speed = 32.0
-chase_speed = 68.0
-detection_vertical_range = 95.0
-lose_aggro_range = 285.0
-lose_aggro_vertical_range = 150.0
-attack_range = 36.0
-attack_damage = 0.75
-attack_cooldown = 1.0
-attack_active_start_frame = 2
-attack_active_end_frame = 5
-attack_hitbox_size = Vector2(58, 44)
-attack_hitbox_offset = Vector2(32, 16)
 
-[node name="Vanguardia3" type="CharacterBody2D" parent="Enemigos" unique_id=428258627 instance=ExtResource("18_3gjdt")]
+[node name="Vanguardia3" parent="Enemigos" unique_id=428258627 instance=ExtResource("18_3gjdt")]
 position = Vector2(760, 447)
-collision_layer = 5
-script = ExtResource("17_0jreg")
-max_health = 4.0
-patrol_speed = 32.0
-chase_speed = 68.0
-detection_vertical_range = 95.0
-lose_aggro_range = 285.0
-lose_aggro_vertical_range = 150.0
-attack_range = 36.0
-attack_damage = 0.75
-attack_cooldown = 1.0
-attack_active_start_frame = 2
-attack_active_end_frame = 5
-attack_hitbox_size = Vector2(58, 44)
-attack_hitbox_offset = Vector2(32, 16)
 
-[node name="Aprendis4" type="CharacterBody2D" parent="Enemigos" unique_id=1730369959 instance=ExtResource("16_stcg7")]
+[node name="Aprendis4" parent="Enemigos" unique_id=1730369959 instance=ExtResource("16_stcg7")]
 position = Vector2(840, 456)
-collision_layer = 5
-script = ExtResource("17_0jreg")
-max_health = 2.5
-use_gravity = false
-patrol_distance = 55.0
-patrol_speed = 24.0
-chase_speed = 48.0
-detection_range = 220.0
-detection_vertical_range = 125.0
-lose_aggro_range = 310.0
-lose_aggro_vertical_range = 190.0
-attack_range = 90.0
-attack_cooldown = 1.4
-attack_active_start_frame = 2
-attack_active_end_frame = 5
-attack_hitbox_size = Vector2(116, 54)
-attack_hitbox_offset = Vector2(58, 4)
-avoid_ledges = false
 
-[node name="Vanguardia5" type="CharacterBody2D" parent="Enemigos" unique_id=90855394 instance=ExtResource("18_3gjdt")]
+[node name="Vanguardia5" parent="Enemigos" unique_id=90855394 instance=ExtResource("18_3gjdt")]
 position = Vector2(1128, 447)
-collision_layer = 5
-script = ExtResource("17_0jreg")
-max_health = 4.0
-patrol_speed = 32.0
-chase_speed = 68.0
-detection_vertical_range = 95.0
-lose_aggro_range = 285.0
-lose_aggro_vertical_range = 150.0
-attack_range = 36.0
-attack_damage = 0.75
-attack_cooldown = 1.0
-attack_active_start_frame = 2
-attack_active_end_frame = 5
-attack_hitbox_size = Vector2(58, 44)
-attack_hitbox_offset = Vector2(32, 16)
 
-[node name="Vanguardia6" type="CharacterBody2D" parent="Enemigos" unique_id=919948878 instance=ExtResource("18_3gjdt")]
+[node name="Vanguardia6" parent="Enemigos" unique_id=919948878 instance=ExtResource("18_3gjdt")]
 position = Vector2(1608, 447)
-collision_layer = 5
-script = ExtResource("17_0jreg")
-max_health = 4.0
-patrol_speed = 32.0
-chase_speed = 68.0
-detection_vertical_range = 95.0
-lose_aggro_range = 285.0
-lose_aggro_vertical_range = 150.0
-attack_range = 36.0
-attack_damage = 0.75
-attack_cooldown = 1.0
-attack_active_start_frame = 2
-attack_active_end_frame = 5
-attack_hitbox_size = Vector2(58, 44)
-attack_hitbox_offset = Vector2(32, 16)
 
-[node name="Aprendis7" type="CharacterBody2D" parent="Enemigos" unique_id=697095482 instance=ExtResource("16_stcg7")]
+[node name="Aprendis7" parent="Enemigos" unique_id=697095482 instance=ExtResource("16_stcg7")]
 position = Vector2(936, 712)
-collision_layer = 5
-script = ExtResource("17_0jreg")
-max_health = 2.5
-use_gravity = false
-patrol_distance = 55.0
-patrol_speed = 24.0
-chase_speed = 48.0
-detection_range = 220.0
-detection_vertical_range = 125.0
-lose_aggro_range = 310.0
-lose_aggro_vertical_range = 190.0
-attack_range = 90.0
-attack_cooldown = 1.4
-attack_active_start_frame = 2
-attack_active_end_frame = 5
-attack_hitbox_size = Vector2(116, 54)
-attack_hitbox_offset = Vector2(58, 4)
-avoid_ledges = false
 
-[node name="Vanguardia8" type="CharacterBody2D" parent="Enemigos" unique_id=1296325035 instance=ExtResource("18_3gjdt")]
+[node name="Vanguardia8" parent="Enemigos" unique_id=1296325035 instance=ExtResource("18_3gjdt")]
 position = Vector2(840, 735)
-collision_layer = 5
-script = ExtResource("17_0jreg")
-max_health = 4.0
-patrol_speed = 32.0
-chase_speed = 68.0
-detection_vertical_range = 95.0
-lose_aggro_range = 285.0
-lose_aggro_vertical_range = 150.0
-attack_range = 36.0
-attack_damage = 0.75
-attack_cooldown = 1.0
-attack_active_start_frame = 2
-attack_active_end_frame = 5
-attack_hitbox_size = Vector2(58, 44)
-attack_hitbox_offset = Vector2(32, 16)
 
-[node name="Vanguardia9" type="CharacterBody2D" parent="Enemigos" unique_id=1890997222 instance=ExtResource("18_3gjdt")]
+[node name="Vanguardia9" parent="Enemigos" unique_id=1890997222 instance=ExtResource("18_3gjdt")]
 position = Vector2(1160, 735)
-collision_layer = 5
-script = ExtResource("17_0jreg")
-max_health = 4.0
-patrol_speed = 32.0
-chase_speed = 68.0
-detection_vertical_range = 95.0
-lose_aggro_range = 285.0
-lose_aggro_vertical_range = 150.0
-attack_range = 36.0
-attack_damage = 0.75
-attack_cooldown = 1.0
-attack_active_start_frame = 2
-attack_active_end_frame = 5
-attack_hitbox_size = Vector2(58, 44)
-attack_hitbox_offset = Vector2(32, 16)
 
-[node name="Vanguardia10" type="CharacterBody2D" parent="Enemigos" unique_id=1023409229 instance=ExtResource("18_3gjdt")]
+[node name="Vanguardia10" parent="Enemigos" unique_id=1023409229 instance=ExtResource("18_3gjdt")]
 position = Vector2(888, 879)
-collision_layer = 5
-script = ExtResource("17_0jreg")
-max_health = 4.0
-patrol_speed = 32.0
-chase_speed = 68.0
-detection_vertical_range = 95.0
-lose_aggro_range = 285.0
-lose_aggro_vertical_range = 150.0
-attack_range = 36.0
-attack_damage = 0.75
-attack_cooldown = 1.0
-attack_active_start_frame = 2
-attack_active_end_frame = 5
-attack_hitbox_size = Vector2(58, 44)
-attack_hitbox_offset = Vector2(32, 16)
 
-[node name="Aprendis11" type="CharacterBody2D" parent="Enemigos" unique_id=302807400 instance=ExtResource("16_stcg7")]
+[node name="Aprendis11" parent="Enemigos" unique_id=302807400 instance=ExtResource("16_stcg7")]
 position = Vector2(1288, 1160)
-collision_layer = 5
-script = ExtResource("17_0jreg")
-max_health = 2.5
-use_gravity = false
-patrol_distance = 55.0
-patrol_speed = 24.0
-chase_speed = 48.0
-detection_range = 220.0
-detection_vertical_range = 125.0
-lose_aggro_range = 310.0
-lose_aggro_vertical_range = 190.0
-attack_range = 90.0
-attack_cooldown = 1.4
-attack_active_start_frame = 2
-attack_active_end_frame = 5
-attack_hitbox_size = Vector2(116, 54)
-attack_hitbox_offset = Vector2(58, 4)
-avoid_ledges = false
 
-[node name="Vanguardia12" type="CharacterBody2D" parent="Enemigos" unique_id=904527159 instance=ExtResource("18_3gjdt")]
+[node name="Vanguardia12" parent="Enemigos" unique_id=904527159 instance=ExtResource("18_3gjdt")]
 position = Vector2(968, 1183)
-collision_layer = 5
-script = ExtResource("17_0jreg")
-max_health = 4.0
-patrol_speed = 32.0
-chase_speed = 68.0
-detection_vertical_range = 95.0
-lose_aggro_range = 285.0
-lose_aggro_vertical_range = 150.0
-attack_range = 36.0
-attack_damage = 0.75
-attack_cooldown = 1.0
-attack_active_start_frame = 2
-attack_active_end_frame = 5
-attack_hitbox_size = Vector2(58, 44)
-attack_hitbox_offset = Vector2(32, 16)
 
-[node name="Vanguardia13" type="CharacterBody2D" parent="Enemigos" unique_id=1598461443 instance=ExtResource("18_3gjdt")]
+[node name="Vanguardia13" parent="Enemigos" unique_id=1598461443 instance=ExtResource("18_3gjdt")]
 position = Vector2(1576, 1183)
-collision_layer = 5
-script = ExtResource("17_0jreg")
-max_health = 4.0
-patrol_speed = 32.0
-chase_speed = 68.0
-detection_vertical_range = 95.0
-lose_aggro_range = 285.0
-lose_aggro_vertical_range = 150.0
-attack_range = 36.0
-attack_damage = 0.75
-attack_cooldown = 1.0
-attack_active_start_frame = 2
-attack_active_end_frame = 5
-attack_hitbox_size = Vector2(58, 44)
-attack_hitbox_offset = Vector2(32, 16)
 
 [node name="Objetos" type="Node2D" parent="." unique_id=2145314701]
 
-[node name="Pocion1" type="Area2D" parent="Objetos" unique_id=1597854334 instance=ExtResource("24_guhso")]
+[node name="Pocion1" parent="Objetos" unique_id=1597854334 instance=ExtResource("24_guhso")]
 position = Vector2(808, 184)
-collision_layer = 0
-script = ExtResource("23_lc1j6")
-pickup_type = "potion"
 
-[node name="Moneda2" type="Area2D" parent="Objetos" unique_id=1020212017 instance=ExtResource("22_65s0h")]
+[node name="Moneda2" parent="Objetos" unique_id=1020212017 instance=ExtResource("22_65s0h")]
 position = Vector2(648, 216)
-collision_layer = 0
-script = ExtResource("23_lc1j6")
 
-[node name="Cofre3" type="AnimatedSprite2D" parent="Objetos" unique_id=846151445 instance=ExtResource("19_bfqls")]
+[node name="Cofre3" parent="Objetos" unique_id=846151445 instance=ExtResource("19_bfqls")]
 position = Vector2(920, 215)
 sprite_frames = SubResource("SpriteFrames_cofre")
-script = ExtResource("21_iuhvc")
-interaction_radius = 64.0
-coin_count = 3
-potion_count = 1
 coin_offsets = PackedVector2Array()
 potion_offsets = PackedVector2Array()
 
-[node name="Moneda4" type="Area2D" parent="Objetos" unique_id=1910164874 instance=ExtResource("22_65s0h")]
+[node name="Moneda4" parent="Objetos" unique_id=1910164874 instance=ExtResource("22_65s0h")]
 position = Vector2(552, 280)
-collision_layer = 0
-script = ExtResource("23_lc1j6")
 
-[node name="Moneda5" type="Area2D" parent="Objetos" unique_id=875549033 instance=ExtResource("22_65s0h")]
+[node name="Moneda5" parent="Objetos" unique_id=875549033 instance=ExtResource("22_65s0h")]
 position = Vector2(648, 344)
-collision_layer = 0
-script = ExtResource("23_lc1j6")
 
-[node name="Moneda6" type="Area2D" parent="Objetos" unique_id=1203450854 instance=ExtResource("22_65s0h")]
+[node name="Moneda6" parent="Objetos" unique_id=1203450854 instance=ExtResource("22_65s0h")]
 position = Vector2(152, 424)
-collision_layer = 0
-script = ExtResource("23_lc1j6")
 
-[node name="Moneda7" type="Area2D" parent="Objetos" unique_id=1505992851 instance=ExtResource("22_65s0h")]
+[node name="Moneda7" parent="Objetos" unique_id=1505992851 instance=ExtResource("22_65s0h")]
 position = Vector2(168, 424)
-collision_layer = 0
-script = ExtResource("23_lc1j6")
 
-[node name="Moneda8" type="Area2D" parent="Objetos" unique_id=1535757728 instance=ExtResource("22_65s0h")]
+[node name="Moneda8" parent="Objetos" unique_id=1535757728 instance=ExtResource("22_65s0h")]
 position = Vector2(1672, 472)
-collision_layer = 0
-script = ExtResource("23_lc1j6")
 
-[node name="Moneda9" type="Area2D" parent="Objetos" unique_id=712408012 instance=ExtResource("22_65s0h")]
+[node name="Moneda9" parent="Objetos" unique_id=712408012 instance=ExtResource("22_65s0h")]
 position = Vector2(1688, 472)
-collision_layer = 0
-script = ExtResource("23_lc1j6")
 
-[node name="Moneda10" type="Area2D" parent="Objetos" unique_id=1343004639 instance=ExtResource("22_65s0h")]
+[node name="Moneda10" parent="Objetos" unique_id=1343004639 instance=ExtResource("22_65s0h")]
 position = Vector2(1704, 472)
-collision_layer = 0
-script = ExtResource("23_lc1j6")
 
-[node name="Moneda11" type="Area2D" parent="Objetos" unique_id=1164968406 instance=ExtResource("22_65s0h")]
+[node name="Moneda11" parent="Objetos" unique_id=1164968406 instance=ExtResource("22_65s0h")]
 position = Vector2(1112, 712)
-collision_layer = 0
-script = ExtResource("23_lc1j6")
 
-[node name="Moneda12" type="Area2D" parent="Objetos" unique_id=1400756592 instance=ExtResource("22_65s0h")]
+[node name="Moneda12" parent="Objetos" unique_id=1400756592 instance=ExtResource("22_65s0h")]
 position = Vector2(1128, 712)
-collision_layer = 0
-script = ExtResource("23_lc1j6")
 
-[node name="Cofre13" type="AnimatedSprite2D" parent="Objetos" unique_id=483012075 instance=ExtResource("19_bfqls")]
+[node name="Cofre13" parent="Objetos" unique_id=483012075 instance=ExtResource("19_bfqls")]
 position = Vector2(1240, 759)
 sprite_frames = SubResource("SpriteFrames_cofre")
-script = ExtResource("21_iuhvc")
-interaction_radius = 64.0
-coin_count = 3
-potion_count = 1
 coin_offsets = PackedVector2Array()
 potion_offsets = PackedVector2Array()
 
-[node name="Moneda14" type="Area2D" parent="Objetos" unique_id=1221080063 instance=ExtResource("22_65s0h")]
+[node name="Moneda14" parent="Objetos" unique_id=1221080063 instance=ExtResource("22_65s0h")]
 position = Vector2(936, 872)
-collision_layer = 0
-script = ExtResource("23_lc1j6")
 
-[node name="Pocion15" type="Area2D" parent="Objetos" unique_id=1268313506 instance=ExtResource("24_guhso")]
+[node name="Pocion15" parent="Objetos" unique_id=1268313506 instance=ExtResource("24_guhso")]
 position = Vector2(952, 904)
-collision_layer = 0
-script = ExtResource("23_lc1j6")
-pickup_type = "potion"
 
-[node name="Moneda16" type="Area2D" parent="Objetos" unique_id=1440143938 instance=ExtResource("22_65s0h")]
+[node name="Moneda16" parent="Objetos" unique_id=1440143938 instance=ExtResource("22_65s0h")]
 position = Vector2(936, 1128)
-collision_layer = 0
-script = ExtResource("23_lc1j6")
 
-[node name="Moneda17" type="Area2D" parent="Objetos" unique_id=308727200 instance=ExtResource("22_65s0h")]
+[node name="Moneda17" parent="Objetos" unique_id=308727200 instance=ExtResource("22_65s0h")]
 position = Vector2(1224, 1128)
-collision_layer = 0
-script = ExtResource("23_lc1j6")
 
-[node name="Pocion18" type="Area2D" parent="Objetos" unique_id=240320167 instance=ExtResource("24_guhso")]
+[node name="Pocion18" parent="Objetos" unique_id=240320167 instance=ExtResource("24_guhso")]
 position = Vector2(1480, 1144)
-collision_layer = 0
-script = ExtResource("23_lc1j6")
-pickup_type = "potion"
 
-[node name="player" type="CharacterBody2D" parent="." unique_id=356054260 groups=["player"] instance=ExtResource("25_yes1p")]
+[node name="player" parent="." unique_id=356054260 instance=ExtResource("25_yes1p")]
 position = Vector2(104, 417)
-collision_mask = 3
-script = ExtResource("26_cqqx4")
 enable_debug_keys = true
 show_debug_hud = true
 
