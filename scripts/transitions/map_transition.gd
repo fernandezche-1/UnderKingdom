@@ -112,7 +112,7 @@ func _request_transition() -> void:
         _prompt.visible = false
 
     GameManager.set_transition(target_spawn_id)
-    if target_scene_path == GameManager.CEMETERY_SCENE_PATH or target_scene_path.ends_with("tiles_cementerio.tscn"):
+    if GameManager.is_autosave_region(target_scene_path):
         GameManager.request_autosave({
             "scene_path": target_scene_path,
             "spawn_id": String(target_spawn_id),

@@ -11,7 +11,6 @@
 [ext_resource type="Script" path="res://scripts/environment/map_ambience.gd" id="9_ambiente"]
 [ext_resource type="PackedScene" path="res://escenas/npc/anciano.tscn" id="npc_0"]
 [ext_resource type="PackedScene" path="res://escenas/npc/barquero.tscn" id="npc_1"]
-[ext_resource type="PackedScene" path="res://escenas/items/reliquia_habilidad.tscn" id="10_reliquia"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_activador"]
 size = Vector2(368, 176)
@@ -168,12 +167,6 @@ position = Vector2(24, 464)
 
 [node name="Barquero" parent="Personajes" instance=ExtResource("npc_1")]
 position = Vector2(1704, 1192)
-
-[node name="Reliquias" type="Node2D" parent="."]
-
-[node name="ReliquiaRodar" parent="Reliquias" instance=ExtResource("10_reliquia")]
-position = Vector2(1208, 756)
-ability_id = "roll"
 
 [editable path="SistemasMapa/KillZones/Lava1"]
 [editable path="SistemasMapa/Escaleras/Escalera1"]

@@ -33,6 +33,7 @@ const SAVE_DIRECTORY := "user://saves"
 const SAVE_FORMAT_VERSION := 2
 const SAVE_SLOT_COUNT := 3
 const PRISON_SCENE_PATH := "res://escenas/mapas/prologo_prision/camara_sellado_alma.tscn"
+const CASTLE_SCENE_PATH := "res://escenas/mapas/tiles_castillo_combate.tscn"
 const CEMETERY_SCENE_PATH := "res://escenas/mapas/tiles_cementerio_combate.tscn"
 const PRISON_CINEMATIC_ID := "prison_opening"
 const PRISON_CINEMATIC_META_KEY := "underkingdom_camara_sellado_alma_completada"
@@ -243,6 +244,8 @@ func delete_save_slot(slot_id: int) -> bool:
 func region_name_for_scene(scene_path: String) -> String:
     if scene_path.contains("prologo_prision"):
         return "Cámara del Sellado"
+    if scene_path.contains("tiles_castillo"):
+        return "Castillo"
     if scene_path.contains("cementerio"):
         return "Cementerio"
     if scene_path.contains("mundo_1"):
@@ -421,8 +424,16 @@ func cancel_pending_autosave() -> void:
     _autosave_elapsed = 0.0
 
 
+## Mundos en los que se autoguarda al entrar (escena _combate o la base generada).
+func is_autosave_region(scene_path: String) -> bool:
+    for region_path: String in [CASTLE_SCENE_PATH, CEMETERY_SCENE_PATH]:
+        if scene_path == region_path or scene_path == region_path.replace("_combate.tscn", ".tscn"):
+            return true
+    return false
+
+
 func autosave_region_entry(player: Node, scene_path: String, spawn_id: StringName) -> void:
-    if scene_path != CEMETERY_SCENE_PATH and not scene_path.ends_with("tiles_cementerio.tscn"):
+    if not is_autosave_region(scene_path):
         return
     request_autosave({
         "scene_path": scene_path,
