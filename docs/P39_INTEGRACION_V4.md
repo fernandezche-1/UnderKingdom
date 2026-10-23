@@ -64,6 +64,17 @@
 - Ahora pasan todos los spawns y checkpoints de los seis mapas con tiles.
 - Siguen sin pasar `mundo_1` (spawns metidos en la colisión dibujada a mano; recurre al spawn pedido) y `escape_calabozo`, cuyo spawn no tiene suelo debajo: el Player cae.
 
+## 5. Fondo del menú principal
+
+- El fondo era `fondos/cementerio.png`, el mapa viejo, encogido a escala no entera. Ahora es la Cámara del Sellado, donde empieza la partida.
+- `menu_principal.gd` instancia la escena de la prisión:
+  - le quita el script (sin cinemática ni guardado);
+  - borra la cámara, el Player, la Reina y la salida;
+  - anima las antorchas y el prisionero encadenado.
+- Escala 1, con paneo lento de ida y vuelta (`PAN_FROM`, `PAN_TO`, `PAN_PERIOD`, `VIEW_TOP`) y posición entera. La reja y el prisionero quedan a la derecha; la sombra lateral se ensanchó para leer bien las ranuras.
+- Las capas de la prisión tienen `z_index` negativo, así que el fondo de respaldo (por si la escena no carga) va en `z_index = -100`.
+- Si Armando cambia la sala, puede hacer falta ajustar el encuadre. Sus antorchas y el prisionero usan escalas no enteras; eso es de su escena.
+
 ## Verificación
 
 - Arrancan sin errores el menú principal, los seis mapas con tiles, el interior del castillo, el Castillo Oscuro y la prisión. Esta última solo avisa de que no tiene `MapBounds`.

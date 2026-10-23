@@ -2,13 +2,23 @@ extends Control
 
 ## "Nueva partida" empieza en la cinemática de la prisión, que sale al cementerio.
 const GAME_SCENE := "res://escenas/mapas/prologo_prision/camara_sellado_alma.tscn"
-const BACKGROUND := preload("res://fondos/cementerio.png")
 const ORNAMENT := preload("res://escenas/ui/texturas/adorno_linea.png")
 
 const MENU_LEFT: float = 40.0
 const MENU_TOP: float = 104.0
 const FADE_IN_TIME: float = 0.6
 const FADE_OUT_TIME: float = 0.35
+## Fondo: la Cámara del Sellado (donde empieza la partida) sin su cinemática.
+## Se quitan los nodos que actúan solos; el resto es decorado.
+const PRISON_REMOVED_NODES: Array[String] = [
+	"Camera2D", "CharacterBody2D/player", "CharacterBody2D2", "SalidaPrision",
+]
+## Paneo de ida y vuelta por la sala, en píxeles de mundo (borde izquierdo de
+## la vista) y segundos por vuelta completa.
+const PAN_FROM: float = 120.0
+const PAN_TO: float = 190.0
+const PAN_PERIOD: float = 40.0
+const VIEW_TOP: float = 120.0
 
 var _main_buttons: VBoxContainer
 var _continue_button: Button
@@ -32,6 +42,8 @@ var _volume_value: Label
 var _fade: ColorRect
 var _master_bus: int = -1
 var _starting: bool = false
+var _prison: Node2D
+var _pan_time: float = 0.0
 
 
 func _ready() -> void:
@@ -67,28 +79,38 @@ func _unhandled_input(event: InputEvent) -> void:
 	get_viewport().set_input_as_handled()
 
 
+func _process(delta: float) -> void:
+	if _prison == null:
+		return
+	_pan_time += delta
+	var t: float = (1.0 - cos(_pan_time * TAU / PAN_PERIOD)) * 0.5
+	# Posición entera: sin subpíxeles el pixel art no tiembla.
+	_prison.position = Vector2(-roundf(lerpf(PAN_FROM, PAN_TO, t)), -VIEW_TOP)
+
+
 func _build_background() -> void:
-	var background := TextureRect.new()
-	background.name = "FondoCementerio"
-	background.texture = BACKGROUND
-	background.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	background.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	background.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(background)
+	var backdrop := ColorRect.new()
+	backdrop.name = "FondoOscuro"
+	backdrop.color = Color(0.018, 0.025, 0.055)
+	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# Las capas de la prisión tienen z_index negativo: el respaldo va aún más abajo.
+	backdrop.z_index = -100
+	add_child(backdrop)
+	_build_prison()
 
 	# Oscurece el lado del menú y deja ver el cementerio a la derecha.
 	var side_shade := TextureRect.new()
 	side_shade.name = "SombraLateral"
 	side_shade.texture = _gradient_texture(Vector2(1.0, 0.0), [
 		Color(0.012, 0.012, 0.035, 0.94),
-		Color(0.012, 0.012, 0.035, 0.84),
+		Color(0.012, 0.012, 0.035, 0.86),
 		Color(0.012, 0.012, 0.035, 0.0),
-	], PackedFloat32Array([0.0, 0.5, 1.0]))
+	], PackedFloat32Array([0.0, 0.6, 1.0]))
 	side_shade.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	side_shade.stretch_mode = TextureRect.STRETCH_SCALE
 	side_shade.set_anchors_and_offsets_preset(Control.PRESET_LEFT_WIDE)
-	side_shade.offset_right = 320.0
+	side_shade.offset_right = 340.0
 	side_shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(side_shade)
 
@@ -104,6 +126,26 @@ func _build_background() -> void:
 	bottom_shade.offset_top = -70.0
 	bottom_shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(bottom_shade)
+
+
+func _build_prison() -> void:
+	var scene := load(GAME_SCENE) as PackedScene
+	if scene == null:
+		push_warning("Menú: no se pudo cargar la prisión para el fondo.")
+		return
+	_prison = scene.instantiate() as Node2D
+	# Sin script no arranca la cinemática ni guarda nada.
+	_prison.set_script(null)
+	for node_path: String in PRISON_REMOVED_NODES:
+		var node := _prison.get_node_or_null(node_path)
+		if node != null:
+			node.get_parent().remove_child(node)
+			node.free()
+	_prison.name = "FondoPrision"
+	add_child(_prison)
+	for sprite: Node in _prison.find_children("*", "AnimatedSprite2D", true, false):
+		(sprite as AnimatedSprite2D).play()
+	_process(0.0)
 
 
 func _gradient_texture(direction: Vector2, colors: Array[Color], offsets: PackedFloat32Array) -> GradientTexture2D:
