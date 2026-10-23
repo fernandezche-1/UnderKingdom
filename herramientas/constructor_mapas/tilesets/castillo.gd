@@ -5,7 +5,7 @@ extends RefCounted
 ## 16-19, ver assets_prueba/raou_castillo/ORIGEN.txt. Mismas letras que
 ## mazmorra; cambian el bloque "castillo", la pared de fondo "castillo" y los
 ## decorados T (armadura), h (estandarte), g (cadena), r (ventana), C (puerta
-## en arco) y E (estantería). Coordenadas en piezas, no en píxeles.
+## en arco), E (estantería) y f (rejas de celda, en vez de la fogata). Coordenadas en piezas, no en píxeles.
 
 const DATA := {
     "textura": "res://assets_prueba/raou_castillo/tileset_castillo.png",
@@ -31,7 +31,7 @@ const DATA := {
     # Decorados: letra -> [pieza de abajo a la izquierda, tamaño en piezas].
     "decorados": {
         "t": [Vector2i(0, 10), Vector2i(1, 1)],    # antorcha (animada)
-        "f": [Vector2i(27, 4), Vector2i(1, 1)],    # fogata (animada)
+        "f": [Vector2i(17, 17), Vector2i(2, 2)],   # rejas de celda
         "b": [Vector2i(29, 9), Vector2i(1, 1)],    # barril
         "x": [Vector2i(26, 10), Vector2i(1, 1)],   # caja
         "T": [Vector2i(8, 17), Vector2i(2, 2)],    # armadura
