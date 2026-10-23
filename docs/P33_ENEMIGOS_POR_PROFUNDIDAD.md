@@ -11,6 +11,7 @@
 
 | Profundidad | Mundo | Enemigos (letra) | Faltan (sin arte todavía) |
 |---|---|---|---|
+| 0 | `tiles_castillo` (el castillo, sobre el cementerio) | Guardia `G` (caballero con escudo, ver `P40_CASTILLO_CON_TILES.md`), Vanguardia `v`, murciélago `m` | |
 | 1 | `tiles_cementerio` (superficie) | Vanguardia `v` (el viejito), murciélago `m` (cripta y abismo), esqueleto de tumba `u` | |
 | 2 | `tiles_mineria` (bajo tierra) | kolbo `k`, kolbo2 `j`, kolbo3 `q`, murciélago `m` | |
 | 3 | `tiles_mazmorra` | Aprendis `a` (esqueleto de fuego), mino `M`, kolbo3 `q`, esqueleto `e` | |
