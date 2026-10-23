@@ -13,6 +13,7 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
   - Cada mundo es un mapa para explorar al estilo Hollow Knight: zonas, atajos, checkpoints, enemigos repartidos y una sala de jefe.
   - La sala del jefe se cierra al entrar. Al vencerlo cae una llave, y esa llave abre la puerta al mundo siguiente, que está en la parte más profunda del mapa.
   - Los enemigos cambian conforme se baja: personas y bichos comunes arriba, criaturas y esqueletos en medio (el Aprendis, mago de fuego con calavera, cuenta como esqueleto), demonios al fondo. Cada mundo usa solo los de su profundidad (tabla en `docs/P33_ENEMIGOS_POR_PROFUNDIDAD.md`); no mezclar enemigos de otro nivel.
+- **Prólogo (de la v4 de Armando):** "Nueva partida" empieza en la cinemática de la prisión (`prologo_prision/camara_sellado_alma.tscn`), que sale al cementerio. El calabozo y el castillo (`escenas/mapas/prologo/`) son mapas a mano, todavía sin enlazar ni validar. Detalle en `docs/P39_INTEGRACION_V4.md`.
 - **Primer mundo, el cementerio:** se juega desde `tiles_cementerio_combate.tscn`, que hereda de la escena generada `tiles_cementerio.tscn`.
   - Trazado y coordenadas: `mapas_texto/tiles_cementerio.txt` y `docs/CHANGELOG_0.04.047.md`, sección "Cementerio con tiles".
   - Es el modelo para los mundos siguientes.
@@ -47,7 +48,7 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
 
 - `escenas/mapas/tiles_*`: los mapas en uso. Cada uno se genera con el constructor y tiene un nodo `SistemasMapa` (MapBounds, spawns, escaleras, checkpoints, transiciones). Los que llevan jefe o puertas tienen además una escena heredada, como `tiles_cementerio_combate.tscn`.
 - `escenas/mapas/` (mapas viejos, sin uso por ahora): mundo_1, primer_boss_mundo_1, mundo_2, mundo_3, ruina, profundidades, jefe_final. Cada uno es un PNG de `fondos/` cortado en tiles de 16 px más colisiones dibujadas a mano.
-- `escenas/menu/`: menú principal y menú de pausa (autoload `PauseMenu`, `scripts/ui/pause_menu_*.gd`, flecha de selección `scripts/ui/menu_selector.gd`; pestañas de estadísticas, llaves y mejoras compradas con monedas, definidas en `GameManager.UPGRADE_DEFINITIONS`). "Nueva partida" llama a `GameManager.reset_for_new_game()`: toda variable de progreso nueva se reinicia ahí.
+- `escenas/menu/`: menú principal y menú de pausa (autoload `PauseMenu`, `scripts/ui/pause_menu_*.gd`, flecha de selección `scripts/ui/menu_selector.gd`; pestañas de estadísticas, llaves y mejoras compradas con monedas, definidas en `GameManager.UPGRADE_DEFINITIONS`). "Nueva partida" llama a `GameManager.reset_for_new_game()` y crea un perfil en una de las 3 ranuras de `user://saves`: toda variable de progreso nueva se reinicia en `reset_for_new_game` y se guarda en `_make_save_data` / `_restore_game_state` (si cambia el formato, subir `SAVE_FORMAT_VERSION`).
 - `escenas/enemigos/`, `escenas/jefes/`, `escenas/player.tscn`, `escenas/sistemas/` (one-way, kill zone, burn zone, climb zone, transición, spawn point), `escenas/items/`, `escenas/ui/`.
 - `scripts/`: `player/player.gd`, `combat/enemy_base.gd` (base de todo enemigo con IA), `bosses/captain_boss.gd`, `core/game_manager.gd` (autoload `GameManager`), `ui/` (HUD, barra de jefe, barra de enemigo), `fx/combat_fx.gd`, `transitions/`, `environment/`, `camera/`.
 - `docs/`: historial de cada etapa (P1…P30). Es la fuente de verdad de lo decidido y lo pendiente; documentar etapas nuevas con el mismo formato.
@@ -64,7 +65,8 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
 ## Validar cambios
 
 - Arranque sin errores: `godot --headless --quit-after 120` desde la raíz del proyecto. Abre el menú principal (`escenas/menu/menu_principal.tscn`), que es la escena principal.
-- El cementerio, donde arranca "Nueva partida": `godot --headless res://escenas/mapas/tiles_cementerio_combate.tscn --quit-after 120`.
+- La prisión, donde arranca "Nueva partida": `godot --headless res://escenas/mapas/prologo_prision/camara_sellado_alma.tscn --quit-after 120`.
+- El cementerio: `godot --headless res://escenas/mapas/tiles_cementerio_combate.tscn --quit-after 120`.
 - Mundo 1, el mapa viejo: `godot --headless res://escenas/mapas/mundo_1.tscn --quit-after 120`. Comprobarlo cuando se toquen scripts compartidos (Player, enemigos, GameManager, Capitán).
 - Un mapa concreto: `godot --headless res://escenas/mapas/<mapa>.tscn --quit-after 60`.
 - Tras crear un script con `class_name` nuevo, correr `godot --headless --import` para actualizar la caché de clases.

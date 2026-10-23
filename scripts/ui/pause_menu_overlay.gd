@@ -42,6 +42,8 @@ const UPGRADE_TEXTS := {
 @onready var volume_slider: HSlider = $Interfaz/PanelMenu/Margen/ControlesOpciones/FilaVolumen/Volumen
 @onready var volume_value: Label = $Interfaz/PanelMenu/Margen/ControlesOpciones/FilaVolumen/ValorVolumen
 @onready var fullscreen_toggle: CheckButton = $Interfaz/PanelMenu/Margen/ControlesOpciones/PantallaCompleta
+@onready var save_button: Button = $Interfaz/PanelMenu/Margen/BotonesPausa/Guardar
+@onready var player_name_label: Label = $Interfaz/PanelJugador/Contenido/PaginaEstadisticas/Cabecera/Resumen/NombrePersonaje
 
 var _player: UnderkingdomPlayer
 var _options_open: bool = false
@@ -217,6 +219,7 @@ func _connect_controls() -> void:
 	tab_upgrades.focus_entered.connect(_show_tab.bind("upgrades"))
 	$Interfaz/PanelMenu/Margen/BotonesPausa/Reanudar.pressed.connect(Callable(pause_manager, "resume_game"))
 	$Interfaz/PanelMenu/Margen/BotonesPausa/Opciones.pressed.connect(show_options)
+	save_button.pressed.connect(_save_from_pause)
 	$Interfaz/PanelMenu/Margen/BotonesPausa/MenuPrincipal.pressed.connect(Callable(pause_manager, "return_to_main_menu"))
 	$Interfaz/PanelMenu/Margen/BotonesPausa/Salir.pressed.connect(Callable(pause_manager, "quit_game"))
 	$Interfaz/PanelMenu/Margen/ControlesOpciones/Volver.pressed.connect(show_pause_menu)
@@ -235,6 +238,10 @@ func set_player(player: UnderkingdomPlayer) -> void:
 
 
 func _update_player_info() -> void:
+	# Sin ranura activa (mapa abierto directo desde el editor) no hay dónde guardar.
+	save_button.disabled = not GameManager.has_active_save_slot()
+	if GameManager.has_active_save_slot():
+		player_name_label.text = GameManager.get_player_display_name()
 	if not is_instance_valid(_player):
 		return
 	_on_health_changed(_player.current_health, _player.max_health)
@@ -344,6 +351,10 @@ func _refresh_upgrades() -> void:
 			continue
 		var next_value: String = _format_upgrade_value(upgrade_id, float(info.next_value)) + unit
 		detail_label.text = "%s: %s » %s" % [texts[1], current_value, next_value]
+		if upgrade_id == "ultimate_cooldown" and not GameManager.has_ability("ultimate"):
+			button.text = "Sin Ultimate"
+			button.disabled = true
+			continue
 		button.text = "%d monedas" % int(info.cost)
 		button.disabled = not GameManager.can_spend_coins(int(info.cost))
 
@@ -362,6 +373,21 @@ func _on_coins_changed(value: int) -> void:
 func _purchase(upgrade_id: String) -> void:
 	GameManager.purchase_upgrade(upgrade_id)
 	_refresh_upgrades()
+
+
+func _save_from_pause() -> void:
+	var saved: bool = GameManager.save_active_game({}, _player)
+	if saved:
+		save_button.text = "Partida guardada"
+	elif GameManager.last_save_error == "unsafe":
+		# En el aire, atacando o con enemigos cerca.
+		save_button.text = "Ahora no se puede"
+	else:
+		save_button.text = "No se pudo guardar"
+		push_warning("Guardado: %s" % GameManager.last_save_error)
+	await get_tree().create_timer(1.3, true, false, true).timeout
+	if is_instance_valid(save_button):
+		save_button.text = "Guardar partida"
 
 
 func _show_tab(tab: String) -> void:

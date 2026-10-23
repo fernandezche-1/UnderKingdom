@@ -1,6 +1,7 @@
 extends Control
 
-const GAME_SCENE := "res://escenas/mapas/tiles_cementerio_combate.tscn"
+## "Nueva partida" empieza en la cinemática de la prisión, que sale al cementerio.
+const GAME_SCENE := "res://escenas/mapas/prologo_prision/camara_sellado_alma.tscn"
 const BACKGROUND := preload("res://fondos/cementerio.png")
 const ORNAMENT := preload("res://escenas/ui/texturas/adorno_linea.png")
 
@@ -10,7 +11,23 @@ const FADE_IN_TIME: float = 0.6
 const FADE_OUT_TIME: float = 0.35
 
 var _main_buttons: VBoxContainer
+var _continue_button: Button
+var _delete_button: Button
 var _options_panel: VBoxContainer
+## Ranuras de guardado: un mismo panel sirve para crear, continuar y eliminar.
+var _profile_panel: VBoxContainer
+var _profile_title: Label
+var _profile_name: LineEdit
+var _profile_message: Label
+var _profile_slots: VBoxContainer
+var _profile_mode: String = "new"
+## Confirmación de reemplazar o eliminar una ranura ocupada.
+var _confirm_panel: VBoxContainer
+var _confirm_message: Label
+var _confirm_buttons: VBoxContainer
+var _confirm_action: String = ""
+var _pending_slot: int = 0
+var _selector: UnderkingdomMenuSelector
 var _volume_value: Label
 var _fade: ColorRect
 var _master_bus: int = -1
@@ -25,20 +42,29 @@ func _ready() -> void:
 	_build_title()
 	_build_main_menu()
 	_build_options()
+	_build_profile_panel()
+	_build_confirm_panel()
 	_build_footer()
-	var selector := UnderkingdomMenuSelector.new()
-	selector.name = "Selector"
-	add_child(selector)
-	selector.watch(_main_buttons)
-	selector.watch(_options_panel)
+	_selector = UnderkingdomMenuSelector.new()
+	_selector.name = "Selector"
+	add_child(_selector)
+	_selector.watch(_main_buttons)
+	_selector.watch(_options_panel)
+	_selector.watch(_confirm_buttons)
 	_build_fade()
 	_show_main_menu()
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _options_panel.visible and event.is_action_pressed("ui_cancel"):
+	if _starting or not event.is_action_pressed("ui_cancel"):
+		return
+	if _confirm_panel.visible:
+		_hide_confirm()
+	elif _profile_panel.visible or _options_panel.visible:
 		_show_main_menu()
-		get_viewport().set_input_as_handled()
+	else:
+		return
+	get_viewport().set_input_as_handled()
 
 
 func _build_background() -> void:
@@ -152,12 +178,15 @@ func _build_main_menu() -> void:
 	new_game.pressed.connect(_on_new_game_pressed)
 	_main_buttons.add_child(new_game)
 
-	var continue_button := _make_button("Continuar")
-	continue_button.name = "Continuar"
-	continue_button.disabled = true
-	continue_button.focus_mode = Control.FOCUS_NONE
-	continue_button.tooltip_text = "No hay un sistema de guardado implementado."
-	_main_buttons.add_child(continue_button)
+	_continue_button = _make_button("Continuar")
+	_continue_button.name = "Continuar"
+	_continue_button.pressed.connect(_show_profiles.bind("continue"))
+	_main_buttons.add_child(_continue_button)
+
+	_delete_button = _make_button("Eliminar partida")
+	_delete_button.name = "EliminarPartida"
+	_delete_button.pressed.connect(_show_profiles.bind("delete"))
+	_main_buttons.add_child(_delete_button)
 
 	var options := _make_button("Opciones")
 	options.name = "Opciones"
@@ -221,6 +250,66 @@ func _build_options() -> void:
 	_options_panel.add_child(back)
 
 
+func _build_profile_panel() -> void:
+	_profile_panel = _make_list("Perfiles")
+	_profile_panel.position.y = MENU_TOP - 12.0
+	_profile_panel.custom_minimum_size.x = 260.0
+	_profile_panel.visible = false
+
+	_profile_title = Label.new()
+	_profile_title.name = "Titulo"
+	_profile_title.theme_type_variation = &"Encabezado"
+	_profile_panel.add_child(_profile_title)
+
+	_profile_name = LineEdit.new()
+	_profile_name.name = "Nombre"
+	_profile_name.placeholder_text = "Nombre del protagonista"
+	_profile_name.max_length = 16
+	_profile_name.custom_minimum_size.x = 170.0
+	_profile_name.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	# Enter en el nombre pasa a elegir la ranura.
+	_profile_name.text_submitted.connect(func(_text: String) -> void: _focus_first_slot())
+	_profile_panel.add_child(_profile_name)
+
+	_profile_message = Label.new()
+	_profile_message.name = "Mensaje"
+	_profile_message.theme_type_variation = &"TextoTenue"
+	_profile_message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_profile_panel.add_child(_profile_message)
+
+	_profile_slots = VBoxContainer.new()
+	_profile_slots.name = "Ranuras"
+	_profile_slots.add_theme_constant_override("separation", 3)
+	_profile_panel.add_child(_profile_slots)
+
+
+func _build_confirm_panel() -> void:
+	_confirm_panel = _make_list("Confirmar")
+	_confirm_panel.position.y = MENU_TOP - 12.0
+	_confirm_panel.custom_minimum_size.x = 260.0
+	_confirm_panel.visible = false
+
+	_confirm_message = Label.new()
+	_confirm_message.name = "Mensaje"
+	_confirm_message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_confirm_panel.add_child(_confirm_message)
+
+	_confirm_buttons = VBoxContainer.new()
+	_confirm_buttons.name = "Botones"
+	_confirm_buttons.add_theme_constant_override("separation", 3)
+	_confirm_panel.add_child(_confirm_buttons)
+
+	var cancel := _make_button("Cancelar")
+	cancel.name = "Cancelar"
+	cancel.pressed.connect(_hide_confirm)
+	_confirm_buttons.add_child(cancel)
+
+	var accept := _make_button("Aceptar")
+	accept.name = "Aceptar"
+	accept.pressed.connect(_on_confirm_accepted)
+	_confirm_buttons.add_child(accept)
+
+
 func _build_footer() -> void:
 	var hint := Label.new()
 	hint.name = "Ayuda"
@@ -263,10 +352,28 @@ func _make_button(label_text: String) -> Button:
 func _show_main_menu() -> void:
 	if _main_buttons == null:
 		return
-	var target := "Opciones" if _options_panel.visible else "NuevaPartida"
+	var target := "NuevaPartida"
+	if _options_panel.visible:
+		target = "Opciones"
+	elif _profile_panel.visible:
+		target = {"continue": "Continuar", "delete": "EliminarPartida"}.get(_profile_mode, "NuevaPartida")
 	_main_buttons.visible = true
 	_options_panel.visible = false
-	(_main_buttons.get_node(target) as Button).grab_focus()
+	_profile_panel.visible = false
+	_confirm_panel.visible = false
+	_continue_button.disabled = not GameManager.has_any_valid_save_slot()
+	_delete_button.disabled = not _has_existing_save_slot()
+	var target_button := _main_buttons.get_node(target) as Button
+	if target_button.disabled:
+		target_button = _main_buttons.get_node("NuevaPartida") as Button
+	target_button.grab_focus()
+
+
+func _has_existing_save_slot() -> bool:
+	for slot_id: int in range(1, GameManager.SAVE_SLOT_COUNT + 1):
+		if bool(GameManager.get_save_slot_info(slot_id).get("exists", false)):
+			return true
+	return false
 
 
 func _show_options() -> void:
@@ -276,20 +383,160 @@ func _show_options() -> void:
 
 
 func _on_new_game_pressed() -> void:
+	_show_profiles("new")
+
+
+## mode: "new" (nombre + ranura), "continue" o "delete".
+func _show_profiles(mode: String) -> void:
+	_profile_mode = mode
+	_main_buttons.visible = false
+	_options_panel.visible = false
+	_confirm_panel.visible = false
+	_profile_panel.visible = true
+	_profile_name.visible = mode == "new"
+	match mode:
+		"new":
+			_profile_title.text = "Nueva partida"
+			_profile_message.text = "Escribe un nombre y elige una ranura."
+		"continue":
+			_profile_title.text = "Continuar"
+			_profile_message.text = "Elige una partida guardada."
+		_:
+			_profile_title.text = "Eliminar partida"
+			_profile_message.text = "Elige la ranura que quieres borrar."
+	_refresh_profile_slots()
+	if mode == "new":
+		_profile_name.text = ""
+		_profile_name.grab_focus()
+	else:
+		_focus_first_slot()
+
+
+func _refresh_profile_slots() -> void:
+	for child: Node in _profile_slots.get_children():
+		_profile_slots.remove_child(child)
+		child.queue_free()
+	for slot_id: int in range(1, GameManager.SAVE_SLOT_COUNT + 1):
+		var info: Dictionary = GameManager.get_save_slot_info(slot_id)
+		var summary := "Ranura %d · vacía" % slot_id
+		if bool(info.get("valid", false)):
+			summary = "Ranura %d · %s · %s" % [slot_id, info.player_name, info.region]
+		elif bool(info.get("exists", false)):
+			summary = "Ranura %d · archivo dañado" % slot_id
+		var button := _make_button(summary)
+		button.name = "Ranura%d" % slot_id
+		if _profile_mode == "continue":
+			button.disabled = not bool(info.get("valid", false))
+		elif _profile_mode == "delete":
+			button.disabled = not bool(info.get("exists", false))
+		button.pressed.connect(_on_profile_slot_pressed.bind(slot_id, info))
+		_profile_slots.add_child(button)
+	var back := _make_button("Volver")
+	back.name = "Volver"
+	back.pressed.connect(_show_main_menu)
+	_profile_slots.add_child(back)
+	_selector.watch(_profile_slots)
+
+
+func _focus_first_slot() -> void:
+	for child: Node in _profile_slots.get_children():
+		var button := child as Button
+		if button != null and not button.disabled:
+			button.grab_focus()
+			return
+
+
+func _on_profile_slot_pressed(slot_id: int, info: Dictionary) -> void:
 	if _starting:
 		return
+	_pending_slot = slot_id
+	match _profile_mode:
+		"continue":
+			_continue_game(slot_id)
+		"delete":
+			_show_confirm("delete", "Se borrará todo el progreso de la ranura %d. No se puede deshacer." % slot_id)
+		_:
+			var normalized := GameManager.normalize_player_name(_profile_name.text)
+			if normalized.is_empty():
+				_profile_message.text = "El nombre lleva de 1 a 16 letras; admite espacios, apóstrofo y guion."
+				_profile_name.grab_focus()
+				return
+			_profile_name.text = normalized
+			if bool(info.get("exists", false)):
+				_show_confirm("overwrite", "La ranura %d ya tiene una partida. ¿Reemplazarla? Se guarda una copia de la anterior." % slot_id)
+			else:
+				_start_new_game(slot_id, false)
+
+
+func _show_confirm(action: String, message: String) -> void:
+	_confirm_action = action
+	_confirm_message.text = message
+	(_confirm_buttons.get_node("Aceptar") as Button).text = "Eliminar" if action == "delete" else "Reemplazar"
+	_profile_panel.visible = false
+	_confirm_panel.visible = true
+	(_confirm_buttons.get_node("Cancelar") as Button).grab_focus()
+
+
+func _hide_confirm() -> void:
+	_confirm_panel.visible = false
+	_profile_panel.visible = true
+	var slot_button := _profile_slots.get_node_or_null("Ranura%d" % _pending_slot) as Button
+	if slot_button != null:
+		slot_button.grab_focus()
+
+
+func _on_confirm_accepted() -> void:
+	if _confirm_action == "overwrite":
+		_start_new_game(_pending_slot, true)
+		return
+	if not GameManager.delete_save_slot(_pending_slot):
+		_hide_confirm()
+		_profile_message.text = GameManager.last_save_error
+		return
+	if not _has_existing_save_slot():
+		_show_main_menu()
+		return
+	_hide_confirm()
+	_profile_message.text = "Partida eliminada."
+	_refresh_profile_slots()
+	_focus_first_slot()
+
+
+func _start_new_game(slot_id: int, overwrite: bool) -> void:
 	if not ResourceLoader.exists(GAME_SCENE):
 		push_error("No existe la escena inicial: %s" % GAME_SCENE)
 		return
+	GameManager.reset_for_new_game()
+	if not GameManager.create_new_profile(slot_id, _profile_name.text, overwrite):
+		_confirm_panel.visible = false
+		_profile_panel.visible = true
+		_profile_message.text = GameManager.last_save_error
+		return
+	get_tree().set_meta(GameManager.PRISON_CINEMATIC_META_KEY, false)
+	await _fade_out()
+	var error := get_tree().change_scene_to_file(GAME_SCENE)
+	if error != OK:
+		push_error("No se pudo iniciar la partida. Error de escena: %s" % error)
+
+
+func _continue_game(slot_id: int) -> void:
+	await _fade_out()
+	if GameManager.load_save_slot(slot_id):
+		return
+	# La partida no cargó: se deshace el fundido y se explica por qué.
+	_starting = false
+	_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	create_tween().tween_property(_fade, "color:a", 0.0, FADE_OUT_TIME)
+	_profile_message.text = GameManager.last_save_error
+	_focus_first_slot()
+
+
+func _fade_out() -> void:
 	_starting = true
 	_fade.mouse_filter = Control.MOUSE_FILTER_STOP
 	var tween := create_tween()
 	tween.tween_property(_fade, "color:a", 1.0, FADE_OUT_TIME)
 	await tween.finished
-	GameManager.reset_for_new_game()
-	var error := get_tree().change_scene_to_file(GAME_SCENE)
-	if error != OK:
-		push_error("No se pudo iniciar la partida. Error de escena: %s" % error)
 
 
 func _on_master_volume_changed(value: float) -> void:

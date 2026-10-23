@@ -246,6 +246,12 @@ theme_type_variation = &"BotonMenu"
 text = "Opciones"
 alignment = 0
 
+[node name="Guardar" type="Button" parent="Interfaz/PanelMenu/Margen/BotonesPausa"]
+layout_mode = 2
+theme_type_variation = &"BotonMenu"
+text = "Guardar partida"
+alignment = 0
+
 [node name="MenuPrincipal" type="Button" parent="Interfaz/PanelMenu/Margen/BotonesPausa"]
 layout_mode = 2
 theme_type_variation = &"BotonMenu"

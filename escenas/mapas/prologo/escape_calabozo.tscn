@@ -1,0 +1,1132 @@
+[gd_scene format=3 uid="uid://c1ip373fpj34i"]
+
+[ext_resource type="TileSet" uid="uid://b61258c4xp07u" path="res://escenas/mapas/prologo/tileset_dungeon_platformer.tres" id="1_tileset"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/spawn_point.tscn" id="2_spawn"]
+[ext_resource type="Script" uid="uid://2hxvdw0c4cgk" path="res://scripts/transitions/map_spawn_controller.gd" id="3_spawn_controller"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/map_transition.tscn" id="4_transition"]
+[ext_resource type="Texture2D" uid="uid://ds7ncq5is2hhy" path="res://prueba/Dungeon Tile Set.png" id="5_dungeon"]
+[ext_resource type="Script" uid="uid://b4qvg3rrq8nnu" path="res://scripts/environment/kill_zone.gd" id="6_kill"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/climb_zone.tscn" id="7_climb"]
+[ext_resource type="Script" uid="uid://bkvqx03fc60f2" path="res://scripts/camera/map_bounds.gd" id="9_bounds"]
+[ext_resource type="TileSet" uid="uid://bgrgnbyqk6iwm" path="res://escenas/mapas/prologo/tileset_dungeon_sidescroller_raou.tres" id="10_raou"]
+[ext_resource type="Texture2D" uid="uid://broyod3l3wymd" path="res://prueba/dungeon_sidescroller-Raou/spr_torch.png" id="11_1cs1e"]
+[ext_resource type="Texture2D" uid="uid://c07ov8a036g6h" path="res://prueba/dungeon_sidescroller-Raou/Tilesetv3.png" id="11_raou_texture"]
+
+[sub_resource type="RectangleShape2D" id="HazardShape"]
+size = Vector2(42, 18)
+
+[sub_resource type="RectangleShape2D" id="ExitShape"]
+size = Vector2(24, 72)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tujam"]
+texture = ExtResource("5_dungeon")
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+11:1/0 = 0
+12:1/0 = 0
+13:1/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+10:2/0 = 0
+11:2/0 = 0
+12:2/0 = 0
+13:2/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+8:3/0 = 0
+9:3/0 = 0
+10:3/0 = 0
+11:3/0 = 0
+12:3/0 = 0
+13:3/0 = 0
+8:4/0 = 0
+9:4/0 = 0
+10:4/0 = 0
+11:4/0 = 0
+12:4/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+8:5/0 = 0
+9:5/0 = 0
+10:5/0 = 0
+11:5/0 = 0
+12:5/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+6:6/0 = 0
+7:6/0 = 0
+8:6/0 = 0
+9:6/0 = 0
+10:6/0 = 0
+11:6/0 = 0
+12:6/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+6:7/0 = 0
+7:7/0 = 0
+8:7/0 = 0
+9:7/0 = 0
+10:7/0 = 0
+11:7/0 = 0
+12:7/0 = 0
+5:8/0 = 0
+1:9/0 = 0
+2:9/0 = 0
+3:9/0 = 0
+5:9/0 = 0
+7:9/0 = 0
+8:9/0 = 0
+9:9/0 = 0
+10:9/0 = 0
+11:9/0 = 0
+12:9/0 = 0
+13:9/0 = 0
+1:10/0 = 0
+2:10/0 = 0
+3:10/0 = 0
+5:10/0 = 0
+7:10/0 = 0
+8:10/0 = 0
+10:10/0 = 0
+12:10/0 = 0
+13:10/0 = 0
+1:11/0 = 0
+2:11/0 = 0
+5:11/0 = 0
+7:11/0 = 0
+8:11/0 = 0
+9:11/0 = 0
+10:11/0 = 0
+12:11/0 = 0
+13:11/0 = 0
+1:12/0 = 0
+2:12/0 = 0
+3:12/0 = 0
+4:12/0 = 0
+5:12/0 = 0
+6:12/0 = 0
+7:12/0 = 0
+8:12/0 = 0
+9:12/0 = 0
+10:12/0 = 0
+11:12/0 = 0
+12:12/0 = 0
+2:13/0 = 0
+4:13/0 = 0
+5:13/0 = 0
+6:13/0 = 0
+7:13/0 = 0
+8:13/0 = 0
+9:13/0 = 0
+1:14/0 = 0
+2:14/0 = 0
+3:14/0 = 0
+4:14/0 = 0
+5:14/0 = 0
+6:14/0 = 0
+10:14/0 = 0
+11:14/0 = 0
+12:14/0 = 0
+13:14/0 = 0
+7:15/0 = 0
+8:15/0 = 0
+9:15/0 = 0
+10:15/0 = 0
+11:15/0 = 0
+12:15/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i37yw"]
+texture = ExtResource("11_1cs1e")
+texture_region_size = Vector2i(28, 27)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cpx3f"]
+texture = ExtResource("11_raou_texture")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+11:0/0 = 0
+12:0/0 = 0
+13:0/0 = 0
+14:0/0 = 0
+0:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+11:1/0 = 0
+12:1/0 = 0
+13:1/0 = 0
+14:1/0 = 0
+15:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+12:2/0 = 0
+14:2/0 = 0
+15:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+8:3/0 = 0
+9:3/0 = 0
+10:3/0 = 0
+11:3/0 = 0
+12:3/0 = 0
+13:3/0 = 0
+14:3/0 = 0
+15:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+8:4/0 = 0
+9:4/0 = 0
+10:4/0 = 0
+11:4/0 = 0
+12:4/0 = 0
+13:4/0 = 0
+14:4/0 = 0
+15:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+8:5/0 = 0
+9:5/0 = 0
+10:5/0 = 0
+11:5/0 = 0
+12:5/0 = 0
+13:5/0 = 0
+14:5/0 = 0
+15:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+7:6/0 = 0
+8:6/0 = 0
+9:6/0 = 0
+10:6/0 = 0
+11:6/0 = 0
+13:6/0 = 0
+14:6/0 = 0
+15:6/0 = 0
+16:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+4:7/0 = 0
+5:7/0 = 0
+6:7/0 = 0
+7:7/0 = 0
+8:7/0 = 0
+9:7/0 = 0
+10:7/0 = 0
+11:7/0 = 0
+13:7/0 = 0
+14:7/0 = 0
+15:7/0 = 0
+16:7/0 = 0
+0:8/0 = 0
+1:8/0 = 0
+2:8/0 = 0
+3:8/0 = 0
+4:8/0 = 0
+5:8/0 = 0
+6:8/0 = 0
+7:8/0 = 0
+8:8/0 = 0
+9:8/0 = 0
+10:8/0 = 0
+11:8/0 = 0
+14:8/0 = 0
+15:8/0 = 0
+0:9/0 = 0
+1:9/0 = 0
+2:9/0 = 0
+3:9/0 = 0
+4:9/0 = 0
+5:9/0 = 0
+6:9/0 = 0
+7:9/0 = 0
+8:9/0 = 0
+9:9/0 = 0
+10:9/0 = 0
+11:9/0 = 0
+12:9/0 = 0
+13:9/0 = 0
+14:9/0 = 0
+15:9/0 = 0
+0:10/0 = 0
+1:10/0 = 0
+2:10/0 = 0
+3:10/0 = 0
+4:10/0 = 0
+5:10/0 = 0
+6:10/0 = 0
+7:10/0 = 0
+8:10/0 = 0
+9:10/0 = 0
+10:10/0 = 0
+11:10/0 = 0
+12:10/0 = 0
+13:10/0 = 0
+14:10/0 = 0
+15:10/0 = 0
+16:10/0 = 0
+0:11/0 = 0
+1:11/0 = 0
+2:11/0 = 0
+3:11/0 = 0
+4:11/0 = 0
+5:11/0 = 0
+6:11/0 = 0
+7:11/0 = 0
+8:11/0 = 0
+9:11/0 = 0
+10:11/0 = 0
+11:11/0 = 0
+12:11/0 = 0
+13:11/0 = 0
+14:11/0 = 0
+15:11/0 = 0
+16:11/0 = 0
+0:12/0 = 0
+2:12/0 = 0
+3:12/0 = 0
+5:12/0 = 0
+6:12/0 = 0
+7:12/0 = 0
+8:12/0 = 0
+9:12/0 = 0
+10:12/0 = 0
+11:12/0 = 0
+12:12/0 = 0
+13:12/0 = 0
+14:12/0 = 0
+15:12/0 = 0
+16:12/0 = 0
+0:13/0 = 0
+1:13/0 = 0
+2:13/0 = 0
+3:13/0 = 0
+4:13/0 = 0
+6:13/0 = 0
+7:13/0 = 0
+8:13/0 = 0
+9:13/0 = 0
+10:13/0 = 0
+11:13/0 = 0
+12:13/0 = 0
+13:13/0 = 0
+0:14/0 = 0
+1:14/0 = 0
+2:14/0 = 0
+3:14/0 = 0
+4:14/0 = 0
+5:14/0 = 0
+6:14/0 = 0
+7:14/0 = 0
+8:14/0 = 0
+9:14/0 = 0
+10:14/0 = 0
+11:14/0 = 0
+12:14/0 = 0
+13:14/0 = 0
+0:15/0 = 0
+1:15/0 = 0
+2:15/0 = 0
+3:15/0 = 0
+4:15/0 = 0
+5:15/0 = 0
+6:15/0 = 0
+7:15/0 = 0
+8:15/0 = 0
+9:15/0 = 0
+10:15/0 = 0
+11:15/0 = 0
+12:15/0 = 0
+13:15/0 = 0
+0:16/0 = 0
+1:16/0 = 0
+2:16/0 = 0
+3:16/0 = 0
+4:16/0 = 0
+5:16/0 = 0
+6:16/0 = 0
+7:16/0 = 0
+8:16/0 = 0
+9:16/0 = 0
+10:16/0 = 0
+11:16/0 = 0
+12:16/0 = 0
+13:16/0 = 0
+0:17/0 = 0
+1:17/0 = 0
+2:17/0 = 0
+3:17/0 = 0
+4:17/0 = 0
+5:17/0 = 0
+6:17/0 = 0
+7:17/0 = 0
+8:17/0 = 0
+9:17/0 = 0
+10:17/0 = 0
+11:17/0 = 0
+12:17/0 = 0
+13:17/0 = 0
+14:17/0 = 0
+15:17/0 = 0
+16:17/0 = 0
+2:18/0 = 0
+3:18/0 = 0
+5:18/0 = 0
+6:18/0 = 0
+7:18/0 = 0
+8:18/0 = 0
+9:18/0 = 0
+10:18/0 = 0
+11:18/0 = 0
+12:18/0 = 0
+13:18/0 = 0
+14:18/0 = 0
+15:18/0 = 0
+16:18/0 = 0
+0:19/0 = 0
+1:19/0 = 0
+2:19/0 = 0
+3:19/0 = 0
+4:19/0 = 0
+5:19/0 = 0
+6:19/0 = 0
+7:19/0 = 0
+8:19/0 = 0
+9:19/0 = 0
+10:19/0 = 0
+11:19/0 = 0
+12:19/0 = 0
+13:19/0 = 0
+14:19/0 = 0
+15:19/0 = 0
+16:19/0 = 0
+0:20/0 = 0
+1:20/0 = 0
+2:20/0 = 0
+3:20/0 = 0
+4:20/0 = 0
+5:20/0 = 0
+6:20/0 = 0
+7:20/0 = 0
+8:20/0 = 0
+9:20/0 = 0
+10:20/0 = 0
+11:20/0 = 0
+12:20/0 = 0
+13:20/0 = 0
+0:21/0 = 0
+1:21/0 = 0
+2:21/0 = 0
+3:21/0 = 0
+4:21/0 = 0
+5:21/0 = 0
+6:21/0 = 0
+7:21/0 = 0
+8:21/0 = 0
+9:21/0 = 0
+10:21/0 = 0
+11:21/0 = 0
+12:21/0 = 0
+13:21/0 = 0
+0:22/0 = 0
+1:22/0 = 0
+2:22/0 = 0
+3:22/0 = 0
+4:22/0 = 0
+5:22/0 = 0
+6:22/0 = 0
+7:22/0 = 0
+8:22/0 = 0
+9:22/0 = 0
+10:22/0 = 0
+11:22/0 = 0
+12:22/0 = 0
+13:22/0 = 0
+0:23/0 = 0
+1:23/0 = 0
+2:23/0 = 0
+3:23/0 = 0
+4:23/0 = 0
+5:23/0 = 0
+6:23/0 = 0
+0:24/0 = 0
+1:24/0 = 0
+2:24/0 = 0
+3:24/0 = 0
+5:24/0 = 0
+6:24/0 = 0
+11:24/0 = 0
+12:24/0 = 0
+13:24/0 = 0
+14:24/0 = 0
+0:25/0 = 0
+1:25/0 = 0
+5:25/0 = 0
+6:25/0 = 0
+11:25/0 = 0
+12:25/0 = 0
+13:25/0 = 0
+14:25/0 = 0
+0:26/0 = 0
+1:26/0 = 0
+2:26/0 = 0
+3:26/0 = 0
+5:26/0 = 0
+6:26/0 = 0
+7:26/0 = 0
+8:26/0 = 0
+9:26/0 = 0
+11:26/0 = 0
+12:26/0 = 0
+13:26/0 = 0
+14:26/0 = 0
+0:27/0 = 0
+1:27/0 = 0
+2:27/0 = 0
+3:27/0 = 0
+5:27/0 = 0
+6:27/0 = 0
+7:27/0 = 0
+8:27/0 = 0
+9:27/0 = 0
+11:27/0 = 0
+12:27/0 = 0
+13:27/0 = 0
+14:27/0 = 0
+0:28/0 = 0
+1:28/0 = 0
+2:28/0 = 0
+3:28/0 = 0
+5:28/0 = 0
+6:28/0 = 0
+7:28/0 = 0
+8:28/0 = 0
+9:28/0 = 0
+10:28/0 = 0
+11:28/0 = 0
+12:28/0 = 0
+13:28/0 = 0
+14:28/0 = 0
+15:28/0 = 0
+0:29/0 = 0
+1:29/0 = 0
+2:29/0 = 0
+3:29/0 = 0
+5:29/0 = 0
+6:29/0 = 0
+7:29/0 = 0
+8:29/0 = 0
+9:29/0 = 0
+10:29/0 = 0
+11:29/0 = 0
+12:29/0 = 0
+13:29/0 = 0
+15:29/0 = 0
+0:30/0 = 0
+1:30/0 = 0
+2:30/0 = 0
+3:30/0 = 0
+5:30/0 = 0
+6:30/0 = 0
+7:30/0 = 0
+8:30/0 = 0
+9:30/0 = 0
+10:30/0 = 0
+11:30/0 = 0
+12:30/0 = 0
+13:30/0 = 0
+15:30/0 = 0
+0:31/0 = 0
+1:31/0 = 0
+2:31/0 = 0
+3:31/0 = 0
+5:31/0 = 0
+6:31/0 = 0
+7:31/0 = 0
+8:31/0 = 0
+9:31/0 = 0
+10:31/0 = 0
+11:31/0 = 0
+12:31/0 = 0
+13:31/0 = 0
+15:31/0 = 0
+0:32/0 = 0
+1:32/0 = 0
+2:32/0 = 0
+3:32/0 = 0
+10:32/0 = 0
+11:32/0 = 0
+12:32/0 = 0
+13:32/0 = 0
+14:32/0 = 0
+15:32/0 = 0
+0:33/0 = 0
+1:33/0 = 0
+2:33/0 = 0
+3:33/0 = 0
+4:33/0 = 0
+5:33/0 = 0
+6:33/0 = 0
+7:33/0 = 0
+8:33/0 = 0
+9:33/0 = 0
+10:33/0 = 0
+11:33/0 = 0
+12:33/0 = 0
+13:33/0 = 0
+15:33/0 = 0
+0:34/0 = 0
+1:34/0 = 0
+2:34/0 = 0
+3:34/0 = 0
+4:34/0 = 0
+5:34/0 = 0
+6:34/0 = 0
+7:34/0 = 0
+8:34/0 = 0
+9:34/0 = 0
+10:34/0 = 0
+11:34/0 = 0
+12:34/0 = 0
+13:34/0 = 0
+15:34/0 = 0
+0:35/0 = 0
+1:35/0 = 0
+2:35/0 = 0
+3:35/0 = 0
+4:35/0 = 0
+5:35/0 = 0
+6:35/0 = 0
+7:35/0 = 0
+8:35/0 = 0
+9:35/0 = 0
+10:35/0 = 0
+11:35/0 = 0
+12:35/0 = 0
+13:35/0 = 0
+15:35/0 = 0
+0:36/0 = 0
+1:36/0 = 0
+2:36/0 = 0
+3:36/0 = 0
+4:36/0 = 0
+5:36/0 = 0
+6:36/0 = 0
+7:36/0 = 0
+8:36/0 = 0
+9:36/0 = 0
+10:36/0 = 0
+11:36/0 = 0
+12:36/0 = 0
+13:36/0 = 0
+14:36/0 = 0
+15:36/0 = 0
+0:37/0 = 0
+1:37/0 = 0
+2:37/0 = 0
+3:37/0 = 0
+4:37/0 = 0
+5:37/0 = 0
+6:37/0 = 0
+7:37/0 = 0
+8:37/0 = 0
+9:37/0 = 0
+10:37/0 = 0
+11:37/0 = 0
+12:37/0 = 0
+13:37/0 = 0
+14:37/0 = 0
+15:37/0 = 0
+0:38/0 = 0
+1:38/0 = 0
+2:38/0 = 0
+3:38/0 = 0
+4:38/0 = 0
+5:38/0 = 0
+6:38/0 = 0
+7:38/0 = 0
+8:38/0 = 0
+9:38/0 = 0
+10:38/0 = 0
+11:38/0 = 0
+12:38/0 = 0
+13:38/0 = 0
+14:38/0 = 0
+15:38/0 = 0
+0:39/0 = 0
+1:39/0 = 0
+2:39/0 = 0
+4:39/0 = 0
+5:39/0 = 0
+6:39/0 = 0
+7:39/0 = 0
+8:39/0 = 0
+9:39/0 = 0
+10:39/0 = 0
+11:39/0 = 0
+12:39/0 = 0
+13:39/0 = 0
+14:39/0 = 0
+15:39/0 = 0
+0:40/0 = 0
+1:40/0 = 0
+2:40/0 = 0
+4:40/0 = 0
+5:40/0 = 0
+6:40/0 = 0
+7:40/0 = 0
+8:40/0 = 0
+9:40/0 = 0
+10:40/0 = 0
+11:40/0 = 0
+12:40/0 = 0
+13:40/0 = 0
+14:40/0 = 0
+15:40/0 = 0
+1:41/0 = 0
+2:41/0 = 0
+3:41/0 = 0
+4:41/0 = 0
+5:41/0 = 0
+6:41/0 = 0
+7:41/0 = 0
+8:41/0 = 0
+9:41/0 = 0
+10:41/0 = 0
+11:41/0 = 0
+12:41/0 = 0
+13:41/0 = 0
+14:41/0 = 0
+15:41/0 = 0
+1:42/0 = 0
+2:42/0 = 0
+3:42/0 = 0
+4:42/0 = 0
+5:42/0 = 0
+6:42/0 = 0
+7:42/0 = 0
+8:42/0 = 0
+9:42/0 = 0
+0:43/0 = 0
+1:43/0 = 0
+2:43/0 = 0
+3:43/0 = 0
+4:43/0 = 0
+5:43/0 = 0
+6:43/0 = 0
+7:43/0 = 0
+8:43/0 = 0
+9:43/0 = 0
+13:43/0 = 0
+0:44/0 = 0
+1:44/0 = 0
+2:44/0 = 0
+3:44/0 = 0
+4:44/0 = 0
+5:44/0 = 0
+6:44/0 = 0
+7:44/0 = 0
+8:44/0 = 0
+9:44/0 = 0
+11:44/0 = 0
+12:44/0 = 0
+13:44/0 = 0
+14:44/0 = 0
+0:45/0 = 0
+1:45/0 = 0
+2:45/0 = 0
+4:45/0 = 0
+5:45/0 = 0
+6:45/0 = 0
+7:45/0 = 0
+8:45/0 = 0
+9:45/0 = 0
+12:45/0 = 0
+13:45/0 = 0
+4:46/0 = 0
+5:46/0 = 0
+6:46/0 = 0
+7:46/0 = 0
+8:46/0 = 0
+9:46/0 = 0
+10:46/0 = 0
+11:46/0 = 0
+12:46/0 = 0
+4:47/0 = 0
+5:47/0 = 0
+6:47/0 = 0
+7:47/0 = 0
+8:47/0 = 0
+9:47/0 = 0
+12:47/0 = 0
+4:48/0 = 0
+5:48/0 = 0
+6:48/0 = 0
+7:48/0 = 0
+8:48/0 = 0
+9:48/0 = 0
+10:48/0 = 0
+11:48/0 = 0
+12:48/0 = 0
+4:49/0 = 0
+5:49/0 = 0
+7:49/0 = 0
+8:49/0 = 0
+9:49/0 = 0
+10:49/0 = 0
+11:49/0 = 0
+12:49/0 = 0
+13:49/0 = 0
+4:50/0 = 0
+5:50/0 = 0
+7:50/0 = 0
+8:50/0 = 0
+9:50/0 = 0
+11:50/0 = 0
+12:50/0 = 0
+13:50/0 = 0
+10:51/0 = 0
+11:51/0 = 0
+12:51/0 = 0
+13:51/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_yqqq1"]
+sources/0 = SubResource("TileSetAtlasSource_tujam")
+sources/1 = SubResource("TileSetAtlasSource_i37yw")
+sources/2 = SubResource("TileSetAtlasSource_cpx3f")
+
+[node name="EscapeCalabozo" type="Node2D" unique_id=1762157672]
+script = ExtResource("3_spawn_controller")
+
+[node name="Fondo" type="ColorRect" parent="." unique_id=60434058]
+z_index = -30
+offset_left = -82.0
+offset_top = 466.0
+offset_right = 1198.0
+offset_bottom = 866.0
+color = Color(0.025, 0.03, 0.055, 1)
+
+[node name="MuroFondo" type="TileMapLayer" parent="." unique_id=1122913847]
+z_index = -10
+tile_set = ExtResource("1_tileset")
+
+[node name="DecoracionRaou" type="TileMapLayer" parent="." unique_id=1161569894]
+z_index = 3
+tile_set = ExtResource("10_raou")
+
+[node name="Terreno" type="TileMapLayer" parent="." unique_id=101980293]
+tile_set = ExtResource("1_tileset")
+
+[node name="SpawnInicio" parent="." unique_id=1272490477 instance=ExtResource("2_spawn")]
+position = Vector2(48, 257)
+
+[node name="DesdeCamara" parent="." unique_id=1321940162 instance=ExtResource("2_spawn")]
+position = Vector2(48, 257)
+spawn_id = &"DesdeCamara"
+
+[node name="DecoracionFondo" type="Node2D" parent="." unique_id=1740735703]
+z_index = -2
+
+[node name="MuralMamposteriaRaou" type="Sprite2D" parent="DecoracionFondo" unique_id=1148959041]
+position = Vector2(224, 128)
+texture = ExtResource("11_raou_texture")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 240, 112, 64)
+
+[node name="Decoracion" type="Node2D" parent="." unique_id=829119173]
+z_index = 2
+
+[node name="Barrote0" type="Line2D" parent="Decoracion" unique_id=1107120179]
+points = PackedVector2Array(128, 150, 128, 300)
+width = 3.0
+default_color = Color(0.15, 0.16, 0.2, 1)
+
+[node name="Barrote1" type="Line2D" parent="Decoracion" unique_id=119988324]
+points = PackedVector2Array(144, 150, 144, 300)
+width = 3.0
+default_color = Color(0.15, 0.16, 0.2, 1)
+
+[node name="Barrote2" type="Line2D" parent="Decoracion" unique_id=355622146]
+points = PackedVector2Array(160, 150, 160, 300)
+width = 3.0
+default_color = Color(0.15, 0.16, 0.2, 1)
+
+[node name="Barrote3" type="Line2D" parent="Decoracion" unique_id=1446739035]
+points = PackedVector2Array(176, 150, 176, 300)
+width = 3.0
+default_color = Color(0.15, 0.16, 0.2, 1)
+
+[node name="Barrote4" type="Line2D" parent="Decoracion" unique_id=1231455192]
+points = PackedVector2Array(192, 150, 192, 300)
+width = 3.0
+default_color = Color(0.15, 0.16, 0.2, 1)
+
+[node name="MarcoCeldaSuperior" type="Line2D" parent="Decoracion" unique_id=1875066839]
+points = PackedVector2Array(120, 150, 200, 150)
+width = 4.0
+default_color = Color(0.36, 0.35, 0.33, 1)
+
+[node name="MarcoCeldaInferior" type="Line2D" parent="Decoracion" unique_id=1025135942]
+points = PackedVector2Array(120, 300, 200, 300)
+width = 4.0
+default_color = Color(0.36, 0.35, 0.33, 1)
+
+[node name="ArcoCelda" type="Sprite2D" parent="Decoracion" unique_id=153421788]
+z_index = 2
+position = Vector2(72, 112)
+texture = ExtResource("5_dungeon")
+centered = false
+region_enabled = true
+region_rect = Rect2(80, 16, 32, 48)
+
+[node name="CadenaSalaOeste" type="Sprite2D" parent="Decoracion" unique_id=553039022]
+z_index = 2
+position = Vector2(255, 125)
+texture = ExtResource("5_dungeon")
+centered = false
+region_enabled = true
+region_rect = Rect2(16, 192, 48, 32)
+
+[node name="CadenaSalaCentral" type="Sprite2D" parent="Decoracion" unique_id=1130399171]
+z_index = 2
+position = Vector2(650, 104)
+texture = ExtResource("5_dungeon")
+centered = false
+region_enabled = true
+region_rect = Rect2(16, 192, 48, 32)
+
+[node name="EscaleraMuro" type="Sprite2D" parent="Decoracion" unique_id=1990965472]
+z_index = 1
+position = Vector2(548, 176)
+texture = ExtResource("5_dungeon")
+centered = false
+region_enabled = true
+region_rect = Rect2(80, 144, 16, 80)
+
+[node name="CajaMaderaA" type="Sprite2D" parent="Decoracion" unique_id=761102974]
+z_index = 2
+position = Vector2(332, 272)
+texture = ExtResource("5_dungeon")
+centered = false
+region_enabled = true
+region_rect = Rect2(144, 160, 32, 32)
+
+[node name="CajaMaderaB" type="Sprite2D" parent="Decoracion" unique_id=571535742]
+z_index = 2
+position = Vector2(368, 288)
+texture = ExtResource("5_dungeon")
+centered = false
+region_enabled = true
+region_rect = Rect2(176, 160, 32, 32)
+
+[node name="Cofre" type="Sprite2D" parent="Decoracion" unique_id=703936069]
+z_index = 2
+position = Vector2(848, 224)
+texture = ExtResource("5_dungeon")
+centered = false
+region_enabled = true
+region_rect = Rect2(208, 192, 32, 48)
+
+[node name="PinchosAtlas" type="Sprite2D" parent="Decoracion" unique_id=842860009]
+z_index = 3
+position = Vector2(272, 304)
+texture = ExtResource("5_dungeon")
+centered = false
+region_enabled = true
+region_rect = Rect2(16, 224, 64, 16)
+
+[node name="PinchosAtlas2" type="Sprite2D" parent="Decoracion" unique_id=828129356]
+z_index = 3
+position = Vector2(788, 224)
+texture = ExtResource("5_dungeon")
+centered = false
+region_enabled = true
+region_rect = Rect2(16, 224, 64, 16)
+
+[node name="EscalonDecorativo0" type="Polygon2D" parent="Decoracion" unique_id=1088364920]
+z_index = 1
+position = Vector2(414, 272)
+color = Color(0.34, 0.35, 0.4, 1)
+polygon = PackedVector2Array(-8, 8, 8, -8, 24, -8, 24, 8)
+
+[node name="EscalonDecorativo1" type="Polygon2D" parent="Decoracion" unique_id=203707270]
+z_index = 1
+position = Vector2(430, 256)
+color = Color(0.34, 0.35, 0.4, 1)
+polygon = PackedVector2Array(-8, 8, 8, -8, 24, -8, 24, 8)
+
+[node name="EscalonDecorativo2" type="Polygon2D" parent="Decoracion" unique_id=1273341330]
+z_index = 1
+position = Vector2(446, 240)
+color = Color(0.34, 0.35, 0.4, 1)
+polygon = PackedVector2Array(-8, 8, 8, -8, 24, -8, 24, 8)
+
+[node name="EscalonDecorativo3" type="Polygon2D" parent="Decoracion" unique_id=992365444]
+z_index = 1
+position = Vector2(462, 224)
+color = Color(0.34, 0.35, 0.4, 1)
+polygon = PackedVector2Array(-8, 8, 8, -8, 24, -8, 24, 8)
+
+[node name="EscalonDecorativo4" type="Polygon2D" parent="Decoracion" unique_id=1111088167]
+z_index = 1
+position = Vector2(478, 208)
+color = Color(0.34, 0.35, 0.4, 1)
+polygon = PackedVector2Array(-8, 8, 8, -8, 24, -8, 24, 8)
+
+[node name="AntorchaSoporte0" type="Polygon2D" parent="Decoracion" unique_id=462645216]
+z_index = 2
+position = Vector2(280, 200)
+color = Color(0.28, 0.24, 0.22, 1)
+polygon = PackedVector2Array(0, 0, 10, 0, 10, 22, -10, 22, -10, 0)
+
+[node name="AntorchaLlama0" type="Polygon2D" parent="Decoracion" unique_id=970210402]
+z_index = 3
+position = Vector2(280, 191)
+color = Color(1, 0.48, 0.12, 1)
+polygon = PackedVector2Array(0, -12, 5, -4, 4, 2, 0, 5, -4, 2, -5, -4)
+
+[node name="AntorchaSoporte1" type="Polygon2D" parent="Decoracion" unique_id=1237389727]
+z_index = 2
+position = Vector2(704, 184)
+color = Color(0.28, 0.24, 0.22, 1)
+polygon = PackedVector2Array(0, 0, 10, 0, 10, 22, -10, 22, -10, 0)
+
+[node name="AntorchaLlama1" type="Polygon2D" parent="Decoracion" unique_id=276767283]
+z_index = 3
+position = Vector2(704, 175)
+color = Color(1, 0.48, 0.12, 1)
+polygon = PackedVector2Array(0, -12, 5, -4, 4, 2, 0, 5, -4, 2, -5, -4)
+
+[node name="AntorchaSoporte2" type="Polygon2D" parent="Decoracion" unique_id=476756636]
+z_index = 2
+position = Vector2(1030, 152)
+color = Color(0.28, 0.24, 0.22, 1)
+polygon = PackedVector2Array(0, 0, 10, 0, 10, 22, -10, 22, -10, 0)
+
+[node name="AntorchaLlama2" type="Polygon2D" parent="Decoracion" unique_id=1556108348]
+z_index = 3
+position = Vector2(1030, 143)
+color = Color(1, 0.48, 0.12, 1)
+polygon = PackedVector2Array(0, -12, 5, -4, 4, 2, 0, 5, -4, 2, -5, -4)
+
+[node name="ClimbZoneEscalera" parent="." unique_id=1580073932 instance=ExtResource("7_climb")]
+position = Vector2(556, 216)
+
+[node name="TrampaOeste" type="Area2D" parent="." unique_id=1552655643]
+position = Vector2(296, 312)
+collision_layer = 0
+script = ExtResource("6_kill")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TrampaOeste" unique_id=688585364]
+shape = SubResource("HazardShape")
+
+[node name="TrampaEste" type="Area2D" parent="." unique_id=553304029]
+position = Vector2(800, 232)
+collision_layer = 0
+script = ExtResource("6_kill")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TrampaEste" unique_id=554615988]
+shape = SubResource("HazardShape")
+
+[node name="SalidaCastillo" parent="." unique_id=1814519486 instance=ExtResource("4_transition")]
+position = Vector2(1256, 177)
+target_scene_path = "res://escenas/mapas/prologo/interior_castillo.tscn"
+target_spawn_id = &"DesdeCalabozo"
+trigger_delay = 0.2
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="SalidaCastillo" unique_id=2121460569]
+shape = SubResource("ExitShape")
+
+[node name="MapBounds" type="Node2D" parent="." unique_id=838373351]
+script = ExtResource("9_bounds")
+right = 1280
+bottom = 400
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1842856956]
+position = Vector2(640, 200)
+limit_left = 0
+limit_top = 0
+limit_right = 1280
+limit_bottom = 400
+
+[node name="PrimerPlano" type="Node2D" parent="." unique_id=554171740]
+z_index = 8
+
+[node name="PortonCeldaRaou" type="Sprite2D" parent="PrimerPlano" unique_id=70531815]
+position = Vector2(112, 144)
+texture = ExtResource("11_raou_texture")
+centered = false
+region_enabled = true
+region_rect = Rect2(160, 384, 48, 80)
+
+[node name="AtlasAmbientalAdicional" type="TileMapLayer" parent="." unique_id=776821285]
+tile_set = SubResource("TileSet_yqqq1")

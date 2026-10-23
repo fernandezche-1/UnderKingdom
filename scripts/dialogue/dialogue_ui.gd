@@ -22,6 +22,7 @@ var _active: bool = false
 var _pause_advance: bool = false
 var _pause_serial: int = 0
 var _portrait_tween: Tween
+var _single_portrait_mode: bool = false
 
 
 func _ready() -> void:
@@ -44,6 +45,37 @@ func start_dialogue(lines: Array, portraits: Dictionary = {}) -> void:
     _advance()
 
 
+## Compacta el diálogo para la cinemática de la Cámara del Sellado sin cambiar
+## la presentación de esta escena en sus otros usos.
+func configure_prison_cinematic() -> void:
+    _single_portrait_mode = true
+    panel.offset_top = 200.0
+    panel.offset_bottom = 262.0
+    panel.color = Color(0.035, 0.035, 0.055, 0.88)
+    left_portrait.offset_left = 12.0
+    left_portrait.offset_top = 8.0
+    left_portrait.offset_right = 52.0
+    left_portrait.offset_bottom = 48.0
+    left_portrait.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+    right_portrait.offset_left = 412.0
+    right_portrait.offset_top = 8.0
+    right_portrait.offset_right = 452.0
+    right_portrait.offset_bottom = 48.0
+    right_portrait.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+    speaker_label.offset_left = 62.0
+    speaker_label.offset_top = 4.0
+    speaker_label.offset_right = 402.0
+    speaker_label.offset_bottom = 19.0
+    dialogue_label.offset_left = 62.0
+    dialogue_label.offset_top = 19.0
+    dialogue_label.offset_right = 402.0
+    dialogue_label.offset_bottom = 58.0
+    continue_label.offset_left = 420.0
+    continue_label.offset_top = 50.0
+    continue_label.offset_right = 456.0
+    continue_label.offset_bottom = 61.0
+
+
 func _unhandled_input(event: InputEvent) -> void:
     if not _active:
         return
@@ -64,7 +96,14 @@ func _advance() -> void:
     var line: Dictionary = _lines[_index]
     var speaker_id := String(line.get("speaker_id", ""))
     var emotion := String(line.get("expression", "neutral"))
-    speaker_label.text = String(line.get("name", ""))
+    var displayed_name := String(line.get("name", ""))
+    if speaker_id == "player":
+        var thought_suffix := ""
+        var suffix_start := displayed_name.find("(")
+        if suffix_start >= 0:
+            thought_suffix = " " + displayed_name.substr(suffix_start)
+        displayed_name = GameManager.get_player_display_name() + thought_suffix
+    speaker_label.text = displayed_name
     dialogue_label.text = String(line.get("text", ""))
     continue_label.text = "E  »"
     _pause_serial += 1
@@ -78,6 +117,9 @@ func _advance() -> void:
     _set_portrait(right_portrait, "friend", emotion if speaker_id == "friend" else "neutral")
     var player_active := speaker_id == "player"
     var friend_active := speaker_id == "friend"
+    if _single_portrait_mode:
+        left_portrait.visible = player_active and left_portrait.texture != null
+        right_portrait.visible = friend_active and right_portrait.texture != null
     left_portrait.modulate = _emotion_tint(emotion) if player_active else Color(0.32, 0.32, 0.38, 0.87)
     right_portrait.modulate = _emotion_tint(emotion) if friend_active else Color(0.32, 0.32, 0.38, 0.87)
     if speaker_id not in ["player", "friend"]:

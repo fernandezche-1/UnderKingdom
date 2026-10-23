@@ -31,3 +31,6 @@ script = ExtResource("2_chest")
 interaction_radius = 64.0
 coin_count = 3
 potion_count = 1
+
+[node name="LootSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(0, 0)
