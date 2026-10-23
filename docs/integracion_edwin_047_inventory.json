@@ -1,0 +1,894 @@
+{
+  "base": "e151dc547ff6a357a5ab4ec8a8dc2e08bc86b698",
+  "v4": "04376061ebaab1fbaa59fd77e7522f080b2410b8",
+  "edwin": "3d456bd20d8fc89a65c0f3ef2c73ca6cc97b00f0",
+  "backup_directory": "C:\\Users\\ferna\\AppData\\Local\\Temp\\underkingdom-before-edwin-hcja3mp0",
+  "files": [
+    {
+      "status": "M",
+      "path": ".gitignore",
+      "decision": "integrate"
+    },
+    {
+      "status": "M",
+      "path": "CLAUDE.md",
+      "decision": "retain-project-history"
+    },
+    {
+      "status": "M",
+      "path": "TASK.md",
+      "decision": "retain-project-history"
+    },
+    {
+      "status": "D",
+      "path": "\"Tilesets\\357\\200\\242\"",
+      "decision": "retain-v4-deletion-deferred"
+    },
+    {
+      "status": "M",
+      "path": "assets_prueba/gothicvania/ORIGEN.txt",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/gothicvania/efectos/explosion_suelo.png",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/gothicvania/efectos/explosion_suelo.png.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/gothicvania/efectos/impacto.png",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/gothicvania/efectos/impacto.png.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/gothicvania/efectos/muerte_enemigo.png",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/gothicvania/efectos/muerte_enemigo.png.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/gothicvania/personajes/barquero_lampara.png",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/gothicvania/personajes/barquero_lampara.png.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/gothicvania/personajes/barquero_sale.png",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/gothicvania/personajes/barquero_sale.png.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/gothicvania_cementerio/ORIGEN.txt",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/gothicvania_cementerio/esqueleto.png",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/gothicvania_cementerio/esqueleto.png.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/gothicvania_cementerio/fondo/cementerio.png",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/gothicvania_cementerio/fondo/cementerio.png.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/gothicvania_cementerio/fondo/cielo.png",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/gothicvania_cementerio/fondo/cielo.png.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/gothicvania_cementerio/fondo/montes.png",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/gothicvania_cementerio/fondo/montes.png.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/gothicvania_cementerio/tileset_cementerio.png",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/gothicvania_cementerio/tileset_cementerio.png.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/super_grotto/ORIGEN.txt",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/super_grotto/murcielago.png",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/super_grotto/murcielago.png.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/super_grotto/recoger.png",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "assets_prueba/super_grotto/recoger.png.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "D",
+      "path": "\"a\\357\\200\\242\"",
+      "decision": "retain-v4-deletion-deferred"
+    },
+    {
+      "status": "D",
+      "path": "\"a\\357\\200\\242git push origin v4\"",
+      "decision": "retain-v4-deletion-deferred"
+    },
+    {
+      "status": "A",
+      "path": "dialogues/barquero_otra_vez.json",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "dialogues/barquero_presentacion.json",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "dialogues/npc_anciano_cementerio.json",
+      "decision": "integrate"
+    },
+    {
+      "status": "M",
+      "path": "docs/CHANGELOG_0.04.047.md",
+      "decision": "retain-project-history"
+    },
+    {
+      "status": "A",
+      "path": "docs/P31_AMBIENTACION_OSCURIDAD.md",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "docs/P32_MODO_DEV.md",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "docs/P33_ENEMIGOS_POR_PROFUNDIDAD.md",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "docs/P34_ENEMIGOS_DE_LOS_PAQUETES.md",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "docs/P35_DESBLOQUEO_DE_HABILIDADES.md",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "docs/P36_PESO_DEL_GOLPE.md",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "docs/P37_MENUS_Y_TIPOGRAFIA.md",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "docs/P38_IA_DEL_CAPITAN.md",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/enemigos/esqueleto.tscn",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/enemigos/esqueleto_tumba.tscn",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/enemigos/murcielago.tscn",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/items/reliquia_habilidad.tscn",
+      "decision": "integrate"
+    },
+    {
+      "status": "M",
+      "path": "escenas/jefes/capitan.tscn",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/jefes/cthulhu_jefe.tscn",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/jefes/demon_slime_jefe.tscn",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/jefes/guardian_hielo.tscn",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/jefes/reina_jefe.tscn",
+      "decision": "integrate"
+    },
+    {
+      "status": "M",
+      "path": "escenas/mapas/tiles_casa.tscn",
+      "decision": "retain-v4-map-layout"
+    },
+    {
+      "status": "M",
+      "path": "escenas/mapas/tiles_cementerio.tscn",
+      "decision": "retain-v4-map-layout"
+    },
+    {
+      "status": "M",
+      "path": "escenas/mapas/tiles_cementerio_combate.tscn",
+      "decision": "integrate"
+    },
+    {
+      "status": "M",
+      "path": "escenas/mapas/tiles_jefe.tscn",
+      "decision": "retain-v4-map-layout"
+    },
+    {
+      "status": "A",
+      "path": "escenas/mapas/tiles_jefe_combate.tscn",
+      "decision": "integrate"
+    },
+    {
+      "status": "M",
+      "path": "escenas/mapas/tiles_mazmorra.tscn",
+      "decision": "retain-v4-map-layout"
+    },
+    {
+      "status": "A",
+      "path": "escenas/mapas/tiles_mazmorra_combate.tscn",
+      "decision": "integrate"
+    },
+    {
+      "status": "M",
+      "path": "escenas/mapas/tiles_mineria.tscn",
+      "decision": "retain-v4-map-layout"
+    },
+    {
+      "status": "M",
+      "path": "escenas/mapas/tiles_mineria_combate.tscn",
+      "decision": "integrate"
+    },
+    {
+      "status": "M",
+      "path": "escenas/mapas/tiles_profundidades.tscn",
+      "decision": "retain-v4-map-layout"
+    },
+    {
+      "status": "A",
+      "path": "escenas/mapas/tiles_profundidades_combate.tscn",
+      "decision": "integrate"
+    },
+    {
+      "status": "M",
+      "path": "escenas/mapas/tiles_ruina.tscn",
+      "decision": "retain-v4-map-layout"
+    },
+    {
+      "status": "A",
+      "path": "escenas/mapas/tiles_ruina_combate.tscn",
+      "decision": "integrate"
+    },
+    {
+      "status": "M",
+      "path": "escenas/menu/menu_pausa.tscn",
+      "decision": "retain-v4-adapt-separately"
+    },
+    {
+      "status": "M",
+      "path": "escenas/menu/menu_principal.gd",
+      "decision": "retain-v4-adapt-separately"
+    },
+    {
+      "status": "A",
+      "path": "escenas/npc/anciano.tscn",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/npc/barquero.tscn",
+      "decision": "integrate"
+    },
+    {
+      "status": "M",
+      "path": "escenas/ui/boss_health_bar.tscn",
+      "decision": "integrate"
+    },
+    {
+      "status": "M",
+      "path": "escenas/ui/dialogue_ui.tscn",
+      "decision": "integrate"
+    },
+    {
+      "status": "M",
+      "path": "escenas/ui/player_hud.tscn",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/ui/tema_underkingdom.tres",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/ui/texturas/adorno_linea.png",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/ui/texturas/adorno_linea.png.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/ui/texturas/casilla.png",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/ui/texturas/casilla.png.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/ui/texturas/casilla_marcada.png",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/ui/texturas/casilla_marcada.png.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/ui/texturas/casilla_marcada_off.png",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/ui/texturas/casilla_marcada_off.png.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/ui/texturas/casilla_off.png",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/ui/texturas/casilla_off.png.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/ui/texturas/marco_panel.png",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/ui/texturas/marco_panel.png.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/ui/texturas/marco_ranura.png",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/ui/texturas/marco_ranura.png.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/ui/texturas/selector.png",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/ui/texturas/selector.png.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/ui/texturas/tirador.png",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/ui/texturas/tirador.png.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/ui/texturas/tirador_foco.png",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "escenas/ui/texturas/tirador_foco.png.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "fuentes/Jacquard12-Regular.ttf",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "fuentes/Jacquard12-Regular.ttf.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "fuentes/OFL_Jacquard12.txt",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "fuentes/PixelOperator8-Bold.ttf",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "fuentes/PixelOperator8-Bold.ttf.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "fuentes/PixelOperator8.ttf",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "fuentes/PixelOperator8.ttf.import",
+      "decision": "integrate"
+    },
+    {
+      "status": "M",
+      "path": "herramientas/constructor_mapas/construir_mapa.gd",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "herramientas/constructor_mapas/tilesets/cementerio.gd",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "herramientas/constructor_mapas/tilesets/cementerio.gd.uid",
+      "decision": "integrate"
+    },
+    {
+      "status": "M",
+      "path": "mapas_texto/LEYENDA.md",
+      "decision": "retain-v4-map-layout"
+    },
+    {
+      "status": "M",
+      "path": "mapas_texto/arena_enemigos.txt",
+      "decision": "retain-v4-map-layout"
+    },
+    {
+      "status": "M",
+      "path": "mapas_texto/ejemplo_cueva.txt",
+      "decision": "retain-v4-map-layout"
+    },
+    {
+      "status": "M",
+      "path": "mapas_texto/ejemplo_nivel.txt",
+      "decision": "retain-v4-map-layout"
+    },
+    {
+      "status": "M",
+      "path": "mapas_texto/paleta_niveles.gpl",
+      "decision": "retain-v4-map-layout"
+    },
+    {
+      "status": "M",
+      "path": "mapas_texto/paleta_niveles.png",
+      "decision": "retain-v4-map-layout"
+    },
+    {
+      "status": "M",
+      "path": "mapas_texto/tiles_cementerio.png",
+      "decision": "retain-v4-map-layout"
+    },
+    {
+      "status": "M",
+      "path": "mapas_texto/tiles_cementerio.txt",
+      "decision": "retain-v4-map-layout"
+    },
+    {
+      "status": "M",
+      "path": "mapas_texto/tiles_jefe.png",
+      "decision": "retain-v4-map-layout"
+    },
+    {
+      "status": "M",
+      "path": "mapas_texto/tiles_jefe.txt",
+      "decision": "retain-v4-map-layout"
+    },
+    {
+      "status": "M",
+      "path": "mapas_texto/tiles_mazmorra.png",
+      "decision": "retain-v4-map-layout"
+    },
+    {
+      "status": "M",
+      "path": "mapas_texto/tiles_mazmorra.txt",
+      "decision": "retain-v4-map-layout"
+    },
+    {
+      "status": "M",
+      "path": "mapas_texto/tiles_mineria.png",
+      "decision": "retain-v4-map-layout"
+    },
+    {
+      "status": "M",
+      "path": "mapas_texto/tiles_mineria.txt",
+      "decision": "retain-v4-map-layout"
+    },
+    {
+      "status": "M",
+      "path": "mapas_texto/tiles_profundidades.txt",
+      "decision": "retain-v4-map-layout"
+    },
+    {
+      "status": "M",
+      "path": "mapas_texto/tiles_ruina.png",
+      "decision": "retain-v4-map-layout"
+    },
+    {
+      "status": "M",
+      "path": "mapas_texto/tiles_ruina.txt",
+      "decision": "retain-v4-map-layout"
+    },
+    {
+      "status": "M",
+      "path": "project.godot",
+      "decision": "retain-v4-adapt-separately"
+    },
+    {
+      "status": "D",
+      "path": "project.godot.backup-20261018",
+      "decision": "retain-v4-deletion-deferred"
+    },
+    {
+      "status": "D",
+      "path": "project.godot.backup-pause-20261018",
+      "decision": "retain-v4-deletion-deferred"
+    },
+    {
+      "status": "D",
+      "path": "prueba/FantasyUIfree/FantasyUIfree/.DS_Store",
+      "decision": "retain-v4-deletion-deferred"
+    },
+    {
+      "status": "D",
+      "path": "prueba/FantasyUIfree/__MACOSX/FantasyUIfree/._.DS_Store",
+      "decision": "retain-v4-deletion-deferred"
+    },
+    {
+      "status": "D",
+      "path": "prueba/FantasyUIfree/__MACOSX/FantasyUIfree/._DragonHpBar2.png",
+      "decision": "retain-v4-deletion-deferred"
+    },
+    {
+      "status": "D",
+      "path": "prueba/FantasyUIfree/__MACOSX/FantasyUIfree/._DragonHpBar2.png.import",
+      "decision": "retain-v4-deletion-deferred"
+    },
+    {
+      "status": "D",
+      "path": "prueba/FantasyUIfree/__MACOSX/FantasyUIfree/._DragonHpBar3.png",
+      "decision": "retain-v4-deletion-deferred"
+    },
+    {
+      "status": "D",
+      "path": "prueba/FantasyUIfree/__MACOSX/FantasyUIfree/._DragonHpBar3.png.import",
+      "decision": "retain-v4-deletion-deferred"
+    },
+    {
+      "status": "D",
+      "path": "prueba/FantasyUIfree/__MACOSX/FantasyUIfree/._Dragonhpbar.png",
+      "decision": "retain-v4-deletion-deferred"
+    },
+    {
+      "status": "D",
+      "path": "prueba/FantasyUIfree/__MACOSX/FantasyUIfree/._Dragonhpbar.png.import",
+      "decision": "retain-v4-deletion-deferred"
+    },
+    {
+      "status": "D",
+      "path": "prueba/FantasyUIfree/__MACOSX/FantasyUIfree/._freefantasy.png",
+      "decision": "retain-v4-deletion-deferred"
+    },
+    {
+      "status": "D",
+      "path": "prueba/FantasyUIfree/__MACOSX/FantasyUIfree/._freefantasy.png.import",
+      "decision": "retain-v4-deletion-deferred"
+    },
+    {
+      "status": "M",
+      "path": "scripts/bosses/captain_boss.gd",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "scripts/bosses/queen_boss.gd",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "scripts/bosses/queen_boss.gd.uid",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "scripts/bosses/simple_boss.gd",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "scripts/bosses/simple_boss.gd.uid",
+      "decision": "integrate"
+    },
+    {
+      "status": "M",
+      "path": "scripts/camera/bounded_camera.gd",
+      "decision": "integrate"
+    },
+    {
+      "status": "M",
+      "path": "scripts/combat/boss_arena.gd",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "scripts/combat/lunge_enemy.gd",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "scripts/combat/lunge_enemy.gd.uid",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "scripts/combat/rising_enemy.gd",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "scripts/combat/rising_enemy.gd.uid",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "scripts/core/dev_mode.gd",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "scripts/core/dev_mode.gd.uid",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "scripts/core/display_settings.gd",
+      "decision": "retain-v4-adapt-separately"
+    },
+    {
+      "status": "A",
+      "path": "scripts/core/display_settings.gd.uid",
+      "decision": "integrate"
+    },
+    {
+      "status": "M",
+      "path": "scripts/core/game_manager.gd",
+      "decision": "retain-v4-adapt-separately"
+    },
+    {
+      "status": "D",
+      "path": "scripts/core/game_manager.gd.backup-upgrades-20261018",
+      "decision": "retain-v4-deletion-deferred"
+    },
+    {
+      "status": "A",
+      "path": "scripts/core/input_config.gd",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "scripts/core/input_config.gd.uid",
+      "decision": "integrate"
+    },
+    {
+      "status": "M",
+      "path": "scripts/dialogue/dialogue_ui.gd",
+      "decision": "retain-v4-adapt-separately"
+    },
+    {
+      "status": "M",
+      "path": "scripts/environment/locked_door.gd",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "scripts/environment/map_ambience.gd",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "scripts/environment/map_ambience.gd.uid",
+      "decision": "integrate"
+    },
+    {
+      "status": "M",
+      "path": "scripts/fx/combat_fx.gd",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "scripts/items/ability_pickup.gd",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "scripts/items/ability_pickup.gd.uid",
+      "decision": "integrate"
+    },
+    {
+      "status": "M",
+      "path": "scripts/items/collectible_pickup.gd",
+      "decision": "retain-v4-adapt-separately"
+    },
+    {
+      "status": "A",
+      "path": "scripts/npc/merchant_npc.gd",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "scripts/npc/merchant_npc.gd.uid",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "scripts/npc/npc.gd",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "scripts/npc/npc.gd.uid",
+      "decision": "integrate"
+    },
+    {
+      "status": "M",
+      "path": "scripts/player/player.gd",
+      "decision": "integrate"
+    },
+    {
+      "status": "D",
+      "path": "scripts/player/player.gd.backup-upgrades-20261018",
+      "decision": "retain-v4-deletion-deferred"
+    },
+    {
+      "status": "M",
+      "path": "scripts/transitions/map_transition.gd",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "scripts/ui/menu_selector.gd",
+      "decision": "integrate"
+    },
+    {
+      "status": "A",
+      "path": "scripts/ui/menu_selector.gd.uid",
+      "decision": "integrate"
+    },
+    {
+      "status": "M",
+      "path": "scripts/ui/pause_menu_manager.gd",
+      "decision": "retain-v4-adapt-separately"
+    },
+    {
+      "status": "M",
+      "path": "scripts/ui/pause_menu_overlay.gd",
+      "decision": "retain-v4-adapt-separately"
+    },
+    {
+      "status": "M",
+      "path": "scripts/ui/player_hud.gd",
+      "decision": "integrate"
+    },
+    {
+      "status": "D",
+      "path": "tatus",
+      "decision": "retain-v4-deletion-deferred"
+    },
+    {
+      "status": "D",
+      "path": "tiles_cementerio_combate.tscn",
+      "decision": "retain-v4-deletion-deferred"
+    },
+    {
+      "status": "D",
+      "path": "witch v4",
+      "decision": "retain-v4-deletion-deferred"
+    }
+  ],
+  "note": "Manual adapters and validation results are documented in INTEGRACION_EDWIN_047.md."
+}

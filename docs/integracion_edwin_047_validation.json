@@ -1,0 +1,27 @@
+{
+  "isolated_project": "C:\\Users\\ferna\\AppData\\Local\\Temp\\underkingdom-validation-zx9h7vmj",
+  "save_namespace": "UnderkingdomIntegrationValidation_b3ea94d9c60045ea81228683cfcf1f58",
+  "checks": [
+    {
+      "name": "regressions",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "log": "C:\\Users\\ferna\\UnderKingdom\\docs\\integracion_edwin_047_regressions.log"
+    },
+    {
+      "name": "editable_castle",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "log": "C:\\Users\\ferna\\UnderKingdom\\docs\\integracion_edwin_047_editable_castle.log"
+    },
+    {
+      "name": "main_menu",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "log": "C:\\Users\\ferna\\UnderKingdom\\docs\\integracion_edwin_047_main_menu.log"
+    }
+  ]
+}

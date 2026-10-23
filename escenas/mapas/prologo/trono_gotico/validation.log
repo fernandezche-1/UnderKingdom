@@ -1,0 +1,62 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: Saved tscn opens
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: One current player spawned
+PASS: Map has no runtime generation script
+PASS: Persistent editable painted layer: FondoAtmosfera
+PASS: Persistent editable painted layer: MuroFondo
+PASS: Persistent editable painted layer: Arquitectura
+PASS: Persistent editable painted layer: Terreno
+PASS: Persistent editable painted layer: Plataformas
+PASS: Persistent editable painted layer: Decoracion
+PASS: Persistent editable painted layer: ElementosInteractivos
+PASS: Persistent editable painted layer: Peligros
+PASS: Entrance is supported by terrain
+PASS: Terrain collision matches painted floor
+PASS: Camera has explicit room bounds
+PASS: Dais to left gallery starts on a physical surface
+PASS: Dais to left gallery lands using actual player physics
+PASS: Dais to left gallery produces a real jump arc
+PASS: Left gallery to central balcony starts on a physical surface
+PASS: Left gallery to central balcony lands using actual player physics
+PASS: Left gallery to central balcony produces a real jump arc
+PASS: Central balcony to middle perch starts on a physical surface
+PASS: Central balcony to middle perch lands using actual player physics
+PASS: Central balcony to middle perch produces a real jump arc
+PASS: Middle perch to right balcony starts on a physical surface
+PASS: Middle perch to right balcony lands using actual player physics
+PASS: Middle perch to right balcony produces a real jump arc
+PASS: Ground to bridge over spike pit starts on a physical surface
+PASS: Ground to bridge over spike pit lands using actual player physics
+PASS: Ground to bridge over spike pit produces a real jump arc
+PASS: Climb detector overlaps player at ladder foot
+PASS: Existing climbing system moves player upward
+PASS: Ladder descends through its balcony opening
+PASS: Chest is within player interaction range on balcony
+PASS: Existing chest interaction opens the chest
+PASS: Chest grants its existing one-time loot
+PASS: Player can physically enter the exit
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Exit performs a real transition to existing castle
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Entering painted spikes triggers actual player death
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:66)
+PASS: Death respawns at safe room entrance
+THRONE RESULT: 39 checks, 0 failures

@@ -1,0 +1,122 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: Open res://escenas/menu/menu_principal.tscn
+PASS: Edwin theme scoped to main menu
+PASS: Jacquard title is active
+PASS: Animated wisps, ornament and selector connected
+PASS: Edwin left layout with v4 controls
+PASS: Functional main button: NuevaPartida
+PASS: Functional main button: Continuar
+PASS: Functional main button: EliminarPartida
+PASS: Functional main button: Opciones
+PASS: Functional main button: Salir
+PASS: Three profile slots retained
+WARNING: No se encontró MapBounds en el mapa actual.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _apply_current_map_bounds (res://scripts/camera/bounded_camera.gd:70)
+PASS: New game still starts in prison
+PASS: Personalized protagonist retained
+PASS: Prison cinematic and Water Queen retained
+PASS: Open res://escenas/mapas/tiles_cementerio_combate.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: One player after entering cemetery
+PASS: New playable enemy: EsqueletoEdwin
+PASS: Combat works for EsqueletoEdwin
+PASS: New playable enemy: TumbaEdwin
+PASS: Tomb enemy preserves dormant protection
+PASS: Combat works for TumbaEdwin
+PASS: New playable enemy: MurcielagoEdwin
+PASS: Combat works for MurcielagoEdwin
+PASS: NPC connected: Anciano
+PASS: NPC dialogue available: Anciano
+PASS: NPC connected: Barquero
+PASS: NPC dialogue available: Barquero
+PASS: Playable cemetery ambience attached
+PASS: Pause opens after visual changes
+PASS: Edwin theme scoped to pause
+PASS: Functional pause button: Reanudar
+PASS: Functional pause button: Guardar
+PASS: Functional pause button: Opciones
+PASS: Functional pause button: MenuPrincipal
+PASS: Functional pause button: Salir
+PASS: All four pause tabs retained
+PASS: Supplemental ability uses GameManager: roll
+PASS: Supplemental ability detail works: roll
+PASS: Supplemental ability uses GameManager: parry
+PASS: Supplemental ability detail works: parry
+PASS: Supplemental ability uses GameManager: lifesteal
+PASS: Supplemental ability detail works: lifesteal
+PASS: Supplemental ability uses GameManager: adrenaline
+PASS: Supplemental ability detail works: adrenaline
+PASS: Fullscreen controls synchronize in styled pause
+PASS: Barquero shop retains upgrade tab
+PASS: Shop purchase survives visual adaptation
+PASS: Open res://escenas/mapas/tiles_cementerio_combate.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Arena trigger spawns actual boss: cementerio
+PASS: Arena enters combat: cementerio
+PASS: Open res://escenas/mapas/tiles_mineria_combate.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Arena trigger spawns actual boss: mineria
+PASS: Arena enters combat: mineria
+PASS: Open res://escenas/mapas/tiles_mazmorra_combate.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Arena trigger spawns actual boss: mazmorra
+PASS: Arena enters combat: mazmorra
+PASS: Open res://escenas/mapas/tiles_profundidades_combate.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Arena trigger spawns actual boss: profundidades
+PASS: Arena enters combat: profundidades
+PASS: Open res://escenas/mapas/tiles_jefe_combate.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Arena trigger spawns actual boss: jefe
+PASS: Arena enters combat: jefe
+PASS: Open res://escenas/mapas/tiles_ruina_combate.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Guardian grants aerial soul fragment
+PASS: Aerial attack starts locked
+PASS: Guardian actually drops aerial relic
+PASS: Relic and soul fragment share one unlock state
+PASS: New relic progress saves in existing format
+PASS: Existing continue loads new reward
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Aerial reward restored
+PASS: Open res://escenas/menu/menu_principal.tscn
+PASS: Styled continue detects save
+PASS: Styled deletion still requires confirmation
+PASS: Cancel still protects save
+PASS: Confirmed deletion works after styling
+VISIBILITY RESULT: 75 checks, 0 failures

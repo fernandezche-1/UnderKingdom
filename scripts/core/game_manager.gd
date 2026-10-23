@@ -14,6 +14,7 @@ signal cinematic_seen(cinematic_id: String)
 signal encounter_completed(encounter_id: String)
 signal key_changed(key_id: String, has_key: bool)
 signal upgrades_changed
+signal ability_unlocked(ability_id: String)
 signal skills_changed
 signal player_name_changed(player_name: String)
 signal save_slots_changed
@@ -853,8 +854,10 @@ func add_coins(amount: int) -> void:
 
 
 func try_spend_coins(amount: int) -> bool:
-	if amount <= 0 or coins < amount:
+	if not can_spend_coins(amount):
 		return false
+	if DevMode.infinite_coins:
+		return true
 	coins -= amount
 	coins_changed.emit(coins)
 	request_autosave()
@@ -1039,3 +1042,57 @@ func reset_cinematics_for_new_game() -> void:
 	cinematics_seen.clear()
 	reset_upgrades_for_new_game()
 	reset_soul_progress()
+
+
+# Compatibility API: shared attacks use v4 soul skills as the only authority.
+# Supplemental abilities retain v4's existing availability on old saves.
+const ABILITY_DEFINITIONS := {
+    "roll": {"name": "Rodar", "hint": "Shift: esquiva y atraviesa enemigos"},
+    "combo_2": {"name": "Ráfaga", "hint": "Ataca otra vez durante el primer golpe"},
+    "combo_3": {"name": "Golpe final", "hint": "Tercer ataque seguido del combo"},
+    "air_attack": {"name": "Tajo aéreo", "hint": "Ataca en el aire"},
+    "parry": {"name": "Parry", "hint": "Cúbrete [Q] justo antes del golpe"},
+    "ultimate": {"name": "Ultimate", "hint": "E"},
+    "lifesteal": {"name": "Robo de vida", "hint": "Golpear te cura"},
+    "adrenaline": {"name": "Adrenalina", "hint": "Con media vida o menos atacas más rápido"},
+}
+
+const ABILITY_SKILLS := {
+	"combo_2": &"attack_2", "combo_3": &"attack_3",
+	"air_attack": &"air_attack", "ultimate": &"ultimate",
+}
+const SUPPLEMENTAL_ABILITIES := {
+	"roll": true, "parry": true, "lifesteal": true, "adrenaline": true,
+}
+
+
+func has_ability(ability_id: String) -> bool:
+	if ABILITY_SKILLS.has(ability_id):
+		return is_skill_unlocked(ABILITY_SKILLS[ability_id])
+	return bool(SUPPLEMENTAL_ABILITIES.get(ability_id, false))
+
+
+func is_ability_unlocked(ability_id: String) -> bool:
+	return has_ability(ability_id)
+
+
+func unlock_ability(ability_id: String) -> void:
+	if not ABILITY_DEFINITIONS.has(ability_id) or has_ability(ability_id):
+		return
+	if ABILITY_SKILLS.has(ability_id):
+		var skills: Array[StringName] = [ABILITY_SKILLS[ability_id]]
+		grant_soul_fragment(skills)
+	ability_unlocked.emit(ability_id)
+	request_autosave()
+
+
+func get_ability_name(ability_id: String) -> String:
+	return String(ABILITY_DEFINITIONS.get(ability_id, {}).get("name", ability_id))
+
+
+func get_ability_hint(ability_id: String) -> String:
+	return String(ABILITY_DEFINITIONS.get(ability_id, {}).get("hint", ""))
+
+
+func can_spend_coins(amount: int) -> bool:
+	return amount > 0 and (DevMode.infinite_coins or coins >= amount)

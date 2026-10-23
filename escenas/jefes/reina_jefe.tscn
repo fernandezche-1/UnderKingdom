@@ -1,0 +1,28 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://escenas/enemigos/reina.tscn" id="1_reina"]
+[ext_resource type="Script" path="res://scripts/bosses/queen_boss.gd" id="2_script"]
+[ext_resource type="PackedScene" path="res://escenas/ui/boss_health_bar.tscn" id="3_barra"]
+
+[node name="LaReina" instance=ExtResource("1_reina")]
+script = ExtResource("2_script")
+max_health = 14.0
+patrol_distance = 48.0
+patrol_speed = 34.0
+chase_speed = 85.0
+detection_range = 520.0
+detection_vertical_range = 220.0
+lose_aggro_range = 680.0
+lose_aggro_vertical_range = 260.0
+attack_range = 46.0
+defense_enabled = true
+defense_chance = 0.2
+defense_duration = 0.5
+defense_cooldown = 2.2
+defense_max_hits = 3
+show_health_bar = false
+counts_as_world1_boss = false
+
+[node name="BossHealthBar" parent="." instance=ExtResource("3_barra")]
+boss_name = "LA REINA"
+show_only_with_aggro = true

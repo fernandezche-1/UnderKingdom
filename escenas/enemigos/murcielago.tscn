@@ -1,0 +1,120 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/combat/lunge_enemy.gd" id="script"]
+[ext_resource type="Texture2D" path="res://assets_prueba/super_grotto/murcielago.png" id="tex_0"]
+
+[sub_resource type="AtlasTexture" id="Atlas_1"]
+atlas = ExtResource("tex_0")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_2"]
+atlas = ExtResource("tex_0")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_3"]
+atlas = ExtResource("tex_0")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_4"]
+atlas = ExtResource("tex_0")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_5"]
+atlas = ExtResource("tex_0")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="Frames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_5")
+}],
+"loop": 1,
+"name": &"attack",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_5")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="Body"]
+size = Vector2(18, 16)
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=746249328]
+collision_layer = 5
+script = ExtResource("script")
+lunge_windup = 0.3
+lunge_speed = 180.0
+max_health = 1.5
+use_gravity = false
+knockback_horizontal = 140.0
+patrol_distance = 40.0
+patrol_speed = 30.0
+detection_range = 190.0
+detection_vertical_range = 150.0
+lose_aggro_range = 320.0
+lose_aggro_vertical_range = 220.0
+attack_range = 62.0
+attack_stop_margin = 0.0
+minimum_player_distance = 24.0
+separation_speed = 60.0
+attack_damage = 0.25
+attack_cooldown = 1.4
+attack_hitbox_size = Vector2(22, 20)
+attack_hitbox_offset = Vector2(0, 8)
+fly_toward_target = true
+fly_target_offset_y = 34.0
+avoid_ledges = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=608664097]
+sprite_frames = SubResource("Frames")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1437154611]
+position = Vector2(0, 8)
+shape = SubResource("Body")

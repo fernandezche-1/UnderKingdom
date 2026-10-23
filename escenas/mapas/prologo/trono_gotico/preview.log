@@ -1,0 +1,9 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 591.84 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 3050 Laptop GPU
+
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PREVIEW: editable room rendered as individual tiles

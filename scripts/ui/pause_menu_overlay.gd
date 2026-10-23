@@ -45,6 +45,7 @@ func _ready() -> void:
 	_apply_button_styles()
 	_connect_controls()
 	_refresh_options()
+	UserSettings.fullscreen_changed.connect($Interfaz/ControlesOpciones/PantallaCompleta.set_pressed_no_signal)
 	GameManager.coins_changed.connect(_on_coins_changed)
 	GameManager.upgrades_changed.connect(_refresh_upgrades)
 	GameManager.skills_changed.connect(_refresh_skills)
@@ -52,6 +53,8 @@ func _ready() -> void:
 	_refresh_upgrades()
 	_refresh_skills()
 	_refresh_keys()
+	preload("res://scripts/ui/edwin_menu_style.gd").apply(interface, false)
+	_build_supplemental_abilities()
 
 
 func _process(delta: float) -> void:
@@ -230,6 +233,8 @@ func _update_player_info() -> void:
 	var ult_left := float(_player.call("get_ultimate_cooldown_left"))
 	var ult_cooldown := float(_player.get("ultimate_cooldown"))
 	var ult_state := "Lista" if ult_left <= 0.0 else "Enfriamiento: %.1f / %.1f s" % [ult_left, ult_cooldown]
+	if not GameManager.has_ability("ultimate"):
+		ult_state = "Bloqueada"
 	stats_value.text = (
 		"Robo de vida: %s\nProgreso: %.2f / %.2f daño\n"
 		+ "Combo: %.2f / %.2f / %.2f daño\nVelocidad: %.0f px/s\n"
@@ -286,7 +291,8 @@ func _refresh_upgrades() -> void:
 	_update_upgrade_row("ultimate_cooldown", "Cooldown de Ultimate", "s", "UltimateComprar", "UltimateInfo")
 	$Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/FuerzaInfo.text = "Fuerza: el daño existe por ataque; no hay mejora funcional."
 	$Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/ResistenciaInfo.text = "Resistencia: hay reducción al bloquear; no hay mejora funcional."
-	$Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/LlamaInfo.text = "Llama Ancestral: habilidad bloqueada; mejora de poder no implementada."
+	var llama_status := "disponible" if GameManager.is_skill_unlocked(&"ultimate") else "bloqueada"
+	$Interfaz/PaginaMejoras/MejorasScroll/ListaMejoras/LlamaInfo.text = "Llama Ancestral: habilidad %s; mejora de poder no implementada." % llama_status
 
 
 func _update_upgrade_row(upgrade_id: String, label: String, unit: String, button_name: String, info_name: String) -> void:
@@ -305,7 +311,7 @@ func _update_upgrade_row(upgrade_id: String, label: String, unit: String, button
 	var availability := "Bloqueada hasta recuperar la habilidad" if skill_locked else "Mejora disponible"
 	info_label.text = "%s\nNivel %d/%d · %s → %s %s\n%s" % [label, info.level, info.max_level, current_value, next_value, unit, availability]
 	button.text = "Habilidad bloqueada" if skill_locked else "Mejorar · %d monedas" % int(info.cost)
-	button.disabled = skill_locked or GameManager.coins < int(info.cost)
+	button.disabled = skill_locked or not GameManager.can_spend_coins(int(info.cost))
 
 
 func _row_container(button_name: String) -> String:
@@ -372,14 +378,19 @@ func _refresh_skills() -> void:
 		button.text = "%s  [%s]" % [info.name, "DISPONIBLE" if info.unlocked else "BLOQUEADA"]
 		button.tooltip_text = String(info.description)
 	_update_selected_skill()
+	_refresh_supplemental_abilities()
 
 
 func _on_skill_selected(skill_id: StringName) -> void:
+	_selected_supplemental = ""
 	_selected_skill = skill_id
 	_update_selected_skill()
 
 
 func _update_selected_skill() -> void:
+	if not _selected_supplemental.is_empty():
+		skill_info.text = "%s\n%s\n%s" % [GameManager.get_ability_name(_selected_supplemental), "DISPONIBLE" if GameManager.has_ability(_selected_supplemental) else "BLOQUEADA", GameManager.get_ability_hint(_selected_supplemental)]
+		return
 	var info := GameManager.get_skill_info(_selected_skill)
 	if info.is_empty():
 		return
@@ -449,3 +460,38 @@ func _on_master_volume_changed(value: float) -> void:
 
 func _on_fullscreen_toggled(enabled: bool) -> void:
 	UserSettings.set_fullscreen(enabled)
+
+
+func open_shop(player: Node, title: String) -> void:
+	open_pause(player)
+	header.text = title
+	_show_tab("upgrades")
+	$Interfaz/Pestanas/TabMejoras.grab_focus()
+
+
+var _selected_supplemental: String = ""
+
+
+func _build_supplemental_abilities() -> void:
+	var list := $Interfaz/PaginaHabilidades/HabilidadesScroll/ListaHabilidades
+	for ability_id in GameManager.SUPPLEMENTAL_ABILITIES:
+		var label := Button.new()
+		label.name = "Extra_" + String(ability_id)
+		label.add_theme_font_size_override("font_size", 8)
+		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		label.pressed.connect(_on_ability_selected.bind(String(ability_id)))
+		list.add_child(label)
+	_refresh_supplemental_abilities()
+
+
+func _refresh_supplemental_abilities() -> void:
+	for ability_id in GameManager.SUPPLEMENTAL_ABILITIES:
+		var label := get_node_or_null("Interfaz/PaginaHabilidades/HabilidadesScroll/ListaHabilidades/Extra_" + String(ability_id)) as Button
+		if label != null:
+			label.text = "%s [%s]" % [GameManager.get_ability_name(ability_id), "DISPONIBLE" if GameManager.has_ability(ability_id) else "BLOQUEADA"]
+			label.tooltip_text = GameManager.get_ability_hint(ability_id)
+
+
+func _on_ability_selected(ability_id: String) -> void:
+	_selected_supplemental = ability_id
+	_update_selected_skill()

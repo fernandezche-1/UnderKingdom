@@ -1,5 +1,7 @@
 extends Node
 
+signal fullscreen_changed(enabled: bool)
+
 const SETTINGS_PATH := "user://settings.cfg"
 const VIEWPORT_SIZE := Vector2i(480, 270)
 const DEFAULT_WINDOWED_SIZE := Vector2i(1440, 810)
@@ -7,6 +9,7 @@ const MAX_INTEGER_SCALE := 3
 
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	var config := ConfigFile.new()
 	var fullscreen := false
 	if config.load(SETTINGS_PATH) == OK:
@@ -15,11 +18,12 @@ func _ready() -> void:
 
 
 func is_fullscreen() -> bool:
-	return get_window().mode == Window.MODE_FULLSCREEN
+	return get_window().mode in [Window.MODE_FULLSCREEN, Window.MODE_EXCLUSIVE_FULLSCREEN]
 
 
 func set_fullscreen(enabled: bool) -> void:
 	_apply_window_mode(enabled)
+	fullscreen_changed.emit(enabled)
 	var config := ConfigFile.new()
 	var load_error := config.load(SETTINGS_PATH)
 	if load_error != OK and load_error != ERR_FILE_NOT_FOUND:
@@ -65,3 +69,9 @@ func _fit_windowed_size(window: Window) -> void:
 		)
 	else:
 		window.position = usable_rect.position
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("toggle_fullscreen"):
+		set_fullscreen(not is_fullscreen())
+		get_viewport().set_input_as_handled()

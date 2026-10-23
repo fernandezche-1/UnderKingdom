@@ -1,0 +1,18 @@
+{
+  "isolated_project": "C:\\Users\\ferna\\AppData\\Local\\Temp\\underkingdom-gothic-throne-cbu_ozqo",
+  "namespace": "UnderkingdomGothicThroneValidation_e97ed4eecc7d4dedbca56de72b73fea2",
+  "phases": [
+    {
+      "name": "build",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    },
+    {
+      "name": "preview",
+      "passed": true,
+      "exit_code": 0,
+      "errors": []
+    }
+  ]
+}

@@ -1,26 +1,199 @@
-[gd_scene format=3 uid="uid://ghvgmf6rhw3q"]
+[gd_scene format=4 uid="uid://ghvgmf6rhw3q"]
 
-[ext_resource type="Script" uid="uid://b20qw4m21ivuh" path="res://scripts/environment/dark_castle_map.gd" id="1_map"]
-[ext_resource type="Script" uid="uid://2hxvdw0c4cgk" path="res://scripts/transitions/map_spawn_controller.gd" id="2_spawn_controller"]
-[ext_resource type="PackedScene" path="res://escenas/sistemas/spawn_point.tscn" id="3_spawn"]
-[ext_resource type="PackedScene" path="res://escenas/sistemas/map_transition.tscn" id="4_transition"]
-[ext_resource type="Script" uid="uid://bkvqx03fc60f2" path="res://scripts/camera/map_bounds.gd" id="5_bounds"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/spawn_point.tscn" id="1_mwyip"]
+[ext_resource type="Script" uid="uid://2hxvdw0c4cgk" path="res://scripts/transitions/map_spawn_controller.gd" id="3_7d8c5"]
+[ext_resource type="Script" uid="uid://bkvqx03fc60f2" path="res://scripts/camera/map_bounds.gd" id="4_kcxkv"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/map_transition.tscn" id="5_hdonw"]
+[ext_resource type="TileSet" uid="uid://dtycv5j43bwjv" path="res://escenas/mapas/prologo/tileset_dark_castle.tres" id="7_xiuk1"]
+[ext_resource type="Texture2D" uid="uid://wwbhrvybsgy8" path="res://111.png" id="8_de44g"]
+[ext_resource type="TileSet" uid="uid://bnj0w3h4bmxq6" path="res://escenas/mapas/prologo/castillo_editable/arquitectura_dark_castle.tres" id="8_jc41g"]
+[ext_resource type="TileSet" uid="uid://o2muuhylkpf3" path="res://escenas/mapas/prologo/castillo_editable/plataformas_originales.tres" id="9_1xxhx"]
+[ext_resource type="Texture2D" uid="uid://be5ku81evltvy" path="res://dark_castle_tileset.png" id="10_ttf50"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/kill_zone.tscn" id="11_44u8c"]
+[ext_resource type="Script" uid="uid://b4qvg3rrq8nnu" path="res://scripts/environment/kill_zone.gd" id="12_shnk1"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/coin_pickup.tscn" id="13_vlcyg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shnk1"]
+atlas = ExtResource("8_de44g")
+region = Rect2(0, 0, 21, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e4i3a"]
+atlas = ExtResource("8_de44g")
+region = Rect2(21, 0, 21, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mwyip"]
+atlas = ExtResource("8_de44g")
+region = Rect2(42, 0, 21, 22)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8xc0e"]
+animations = [{
+"frames": [],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shnk1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e4i3a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mwyip")
+}],
+"loop": 1,
+"name": &"fuego",
+"speed": 6.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_wwafx"]
+colors = PackedColorArray(0.7, 0.36, 1, 0.42, 0.7, 0.36, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tifhw"]
+gradient = SubResource("Gradient_wwafx")
+fill = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4okdh"]
+atlas = ExtResource("10_ttf50")
+region = Rect2(18, 110, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lr84d"]
+atlas = ExtResource("10_ttf50")
+region = Rect2(38, 110, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x4aha"]
+atlas = ExtResource("10_ttf50")
+region = Rect2(58, 110, 20, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hvxdr"]
+animations = [{
+"frames": [],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4okdh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lr84d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x4aha")
+}],
+"loop": 1,
+"name": &"fuego",
+"speed": 6.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_3ge1l"]
+colors = PackedColorArray(0.7, 0.36, 1, 0.42, 0.7, 0.36, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_yg750"]
+gradient = SubResource("Gradient_3ge1l")
+fill = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_chyhm"]
+atlas = ExtResource("8_de44g")
+region = Rect2(0, 0, 21, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7d8c5"]
+atlas = ExtResource("8_de44g")
+region = Rect2(21, 0, 21, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kcxkv"]
+atlas = ExtResource("8_de44g")
+region = Rect2(42, 0, 21, 22)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u8j62"]
+animations = [{
+"frames": [],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_chyhm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7d8c5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kcxkv")
+}],
+"loop": 1,
+"name": &"fuego",
+"speed": 6.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_uoyk7"]
+colors = PackedColorArray(0.7, 0.36, 1, 0.42, 0.7, 0.36, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ap8bi"]
+gradient = SubResource("Gradient_uoyk7")
+fill = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hdonw"]
+atlas = ExtResource("8_de44g")
+region = Rect2(0, 0, 21, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rxm3"]
+atlas = ExtResource("8_de44g")
+region = Rect2(21, 0, 21, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xiuk1"]
+atlas = ExtResource("8_de44g")
+region = Rect2(42, 0, 21, 22)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_te2h3"]
+animations = [{
+"frames": [],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hdonw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8rxm3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xiuk1")
+}],
+"loop": 1,
+"name": &"fuego",
+"speed": 6.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_46eqf"]
+colors = PackedColorArray(0.7, 0.36, 1, 0.42, 0.7, 0.36, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vhj84"]
+gradient = SubResource("Gradient_46eqf")
+fill = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e4i3a"]
+size = Vector2(42, 18)
 
 [node name="CastilloOscuro" type="Node2D" unique_id=465934214]
-script = ExtResource("1_map")
 
-[node name="SpawnInicio" parent="." unique_id=598730996 instance=ExtResource("3_spawn")]
+[node name="SpawnInicio" parent="." unique_id=598730996 instance=ExtResource("1_mwyip")]
 position = Vector2(32, 260)
 
-[node name="DesdeCastillo" parent="." unique_id=997898370 instance=ExtResource("3_spawn")]
+[node name="DesdeCastillo" parent="." unique_id=997898370 instance=ExtResource("1_mwyip")]
 position = Vector2(32, 260)
 spawn_id = &"DesdeCastillo"
 
 [node name="ControladorSpawn" type="Node" parent="." unique_id=696651096]
-script = ExtResource("2_spawn_controller")
+script = ExtResource("3_7d8c5")
 
 [node name="MapBounds" type="Node2D" parent="." unique_id=53841778]
-script = ExtResource("5_bounds")
+script = ExtResource("4_kcxkv")
 right = 1152
 bottom = 400
 
@@ -31,7 +204,766 @@ limit_top = 0
 limit_right = 1152
 limit_bottom = 400
 
-[node name="SalidaCementerio" parent="." unique_id=387466762 instance=ExtResource("4_transition")]
+[node name="SalidaCementerio" parent="." unique_id=387466762 instance=ExtResource("5_hdonw")]
 position = Vector2(1100, 274)
 target_scene_path = "res://escenas/mapas/tiles_cementerio_combate.tscn"
 trigger_delay = 0.2
+
+[node name="Fondo" type="TileMapLayer" parent="." unique_id=320309155]
+tile_set = ExtResource("7_xiuk1")
+collision_enabled = false
+
+[node name="Fondo" type="ColorRect" parent="Fondo" unique_id=250510444]
+z_index = -20
+offset_right = 1152.0
+offset_bottom = 400.0
+color = Color(0.03529412, 0.02745098, 0.07450981, 1)
+
+[node name="JuntaFondo" type="ColorRect" parent="Fondo" unique_id=749817872]
+z_index = -12
+offset_left = 24.0
+offset_top = 88.0
+offset_right = 48.0
+offset_bottom = 93.0
+color = Color(0.12941177, 0.08627451, 0.21960784, 1)
+
+[node name="JuntaFondo2" type="ColorRect" parent="Fondo" unique_id=2082075475]
+z_index = -12
+offset_left = 36.0
+offset_top = 96.0
+offset_right = 52.0
+offset_bottom = 100.0
+color = Color(0.09019608, 0.06666667, 0.16078432, 1)
+
+[node name="JuntaFondo3" type="ColorRect" parent="Fondo" unique_id=79938063]
+z_index = -12
+offset_left = 72.0
+offset_top = 88.0
+offset_right = 96.0
+offset_bottom = 93.0
+color = Color(0.12941177, 0.08627451, 0.21960784, 1)
+
+[node name="JuntaFondo4" type="ColorRect" parent="Fondo" unique_id=449401122]
+z_index = -12
+offset_left = 84.0
+offset_top = 96.0
+offset_right = 100.0
+offset_bottom = 100.0
+color = Color(0.09019608, 0.06666667, 0.16078432, 1)
+
+[node name="JuntaFondo5" type="ColorRect" parent="Fondo" unique_id=462480977]
+z_index = -12
+offset_left = 120.0
+offset_top = 88.0
+offset_right = 144.0
+offset_bottom = 93.0
+color = Color(0.12941177, 0.08627451, 0.21960784, 1)
+
+[node name="JuntaFondo6" type="ColorRect" parent="Fondo" unique_id=1553319911]
+z_index = -12
+offset_left = 132.0
+offset_top = 96.0
+offset_right = 148.0
+offset_bottom = 100.0
+color = Color(0.09019608, 0.06666667, 0.16078432, 1)
+
+[node name="JuntaFondo7" type="ColorRect" parent="Fondo" unique_id=1208413766]
+z_index = -12
+offset_left = 168.0
+offset_top = 88.0
+offset_right = 192.0
+offset_bottom = 93.0
+color = Color(0.12941177, 0.08627451, 0.21960784, 1)
+
+[node name="JuntaFondo8" type="ColorRect" parent="Fondo" unique_id=1886016620]
+z_index = -12
+offset_left = 180.0
+offset_top = 96.0
+offset_right = 196.0
+offset_bottom = 100.0
+color = Color(0.09019608, 0.06666667, 0.16078432, 1)
+
+[node name="JuntaFondo9" type="ColorRect" parent="Fondo" unique_id=347848225]
+z_index = -12
+offset_left = 216.0
+offset_top = 88.0
+offset_right = 240.0
+offset_bottom = 93.0
+color = Color(0.12941177, 0.08627451, 0.21960784, 1)
+
+[node name="JuntaFondo10" type="ColorRect" parent="Fondo" unique_id=1020409354]
+z_index = -12
+offset_left = 228.0
+offset_top = 96.0
+offset_right = 244.0
+offset_bottom = 100.0
+color = Color(0.09019608, 0.06666667, 0.16078432, 1)
+
+[node name="JuntaFondo11" type="ColorRect" parent="Fondo" unique_id=2011205767]
+z_index = -12
+offset_left = 264.0
+offset_top = 88.0
+offset_right = 288.0
+offset_bottom = 93.0
+color = Color(0.12941177, 0.08627451, 0.21960784, 1)
+
+[node name="JuntaFondo12" type="ColorRect" parent="Fondo" unique_id=291082872]
+z_index = -12
+offset_left = 276.0
+offset_top = 96.0
+offset_right = 292.0
+offset_bottom = 100.0
+color = Color(0.09019608, 0.06666667, 0.16078432, 1)
+
+[node name="JuntaFondo13" type="ColorRect" parent="Fondo" unique_id=809578575]
+z_index = -12
+offset_left = 312.0
+offset_top = 88.0
+offset_right = 336.0
+offset_bottom = 93.0
+color = Color(0.12941177, 0.08627451, 0.21960784, 1)
+
+[node name="JuntaFondo14" type="ColorRect" parent="Fondo" unique_id=778284375]
+z_index = -12
+offset_left = 324.0
+offset_top = 96.0
+offset_right = 340.0
+offset_bottom = 100.0
+color = Color(0.09019608, 0.06666667, 0.16078432, 1)
+
+[node name="JuntaFondo15" type="ColorRect" parent="Fondo" unique_id=1527029307]
+z_index = -12
+offset_left = 360.0
+offset_top = 88.0
+offset_right = 384.0
+offset_bottom = 93.0
+color = Color(0.12941177, 0.08627451, 0.21960784, 1)
+
+[node name="JuntaFondo16" type="ColorRect" parent="Fondo" unique_id=1134913728]
+z_index = -12
+offset_left = 372.0
+offset_top = 96.0
+offset_right = 388.0
+offset_bottom = 100.0
+color = Color(0.09019608, 0.06666667, 0.16078432, 1)
+
+[node name="JuntaFondo17" type="ColorRect" parent="Fondo" unique_id=561484971]
+z_index = -12
+offset_left = 408.0
+offset_top = 88.0
+offset_right = 432.0
+offset_bottom = 93.0
+color = Color(0.12941177, 0.08627451, 0.21960784, 1)
+
+[node name="JuntaFondo18" type="ColorRect" parent="Fondo" unique_id=686108361]
+z_index = -12
+offset_left = 420.0
+offset_top = 96.0
+offset_right = 436.0
+offset_bottom = 100.0
+color = Color(0.09019608, 0.06666667, 0.16078432, 1)
+
+[node name="JuntaFondo19" type="ColorRect" parent="Fondo" unique_id=516727787]
+z_index = -12
+offset_left = 456.0
+offset_top = 88.0
+offset_right = 480.0
+offset_bottom = 93.0
+color = Color(0.12941177, 0.08627451, 0.21960784, 1)
+
+[node name="JuntaFondo20" type="ColorRect" parent="Fondo" unique_id=771351892]
+z_index = -12
+offset_left = 468.0
+offset_top = 96.0
+offset_right = 484.0
+offset_bottom = 100.0
+color = Color(0.09019608, 0.06666667, 0.16078432, 1)
+
+[node name="JuntaFondo21" type="ColorRect" parent="Fondo" unique_id=1147538058]
+z_index = -12
+offset_left = 504.0
+offset_top = 88.0
+offset_right = 528.0
+offset_bottom = 93.0
+color = Color(0.12941177, 0.08627451, 0.21960784, 1)
+
+[node name="JuntaFondo22" type="ColorRect" parent="Fondo" unique_id=1164823025]
+z_index = -12
+offset_left = 516.0
+offset_top = 96.0
+offset_right = 532.0
+offset_bottom = 100.0
+color = Color(0.09019608, 0.06666667, 0.16078432, 1)
+
+[node name="JuntaFondo23" type="ColorRect" parent="Fondo" unique_id=762677131]
+z_index = -12
+offset_left = 552.0
+offset_top = 88.0
+offset_right = 576.0
+offset_bottom = 93.0
+color = Color(0.12941177, 0.08627451, 0.21960784, 1)
+
+[node name="JuntaFondo24" type="ColorRect" parent="Fondo" unique_id=1615405808]
+z_index = -12
+offset_left = 564.0
+offset_top = 96.0
+offset_right = 580.0
+offset_bottom = 100.0
+color = Color(0.09019608, 0.06666667, 0.16078432, 1)
+
+[node name="JuntaFondo25" type="ColorRect" parent="Fondo" unique_id=1431947457]
+z_index = -12
+offset_left = 600.0
+offset_top = 88.0
+offset_right = 624.0
+offset_bottom = 93.0
+color = Color(0.12941177, 0.08627451, 0.21960784, 1)
+
+[node name="JuntaFondo26" type="ColorRect" parent="Fondo" unique_id=403656823]
+z_index = -12
+offset_left = 612.0
+offset_top = 96.0
+offset_right = 628.0
+offset_bottom = 100.0
+color = Color(0.09019608, 0.06666667, 0.16078432, 1)
+
+[node name="JuntaFondo27" type="ColorRect" parent="Fondo" unique_id=72407137]
+z_index = -12
+offset_left = 648.0
+offset_top = 88.0
+offset_right = 672.0
+offset_bottom = 93.0
+color = Color(0.12941177, 0.08627451, 0.21960784, 1)
+
+[node name="JuntaFondo28" type="ColorRect" parent="Fondo" unique_id=877581221]
+z_index = -12
+offset_left = 660.0
+offset_top = 96.0
+offset_right = 676.0
+offset_bottom = 100.0
+color = Color(0.09019608, 0.06666667, 0.16078432, 1)
+
+[node name="JuntaFondo29" type="ColorRect" parent="Fondo" unique_id=312947109]
+z_index = -12
+offset_left = 696.0
+offset_top = 88.0
+offset_right = 720.0
+offset_bottom = 93.0
+color = Color(0.12941177, 0.08627451, 0.21960784, 1)
+
+[node name="JuntaFondo30" type="ColorRect" parent="Fondo" unique_id=2071668859]
+z_index = -12
+offset_left = 708.0
+offset_top = 96.0
+offset_right = 724.0
+offset_bottom = 100.0
+color = Color(0.09019608, 0.06666667, 0.16078432, 1)
+
+[node name="JuntaFondo31" type="ColorRect" parent="Fondo" unique_id=455050841]
+z_index = -12
+offset_left = 744.0
+offset_top = 88.0
+offset_right = 768.0
+offset_bottom = 93.0
+color = Color(0.12941177, 0.08627451, 0.21960784, 1)
+
+[node name="JuntaFondo32" type="ColorRect" parent="Fondo" unique_id=113223673]
+z_index = -12
+offset_left = 756.0
+offset_top = 96.0
+offset_right = 772.0
+offset_bottom = 100.0
+color = Color(0.09019608, 0.06666667, 0.16078432, 1)
+
+[node name="JuntaFondo33" type="ColorRect" parent="Fondo" unique_id=483133391]
+z_index = -12
+offset_left = 792.0
+offset_top = 88.0
+offset_right = 816.0
+offset_bottom = 93.0
+color = Color(0.12941177, 0.08627451, 0.21960784, 1)
+
+[node name="JuntaFondo34" type="ColorRect" parent="Fondo" unique_id=810191312]
+z_index = -12
+offset_left = 804.0
+offset_top = 96.0
+offset_right = 820.0
+offset_bottom = 100.0
+color = Color(0.09019608, 0.06666667, 0.16078432, 1)
+
+[node name="JuntaFondo35" type="ColorRect" parent="Fondo" unique_id=1916036189]
+z_index = -12
+offset_left = 840.0
+offset_top = 88.0
+offset_right = 864.0
+offset_bottom = 93.0
+color = Color(0.12941177, 0.08627451, 0.21960784, 1)
+
+[node name="JuntaFondo36" type="ColorRect" parent="Fondo" unique_id=1697874247]
+z_index = -12
+offset_left = 852.0
+offset_top = 96.0
+offset_right = 868.0
+offset_bottom = 100.0
+color = Color(0.09019608, 0.06666667, 0.16078432, 1)
+
+[node name="JuntaFondo37" type="ColorRect" parent="Fondo" unique_id=699771064]
+z_index = -12
+offset_left = 888.0
+offset_top = 88.0
+offset_right = 912.0
+offset_bottom = 93.0
+color = Color(0.12941177, 0.08627451, 0.21960784, 1)
+
+[node name="JuntaFondo38" type="ColorRect" parent="Fondo" unique_id=563859008]
+z_index = -12
+offset_left = 900.0
+offset_top = 96.0
+offset_right = 916.0
+offset_bottom = 100.0
+color = Color(0.09019608, 0.06666667, 0.16078432, 1)
+
+[node name="JuntaFondo39" type="ColorRect" parent="Fondo" unique_id=1658228719]
+z_index = -12
+offset_left = 936.0
+offset_top = 88.0
+offset_right = 960.0
+offset_bottom = 93.0
+color = Color(0.12941177, 0.08627451, 0.21960784, 1)
+
+[node name="JuntaFondo40" type="ColorRect" parent="Fondo" unique_id=2023995189]
+z_index = -12
+offset_left = 948.0
+offset_top = 96.0
+offset_right = 964.0
+offset_bottom = 100.0
+color = Color(0.09019608, 0.06666667, 0.16078432, 1)
+
+[node name="JuntaFondo41" type="ColorRect" parent="Fondo" unique_id=1520908651]
+z_index = -12
+offset_left = 984.0
+offset_top = 88.0
+offset_right = 1008.0
+offset_bottom = 93.0
+color = Color(0.12941177, 0.08627451, 0.21960784, 1)
+
+[node name="JuntaFondo42" type="ColorRect" parent="Fondo" unique_id=1083839041]
+z_index = -12
+offset_left = 996.0
+offset_top = 96.0
+offset_right = 1012.0
+offset_bottom = 100.0
+color = Color(0.09019608, 0.06666667, 0.16078432, 1)
+
+[node name="JuntaFondo43" type="ColorRect" parent="Fondo" unique_id=303101748]
+z_index = -12
+offset_left = 1032.0
+offset_top = 88.0
+offset_right = 1056.0
+offset_bottom = 93.0
+color = Color(0.12941177, 0.08627451, 0.21960784, 1)
+
+[node name="JuntaFondo44" type="ColorRect" parent="Fondo" unique_id=1896503549]
+z_index = -12
+offset_left = 1044.0
+offset_top = 96.0
+offset_right = 1060.0
+offset_bottom = 100.0
+color = Color(0.09019608, 0.06666667, 0.16078432, 1)
+
+[node name="JuntaFondo45" type="ColorRect" parent="Fondo" unique_id=1775836366]
+z_index = -12
+offset_left = 1080.0
+offset_top = 88.0
+offset_right = 1104.0
+offset_bottom = 93.0
+color = Color(0.12941177, 0.08627451, 0.21960784, 1)
+
+[node name="JuntaFondo46" type="ColorRect" parent="Fondo" unique_id=1542561234]
+z_index = -12
+offset_left = 1092.0
+offset_top = 96.0
+offset_right = 1108.0
+offset_bottom = 100.0
+color = Color(0.09019608, 0.06666667, 0.16078432, 1)
+
+[node name="JuntaFondo47" type="ColorRect" parent="Fondo" unique_id=1111621457]
+z_index = -12
+offset_left = 1128.0
+offset_top = 88.0
+offset_right = 1152.0
+offset_bottom = 93.0
+color = Color(0.12941177, 0.08627451, 0.21960784, 1)
+
+[node name="JuntaFondo48" type="ColorRect" parent="Fondo" unique_id=742069782]
+z_index = -12
+offset_left = 1140.0
+offset_top = 96.0
+offset_right = 1156.0
+offset_bottom = 100.0
+color = Color(0.09019608, 0.06666667, 0.16078432, 1)
+
+[node name="Arquitectura" type="TileMapLayer" parent="." unique_id=1870492677]
+tile_set = ExtResource("7_xiuk1")
+collision_enabled = false
+
+[node name="VentanaGotica" type="TileMapLayer" parent="Arquitectura" unique_id=1193269667]
+z_index = -3
+position = Vector2(112, 112)
+tile_map_data = PackedByteArray("AAAAAAAAAAAFAAEAAAAAAAEAAAAFAAIAAAAAAAIAAAAFAAMAAAABAAAAAAAGAAEAAAABAAEAAAAGAAIAAAABAAIAAAAGAAMAAAACAAAAAAAHAAEAAAACAAEAAAAHAAIAAAACAAIAAAAHAAMAAAA=")
+tile_set = ExtResource("8_jc41g")
+collision_enabled = false
+
+[node name="VentanaGotica2" type="TileMapLayer" parent="Arquitectura" unique_id=1473834186]
+z_index = -3
+position = Vector2(344, 104)
+tile_map_data = PackedByteArray("AAAAAAAAAAAFAAEAAAAAAAEAAAAFAAIAAAAAAAIAAAAFAAMAAAABAAAAAAAGAAEAAAABAAEAAAAGAAIAAAABAAIAAAAGAAMAAAACAAAAAAAHAAEAAAACAAEAAAAHAAIAAAACAAIAAAAHAAMAAAA=")
+tile_set = ExtResource("8_jc41g")
+collision_enabled = false
+
+[node name="VentanaGotica3" type="TileMapLayer" parent="Arquitectura" unique_id=581195630]
+z_index = -3
+position = Vector2(744, 104)
+tile_map_data = PackedByteArray("AAAAAAAAAAAFAAEAAAAAAAEAAAAFAAIAAAAAAAIAAAAFAAMAAAABAAAAAAAGAAEAAAABAAEAAAAGAAIAAAABAAIAAAAGAAMAAAACAAAAAAAHAAEAAAACAAEAAAAHAAIAAAACAAIAAAAHAAMAAAA=")
+tile_set = ExtResource("8_jc41g")
+collision_enabled = false
+
+[node name="VentanaGotica4" type="TileMapLayer" parent="Arquitectura" unique_id=2140637015]
+z_index = -3
+position = Vector2(984, 120)
+tile_map_data = PackedByteArray("AAAAAAAAAAAFAAEAAAAAAAEAAAAFAAIAAAAAAAIAAAAFAAMAAAABAAAAAAAGAAEAAAABAAEAAAAGAAIAAAABAAIAAAAGAAMAAAACAAAAAAAHAAEAAAACAAEAAAAHAAIAAAACAAIAAAAHAAMAAAA=")
+tile_set = ExtResource("8_jc41g")
+collision_enabled = false
+
+[node name="Estandarte" type="TileMapLayer" parent="Arquitectura" unique_id=634953698]
+z_index = 2
+position = Vector2(208, 80)
+tile_map_data = PackedByteArray("AAAAAAAAAAANAAEAAAAAAAEAAAANAAIAAAAAAAIAAAANAAMAAAA=")
+tile_set = ExtResource("8_jc41g")
+collision_enabled = false
+
+[node name="Estandarte2" type="TileMapLayer" parent="Arquitectura" unique_id=39481993]
+z_index = 2
+position = Vector2(592, 64)
+tile_map_data = PackedByteArray("AAAAAAAAAAANAAEAAAAAAAEAAAANAAIAAAAAAAIAAAANAAMAAAA=")
+tile_set = ExtResource("8_jc41g")
+collision_enabled = false
+
+[node name="Estandarte3" type="TileMapLayer" parent="Arquitectura" unique_id=1964609133]
+z_index = 2
+position = Vector2(912, 80)
+tile_map_data = PackedByteArray("AAAAAAAAAAANAAEAAAAAAAEAAAANAAIAAAAAAAIAAAANAAMAAAA=")
+tile_set = ExtResource("8_jc41g")
+collision_enabled = false
+
+[node name="Columna" type="ColorRect" parent="Arquitectura" unique_id=2060961166]
+z_index = -2
+offset_left = 48.0
+offset_top = 112.0
+offset_right = 60.0
+offset_bottom = 238.0
+color = Color(0.09019608, 0.07450981, 0.14901961, 1)
+
+[node name="Capitel" type="ColorRect" parent="Arquitectura" unique_id=545399277]
+z_index = -1
+offset_left = 44.0
+offset_top = 112.0
+offset_right = 64.0
+offset_bottom = 119.0
+color = Color(0.20392157, 0.13725491, 0.28235295, 1)
+
+[node name="BaseColumna" type="ColorRect" parent="Arquitectura" unique_id=182879295]
+z_index = -1
+offset_left = 45.0
+offset_top = 232.0
+offset_right = 63.0
+offset_bottom = 240.0
+color = Color(0.20392157, 0.13725491, 0.28235295, 1)
+
+[node name="Columna2" type="ColorRect" parent="Arquitectura" unique_id=43421171]
+z_index = -2
+offset_left = 256.0
+offset_top = 112.0
+offset_right = 268.0
+offset_bottom = 238.0
+color = Color(0.09019608, 0.07450981, 0.14901961, 1)
+
+[node name="Capitel2" type="ColorRect" parent="Arquitectura" unique_id=928785834]
+z_index = -1
+offset_left = 252.0
+offset_top = 112.0
+offset_right = 272.0
+offset_bottom = 119.0
+color = Color(0.20392157, 0.13725491, 0.28235295, 1)
+
+[node name="BaseColumna2" type="ColorRect" parent="Arquitectura" unique_id=1595130251]
+z_index = -1
+offset_left = 253.0
+offset_top = 232.0
+offset_right = 271.0
+offset_bottom = 240.0
+color = Color(0.20392157, 0.13725491, 0.28235295, 1)
+
+[node name="Columna3" type="ColorRect" parent="Arquitectura" unique_id=49326702]
+z_index = -2
+offset_left = 432.0
+offset_top = 112.0
+offset_right = 444.0
+offset_bottom = 238.0
+color = Color(0.09019608, 0.07450981, 0.14901961, 1)
+
+[node name="Capitel3" type="ColorRect" parent="Arquitectura" unique_id=1748930898]
+z_index = -1
+offset_left = 428.0
+offset_top = 112.0
+offset_right = 448.0
+offset_bottom = 119.0
+color = Color(0.20392157, 0.13725491, 0.28235295, 1)
+
+[node name="BaseColumna3" type="ColorRect" parent="Arquitectura" unique_id=336353697]
+z_index = -1
+offset_left = 429.0
+offset_top = 232.0
+offset_right = 447.0
+offset_bottom = 240.0
+color = Color(0.20392157, 0.13725491, 0.28235295, 1)
+
+[node name="Columna4" type="ColorRect" parent="Arquitectura" unique_id=1469853200]
+z_index = -2
+offset_left = 640.0
+offset_top = 112.0
+offset_right = 652.0
+offset_bottom = 238.0
+color = Color(0.09019608, 0.07450981, 0.14901961, 1)
+
+[node name="Capitel4" type="ColorRect" parent="Arquitectura" unique_id=60884301]
+z_index = -1
+offset_left = 636.0
+offset_top = 112.0
+offset_right = 656.0
+offset_bottom = 119.0
+color = Color(0.20392157, 0.13725491, 0.28235295, 1)
+
+[node name="BaseColumna4" type="ColorRect" parent="Arquitectura" unique_id=1063667764]
+z_index = -1
+offset_left = 637.0
+offset_top = 232.0
+offset_right = 655.0
+offset_bottom = 240.0
+color = Color(0.20392157, 0.13725491, 0.28235295, 1)
+
+[node name="Columna5" type="ColorRect" parent="Arquitectura" unique_id=1810252772]
+z_index = -2
+offset_left = 888.0
+offset_top = 112.0
+offset_right = 900.0
+offset_bottom = 238.0
+color = Color(0.09019608, 0.07450981, 0.14901961, 1)
+
+[node name="Capitel5" type="ColorRect" parent="Arquitectura" unique_id=2025514408]
+z_index = -1
+offset_left = 884.0
+offset_top = 112.0
+offset_right = 904.0
+offset_bottom = 119.0
+color = Color(0.20392157, 0.13725491, 0.28235295, 1)
+
+[node name="BaseColumna5" type="ColorRect" parent="Arquitectura" unique_id=1580625566]
+z_index = -1
+offset_left = 885.0
+offset_top = 232.0
+offset_right = 903.0
+offset_bottom = 240.0
+color = Color(0.20392157, 0.13725491, 0.28235295, 1)
+
+[node name="Columna6" type="ColorRect" parent="Arquitectura" unique_id=55671526]
+z_index = -2
+offset_left = 1088.0
+offset_top = 112.0
+offset_right = 1100.0
+offset_bottom = 238.0
+color = Color(0.09019608, 0.07450981, 0.14901961, 1)
+
+[node name="Capitel6" type="ColorRect" parent="Arquitectura" unique_id=1939804690]
+z_index = -1
+offset_left = 1084.0
+offset_top = 112.0
+offset_right = 1104.0
+offset_bottom = 119.0
+color = Color(0.20392157, 0.13725491, 0.28235295, 1)
+
+[node name="BaseColumna6" type="ColorRect" parent="Arquitectura" unique_id=1434027328]
+z_index = -1
+offset_left = 1085.0
+offset_top = 232.0
+offset_right = 1103.0
+offset_bottom = 240.0
+color = Color(0.20392157, 0.13725491, 0.28235295, 1)
+
+[node name="ArcoDeSalida" type="TileMapLayer" parent="Arquitectura" unique_id=813599872]
+z_index = 3
+position = Vector2(1040, 246)
+tile_map_data = PackedByteArray("AAAAAAAAAAARAAEAAAAAAAEAAAARAAIAAAAAAAIAAAARAAMAAAAAAAMAAAARAAQAAAABAAAAAAASAAEAAAABAAEAAAASAAIAAAABAAIAAAASAAMAAAABAAMAAAASAAQAAAACAAAAAAATAAEAAAACAAEAAAATAAIAAAACAAIAAAATAAMAAAACAAMAAAATAAQAAAA=")
+tile_set = ExtResource("8_jc41g")
+collision_enabled = false
+
+[node name="UmbralSalida" type="ColorRect" parent="Arquitectura" unique_id=220418545]
+z_index = 4
+offset_left = 1038.0
+offset_top = 310.0
+offset_right = 1090.0
+offset_bottom = 314.0
+color = Color(0.6862745, 0.4627451, 0.7647059, 1)
+
+[node name="Terreno" type="TileMapLayer" parent="." unique_id=1051760683]
+position = Vector2(0, 6)
+tile_map_data = PackedByteArray("AAAAACgAUAEAAAAAAAAAACkAUAEAAAEAAAABACgAUAEBAAAAAAABACkAUAEBAAEAAAACACgAUAECAAAAAAACACkAUAECAAEAAAADACgAUAEDAAAAAAADACkAUAEDAAEAAAAEACgAUAEEAAAAAAAEACkAUAEEAAEAAAAFACgAUAEFAAAAAAAFACkAUAEFAAEAAAAGACgAUAEGAAAAAAAGACkAUAEGAAEAAAAHACgAUAEHAAAAAAAHACkAUAEHAAEAAAAIACgAUAEIAAAAAAAIACkAUAEIAAEAAAAJACgAUAEJAAAAAAAJACkAUAEJAAEAAAAKACgAUAEKAAAAAAAKACkAUAEKAAEAAAALACgAUAELAAAAAAALACkAUAELAAEAAAAMACgAUAEMAAAAAAAMACkAUAEMAAEAAAANACgAUAENAAAAAAANACkAUAENAAEAAAAOACgAUAEOAAAAAAAOACkAUAEOAAEAAAAPACgAUAEPAAAAAAAPACkAUAEPAAEAAAAQACgAUAEQAAAAAAAQACkAUAEQAAEAAAARACgAUAERAAAAAAARACkAUAERAAEAAAASACgAUAESAAAAAAASACkAUAESAAEAAAATACgAUAETAAAAAAATACkAUAETAAEAAAAUACgAUAEUAAAAAAAUACkAUAEUAAEAAAAVACgAUAEVAAAAAAAVACkAUAEVAAEAAAAWACgAUAEWAAAAAAAWACkAUAEWAAEAAAAXACgAUAEXAAAAAAAXACkAUAEXAAEAAAAYACgAUAEYAAAAAAAYACkAUAEYAAEAAAAZACgAUAEZAAAAAAAZACkAUAEZAAEAAAAaACgAUAEaAAAAAAAaACkAUAEaAAEAAAAbACgAUAEbAAAAAAAbACkAUAEbAAEAAAAcACgAUAEcAAAAAAAcACkAUAEcAAEAAAAdACgAUAEdAAAAAAAdACkAUAEdAAEAAAAeACgAUAEeAAAAAAAeACkAUAEeAAEAAAAfACgAUAEfAAAAAAAfACkAUAEfAAEAAAAgACgAUAEgAAAAAAAgACkAUAEgAAEAAAAhACgAUAEhAAAAAAAhACkAUAEhAAEAAAAiACgAUAEiAAAAAAAiACkAUAEiAAEAAAAjACgAUAEjAAAAAAAjACkAUAEjAAEAAAAkACgAUAEkAAAAAAAkACkAUAEkAAEAAAAlACgAUAElAAAAAAAlACkAUAElAAEAAAAmACgAUAEmAAAAAAAmACkAUAEmAAEAAAAnACgAUAEnAAAAAAAnACkAUAEnAAEAAAAoACgAUAEoAAAAAAAoACkAUAEoAAEAAAApACgAUAEpAAAAAAApACkAUAEpAAEAAAAqACgAUAEqAAAAAAAqACkAUAEqAAEAAAArACgAUAErAAAAAAArACkAUAErAAEAAAArACEAwAAAAAAAAAArACIAwAAAAAEAAAAsACEAwAABAAAAAAAsACIAwAABAAEAAAAtACEAwAACAAAAAAAtACIAwAACAAEAAAAuACEAwAADAAAAAAAuACIAwAADAAEAAAAvACEAwAAEAAAAAAAvACIAwAAEAAEAAAAwACEAwAAFAAAAAAAwACIAwAAFAAEAAAAxACEAwAAGAAAAAAAxACIAwAAGAAEAAAAyACEAwAAHAAAAAAAyACIAwAAHAAEAAAAzACEAwAAIAAAAAAAzACIAwAAIAAEAAAA0ACEAwAAJAAAAAAA0ACIAwAAJAAEAAAA1ACEAwAAKAAAAAAA1ACIAwAAKAAEAAAA2ACEAwAALAAAAAAA2ACIAwAALAAEAAAA3ACEAwAAMAAAAAAA3ACIAwAAMAAEAAAA4ACEAwAANAAAAAAA4ACIAwAANAAEAAAA5ACEAwAAOAAAAAAA5ACIAwAAOAAEAAAA6ACEAwAAPAAAAAAA6ACIAwAAPAAEAAAA7ACEAwAAQAAAAAAA7ACIAwAAQAAEAAAA8ACEAwAARAAAAAAA8ACIAwAARAAEAAAA9ACEAwAASAAAAAAA9ACIAwAASAAEAAAA+ACEAwAATAAAAAAA+ACIAwAATAAEAAAA/ACEAwAAUAAAAAAA/ACIAwAAUAAEAAABAACEAwAAVAAAAAABAACIAwAAVAAEAAABBACEAwAAWAAAAAABBACIAwAAWAAEAAABCACEAwAAXAAAAAABCACIAwAAXAAEAAABDACEAwAAYAAAAAABDACIAwAAYAAEAAABEACEAwAAZAAAAAABEACIAwAAZAAEAAABDACYA0AAAAAAAAABDACcA0AAAAAEAAABEACYA0AABAAAAAABEACcA0AABAAEAAABFACYA0AACAAAAAABFACcA0AACAAEAAABGACYA0AADAAAAAABGACcA0AADAAEAAABHACYA0AAEAAAAAABHACcA0AAEAAEAAABIACYA0AAFAAAAAABIACcA0AAFAAEAAABJACYA0AAGAAAAAABJACcA0AAGAAEAAABKACYA0AAHAAAAAABKACcA0AAHAAEAAABLACYA0AAIAAAAAABLACcA0AAIAAEAAABMACYA0AAJAAAAAABMACcA0AAJAAEAAABNACYA0AAKAAAAAABNACcA0AAKAAEAAABOACYA0AALAAAAAABOACcA0AALAAEAAABPACYA0AAMAAAAAABPACcA0AAMAAEAAABQACYA0AANAAAAAABQACcA0AANAAEAAABRACYA0AAOAAAAAABRACcA0AAOAAEAAABSACYA0AAPAAAAAABSACcA0AAPAAEAAABTACYA0AAQAAAAAABTACcA0AAQAAEAAABUACYA0AARAAAAAABUACcA0AARAAEAAABVACYA0AASAAAAAABVACcA0AASAAEAAABWACYA0AATAAAAAABWACcA0AATAAEAAABXACYA0AAUAAAAAABXACcA0AAUAAEAAABYACYA0AAVAAAAAABYACcA0AAVAAEAAABZACYA0AAWAAAAAABZACcA0AAWAAEAAABaACYA0AAXAAAAAABaACcA0AAXAAEAAABbACYA0AAYAAAAAABbACcA0AAYAAEAAABcACYA0AAZAAAAAABcACcA0AAZAAEAAABdACYA0AAaAAAAAABdACcA0AAaAAEAAABeACYA0AAbAAAAAABeACcA0AAbAAEAAABnACgASAEAAAAAAABnACkASAEAAAEAAABoACgASAEBAAAAAABoACkASAEBAAEAAABpACgASAECAAAAAABpACkASAECAAEAAABqACgASAEDAAAAAABqACkASAEDAAEAAABrACgASAEEAAAAAABrACkASAEEAAEAAABsACgASAEFAAAAAABsACkASAEFAAEAAABtACgASAEGAAAAAABtACkASAEGAAEAAABuACgASAEHAAAAAABuACkASAEHAAEAAABvACgASAEIAAAAAABvACkASAEIAAEAAABwACgASAEJAAAAAABwACkASAEJAAEAAABxACgASAEKAAAAAABxACkASAEKAAEAAAByACgASAELAAAAAAByACkASAELAAEAAABzACgASAEMAAAAAABzACkASAEMAAEAAAB0ACgASAENAAAAAAB0ACkASAENAAEAAAB1ACgASAEOAAAAAAB1ACkASAEOAAEAAAB2ACgASAEPAAAAAAB2ACkASAEPAAEAAAB3ACgASAEQAAAAAAB3ACkASAEQAAEAAAB4ACgASAERAAAAAAB4ACkASAERAAEAAAB5ACgASAESAAAAAAB5ACkASAESAAEAAAB6ACgASAETAAAAAAB6ACkASAETAAEAAAB7ACgASAEUAAAAAAB7ACkASAEUAAEAAAB8ACgASAEVAAAAAAB8ACkASAEVAAEAAAB9ACgASAEWAAAAAAB9ACkASAEWAAEAAAB+ACgASAEXAAAAAAB+ACkASAEXAAEAAAB/ACgASAEYAAAAAAB/ACkASAEYAAEAAACAACgASAEZAAAAAACAACkASAEZAAEAAACBACgASAEaAAAAAACBACkASAEaAAEAAACCACgASAEbAAAAAACCACkASAEbAAEAAACDACgASAEcAAAAAACDACkASAEcAAEAAACEACgASAEdAAAAAACEACkASAEdAAEAAACFACgASAEeAAAAAACFACkASAEeAAEAAACGACgASAEfAAAAAACGACkASAEfAAEAAACHACgASAEgAAAAAACHACkASAEgAAEAAACIACgASAEhAAAAAACIACkASAEhAAEAAACJACgASAEiAAAAAACJACkASAEiAAEAAACKACgASAEjAAAAAACKACkASAEjAAEAAACLACgASAEkAAAAAACLACkASAEkAAEAAACMACgASAElAAAAAACMACkASAElAAEAAACNACgASAEmAAAAAACNACkASAEmAAEAAACOACgASAEnAAAAAACOACkASAEnAAEAAACPACgASAEoAAAAAACPACkASAEoAAEAAACQACgASAEpAAAAAACQACkASAEpAAEAAACRACgASAEqAAAAAACRACkASAEqAAEAAAA=")
+tile_set = ExtResource("9_1xxhx")
+
+[node name="Plataformas" type="TileMapLayer" parent="." unique_id=72320261]
+position = Vector2(0, 6)
+tile_map_data = PackedByteArray("AAAIABkAsAAAAAAAAAAIABoAsAAAAAEAAAAJABkAsAABAAAAAAAJABoAsAABAAEAAAAKABkAsAACAAAAAAAKABoAsAACAAEAAAALABkAsAADAAAAAAALABoAsAADAAEAAAAMABkAsAAEAAAAAAAMABoAsAAEAAEAAAANABkAsAAFAAAAAAANABoAsAAFAAEAAAAOABkAsAAGAAAAAAAOABoAsAAGAAEAAAAPABkAsAAHAAAAAAAPABoAsAAHAAEAAAAQABkAsAAIAAAAAAAQABoAsAAIAAEAAAARABkAsAAJAAAAAAARABoAsAAJAAEAAAASABkAsAAKAAAAAAASABoAsAAKAAEAAAATABkAsAALAAAAAAATABoAsAALAAEAAAAUABkAsAAMAAAAAAAUABoAsAAMAAEAAAAVABkAsAANAAAAAAAVABoAsAANAAEAAAAWABkAsAAOAAAAAAAWABoAsAAOAAEAAAAXABkAsAAPAAAAAAAXABoAsAAPAAEAAAAYABkAsAAQAAAAAAAYABoAsAAQAAEAAAAZABkAsAARAAAAAAAZABoAsAARAAEAAAAaABkAsAASAAAAAAAaABoAsAASAAEAAAAbABkAsAATAAAAAAAbABoAsAATAAEAAAAcABkAsAAUAAAAAAAcABoAsAAUAAEAAAAdABkAsAAVAAAAAAAdABoAsAAVAAEAAAAeABkAsAAWAAAAAAAeABoAsAAWAAEAAAAfABkAsAAXAAAAAAAfABoAsAAXAAEAAAAiABUAoAAAAAAAAAAiABYAoAAAAAEAAAAjABUAoAABAAAAAAAjABYAoAABAAEAAAAkABUAoAACAAAAAAAkABYAoAACAAEAAAAlABUAoAADAAAAAAAlABYAoAADAAEAAAAmABUAoAAEAAAAAAAmABYAoAAEAAEAAAAnABUAoAAFAAAAAAAnABYAoAAFAAEAAAAoABUAoAAGAAAAAAAoABYAoAAGAAEAAAApABUAoAAHAAAAAAApABYAoAAHAAEAAAAqABUAoAAIAAAAAAAqABYAoAAIAAEAAAArABUAoAAJAAAAAAArABYAoAAJAAEAAAAsABUAoAAKAAAAAAAsABYAoAAKAAEAAAAtABUAoAALAAAAAAAtABYAoAALAAEAAAAuABUAoAAMAAAAAAAuABYAoAAMAAEAAAAvABUAoAANAAAAAAAvABYAoAANAAEAAAAwABUAoAAOAAAAAAAwABYAoAAOAAEAAAAxABUAoAAPAAAAAAAxABYAoAAPAAEAAAAyABUAoAAQAAAAAAAyABYAoAAQAAEAAAAzABUAoAARAAAAAAAzABYAoAARAAEAAAA0ABUAoAASAAAAAAA0ABYAoAASAAEAAAA1ABUAoAATAAAAAAA1ABYAoAATAAEAAAA2ABUAoAAUAAAAAAA2ABYAoAAUAAEAAAA3ABUAoAAVAAAAAAA3ABYAoAAVAAEAAAA4ABsAwAAAAAAAAAA4ABwAwAAAAAEAAAA5ABsAwAABAAAAAAA5ABwAwAABAAEAAAA6ABsAwAACAAAAAAA6ABwAwAACAAEAAAA7ABsAwAADAAAAAAA7ABwAwAADAAEAAAA8ABsAwAAEAAAAAAA8ABwAwAAEAAEAAAA9ABsAwAAFAAAAAAA9ABwAwAAFAAEAAAA+ABsAwAAGAAAAAAA+ABwAwAAGAAEAAAA/ABsAwAAHAAAAAAA/ABwAwAAHAAEAAABAABsAwAAIAAAAAABAABwAwAAIAAEAAABBABsAwAAJAAAAAABBABwAwAAJAAEAAABCABsAwAAKAAAAAABCABwAwAAKAAEAAABDABsAwAALAAAAAABDABwAwAALAAEAAABEABsAwAAMAAAAAABEABwAwAAMAAEAAABFABsAwAANAAAAAABFABwAwAANAAEAAABGABsAwAAOAAAAAABGABwAwAAOAAEAAABHABsAwAAPAAAAAABHABwAwAAPAAEAAABIABsAwAAQAAAAAABIABwAwAAQAAEAAABJABsAwAARAAAAAABJABwAwAARAAEAAABKABsAwAASAAAAAABKABwAwAASAAEAAABLABsAwAATAAAAAABLABwAwAATAAEAAABMABsAwAAUAAAAAABMABwAwAAUAAEAAABNABsAwAAVAAAAAABNABwAwAAVAAEAAABOABsAwAAWAAAAAABOABwAwAAWAAEAAABPABsAwAAXAAAAAABPABwAwAAXAAEAAABQABsAwAAYAAAAAABQABwAwAAYAAEAAABRABsAwAAZAAAAAABRABwAwAAZAAEAAABUABYA0AAAAAAAAABUABcA0AAAAAEAAABVABYA0AABAAAAAABVABcA0AABAAEAAABWABYA0AACAAAAAABWABcA0AACAAEAAABXABYA0AADAAAAAABXABcA0AADAAEAAABYABYA0AAEAAAAAABYABcA0AAEAAEAAABZABYA0AAFAAAAAABZABcA0AAFAAEAAABaABYA0AAGAAAAAABaABcA0AAGAAEAAABbABYA0AAHAAAAAABbABcA0AAHAAEAAABcABYA0AAIAAAAAABcABcA0AAIAAEAAABdABYA0AAJAAAAAABdABcA0AAJAAEAAABeABYA0AAKAAAAAABeABcA0AAKAAEAAABfABYA0AALAAAAAABfABcA0AALAAEAAABgABYA0AAMAAAAAABgABcA0AAMAAEAAABhABYA0AANAAAAAABhABcA0AANAAEAAABiABYA0AAOAAAAAABiABcA0AAOAAEAAABjABYA0AAPAAAAAABjABcA0AAPAAEAAABkABYA0AAQAAAAAABkABcA0AAQAAEAAABlABYA0AARAAAAAABlABcA0AARAAEAAABmABYA0AASAAAAAABmABcA0AASAAEAAABnABYA0AATAAAAAABnABcA0AATAAEAAABoABYA0AAUAAAAAABoABcA0AAUAAEAAABpABYA0AAVAAAAAABpABcA0AAVAAEAAABqABYA0AAWAAAAAABqABcA0AAWAAEAAABrABYA0AAXAAAAAABrABcA0AAXAAEAAABsABYA0AAYAAAAAABsABcA0AAYAAEAAABtABYA0AAZAAAAAABtABcA0AAZAAEAAABuABYA0AAaAAAAAABuABcA0AAaAAEAAABvABYA0AAbAAAAAABvABcA0AAbAAEAAABxABwAkAAAAAAAAABxAB0AkAAAAAEAAAByABwAkAABAAAAAAByAB0AkAABAAEAAABzABwAkAACAAAAAABzAB0AkAACAAEAAAB0ABwAkAADAAAAAAB0AB0AkAADAAEAAAB1ABwAkAAEAAAAAAB1AB0AkAAEAAEAAAB2ABwAkAAFAAAAAAB2AB0AkAAFAAEAAAB3ABwAkAAGAAAAAAB3AB0AkAAGAAEAAAB4ABwAkAAHAAAAAAB4AB0AkAAHAAEAAAB5ABwAkAAIAAAAAAB5AB0AkAAIAAEAAAB6ABwAkAAJAAAAAAB6AB0AkAAJAAEAAAB7ABwAkAAKAAAAAAB7AB0AkAAKAAEAAAB8ABwAkAALAAAAAAB8AB0AkAALAAEAAAB9ABwAkAAMAAAAAAB9AB0AkAAMAAEAAAB+ABwAkAANAAAAAAB+AB0AkAANAAEAAAB/ABwAkAAOAAAAAAB/AB0AkAAOAAEAAACAABwAkAAPAAAAAACAAB0AkAAPAAEAAACBABwAkAAQAAAAAACBAB0AkAAQAAEAAACCABwAkAARAAAAAACCAB0AkAARAAEAAACDABwAkAASAAAAAACDAB0AkAASAAEAAACEABwAkAATAAAAAACEAB0AkAATAAEAAAAcAB0AKAAAAAAAAAAcAB4AKAAAAAEAAAAdAB0AKAABAAAAAAAdAB4AKAABAAEAAAAeAB0AKAACAAAAAAAeAB4AKAACAAEAAAAfAB0AKAADAAAAAAAfAB4AKAADAAEAAAAgAB0AKAAEAAAAAAAgAB4AKAAEAAEAAAAhAB0AKAAFAAAAAAAhAB4AKAAFAAEAAAAiAB0AKAAGAAAAAAAiAB4AKAAGAAEAAAAhABkAKAAAAAAAAAAhABoAKAAAAAEAAAAiABkAKAABAAAAAAAiABoAKAABAAEAAAAjABkAKAACAAAAAAAjABoAKAACAAEAAAAkABkAKAADAAAAAAAkABoAKAADAAEAAAAlABkAKAAEAAAAAAAlABoAKAAEAAEAAAAmABkAKAAFAAAAAAAmABoAKAAFAAEAAAAnABkAKAAGAAAAAAAnABoAKAAGAAEAAAAyABgAKAAAAAAAAAAyABkAKAAAAAEAAAAzABgAKAABAAAAAAAzABkAKAABAAEAAAA0ABgAKAACAAAAAAA0ABkAKAACAAEAAAA1ABgAKAADAAAAAAA1ABkAKAADAAEAAAA2ABgAKAAEAAAAAAA2ABkAKAAEAAEAAAA3ABgAKAAFAAAAAAA3ABkAKAAFAAEAAAA4ABgAKAAGAAAAAAA4ABkAKAAGAAEAAAA0AB4AIAAAAAAAAAA0AB8AIAAAAAEAAAA1AB4AIAABAAAAAAA1AB8AIAABAAEAAAA2AB4AIAACAAAAAAA2AB8AIAACAAEAAAA3AB4AIAADAAAAAAA3AB8AIAADAAEAAAA4AB4AIAAEAAAAAAA4AB8AIAAEAAEAAAA5AB4AIAAFAAAAAAA5AB8AIAAFAAEAAABQAB8AKAAAAAAAAABQACAAKAAAAAEAAABRAB8AKAABAAAAAABRACAAKAABAAEAAABSAB8AKAACAAAAAABSACAAKAACAAEAAABTAB8AKAADAAAAAABTACAAKAADAAEAAABUAB8AKAAEAAAAAABUACAAKAAEAAEAAABVAB8AKAAFAAAAAABVACAAKAAFAAEAAABWAB8AKAAGAAAAAABWACAAKAAGAAEAAABSABsAEAAAAAAAAABSABwAEAAAAAEAAABTABsAEAABAAAAAABTABwAEAABAAEAAABUABsAEAACAAAAAABUABwAEAACAAEAAABVABsAEAADAAAAAABVABwAEAADAAEAAABuABoAGAAAAAAAAABuABsAGAAAAAEAAABvABoAGAABAAAAAABvABsAGAABAAEAAABwABoAGAACAAAAAABwABsAGAACAAEAAABxABoAGAADAAAAAABxABsAGAADAAEAAAByABoAGAAEAAAAAAByABsAGAAEAAEAAAA=")
+tile_set = ExtResource("9_1xxhx")
+
+[node name="Decoracion" type="TileMapLayer" parent="." unique_id=402412459]
+tile_set = ExtResource("7_xiuk1")
+collision_enabled = false
+
+[node name="AntorchaAnimada" type="AnimatedSprite2D" parent="Decoracion" unique_id=897945095]
+z_index = 5
+position = Vector2(176, 174)
+sprite_frames = SubResource("SpriteFrames_8xc0e")
+animation = &"fuego"
+autoplay = "fuego"
+frame_progress = 0.34429437
+
+[node name="LuzMorada" type="PointLight2D" parent="Decoracion" unique_id=165906675]
+position = Vector2(186, 184)
+color = Color(0.56, 0.28, 0.86, 0.42)
+energy = 0.65
+texture = SubResource("GradientTexture2D_tifhw")
+texture_scale = 0.45
+
+[node name="AntorchaAnimada2" type="AnimatedSprite2D" parent="Decoracion" unique_id=715627961]
+z_index = 5
+position = Vector2(480, 190)
+sprite_frames = SubResource("SpriteFrames_hvxdr")
+animation = &"fuego"
+autoplay = "fuego"
+
+[node name="LuzMorada2" type="PointLight2D" parent="Decoracion" unique_id=260656053]
+position = Vector2(490, 200)
+color = Color(0.56, 0.28, 0.86, 0.42)
+energy = 0.65
+texture = SubResource("GradientTexture2D_yg750")
+texture_scale = 0.45
+
+[node name="AntorchaAnimada3" type="AnimatedSprite2D" parent="Decoracion" unique_id=1700470753]
+z_index = 5
+position = Vector2(704, 150)
+sprite_frames = SubResource("SpriteFrames_u8j62")
+animation = &"fuego"
+autoplay = "fuego"
+frame_progress = 0.13523513
+
+[node name="LuzMorada3" type="PointLight2D" parent="Decoracion" unique_id=1212414440]
+position = Vector2(714, 160)
+color = Color(0.56, 0.28, 0.86, 0.42)
+energy = 0.65
+texture = SubResource("GradientTexture2D_ap8bi")
+texture_scale = 0.45
+
+[node name="AntorchaAnimada4" type="AnimatedSprite2D" parent="Decoracion" unique_id=148099480]
+z_index = 5
+position = Vector2(960, 198)
+sprite_frames = SubResource("SpriteFrames_te2h3")
+animation = &"fuego"
+autoplay = "fuego"
+frame_progress = 0.65845007
+
+[node name="LuzMorada4" type="PointLight2D" parent="Decoracion" unique_id=1361896631]
+position = Vector2(970, 208)
+color = Color(0.56, 0.28, 0.86, 0.42)
+energy = 0.65
+texture = SubResource("GradientTexture2D_vhj84")
+texture_scale = 0.45
+
+[node name="PrimerPlano" type="TileMapLayer" parent="." unique_id=1194432599]
+tile_set = ExtResource("7_xiuk1")
+collision_enabled = false
+
+[node name="Pincho_0" type="Polygon2D" parent="PrimerPlano" unique_id=1428007087]
+z_index = 2
+position = Vector2(748, 348)
+color = Color(0.7411765, 0.54509807, 0.8156863, 1)
+polygon = PackedVector2Array(0, 16, 7, 0, 14, 16)
+
+[node name="Pincho_1" type="Polygon2D" parent="PrimerPlano" unique_id=2016825697]
+z_index = 2
+position = Vector2(763, 348)
+color = Color(0.7411765, 0.54509807, 0.8156863, 1)
+polygon = PackedVector2Array(0, 16, 7, 0, 14, 16)
+
+[node name="Pincho_2" type="Polygon2D" parent="PrimerPlano" unique_id=1622152680]
+z_index = 2
+position = Vector2(778, 348)
+color = Color(0.7411765, 0.54509807, 0.8156863, 1)
+polygon = PackedVector2Array(0, 16, 7, 0, 14, 16)
+
+[node name="Pincho_3" type="Polygon2D" parent="PrimerPlano" unique_id=1290103613]
+z_index = 2
+position = Vector2(793, 348)
+color = Color(0.7411765, 0.54509807, 0.8156863, 1)
+polygon = PackedVector2Array(0, 16, 7, 0, 14, 16)
+
+[node name="Pincho_4" type="Polygon2D" parent="PrimerPlano" unique_id=1154114205]
+z_index = 2
+position = Vector2(808, 348)
+color = Color(0.7411765, 0.54509807, 0.8156863, 1)
+polygon = PackedVector2Array(0, 16, 7, 0, 14, 16)
+
+[node name="ElementosInteractivos" type="TileMapLayer" parent="." unique_id=914034726]
+tile_set = ExtResource("7_xiuk1")
+collision_enabled = false
+
+[node name="TrampaPinchos" parent="ElementosInteractivos" unique_id=960574146 instance=ExtResource("11_44u8c")]
+position = Vector2(784, 366)
+
+[node name="Moneda_128_184" parent="ElementosInteractivos" unique_id=1147244278 instance=ExtResource("13_vlcyg")]
+position = Vector2(128, 184)
+
+[node name="Moneda_176_184" parent="ElementosInteractivos" unique_id=1388151914 instance=ExtResource("13_vlcyg")]
+position = Vector2(176, 184)
+
+[node name="Moneda_320_152" parent="ElementosInteractivos" unique_id=318798945 instance=ExtResource("13_vlcyg")]
+position = Vector2(320, 152)
+
+[node name="Moneda_376_152" parent="ElementosInteractivos" unique_id=1031707727 instance=ExtResource("13_vlcyg")]
+position = Vector2(376, 152)
+
+[node name="Moneda_496_200" parent="ElementosInteractivos" unique_id=468959483 instance=ExtResource("13_vlcyg")]
+position = Vector2(496, 200)
+
+[node name="Moneda_576_200" parent="ElementosInteractivos" unique_id=832328530 instance=ExtResource("13_vlcyg")]
+position = Vector2(576, 200)
+
+[node name="Moneda_720_160" parent="ElementosInteractivos" unique_id=477986812 instance=ExtResource("13_vlcyg")]
+position = Vector2(720, 160)
+
+[node name="Moneda_792_160" parent="ElementosInteractivos" unique_id=576364447 instance=ExtResource("13_vlcyg")]
+position = Vector2(792, 160)
+
+[node name="Moneda_944_208" parent="ElementosInteractivos" unique_id=2072115436 instance=ExtResource("13_vlcyg")]
+position = Vector2(944, 208)
+
+[node name="Moneda_1000_208" parent="ElementosInteractivos" unique_id=1509542631 instance=ExtResource("13_vlcyg")]
+position = Vector2(1000, 208)
+
+[node name="TrampaOeste" type="Area2D" parent="." unique_id=1426370372]
+position = Vector2(296, 312)
+collision_layer = 0
+script = ExtResource("12_shnk1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TrampaOeste" unique_id=1348906941]
+position = Vector2(68, 8)
+shape = SubResource("RectangleShape2D_e4i3a")

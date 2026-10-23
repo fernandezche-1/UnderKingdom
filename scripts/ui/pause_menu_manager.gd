@@ -10,9 +10,7 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if not (event is InputEventKey):
-		return
-	if event.keycode != KEY_ESCAPE or not event.pressed or event.echo:
+	if not event.is_action_pressed("pause"):
 		return
 
 	if is_instance_valid(_overlay) and bool(_overlay.call("is_pause_open")):
@@ -56,3 +54,14 @@ func return_to_main_menu() -> void:
 func quit_game() -> void:
 	get_tree().paused = false
 	get_tree().quit()
+
+
+func open_shop(title: String) -> void:
+	var player := get_tree().get_first_node_in_group("player")
+	if player == null or bool(player.get("dead")) or bool(player.get("controls_locked")):
+		return
+	if not is_instance_valid(_overlay):
+		_overlay = PAUSE_SCENE.instantiate() as CanvasLayer
+		get_tree().root.add_child(_overlay)
+	_overlay.call("open_shop", player, title)
+	get_tree().paused = true

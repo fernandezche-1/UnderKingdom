@@ -1,0 +1,13 @@
+{
+  "isolated_project": "C:\\Users\\ferna\\AppData\\Local\\Temp\\underkingdom-validation-qzclr01p",
+  "save_namespace": "UnderkingdomIntegrationValidation_46b6a2975c34489a99854c6bf04bb592",
+  "checks": [
+    {
+      "name": "visibility",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "log": "C:\\Users\\ferna\\UnderKingdom\\docs\\integracion_edwin_047_visibility.log"
+    }
+  ]
+}

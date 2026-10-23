@@ -1,0 +1,440 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: Load res://escenas/enemigos/esqueleto.tscn
+PASS: Load res://escenas/enemigos/esqueleto_tumba.tscn
+PASS: Load res://escenas/enemigos/murcielago.tscn
+PASS: Load res://escenas/items/reliquia_habilidad.tscn
+PASS: Load res://escenas/jefes/cthulhu_jefe.tscn
+PASS: Load res://escenas/jefes/demon_slime_jefe.tscn
+PASS: Load res://escenas/jefes/guardian_hielo.tscn
+PASS: Load res://escenas/jefes/reina_jefe.tscn
+PASS: Load res://escenas/mapas/tiles_jefe_combate.tscn
+PASS: Load res://escenas/mapas/tiles_mazmorra_combate.tscn
+PASS: Load res://escenas/mapas/tiles_profundidades_combate.tscn
+PASS: Load res://escenas/mapas/tiles_ruina_combate.tscn
+PASS: Load res://escenas/npc/anciano.tscn
+PASS: Load res://escenas/npc/barquero.tscn
+PASS: Load res://escenas/ui/tema_underkingdom.tres
+PASS: Load res://herramientas/constructor_mapas/tilesets/cementerio.gd
+PASS: Load res://scripts/bosses/queen_boss.gd
+PASS: Load res://scripts/bosses/simple_boss.gd
+PASS: Load res://scripts/combat/lunge_enemy.gd
+PASS: Load res://scripts/combat/rising_enemy.gd
+PASS: Load res://scripts/core/dev_mode.gd
+PASS: Load res://scripts/core/input_config.gd
+PASS: Load res://scripts/environment/map_ambience.gd
+PASS: Load res://scripts/items/ability_pickup.gd
+PASS: Load res://scripts/npc/merchant_npc.gd
+PASS: Load res://scripts/npc/npc.gd
+PASS: Load res://scripts/ui/menu_selector.gd
+PASS: Load res://animated_sprite_2d.gd
+PASS: Load res://escenas/enemigos/aprendis.tscn
+PASS: Load res://escenas/enemigos/demonslime.tscn
+PASS: Load res://escenas/enemigos/diablillo.tscn
+PASS: Load res://escenas/enemigos/enemis.tscn
+PASS: Load res://escenas/enemigos/kolbo.tscn
+PASS: Load res://escenas/enemigos/kolbo2.tscn
+PASS: Load res://escenas/enemigos/kolbo3.tscn
+PASS: Load res://escenas/enemigos/mino.tscn
+PASS: Load res://escenas/enemigos/reina.tscn
+PASS: Load res://escenas/enemigos/vanguardia.tscn
+PASS: Load res://escenas/items/llave_jefe_m1.tscn
+PASS: Load res://escenas/jefes/boss.tscn
+PASS: Load res://escenas/jefes/boss_mina.tscn
+PASS: Load res://escenas/jefes/caballero_reina.tscn
+PASS: Load res://escenas/jefes/capitan.tscn
+PASS: Load res://escenas/mapas/antorhca.tscn
+PASS: Load res://escenas/mapas/arena_enemigos.tscn
+PASS: Load res://escenas/mapas/ejemplo_cueva.tscn
+PASS: Load res://escenas/mapas/ejemplo_nivel.tscn
+PASS: Load res://escenas/mapas/jefe_final.tscn
+PASS: Load res://escenas/mapas/mundo_1.tscn
+PASS: Load res://escenas/mapas/mundo_2.tscn
+PASS: Load res://escenas/mapas/mundo_3.tscn
+PASS: Load res://escenas/mapas/primer_boss_mundo_1.tscn
+PASS: Load res://escenas/mapas/profundidades.tscn
+PASS: Load res://escenas/mapas/prologo/castillo_editable/arquitectura_dark_castle.tres
+PASS: Load res://escenas/mapas/prologo/castillo_editable/plataformas_originales.tres
+PASS: Load res://escenas/mapas/prologo/castillo_oscuro.before_editable_20261022.tscn
+PASS: Load res://escenas/mapas/prologo/castillo_oscuro.pre_tilemap_backup.tscn
+PASS: Load res://escenas/mapas/prologo/castillo_oscuro.tscn
+PASS: Load res://escenas/mapas/prologo/escape_calabozo.tscn
+PASS: Load res://escenas/mapas/prologo/interior_castillo.tscn
+PASS: Load res://escenas/mapas/prologo/tileset_dark_castle.tres
+PASS: Load res://escenas/mapas/prologo/tileset_dungeon_platformer.tres
+PASS: Load res://escenas/mapas/prologo/tileset_dungeon_sidescroller_raou.tres
+PASS: Load res://escenas/mapas/prologo_prision/camara_sellado_alma.tscn
+PASS: Load res://escenas/mapas/prologo_prision/cinematica_prision.gd
+PASS: Load res://escenas/mapas/prologo_prision/tileset_prision.tres
+PASS: Load res://escenas/mapas/prueba_tileset.tscn
+PASS: Load res://escenas/mapas/ruina.tscn
+PASS: Load res://escenas/mapas/tiles_casa.tscn
+PASS: Load res://escenas/mapas/tiles_cementerio.tscn
+PASS: Load res://escenas/mapas/tiles_cementerio_combate.tscn
+PASS: Load res://escenas/mapas/tiles_jefe.tscn
+PASS: Load res://escenas/mapas/tiles_mazmorra.tscn
+PASS: Load res://escenas/mapas/tiles_mineria.tscn
+PASS: Load res://escenas/mapas/tiles_mineria_combate.tscn
+PASS: Load res://escenas/mapas/tiles_profundidades.tscn
+PASS: Load res://escenas/mapas/tiles_ruina.tscn
+PASS: Load res://escenas/menu/menu_pausa.tscn
+PASS: Load res://escenas/menu/menu_principal.gd
+PASS: Load res://escenas/menu/menu_principal.tscn
+PASS: Load res://escenas/objetos/caja_rompible.tscn
+PASS: Load res://escenas/objetos/cofre.tscn
+PASS: Load res://escenas/objetos/coin_pickup.tscn
+PASS: Load res://escenas/objetos/estatua_rompible.tscn
+PASS: Load res://escenas/objetos/potion_pickup.tscn
+PASS: Load res://escenas/player.tscn
+PASS: Load res://escenas/prision.tscn
+PASS: Load res://escenas/proyectiles/flecha_enemiga.tscn
+PASS: Load res://escenas/proyectiles/fuego_diablillo.tscn
+PASS: Load res://escenas/sistemas/burn_zone.tscn
+PASS: Load res://escenas/sistemas/checkpoint.tscn
+PASS: Load res://escenas/sistemas/climb_zone.tscn
+PASS: Load res://escenas/sistemas/kill_zone.tscn
+PASS: Load res://escenas/sistemas/map_transition.tscn
+PASS: Load res://escenas/sistemas/one_way_platform.tscn
+PASS: Load res://escenas/sistemas/spawn_point.tscn
+PASS: Load res://escenas/sistemas/trampa_fuego.tscn
+PASS: Load res://escenas/ui/boss_health_bar.tscn
+PASS: Load res://escenas/ui/dialogue_ui.tscn
+PASS: Load res://escenas/ui/player_hud.tscn
+PASS: Load res://herramientas/constructor_mapas/construir_mapa.gd
+PASS: Load res://herramientas/constructor_mapas/construir_mapa.tscn
+PASS: Load res://herramientas/constructor_mapas/tilesets/mazmorra.gd
+PASS: Load res://scripts/bosses/captain_boss.gd
+PASS: Load res://scripts/bosses/w2_archer_boss.gd
+PASS: Load res://scripts/bosses/w2_queen_knight_progress.gd
+PASS: Load res://scripts/camera/bounded_camera.gd
+PASS: Load res://scripts/camera/map_bounds.gd
+PASS: Load res://scripts/cinematics/cinematic_controller.gd
+PASS: Load res://scripts/combat/boss_arena.gd
+PASS: Load res://scripts/combat/enemy_base.gd
+PASS: Load res://scripts/combat/ranged_demon.gd
+PASS: Load res://scripts/core/game_manager.gd
+PASS: Load res://scripts/core/user_settings.gd
+PASS: Load res://scripts/dialogue/dialogue_ui.gd
+PASS: Load res://scripts/environment/arena_barrier.gd
+PASS: Load res://scripts/environment/breakable_object.gd
+PASS: Load res://scripts/environment/burn_zone.gd
+PASS: Load res://scripts/environment/checkpoint.gd
+PASS: Load res://scripts/environment/checkpoint_boss.gd
+PASS: Load res://scripts/environment/chest_interactable.gd
+PASS: Load res://scripts/environment/climb_zone.gd
+PASS: Load res://scripts/environment/dark_castle_map.before_editable_20261022.gd
+PASS: Load res://scripts/environment/dark_castle_map.gd
+PASS: Load res://scripts/environment/dark_castle_map.pre_tilemap_backup.gd
+PASS: Load res://scripts/environment/kill_zone.gd
+PASS: Load res://scripts/environment/ledge_transition_zone.gd
+PASS: Load res://scripts/environment/locked_door.gd
+PASS: Load res://scripts/environment/story_hidden_actor.gd
+PASS: Load res://scripts/environment/world1_boss_gate_blocker.gd
+PASS: Load res://scripts/fx/combat_fx.gd
+PASS: Load res://scripts/items/boss_key_pickup.gd
+PASS: Load res://scripts/items/collectible_pickup.gd
+PASS: Load res://scripts/player/player.gd
+PASS: Load res://scripts/projectiles/enemy_projectile.gd
+PASS: Load res://scripts/transitions/map_spawn_controller.gd
+PASS: Load res://scripts/transitions/map_transition.gd
+PASS: Load res://scripts/transitions/spawn_point.gd
+PASS: Load res://scripts/transitions/world_test_route.gd
+PASS: Load res://scripts/ui/boss_health_bar.gd
+PASS: Load res://scripts/ui/enemy_health_bar.gd
+PASS: Load res://scripts/ui/pause_menu_manager.gd
+PASS: Load res://scripts/ui/pause_menu_overlay.gd
+PASS: Load res://scripts/ui/player_hud.gd
+PASS: Load res://tiles_cementerio_combate.tscn
+PASS: Open res://escenas/menu/menu_principal.tscn
+PASS: Continue disabled without a save
+PASS: Display preferences saved
+PASS: Fullscreen preference persists
+PASS: Fullscreen checkbox synchronized
+WARNING: No se encontró MapBounds en el mapa actual.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _apply_current_map_bounds (res://scripts/camera/bounded_camera.gd:70)
+PASS: New game opens Soul Sealing Chamber
+PASS: Custom profile name retained
+PASS: Soul fragmentation preserved
+PASS: Existing roll remains available
+PASS: Prison cinematic locks player
+PASS: Prison cinematic completes
+PASS: Player control restored after cinematic
+PASS: Prison exit enabled
+PASS: Pause opens
+PASS: v4 skill tab retained
+PASS: Pause backs out of options
+PASS: Pause closes
+PASS: Merchant opens existing upgrade shop
+PASS: Relic unlocks v4 skill
+PASS: Soul fragment unlocks Edwin ability API
+PASS: Existing upgrade purchase works
+PASS: Upgrade applied to player
+PASS: Integrated progress saves
+PASS: Save is valid in v4 format
+PASS: Continue loads saved slot
+WARNING: No se encontró MapBounds en el mapa actual.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _apply_current_map_bounds (res://scripts/camera/bounded_camera.gd:70)
+PASS: Continue skips completed prison cinematic
+PASS: Ability progress restored from v4 skills
+PASS: Inventory and upgrades restored
+PASS: Player receives combat damage
+PASS: HUD follows health signal
+PASS: HUD follows acquired keys
+PASS: Player damages res://escenas/enemigos/esqueleto.tscn
+PASS: Buried skeleton rejects damage while dormant
+PASS: Player damages res://escenas/enemigos/esqueleto_tumba.tscn
+PASS: Player damages res://escenas/enemigos/murcielago.tscn
+PASS: Player damages res://escenas/jefes/capitan.tscn
+PASS: Player damages res://escenas/jefes/reina_jefe.tscn
+PASS: Player damages res://escenas/jefes/guardian_hielo.tscn
+PASS: Player damages res://escenas/jefes/demon_slime_jefe.tscn
+PASS: Player damages res://escenas/jefes/cthulhu_jefe.tscn
+PASS: Open res://escenas/mapas/tiles_jefe_combate.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Transition spawn exists: res://escenas/mapas/tiles_jefe_combate.tscn -> res://escenas/mapas/tiles_profundidades_combate.tscn / DesdeSiguiente
+PASS: Finite player spawn: res://escenas/mapas/tiles_jefe_combate.tscn
+PASS: Unsafe spawn rejected: res://escenas/mapas/tiles_jefe_combate.tscn
+PASS: Open res://escenas/mapas/tiles_mazmorra_combate.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Transition spawn exists: res://escenas/mapas/tiles_mazmorra_combate.tscn -> res://escenas/mapas/tiles_ruina_combate.tscn / DesdeAnterior
+PASS: Transition spawn exists: res://escenas/mapas/tiles_mazmorra_combate.tscn -> res://escenas/mapas/tiles_mineria_combate.tscn / DesdeSiguiente
+PASS: Finite player spawn: res://escenas/mapas/tiles_mazmorra_combate.tscn
+PASS: Unsafe spawn rejected: res://escenas/mapas/tiles_mazmorra_combate.tscn
+PASS: Open res://escenas/mapas/tiles_profundidades_combate.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Transition spawn exists: res://escenas/mapas/tiles_profundidades_combate.tscn -> res://escenas/mapas/tiles_jefe_combate.tscn / DesdeAnterior
+PASS: Transition spawn exists: res://escenas/mapas/tiles_profundidades_combate.tscn -> res://escenas/mapas/tiles_ruina_combate.tscn / DesdeSiguiente
+PASS: Finite player spawn: res://escenas/mapas/tiles_profundidades_combate.tscn
+PASS: Unsafe spawn rejected: res://escenas/mapas/tiles_profundidades_combate.tscn
+PASS: Open res://escenas/mapas/tiles_ruina_combate.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Transition spawn exists: res://escenas/mapas/tiles_ruina_combate.tscn -> res://escenas/mapas/tiles_profundidades_combate.tscn / DesdeAnterior
+PASS: Transition spawn exists: res://escenas/mapas/tiles_ruina_combate.tscn -> res://escenas/mapas/tiles_mazmorra_combate.tscn / DesdeSiguiente
+PASS: Finite player spawn: res://escenas/mapas/tiles_ruina_combate.tscn
+PASS: Unsafe spawn rejected: res://escenas/mapas/tiles_ruina_combate.tscn
+PASS: Open res://escenas/mapas/antorhca.tscn
+PASS: Open res://escenas/mapas/arena_enemigos.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Finite player spawn: res://escenas/mapas/arena_enemigos.tscn
+PASS: Open res://escenas/mapas/ejemplo_cueva.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Finite player spawn: res://escenas/mapas/ejemplo_cueva.tscn
+PASS: Open res://escenas/mapas/ejemplo_nivel.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Transition spawn exists: res://escenas/mapas/ejemplo_nivel.tscn -> res://escenas/mapas/ejemplo_nivel.tscn / DesdeAnterior
+PASS: Transition spawn exists: res://escenas/mapas/ejemplo_nivel.tscn -> res://escenas/mapas/ejemplo_nivel.tscn / DesdeSiguiente
+PASS: Finite player spawn: res://escenas/mapas/ejemplo_nivel.tscn
+PASS: Open res://escenas/mapas/jefe_final.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Transition spawn exists: res://escenas/mapas/jefe_final.tscn -> res://escenas/mapas/profundidades.tscn / SpawnSalida
+PASS: Finite player spawn: res://escenas/mapas/jefe_final.tscn
+PASS: Open res://escenas/mapas/mundo_1.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Transition spawn exists: res://escenas/mapas/mundo_1.tscn -> res://escenas/mapas/primer_boss_mundo_1.tscn / SpawnEntrada
+PASS: Finite player spawn: res://escenas/mapas/mundo_1.tscn
+PASS: Open res://escenas/mapas/mundo_2.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Transition spawn exists: res://escenas/mapas/mundo_2.tscn -> res://escenas/mapas/primer_boss_mundo_1.tscn / SpawnSalida
+PASS: Transition spawn exists: res://escenas/mapas/mundo_2.tscn -> res://escenas/mapas/mundo_3.tscn / SpawnEntrada
+PASS: Finite player spawn: res://escenas/mapas/mundo_2.tscn
+PASS: Open res://escenas/mapas/mundo_3.tscn
+PASS: Transition spawn exists: res://escenas/mapas/mundo_3.tscn -> res://escenas/mapas/mundo_2.tscn / SpawnSalida
+PASS: Transition spawn exists: res://escenas/mapas/mundo_3.tscn -> res://escenas/mapas/ruina.tscn / SpawnEntrada
+PASS: Finite player spawn: res://escenas/mapas/mundo_3.tscn
+PASS: Open res://escenas/mapas/primer_boss_mundo_1.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Transition spawn exists: res://escenas/mapas/primer_boss_mundo_1.tscn -> res://escenas/mapas/mundo_1.tscn / SpawnSalida
+PASS: Transition spawn exists: res://escenas/mapas/primer_boss_mundo_1.tscn -> res://escenas/mapas/mundo_2.tscn / SpawnEntrada
+PASS: Finite player spawn: res://escenas/mapas/primer_boss_mundo_1.tscn
+PASS: Open res://escenas/mapas/profundidades.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Transition spawn exists: res://escenas/mapas/profundidades.tscn -> res://escenas/mapas/ruina.tscn / SpawnSalida
+PASS: Transition spawn exists: res://escenas/mapas/profundidades.tscn -> res://escenas/mapas/jefe_final.tscn / SpawnEntrada
+PASS: Finite player spawn: res://escenas/mapas/profundidades.tscn
+PASS: Open res://escenas/mapas/prologo/castillo_oscuro.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Transition spawn exists: res://escenas/mapas/prologo/castillo_oscuro.tscn -> res://escenas/mapas/tiles_cementerio_combate.tscn / SpawnInicio
+PASS: Finite player spawn: res://escenas/mapas/prologo/castillo_oscuro.tscn
+PASS: Open res://escenas/mapas/prologo/escape_calabozo.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Transition spawn exists: res://escenas/mapas/prologo/escape_calabozo.tscn -> res://escenas/mapas/prologo/interior_castillo.tscn / DesdeCalabozo
+PASS: Finite player spawn: res://escenas/mapas/prologo/escape_calabozo.tscn
+PASS: Open res://escenas/mapas/prologo/interior_castillo.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Transition spawn exists: res://escenas/mapas/prologo/interior_castillo.tscn -> res://escenas/mapas/prologo/castillo_oscuro.tscn / SpawnInicio
+PASS: Finite player spawn: res://escenas/mapas/prologo/interior_castillo.tscn
+PASS: Open res://escenas/mapas/prologo_prision/camara_sellado_alma.tscn
+WARNING: No se encontró MapBounds en el mapa actual.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _apply_current_map_bounds (res://scripts/camera/bounded_camera.gd:70)
+PASS: Transition spawn exists: res://escenas/mapas/prologo_prision/camara_sellado_alma.tscn -> res://escenas/mapas/tiles_cementerio_combate.tscn / SpawnInicio
+PASS: Finite player spawn: res://escenas/mapas/prologo_prision/camara_sellado_alma.tscn
+PASS: Open res://escenas/mapas/prueba_tileset.tscn
+PASS: Finite player spawn: res://escenas/mapas/prueba_tileset.tscn
+PASS: Open res://escenas/mapas/ruina.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Transition spawn exists: res://escenas/mapas/ruina.tscn -> res://escenas/mapas/mundo_3.tscn / SpawnSalida
+PASS: Transition spawn exists: res://escenas/mapas/ruina.tscn -> res://escenas/mapas/profundidades.tscn / SpawnEntrada
+PASS: Finite player spawn: res://escenas/mapas/ruina.tscn
+PASS: Open res://escenas/mapas/tiles_casa.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Transition spawn exists: res://escenas/mapas/tiles_casa.tscn -> res://escenas/mapas/tiles_mineria.tscn / DesdeAnterior
+PASS: Transition spawn exists: res://escenas/mapas/tiles_casa.tscn -> res://escenas/mapas/tiles_cementerio_combate.tscn / DesdeSiguiente
+PASS: Finite player spawn: res://escenas/mapas/tiles_casa.tscn
+PASS: Unsafe spawn rejected: res://escenas/mapas/tiles_casa.tscn
+PASS: Open res://escenas/mapas/tiles_cementerio.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Transition spawn exists: res://escenas/mapas/tiles_cementerio.tscn -> res://escenas/mapas/tiles_mineria_combate.tscn / DesdeAnterior
+PASS: Finite player spawn: res://escenas/mapas/tiles_cementerio.tscn
+PASS: Unsafe spawn rejected: res://escenas/mapas/tiles_cementerio.tscn
+PASS: Open res://escenas/mapas/tiles_cementerio_combate.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Transition spawn exists: res://escenas/mapas/tiles_cementerio_combate.tscn -> res://escenas/mapas/tiles_mineria_combate.tscn / DesdeAnterior
+PASS: Finite player spawn: res://escenas/mapas/tiles_cementerio_combate.tscn
+PASS: Unsafe spawn rejected: res://escenas/mapas/tiles_cementerio_combate.tscn
+PASS: Open res://escenas/mapas/tiles_jefe.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Transition spawn exists: res://escenas/mapas/tiles_jefe.tscn -> res://escenas/mapas/tiles_profundidades_combate.tscn / DesdeSiguiente
+PASS: Finite player spawn: res://escenas/mapas/tiles_jefe.tscn
+PASS: Unsafe spawn rejected: res://escenas/mapas/tiles_jefe.tscn
+PASS: Open res://escenas/mapas/tiles_mazmorra.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Transition spawn exists: res://escenas/mapas/tiles_mazmorra.tscn -> res://escenas/mapas/tiles_ruina_combate.tscn / DesdeAnterior
+PASS: Transition spawn exists: res://escenas/mapas/tiles_mazmorra.tscn -> res://escenas/mapas/tiles_mineria_combate.tscn / DesdeSiguiente
+PASS: Finite player spawn: res://escenas/mapas/tiles_mazmorra.tscn
+PASS: Unsafe spawn rejected: res://escenas/mapas/tiles_mazmorra.tscn
+PASS: Open res://escenas/mapas/tiles_mineria.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Transition spawn exists: res://escenas/mapas/tiles_mineria.tscn -> res://escenas/mapas/tiles_mazmorra_combate.tscn / DesdeAnterior
+PASS: Transition spawn exists: res://escenas/mapas/tiles_mineria.tscn -> res://escenas/mapas/tiles_cementerio_combate.tscn / DesdeSiguiente
+PASS: Finite player spawn: res://escenas/mapas/tiles_mineria.tscn
+PASS: Unsafe spawn rejected: res://escenas/mapas/tiles_mineria.tscn
+PASS: Open res://escenas/mapas/tiles_mineria_combate.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Transition spawn exists: res://escenas/mapas/tiles_mineria_combate.tscn -> res://escenas/mapas/tiles_mazmorra_combate.tscn / DesdeAnterior
+PASS: Transition spawn exists: res://escenas/mapas/tiles_mineria_combate.tscn -> res://escenas/mapas/tiles_cementerio_combate.tscn / DesdeSiguiente
+PASS: Finite player spawn: res://escenas/mapas/tiles_mineria_combate.tscn
+PASS: Unsafe spawn rejected: res://escenas/mapas/tiles_mineria_combate.tscn
+PASS: Open res://escenas/mapas/tiles_profundidades.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Transition spawn exists: res://escenas/mapas/tiles_profundidades.tscn -> res://escenas/mapas/tiles_jefe_combate.tscn / DesdeAnterior
+PASS: Transition spawn exists: res://escenas/mapas/tiles_profundidades.tscn -> res://escenas/mapas/tiles_ruina_combate.tscn / DesdeSiguiente
+PASS: Finite player spawn: res://escenas/mapas/tiles_profundidades.tscn
+PASS: Unsafe spawn rejected: res://escenas/mapas/tiles_profundidades.tscn
+PASS: Open res://escenas/mapas/tiles_ruina.tscn
+WARNING: No se encontró un SpawnPoint con suelo seguro; se conservará la última posición de respaldo.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _safe_fallback (res://scripts/transitions/map_spawn_controller.gd:138)
+       [1] _place_player (res://scripts/transitions/map_spawn_controller.gd:84)
+PASS: Transition spawn exists: res://escenas/mapas/tiles_ruina.tscn -> res://escenas/mapas/tiles_profundidades_combate.tscn / DesdeAnterior
+PASS: Transition spawn exists: res://escenas/mapas/tiles_ruina.tscn -> res://escenas/mapas/tiles_mazmorra_combate.tscn / DesdeSiguiente
+PASS: Finite player spawn: res://escenas/mapas/tiles_ruina.tscn
+PASS: Unsafe spawn rejected: res://escenas/mapas/tiles_ruina.tscn
+PASS: Open res://escenas/menu/menu_principal.tscn
+PASS: Continue enabled with existing save
+PASS: Delete requires confirmation
+PASS: Cancel deletion preserves save
+PASS: Confirmed deletion removes save
+INTEGRATION RESULT: 300 checks, 0 failures

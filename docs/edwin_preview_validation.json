@@ -1,0 +1,13 @@
+{
+  "isolated_project": "C:\\Users\\ferna\\AppData\\Local\\Temp\\underkingdom-validation-inpnadmz",
+  "save_namespace": "UnderkingdomIntegrationValidation_c281bef39a5d4c21958aca44fd128ed1",
+  "checks": [
+    {
+      "name": "preview",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "log": "C:\\Users\\ferna\\UnderKingdom\\docs\\integracion_edwin_047_preview.log"
+    }
+  ]
+}

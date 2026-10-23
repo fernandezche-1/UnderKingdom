@@ -34,12 +34,12 @@ func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	_master_bus = AudioServer.get_bus_index("Master")
 	_build_background()
-	_build_menu_frame()
 	_build_title()
 	_build_main_menu()
 	_build_options()
 	_build_profile_panel()
 	_build_delete_confirmation()
+	preload("res://scripts/ui/edwin_menu_style.gd").apply(self, true)
 	_show_main_menu()
 
 
@@ -184,6 +184,7 @@ func _build_options() -> void:
 	fullscreen.add_theme_color_override("font_color", COLOR_TEXT)
 	fullscreen.button_pressed = UserSettings.is_fullscreen()
 	fullscreen.toggled.connect(_on_fullscreen_toggled)
+	UserSettings.fullscreen_changed.connect(fullscreen.set_pressed_no_signal)
 	_options_panel.add_child(fullscreen)
 
 	var back := _make_button("Volver")
@@ -421,11 +422,8 @@ func _make_button(label_text: String) -> Button:
 	button.add_theme_color_override("font_hover_color", Color(1.0, 0.98, 0.82))
 	button.add_theme_color_override("font_pressed_color", Color(1.0, 0.86, 0.57))
 	button.add_theme_color_override("font_disabled_color", Color(0.55, 0.48, 0.39))
-	button.add_theme_stylebox_override("normal", _button_style(Color.WHITE))
-	button.add_theme_stylebox_override("hover", _button_style(COLOR_HOVER))
-	button.add_theme_stylebox_override("pressed", _button_style(COLOR_PRESSED))
-	button.add_theme_stylebox_override("focus", _button_style(COLOR_HOVER))
-	button.add_theme_stylebox_override("disabled", _button_style(COLOR_DISABLED))
+	# Also applies to slot buttons rebuilt after opening a profile panel.
+	# Their visual states inherit the menu theme; signals remain unchanged.
 	return button
 
 

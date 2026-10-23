@@ -80,11 +80,9 @@ func configure_prison_cinematic() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not _active or not (event is InputEventKey):
+	if not _active:
 		return
-	if not event.pressed or event.echo:
-		return
-	if event.keycode in [KEY_E, KEY_ENTER, KEY_SPACE]:
+	if event.is_action_pressed("dialogue_advance"):
 		get_viewport().set_input_as_handled()
 		if not _pause_advance:
 			_advance()
