@@ -30,8 +30,9 @@ enum PlayerAction {
 ## lejos, "around" alrededor del Player (la ráfaga golpea delante y detrás).
 ## knockback: false = daño sin empuje ni aturdir, para que los golpes
 ## seguidos de una ráfaga conecten todos; el último de cada ataque empuja.
+## lunge: el Player da un paso corto hacia delante al soltar el tajo.
 const ATTACK_PROFILES := {
-    &"attack": {"start": 0, "end": 10, "hits": [
+    &"attack": {"start": 0, "end": 10, "lunge": true, "hits": [
         {"frames": Vector2i(4, 6), "ratio": 1.0, "area": "front", "knockback": true},
     ]},
     &"attack 2": {"start": 8, "end": 18, "hits": [
@@ -44,7 +45,7 @@ const ATTACK_PROFILES := {
         {"frames": Vector2i(15, 15), "ratio": 0.125, "area": "around", "knockback": false},
         {"frames": Vector2i(16, 16), "ratio": 0.125, "area": "around", "knockback": true},
     ]},
-    &"attack 3": {"start": 17, "end": 27, "hits": [
+    &"attack 3": {"start": 17, "end": 27, "lunge": true, "hits": [
         {"frames": Vector2i(22, 22), "ratio": 0.4, "area": "wide", "knockback": false},
         {"frames": Vector2i(23, 25), "ratio": 0.6, "area": "blast", "knockback": true},
     ]},
@@ -115,9 +116,16 @@ const ATTACK_PROFILES := {
 @export_range(-100.0, 200.0, 1.0) var attack_hitbox_offset_y: float = 34.0
 @export_range(0.05, 2.0, 0.05) var combo_queue_window: float = 0.45
 @export_range(1.0, 2.0, 0.05) var combo_base_speed_multiplier: float = 1.20
+## Velocidad propia del primer tajo, que sustituye a combo_base_speed_multiplier:
+## es el golpe que más se usa y el único al empezar una partida.
+@export_range(1.0, 2.0, 0.05) var attack_1_speed_multiplier: float = 1.35
 ## Velocidad propia del ataque aéreo (la animación del pack va a 9 fps).
 @export_range(1.0, 3.0, 0.05) var air_attack_speed_multiplier: float = 1.80
 @export_range(0, 30, 1) var attack_1_chain_frame: int = 7
+## Sin la Ráfaga, el primer tajo se encadena consigo mismo desde
+## attack_1_chain_frame y vuelve a empezar en este cuadro, saltándose la
+## preparación agachada (cuadros 0-1, la misma pose que el final).
+@export_range(0, 10, 1) var attack_1_repeat_frame: int = 2
 @export_range(0, 40, 1) var attack_2_chain_frame: int = 17
 ## Moverse, saltar o rodar corta attack / attack 2 / attack 3 / air attack.
 ## Si ya ibas moviéndote al atacar, el golpe sale y luego sigues caminando.
@@ -127,6 +135,23 @@ const ATTACK_PROFILES := {
 ## actual (el más ancho mide 42 px) si se rueda desde cerca.
 @export_range(16.0, 400.0, 4.0) var roll_distance: float = 96.0
 @export_range(0.1, 10.0, 0.1) var ultimate_cooldown: float = 6.0
+
+@export_category("Impacto")
+## Paso hacia delante de los ataques con "lunge" en ATTACK_PROFILES.
+@export_range(0.0, 40.0, 1.0) var attack_lunge_distance: float = 10.0
+@export_range(0.01, 0.4, 0.01) var attack_lunge_time: float = 0.12
+## Hitstop al conectar con un enemigo, en segundos reales: el juego entero
+## va a hit_stop_time_scale de su velocidad. 0 lo desactiva.
+@export_range(0.0, 0.3, 0.005) var hit_stop_time: float = 0.06
+## Golpes intermedios de una ráfaga (sin empuje).
+@export_range(0.0, 0.3, 0.005) var hit_stop_continuous_time: float = 0.02
+## Remates con área "blast" (Golpe final, Ultimate).
+@export_range(0.0, 0.3, 0.005) var hit_stop_heavy_time: float = 0.1
+@export_range(0.0, 1.0, 0.01) var hit_stop_time_scale: float = 0.05
+## Temblor de la cámara (píxeles) en los golpes que empujan.
+@export_range(0.0, 8.0, 1.0) var hit_shake_strength: float = 2.0
+@export_range(0.0, 8.0, 1.0) var hit_shake_heavy_strength: float = 4.0
+@export_range(0.0, 0.5, 0.01) var hit_shake_time: float = 0.12
 
 @export_category("Adrenalina")
 @export var adrenaline_enabled: bool = true
@@ -158,6 +183,7 @@ const ATTACK_PROFILES := {
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_hitbox: Area2D = $AttackHitbox
+@onready var camera: UnderkingdomBoundedCamera = get_node_or_null("Camera2D") as UnderkingdomBoundedCamera
 @onready var debug_hud: CanvasLayer = get_node_or_null("DebugHUD")
 @onready var info_label: Label = get_node_or_null("DebugHUD/Panel/Info")
 
@@ -201,6 +227,7 @@ var _ultimate_cooldown_left: float = 0.0
 var _attack_hit_targets: Array[int] = []
 var _attack_subwindow_index: int = -1
 var _current_attack_speed_multiplier: float = 1.0
+var _attack_lunge_left: float = 0.0
 var _lifesteal_damage_bank: float = 0.0
 
 var _guard_hits_remaining: int = 3
@@ -250,40 +277,31 @@ func _unhandled_input(event: InputEvent) -> void:
     if dead or controls_locked:
         return
 
-    if event is InputEventMouseButton:
-        if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-            request_attack()
-        return
-
-    if not (event is InputEventKey):
-        return
-    if not event.pressed or event.echo:
-        return
-
-    match event.keycode:
-        KEY_SPACE, KEY_W, KEY_UP:
-            _jump_requested = true
-        KEY_F, KEY_Z:
-            request_attack()
-        KEY_SHIFT:
-            request_roll()
-        KEY_E:
-            if not _try_context_interaction():
-                request_ultimate()
-        KEY_C:
-            drink_potion()
-        KEY_R:
-            if enable_debug_keys:
-                respawn_now()
-        KEY_H:
-            if enable_debug_keys:
-                take_damage(0.25)
-        KEY_J:
-            if enable_debug_keys:
-                take_damage(1.0)
-        KEY_K:
-            if enable_debug_keys:
-                die()
+    if event.is_action_pressed("attack"):
+        request_attack()
+    elif event.is_action_pressed("jump"):
+        _jump_requested = true
+    elif event.is_action_pressed("roll"):
+        request_roll()
+    elif event.is_action_pressed("interact"):
+        if not _try_context_interaction():
+            request_ultimate()
+    elif event.is_action_pressed("potion"):
+        drink_potion()
+    elif event is InputEventKey and event.pressed and not event.echo:
+        match event.keycode:
+            KEY_R:
+                if enable_debug_keys:
+                    respawn_now()
+            KEY_H:
+                if enable_debug_keys:
+                    take_damage(0.25)
+            KEY_J:
+                if enable_debug_keys:
+                    take_damage(1.0)
+            KEY_K:
+                if enable_debug_keys:
+                    die()
 
 
 func _physics_process(delta: float) -> void:
@@ -401,18 +419,13 @@ func _update_cinematic_animation() -> void:
 func request_attack() -> void:
     if dead or _climbing:
         return
-    if not GameManager.is_skill_unlocked(&"attack_1"):
-        return
 
     if _action == PlayerAction.ATTACK:
-        if _combo_step < 3:
-            var next_skill: StringName = &"attack_2" if _combo_step == 1 else &"attack_3"
-            if not GameManager.is_skill_unlocked(next_skill):
-                return
+        var remaining_steps := _remaining_combo_inputs()
+        if remaining_steps > 0:
             # Guardamos pulsaciones reales, no solo un booleano. Asi, si el
             # jugador pulsa dos veces durante attack 1, quedan preparados
             # attack 2 Y attack 3 en vez de perderse la tercera pulsacion.
-            var remaining_steps := maxi(3 - _combo_step, 0)
             _combo_buffered_inputs = mini(_combo_buffered_inputs + 1, remaining_steps)
             _combo_queued = _combo_buffered_inputs > 0
             _combo_queue_left = maxf(
@@ -428,9 +441,8 @@ func request_attack() -> void:
         _leave_guard_for_action()
 
     if not is_on_floor():
-        if not GameManager.is_skill_unlocked(&"air_attack"):
-            return
-        _start_attack(&"air attack", air_attack_damage, PlayerAction.AIR_ATTACK)
+        if GameManager.has_ability("air_attack"):
+            _start_attack(&"air attack", air_attack_damage, PlayerAction.AIR_ATTACK)
         return
 
     _combo_step = 1
@@ -440,7 +452,7 @@ func request_attack() -> void:
 
 
 func request_roll() -> void:
-    if dead or _climbing or not is_on_floor():
+    if dead or _climbing or not is_on_floor() or not GameManager.has_ability("roll"):
         return
     if _action == PlayerAction.ATTACK and movement_cancels_attacks:
         _finish_action()
@@ -488,9 +500,7 @@ func _try_context_interaction() -> bool:
 
 
 func request_ultimate() -> void:
-    if dead or _climbing or not is_on_floor():
-        return
-    if not GameManager.is_skill_unlocked(&"ultimate"):
+    if dead or _climbing or not is_on_floor() or not GameManager.has_ability("ultimate"):
         return
     if _ultimate_cooldown_left > 0.0:
         return
@@ -500,15 +510,23 @@ func request_ultimate() -> void:
     if _action == PlayerAction.DEFEND:
         _leave_guard_for_action()
 
-    _ultimate_cooldown_left = ultimate_cooldown
+    _ultimate_cooldown_left = 0.0 if DevMode.no_ultimate_cooldown else ultimate_cooldown
     _combo_step = 0
     _combo_queued = false
     _combo_buffered_inputs = 0
     _start_attack(&"attack ultimate", ultimate_damage, PlayerAction.ULTIMATE)
 
 
-func _start_attack(animation_name: StringName, damage: float, action_type: PlayerAction) -> void:
+## start_frame >= 0 arranca la animación en ese cuadro en vez del "start" de su
+## perfil (el primer tajo repetido se salta la preparación).
+func _start_attack(
+    animation_name: StringName,
+    damage: float,
+    action_type: PlayerAction,
+    start_frame: int = -1
+) -> void:
     var profile := _attack_profile(animation_name)
+    var first_frame := int(profile.start) if start_frame < 0 else start_frame
     _attack_sequence_id += 1
     _action = action_type
     _current_attack_damage = damage
@@ -516,26 +534,23 @@ func _start_attack(animation_name: StringName, damage: float, action_type: Playe
     _current_attack_speed_multiplier = _attack_speed_multiplier_for(animation_name)
     sprite.speed_scale = _current_attack_speed_multiplier
     _action_total_time = (
-        _frames_duration(animation_name, int(profile.start), int(profile.end))
+        _frames_duration(animation_name, first_frame, int(profile.end))
         / maxf(_current_attack_speed_multiplier, 0.01)
     )
     _action_time_left = _action_total_time
     _attack_held_direction = _get_horizontal_input()
+    _attack_lunge_left = attack_lunge_time if bool(profile.get("lunge", false)) and is_on_floor() else 0.0
 
     _attack_hit_targets.clear()
     _attack_subwindow_index = -1
     attack_hitbox.scale = Vector2.ONE
     sprite.play(animation_name)
-    sprite.frame = int(profile.start)
+    sprite.frame = first_frame
     sprite.frame_progress = 0.0
     attack_started.emit(animation_name, damage)
 
 
 func _start_combo_step(step: int) -> void:
-    var required_skill: StringName = &"attack_2" if step == 2 else &"attack_3"
-    if not GameManager.is_skill_unlocked(required_skill):
-        _finish_action()
-        return
     _combo_step = step
     _combo_queued = _combo_buffered_inputs > 0
     _combo_queue_left = 0.0
@@ -599,7 +614,7 @@ func _update_action_state() -> void:
     # siempre que el jugador ya lo haya dejado en el buffer.
     if (
         _action == PlayerAction.ATTACK
-        and _combo_step < 3
+        and _remaining_combo_inputs() > 0
         and _combo_buffered_inputs > 0
         and _can_chain_combo_early()
     ):
@@ -610,7 +625,7 @@ func _update_action_state() -> void:
         return
 
     if _action == PlayerAction.ATTACK:
-        if _combo_buffered_inputs > 0 and _combo_step < 3:
+        if _combo_buffered_inputs > 0 and _remaining_combo_inputs() > 0:
             _consume_combo_buffer_and_start_next()
         else:
             _finish_action()
@@ -672,12 +687,36 @@ func _last_hit_frame() -> int:
 
 
 func _consume_combo_buffer_and_start_next() -> void:
-    if _combo_buffered_inputs <= 0 or _combo_step >= 3:
+    if _combo_buffered_inputs <= 0 or _remaining_combo_inputs() <= 0:
         return
 
     _combo_buffered_inputs -= 1
     _combo_queued = _combo_buffered_inputs > 0
+    if _repeats_first_attack():
+        _start_attack(&"attack", attack_1_damage, PlayerAction.ATTACK, attack_1_repeat_frame)
+        return
     _start_combo_step(_combo_step + 1)
+
+
+## Pulsaciones que se pueden guardar ahora para seguir atacando.
+func _remaining_combo_inputs() -> int:
+    if _repeats_first_attack():
+        return 1
+    return maxi(_max_combo_step() - _combo_step, 0)
+
+
+## Sin la Ráfaga, el primer tajo se encadena consigo mismo: machacar el botón
+## da tajos seguidos en vez de perder las pulsaciones.
+func _repeats_first_attack() -> bool:
+    return _max_combo_step() == 1 and _combo_step == 1
+
+
+## Etapas del combo en suelo que el Player ya tiene (GameManager: combo_2,
+## combo_3). Sin la Ráfaga, el Golpe final tampoco se encadena.
+func _max_combo_step() -> int:
+    if not GameManager.has_ability("combo_2"):
+        return 1
+    return 3 if GameManager.has_ability("combo_3") else 2
 
 
 func _finish_action() -> void:
@@ -697,16 +736,14 @@ func _finish_action() -> void:
     _attack_hit_targets.clear()
     _attack_subwindow_index = -1
     _current_attack_speed_multiplier = 1.0
+    _attack_lunge_left = 0.0
     sprite.speed_scale = 1.0
     attack_hitbox.scale = Vector2.ONE
     _update_attack_hitbox_position()
 
 
 func _update_defense_state() -> void:
-    var wants_defense := (
-        Input.is_key_pressed(KEY_Q)
-        or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)
-    )
+    var wants_defense := Input.is_action_pressed("defend")
 
     if not wants_defense:
         _guard_requires_release = false
@@ -749,7 +786,13 @@ func _process_normal_movement(delta: float) -> void:
 
 
 func _process_attack_movement(delta: float) -> void:
-    velocity.x = move_toward(velocity.x, 0.0, deceleration * delta)
+    if _attack_lunge_left > 0.0:
+        # Paso corto al soltar el tajo: el peso de la espada arrastra al Player.
+        _attack_lunge_left = maxf(_attack_lunge_left - delta, 0.0)
+        var facing := -1.0 if sprite.flip_h else 1.0
+        velocity.x = facing * attack_lunge_distance / maxf(attack_lunge_time, 0.01)
+    else:
+        velocity.x = move_toward(velocity.x, 0.0, deceleration * delta)
     if not is_on_floor():
         velocity.y = minf(velocity.y + gravity * delta, max_fall_speed)
     _jump_requested = false
@@ -796,7 +839,7 @@ func _try_start_drop_through() -> void:
     if not is_on_floor():
         return
 
-    var wants_down := Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_DOWN)
+    var wants_down := Input.is_action_pressed("move_down")
     if not wants_down:
         return
 
@@ -843,9 +886,9 @@ func _process_climbing() -> void:
     var horizontal := _get_horizontal_input()
     var vertical := 0.0
 
-    if Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_UP):
+    if Input.is_action_pressed("move_up"):
         vertical -= 1.0
-    if Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_DOWN):
+    if Input.is_action_pressed("move_down"):
         vertical += 1.0
 
     var axis := Vector2.DOWN
@@ -904,10 +947,8 @@ func _can_climb() -> bool:
 
 func _has_climb_input() -> bool:
     return (
-        Input.is_key_pressed(KEY_W)
-        or Input.is_key_pressed(KEY_UP)
-        or Input.is_key_pressed(KEY_S)
-        or Input.is_key_pressed(KEY_DOWN)
+        Input.is_action_pressed("move_up")
+        or Input.is_action_pressed("move_down")
     )
 
 
@@ -959,8 +1000,8 @@ func _process_simple_ledge_input() -> void:
     if not is_on_floor():
         return
 
-    var wants_up := Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_UP)
-    var wants_down := Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_DOWN)
+    var wants_up := Input.is_action_pressed("move_up")
+    var wants_down := Input.is_action_pressed("move_down")
 
     # SUBIR: un solo impulso físico; después actúan la gravedad y move_and_slide().
     if wants_up and _active_ledge_transition_zone.has_method("can_go_up"):
@@ -986,9 +1027,9 @@ func _process_simple_ledge_input() -> void:
 
 func _get_horizontal_input() -> float:
     var direction := 0.0
-    if Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_LEFT):
+    if Input.is_action_pressed("move_left"):
         direction -= 1.0
-    if Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT):
+    if Input.is_action_pressed("move_right"):
         direction += 1.0
     return direction
 
@@ -1066,14 +1107,13 @@ func _update_attack_damage_window() -> void:
     var hit: Dictionary = hits[index]
     var damage := _current_attack_damage * float(hit.ratio)
     var knockback := bool(hit.knockback)
+    var area := String(hit.area)
     var facing := -1.0 if sprite.flip_h else 1.0
 
-    match String(hit.area):
+    match area:
         "around":
             attack_hitbox.position = Vector2(0.0, attack_hitbox_offset_y)
             attack_hitbox.scale = Vector2(1.90, 1.35)
-            _damage_around_targets(damage, knockback)
-            return
         "wide":
             _update_attack_hitbox_position()
             attack_hitbox.scale = Vector2(1.45, 1.20)
@@ -1084,7 +1124,24 @@ func _update_attack_damage_window() -> void:
             _update_attack_hitbox_position()
             attack_hitbox.scale = Vector2.ONE
 
-    _damage_attack_overlaps(damage, knockback)
+    var connected := (
+        _damage_around_targets(damage, knockback)
+        if area == "around"
+        else _damage_attack_overlaps(damage, knockback)
+    )
+    if connected:
+        _play_hit_impact(knockback, area == "blast")
+
+
+## Hitstop y temblor al conectar con un enemigo: el peso de la espada se nota
+## en el impacto, no en la espera.
+func _play_hit_impact(knockback: bool, heavy: bool) -> void:
+    if not knockback:
+        UnderkingdomCombatFX.hit_stop(hit_stop_continuous_time, hit_stop_time_scale)
+        return
+    UnderkingdomCombatFX.hit_stop(hit_stop_heavy_time if heavy else hit_stop_time, hit_stop_time_scale)
+    if camera != null:
+        camera.shake(hit_shake_heavy_strength if heavy else hit_shake_strength, hit_shake_time)
 
 
 func _reset_attack_hitbox() -> void:
@@ -1107,7 +1164,8 @@ func _attack_profile(animation_name: StringName) -> Dictionary:
     ]}
 
 
-func _damage_around_targets(damage_amount: float, knockback: bool) -> void:
+## Devuelve si algún enemigo recibió el golpe.
+func _damage_around_targets(damage_amount: float, knockback: bool) -> bool:
     # Consulta física real centrada en el Player: detecta enemigos delante y
     # detrás con el mismo alcance, sin depender del origen del enemigo.
     var radius := attack_hitbox_offset_x + 41.0
@@ -1127,26 +1185,33 @@ func _damage_around_targets(damage_amount: float, knockback: bool) -> void:
     query.collide_with_areas = false
     query.exclude = [get_rid()]
 
+    var connected := false
     for result in get_world_2d().direct_space_state.intersect_shape(query, 32):
         var target := result.get("collider") as Node
         if target == null or target == self:
             continue
         if not target.is_in_group("enemy") and not target.is_in_group("breakable"):
             continue
-        _damage_target_once(target, damage_amount, knockback)
+        connected = _damage_target_once(target, damage_amount, knockback) or connected
+    return connected
 
 
-func _damage_attack_overlaps(damage_amount: float, knockback: bool) -> void:
+## Devuelve si algún enemigo recibió el golpe.
+func _damage_attack_overlaps(damage_amount: float, knockback: bool) -> bool:
+    var connected := false
     for body in attack_hitbox.get_overlapping_bodies():
         if body == self:
             continue
-        _damage_target_once(body, damage_amount, knockback)
+        connected = _damage_target_once(body, damage_amount, knockback) or connected
+    return connected
 
 
-func _damage_target_once(body: Node, damage_amount: float, knockback: bool) -> void:
+## Devuelve true si el objetivo es un enemigo y aceptó el daño (los rompibles
+## no cuentan para el hitstop).
+func _damage_target_once(body: Node, damage_amount: float, knockback: bool) -> bool:
     var body_id := body.get_instance_id()
     if _attack_hit_targets.has(body_id):
-        return
+        return false
 
     # Solo consumimos el objetivo si el daño fue aceptado. Si el enemigo
     # estaba invulnerable, puede volver a intentarse durante la ventana.
@@ -1158,6 +1223,7 @@ func _damage_target_once(body: Node, damage_amount: float, knockback: bool) -> v
     if accepted:
         _attack_hit_targets.append(body_id)
         UnderkingdomCombatFX.hit_flash(body)
+    return accepted and body.is_in_group("enemy")
 
 
 func _try_damage_attack_target(body: Node, damage_amount: float = -1.0) -> bool:
@@ -1231,7 +1297,7 @@ func _register_actual_damage_for_lifesteal(body: Node, health_before: float) -> 
 
 
 func _register_lifesteal_damage(actual_damage: float) -> void:
-    if not lifesteal_enabled or actual_damage <= 0.0 or dead:
+    if not is_lifesteal_active() or actual_damage <= 0.0 or dead:
         return
 
     # No se guarda curación mientras la vida está llena; hay que combatir
@@ -1261,16 +1327,14 @@ func _attack_speed_multiplier_for(animation_name: StringName) -> float:
 
     # Las animaciones del pack van lentas (9-10 fps); el combo y el ataque
     # aéreo se aceleran un poco incluso con vida normal.
-    if animation_name in [&"attack", &"attack 2", &"attack 3"]:
+    if animation_name == &"attack":
+        multiplier *= maxf(attack_1_speed_multiplier, 1.0)
+    elif animation_name in [&"attack 2", &"attack 3"]:
         multiplier *= maxf(combo_base_speed_multiplier, 1.0)
     elif animation_name == &"air attack":
         multiplier *= maxf(air_attack_speed_multiplier, 1.0)
 
-    if (
-        adrenaline_enabled
-        and max_health > 0.0
-        and current_health <= max_health * adrenaline_health_ratio
-    ):
+    if is_adrenaline_active():
         if animation_name != &"attack ultimate" or adrenaline_affects_ultimate:
             multiplier *= maxf(adrenaline_attack_speed_multiplier, 1.0)
 
@@ -1280,9 +1344,14 @@ func _attack_speed_multiplier_for(animation_name: StringName) -> float:
 func is_adrenaline_active() -> bool:
     return (
         adrenaline_enabled
+        and GameManager.has_ability("adrenaline")
         and max_health > 0.0
         and current_health <= max_health * adrenaline_health_ratio
     )
+
+
+func is_lifesteal_active() -> bool:
+    return lifesteal_enabled and GameManager.has_ability("lifesteal")
 
 
 ## 0.0 = recién usada, 1.0 = lista. La usa el HUD.
@@ -1294,6 +1363,11 @@ func get_ultimate_ready_ratio() -> float:
 
 func get_ultimate_cooldown_left() -> float:
     return _ultimate_cooldown_left
+
+
+## Daño acumulado hacia la próxima curación del robo de vida.
+func get_lifesteal_progress() -> float:
+    return _lifesteal_damage_bank
 
 
 func set_ultimate_cooldown_progress(ready_ratio: float) -> void:
@@ -1352,7 +1426,12 @@ func take_damage(
     if _action == PlayerAction.DEFEND:
         # Parry: el golpe llegó justo después de cubrirse. No gasta guardia y
         # aturde al atacante (solo golpes de un enemigo, con origen).
-        if _parry_available and _defend_elapsed <= parry_window and apply_knockback:
+        if (
+            _parry_available
+            and _defend_elapsed <= parry_window
+            and apply_knockback
+            and GameManager.has_ability("parry")
+        ):
             _perform_parry(source_global_position)
             return true
 
@@ -1367,7 +1446,10 @@ func take_damage(
                 _block_push_left = 0.25
         return true
 
-    current_health = maxf(current_health - amount, 0.0)
+    # Modo dev: el golpe se recibe (animación, empuje, invulnerabilidad) pero
+    # no quita vida.
+    if not DevMode.infinite_health:
+        current_health = maxf(current_health - amount, 0.0)
     damaged.emit(amount)
     health_changed.emit(current_health, max_health)
 
@@ -1423,6 +1505,12 @@ func _apply_knockback(source_global_position: Vector2) -> void:
 
 func is_invulnerable() -> bool:
     return cinematic_invulnerable or _invulnerability_left > 0.0 or _action == PlayerAction.ULTIMATE
+
+
+## Colgado de una escalera. Lo usan los jefes para saber si el Player está
+## quieto en el aire (no saltando) y vale la pena ir a buscarlo.
+func is_climbing() -> bool:
+    return _climbing
 
 
 func _update_damage_timers(delta: float) -> void:
@@ -1543,7 +1631,7 @@ func heal(amount: float) -> void:
 func drink_potion() -> bool:
     if dead or current_health >= max_health:
         return false
-    if not GameManager.use_potion():
+    if not DevMode.infinite_potions and not GameManager.use_potion():
         return false
     heal(potion_heal_amount)
     UnderkingdomCombatFX.heal(self, sprite)
@@ -1552,6 +1640,11 @@ func drink_potion() -> bool:
 
 func die() -> void:
     if dead or cinematic_invulnerable:
+        return
+    # Modo dev: los vacíos y las kill zones devuelven al último punto de
+    # reaparición sin recargar el mapa.
+    if DevMode.infinite_health:
+        respawn_now()
         return
 
     dead = true

@@ -45,15 +45,18 @@ func _build_detector() -> void:
 func _on_detector_body_entered(body: Node2D) -> void:
     if not closed or not body.is_in_group(player_group):
         return
+    # El mensaje sale hacia el lado del Player: así no se corta cuando la
+    # puerta está junto al borde del mapa.
+    var side := signf(body.global_position.x - global_position.x)
     if not GameManager.has_key(key_id):
-        _show_message(locked_message)
+        _show_message(locked_message, side)
         return
     GameManager.mark_object_consumed(self)
     open()
-    _show_message(opened_message)
+    _show_message(opened_message, side)
 
 
-func _show_message(text: String) -> void:
+func _show_message(text: String, side: float = 0.0) -> void:
     if text.is_empty():
         return
     if _message == null:
@@ -68,7 +71,8 @@ func _show_message(text: String) -> void:
 
     var top := collision.position.y - (collision.shape as RectangleShape2D).size.y * 0.5
     _message.text = text
-    _message.position = Vector2(-80.0, top - 20.0)
+    var half_width := _message.size.x * 0.5
+    _message.position = Vector2(-half_width + side * (half_width - 8.0), top - 20.0)
     _message.modulate.a = 1.0
     _message.visible = true
     _message_tween = _message.create_tween()

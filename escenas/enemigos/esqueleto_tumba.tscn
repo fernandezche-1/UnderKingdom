@@ -1,0 +1,227 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/combat/rising_enemy.gd" id="script"]
+[ext_resource type="Texture2D" path="res://assets_prueba/gothicvania_cementerio/esqueleto.png" id="tex_0"]
+
+[sub_resource type="AtlasTexture" id="Atlas_1"]
+atlas = ExtResource("tex_0")
+region = Rect2(0, 52, 44, 52)
+
+[sub_resource type="AtlasTexture" id="Atlas_3"]
+atlas = ExtResource("tex_0")
+region = Rect2(44, 52, 44, 52)
+
+[sub_resource type="AtlasTexture" id="Atlas_4"]
+atlas = ExtResource("tex_0")
+region = Rect2(88, 52, 44, 52)
+
+[sub_resource type="AtlasTexture" id="Atlas_5"]
+atlas = ExtResource("tex_0")
+region = Rect2(132, 52, 44, 52)
+
+[sub_resource type="AtlasTexture" id="Atlas_2"]
+atlas = ExtResource("tex_0")
+region = Rect2(176, 52, 44, 52)
+
+[sub_resource type="AtlasTexture" id="Atlas_6"]
+atlas = ExtResource("tex_0")
+region = Rect2(220, 52, 44, 52)
+
+[sub_resource type="AtlasTexture" id="Atlas_7"]
+atlas = ExtResource("tex_0")
+region = Rect2(264, 52, 44, 52)
+
+[sub_resource type="AtlasTexture" id="Atlas_8"]
+atlas = ExtResource("tex_0")
+region = Rect2(308, 52, 44, 52)
+
+[sub_resource type="AtlasTexture" id="Atlas_9"]
+atlas = ExtResource("tex_0")
+region = Rect2(0, 208, 44, 52)
+
+[sub_resource type="AtlasTexture" id="Atlas_10"]
+atlas = ExtResource("tex_0")
+region = Rect2(44, 208, 44, 52)
+
+[sub_resource type="AtlasTexture" id="Atlas_11"]
+atlas = ExtResource("tex_0")
+region = Rect2(88, 208, 44, 52)
+
+[sub_resource type="AtlasTexture" id="Atlas_12"]
+atlas = ExtResource("tex_0")
+region = Rect2(132, 208, 44, 52)
+
+[sub_resource type="AtlasTexture" id="Atlas_13"]
+atlas = ExtResource("tex_0")
+region = Rect2(176, 208, 44, 52)
+
+[sub_resource type="AtlasTexture" id="Atlas_14"]
+atlas = ExtResource("tex_0")
+region = Rect2(0, 156, 44, 52)
+
+[sub_resource type="AtlasTexture" id="Atlas_15"]
+atlas = ExtResource("tex_0")
+region = Rect2(44, 156, 44, 52)
+
+[sub_resource type="AtlasTexture" id="Atlas_16"]
+atlas = ExtResource("tex_0")
+region = Rect2(88, 156, 44, 52)
+
+[sub_resource type="AtlasTexture" id="Atlas_17"]
+atlas = ExtResource("tex_0")
+region = Rect2(132, 156, 44, 52)
+
+[sub_resource type="AtlasTexture" id="Atlas_18"]
+atlas = ExtResource("tex_0")
+region = Rect2(176, 156, 44, 52)
+
+[sub_resource type="AtlasTexture" id="Atlas_19"]
+atlas = ExtResource("tex_0")
+region = Rect2(220, 156, 44, 52)
+
+[sub_resource type="SpriteFrames" id="Frames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_7")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_8")
+}],
+"loop": 1,
+"name": &"attack",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_9")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_10")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_11")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_12")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_13")
+}],
+"loop": 0,
+"name": &"death",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_2")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_14")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_15")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_16")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_17")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_18")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_19")
+}],
+"loop": 0,
+"name": &"rise",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_7")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_8")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="Body"]
+size = Vector2(16, 36)
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1243854571]
+collision_layer = 5
+script = ExtResource("script")
+lunge_windup = 0.35
+lunge_duration = 0.3
+lunge_speed = 190.0
+knockback_horizontal = 150.0
+patrol_distance = 45.0
+patrol_speed = 24.0
+chase_speed = 52.0
+detection_range = 190.0
+detection_vertical_range = 90.0
+lose_aggro_vertical_range = 150.0
+attack_range = 48.0
+minimum_player_distance = 22.0
+attack_cooldown = 1.6
+attack_hitbox_size = Vector2(26, 34)
+attack_hitbox_offset = Vector2(6, 8)
+sprite_faces_right = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1684483130]
+sprite_frames = SubResource("Frames")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1414034344]
+position = Vector2(0, 8)
+shape = SubResource("Body")

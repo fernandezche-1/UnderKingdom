@@ -75,6 +75,7 @@ func _physics_process(_delta: float) -> void:
 				else:
 					GameManager.consumed_objects[persistent_loot_key] = true
 					GameManager.request_autosave()
+				UnderkingdomCombatFX.pickup_sparkle(self)
 				queue_free()
 				return
 

@@ -1,120 +1,219 @@
 extends Control
 
+## "Nueva partida" empieza en la cinemática de la prisión, que sale al cementerio.
 const GAME_SCENE := "res://escenas/mapas/prologo_prision/camara_sellado_alma.tscn"
-const BACKGROUND := preload("res://fondos/cementerio.png")
-const UI_ATLAS := preload("res://prueba/FantasyUIfree/FantasyUIfree/freefantasy.png")
-const BUTTON_REGION := Rect2(138, 5, 45, 23)
-const FRAME_REGION := Rect2(163, 48, 83, 127)
+const ORNAMENT := preload("res://escenas/ui/texturas/adorno_linea.png")
 
-const COLOR_TEXT := Color(1.0, 0.9, 0.68)
-const COLOR_HOVER := Color(1.22, 1.1, 0.82)
-const COLOR_PRESSED := Color(0.76, 0.63, 0.43)
-const COLOR_DISABLED := Color(0.48, 0.44, 0.38)
+const MENU_LEFT: float = 40.0
+const MENU_TOP: float = 104.0
+const FADE_IN_TIME: float = 0.6
+const FADE_OUT_TIME: float = 0.35
+## Fondo: la Cámara del Sellado (donde empieza la partida) sin su cinemática.
+## Se quitan los nodos que actúan solos; el resto es decorado.
+const PRISON_REMOVED_NODES: Array[String] = [
+	"Camera2D", "CharacterBody2D/player", "CharacterBody2D2", "SalidaPrision",
+]
+## Paneo de ida y vuelta por la sala, en píxeles de mundo (borde izquierdo de
+## la vista) y segundos por vuelta completa.
+const PAN_FROM: float = 120.0
+const PAN_TO: float = 190.0
+const PAN_PERIOD: float = 40.0
+const VIEW_TOP: float = 120.0
 
 var _main_buttons: VBoxContainer
 var _continue_button: Button
 var _delete_button: Button
 var _options_panel: VBoxContainer
-var _master_bus := -1
-var _profile_panel: PanelContainer
+## Ranuras de guardado: un mismo panel sirve para crear, continuar y eliminar.
+var _profile_panel: VBoxContainer
 var _profile_title: Label
 var _profile_name: LineEdit
 var _profile_message: Label
 var _profile_slots: VBoxContainer
-var _profile_mode := "new"
-var _pending_slot := 0
-var _overwrite_dialog: ConfirmationDialog
-var _delete_confirmation: PanelContainer
-var _delete_confirmation_message: Label
-var _delete_cancel_button: Button
-var _pending_delete_slot := 0
+var _profile_mode: String = "new"
+## Confirmación de reemplazar o eliminar una ranura ocupada.
+var _confirm_panel: VBoxContainer
+var _confirm_message: Label
+var _confirm_buttons: VBoxContainer
+var _confirm_action: String = ""
+var _pending_slot: int = 0
+var _selector: UnderkingdomMenuSelector
+var _volume_value: Label
+var _fade: ColorRect
+var _master_bus: int = -1
+var _starting: bool = false
+var _prison: Node2D
+var _pan_time: float = 0.0
 
 
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	_master_bus = AudioServer.get_bus_index("Master")
 	_build_background()
-	_build_menu_frame()
+	_build_wisps()
 	_build_title()
 	_build_main_menu()
 	_build_options()
 	_build_profile_panel()
-	_build_delete_confirmation()
+	_build_confirm_panel()
+	_build_footer()
+	_selector = UnderkingdomMenuSelector.new()
+	_selector.name = "Selector"
+	add_child(_selector)
+	_selector.watch(_main_buttons)
+	_selector.watch(_options_panel)
+	_selector.watch(_confirm_buttons)
+	_build_fade()
 	_show_main_menu()
 
 
+func _unhandled_input(event: InputEvent) -> void:
+	if _starting or not event.is_action_pressed("ui_cancel"):
+		return
+	if _confirm_panel.visible:
+		_hide_confirm()
+	elif _profile_panel.visible or _options_panel.visible:
+		_show_main_menu()
+	else:
+		return
+	get_viewport().set_input_as_handled()
+
+
+func _process(delta: float) -> void:
+	if _prison == null:
+		return
+	_pan_time += delta
+	var t: float = (1.0 - cos(_pan_time * TAU / PAN_PERIOD)) * 0.5
+	# Posición entera: sin subpíxeles el pixel art no tiembla.
+	_prison.position = Vector2(-roundf(lerpf(PAN_FROM, PAN_TO, t)), -VIEW_TOP)
+
+
 func _build_background() -> void:
-	var background := TextureRect.new()
-	background.name = "FondoCementerio"
-	background.texture = BACKGROUND
-	background.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	background.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	background.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(background)
-	move_child(background, 0)
+	var backdrop := ColorRect.new()
+	backdrop.name = "FondoOscuro"
+	backdrop.color = Color(0.018, 0.025, 0.055)
+	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# Las capas de la prisión tienen z_index negativo: el respaldo va aún más abajo.
+	backdrop.z_index = -100
+	add_child(backdrop)
+	_build_prison()
 
-	var shade := ColorRect.new()
-	shade.name = "SombraFondo"
-	shade.color = Color(0.015, 0.02, 0.045, 0.46)
-	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(shade)
+	# Oscurece el lado del menú y deja ver el cementerio a la derecha.
+	var side_shade := TextureRect.new()
+	side_shade.name = "SombraLateral"
+	side_shade.texture = _gradient_texture(Vector2(1.0, 0.0), [
+		Color(0.012, 0.012, 0.035, 0.94),
+		Color(0.012, 0.012, 0.035, 0.86),
+		Color(0.012, 0.012, 0.035, 0.0),
+	], PackedFloat32Array([0.0, 0.6, 1.0]))
+	side_shade.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	side_shade.stretch_mode = TextureRect.STRETCH_SCALE
+	side_shade.set_anchors_and_offsets_preset(Control.PRESET_LEFT_WIDE)
+	side_shade.offset_right = 340.0
+	side_shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(side_shade)
+
+	var bottom_shade := TextureRect.new()
+	bottom_shade.name = "SombraInferior"
+	bottom_shade.texture = _gradient_texture(Vector2(0.0, 1.0), [
+		Color(0.012, 0.012, 0.035, 0.0),
+		Color(0.012, 0.012, 0.035, 0.75),
+	], PackedFloat32Array([0.0, 1.0]))
+	bottom_shade.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	bottom_shade.stretch_mode = TextureRect.STRETCH_SCALE
+	bottom_shade.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
+	bottom_shade.offset_top = -70.0
+	bottom_shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(bottom_shade)
 
 
-func _build_menu_frame() -> void:
-	var frame := TextureRect.new()
-	frame.name = "MarcoMenu"
-	frame.texture = _atlas_texture(FRAME_REGION)
-	frame.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	frame.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	frame.anchor_left = 1.0
-	frame.anchor_right = 1.0
-	frame.anchor_top = 0.0
-	frame.anchor_bottom = 1.0
-	frame.offset_left = -176.0
-	frame.offset_right = -10.0
-	frame.offset_top = 7.0
-	frame.offset_bottom = -7.0
-	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(frame)
+func _build_prison() -> void:
+	var scene := load(GAME_SCENE) as PackedScene
+	if scene == null:
+		push_warning("Menú: no se pudo cargar la prisión para el fondo.")
+		return
+	_prison = scene.instantiate() as Node2D
+	# Sin script no arranca la cinemática ni guarda nada.
+	_prison.set_script(null)
+	for node_path: String in PRISON_REMOVED_NODES:
+		var node := _prison.get_node_or_null(node_path)
+		if node != null:
+			node.get_parent().remove_child(node)
+			node.free()
+	_prison.name = "FondoPrision"
+	add_child(_prison)
+	for sprite: Node in _prison.find_children("*", "AnimatedSprite2D", true, false):
+		(sprite as AnimatedSprite2D).play()
+	_process(0.0)
+
+
+func _gradient_texture(direction: Vector2, colors: Array[Color], offsets: PackedFloat32Array) -> GradientTexture2D:
+	var gradient := Gradient.new()
+	gradient.colors = PackedColorArray(colors)
+	gradient.offsets = offsets
+	var texture := GradientTexture2D.new()
+	texture.gradient = gradient
+	texture.fill_from = Vector2.ZERO
+	texture.fill_to = direction
+	texture.width = 64
+	texture.height = 64
+	return texture
+
+
+## Ánimas: lucecitas frías que suben despacio entre las tumbas.
+func _build_wisps() -> void:
+	var ramp := Gradient.new()
+	ramp.colors = PackedColorArray([
+		Color(0.62, 0.92, 1.0, 0.0),
+		Color(0.62, 0.92, 1.0, 0.75),
+		Color(0.62, 0.92, 1.0, 0.45),
+		Color(0.62, 0.92, 1.0, 0.0),
+	])
+	ramp.offsets = PackedFloat32Array([0.0, 0.2, 0.75, 1.0])
+	var wisps := CPUParticles2D.new()
+	wisps.name = "Animas"
+	wisps.amount = 30
+	wisps.lifetime = 10.0
+	wisps.preprocess = 10.0
+	wisps.position = Vector2(240.0, 285.0)
+	wisps.emission_shape = CPUParticles2D.EMISSION_SHAPE_RECTANGLE
+	wisps.emission_rect_extents = Vector2(250.0, 12.0)
+	wisps.direction = Vector2.UP
+	wisps.spread = 25.0
+	wisps.gravity = Vector2(0.0, -1.5)
+	wisps.initial_velocity_min = 6.0
+	wisps.initial_velocity_max = 15.0
+	wisps.tangential_accel_min = -2.0
+	wisps.tangential_accel_max = 2.0
+	wisps.scale_amount_min = 2.0
+	wisps.scale_amount_max = 2.0
+	wisps.color_ramp = ramp
+	add_child(wisps)
 
 
 func _build_title() -> void:
 	var title := Label.new()
 	title.name = "Titulo"
-	title.text = "UNDERKINGDOM"
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	title.anchor_left = 1.0
-	title.anchor_right = 1.0
-	title.anchor_top = 0.0
-	title.anchor_bottom = 0.0
-	title.offset_left = -177.0
-	title.offset_right = -9.0
-	title.offset_top = 47.0
-	title.offset_bottom = 77.0
-	title.add_theme_font_size_override("font_size", 18)
-	title.add_theme_color_override("font_color", COLOR_TEXT)
-	title.add_theme_color_override("font_outline_color", Color(0.12, 0.035, 0.025))
-	title.add_theme_constant_override("outline_size", 3)
+	title.theme_type_variation = &"Titulo"
+	title.text = "Underkingdom"
+	title.position = Vector2(28.0, 30.0)
 	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(title)
 
+	var ornament := NinePatchRect.new()
+	ornament.name = "Adorno"
+	ornament.texture = ORNAMENT
+	ornament.patch_margin_left = 8
+	ornament.patch_margin_right = 8
+	ornament.position = Vector2(26.0, 80.0)
+	ornament.size = Vector2(232.0, 5.0)
+	ornament.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(ornament)
+
 
 func _build_main_menu() -> void:
-	_main_buttons = VBoxContainer.new()
-	_main_buttons.name = "BotonesPrincipales"
-	_main_buttons.anchor_left = 1.0
-	_main_buttons.anchor_right = 1.0
-	_main_buttons.anchor_top = 0.0
-	_main_buttons.anchor_bottom = 0.0
-	_main_buttons.offset_left = -146.0
-	_main_buttons.offset_right = -28.0
-	_main_buttons.offset_top = 83.0
-	_main_buttons.offset_bottom = 224.0
-	_main_buttons.add_theme_constant_override("separation", 4)
-	add_child(_main_buttons)
+	_main_buttons = _make_list("BotonesPrincipales")
 
 	var new_game := _make_button("Nueva partida")
 	new_game.name = "NuevaPartida"
@@ -123,12 +222,12 @@ func _build_main_menu() -> void:
 
 	_continue_button = _make_button("Continuar")
 	_continue_button.name = "Continuar"
-	_continue_button.pressed.connect(_show_continue_profiles)
+	_continue_button.pressed.connect(_show_profiles.bind("continue"))
 	_main_buttons.add_child(_continue_button)
 
 	_delete_button = _make_button("Eliminar partida")
 	_delete_button.name = "EliminarPartida"
-	_delete_button.pressed.connect(_show_delete_profiles)
+	_delete_button.pressed.connect(_show_profiles.bind("delete"))
 	_main_buttons.add_child(_delete_button)
 
 	var options := _make_button("Opciones")
@@ -143,47 +242,48 @@ func _build_main_menu() -> void:
 
 
 func _build_options() -> void:
-	_options_panel = VBoxContainer.new()
-	_options_panel.name = "ControlesOpciones"
-	_options_panel.anchor_left = 1.0
-	_options_panel.anchor_right = 1.0
-	_options_panel.anchor_top = 0.0
-	_options_panel.anchor_bottom = 0.0
-	_options_panel.offset_left = -146.0
-	_options_panel.offset_right = -28.0
-	_options_panel.offset_top = 88.0
-	_options_panel.offset_bottom = 219.0
-	_options_panel.add_theme_constant_override("separation", 3)
-	add_child(_options_panel)
+	_options_panel = _make_list("ControlesOpciones")
+	_options_panel.add_theme_constant_override("separation", 5)
+	_options_panel.visible = false
+
+	var volume_row := HBoxContainer.new()
+	volume_row.name = "FilaVolumen"
+	volume_row.add_theme_constant_override("separation", 6)
+	_options_panel.add_child(volume_row)
 
 	var volume_label := Label.new()
-	volume_label.text = "VOLUMEN GENERAL"
-	volume_label.add_theme_font_size_override("font_size", 9)
-	volume_label.add_theme_color_override("font_color", COLOR_TEXT)
-	_options_panel.add_child(volume_label)
+	volume_label.text = "Volumen"
+	volume_row.add_child(volume_label)
 
 	var volume_slider := HSlider.new()
 	volume_slider.name = "VolumenGeneral"
 	volume_slider.min_value = 0.0
 	volume_slider.max_value = 1.0
-	volume_slider.step = 0.01
+	volume_slider.step = 0.05
 	volume_slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	volume_slider.custom_minimum_size.y = 18.0
+	volume_slider.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	if _master_bus >= 0:
 		volume_slider.value = AudioServer.get_bus_volume_linear(_master_bus)
 	else:
 		volume_slider.editable = false
 		volume_slider.tooltip_text = "No existe el bus Master."
 	volume_slider.value_changed.connect(_on_master_volume_changed)
-	_options_panel.add_child(volume_slider)
+	volume_row.add_child(volume_slider)
+
+	_volume_value = Label.new()
+	_volume_value.name = "ValorVolumen"
+	_volume_value.theme_type_variation = &"TextoTenue"
+	_volume_value.custom_minimum_size.x = 24.0
+	_volume_value.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	volume_row.add_child(_volume_value)
+	_update_volume_label(volume_slider.value)
 
 	var fullscreen := CheckButton.new()
 	fullscreen.name = "PantallaCompleta"
 	fullscreen.text = "Pantalla completa"
-	fullscreen.add_theme_font_size_override("font_size", 9)
-	fullscreen.add_theme_color_override("font_color", COLOR_TEXT)
-	fullscreen.button_pressed = UserSettings.is_fullscreen()
-	fullscreen.toggled.connect(_on_fullscreen_toggled)
+	fullscreen.button_pressed = DisplaySettings.is_fullscreen()
+	fullscreen.toggled.connect(DisplaySettings.set_fullscreen)
+	DisplaySettings.fullscreen_changed.connect(fullscreen.set_pressed_no_signal)
 	_options_panel.add_child(fullscreen)
 
 	var back := _make_button("Volver")
@@ -193,278 +293,126 @@ func _build_options() -> void:
 
 
 func _build_profile_panel() -> void:
-	_profile_panel = PanelContainer.new()
-	_profile_panel.name = "Perfiles"
+	_profile_panel = _make_list("Perfiles")
+	_profile_panel.position.y = MENU_TOP - 12.0
+	_profile_panel.custom_minimum_size.x = 260.0
 	_profile_panel.visible = false
-	_profile_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	_profile_panel.offset_left = 24.0
-	_profile_panel.offset_top = 28.0
-	_profile_panel.offset_right = -24.0
-	_profile_panel.offset_bottom = -28.0
-	var panel_style := StyleBoxFlat.new()
-	panel_style.bg_color = Color(0.035, 0.045, 0.075, 0.96)
-	panel_style.border_color = Color(0.45, 0.34, 0.23, 1.0)
-	panel_style.set_border_width_all(2)
-	panel_style.set_content_margin_all(8.0)
-	_profile_panel.add_theme_stylebox_override("panel", panel_style)
-	add_child(_profile_panel)
-	var contents := VBoxContainer.new()
-	contents.name = "ContenidoPerfiles"
-	contents.add_theme_constant_override("separation", 5)
-	_profile_panel.add_child(contents)
+
 	_profile_title = Label.new()
 	_profile_title.name = "Titulo"
-	_profile_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_profile_title.add_theme_font_size_override("font_size", 12)
-	_profile_title.add_theme_color_override("font_color", COLOR_TEXT)
-	contents.add_child(_profile_title)
+	_profile_title.theme_type_variation = &"Encabezado"
+	_profile_panel.add_child(_profile_title)
+
 	_profile_name = LineEdit.new()
+	_profile_name.name = "Nombre"
 	_profile_name.placeholder_text = "Nombre del protagonista"
 	_profile_name.max_length = 16
-	_profile_name.custom_minimum_size.y = 22.0
-	_profile_name.add_theme_font_size_override("font_size", 9)
-	contents.add_child(_profile_name)
+	_profile_name.custom_minimum_size.x = 170.0
+	_profile_name.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	# Enter en el nombre pasa a elegir la ranura.
+	_profile_name.text_submitted.connect(func(_text: String) -> void: _focus_first_slot())
+	_profile_panel.add_child(_profile_name)
+
 	_profile_message = Label.new()
-	_profile_message.add_theme_font_size_override("font_size", 8)
-	_profile_message.add_theme_color_override("font_color", COLOR_TEXT)
+	_profile_message.name = "Mensaje"
+	_profile_message.theme_type_variation = &"TextoTenue"
 	_profile_message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	contents.add_child(_profile_message)
+	_profile_panel.add_child(_profile_message)
+
 	_profile_slots = VBoxContainer.new()
+	_profile_slots.name = "Ranuras"
 	_profile_slots.add_theme_constant_override("separation", 3)
-	contents.add_child(_profile_slots)
-	var back := _make_button("Volver")
-	back.pressed.connect(_hide_profiles)
-	contents.add_child(back)
-	_overwrite_dialog = ConfirmationDialog.new()
-	_overwrite_dialog.title = "Reemplazar partida"
-	_overwrite_dialog.dialog_text = "Esta ranura ya tiene una partida. ¿Quieres reemplazarla? Se conservará una copia del archivo anterior."
-	_overwrite_dialog.confirmed.connect(_confirm_overwrite)
-	add_child(_overwrite_dialog)
+	_profile_panel.add_child(_profile_slots)
 
 
-func _build_delete_confirmation() -> void:
-	_delete_confirmation = PanelContainer.new()
-	_delete_confirmation.name = "ConfirmarEliminarPartida"
-	_delete_confirmation.visible = false
-	_delete_confirmation.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
-	_delete_confirmation.offset_left = -155.0
-	_delete_confirmation.offset_top = -55.0
-	_delete_confirmation.offset_right = 155.0
-	_delete_confirmation.offset_bottom = 55.0
-	var panel_style := StyleBoxFlat.new()
-	panel_style.bg_color = Color(0.035, 0.045, 0.075, 0.98)
-	panel_style.border_color = Color(0.45, 0.34, 0.23, 1.0)
-	panel_style.set_border_width_all(2)
-	panel_style.set_content_margin_all(7.0)
-	_delete_confirmation.add_theme_stylebox_override("panel", panel_style)
-	add_child(_delete_confirmation)
-	var contents := VBoxContainer.new()
-	contents.add_theme_constant_override("separation", 4)
-	_delete_confirmation.add_child(contents)
-	var title := Label.new()
-	title.text = "¿Eliminar partida guardada?"
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_font_size_override("font_size", 11)
-	title.add_theme_color_override("font_color", COLOR_TEXT)
-	contents.add_child(title)
-	_delete_confirmation_message = Label.new()
-	_delete_confirmation_message.text = "Se eliminará todo el progreso de esta partida. Esta acción no se puede deshacer."
-	_delete_confirmation_message.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_delete_confirmation_message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_delete_confirmation_message.add_theme_font_size_override("font_size", 8)
-	_delete_confirmation_message.add_theme_color_override("font_color", COLOR_TEXT)
-	contents.add_child(_delete_confirmation_message)
-	var buttons := HBoxContainer.new()
-	buttons.add_theme_constant_override("separation", 6)
-	contents.add_child(buttons)
-	_delete_cancel_button = _make_button("Cancelar")
-	_delete_cancel_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_delete_cancel_button.pressed.connect(_cancel_delete_confirmation)
-	buttons.add_child(_delete_cancel_button)
-	var confirm := _make_button("Eliminar definitivamente")
-	confirm.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	confirm.pressed.connect(_confirm_delete_slot)
-	buttons.add_child(confirm)
+func _build_confirm_panel() -> void:
+	_confirm_panel = _make_list("Confirmar")
+	_confirm_panel.position.y = MENU_TOP - 12.0
+	_confirm_panel.custom_minimum_size.x = 260.0
+	_confirm_panel.visible = false
+
+	_confirm_message = Label.new()
+	_confirm_message.name = "Mensaje"
+	_confirm_message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_confirm_panel.add_child(_confirm_message)
+
+	_confirm_buttons = VBoxContainer.new()
+	_confirm_buttons.name = "Botones"
+	_confirm_buttons.add_theme_constant_override("separation", 3)
+	_confirm_panel.add_child(_confirm_buttons)
+
+	var cancel := _make_button("Cancelar")
+	cancel.name = "Cancelar"
+	cancel.pressed.connect(_hide_confirm)
+	_confirm_buttons.add_child(cancel)
+
+	var accept := _make_button("Aceptar")
+	accept.name = "Aceptar"
+	accept.pressed.connect(_on_confirm_accepted)
+	_confirm_buttons.add_child(accept)
 
 
-func _show_new_profiles() -> void:
-	_profile_mode = "new"
-	_profile_panel.visible = true
-	_profile_title.text = "CREAR PERSONAJE"
-	_profile_name.visible = true
-	_profile_name.text = ""
-	_profile_message.text = "Elige una ranura. Tu aventura comenzará en la prisión."
-	_main_buttons.visible = false
-	_options_panel.visible = false
-	_refresh_profile_slots()
-	_profile_name.grab_focus()
+func _build_footer() -> void:
+	var hint := Label.new()
+	hint.name = "Ayuda"
+	hint.theme_type_variation = &"TextoTenue"
+	hint.text = "Enter / A  aceptar      Esc / B  volver"
+	hint.position = Vector2(28.0, 252.0)
+	hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(hint)
 
 
-func _show_continue_profiles() -> void:
-	_profile_mode = "continue"
-	_profile_panel.visible = true
-	_profile_title.text = "CONTINUAR"
-	_profile_name.visible = false
-	_profile_message.text = "Selecciona una partida guardada."
-	_main_buttons.visible = false
-	_options_panel.visible = false
-	_refresh_profile_slots()
+func _build_fade() -> void:
+	_fade = ColorRect.new()
+	_fade.name = "Fundido"
+	_fade.color = Color(0.0, 0.0, 0.0, 1.0)
+	_fade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_fade)
+	create_tween().tween_property(_fade, "color:a", 0.0, FADE_IN_TIME)
 
 
-func _show_delete_profiles() -> void:
-	_profile_mode = "delete"
-	_profile_panel.visible = true
-	_profile_title.text = "ELIMINAR PARTIDA"
-	_profile_name.visible = false
-	_profile_message.text = "Selecciona la ranura que deseas eliminar."
-	_main_buttons.visible = false
-	_options_panel.visible = false
-	_refresh_profile_slots()
-
-
-func _refresh_profile_slots() -> void:
-	for child in _profile_slots.get_children():
-		child.queue_free()
-	for slot_id in range(1, GameManager.SAVE_SLOT_COUNT + 1):
-		var info: Dictionary = GameManager.get_save_slot_info(slot_id)
-		var summary := "Ranura %d: Vacía" % slot_id
-		if bool(info.get("valid", false)):
-			summary = "Ranura %d: %s — %s" % [slot_id, info.player_name, info.region]
-		elif bool(info.get("exists", false)):
-			summary = "Ranura %d: Archivo no válido" % slot_id
-		var button := _make_button(summary)
-		button.custom_minimum_size.y = 30.0
-		button.pressed.connect(_on_profile_slot_pressed.bind(slot_id, info))
-		if _profile_mode == "continue" and not bool(info.get("valid", false)):
-			button.disabled = true
-		elif _profile_mode == "delete" and not bool(info.get("exists", false)):
-			button.disabled = true
-		_profile_slots.add_child(button)
-
-
-func _on_profile_slot_pressed(slot_id: int, info: Dictionary) -> void:
-	if _profile_mode == "delete":
-		if not bool(info.get("exists", false)):
-			return
-		_pending_delete_slot = slot_id
-		_delete_confirmation.visible = true
-		_delete_cancel_button.grab_focus()
-		return
-	if _profile_mode == "continue":
-		if GameManager.load_save_slot(slot_id):
-			return
-		_profile_message.text = GameManager.last_save_error
-		return
-	var normalized := GameManager.normalize_player_name(_profile_name.text)
-	if normalized.is_empty():
-		_profile_message.text = "Usa entre 1 y 16 letras; puedes incluir espacios, apóstrofo o guion."
-		return
-	_profile_name.text = normalized
-	_pending_slot = slot_id
-	if bool(info.get("exists", false)):
-		_overwrite_dialog.popup_centered()
-		return
-	_start_new_profile(slot_id, false)
-
-
-func _cancel_delete_confirmation() -> void:
-	_delete_confirmation.visible = false
-	_pending_delete_slot = 0
-
-
-func _confirm_delete_slot() -> void:
-	if _pending_delete_slot < 1:
-		return
-	var slot_id := _pending_delete_slot
-	_delete_confirmation.visible = false
-	_pending_delete_slot = 0
-	if not GameManager.delete_save_slot(slot_id):
-		_profile_message.text = GameManager.last_save_error
-		return
-	_profile_message.text = "Partida eliminada correctamente"
-	_refresh_profile_slots()
-	_continue_button.disabled = not GameManager.has_any_valid_save_slot()
-	_delete_button.disabled = not _has_existing_save_slot()
-
-
-func _confirm_overwrite() -> void:
-	_start_new_profile(_pending_slot, true)
-
-
-func _start_new_profile(slot_id: int, overwrite: bool) -> void:
-	if not ResourceLoader.exists(GAME_SCENE):
-		_profile_message.text = "No se encontró la escena inicial de la prisión."
-		return
-	_reset_new_game_progress()
-	if not GameManager.create_new_profile(slot_id, _profile_name.text, overwrite):
-		_profile_message.text = GameManager.last_save_error
-		return
-	get_tree().set_meta(GameManager.PRISON_CINEMATIC_META_KEY, false)
-	var error := get_tree().change_scene_to_file(GAME_SCENE)
-	if error != OK:
-		_profile_message.text = "No se pudo iniciar la partida (%d)." % error
-
-
-func _hide_profiles() -> void:
-	_profile_panel.visible = false
-	_show_main_menu()
+func _make_list(list_name: String) -> VBoxContainer:
+	var list := VBoxContainer.new()
+	list.name = list_name
+	list.position = Vector2(MENU_LEFT, MENU_TOP)
+	list.custom_minimum_size.x = 170.0
+	list.add_theme_constant_override("separation", 3)
+	add_child(list)
+	return list
 
 
 func _make_button(label_text: String) -> Button:
 	var button := Button.new()
 	button.text = label_text
-	button.custom_minimum_size.y = 25.0
-	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	button.theme_type_variation = &"BotonMenu"
+	button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 	button.focus_mode = Control.FOCUS_ALL
-	button.add_theme_font_size_override("font_size", 10)
-	button.add_theme_color_override("font_color", COLOR_TEXT)
-	button.add_theme_color_override("font_hover_color", Color(1.0, 0.98, 0.82))
-	button.add_theme_color_override("font_pressed_color", Color(1.0, 0.86, 0.57))
-	button.add_theme_color_override("font_disabled_color", Color(0.55, 0.48, 0.39))
-	button.add_theme_stylebox_override("normal", _button_style(Color.WHITE))
-	button.add_theme_stylebox_override("hover", _button_style(COLOR_HOVER))
-	button.add_theme_stylebox_override("pressed", _button_style(COLOR_PRESSED))
-	button.add_theme_stylebox_override("focus", _button_style(COLOR_HOVER))
-	button.add_theme_stylebox_override("disabled", _button_style(COLOR_DISABLED))
 	return button
-
-
-func _button_style(tint: Color) -> StyleBoxTexture:
-	var style := StyleBoxTexture.new()
-	style.texture = _atlas_texture(BUTTON_REGION)
-	style.texture_margin_left = 5.0
-	style.texture_margin_right = 5.0
-	style.texture_margin_top = 4.0
-	style.texture_margin_bottom = 4.0
-	style.content_margin_left = 4.0
-	style.content_margin_right = 4.0
-	style.content_margin_top = 1.0
-	style.content_margin_bottom = 1.0
-	style.modulate_color = tint
-	return style
-
-
-func _atlas_texture(region: Rect2) -> AtlasTexture:
-	var texture := AtlasTexture.new()
-	texture.atlas = UI_ATLAS
-	texture.region = region
-	return texture
 
 
 func _show_main_menu() -> void:
 	if _main_buttons == null:
 		return
+	var target := "NuevaPartida"
+	if _options_panel.visible:
+		target = "Opciones"
+	elif _profile_panel.visible:
+		target = {"continue": "Continuar", "delete": "EliminarPartida"}.get(_profile_mode, "NuevaPartida")
 	_main_buttons.visible = true
 	_options_panel.visible = false
 	_profile_panel.visible = false
+	_confirm_panel.visible = false
 	_continue_button.disabled = not GameManager.has_any_valid_save_slot()
 	_delete_button.disabled = not _has_existing_save_slot()
-	var start_button := _main_buttons.get_node("NuevaPartida") as Button
-	start_button.grab_focus()
+	var target_button := _main_buttons.get_node(target) as Button
+	if target_button.disabled:
+		target_button = _main_buttons.get_node("NuevaPartida") as Button
+	target_button.grab_focus()
 
 
 func _has_existing_save_slot() -> bool:
-	for slot_id in range(1, GameManager.SAVE_SLOT_COUNT + 1):
+	for slot_id: int in range(1, GameManager.SAVE_SLOT_COUNT + 1):
 		if bool(GameManager.get_save_slot_info(slot_id).get("exists", false)):
 			return true
 	return false
@@ -473,57 +421,175 @@ func _has_existing_save_slot() -> bool:
 func _show_options() -> void:
 	_main_buttons.visible = false
 	_options_panel.visible = true
-	var fullscreen := _options_panel.get_node("PantallaCompleta") as CheckButton
-	fullscreen.set_pressed_no_signal(UserSettings.is_fullscreen())
-	var slider := _options_panel.get_node("VolumenGeneral") as HSlider
-	slider.grab_focus()
+	(_options_panel.get_node("FilaVolumen/VolumenGeneral") as HSlider).grab_focus()
 
 
 func _on_new_game_pressed() -> void:
-	_show_new_profiles()
+	_show_profiles("new")
 
 
-func _reset_new_game_progress() -> void:
-	var manager: Variant = get_node_or_null("/root/GameManager")
-	if manager == null:
+## mode: "new" (nombre + ranura), "continue" o "delete".
+func _show_profiles(mode: String) -> void:
+	_profile_mode = mode
+	_main_buttons.visible = false
+	_options_panel.visible = false
+	_confirm_panel.visible = false
+	_profile_panel.visible = true
+	_profile_name.visible = mode == "new"
+	match mode:
+		"new":
+			_profile_title.text = "Nueva partida"
+			_profile_message.text = "Escribe un nombre y elige una ranura."
+		"continue":
+			_profile_title.text = "Continuar"
+			_profile_message.text = "Elige una partida guardada."
+		_:
+			_profile_title.text = "Eliminar partida"
+			_profile_message.text = "Elige la ranura que quieres borrar."
+	_refresh_profile_slots()
+	if mode == "new":
+		_profile_name.text = ""
+		_profile_name.grab_focus()
+	else:
+		_focus_first_slot()
+
+
+func _refresh_profile_slots() -> void:
+	for child: Node in _profile_slots.get_children():
+		_profile_slots.remove_child(child)
+		child.queue_free()
+	for slot_id: int in range(1, GameManager.SAVE_SLOT_COUNT + 1):
+		var info: Dictionary = GameManager.get_save_slot_info(slot_id)
+		var summary := "Ranura %d · vacía" % slot_id
+		if bool(info.get("valid", false)):
+			summary = "Ranura %d · %s · %s" % [slot_id, info.player_name, info.region]
+		elif bool(info.get("exists", false)):
+			summary = "Ranura %d · archivo dañado" % slot_id
+		var button := _make_button(summary)
+		button.name = "Ranura%d" % slot_id
+		if _profile_mode == "continue":
+			button.disabled = not bool(info.get("valid", false))
+		elif _profile_mode == "delete":
+			button.disabled = not bool(info.get("exists", false))
+		button.pressed.connect(_on_profile_slot_pressed.bind(slot_id, info))
+		_profile_slots.add_child(button)
+	var back := _make_button("Volver")
+	back.name = "Volver"
+	back.pressed.connect(_show_main_menu)
+	_profile_slots.add_child(back)
+	_selector.watch(_profile_slots)
+
+
+func _focus_first_slot() -> void:
+	for child: Node in _profile_slots.get_children():
+		var button := child as Button
+		if button != null and not button.disabled:
+			button.grab_focus()
+			return
+
+
+func _on_profile_slot_pressed(slot_id: int, info: Dictionary) -> void:
+	if _starting:
 		return
+	_pending_slot = slot_id
+	match _profile_mode:
+		"continue":
+			_continue_game(slot_id)
+		"delete":
+			_show_confirm("delete", "Se borrará todo el progreso de la ranura %d. No se puede deshacer." % slot_id)
+		_:
+			var normalized := GameManager.normalize_player_name(_profile_name.text)
+			if normalized.is_empty():
+				_profile_message.text = "El nombre lleva de 1 a 16 letras; admite espacios, apóstrofo y guion."
+				_profile_name.grab_focus()
+				return
+			_profile_name.text = normalized
+			if bool(info.get("exists", false)):
+				_show_confirm("overwrite", "La ranura %d ya tiene una partida. ¿Reemplazarla? Se guarda una copia de la anterior." % slot_id)
+			else:
+				_start_new_game(slot_id, false)
 
-	manager.pending_spawn_id = &""
-	manager.previous_scene_path = ""
-	manager.current_scene_path = ""
-	manager.world1_boss_defeated = false
-	manager.world1_boss_key_collected = false
-	manager.reset_cinematics_for_new_game()
-	manager.coins = 0
-	manager.potions = 0
-	manager.cthulhu_revealed = false
-	manager.w2_knight_defeated = false
-	manager.respawn_scene_path = ""
-	manager.respawn_position = Vector2.ZERO
-	manager.consumed_objects.clear()
-	manager.completed_encounters.clear()
-	manager.collected_keys.clear()
-	manager.upgrade_levels = {"max_health": 0, "lifesteal": 0, "ultimate_cooldown": 0}
-	manager.active_save_slot = 0
-	manager.pending_save_restore.clear()
-	manager.last_checkpoint_id = ""
-	manager.cancel_pending_autosave()
-	manager.world1_boss_defeated_changed.emit(false)
-	manager.world1_boss_key_changed.emit(false)
-	manager.coins_changed.emit(0)
-	manager.potions_changed.emit(0)
-	manager.cthulhu_revealed_changed.emit(false)
-	manager.w2_knight_defeated_changed.emit(false)
+
+func _show_confirm(action: String, message: String) -> void:
+	_confirm_action = action
+	_confirm_message.text = message
+	(_confirm_buttons.get_node("Aceptar") as Button).text = "Eliminar" if action == "delete" else "Reemplazar"
+	_profile_panel.visible = false
+	_confirm_panel.visible = true
+	(_confirm_buttons.get_node("Cancelar") as Button).grab_focus()
+
+
+func _hide_confirm() -> void:
+	_confirm_panel.visible = false
+	_profile_panel.visible = true
+	var slot_button := _profile_slots.get_node_or_null("Ranura%d" % _pending_slot) as Button
+	if slot_button != null:
+		slot_button.grab_focus()
+
+
+func _on_confirm_accepted() -> void:
+	if _confirm_action == "overwrite":
+		_start_new_game(_pending_slot, true)
+		return
+	if not GameManager.delete_save_slot(_pending_slot):
+		_hide_confirm()
+		_profile_message.text = GameManager.last_save_error
+		return
+	if not _has_existing_save_slot():
+		_show_main_menu()
+		return
+	_hide_confirm()
+	_profile_message.text = "Partida eliminada."
+	_refresh_profile_slots()
+	_focus_first_slot()
+
+
+func _start_new_game(slot_id: int, overwrite: bool) -> void:
+	if not ResourceLoader.exists(GAME_SCENE):
+		push_error("No existe la escena inicial: %s" % GAME_SCENE)
+		return
+	GameManager.reset_for_new_game()
+	if not GameManager.create_new_profile(slot_id, _profile_name.text, overwrite):
+		_confirm_panel.visible = false
+		_profile_panel.visible = true
+		_profile_message.text = GameManager.last_save_error
+		return
+	get_tree().set_meta(GameManager.PRISON_CINEMATIC_META_KEY, false)
+	await _fade_out()
+	var error := get_tree().change_scene_to_file(GAME_SCENE)
+	if error != OK:
+		push_error("No se pudo iniciar la partida. Error de escena: %s" % error)
+
+
+func _continue_game(slot_id: int) -> void:
+	await _fade_out()
+	if GameManager.load_save_slot(slot_id):
+		return
+	# La partida no cargó: se deshace el fundido y se explica por qué.
+	_starting = false
+	_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	create_tween().tween_property(_fade, "color:a", 0.0, FADE_OUT_TIME)
+	_profile_message.text = GameManager.last_save_error
+	_focus_first_slot()
+
+
+func _fade_out() -> void:
+	_starting = true
+	_fade.mouse_filter = Control.MOUSE_FILTER_STOP
+	var tween := create_tween()
+	tween.tween_property(_fade, "color:a", 1.0, FADE_OUT_TIME)
+	await tween.finished
 
 
 func _on_master_volume_changed(value: float) -> void:
+	_update_volume_label(value)
 	if _master_bus < 0:
 		return
 	AudioServer.set_bus_volume_db(_master_bus, linear_to_db(maxf(value, 0.0001)))
 
 
-func _on_fullscreen_toggled(enabled: bool) -> void:
-	UserSettings.set_fullscreen(enabled)
+func _update_volume_label(value: float) -> void:
+	_volume_value.text = "%d%%" % roundi(value * 100.0)
 
 
 func _on_quit_pressed() -> void:

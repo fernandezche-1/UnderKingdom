@@ -212,7 +212,6 @@ func _transition_to_player() -> void:
 	prisoner.cinematic_invulnerable = false
 	prisoner.set_physics_process(true)
 	prisoner.sprite.play(&"idle")
-	GameManager.mark_soul_fragmented()
 	exit_transition.enabled = true
 	var player_hud := prisoner.get_node("PlayerHUD") as CanvasLayer
 	var debug_hud := prisoner.get_node("DebugHUD") as CanvasLayer
@@ -245,7 +244,6 @@ func _restore_completed_scene() -> void:
 	prisoner.cinematic_invulnerable = false
 	prisoner.set_physics_process(true)
 	prisoner.visible = true
-	GameManager.mark_soul_fragmented()
 	exit_transition.enabled = true
 	queen.visible = false
 	cinematic_camera.enabled = false

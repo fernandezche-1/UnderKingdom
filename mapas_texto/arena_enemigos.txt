@@ -3,6 +3,8 @@
 ; saltan. Leyenda completa en mapas_texto/ejemplo_cueva.txt.
 
 escena: res://escenas/mapas/arena_enemigos.tscn
+; Mapa de prueba: teclas R/H/J/K y panel de depuración del Player.
+depuracion: si
 bloques: violeta
 fondo: cueva
 ---

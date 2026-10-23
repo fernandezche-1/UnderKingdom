@@ -52,7 +52,8 @@ offset_top = 7.0
 offset_right = 379.0
 offset_bottom = 27.0
 theme_override_colors/font_color = Color(0.94, 0.78, 0.42, 1)
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 8
+theme_type_variation = &"TextoFuerte"
 text = "VIEJO AMIGO"
 
 [node name="DialogueText" type="Label" parent="Panel"]
@@ -62,7 +63,7 @@ offset_top = 27.0
 offset_right = 380.0
 offset_bottom = 73.0
 theme_override_colors/font_color = Color(0.96, 0.96, 0.96, 1)
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 8
 text = "..."
 autowrap_mode = 2
 vertical_alignment = 1
@@ -74,6 +75,6 @@ offset_top = 68.0
 offset_right = 456.0
 offset_bottom = 84.0
 theme_override_colors/font_color = Color(0.82, 0.82, 0.82, 1)
-theme_override_font_sizes/font_size = 9
-text = "E  ▶"
+theme_override_font_sizes/font_size = 8
+text = "E  »"
 horizontal_alignment = 2

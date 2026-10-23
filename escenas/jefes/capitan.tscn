@@ -572,8 +572,60 @@ region = Rect2(8064, 1152, 288, 128)
 atlas = ExtResource("1_ocwlu")
 region = Rect2(8352, 1152, 288, 128)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_salto_0"]
+atlas = ExtResource("1_ocwlu")
+region = Rect2(0, 256, 288, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_salto_1"]
+atlas = ExtResource("1_ocwlu")
+region = Rect2(288, 256, 288, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_salto_2"]
+atlas = ExtResource("1_ocwlu")
+region = Rect2(576, 256, 288, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_caida_0"]
+atlas = ExtResource("1_ocwlu")
+region = Rect2(0, 384, 288, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_caida_1"]
+atlas = ExtResource("1_ocwlu")
+region = Rect2(288, 384, 288, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_caida_2"]
+atlas = ExtResource("1_ocwlu")
+region = Rect2(576, 384, 288, 128)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_2h10h"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_salto_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_salto_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_salto_2")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_caida_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_caida_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_caida_2")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 10.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_y3wb5")

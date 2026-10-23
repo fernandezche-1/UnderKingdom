@@ -15,5 +15,5 @@ tileset: mazmorra
 bloques: madera
 fondo: ninguno
 parallax: assets_prueba/pixelfantasy_caves/fondo1.png 0; assets_prueba/pixelfantasy_caves/fondo2.png 0.1; assets_prueba/pixelfantasy_caves/fondo3.png 0.2; assets_prueba/pixelfantasy_caves/fondo4a.png 0.3
-siguiente: res://escenas/mapas/tiles_mazmorra.tscn
+siguiente: res://escenas/mapas/tiles_mazmorra_combate.tscn
 anterior: res://escenas/mapas/tiles_cementerio_combate.tscn

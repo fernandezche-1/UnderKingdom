@@ -1,4 +1,3 @@
-
 extends Node
 class_name UnderkingdomMapSpawnController
 
@@ -7,6 +6,9 @@ class_name UnderkingdomMapSpawnController
 ## Si no existe un jugador, crea una instancia automáticamente.
 
 const PLAYER_SCENE := preload("res://escenas/player.tscn")
+## Los spawns de los mapas con tiles dejan los pies justo sobre el suelo, y la
+## consulta de forma cuenta ese contacto como solape: se prueba un poco más arriba.
+const SPAWN_SKIN: float = 2.0
 
 @export var player_group: StringName = &"player"
 @export var default_spawn_id: StringName = &"SpawnInicio"
@@ -18,7 +20,9 @@ func _ready() -> void:
 
 
 func _place_player() -> void:
-	# Esperar a que las plataformas estén registradas en física.
+	# Esperar a que las plataformas estén registradas en física. Al llegar con
+	# change_scene, en el primer frame de física los tiles aún no tienen colisión.
+	await get_tree().physics_frame
 	await get_tree().physics_frame
 	GameManager.remember_current_scene()
 
@@ -181,7 +185,7 @@ func _is_safe_landing(
 
 	# Calcular la posición de la colisión.
 	var shape_transform := body.global_transform
-	shape_transform.origin = candidate
+	shape_transform.origin = candidate - Vector2(0.0, SPAWN_SKIN)
 	shape_transform *= collision.transform
 
 	var space := body.get_world_2d().direct_space_state
@@ -196,8 +200,9 @@ func _is_safe_landing(
 	overlap_query.collide_with_areas = false
 	overlap_query.exclude = [body.get_rid()]
 
-	if not space.intersect_shape(overlap_query, 1).is_empty():
-		return false
+	for hit: Dictionary in space.intersect_shape(overlap_query, 8):
+		if _blocks_spawn(hit):
+			return false
 
 	# Comprobar que exista suelo debajo de los pies.
 	var shape_rect := collision.shape.get_rect()
@@ -211,7 +216,7 @@ func _is_safe_landing(
 
 	var ray_query := PhysicsRayQueryParameters2D.create(
 		feet_world,
-		feet_world + Vector2(0.0, 12.0),
+		feet_world + Vector2(0.0, 12.0 + SPAWN_SKIN),
 		body.collision_mask,
 		[body.get_rid()]
 	)
@@ -219,6 +224,20 @@ func _is_safe_landing(
 	ray_query.collide_with_areas = false
 
 	return not space.intersect_ray(ray_query).is_empty()
+
+
+## Solo cuenta la geometría fija: un enemigo que pasa por encima del punto o
+## una plataforma one-way (se atraviesa desde abajo) no lo hacen inseguro.
+func _blocks_spawn(hit: Dictionary) -> bool:
+	var collider: Object = hit.get("collider")
+	if collider is CharacterBody2D or collider is RigidBody2D:
+		return false
+	if collider is CollisionObject2D:
+		var body := collider as CollisionObject2D
+		var owner_id: int = body.shape_find_owner(int(hit.get("shape", 0)))
+		if body.is_shape_owner_one_way_collision_enabled(owner_id):
+			return false
+	return true
 
 
 func _set_player_spawn(

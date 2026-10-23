@@ -3580,8 +3580,6 @@ position = Vector2(520, 536)
 
 [node name="player" parent="." unique_id=356054260 instance=ExtResource("21_624iu")]
 position = Vector2(40, 577)
-enable_debug_keys = true
-show_debug_hud = true
 
 [editable path="SistemasMapa/Escaleras/Escalera1"]
 [editable path="SistemasMapa/Escaleras/Escalera2"]

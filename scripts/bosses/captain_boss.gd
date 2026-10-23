@@ -42,6 +42,34 @@ const BOSS_KEY_SCENE := preload("res://escenas/items/llave_jefe_m1.tscn")
 ## se reutiliza en otro mapa (p. ej. el encuentro del cementerio con tiles).
 @export var counts_as_world1_boss: bool = true
 
+@export_category("Capitán - Plataformas")
+## Salta a las plataformas donde está el Player y las atraviesa hacia abajo
+## cuando el Player queda debajo o en otra plataforma.
+@export var use_platforms: bool = true
+## Capa de las plataformas one-way (la misma que one_way_collision_layer del Player).
+@export_range(1, 32, 1) var one_way_collision_layer: int = 2
+## Desnivel mínimo entre los dos para considerar que están a distinta altura.
+@export_range(8.0, 64.0, 1.0) var platform_min_rise: float = 24.0
+## Desnivel máximo al que llega de un salto.
+@export_range(32.0, 240.0, 4.0) var jump_max_rise: float = 128.0
+## Cuánto sube por encima de la plataforma antes de caer en ella.
+@export_range(8.0, 64.0, 1.0) var jump_clearance: float = 22.0
+@export_range(40.0, 400.0, 5.0) var jump_max_horizontal_speed: float = 230.0
+## Separación con la que intenta caer junto al Player.
+@export_range(0.0, 120.0, 2.0) var jump_landing_gap: float = 40.0
+## Hasta dónde se acerca andando antes de saltar.
+@export_range(0.0, 160.0, 2.0) var jump_approach_distance: float = 56.0
+## Tiempo que el Player tiene que seguir arriba o abajo antes de que el
+## Capitán vaya a por él. En fases 2 y 3 se acorta con el enfriamiento.
+@export_range(0.0, 2.0, 0.05) var jump_reaction_time: float = 0.45
+## Aviso antes de saltar: se agacha este tiempo.
+@export_range(0.05, 0.6, 0.01) var jump_windup_time: float = 0.22
+@export_range(0.0, 5.0, 0.05) var jump_cooldown: float = 1.0
+## Al aterrizar junto al Player, ataca como muy pronto tras este tiempo.
+@export_range(0.0, 1.0, 0.05) var landing_attack_delay: float = 0.25
+@export_range(0.05, 1.0, 0.05) var drop_through_time: float = 0.25
+@export_range(20.0, 600.0, 10.0) var drop_down_speed: float = 160.0
+
 @export_category("Capitán - Aviso de Ultimate")
 @export var ultimate_warning_color: Color = Color(1.0, 0.35, 0.2)
 @export_range(1.0, 40.0, 0.5) var ultimate_warning_pulse_speed: float = 18.0
@@ -64,6 +92,20 @@ var _spam_immunity_left: float = 0.0
 var _spam_immunity_cooldown_left: float = 0.0
 var _last_registered_player_attack_sequence: int = -1
 
+enum JumpState { NONE, WINDUP, AIRBORNE }
+## Salto a una plataforma (cae junto al Player) o tajo vertical contra un
+## Player colgado de una escalera (sube a su altura y vuelve al suelo).
+enum JumpKind { PLATFORM, SLASH }
+
+var _jump_state: JumpState = JumpState.NONE
+var _jump_kind: JumpKind = JumpKind.PLATFORM
+var _jump_velocity: Vector2 = Vector2.ZERO
+var _jump_windup_left: float = 0.0
+var _jump_air_time: float = 0.0
+var _jump_cooldown_left: float = 0.0
+var _off_level_time: float = 0.0
+var _drop_through_left: float = 0.0
+
 
 func _ready() -> void:
     # Si el jefe ya fue derrotado en esta ejecución, no reaparece. Si murió
@@ -79,6 +121,10 @@ func _ready() -> void:
     if counts_as_world1_boss:
         add_to_group("world1_boss")
     _next_roll_threshold = attacks_before_roll
+    # Las one-way solo frenan desde arriba: caminar por debajo o saltar a
+    # través de ellas sigue igual que antes.
+    if use_platforms:
+        set_collision_mask_value(one_way_collision_layer, true)
     health_changed.connect(_on_boss_health_changed)
     _update_boss_phase()
 
@@ -208,6 +254,7 @@ func _activate_spam_immunity() -> void:
     _roll_pending = false
     _roll_time_left = 0.0
     _disable_roll_player_passthrough()
+    _end_jump()
     _defense_time_left = 0.0
     velocity.x = 0.0
     ai_state = AIState.DEFEND
@@ -281,11 +328,15 @@ func _cooldown_for_attack(animation_name: StringName) -> float:
         &"attack rapido":
             base_cooldown = 0.85
 
+    return base_cooldown * _phase_cooldown_multiplier()
+
+
+func _phase_cooldown_multiplier() -> float:
     if boss_phase >= 3:
-        return base_cooldown * phase_3_cooldown_multiplier
+        return phase_3_cooldown_multiplier
     if boss_phase >= 2:
-        return base_cooldown * phase_2_cooldown_multiplier
-    return base_cooldown
+        return phase_2_cooldown_multiplier
+    return 1.0
 
 
 func _on_enemy_attack_finished(_animation_name: StringName) -> void:
@@ -298,6 +349,17 @@ func _on_enemy_attack_finished(_animation_name: StringName) -> void:
             attacks_before_roll + randi_range(-roll_count_variation, roll_count_variation),
             1
         )
+
+
+func _physics_process(delta: float) -> void:
+    # Si muere en el aire, cae durante la animación de muerte en vez de
+    # quedarse flotando.
+    if dead and use_gravity and not is_on_floor():
+        velocity.x = 0.0
+        _apply_gravity(delta)
+        move_and_slide()
+        return
+    super._physics_process(delta)
 
 
 func _process(delta: float) -> void:
@@ -351,7 +413,11 @@ func _process_special_state(delta: float) -> bool:
             _play_if_exists(&"idle")
         return true
 
-    if not _roll_pending or not sprite.sprite_frames.has_animation(&"roll"):
+    if _jump_state != JumpState.NONE:
+        return _process_jump(delta)
+
+    # El roll espera a que pise suelo (p. ej. si lo tocó en medio de un salto).
+    if not _roll_pending or not is_on_floor() or not sprite.sprite_frames.has_animation(&"roll"):
         return false
 
     _roll_pending = false
@@ -393,6 +459,343 @@ func _cancel_special_state_on_hit() -> void:
     _roll_pending = false
     _roll_time_left = 0.0
     _disable_roll_player_passthrough()
+    # Golpeado en el aire, sale despedido y cae donde le toque.
+    _end_jump()
+
+
+func _can_block_incoming() -> bool:
+    # No se cubre en el aire: pillarlo saltando es la recompensa.
+    if _jump_state != JumpState.NONE or not is_on_floor():
+        return false
+    return super._can_block_incoming()
+
+
+func _update_combat_timers(delta: float) -> void:
+    super._update_combat_timers(delta)
+
+    if _jump_cooldown_left > 0.0:
+        _jump_cooldown_left = maxf(_jump_cooldown_left - delta, 0.0)
+
+    if _drop_through_left > 0.0:
+        _drop_through_left = maxf(_drop_through_left - delta, 0.0)
+        if _drop_through_left <= 0.0:
+            set_collision_mask_value(one_way_collision_layer, true)
+
+
+func _play_movement_animation() -> void:
+    if not is_on_floor() and _play_air_animation():
+        return
+    super._play_movement_animation()
+
+
+## Plataformas: el Capitán sube a donde está el Player, baja de una one-way o
+## sigue la persecución normal si están al mismo nivel.
+func _chase_target(delta: float) -> void:
+    if use_platforms and _navigate_platforms(delta):
+        return
+    super._chase_target(delta)
+
+
+func _navigate_platforms(delta: float) -> bool:
+    # En el aire (cayendo de una plataforma o tras un empujón) no decide nada:
+    # conserva el impulso y espera a tocar suelo.
+    if not is_on_floor():
+        _play_air_animation()
+        return true
+
+    var offset_x := _target.global_position.x - _body_global_x()
+    # El Player y el Capitán tienen el origen a la misma altura sobre los pies,
+    # así que la diferencia de origen es el desnivel entre los dos.
+    var rise := global_position.y - _target.global_position.y
+    var target_above := rise > platform_min_rise and _is_target_settled()
+    var wants_down := false
+
+    if not target_above and _is_on_one_way_platform():
+        if -rise > platform_min_rise:
+            wants_down = true
+        elif absf(rise) <= platform_min_rise:
+            # Mismo nivel pero en otra plataforma: el borde no lo deja seguir.
+            var stop_distance := maxf(attack_range + attack_stop_margin, minimum_player_distance)
+            wants_down = (
+                absf(offset_x) > stop_distance
+                and not _can_move_horizontally(_normalized_direction(offset_x))
+            )
+
+    if not target_above and not wants_down:
+        _off_level_time = 0.0
+        return false
+
+    _off_level_time += delta
+    var reaction := jump_reaction_time * _phase_cooldown_multiplier()
+    _face_direction(_normalized_direction(offset_x))
+
+    if wants_down:
+        if _off_level_time >= reaction:
+            _start_drop_through()
+        else:
+            _hold_position(delta)
+        return true
+
+    # Player arriba: no lanza tajos al aire; se acerca y salta.
+    if (
+        rise <= jump_max_rise
+        and _off_level_time >= reaction
+        and _jump_cooldown_left <= 0.0
+        and _try_start_jump()
+    ):
+        return true
+
+    if absf(offset_x) > jump_approach_distance and _can_move_horizontally(_normalized_direction(offset_x)):
+        ai_state = AIState.CHASE
+        velocity.x = _normalized_direction(offset_x) * chase_speed
+        _play_movement_animation()
+    else:
+        _hold_position(delta)
+    return true
+
+
+func _hold_position(delta: float) -> void:
+    ai_state = AIState.HOLD
+    velocity.x = move_toward(velocity.x, 0.0, horizontal_deceleration * 2.0 * delta)
+    _play_if_exists(&"idle")
+
+
+## De pie sobre algo o colgado de una escalera: no está en mitad de un salto.
+func _is_target_settled() -> bool:
+    if _target is CharacterBody2D and (_target as CharacterBody2D).is_on_floor():
+        return true
+    return _target.has_method(&"is_climbing") and bool(_target.call(&"is_climbing"))
+
+
+func _is_on_one_way_platform() -> bool:
+    if not is_on_floor():
+        return false
+    var solid_mask := collision_mask & ~(1 << (one_way_collision_layer - 1))
+    var feet := Vector2(_body_global_x(), global_position.y + _collision_foot_y())
+    for side: float in [-8.0, 0.0, 8.0]:
+        if _ray_hit(feet + Vector2(side, -2.0), 8.0, solid_mask).size() > 0:
+            return false
+    return true
+
+
+func _ray_hit(from: Vector2, depth: float, mask: int) -> Dictionary:
+    var query := PhysicsRayQueryParameters2D.create(from, from + Vector2(0.0, depth))
+    query.collision_mask = mask
+    query.collide_with_areas = false
+    var exclude: Array[RID] = [get_rid()]
+    if _target is CollisionObject2D:
+        exclude.append((_target as CollisionObject2D).get_rid())
+    query.exclude = exclude
+    return get_world_2d().direct_space_state.intersect_ray(query)
+
+
+## Altura del suelo bajo un punto, probando también a los lados por si está
+## justo en un borde. NAN si no hay nada en depth píxeles.
+func _surface_y_below(from: Vector2, depth: float) -> float:
+    for side: float in [0.0, -8.0, 8.0]:
+        var hit := _ray_hit(from + Vector2(side, 0.0), depth, collision_mask)
+        if hit.size() > 0:
+            return (hit.position as Vector2).y
+    return NAN
+
+
+func _start_drop_through() -> void:
+    set_collision_mask_value(one_way_collision_layer, false)
+    _drop_through_left = drop_through_time
+    _off_level_time = 0.0
+    velocity.y = maxf(velocity.y, drop_down_speed)
+    _play_air_animation()
+
+
+func _try_start_jump() -> bool:
+    var target_body := _target as CharacterBody2D
+    var on_floor := target_body != null and target_body.is_on_floor()
+    var planned := _plan_platform_jump() if on_floor else _plan_slash_jump()
+    if not planned:
+        return false
+
+    _jump_state = JumpState.WINDUP
+    _jump_windup_left = jump_windup_time * _phase_cooldown_multiplier()
+    _off_level_time = 0.0
+    velocity.x = 0.0
+    ai_state = AIState.HOLD
+    # Aviso: se agacha (primer cuadro del roll) antes de despegar.
+    if sprite.sprite_frames.has_animation(&"roll"):
+        sprite.animation = &"roll"
+        sprite.frame = 0
+        sprite.pause()
+    return true
+
+
+## Busca dónde caer junto al Player sobre su plataforma y si el arco está libre.
+func _plan_platform_jump() -> bool:
+    var target_x := _target.global_position.x
+    var surface_y := _surface_y_below(_target.global_position, 96.0)
+    if is_nan(surface_y):
+        return false
+
+    var feet_offset := _collision_foot_y()
+    var start := global_position
+    var height := (start.y + feet_offset) - surface_y + jump_clearance
+    if height <= jump_clearance:
+        return false
+    var launch_speed := sqrt(2.0 * gravity * height)
+    var air_time := launch_speed / gravity + sqrt(2.0 * jump_clearance / gravity)
+
+    var side := _normalized_direction(target_x - _body_global_x())
+    for landing_x: float in [
+        target_x - side * jump_landing_gap,
+        target_x - side * jump_landing_gap * 0.5,
+        target_x,
+        target_x + side * jump_landing_gap,
+    ]:
+        var landing_feet := Vector2(landing_x, surface_y - 8.0)
+        var landing_surface := _surface_y_below(landing_feet, 16.0)
+        if is_nan(landing_surface) or absf(landing_surface - surface_y) > 2.0:
+            continue
+        var horizontal_speed := (landing_x - _body_global_x()) / air_time
+        if absf(horizontal_speed) > jump_max_horizontal_speed:
+            continue
+        var jump_velocity := Vector2(horizontal_speed, -launch_speed)
+        # El último tramo es el propio aterrizaje: no se comprueba.
+        if not _jump_path_clear(start, jump_velocity, air_time * 0.92):
+            continue
+        _jump_kind = JumpKind.PLATFORM
+        _jump_velocity = jump_velocity
+        return true
+    return false
+
+
+## Player colgado de una escalera: sube hasta su altura, a distancia de tajo.
+func _plan_slash_jump() -> bool:
+    var height := global_position.y - _target.global_position.y + 4.0
+    if height <= 0.0:
+        return false
+    var launch_speed := sqrt(2.0 * gravity * height)
+    var rise_time := launch_speed / gravity
+
+    var side := _normalized_direction(_target.global_position.x - _body_global_x())
+    var reach := _hitbox_offset_for_attack(&"attack").x
+    var apex_x := _target.global_position.x - side * reach
+    var horizontal_speed := clampf(
+        (apex_x - _body_global_x()) / rise_time,
+        -jump_max_horizontal_speed,
+        jump_max_horizontal_speed
+    )
+    var jump_velocity := Vector2(horizontal_speed, -launch_speed)
+    if not _jump_path_clear(global_position, jump_velocity, rise_time):
+        return false
+    _jump_kind = JumpKind.SLASH
+    _jump_velocity = jump_velocity
+    return true
+
+
+## Recorre el arco en tramos con test_move. Las one-way no frenan al subir.
+func _jump_path_clear(start: Vector2, jump_velocity: Vector2, duration: float) -> bool:
+    const STEPS := 12
+    var step := duration / STEPS
+    var position_now := start
+    var vertical_speed := jump_velocity.y
+    var xform := global_transform
+    for i in STEPS:
+        var next_vertical_speed := vertical_speed + gravity * step
+        var motion := Vector2(jump_velocity.x * step, (vertical_speed + next_vertical_speed) * 0.5 * step)
+        xform.origin = position_now
+        if test_move(xform, motion):
+            return false
+        position_now += motion
+        vertical_speed = next_vertical_speed
+    return true
+
+
+func _process_jump(delta: float) -> bool:
+    if _jump_state == JumpState.WINDUP:
+        velocity.x = move_toward(velocity.x, 0.0, horizontal_deceleration * 2.0 * delta)
+        _jump_windup_left -= delta
+        if _jump_windup_left > 0.0:
+            return true
+        if not is_on_floor():
+            _end_jump()
+            return false
+        _jump_state = JumpState.AIRBORNE
+        _jump_air_time = 0.0
+        velocity = _jump_velocity
+        _face_direction(signf(_jump_velocity.x))
+        _play_air_animation()
+        return true
+
+    _jump_air_time += delta
+    if _jump_air_time > 0.05 and is_on_floor():
+        _land()
+        return false
+
+    velocity.x = _jump_velocity.x
+    _play_air_animation()
+    _try_air_slash()
+    return true
+
+
+## Tajo aéreo (la animación attack ya es el ataque en el aire del sprite). En
+## el salto vertical siempre; al subir a una plataforma, desde la fase 2 y solo
+## si ya va a caer encima de ella, para no quedarse corto.
+func _try_air_slash() -> void:
+    if not attacks_enabled or _attack_cooldown_left > 0.0 or velocity.y < -80.0:
+        return
+    if not is_instance_valid(_target):
+        return
+    if _jump_kind == JumpKind.PLATFORM:
+        if boss_phase < 2:
+            return
+        var feet := Vector2(_body_global_x(), global_position.y + _collision_foot_y())
+        if is_nan(_surface_y_below(feet, jump_clearance + 12.0)):
+            return
+
+    _face_direction(_normalized_direction(_target.global_position.x - _body_global_x()))
+    if not _target_in_attack_reach(&"attack"):
+        return
+
+    _end_jump()
+    _start_enemy_attack(&"attack")
+
+
+func _target_in_attack_reach(animation_name: StringName) -> bool:
+    var shape := RectangleShape2D.new()
+    shape.size = _hitbox_size_for_attack(animation_name)
+    var offset := _hitbox_offset_for_attack(animation_name)
+    var query := PhysicsShapeQueryParameters2D.new()
+    query.shape = shape
+    query.transform = Transform2D(
+        0.0,
+        global_position + Vector2(_body_center_x() + offset.x * _facing_direction(), offset.y)
+    )
+    query.collision_mask = _attack_hitbox.collision_mask
+    query.exclude = [get_rid()]
+    for hit in get_world_2d().direct_space_state.intersect_shape(query, 8):
+        if hit.collider == _target:
+            return true
+    return false
+
+
+func _land() -> void:
+    _end_jump()
+    velocity.x = 0.0
+    _jump_cooldown_left = jump_cooldown
+    # Cae junto al Player: ataca enseguida, pero dejando ver el aterrizaje.
+    _attack_cooldown_left = minf(_attack_cooldown_left, landing_attack_delay)
+    _play_if_exists(&"idle")
+
+
+func _end_jump() -> void:
+    _jump_state = JumpState.NONE
+    _jump_windup_left = 0.0
+
+
+func _play_air_animation() -> bool:
+    var animation_name: StringName = &"jump" if velocity.y < 0.0 else &"fall"
+    if not sprite.sprite_frames.has_animation(animation_name):
+        return false
+    _play_if_exists(animation_name)
+    return true
 
 
 func _is_special_invulnerable() -> bool:

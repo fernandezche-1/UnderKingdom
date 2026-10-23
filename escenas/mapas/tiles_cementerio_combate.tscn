@@ -8,6 +8,10 @@
 [ext_resource type="Script" uid="uid://c5vs20q6x5qa5" path="res://scripts/environment/locked_door.gd" id="6_puerta_llave"]
 [ext_resource type="Texture2D" uid="uid://carrjvpw80884" path="res://assets_prueba/dungeon_platformer/dungeontilesetfull.png" id="7_tileset"]
 [ext_resource type="Script" uid="uid://dsy5vbjhmxc2" path="res://scripts/cinematics/cinematic_controller.gd" id="8_cinematica"]
+[ext_resource type="Script" path="res://scripts/environment/map_ambience.gd" id="9_ambiente"]
+[ext_resource type="PackedScene" path="res://escenas/npc/anciano.tscn" id="npc_0"]
+[ext_resource type="PackedScene" path="res://escenas/npc/barquero.tscn" id="npc_1"]
+[ext_resource type="PackedScene" path="res://escenas/items/reliquia_habilidad.tscn" id="10_reliquia"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_activador"]
 size = Vector2(368, 176)
@@ -56,6 +60,7 @@ boss_overrides = Dictionary[String, Variant]({
 })
 key_scene = ExtResource("4_llave")
 key_id = "cementerio_capitan"
+ability_reward = "combo_2"
 
 [node name="Activador" type="Area2D" parent="SistemasMapa/SalaJefe" index="0" unique_id=817542820]
 position = Vector2(344, 824)
@@ -152,6 +157,23 @@ camera_pan_duration = 0.6
 camera_return_duration = 0.6
 focus_offset = Vector2(0, -5)
 freeze_actor_until_dialogue = true
+
+[node name="Ambientacion" type="Node2D" parent="." unique_id=1873402615]
+script = ExtResource("9_ambiente")
+
+[node name="Personajes" type="Node2D" parent="."]
+
+[node name="Anciano" parent="Personajes" instance=ExtResource("npc_0")]
+position = Vector2(24, 464)
+
+[node name="Barquero" parent="Personajes" instance=ExtResource("npc_1")]
+position = Vector2(1704, 1192)
+
+[node name="Reliquias" type="Node2D" parent="."]
+
+[node name="ReliquiaRodar" parent="Reliquias" instance=ExtResource("10_reliquia")]
+position = Vector2(1208, 756)
+ability_id = "roll"
 
 [editable path="SistemasMapa/KillZones/Lava1"]
 [editable path="SistemasMapa/Escaleras/Escalera1"]

@@ -24,6 +24,8 @@
 ;   escena:  dónde se guarda; siempre dentro de res://escenas/mapas/
 
 escena: res://escenas/mapas/ejemplo_cueva.tscn
+; Mapa de prueba: teclas R/H/J/K y panel de depuración del Player.
+depuracion: si
 bloques: oro
 fondo: cueva
 ---

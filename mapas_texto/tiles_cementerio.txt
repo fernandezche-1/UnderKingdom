@@ -10,8 +10,8 @@ escena: res://escenas/mapas/tiles_cementerio.tscn
 ; La sala del jefe y la puerta con llave viven en tiles_cementerio_combate.tscn, que
 ; hereda de esta escena: regenerarla no lo borra. Jugar el nivel desde esa.
 imagen: mapas_texto/tiles_cementerio.png
-tileset: mazmorra
-bloques: verde
+tileset: cementerio
+bloques: cementerio
 fondo: ninguno
-parallax: assets_prueba/gothicvania/pueblo_noche/cielo.png 0 x2; assets_prueba/gothicvania/pueblo_noche/nubes.png 0.05 x2; assets_prueba/gothicvania/pueblo_noche/montes.png 0.15 x2; assets_prueba/gothicvania/pueblo_noche/pueblo.png 0.3 x2
+parallax: assets_prueba/gothicvania_cementerio/fondo/cielo.png 0 x2; assets_prueba/gothicvania_cementerio/fondo/montes.png 0.1 x2; assets_prueba/gothicvania_cementerio/fondo/cementerio.png 0.25 x2
 siguiente: res://escenas/mapas/tiles_mineria_combate.tscn

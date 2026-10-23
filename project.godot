@@ -18,9 +18,11 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-UserSettings="*res://scripts/core/user_settings.gd"
+InputConfig="*res://scripts/core/input_config.gd"
 GameManager="*res://scripts/core/game_manager.gd"
 PauseMenu="*res://scripts/ui/pause_menu_manager.gd"
+DevMode="*res://scripts/core/dev_mode.gd"
+DisplaySettings="*res://scripts/core/display_settings.gd"
 
 [display]
 
@@ -30,6 +32,10 @@ window/size/window_width_override=1440
 window/size/window_height_override=810
 window/stretch/mode="canvas_items"
 window/stretch/scale_mode="integer"
+
+[gui]
+
+theme/custom="res://escenas/ui/tema_underkingdom.tres"
 
 [physics]
 

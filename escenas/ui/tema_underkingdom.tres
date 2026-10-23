@@ -1,0 +1,381 @@
+[gd_resource type="Theme" load_steps=38 format=3]
+
+[ext_resource type="FontFile" path="res://fuentes/PixelOperator8.ttf" id="1_texto"]
+[ext_resource type="FontFile" path="res://fuentes/PixelOperator8-Bold.ttf" id="2_negrita"]
+[ext_resource type="FontFile" path="res://fuentes/Jacquard12-Regular.ttf" id="3_titulo"]
+[ext_resource type="Texture2D" path="res://escenas/ui/texturas/marco_panel.png" id="4_marco"]
+[ext_resource type="Texture2D" path="res://escenas/ui/texturas/marco_ranura.png" id="5_ranura"]
+[ext_resource type="Texture2D" path="res://escenas/ui/texturas/casilla.png" id="6_casilla"]
+[ext_resource type="Texture2D" path="res://escenas/ui/texturas/casilla_marcada.png" id="7_marcada"]
+[ext_resource type="Texture2D" path="res://escenas/ui/texturas/casilla_off.png" id="8_casilla_off"]
+[ext_resource type="Texture2D" path="res://escenas/ui/texturas/casilla_marcada_off.png" id="9_marcada_off"]
+[ext_resource type="Texture2D" path="res://escenas/ui/texturas/tirador.png" id="10_tirador"]
+[ext_resource type="Texture2D" path="res://escenas/ui/texturas/tirador_foco.png" id="11_tirador_foco"]
+
+[sub_resource type="StyleBoxFlat" id="Boton_normal"]
+content_margin_left = 5.0
+content_margin_top = 2.0
+content_margin_right = 5.0
+content_margin_bottom = 2.0
+bg_color = Color(0.11, 0.09, 0.14, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.478, 0.384, 0.278, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Boton_hover"]
+content_margin_left = 5.0
+content_margin_top = 2.0
+content_margin_right = 5.0
+content_margin_bottom = 2.0
+bg_color = Color(0.165, 0.125, 0.19, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.94, 0.69, 0.35, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Boton_pulsado"]
+content_margin_left = 5.0
+content_margin_top = 2.0
+content_margin_right = 5.0
+content_margin_bottom = 2.0
+bg_color = Color(0.055, 0.045, 0.07, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.66, 0.41, 0.18, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Boton_apagado"]
+content_margin_left = 5.0
+content_margin_top = 2.0
+content_margin_right = 5.0
+content_margin_bottom = 2.0
+bg_color = Color(0.08, 0.07, 0.1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.23, 0.2, 0.25, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Boton_foco"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.94, 0.69, 0.35, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="Vacio"]
+
+[sub_resource type="StyleBoxEmpty" id="Menu_item"]
+content_margin_top = 1.0
+content_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxFlat" id="Pestana_normal"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 3.0
+draw_center = false
+border_width_bottom = 1
+border_color = Color(0.243, 0.192, 0.153, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Pestana_hover"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 3.0
+draw_center = false
+border_width_bottom = 1
+border_color = Color(0.478, 0.384, 0.278, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Pestana_activa"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 3.0
+bg_color = Color(0.94, 0.69, 0.35, 0.08)
+border_width_bottom = 2
+border_color = Color(0.94, 0.69, 0.35, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Pestana_foco"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.94, 0.69, 0.35, 0.55)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxTexture" id="Panel_marco"]
+content_margin_left = 10.0
+content_margin_top = 8.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+texture = ExtResource("4_marco")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="Panel_ranura"]
+content_margin_left = 3.0
+content_margin_top = 3.0
+content_margin_right = 3.0
+content_margin_bottom = 3.0
+texture = ExtResource("5_ranura")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxFlat" id="Panel_fila"]
+content_margin_left = 5.0
+content_margin_top = 3.0
+content_margin_right = 4.0
+content_margin_bottom = 3.0
+bg_color = Color(0.11, 0.09, 0.14, 0.7)
+border_width_bottom = 1
+border_color = Color(0.243, 0.192, 0.153, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Barra_fondo"]
+bg_color = Color(0.04, 0.035, 0.06, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.243, 0.192, 0.153, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Barra_relleno"]
+bg_color = Color(0.72, 0.2, 0.18, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.06, 0.07, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Deslizador_pista"]
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.04, 0.035, 0.06, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.243, 0.192, 0.153, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Deslizador_relleno"]
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.66, 0.41, 0.18, 1)
+border_width_top = 1
+border_color = Color(0.94, 0.69, 0.35, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Deslizador_relleno_foco"]
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.94, 0.69, 0.35, 1)
+border_width_top = 1
+border_color = Color(1, 0.89, 0.66, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Deslizador_foco"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.94, 0.69, 0.35, 0.6)
+expand_margin_left = 2.0
+expand_margin_top = 1.0
+expand_margin_right = 2.0
+expand_margin_bottom = 1.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="Casilla_estilo"]
+content_margin_top = 1.0
+content_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxFlat" id="Scroll_fondo"]
+content_margin_left = 1.0
+content_margin_right = 1.0
+bg_color = Color(0.04, 0.035, 0.06, 0.8)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Scroll_agarre"]
+content_margin_left = 1.0
+content_margin_right = 1.0
+bg_color = Color(0.478, 0.384, 0.278, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Scroll_agarre_foco"]
+content_margin_left = 1.0
+content_margin_right = 1.0
+bg_color = Color(0.94, 0.69, 0.35, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxLine" id="Separador"]
+color = Color(0.243, 0.192, 0.153, 1)
+thickness = 1
+
+[sub_resource type="StyleBoxFlat" id="Tooltip"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 2.0
+bg_color = Color(0.055, 0.045, 0.07, 0.96)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.478, 0.384, 0.278, 1)
+anti_aliasing = false
+
+[resource]
+default_font = ExtResource("1_texto")
+default_font_size = 8
+BotonMenu/base_type = &"Button"
+BotonMenu/colors/font_color = Color(0.91, 0.86, 0.75, 1)
+BotonMenu/colors/font_disabled_color = Color(0.36, 0.33, 0.38, 1)
+BotonMenu/colors/font_focus_color = Color(0.94, 0.69, 0.35, 1)
+BotonMenu/colors/font_hover_color = Color(0.94, 0.69, 0.35, 1)
+BotonMenu/colors/font_hover_pressed_color = Color(1, 0.89, 0.66, 1)
+BotonMenu/colors/font_pressed_color = Color(1, 0.89, 0.66, 1)
+BotonMenu/colors/font_shadow_color = Color(0.02, 0.016, 0.03, 0.9)
+BotonMenu/constants/shadow_offset_x = 1
+BotonMenu/constants/shadow_offset_y = 1
+BotonMenu/styles/disabled = SubResource("Menu_item")
+BotonMenu/styles/focus = SubResource("Vacio")
+BotonMenu/styles/hover = SubResource("Menu_item")
+BotonMenu/styles/hover_pressed = SubResource("Menu_item")
+BotonMenu/styles/normal = SubResource("Menu_item")
+BotonMenu/styles/pressed = SubResource("Menu_item")
+BotonPestana/base_type = &"Button"
+BotonPestana/colors/font_color = Color(0.56, 0.52, 0.46, 1)
+BotonPestana/colors/font_focus_color = Color(1, 0.89, 0.66, 1)
+BotonPestana/colors/font_hover_color = Color(0.91, 0.86, 0.75, 1)
+BotonPestana/colors/font_hover_pressed_color = Color(1, 0.89, 0.66, 1)
+BotonPestana/colors/font_pressed_color = Color(0.94, 0.69, 0.35, 1)
+BotonPestana/styles/focus = SubResource("Pestana_foco")
+BotonPestana/styles/hover = SubResource("Pestana_hover")
+BotonPestana/styles/hover_pressed = SubResource("Pestana_activa")
+BotonPestana/styles/normal = SubResource("Pestana_normal")
+BotonPestana/styles/pressed = SubResource("Pestana_activa")
+Button/colors/font_color = Color(0.91, 0.86, 0.75, 1)
+Button/colors/font_disabled_color = Color(0.36, 0.33, 0.38, 1)
+Button/colors/font_focus_color = Color(1, 0.89, 0.66, 1)
+Button/colors/font_hover_color = Color(1, 0.89, 0.66, 1)
+Button/colors/font_hover_pressed_color = Color(0.94, 0.69, 0.35, 1)
+Button/colors/font_pressed_color = Color(0.94, 0.69, 0.35, 1)
+Button/constants/h_separation = 4
+Button/styles/disabled = SubResource("Boton_apagado")
+Button/styles/focus = SubResource("Boton_foco")
+Button/styles/hover = SubResource("Boton_hover")
+Button/styles/hover_pressed = SubResource("Boton_pulsado")
+Button/styles/normal = SubResource("Boton_normal")
+Button/styles/pressed = SubResource("Boton_pulsado")
+CheckBox/colors/font_color = Color(0.91, 0.86, 0.75, 1)
+CheckBox/colors/font_disabled_color = Color(0.36, 0.33, 0.38, 1)
+CheckBox/colors/font_focus_color = Color(0.94, 0.69, 0.35, 1)
+CheckBox/colors/font_hover_color = Color(0.94, 0.69, 0.35, 1)
+CheckBox/colors/font_hover_pressed_color = Color(0.94, 0.69, 0.35, 1)
+CheckBox/colors/font_pressed_color = Color(0.91, 0.86, 0.75, 1)
+CheckBox/constants/h_separation = 5
+CheckBox/icons/checked = ExtResource("7_marcada")
+CheckBox/icons/checked_disabled = ExtResource("9_marcada_off")
+CheckBox/icons/unchecked = ExtResource("6_casilla")
+CheckBox/icons/unchecked_disabled = ExtResource("8_casilla_off")
+CheckBox/styles/disabled = SubResource("Casilla_estilo")
+CheckBox/styles/focus = SubResource("Vacio")
+CheckBox/styles/hover = SubResource("Casilla_estilo")
+CheckBox/styles/hover_pressed = SubResource("Casilla_estilo")
+CheckBox/styles/normal = SubResource("Casilla_estilo")
+CheckBox/styles/pressed = SubResource("Casilla_estilo")
+CheckButton/colors/font_color = Color(0.91, 0.86, 0.75, 1)
+CheckButton/colors/font_disabled_color = Color(0.36, 0.33, 0.38, 1)
+CheckButton/colors/font_focus_color = Color(0.94, 0.69, 0.35, 1)
+CheckButton/colors/font_hover_color = Color(0.94, 0.69, 0.35, 1)
+CheckButton/colors/font_hover_pressed_color = Color(0.94, 0.69, 0.35, 1)
+CheckButton/colors/font_pressed_color = Color(0.91, 0.86, 0.75, 1)
+CheckButton/constants/h_separation = 5
+CheckButton/icons/checked = ExtResource("7_marcada")
+CheckButton/icons/checked_disabled = ExtResource("9_marcada_off")
+CheckButton/icons/checked_disabled_mirrored = ExtResource("9_marcada_off")
+CheckButton/icons/checked_mirrored = ExtResource("7_marcada")
+CheckButton/icons/unchecked = ExtResource("6_casilla")
+CheckButton/icons/unchecked_disabled = ExtResource("8_casilla_off")
+CheckButton/icons/unchecked_disabled_mirrored = ExtResource("8_casilla_off")
+CheckButton/icons/unchecked_mirrored = ExtResource("6_casilla")
+CheckButton/styles/disabled = SubResource("Casilla_estilo")
+CheckButton/styles/focus = SubResource("Vacio")
+CheckButton/styles/hover = SubResource("Casilla_estilo")
+CheckButton/styles/hover_pressed = SubResource("Casilla_estilo")
+CheckButton/styles/normal = SubResource("Casilla_estilo")
+CheckButton/styles/pressed = SubResource("Casilla_estilo")
+Encabezado/base_type = &"Label"
+Encabezado/colors/font_color = Color(0.94, 0.84, 0.62, 1)
+Encabezado/colors/font_shadow_color = Color(0.02, 0.016, 0.03, 0.95)
+Encabezado/constants/shadow_offset_x = 1
+Encabezado/constants/shadow_offset_y = 1
+Encabezado/font_sizes/font_size = 21
+Encabezado/fonts/font = ExtResource("3_titulo")
+HSeparator/constants/separation = 5
+HSeparator/styles/separator = SubResource("Separador")
+HSlider/icons/grabber = ExtResource("10_tirador")
+HSlider/icons/grabber_disabled = ExtResource("10_tirador")
+HSlider/icons/grabber_highlight = ExtResource("11_tirador_foco")
+HSlider/styles/focus = SubResource("Deslizador_foco")
+HSlider/styles/grabber_area = SubResource("Deslizador_relleno")
+HSlider/styles/grabber_area_highlight = SubResource("Deslizador_relleno_foco")
+HSlider/styles/slider = SubResource("Deslizador_pista")
+Label/colors/font_color = Color(0.91, 0.86, 0.75, 1)
+Label/colors/font_shadow_color = Color(0.02, 0.016, 0.03, 0.85)
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/constants/shadow_outline_size = 0
+Panel/styles/panel = SubResource("Panel_marco")
+PanelContainer/styles/panel = SubResource("Panel_marco")
+PanelFila/base_type = &"PanelContainer"
+PanelFila/styles/panel = SubResource("Panel_fila")
+PanelRanura/base_type = &"PanelContainer"
+PanelRanura/styles/panel = SubResource("Panel_ranura")
+ProgressBar/colors/font_color = Color(0.91, 0.86, 0.75, 1)
+ProgressBar/styles/background = SubResource("Barra_fondo")
+ProgressBar/styles/fill = SubResource("Barra_relleno")
+TextoAcento/base_type = &"Label"
+TextoAcento/colors/font_color = Color(0.94, 0.69, 0.35, 1)
+TextoFuerte/base_type = &"Label"
+TextoFuerte/colors/font_color = Color(0.94, 0.84, 0.62, 1)
+TextoFuerte/fonts/font = ExtResource("2_negrita")
+TextoTenue/base_type = &"Label"
+TextoTenue/colors/font_color = Color(0.56, 0.52, 0.46, 1)
+Titulo/base_type = &"Label"
+Titulo/colors/font_color = Color(0.94, 0.84, 0.62, 1)
+Titulo/colors/font_shadow_color = Color(0.02, 0.016, 0.03, 0.95)
+Titulo/constants/shadow_offset_x = 2
+Titulo/constants/shadow_offset_y = 2
+Titulo/font_sizes/font_size = 42
+Titulo/fonts/font = ExtResource("3_titulo")
+TooltipLabel/colors/font_color = Color(0.91, 0.86, 0.75, 1)
+TooltipPanel/styles/panel = SubResource("Tooltip")
+VScrollBar/styles/grabber = SubResource("Scroll_agarre")
+VScrollBar/styles/grabber_highlight = SubResource("Scroll_agarre_foco")
+VScrollBar/styles/grabber_pressed = SubResource("Scroll_agarre_foco")
+VScrollBar/styles/scroll = SubResource("Scroll_fondo")
+VScrollBar/styles/scroll_focus = SubResource("Scroll_fondo")

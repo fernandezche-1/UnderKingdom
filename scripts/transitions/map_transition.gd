@@ -44,13 +44,10 @@ func _unhandled_input(event: InputEvent) -> void:
         return
     if not enabled or _changing_scene:
         return
-    if not (event is InputEventKey):
-        return
-
     var key_event := event as InputEventKey
-    if not key_event.pressed or key_event.echo:
-        return
-    if key_event.keycode != interaction_keycode:
+    var by_key: bool = key_event != null and key_event.pressed and not key_event.echo and key_event.keycode == interaction_keycode
+    var by_action: bool = interaction_keycode == KEY_E and event.is_action_pressed("interact")
+    if not by_key and not by_action:
         return
 
     get_viewport().set_input_as_handled()
