@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/items/sword_recovery.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/espada_recuperable.png" id="2_sword"]
+
+[node name="EspadaRecuperable" type="Node2D"]
+z_index = 2
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_sword")
+scale = Vector2(2, 2)
+
+[node name="Prompt" type="Label" parent="."]
+visible = false
+offset_left = -72.0
+offset_top = -44.0
+offset_right = 72.0
+offset_bottom = -30.0
+theme_override_colors/font_color = Color(0.92, 0.86, 0.68, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 8
+text = "E - RECUPERAR ESPADA"
+horizontal_alignment = 1

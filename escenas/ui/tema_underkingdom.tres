@@ -1,28 +1,82 @@
-[gd_resource type="Theme" load_steps=38 format=3]
+[gd_resource type="Theme" format=3 uid="uid://e2lhjshxmqom"]
 
-[ext_resource type="FontFile" path="res://fuentes/PixelOperator8.ttf" id="1_texto"]
-[ext_resource type="FontFile" path="res://fuentes/PixelOperator8-Bold.ttf" id="2_negrita"]
-[ext_resource type="FontFile" path="res://fuentes/Jacquard12-Regular.ttf" id="3_titulo"]
-[ext_resource type="Texture2D" path="res://escenas/ui/texturas/marco_panel.png" id="4_marco"]
-[ext_resource type="Texture2D" path="res://escenas/ui/texturas/marco_ranura.png" id="5_ranura"]
-[ext_resource type="Texture2D" path="res://escenas/ui/texturas/casilla.png" id="6_casilla"]
-[ext_resource type="Texture2D" path="res://escenas/ui/texturas/casilla_marcada.png" id="7_marcada"]
-[ext_resource type="Texture2D" path="res://escenas/ui/texturas/casilla_off.png" id="8_casilla_off"]
-[ext_resource type="Texture2D" path="res://escenas/ui/texturas/casilla_marcada_off.png" id="9_marcada_off"]
-[ext_resource type="Texture2D" path="res://escenas/ui/texturas/tirador.png" id="10_tirador"]
-[ext_resource type="Texture2D" path="res://escenas/ui/texturas/tirador_foco.png" id="11_tirador_foco"]
+[ext_resource type="FontFile" uid="uid://bb3vnlou2531k" path="res://fuentes/PixelOperator8.ttf" id="1_texto"]
+[ext_resource type="FontFile" uid="uid://c1kkao1ffe466" path="res://fuentes/PixelOperator8-Bold.ttf" id="2_negrita"]
+[ext_resource type="FontFile" uid="uid://57jv6acqjtcg" path="res://fuentes/Jacquard12-Regular.ttf" id="3_titulo"]
+[ext_resource type="Texture2D" uid="uid://cwq0abtw3ym6a" path="res://escenas/ui/texturas/marco_panel.png" id="4_marco"]
+[ext_resource type="Texture2D" uid="uid://c77qkwem3pyph" path="res://escenas/ui/texturas/marco_ranura.png" id="5_ranura"]
+[ext_resource type="Texture2D" uid="uid://dpheuyrvh1y42" path="res://escenas/ui/texturas/casilla.png" id="6_casilla"]
+[ext_resource type="Texture2D" uid="uid://c3nlt243acdbf" path="res://escenas/ui/texturas/casilla_marcada.png" id="7_marcada"]
+[ext_resource type="Texture2D" uid="uid://dcevnyktegarl" path="res://escenas/ui/texturas/casilla_off.png" id="8_casilla_off"]
+[ext_resource type="Texture2D" uid="uid://cxyp7pp37ye1x" path="res://escenas/ui/texturas/casilla_marcada_off.png" id="9_marcada_off"]
+[ext_resource type="Texture2D" uid="uid://cq48sme1dnftv" path="res://escenas/ui/texturas/tirador.png" id="10_tirador"]
+[ext_resource type="Texture2D" uid="uid://lyi5fnrt8cuw" path="res://escenas/ui/texturas/tirador_foco.png" id="11_tirador_foco"]
 
-[sub_resource type="StyleBoxFlat" id="Boton_normal"]
-content_margin_left = 5.0
-content_margin_top = 2.0
-content_margin_right = 5.0
-content_margin_bottom = 2.0
-bg_color = Color(0.11, 0.09, 0.14, 1)
+[sub_resource type="StyleBoxEmpty" id="Menu_item"]
+content_margin_top = 1.0
+content_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxEmpty" id="Vacio"]
+
+[sub_resource type="StyleBoxFlat" id="Pestana_foco"]
+draw_center = false
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
+border_color = Color(0.94, 0.69, 0.35, 0.55)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Pestana_hover"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 3.0
+draw_center = false
+border_width_bottom = 1
 border_color = Color(0.478, 0.384, 0.278, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Pestana_activa"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 3.0
+bg_color = Color(0.94, 0.69, 0.35, 0.08)
+border_width_bottom = 2
+border_color = Color(0.94, 0.69, 0.35, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Pestana_normal"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 3.0
+draw_center = false
+border_width_bottom = 1
+border_color = Color(0.243, 0.192, 0.153, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Boton_apagado"]
+content_margin_left = 5.0
+content_margin_top = 2.0
+content_margin_right = 5.0
+content_margin_bottom = 2.0
+bg_color = Color(0.08, 0.07, 0.1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.23, 0.2, 0.25, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Boton_foco"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.94, 0.69, 0.35, 1)
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="Boton_hover"]
@@ -51,71 +105,64 @@ border_width_bottom = 1
 border_color = Color(0.66, 0.41, 0.18, 1)
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="Boton_apagado"]
+[sub_resource type="StyleBoxFlat" id="Boton_normal"]
 content_margin_left = 5.0
 content_margin_top = 2.0
 content_margin_right = 5.0
 content_margin_bottom = 2.0
-bg_color = Color(0.08, 0.07, 0.1, 1)
+bg_color = Color(0.11, 0.09, 0.14, 1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.23, 0.2, 0.25, 1)
-anti_aliasing = false
-
-[sub_resource type="StyleBoxFlat" id="Boton_foco"]
-draw_center = false
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.94, 0.69, 0.35, 1)
-anti_aliasing = false
-
-[sub_resource type="StyleBoxEmpty" id="Vacio"]
-
-[sub_resource type="StyleBoxEmpty" id="Menu_item"]
-content_margin_top = 1.0
-content_margin_bottom = 1.0
-
-[sub_resource type="StyleBoxFlat" id="Pestana_normal"]
-content_margin_left = 4.0
-content_margin_top = 2.0
-content_margin_right = 4.0
-content_margin_bottom = 3.0
-draw_center = false
-border_width_bottom = 1
-border_color = Color(0.243, 0.192, 0.153, 1)
-anti_aliasing = false
-
-[sub_resource type="StyleBoxFlat" id="Pestana_hover"]
-content_margin_left = 4.0
-content_margin_top = 2.0
-content_margin_right = 4.0
-content_margin_bottom = 3.0
-draw_center = false
 border_width_bottom = 1
 border_color = Color(0.478, 0.384, 0.278, 1)
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="Pestana_activa"]
-content_margin_left = 4.0
-content_margin_top = 2.0
-content_margin_right = 4.0
-content_margin_bottom = 3.0
-bg_color = Color(0.94, 0.69, 0.35, 0.08)
-border_width_bottom = 2
-border_color = Color(0.94, 0.69, 0.35, 1)
-anti_aliasing = false
+[sub_resource type="StyleBoxEmpty" id="Casilla_estilo"]
+content_margin_top = 1.0
+content_margin_bottom = 1.0
 
-[sub_resource type="StyleBoxFlat" id="Pestana_foco"]
+[sub_resource type="StyleBoxLine" id="Separador"]
+color = Color(0.243, 0.192, 0.153, 1)
+
+[sub_resource type="StyleBoxFlat" id="Deslizador_foco"]
 draw_center = false
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.94, 0.69, 0.35, 0.55)
+border_color = Color(0.94, 0.69, 0.35, 0.6)
+expand_margin_left = 2.0
+expand_margin_top = 1.0
+expand_margin_right = 2.0
+expand_margin_bottom = 1.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Deslizador_relleno"]
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.66, 0.41, 0.18, 1)
+border_width_top = 1
+border_color = Color(0.94, 0.69, 0.35, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Deslizador_relleno_foco"]
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.94, 0.69, 0.35, 1)
+border_width_top = 1
+border_color = Color(1, 0.89, 0.66, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Deslizador_pista"]
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.04, 0.035, 0.06, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.243, 0.192, 0.153, 1)
 anti_aliasing = false
 
 [sub_resource type="StyleBoxTexture" id="Panel_marco"]
@@ -129,6 +176,16 @@ texture_margin_top = 8.0
 texture_margin_right = 8.0
 texture_margin_bottom = 8.0
 
+[sub_resource type="StyleBoxFlat" id="Panel_fila"]
+content_margin_left = 5.0
+content_margin_top = 3.0
+content_margin_right = 4.0
+content_margin_bottom = 3.0
+bg_color = Color(0.11, 0.09, 0.14, 0.7)
+border_width_bottom = 1
+border_color = Color(0.243, 0.192, 0.153, 1)
+anti_aliasing = false
+
 [sub_resource type="StyleBoxTexture" id="Panel_ranura"]
 content_margin_left = 3.0
 content_margin_top = 3.0
@@ -139,16 +196,6 @@ texture_margin_left = 3.0
 texture_margin_top = 3.0
 texture_margin_right = 3.0
 texture_margin_bottom = 3.0
-
-[sub_resource type="StyleBoxFlat" id="Panel_fila"]
-content_margin_left = 5.0
-content_margin_top = 3.0
-content_margin_right = 4.0
-content_margin_bottom = 3.0
-bg_color = Color(0.11, 0.09, 0.14, 0.7)
-border_width_bottom = 1
-border_color = Color(0.243, 0.192, 0.153, 1)
-anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="Barra_fondo"]
 bg_color = Color(0.04, 0.035, 0.06, 1)
@@ -168,54 +215,17 @@ border_width_bottom = 1
 border_color = Color(0.3, 0.06, 0.07, 1)
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="Deslizador_pista"]
+[sub_resource type="StyleBoxFlat" id="Tooltip"]
+content_margin_left = 4.0
 content_margin_top = 2.0
+content_margin_right = 4.0
 content_margin_bottom = 2.0
-bg_color = Color(0.04, 0.035, 0.06, 1)
+bg_color = Color(0.055, 0.045, 0.07, 0.96)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.243, 0.192, 0.153, 1)
-anti_aliasing = false
-
-[sub_resource type="StyleBoxFlat" id="Deslizador_relleno"]
-content_margin_top = 2.0
-content_margin_bottom = 2.0
-bg_color = Color(0.66, 0.41, 0.18, 1)
-border_width_top = 1
-border_color = Color(0.94, 0.69, 0.35, 1)
-anti_aliasing = false
-
-[sub_resource type="StyleBoxFlat" id="Deslizador_relleno_foco"]
-content_margin_top = 2.0
-content_margin_bottom = 2.0
-bg_color = Color(0.94, 0.69, 0.35, 1)
-border_width_top = 1
-border_color = Color(1, 0.89, 0.66, 1)
-anti_aliasing = false
-
-[sub_resource type="StyleBoxFlat" id="Deslizador_foco"]
-draw_center = false
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.94, 0.69, 0.35, 0.6)
-expand_margin_left = 2.0
-expand_margin_top = 1.0
-expand_margin_right = 2.0
-expand_margin_bottom = 1.0
-anti_aliasing = false
-
-[sub_resource type="StyleBoxEmpty" id="Casilla_estilo"]
-content_margin_top = 1.0
-content_margin_bottom = 1.0
-
-[sub_resource type="StyleBoxFlat" id="Scroll_fondo"]
-content_margin_left = 1.0
-content_margin_right = 1.0
-bg_color = Color(0.04, 0.035, 0.06, 0.8)
+border_color = Color(0.478, 0.384, 0.278, 1)
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="Scroll_agarre"]
@@ -230,21 +240,10 @@ content_margin_right = 1.0
 bg_color = Color(0.94, 0.69, 0.35, 1)
 anti_aliasing = false
 
-[sub_resource type="StyleBoxLine" id="Separador"]
-color = Color(0.243, 0.192, 0.153, 1)
-thickness = 1
-
-[sub_resource type="StyleBoxFlat" id="Tooltip"]
-content_margin_left = 4.0
-content_margin_top = 2.0
-content_margin_right = 4.0
-content_margin_bottom = 2.0
-bg_color = Color(0.055, 0.045, 0.07, 0.96)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.478, 0.384, 0.278, 1)
+[sub_resource type="StyleBoxFlat" id="Scroll_fondo"]
+content_margin_left = 1.0
+content_margin_right = 1.0
+bg_color = Color(0.04, 0.035, 0.06, 0.8)
 anti_aliasing = false
 
 [resource]

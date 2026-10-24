@@ -37,15 +37,25 @@ func _place_player() -> void:
 		target = _find_spawn_point(default_spawn_id)
 
 	var player := get_tree().get_first_node_in_group(player_group)
+	# Recuperación defensiva para el protagonista del prólogo por si una edición
+	# de escena pierde accidentalmente el grupo `player`.
+	var current_scene := get_tree().current_scene
+	if player == null and current_scene != null:
+		player = current_scene.get_node_or_null("prision inicio")
 
 	if player == null and auto_spawn_player_if_missing:
+		# El prólogo ya incluye prisn.tscn y no debe sustituirlo por player.tscn.
+		if (
+			current_scene != null
+			and current_scene.scene_file_path == GameManager.PRISON_SCENE_PATH
+			and not GameManager.sword_guard_defeated
+		):
+			return
 		player = PLAYER_SCENE.instantiate()
-		get_tree().current_scene.add_child(player)
+		current_scene.add_child(player)
 
 	if player == null:
 		return
-
-	var current_scene := get_tree().current_scene
 
 	var saved_state: Dictionary = {}
 

@@ -32,6 +32,9 @@ enum PlayerAction {
 ## seguidos de una ráfaga conecten todos; el último de cada ataque empuja.
 ## lunge: el Player da un paso corto hacia delante al soltar el tajo.
 const ATTACK_PROFILES := {
+    &"puch": {"start": 0, "end": 5, "hits": [
+        {"frames": Vector2i(2, 3), "ratio": 1.0, "area": "front", "knockback": true},
+    ]},
     &"attack": {"start": 0, "end": 10, "lunge": true, "hits": [
         {"frames": Vector2i(4, 6), "ratio": 1.0, "area": "front", "knockback": true},
     ]},
@@ -106,6 +109,7 @@ const ATTACK_PROFILES := {
 
 @export_category("Combate")
 @export_range(0.1, 10.0, 0.05) var attack_1_damage: float = 0.50
+@export_range(0.05, 0.5, 0.05) var unarmed_attack_damage: float = 0.25
 @export_range(0.1, 10.0, 0.05) var attack_2_damage: float = 0.75
 @export_range(0.1, 10.0, 0.05) var attack_3_damage: float = 1.00
 @export_range(0.1, 10.0, 0.05) var air_attack_damage: float = 0.75
@@ -241,11 +245,27 @@ var _roll_collision_exceptions: Array[PhysicsBody2D] = []
 var _attack_held_direction: float = 0.0
 var _fall_limit: float = 1200.0
 var _base_sprite_scale: Vector2 = Vector2.ONE
+var _base_sprite_position: Vector2 = Vector2.ZERO
+var _armed_sprite_position: Vector2 = Vector2.ZERO
+var _armed_sprite_frames: SpriteFrames
+var _unarmed_sprite_frames: SpriteFrames
+var _armed_sprite_offset: Vector2 = Vector2.ZERO
+const UNARMED_IDLE_SHEET: Texture2D = preload("res://Elementals_fire_knight_FREE_v1.1/idle_8_frames_288x128.png")
+const UNARMED_PUNCH_SHEET: Texture2D = preload("res://Elementals_fire_knight_FREE_v1.1/Right_Punch_6_frames_1728x128_alineado.png")
+const UNARMED_RUN_SHEET: Texture2D = preload("res://Elementals_fire_knight_FREE_v1.1/run_unarmed_8_frames_2304x128.png")
 
 
 func _ready() -> void:
     add_to_group("player")
     _base_sprite_scale = sprite.scale
+    _base_sprite_position = sprite.position
+    if sprite.sprite_frames.has_animation(&"attack"):
+        _armed_sprite_frames = sprite.sprite_frames
+        _armed_sprite_offset = sprite.offset
+        _armed_sprite_position = sprite.position
+    else:
+        _load_armed_sprite_frames()
+    set_sword_equipped(GameManager.has_sword)
     floor_max_angle = deg_to_rad(max_stair_slope_degrees)
     floor_snap_length = floor_snap_distance
     _normal_floor_snap_length = floor_snap_distance
@@ -273,13 +293,88 @@ func _ready() -> void:
     health_changed.emit(current_health, max_health)
 
 
+func set_sword_equipped(equipped: bool) -> void:
+    if not is_instance_valid(sprite):
+        return
+    if not equipped:
+        _jump_requested = false
+    if _armed_sprite_frames == null:
+        _armed_sprite_frames = sprite.sprite_frames
+    if equipped:
+        sprite.sprite_frames = _armed_sprite_frames
+        sprite.position = _armed_sprite_position
+        sprite.offset = _armed_sprite_offset
+    else:
+        if _unarmed_sprite_frames == null:
+            _unarmed_sprite_frames = _build_unarmed_sprite_frames()
+        sprite.sprite_frames = _unarmed_sprite_frames
+        sprite.position = _base_sprite_position
+        # El ajuste de 17 px por la diferencia entre lienzos de 162 y 128 px
+        # debe compensar tambi?n el origen vertical propio de cada escena.
+        # Prisn ya tiene el origen 17 px m?s arriba que el Player original.
+        sprite.offset = _armed_sprite_offset + Vector2(
+            0.0, -17.0 + _armed_sprite_position.y - _base_sprite_position.y
+        )
+    sprite.speed_scale = 1.0
+    sprite.scale = _base_sprite_scale
+    sprite.play(&"idle")
+    attack_hitbox.scale = Vector2.ONE if equipped else Vector2(0.65, 0.9)
+    _update_attack_hitbox_position()
+
+
+func _load_armed_sprite_frames() -> void:
+    # prisn.tscn comparte el controlador, pero conserva el SpriteFrames sin arma.
+    # Carga solo los frames del recurso original para cambiar de estado al recuperar.
+    var player_scene := load("res://escenas/player.tscn") as PackedScene
+    if player_scene == null:
+        push_error("No se pudieron cargar las animaciones originales con espada.")
+        return
+    var visual_reference := player_scene.instantiate()
+    var armed_sprite := visual_reference.get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
+    if armed_sprite != null:
+        _armed_sprite_frames = armed_sprite.sprite_frames
+        _armed_sprite_offset = armed_sprite.offset
+        _armed_sprite_position = armed_sprite.position
+    visual_reference.free()
+
+
+func _build_unarmed_sprite_frames() -> SpriteFrames:
+    var frames := SpriteFrames.new()
+    frames.remove_animation(&"default")
+    frames.add_animation(&"idle")
+    frames.set_animation_speed(&"idle", 5.0)
+    frames.set_animation_loop(&"idle", true)
+    for index in 8:
+        var atlas := AtlasTexture.new()
+        atlas.atlas = UNARMED_IDLE_SHEET
+        atlas.region = Rect2(index * 288, 0, 288, 128)
+        frames.add_frame(&"idle", atlas)
+    frames.add_animation(&"puch")
+    frames.set_animation_speed(&"puch", 5.0)
+    frames.set_animation_loop(&"puch", false)
+    for index in 6:
+        var atlas := AtlasTexture.new()
+        atlas.atlas = UNARMED_PUNCH_SHEET
+        atlas.region = Rect2(index * 288, 0, 288, 128)
+        frames.add_frame(&"puch", atlas)
+    frames.add_animation(&"run")
+    frames.set_animation_speed(&"run", 8.0)
+    frames.set_animation_loop(&"run", true)
+    for index in 8:
+        var atlas := AtlasTexture.new()
+        atlas.atlas = UNARMED_RUN_SHEET
+        atlas.region = Rect2(index * 288, 0, 288, 128)
+        frames.add_frame(&"run", atlas)
+    return frames
+
+
 func _unhandled_input(event: InputEvent) -> void:
     if dead or controls_locked:
         return
 
     if event.is_action_pressed("attack"):
         request_attack()
-    elif event.is_action_pressed("jump"):
+    elif event.is_action_pressed("jump") and GameManager.has_sword:
         _jump_requested = true
     elif event.is_action_pressed("roll"):
         request_roll()
@@ -407,6 +502,10 @@ func _process_cinematic_movement(delta: float) -> void:
 func _update_cinematic_animation() -> void:
     sprite.scale = _base_sprite_scale
     sprite.speed_scale = 1.0
+    if not GameManager.has_sword:
+        if sprite.animation != &"idle" or not sprite.is_playing():
+            sprite.play(&"idle")
+        return
     if absf(velocity.x) > 1.0:
         sprite.flip_h = velocity.x < 0.0
         if sprite.animation != &"run" or not sprite.is_playing():
@@ -418,6 +517,14 @@ func _update_cinematic_animation() -> void:
 
 func request_attack() -> void:
     if dead or _climbing:
+        return
+
+    if not GameManager.has_sword:
+        if _action == PlayerAction.NORMAL and is_on_floor():
+            _combo_step = 0
+            _combo_queued = false
+            _combo_buffered_inputs = 0
+            _start_attack(&"puch", unarmed_attack_damage, PlayerAction.ATTACK)
         return
 
     if _action == PlayerAction.ATTACK:
@@ -452,7 +559,7 @@ func request_attack() -> void:
 
 
 func request_roll() -> void:
-    if dead or _climbing or not is_on_floor() or not GameManager.has_ability("roll"):
+    if dead or not GameManager.has_sword or _climbing or not is_on_floor() or not GameManager.has_ability("roll"):
         return
     if _action == PlayerAction.ATTACK and movement_cancels_attacks:
         _finish_action()
@@ -500,7 +607,7 @@ func _try_context_interaction() -> bool:
 
 
 func request_ultimate() -> void:
-    if dead or _climbing or not is_on_floor() or not GameManager.has_ability("ultimate"):
+    if dead or not GameManager.has_sword or _climbing or not is_on_floor() or not GameManager.has_ability("ultimate"):
         return
     if _ultimate_cooldown_left > 0.0:
         return
@@ -525,6 +632,8 @@ func _start_attack(
     action_type: PlayerAction,
     start_frame: int = -1
 ) -> void:
+    if not GameManager.has_sword and animation_name != &"puch":
+        return
     var profile := _attack_profile(animation_name)
     var first_frame := int(profile.start) if start_frame < 0 else start_frame
     _attack_sequence_id += 1
@@ -714,6 +823,8 @@ func _repeats_first_attack() -> bool:
 ## Etapas del combo en suelo que el Player ya tiene (GameManager: combo_2,
 ## combo_3). Sin la Ráfaga, el Golpe final tampoco se encadena.
 func _max_combo_step() -> int:
+    if not GameManager.has_sword:
+        return 1
     if not GameManager.has_ability("combo_2"):
         return 1
     return 3 if GameManager.has_ability("combo_3") else 2
@@ -743,6 +854,10 @@ func _finish_action() -> void:
 
 
 func _update_defense_state() -> void:
+    if not GameManager.has_sword:
+        if _action == PlayerAction.DEFEND:
+            _finish_action()
+        return
     var wants_defense := Input.is_action_pressed("defend")
 
     if not wants_defense:
@@ -780,7 +895,7 @@ func _process_normal_movement(delta: float) -> void:
     if not is_on_floor():
         velocity.y = minf(velocity.y + gravity * delta, max_fall_speed)
 
-    if _jump_requested and is_on_floor():
+    if GameManager.has_sword and _jump_requested and is_on_floor():
         velocity.y = jump_velocity
     _jump_requested = false
 
@@ -1004,7 +1119,7 @@ func _process_simple_ledge_input() -> void:
     var wants_down := Input.is_action_pressed("move_down")
 
     # SUBIR: un solo impulso físico; después actúan la gravedad y move_and_slide().
-    if wants_up and _active_ledge_transition_zone.has_method("can_go_up"):
+    if GameManager.has_sword and wants_up and _active_ledge_transition_zone.has_method("can_go_up"):
         if _active_ledge_transition_zone.call("can_go_up", self):
             velocity.y = float(
                 _active_ledge_transition_zone.call("get_jump_velocity")
@@ -1048,6 +1163,12 @@ func _update_animation(direction: float) -> void:
     elif direction > 0.0:
         sprite.flip_h = false
 
+    if not GameManager.has_sword:
+        var unarmed_animation: StringName = &"run" if absf(velocity.x) > 8.0 else &"idle"
+        if sprite.animation != unarmed_animation or not sprite.is_playing():
+            sprite.play(unarmed_animation)
+        return
+
     # En escaleras, la animación propia (de espaldas). Ya viene angosta, así
     # que se dibuja a la escala normal; quieto en la escalera se congela.
     if _climbing:
@@ -1072,6 +1193,10 @@ func _update_animation(direction: float) -> void:
 
 func _update_attack_hitbox_position() -> void:
     var facing := -1.0 if sprite.flip_h else 1.0
+    if not GameManager.has_sword:
+        attack_hitbox.position = Vector2(28.0 * facing, 26.0)
+        attack_hitbox.scale = Vector2(0.65, 0.9)
+        return
     attack_hitbox.position = Vector2(
         attack_hitbox_offset_x * facing,
         attack_hitbox_offset_y
@@ -1484,7 +1609,7 @@ func take_damage(
     sprite.speed_scale = 1.0
     _action_total_time = maxf(_animation_duration(&"take hit"), hurt_animation_time)
     _action_time_left = _action_total_time
-    sprite.play(&"take hit")
+    sprite.play(&"take hit" if GameManager.has_sword else &"idle")
     _update_hud("DAÑO -%.2f" % amount)
     return true
 
@@ -1595,7 +1720,7 @@ func _block_guard_hit() -> void:
     _action_time_left = guard_break_stun_time
     _hurt_time_left = guard_break_stun_time
     velocity.x = 0.0
-    sprite.play(&"take hit")
+    sprite.play(&"take hit" if GameManager.has_sword else &"idle")
     UnderkingdomCombatFX.guard_break(self, sprite)
     _update_hud("GUARD BREAK")
 
@@ -1661,7 +1786,7 @@ func die() -> void:
     health_changed.emit(current_health, max_health)
     died.emit()
 
-    sprite.play(&"death")
+    sprite.play(&"death" if GameManager.has_sword else &"idle")
     _update_hud("MUERTO — reapareciendo...")
 
     # No cortar la muerte: esperamos como mínimo la duración completa de la

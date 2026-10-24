@@ -11,7 +11,8 @@ const FADE_OUT_TIME: float = 0.35
 ## Fondo: la Cámara del Sellado (donde empieza la partida) sin su cinemática.
 ## Se quitan los nodos que actúan solos; el resto es decorado.
 const PRISON_REMOVED_NODES: Array[String] = [
-	"Camera2D", "CharacterBody2D/player", "CharacterBody2D2", "SalidaPrision",
+	"Camera2D", "CharacterBody2D/player", "prision inicio", "GuardiaMision",
+	"CharacterBody2D2", "SalidaPrision",
 ]
 ## Paneo de ida y vuelta por la sala, en píxeles de mundo (borde izquierdo de
 ## la vista) y segundos por vuelta completa.
@@ -141,6 +142,8 @@ func _build_prison() -> void:
 		if node != null:
 			node.get_parent().remove_child(node)
 			node.free()
+	# La prisión del menú es solo arte: no procesa física, entrada ni lógica del mapa.
+	_prison.process_mode = Node.PROCESS_MODE_DISABLED
 	_prison.name = "FondoPrision"
 	add_child(_prison)
 	for sprite: Node in _prison.find_children("*", "AnimatedSprite2D", true, false):
