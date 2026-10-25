@@ -1,0 +1,160 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Texture2D" path="res://assets_prueba/gothicvania/pueblo_noche/cielo.png" id="1_cielo"]
+[ext_resource type="Texture2D" path="res://assets_prueba/gothicvania/pueblo_noche/nubes.png" id="2_nubes"]
+[ext_resource type="Texture2D" path="res://assets_prueba/gothicvania/pueblo_noche/montes.png" id="3_montes"]
+[ext_resource type="Texture2D" path="res://assets_prueba/gothicvania/pueblo_noche/pueblo.png" id="4_pueblo"]
+[ext_resource type="Texture2D" path="res://assets_prueba/gothicvania/castillo_viejo/fondo.png" id="5_castillo_viejo"]
+[ext_resource type="Texture2D" path="res://assets_prueba/raou_castillo/tileset_castillo.png" id="6_castillo_tiles"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna_tope"]
+atlas = ExtResource("6_castillo_tiles")
+region = Rect2(48, 256, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna_medio"]
+atlas = ExtResource("6_castillo_tiles")
+region = Rect2(48, 272, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna_base"]
+atlas = ExtResource("6_castillo_tiles")
+region = Rect2(48, 288, 16, 16)
+
+[node name="FondoCastilloRecuerdo" type="Node2D"]
+z_index = -9
+texture_filter = 1
+
+[node name="Cielo" type="Sprite2D" parent="."]
+texture_repeat = 1
+position = Vector2(0, 24)
+texture = ExtResource("1_cielo")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 512, 224)
+
+[node name="Nubes" type="Sprite2D" parent="."]
+texture_repeat = 1
+position = Vector2(-32, 24)
+texture = ExtResource("2_nubes")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 576, 224)
+modulate = Color(0.56, 0.24, 0.55, 0.48)
+
+[node name="Montes" type="Sprite2D" parent="."]
+texture_repeat = 1
+position = Vector2(-32, 24)
+texture = ExtResource("3_montes")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 576, 224)
+modulate = Color(0.72, 0.35, 0.66, 0.9)
+
+[node name="ArcosDistantes" type="Sprite2D" parent="."]
+position = Vector2(0, -16)
+texture = ExtResource("5_castillo_viejo")
+centered = false
+region_enabled = true
+region_rect = Rect2(480, 0, 480, 304)
+modulate = Color(0.52, 0.28, 0.58, 0.22)
+
+[node name="PuebloLejano" type="Sprite2D" parent="."]
+position = Vector2(-16, 40)
+texture = ExtResource("4_pueblo")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 512, 224)
+modulate = Color(0.58, 0.34, 0.57, 0.64)
+
+[node name="SiluetaCastillo" type="Polygon2D" parent="."]
+color = Color(0.055, 0.035, 0.105, 1)
+polygon = PackedVector2Array(0, 211, 24, 211, 24, 171, 40, 171, 40, 155, 56, 155, 56, 171, 80, 171, 80, 147, 96, 147, 96, 131, 112, 131, 112, 91, 128, 91, 128, 55, 144, 55, 144, 35, 160, 35, 160, 55, 176, 55, 176, 91, 192, 91, 192, 131, 208, 131, 208, 111, 224, 111, 224, 75, 240, 75, 240, 43, 256, 43, 256, 75, 272, 75, 272, 111, 288, 111, 288, 131, 304, 131, 304, 91, 320, 91, 320, 55, 336, 55, 336, 35, 352, 35, 352, 55, 368, 55, 368, 91, 384, 91, 384, 131, 400, 131, 400, 155, 424, 155, 424, 171, 448, 171, 448, 211, 480, 211, 480, 239, 0, 239)
+
+[node name="SiluetaMurallas" type="Line2D" parent="."]
+points = PackedVector2Array(0, 211, 24, 211, 24, 171, 40, 171, 40, 155, 56, 155, 56, 171, 80, 171, 80, 147, 96, 147, 96, 131, 112, 131, 112, 91, 128, 91, 128, 55, 144, 55, 144, 35, 160, 35, 160, 55, 176, 55, 176, 91, 192, 91, 192, 131, 208, 131, 208, 111, 224, 111, 224, 75, 240, 75, 240, 43, 256, 43, 256, 75, 272, 75, 272, 111, 288, 111, 288, 131, 304, 131, 304, 91, 320, 91, 320, 55, 336, 55, 336, 35, 352, 35, 352, 55, 368, 55, 368, 91, 384, 91, 384, 131, 400, 131, 400, 155, 424, 155, 424, 171, 448, 171, 448, 211, 480, 211)
+width = 2.0
+default_color = Color(0.29, 0.16, 0.42, 1)
+joint_mode = 2
+
+[node name="Ventanas" type="Node2D" parent="."]
+
+[node name="LuzTorreOeste" type="Polygon2D" parent="Ventanas"]
+color = Color(0.72, 0.14, 0.27, 0.9)
+polygon = PackedVector2Array(148, 76, 152, 68, 156, 76, 156, 87, 148, 87)
+
+[node name="LuzTorreCentro" type="Polygon2D" parent="Ventanas"]
+color = Color(0.82, 0.2, 0.32, 0.9)
+polygon = PackedVector2Array(244, 93, 248, 85, 252, 93, 252, 105, 244, 105)
+
+[node name="LuzTorreEste" type="Polygon2D" parent="Ventanas"]
+color = Color(0.68, 0.16, 0.31, 0.88)
+polygon = PackedVector2Array(340, 76, 344, 68, 348, 76, 348, 87, 340, 87)
+
+[node name="LuzMurallaOeste" type="Polygon2D" parent="Ventanas"]
+color = Color(0.55, 0.2, 0.53, 0.8)
+polygon = PackedVector2Array(92, 164, 96, 156, 100, 164, 100, 171, 92, 171)
+
+[node name="LuzMurallaEste" type="Polygon2D" parent="Ventanas"]
+color = Color(0.55, 0.2, 0.53, 0.8)
+polygon = PackedVector2Array(388, 164, 392, 156, 396, 164, 396, 171, 388, 171)
+
+[node name="SalidaCalabozo" type="Node2D" parent="."]
+position = Vector2(240, 0)
+
+[node name="Resplandor" type="Polygon2D" parent="SalidaCalabozo"]
+color = Color(0.46, 0.08, 0.28, 0.45)
+polygon = PackedVector2Array(-31, 241, -31, 191, -23, 175, -8, 159, 0, 155, 8, 159, 23, 175, 31, 191, 31, 241)
+
+[node name="Arco" type="Polygon2D" parent="SalidaCalabozo"]
+color = Color(0.12, 0.035, 0.09, 1)
+polygon = PackedVector2Array(-24, 241, -24, 193, -16, 177, -8, 169, 0, 165, 8, 169, 16, 177, 24, 193, 24, 241)
+
+[node name="BordeArco" type="Line2D" parent="SalidaCalabozo"]
+points = PackedVector2Array(-26, 241, -26, 192, -18, 175, -8, 165, 0, 161, 8, 165, 18, 175, 26, 192, 26, 241)
+width = 3.0
+default_color = Color(0.67, 0.18, 0.42, 1)
+joint_mode = 2
+
+[node name="Umbral" type="Polygon2D" parent="SalidaCalabozo"]
+color = Color(0.31, 0.075, 0.17, 0.8)
+polygon = PackedVector2Array(-24, 232, -24, 203, -16, 187, -8, 179, 0, 175, 8, 179, 16, 187, 24, 203, 24, 232)
+
+[node name="ColumnasRuina" type="Node2D" parent="."]
+
+[node name="OesteTope" type="Sprite2D" parent="ColumnasRuina"]
+position = Vector2(56, 184)
+texture = SubResource("AtlasTexture_columna_tope")
+centered = false
+scale = Vector2(2, 2)
+
+[node name="OesteMedio" type="Sprite2D" parent="ColumnasRuina"]
+position = Vector2(56, 216)
+texture = SubResource("AtlasTexture_columna_medio")
+centered = false
+scale = Vector2(2, 2)
+
+[node name="OesteBase" type="Sprite2D" parent="ColumnasRuina"]
+position = Vector2(56, 248)
+texture = SubResource("AtlasTexture_columna_base")
+centered = false
+scale = Vector2(2, 2)
+
+[node name="EsteTope" type="Sprite2D" parent="ColumnasRuina"]
+position = Vector2(392, 184)
+texture = SubResource("AtlasTexture_columna_tope")
+centered = false
+scale = Vector2(2, 2)
+flip_h = true
+
+[node name="EsteMedio" type="Sprite2D" parent="ColumnasRuina"]
+position = Vector2(392, 216)
+texture = SubResource("AtlasTexture_columna_medio")
+centered = false
+scale = Vector2(2, 2)
+flip_h = true
+
+[node name="EsteBase" type="Sprite2D" parent="ColumnasRuina"]
+position = Vector2(392, 248)
+texture = SubResource("AtlasTexture_columna_base")
+centered = false
+scale = Vector2(2, 2)
+flip_h = true

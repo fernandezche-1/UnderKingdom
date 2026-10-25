@@ -1,7 +1,7 @@
 extends Node2D
 ## Secuencia de apertura de la Cámara del Sellado del Alma.
-## El Player existente representa al prisionero durante el plano y se conserva
-## como el Player jugable al final; no se instancia ni duplica otro personaje.
+## El actor de prision.tscn representa al prisionero encadenado. El protagonista
+## jugable es la instancia prision inicio de prisn.tscn.
 
 const DIALOGUE_SCENE := preload("res://escenas/ui/dialogue_ui.tscn")
 const QUEEN_PORTRAIT := preload("res://Elementals_water_priestess_FREE_v1.1/Elementals_water_priestess_FREE_v1.1/water_priestess.png")
@@ -19,7 +19,7 @@ const ONCE_KEY := "underkingdom_camara_sellado_alma_completada"
 @onready var wall_tiles: TileMapLayer = $MuroFondo
 @onready var floor_tiles: TileMapLayer = $Terreno
 @onready var prisoner_shell: Node2D = $CharacterBody2D
-@onready var prisoner: UnderkingdomPlayer = $CharacterBody2D/player
+@onready var prisoner: UnderkingdomPlayer = get_node_or_null("prision inicio") as UnderkingdomPlayer
 @onready var queen: CharacterBody2D = $CharacterBody2D2
 @onready var ritual: Node2D = $CirculoRitual
 @onready var ring_one: Line2D = $CirculoRitual/Anillo1
@@ -58,6 +58,14 @@ func _ready() -> void:
 	_build_lower_corridor()
 	if not _resolve_nodes():
 		return
+	# La espada solo puede persistir si se derrotó al guardia y se recogió.
+	# Esto también corrige perfiles antiguos cuyo campo ausente se interpretaba
+	# como armado por defecto.
+	if not GameManager.sword_guard_defeated:
+		GameManager.has_sword = false
+		GameManager.sword_mission_started = false
+		GameManager.sword_mission_completed = false
+		prisoner.set_sword_equipped(false)
 	if get_tree().get_meta(ONCE_KEY, false) or GameManager.has_seen_cinematic(GameManager.PRISON_CINEMATIC_ID):
 		_restore_completed_scene()
 		var saved_state := GameManager.consume_pending_save_restore(get_tree().current_scene.scene_file_path)
@@ -105,6 +113,9 @@ func _play_inner_monologue() -> void:
 
 func _resolve_nodes() -> bool:
 	_queen_sprite = queen.get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
+	if not is_instance_valid(prisoner):
+		push_error("Cinemática de prisión: no se encontró el protagonista 'prision inicio'.")
+		return false
 	_player_camera = prisoner.get_node_or_null("Camera2D") as Camera2D
 	if _queen_sprite == null or _player_camera == null:
 		push_error("Cinemática de prisión: faltan la animación de la reina o la cámara del Player.")
@@ -198,11 +209,13 @@ func _chain_break_sequence() -> void:
 
 func _transition_to_player() -> void:
 	if not is_instance_valid(prisoner): return
-	# El actor encadenado se oculta y el Player original ocupa su marcador de suelo.
+	# El actor encadenado se oculta; prisn ya es el único Player jugable.
 	prisoner_shell.visible = false
 	prisoner.reparent(self, true)
 	prisoner.global_position = _player_position_at_marker(player_transition_marker)
 	prisoner.velocity = Vector2.ZERO
+	GameManager.start_sword_mission()
+	prisoner.set_sword_equipped(GameManager.has_sword)
 	prisoner.sprite.flip_h = false
 	if is_instance_valid(_cinematic_actor):
 		_cinematic_actor.visible = false
@@ -217,6 +230,9 @@ func _transition_to_player() -> void:
 	var debug_hud := prisoner.get_node("DebugHUD") as CanvasLayer
 	player_hud.visible = true
 	debug_hud.visible = prisoner.show_debug_hud
+	var hud := prisoner.get_node_or_null("PlayerHUD")
+	if hud != null and hud.has_method("show_story_notice"):
+		hud.call("show_story_notice", "MISIÓN PRINCIPAL: RECUPERAR LA ESPADA", GameManager.SWORD_MISSION_DESCRIPTION)
 	_player_camera.enabled = true
 	_player_camera.global_position = cinematic_camera.global_position
 	_player_camera.zoom = cinematic_camera.zoom
@@ -236,7 +252,9 @@ func _transition_to_player() -> void:
 
 
 func _restore_completed_scene() -> void:
+	GameManager.start_sword_mission()
 	prisoner.reparent(self, true)
+	prisoner.set_sword_equipped(GameManager.has_sword)
 	prisoner.global_position = _player_position_at_marker(player_transition_marker)
 	prisoner.visible = false
 	prisoner_shell.visible = false
@@ -246,10 +264,28 @@ func _restore_completed_scene() -> void:
 	prisoner.visible = true
 	exit_transition.enabled = true
 	queen.visible = false
+	# La Reina deja de formar parte del encuentro al restaurar una partida con
+	# esta cinemática completada. Ocultarla sola deja su IA y golpe activos.
+	queen.process_mode = Node.PROCESS_MODE_DISABLED
+	queen.set_physics_process(false)
+	queen.collision_layer = 0
+	queen.collision_mask = 0
+	var queen_collision := queen.get_node_or_null("CollisionShape2D") as CollisionShape2D
+	if queen_collision != null:
+		queen_collision.set_deferred("disabled", true)
+	var queen_attack_hitbox := queen.get_node_or_null("AttackHitbox") as Area2D
+	if queen_attack_hitbox != null:
+		queen_attack_hitbox.collision_layer = 0
+		queen_attack_hitbox.collision_mask = 0
+		queen_attack_hitbox.set_deferred("monitoring", false)
+		queen_attack_hitbox.set_deferred("monitorable", false)
 	cinematic_camera.enabled = false
 	_player_camera.enabled = true
 	_player_camera.make_current()
 	(prisoner.get_node("PlayerHUD") as CanvasLayer).visible = true
+	var hud := prisoner.get_node_or_null("PlayerHUD")
+	if hud != null and hud.has_method("show_story_notice") and not GameManager.sword_mission_completed:
+		hud.call("show_story_notice", "MISIÓN PRINCIPAL: RECUPERAR LA ESPADA", GameManager.SWORD_MISSION_DESCRIPTION)
 
 
 func _queen_walk_to_cell() -> void:
