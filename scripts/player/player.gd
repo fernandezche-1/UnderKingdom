@@ -125,6 +125,8 @@ const ATTACK_PROFILES := {
 @export_range(1.0, 2.0, 0.05) var attack_1_speed_multiplier: float = 1.35
 ## Velocidad propia del ataque aéreo (la animación del pack va a 9 fps).
 @export_range(1.0, 3.0, 0.05) var air_attack_speed_multiplier: float = 1.80
+## Velocidad del puñetazo sin espada (la animación va a 5 fps: 2.4 la deja en 12).
+@export_range(1.0, 4.0, 0.05) var unarmed_attack_speed_multiplier: float = 2.40
 @export_range(0, 30, 1) var attack_1_chain_frame: int = 7
 ## Sin la Ráfaga, el primer tajo se encadena consigo mismo desde
 ## attack_1_chain_frame y vuelve a empezar en este cuadro, saltándose la
@@ -306,14 +308,13 @@ func set_sword_equipped(equipped: bool) -> void:
             _unarmed_sprite_frames = _build_unarmed_sprite_frames()
         sprite.sprite_frames = _unarmed_sprite_frames
         sprite.position = _base_sprite_position
-        # Las animaciones desarmadas usan lienzos de 288x128 y las armadas,
-        # de 288x162. El margen transparente inferior del conjunto armado es
-        # 17 px mayor; este ajuste hace coincidir los pies de ambos conjuntos.
+        # Ambos conjuntos usan lienzos de 288x128 con los pies en la última
+        # fila: basta con compensar la diferencia de altura entre escenas.
         sprite.offset = _armed_sprite_offset + Vector2(
-            0.0, -17.0 + _armed_sprite_position.y - _base_sprite_position.y
+            0.0, _armed_sprite_position.y - _base_sprite_position.y
         )
     # Cambiar SpriteFrames conservando el nombre "idle" puede conservar el
-    # fotograma/avance del conjunto anterior. Reinicia animaci?n y estados.
+    # fotograma/avance del conjunto anterior. Reinicia animación y estados.
     _action = PlayerAction.NORMAL
     _action_time_left = 0.0
     _action_total_time = 0.0
@@ -333,9 +334,6 @@ func set_sword_equipped(equipped: bool) -> void:
     _drop_through_left = 0.0
     sprite.speed_scale = 1.0
     sprite.scale = _base_sprite_scale
-    var hitbox_shape := attack_hitbox.get_node_or_null("CollisionShape2D") as CollisionShape2D
-    if hitbox_shape != null:
-        hitbox_shape.set_deferred("disabled", true)
     sprite.stop()
     sprite.play(&"idle")
     sprite.frame = 0
@@ -1480,6 +1478,8 @@ func _attack_speed_multiplier_for(animation_name: StringName) -> float:
         multiplier *= maxf(combo_base_speed_multiplier, 1.0)
     elif animation_name == &"air attack":
         multiplier *= maxf(air_attack_speed_multiplier, 1.0)
+    elif animation_name == &"puch":
+        multiplier *= maxf(unarmed_attack_speed_multiplier, 1.0)
 
     if is_adrenaline_active():
         if animation_name != &"attack ultimate" or adrenaline_affects_ultimate:
