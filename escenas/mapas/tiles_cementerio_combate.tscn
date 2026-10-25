@@ -136,16 +136,7 @@ shape = SubResource("RectangleShape2D_puerta_llave")
 
 [node name="Cinematicas" type="Node2D" parent="SistemasMapa" parent_id_path=PackedInt32Array(1342171580) index="10" unique_id=1101519284]
 
-[node name="IntroRecuerdo" type="Node2D" parent="SistemasMapa/Cinematicas" index="0" unique_id=899738187]
-script = ExtResource("8_cinematica")
-cinematic_id = "cementerio_intro_recuerdo"
-player_path = NodePath("../../../player")
-dialogue_path = "res://dialogues/w1_intro_recuerdo.json"
-start_delay = 0.15
-camera_pan_duration = 1.0
-camera_return_duration = 0.7
-
-[node name="ReencuentroCapitan" type="Node2D" parent="SistemasMapa/Cinematicas" index="1" unique_id=1751707266]
+[node name="ReencuentroCapitan" type="Node2D" parent="SistemasMapa/Cinematicas" index="0" unique_id=1751707266]
 script = ExtResource("8_cinematica")
 cinematic_id = "cementerio_reencuentro_capitan"
 activation = 2

@@ -131,9 +131,8 @@ const ATTACK_PROFILES := {
 ## preparación agachada (cuadros 0-1, la misma pose que el final).
 @export_range(0, 10, 1) var attack_1_repeat_frame: int = 2
 @export_range(0, 40, 1) var attack_2_chain_frame: int = 17
-## Moverse, saltar o rodar corta attack / attack 2 / attack 3 / air attack.
-## Si ya ibas moviéndote al atacar, el golpe sale y luego sigues caminando.
-@export var movement_cancels_attacks: bool = true
+## Si está activado, moverse, saltar o rodar corta los ataques. Desactivado por defecto.
+@export var movement_cancels_attacks: bool = false
 ## Distancia total del roll. Arranca rápido y frena hasta detenerse al
 ## final de la animación; 96 px alcanzan para atravesar a cualquier enemigo
 ## actual (el más ancho mide 42 px) si se rueda desde cerca.
@@ -296,8 +295,6 @@ func _ready() -> void:
 func set_sword_equipped(equipped: bool) -> void:
     if not is_instance_valid(sprite):
         return
-    if not equipped:
-        _jump_requested = false
     if _armed_sprite_frames == null:
         _armed_sprite_frames = sprite.sprite_frames
     if equipped:
@@ -309,15 +306,40 @@ func set_sword_equipped(equipped: bool) -> void:
             _unarmed_sprite_frames = _build_unarmed_sprite_frames()
         sprite.sprite_frames = _unarmed_sprite_frames
         sprite.position = _base_sprite_position
-        # El ajuste de 17 px por la diferencia entre lienzos de 162 y 128 px
-        # debe compensar tambi?n el origen vertical propio de cada escena.
-        # Prisn ya tiene el origen 17 px m?s arriba que el Player original.
+        # Las animaciones desarmadas usan lienzos de 288x128 y las armadas,
+        # de 288x162. El margen transparente inferior del conjunto armado es
+        # 17 px mayor; este ajuste hace coincidir los pies de ambos conjuntos.
         sprite.offset = _armed_sprite_offset + Vector2(
             0.0, -17.0 + _armed_sprite_position.y - _base_sprite_position.y
         )
+    # Cambiar SpriteFrames conservando el nombre "idle" puede conservar el
+    # fotograma/avance del conjunto anterior. Reinicia animaci?n y estados.
+    _action = PlayerAction.NORMAL
+    _action_time_left = 0.0
+    _action_total_time = 0.0
+    _current_attack_animation = &""
+    _current_attack_damage = 0.0
+    _combo_step = 0
+    _combo_queued = false
+    _combo_queue_left = 0.0
+    _combo_buffered_inputs = 0
+    _current_attack_speed_multiplier = 1.0
+    _attack_hit_targets.clear()
+    _attack_subwindow_index = -1
+    _attack_lunge_left = 0.0
+    _jump_requested = false
+    _climbing = false
+    _active_climb_zone = null
+    _drop_through_left = 0.0
     sprite.speed_scale = 1.0
     sprite.scale = _base_sprite_scale
+    var hitbox_shape := attack_hitbox.get_node_or_null("CollisionShape2D") as CollisionShape2D
+    if hitbox_shape != null:
+        hitbox_shape.set_deferred("disabled", true)
+    sprite.stop()
     sprite.play(&"idle")
+    sprite.frame = 0
+    sprite.frame_progress = 0.0
     attack_hitbox.scale = Vector2.ONE if equipped else Vector2(0.65, 0.9)
     _update_attack_hitbox_position()
 

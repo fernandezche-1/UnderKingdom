@@ -27,6 +27,9 @@
 [ext_resource type="PackedScene" path="res://escenas/objetos/potion_pickup.tscn" id="25_0yd5k"]
 [ext_resource type="PackedScene" path="res://escenas/player.tscn" id="26_3jepd"]
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="27_xjwtg"]
+[ext_resource type="Script" path="res://scripts/items/prison_guard_mission.gd" id="28_mission"]
+[ext_resource type="Script" path="res://scripts/cinematics/cinematic_controller.gd" id="29_cinematic"]
+[ext_resource type="PackedScene" path="res://escenas/mapas/fondos/castillo_recuerdo.tscn" id="30_castillo_recuerdo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mnxfp"]
 texture = ExtResource("1_0h75k")
@@ -3758,6 +3761,17 @@ tile_set = SubResource("TileSet_fb3d3")
 
 [node name="SistemasMapa" type="Node2D" parent="." unique_id=1141564958]
 
+[node name="Cinematicas" type="Node2D" parent="SistemasMapa"]
+
+[node name="IntroRecuerdo" type="Node2D" parent="SistemasMapa/Cinematicas"]
+script = ExtResource("29_cinematic")
+cinematic_id = "cementerio_intro_recuerdo"
+player_path = NodePath("../../../player")
+dialogue_path = "res://dialogues/w1_intro_recuerdo.json"
+start_delay = 0.15
+camera_pan_duration = 1.0
+camera_return_duration = 0.7
+
 [node name="KillZones" type="Node2D" parent="SistemasMapa" unique_id=1012956290]
 
 [node name="Pinchos1" parent="SistemasMapa/KillZones" unique_id=771256308 groups=["kill_zone"] instance=ExtResource("2_rww04")]
@@ -4243,6 +4257,10 @@ attack_active_end_frame = 5
 attack_hitbox_size = Vector2(58, 44)
 attack_hitbox_offset = Vector2(32, 16)
 
+[node name="MisionRecuperarEspada" type="Node2D" parent="Enemigos"]
+script = ExtResource("28_mission")
+guard_path = NodePath("../Guardia6")
+
 [node name="Objetos" type="Node2D" parent="." unique_id=1877888205]
 
 [node name="Moneda1" type="Area2D" parent="Objetos" unique_id=964326209 instance=ExtResource("20_g2qkj")]
@@ -4402,6 +4420,8 @@ pickup_type = "potion"
 position = Vector2(56, 161)
 collision_mask = 3
 script = ExtResource("27_xjwtg")
+
+[node name="FondoCastilloRecuerdo" parent="." instance=ExtResource("30_castillo_recuerdo")]
 
 [editable path="SistemasMapa/KillZones/Pinchos1"]
 [editable path="SistemasMapa/KillZones/Pinchos2"]

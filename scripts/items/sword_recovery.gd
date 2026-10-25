@@ -60,15 +60,18 @@ func _recover(player: UnderkingdomPlayer) -> void:
 	await tween.finished
 	if not is_instance_valid(player):
 		return
+	if not GameManager.recover_sword(player):
+		player.set_controls_locked(false)
+		_busy = false
+		return
 	GameManager.mark_object_consumed(self)
-	if GameManager.recover_sword(player):
-		UnderkingdomCombatFX.pickup_sparkle(self)
-		var hud := player.get_node_or_null("PlayerHUD")
-		if hud != null and hud.has_method("show_story_notice"):
-			hud.call(
-				"show_story_notice",
-				"Espada recuperada",
-				"Mi arma ha vuelto a mis manos... pero mi llama continúa debilitada."
-			)
+	UnderkingdomCombatFX.pickup_sparkle(self)
+	var hud := player.get_node_or_null("PlayerHUD")
+	if hud != null and hud.has_method("show_story_notice"):
+		hud.call(
+			"show_story_notice",
+			"Espada recuperada",
+			"Mi arma ha vuelto a mis manos... pero mi llama continúa debilitada."
+		)
 	player.set_controls_locked(false)
 	queue_free()
