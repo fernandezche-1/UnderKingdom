@@ -264,6 +264,21 @@ func _restore_completed_scene() -> void:
 	prisoner.visible = true
 	exit_transition.enabled = true
 	queen.visible = false
+	# La Reina deja de formar parte del encuentro al restaurar una partida con
+	# esta cinemática completada. Ocultarla sola deja su IA y golpe activos.
+	queen.process_mode = Node.PROCESS_MODE_DISABLED
+	queen.set_physics_process(false)
+	queen.collision_layer = 0
+	queen.collision_mask = 0
+	var queen_collision := queen.get_node_or_null("CollisionShape2D") as CollisionShape2D
+	if queen_collision != null:
+		queen_collision.set_deferred("disabled", true)
+	var queen_attack_hitbox := queen.get_node_or_null("AttackHitbox") as Area2D
+	if queen_attack_hitbox != null:
+		queen_attack_hitbox.collision_layer = 0
+		queen_attack_hitbox.collision_mask = 0
+		queen_attack_hitbox.set_deferred("monitoring", false)
+		queen_attack_hitbox.set_deferred("monitorable", false)
 	cinematic_camera.enabled = false
 	_player_camera.enabled = true
 	_player_camera.make_current()
