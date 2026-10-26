@@ -2,6 +2,7 @@ extends Node2D
 class_name UnderkingdomPrisonGuardMission
 
 ## Conecta la misión al guardia que ya existe en el castillo.
+## Vacío: solo arranca la misión (la prisión no tiene guardia ni suelta la espada).
 @export var guard_path: NodePath = ^"../Guardia2"
 
 const SWORD_SCENE: PackedScene = preload("res://escenas/objetos/espada_recuperable.tscn")
@@ -17,6 +18,8 @@ func _ready() -> void:
 	print("[SWORD_DROP] mission_ready scene=%s node=%s guard_path=%s has_sword=%s defeated=%s" % [scene_path, get_path(), guard_path, GameManager.has_sword, GameManager.sword_guard_defeated])
 	if not GameManager.has_sword:
 		GameManager.start_sword_mission()
+	if guard_path.is_empty():
+		return
 
 	_guard = get_node_or_null(guard_path) as UnderkingdomEnemyBase
 	if is_instance_valid(_guard):

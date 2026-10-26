@@ -1191,3 +1191,4 @@ position = Vector2(513, 289)
 [node name="GuardiaMision" type="Node2D" parent="." unique_id=1066561021]
 position = Vector2(760, 326)
 script = ExtResource("13_guard_mission")
+guard_path = NodePath("")
