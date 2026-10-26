@@ -119,7 +119,7 @@ const ATTACK_PROFILES := {
 @export_range(10.0, 300.0, 1.0) var attack_hitbox_offset_x: float = 52.0
 @export_range(-100.0, 200.0, 1.0) var attack_hitbox_offset_y: float = 34.0
 @export_range(0.05, 2.0, 0.05) var combo_queue_window: float = 0.45
-@export_range(1.0, 2.0, 0.05) var combo_base_speed_multiplier: float = 1.20
+@export_range(1.0, 2.0, 0.05) var combo_base_speed_multiplier: float = 1.35
 ## Velocidad propia del primer tajo, que sustituye a combo_base_speed_multiplier:
 ## es el golpe que más se usa y el único al empezar una partida.
 @export_range(1.0, 2.0, 0.05) var attack_1_speed_multiplier: float = 1.35
@@ -132,6 +132,10 @@ const ATTACK_PROFILES := {
 ## attack_1_chain_frame y vuelve a empezar en este cuadro, saltándose la
 ## preparación agachada (cuadros 0-1, la misma pose que el final).
 @export_range(0, 10, 1) var attack_1_repeat_frame: int = 2
+## Sin la Ráfaga, cuadro desde el que el tajo se encadena consigo mismo. Va
+## después de attack_1_chain_frame para que machacar el botón haga menos daño
+## por segundo que el combo.
+@export_range(0, 10, 1) var attack_1_repeat_chain_frame: int = 9
 @export_range(0, 40, 1) var attack_2_chain_frame: int = 17
 ## Si está activado, moverse, saltar o rodar corta los ataques. Desactivado por defecto.
 @export var movement_cancels_attacks: bool = false
@@ -223,6 +227,9 @@ var _action_total_time: float = 0.0
 var _current_attack_damage: float = 0.0
 var _attack_sequence_id: int = 0
 var _current_attack_animation: StringName = &""
+## El tajo en curso es una repetición del primero (sin la Ráfaga): pega sin
+## aturdir, para que machacar el botón no deje al enemigo sin responder.
+var _attack_is_repeat: bool = false
 var _combo_step: int = 0
 var _combo_queued: bool = false
 var _combo_queue_left: float = 0.0
@@ -660,6 +667,7 @@ func _start_attack(
     _action = action_type
     _current_attack_damage = damage
     _current_attack_animation = animation_name
+    _attack_is_repeat = false
     _current_attack_speed_multiplier = _attack_speed_multiplier_for(animation_name)
     sprite.speed_scale = _current_attack_speed_multiplier
     _action_total_time = (
@@ -773,7 +781,8 @@ func _can_chain_combo_early() -> bool:
 
     match _current_attack_animation:
         &"attack":
-            return sprite.frame >= maxi(attack_1_chain_frame, _last_hit_frame() + 1)
+            var chain_frame := attack_1_repeat_chain_frame if _repeats_first_attack() else attack_1_chain_frame
+            return sprite.frame >= maxi(chain_frame, _last_hit_frame() + 1)
         &"attack 2":
             return sprite.frame >= maxi(attack_2_chain_frame, _last_hit_frame() + 1)
         _:
@@ -823,6 +832,7 @@ func _consume_combo_buffer_and_start_next() -> void:
     _combo_queued = _combo_buffered_inputs > 0
     if _repeats_first_attack():
         _start_attack(&"attack", attack_1_damage, PlayerAction.ATTACK, attack_1_repeat_frame)
+        _attack_is_repeat = true
         return
     _start_combo_step(_combo_step + 1)
 
@@ -1251,7 +1261,7 @@ func _update_attack_damage_window() -> void:
 
     var hit: Dictionary = hits[index]
     var damage := _current_attack_damage * float(hit.ratio)
-    var knockback := bool(hit.knockback)
+    var knockback := bool(hit.knockback) and not _attack_is_repeat
     var area := String(hit.area)
     var facing := -1.0 if sprite.flip_h else 1.0
 
@@ -1275,7 +1285,8 @@ func _update_attack_damage_window() -> void:
         else _damage_attack_overlaps(damage, knockback)
     )
     if connected:
-        _play_hit_impact(knockback, area == "blast")
+        # El tajo repetido no aturde, pero se siente igual que el primero.
+        _play_hit_impact(bool(hit.knockback), area == "blast")
 
 
 ## Hitstop y temblor al conectar con un enemigo: el peso de la espada se nota
