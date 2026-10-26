@@ -53,6 +53,7 @@ const COLORS := {
     "m": ["402060", "murciélago"],
     "e": ["d0d0b0", "esqueleto"],
     "u": ["706050", "esqueleto de tumba"],
+    "G": ["b0b0d0", "Guardia"],
     "t": ["ffc090", "antorcha"],
     "f": ["c03000", "fogata"],
     "b": ["a08060", "barril"],
@@ -94,6 +95,7 @@ const ENEMIES := {
     "m": "res://escenas/enemigos/murcielago.tscn",
     "e": "res://escenas/enemigos/esqueleto.tscn",
     "u": "res://escenas/enemigos/esqueleto_tumba.tscn",
+    "G": "res://escenas/enemigos/guardia.tscn",
 }
 
 var _grid: Array[String] = []

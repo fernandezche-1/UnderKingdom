@@ -48,7 +48,7 @@
 | Habilidad | Dónde |
 |---|---|
 | Moverse, saltar, escalar, poción, primer tajo, guardia | Desde el inicio |
-| Rodar | Reliquia en las catacumbas 1 del cementerio, junto al cofre: (1208, 756) en px, columna 75, fila 47. Es camino obligatorio antes del Capitán. **Posición provisional:** moverla en el editor si se prefiere otro sitio. |
+| Rodar | Reliquia en el nicho de la biblioteca del castillo, junto al cofre: (1208, 756) en px, columna 75, fila 47, en `tiles_castillo_combate.tscn`. Es camino obligatorio antes del Rey Caído. Antes estaba en el mismo punto del cementerio (ver `P40_CASTILLO_CON_TILES.md`). |
 | Ráfaga (`combo_2`) | Capitán (`tiles_cementerio_combate.tscn`) |
 | Golpe final (`combo_3`) | Caballero de la Reina (`tiles_mineria_combate.tscn`) |
 | Ultimate | La Reina (`tiles_mazmorra_combate.tscn`) |

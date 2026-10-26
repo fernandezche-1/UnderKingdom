@@ -11,7 +11,7 @@ class_name UnderkingdomDevMode
 ## Con el panel abierto, las teclas 1-9 o un clic activan cada opción.
 
 ## Llaves de jefe de la ruta de tiles. Añadir aquí la de cada mundo nuevo.
-const BOSS_KEY_IDS: Array[String] = ["cementerio_capitan", "minas_caballero"]
+const BOSS_KEY_IDS: Array[String] = ["castillo_rey", "cementerio_capitan", "minas_caballero"]
 const COINS_PER_GRANT: int = 100
 const POTIONS_PER_GRANT: int = 5
 const FONT_SIZE: int = 8

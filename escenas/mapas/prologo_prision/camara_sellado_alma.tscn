@@ -1154,7 +1154,7 @@ end_cap_mode = 2
 
 [node name="SalidaPrision" parent="." unique_id=1902965593 instance=ExtResource("6_exit")]
 position = Vector2(996, 320)
-target_scene_path = "res://escenas/mapas/tiles_castillo.tscn"
+target_scene_path = "res://escenas/mapas/tiles_castillo_combate.tscn"
 target_spawn_id = &"SpawnInicio"
 enabled = false
 require_interaction = true

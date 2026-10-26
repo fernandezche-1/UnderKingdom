@@ -47,9 +47,9 @@ cofre_pociones: 1
 |---|---|
 | `escena` | Dónde se guarda el nivel; siempre en `res://escenas/mapas/`. **Nunca sobrescribe** un mapa hecho a mano. |
 | `imagen` | El PNG del nivel. Si en vez de imagen se escribe el mapa con letras después de una línea `---`, se omite. |
-| `tileset` | Qué juego de piezas usar: `mazmorra` o `cementerio` (el de mazmorra más piezas de Gothicvania Cemetery; en él `T` es una lápida, `g` puntas de pasto y `r` zarzas). Cada tileset es un archivo en `herramientas/constructor_mapas/tilesets/`. |
-| `bloques` | Estilo de los bloques. En mazmorra: `verde`, `verde_claro`, `ladrillo`, `violeta`, `oro`, `oliva` o `madera`. En cementerio, además, `cementerio`. |
-| `fondo` | Pared detrás de todo: `cueva` o `ninguno`. |
+| `tileset` | Qué juego de piezas usar: `mazmorra`, `cementerio` (el de mazmorra más piezas de Gothicvania Cemetery; en él `T` es una lápida, `g` puntas de pasto y `r` zarzas) o `castillo` (el de mazmorra más el muro de ladrillo morado de Raou; en él `T` es una armadura 2x2, `h` un estandarte 1x2, `g` una cadena 1x2, `r` una ventana en arco 2x2, `C` una puerta en arco 2x3, `E` una estantería 2x2 y `f` unas rejas de celda 2x2; el estandarte y la cadena cuelgan del techo: su letra va dos piezas debajo de él). Cada tileset es un archivo en `herramientas/constructor_mapas/tilesets/`. |
+| `bloques` | Estilo de los bloques. En mazmorra: `verde`, `verde_claro`, `ladrillo`, `violeta`, `oro`, `oliva` o `madera`. En cementerio, además, `cementerio`, y en castillo, `castillo`. |
+| `fondo` | Pared detrás de todo: `cueva`, `castillo` (ladrillo oscuro, solo con el tileset castillo) o `ninguno`. |
 | `parallax` | Imágenes de fondo que se mueven más lento, de la más lejana a la más cercana: `fondos/cielo.png 0.05; fondos/nubes.png 0.2`. El número es la velocidad horizontal (0 = quieta, 1 = como el mapa). Si la imagen es más baja que la pantalla (270 px), se agrega `x2` para dibujarla al doble: `fondos/cielo.png 0.05 x2`. En vertical cada imagen recorre el mapa: se ve su borde de arriba con la cámara arriba del todo y el de abajo con la cámara abajo. Necesita `fondo: ninguno`. |
 | `siguiente` / `anterior` | Mapa al que llevan las salidas azules / moradas. Por defecto se llega a su spawn `DesdeAnterior` / `DesdeSiguiente`, que el constructor crea solo. Para llegar a otro spawn: `res://escenas/mapas/mundo_2.tscn#SpawnInicio`. |
 | `cofre_monedas`, `cofre_pociones` | Botín de cada cofre del nivel (por defecto 3 y 1). |
@@ -120,6 +120,7 @@ El mapa original no se toca. El PNG es un punto de partida: faltan las salidas, 
 | `m` | #402060 | 64, 32, 96 | murciélago (vuela y embiste; se dibuja donde flota) |
 | `e` | #d0d0b0 | 208, 208, 176 | esqueleto (camina y embiste) |
 | `u` | #706050 | 112, 96, 80 | esqueleto de tumba (enterrado hasta que el Player se acerca) |
+| `G` | #b0b0d0 | 176, 176, 208 | Guardia del castillo (se cubre con el escudo) |
 | `t` | #ffc090 | 255, 192, 144 | antorcha |
 | `f` | #c03000 | 192, 48, 0 | fogata (decorado) |
 | `b` | #a08060 | 160, 128, 96 | barril |

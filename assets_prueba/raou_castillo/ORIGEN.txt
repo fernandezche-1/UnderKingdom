@@ -1,0 +1,41 @@
+Tileset del castillo (primer mundo, tiles_castillo)
+
+tileset_castillo.png: atlas del tileset "castillo" del constructor
+(herramientas/constructor_mapas/tilesets/castillo.gd), 512x384, piezas de 16.
+
+Filas 0-15: copia sin cambios de
+assets_prueba/dungeon_platformer/dungeontilesetfull.png (CC0, RottingPixels),
+por la antorcha, lava, agua, escalera, fogata, barril, caja y las rampas
+"violeta".
+
+Filas 16-19, columnas 0-3: juego de 4x4 "castillo", piezas copiadas tal cual
+del muro de ladrillo de prueba/dungeon_sidescroller-Raou/Tilesetv3.png
+(piezas (0,2)-(4,5) del original). Esquinas y bordes de arriba (0,2) (1,2)
+(4,2); lados (0,4) (4,4); interior (1,3); base (0,5) (1,5) (4,5). La fila 3
+(tiras de una pieza y plataformas) repite la de arriba. La columna (3,*) une
+la mitad izquierda de la esquina izquierda con la mitad derecha de la
+derecha. Todas son macizas (4 esquinas opacas), como pide el constructor.
+
+Pared de fondo (4,16)-(4,18): pieza (12,14)-(12,16) de Tilesetv3.png, que se
+repite de lado sin costura.
+
+Decorados (recortados por su borde y centrados en su hueco, sin cambiar el
+arte):
+- (8,16) armadura 2x2: Tilesetv3.png, píxeles (7,417)-(24,448).
+- (10,16) estandarte 1x2 y (11,16) cadena 1x2: dark_castle_tileset.png de la
+  raíz (v4 de Armando), píxeles (210,8)-(222,28) y (245,11)-(252,33).
+- (13,16) puerta en arco 2x3: Tilesetv3.png, (2,454)-(31,496).
+- (15,16) estantería 2x2: Tilesetv3.png, (65,593)-(94,624).
+- (17,16) rejas 2x2: Tilesetv3.png, (121,688)-(152,720).
+- (19,16) ventana en arco 2x2: arco de piedra de Tilesetv3.png,
+  (196,56)-(220,86), con el hueco relleno de un solo color oscuro. Es la única
+  pieza en la que se pintó algo.
+
+Licencias:
+- Tilesetv3.png es "Dark Dungeon - Side-Scroller Tileset" de Raou
+  (https://raou.itch.io/dark-dun), gratis con pago voluntario. Sin licencia
+  formal; en los comentarios de la página el autor dice que se puede usar en
+  proyectos comerciales o no y modificar, siempre que el tileset en sí no se
+  redistribuya. Antes de publicar el juego conviene pedirle la confirmación
+  por escrito y no dejar sus PNG sueltos en un repositorio público.
+- dark_castle_tileset.png: pieza de Armando en la v4, origen sin anotar.

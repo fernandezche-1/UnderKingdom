@@ -6,7 +6,7 @@
 
 **Para probar:** abrir `escenas/mapas/tiles_cementerio_combate.tscn` y pulsar F6. Es el cementerio generado más la sala del Capitán, su llave y la puerta que la pide. Las minas se juegan igual desde `tiles_mineria_combate.tscn`. Cada salida azul del borde derecho lleva al siguiente nivel:
 
-`tiles_cementerio` → `tiles_mineria` → `tiles_mazmorra` → `tiles_ruina` → `tiles_profundidades` → `tiles_jefe`
+`tiles_castillo` → `tiles_cementerio` → `tiles_mineria` → `tiles_mazmorra` → `tiles_ruina` → `tiles_profundidades` → `tiles_jefe`
 
 Para probar, el Modo dev (tecla º): vida, pociones y monedas infinitas, llaves de jefe. Las teclas R/H/J/K y el panel de depuración del Player ya no están en los niveles de la ruta; se activan con `depuracion: si` en el `.txt` (lo llevan `arena_enemigos` y los ejemplos).
 
@@ -41,7 +41,8 @@ Si se vuelve a jugar tras un cambio, anotar lo que se encuentre en la sección 2
 
 | Nivel | Tamaño (piezas) | Bloques | Enemigos | Escaleras | Además |
 |---|---|---|---|---|---|
-| `tiles_cementerio` | 120 x 78 | cementerio | 13 Vanguardia + Capitán | 4 | Primer mundo estilo Hollow Knight, de bajada: superficie, cripta, catacumbas, sala del jefe y abismo con la puerta con llave y la salida en el fondo. Se juega desde `tiles_cementerio_combate.tscn`. Ya no es un calco de `mundo_1`. |
+| `tiles_castillo` | 100 x 80 | castillo | 6 Guardias, 5 Vanguardias, 5 murciélagos + Rey Caído | 5 | Primer mundo, entre la prisión y el cementerio: galería de las celdas, gran salón, biblioteca, antecámara, sala del trono y criptas con la puerta con llave y la salida. Tileset propio (ladrillo morado de Raou). Se juega desde `tiles_castillo_combate.tscn` (P40). |
+| `tiles_cementerio` | 120 x 78 | cementerio | 13 Vanguardia + Capitán | 4 | Segundo mundo (antes el primero) estilo Hollow Knight, de bajada: superficie, cripta, catacumbas, sala del jefe y abismo con la puerta con llave y la salida en el fondo. Se juega desde `tiles_cementerio_combate.tscn`. Ya no es un calco de `mundo_1`. |
 | `tiles_casa` | 104 x 58 | violeta | 4 diablillos | 3 | 3 huecos de 3 piezas en pisos. Las 2 escaleras del mapa original se reemplazaron. **Fuera de la ruta:** el cementerio lleva ahora a las minas. |
 | `tiles_mineria` | 104 x 90 | madera | 4 kolbo, 4 kolbo2, 4 kolbo3 + Caballero de la Reina | 4 | Segundo mundo, con la misma estructura que el cementerio: bocamina, galerías, sala del jefe y veta ardiente con la puerta con llave y la salida en el fondo. Se juega desde `tiles_mineria_combate.tscn`. Ya no es un calco. |
 | `tiles_mazmorra` | 78 x 71 | oliva | 2 Aprendis, 2 kolbo3, 1 mino, 3 esqueletos + la Reina | 13 | 9 huecos, 29 pinchos en pozos sin salida y túnel de 18 piezas hasta la salida derecha. Recortado: lo de abajo era vacío. Se juega desde `tiles_mazmorra_combate.tscn`: la Reina está en la cámara del fondo a la derecha y la puerta con llave tapa la salida (P34). |
