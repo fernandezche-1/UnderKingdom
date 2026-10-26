@@ -114,6 +114,9 @@ var respawn_position: Vector2 = Vector2.ZERO
 ## Cofres abiertos y objetos rotos ("escena|ruta del nodo"), para que no
 ## vuelvan a soltar botín al recargar el mapa.
 var consumed_objects: Dictionary = {}
+## Pociones bebidas desde el último punto de reaparición. Al morir se devuelven
+## para reaparecer con las mismas que se tenían al pasar por él.
+var potions_used_since_respawn: int = 0
 
 const DEATH_FADE_IN := 0.6
 const DEATH_HOLD := 0.7
@@ -323,6 +326,7 @@ func load_save_slot(slot_id: int) -> bool:
 func _restore_game_state(state: Dictionary) -> void:
 	coins = maxi(0, int(state.get("coins", 0)))
 	potions = maxi(0, int(state.get("potions", 0)))
+	potions_used_since_respawn = 0
 	world1_boss_defeated = bool(state.get("world1_boss_defeated", false))
 	world1_boss_key_collected = bool(state.get("world1_boss_key_collected", false))
 	w2_knight_defeated = bool(state.get("w2_knight_defeated", false))
@@ -710,6 +714,7 @@ func set_respawn_point(world_position: Vector2) -> void:
 		return
 	respawn_scene_path = current_scene.scene_file_path
 	respawn_position = world_position
+	potions_used_since_respawn = 0
 
 
 ## Devuelve true una sola vez tras recargar el mapa por una muerte, si hay
@@ -738,6 +743,7 @@ func respawn_after_death() -> void:
 	await fade_in.finished
 	await get_tree().create_timer(DEATH_HOLD).timeout
 
+	_restore_potions_used_since_respawn()
 	_death_respawn_pending = true
 	get_tree().reload_current_scene()
 	# El SpawnController coloca al Player un frame después de cargar.
@@ -751,6 +757,15 @@ func respawn_after_death() -> void:
 	await fade_out.finished
 	_death_layer.visible = false
 	_respawning_after_death = false
+
+
+func _restore_potions_used_since_respawn() -> void:
+	if potions_used_since_respawn <= 0:
+		return
+	potions += potions_used_since_respawn
+	potions_used_since_respawn = 0
+	potions_changed.emit(potions)
+	request_autosave()
 
 
 func is_respawning_after_death() -> bool:
@@ -923,6 +938,7 @@ func use_potion() -> bool:
 	if potions <= 0:
 		return false
 	potions -= 1
+	potions_used_since_respawn += 1
 	potions_changed.emit(potions)
 	request_autosave()
 	return true
@@ -1060,6 +1076,7 @@ func reset_for_new_game() -> void:
 	world1_boss_key_collected = false
 	coins = 0
 	potions = 0
+	potions_used_since_respawn = 0
 	cthulhu_revealed = false
 	w2_knight_defeated = false
 	completed_encounters.clear()
