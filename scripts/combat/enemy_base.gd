@@ -822,10 +822,14 @@ func die() -> void:
     _cancel_attack()
     _defense_time_left = 0.0
     velocity = Vector2.ZERO
+    if is_in_group("sword_recovery_target"):
+        print("[SWORD_DROP] signal_emitted=died enemy=%s source_scene=%s map=%s health=%.2f death_animation_available=%s" % [get_path(), scene_file_path, get_tree().current_scene.scene_file_path, current_health, sprite.sprite_frames.has_animation(&"death")])
     died.emit()
 
     if sprite.sprite_frames.has_animation(&"death"):
         sprite.play(&"death")
+        if is_in_group("sword_recovery_target"):
+            print("[SWORD_DROP] death_animation_playing enemy=%s animation=%s" % [get_path(), sprite.animation])
         await get_tree().create_timer(_animation_duration(&"death")).timeout
     else:
         # Sin animación de muerte: se desvanece con una nube de partículas.
@@ -840,6 +844,8 @@ func die() -> void:
         return
 
     _on_enemy_death_finished()
+    if is_in_group("sword_recovery_target"):
+        print("[SWORD_DROP] signal_emitted=death_finished enemy=%s source_scene=%s map=%s inside_tree=%s" % [get_path(), scene_file_path, get_tree().current_scene.scene_file_path, is_inside_tree()])
     death_finished.emit()
 
     if remove_on_death:

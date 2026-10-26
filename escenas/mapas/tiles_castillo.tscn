@@ -4259,7 +4259,7 @@ attack_hitbox_offset = Vector2(32, 16)
 
 [node name="MisionRecuperarEspada" type="Node2D" parent="Enemigos"]
 script = ExtResource("28_mission")
-guard_path = NodePath("../Guardia6")
+guard_path = NodePath("../Guardia2")
 
 [node name="Objetos" type="Node2D" parent="." unique_id=1877888205]
 
