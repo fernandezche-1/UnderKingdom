@@ -28,14 +28,15 @@ var active_save_slot: int = 0
 var last_checkpoint_id: String = ""
 var pending_save_restore: Dictionary = {}
 var last_save_error: String = ""
-## Los mapas abiertos directamente desde el editor conservan el equipo clásico.
-## Nueva partida lo reinicia a false antes de entrar en la cinemática.
-var has_sword: bool = true
+## Sin guardado activo, se inicia como prisionero desarmado.
+## Al cargar, el progreso guardado restaura el equipo recuperado.
+var has_sword: bool = false
 var sword_mission_started: bool = false
 var sword_mission_completed: bool = false
 var sword_guard_defeated: bool = false
+var castle_equipment_recovered: bool = false
 const SWORD_MISSION_TITLE := "Recuperar la espada"
-const SWORD_MISSION_DESCRIPTION := "Derrota al guardia de la reina y recupera la espada que te arrebató."
+const SWORD_MISSION_DESCRIPTION := "Encuentra la llave de la armería y recupera tu armadura y espada."
 
 const SAVE_DIRECTORY := "user://saves"
 ## 2: las habilidades se guardan como "abilities" (ABILITY_DEFINITIONS) en vez
@@ -349,7 +350,10 @@ func _restore_game_state(state: Dictionary) -> void:
 	# Los perfiles anteriores a la misión no registraban la derrota del guardia.
 	# No se concede la espada implícitamente al migrarlos al sistema nuevo.
 	sword_guard_defeated = bool(state.get("sword_guard_defeated", false))
-	has_sword = bool(state.get("has_sword", false)) and sword_guard_defeated
+	castle_equipment_recovered = bool(state.get("castle_equipment_recovered", false))
+	# La derrota de un guardia ya no concede equipo. Solo se restaura el estado
+	# armado si el guardado registra que se recuperó en la armería.
+	has_sword = bool(state.get("has_sword", false)) and castle_equipment_recovered
 	sword_mission_started = bool(state.get("sword_mission_started", false)) and not has_sword
 	sword_mission_completed = bool(state.get("sword_mission_completed", false)) and has_sword
 	sword_mission_changed.emit(sword_mission_started, sword_mission_completed)
@@ -551,6 +555,7 @@ func _make_save_data(slot_id: int, location: Dictionary, player: Node) -> Dictio
 			"sword_mission_started": sword_mission_started,
 			"sword_mission_completed": sword_mission_completed,
 			"sword_guard_defeated": sword_guard_defeated,
+			"castle_equipment_recovered": castle_equipment_recovered,
 		},
 	}
 
@@ -1075,6 +1080,7 @@ func reset_for_new_game() -> void:
 	sword_mission_started = false
 	sword_mission_completed = false
 	sword_guard_defeated = false
+	castle_equipment_recovered = false
 	sword_equipment_changed.emit(false)
 	sword_mission_changed.emit(false, false)
 	active_save_slot = 0
@@ -1099,6 +1105,21 @@ func start_sword_mission() -> void:
 func recover_sword(player: Node = null) -> bool:
 	if has_sword or not sword_guard_defeated:
 		return false
+	has_sword = true
+	sword_mission_started = true
+	sword_mission_completed = true
+	if is_instance_valid(player) and player.has_method("set_sword_equipped"):
+		player.call("set_sword_equipped", true)
+	sword_equipment_changed.emit(true)
+	sword_mission_changed.emit(true, true)
+	request_autosave()
+	return true
+
+
+func recover_castle_equipment(player: Node = null) -> bool:
+	if castle_equipment_recovered or has_sword:
+		return false
+	castle_equipment_recovered = true
 	has_sword = true
 	sword_mission_started = true
 	sword_mission_completed = true

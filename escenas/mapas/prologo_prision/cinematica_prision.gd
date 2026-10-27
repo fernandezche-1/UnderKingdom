@@ -58,10 +58,9 @@ func _ready() -> void:
 	_build_lower_corridor()
 	if not _resolve_nodes():
 		return
-	# La espada solo puede persistir si se derrotó al guardia y se recogió.
-	# Esto también corrige perfiles antiguos cuyo campo ausente se interpretaba
-	# como armado por defecto.
-	if not GameManager.sword_guard_defeated:
+	# El equipo se obtiene en la armería; la derrota del guardia ya no determina
+	# el aspecto ni el estado del protagonista al cargar el prólogo.
+	if not GameManager.castle_equipment_recovered:
 		GameManager.has_sword = false
 		GameManager.sword_mission_started = false
 		GameManager.sword_mission_completed = false
