@@ -1155,7 +1155,6 @@ end_cap_mode = 2
 [node name="SalidaPrision" parent="." unique_id=1902965593 instance=ExtResource("6_exit")]
 position = Vector2(996, 320)
 target_scene_path = "res://escenas/mapas/tiles_castillo_combate.tscn"
-target_spawn_id = &"SpawnInicio"
 enabled = false
 require_interaction = true
 prompt_text = "E - ESCAPAR"
@@ -1191,4 +1190,3 @@ position = Vector2(513, 289)
 [node name="GuardiaMision" type="Node2D" parent="." unique_id=1066561021]
 position = Vector2(760, 326)
 script = ExtResource("13_guard_mission")
-guard_path = NodePath("")

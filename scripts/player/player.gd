@@ -258,6 +258,14 @@ var _armed_sprite_position: Vector2 = Vector2.ZERO
 var _armed_sprite_frames: SpriteFrames
 var _unarmed_sprite_frames: SpriteFrames
 var _armed_sprite_offset: Vector2 = Vector2.ZERO
+var _base_sprite_offset: Vector2 = Vector2.ZERO
+var _uses_normalized_prisoner_frames: bool = false
+var _armed_sprite_scale: Vector2 = Vector2.ONE
+@export var debug_slide_collisions: bool = true
+var _last_blocked_contact_signature: String = ""
+var _armory_stuck_frames: int = 0
+var _armory_block_reported: bool = false
+const ARMORY_STUCK_FRAMES_TO_REPORT: int = 5
 const UNARMED_IDLE_SHEET: Texture2D = preload("res://Elementals_fire_knight_FREE_v1.1/idle_8_frames_288x128.png")
 const UNARMED_PUNCH_SHEET: Texture2D = preload("res://Elementals_fire_knight_FREE_v1.1/Right_Punch_6_frames_1728x128_alineado.png")
 const UNARMED_RUN_SHEET: Texture2D = preload("res://Elementals_fire_knight_FREE_v1.1/run_unarmed_8_frames_2304x128.png")
@@ -267,11 +275,16 @@ func _ready() -> void:
     add_to_group("player")
     _base_sprite_scale = sprite.scale
     _base_sprite_position = sprite.position
+    _base_sprite_offset = sprite.offset
     if sprite.sprite_frames.has_animation(&"attack"):
         _armed_sprite_frames = sprite.sprite_frames
         _armed_sprite_offset = sprite.offset
         _armed_sprite_position = sprite.position
+        _armed_sprite_scale = sprite.scale
     else:
+        # prisn.tscn ya trae sus SpriteFrames normalizados en la escena.
+        _uses_normalized_prisoner_frames = true
+        _unarmed_sprite_frames = sprite.sprite_frames
         _load_armed_sprite_frames()
     set_sword_equipped(GameManager.has_sword)
     floor_max_angle = deg_to_rad(max_stair_slope_degrees)
@@ -310,16 +323,21 @@ func set_sword_equipped(equipped: bool) -> void:
         sprite.sprite_frames = _armed_sprite_frames
         sprite.position = _armed_sprite_position
         sprite.offset = _armed_sprite_offset
+        sprite.scale = _armed_sprite_scale
     else:
         if _unarmed_sprite_frames == null:
             _unarmed_sprite_frames = _build_unarmed_sprite_frames()
         sprite.sprite_frames = _unarmed_sprite_frames
         sprite.position = _base_sprite_position
-        # Ambos conjuntos usan lienzos de 288x128 con los pies en la última
-        # fila: basta con compensar la diferencia de altura entre escenas.
-        sprite.offset = _armed_sprite_offset + Vector2(
-            0.0, _armed_sprite_position.y - _base_sprite_position.y
-        )
+        sprite.scale = _base_sprite_scale
+        if _uses_normalized_prisoner_frames:
+            # prisn.tscn usa atlas normalizados y mantiene su offset de origen.
+            sprite.offset = _base_sprite_offset
+        else:
+            # player.tscn conserva el sistema anterior de hojas 288x128.
+            sprite.offset = _armed_sprite_offset + Vector2(
+                0.0, _armed_sprite_position.y - _base_sprite_position.y
+            )
     # Cambiar SpriteFrames conservando el nombre "idle" puede conservar el
     # fotograma/avance del conjunto anterior. Reinicia animación y estados.
     _action = PlayerAction.NORMAL
@@ -340,7 +358,7 @@ func set_sword_equipped(equipped: bool) -> void:
     _active_climb_zone = null
     _drop_through_left = 0.0
     sprite.speed_scale = 1.0
-    sprite.scale = _base_sprite_scale
+    sprite.scale = _armed_sprite_scale if equipped else _base_sprite_scale
     sprite.stop()
     sprite.play(&"idle")
     sprite.frame = 0
@@ -362,6 +380,7 @@ func _load_armed_sprite_frames() -> void:
         _armed_sprite_frames = armed_sprite.sprite_frames
         _armed_sprite_offset = armed_sprite.offset
         _armed_sprite_position = armed_sprite.position
+        _armed_sprite_scale = armed_sprite.scale
     visual_reference.free()
 
 
@@ -401,12 +420,14 @@ func _unhandled_input(event: InputEvent) -> void:
 
     if event.is_action_pressed("attack"):
         request_attack()
-    elif event.is_action_pressed("jump") and GameManager.has_sword:
+    elif event.is_action_pressed("jump"):
         _jump_requested = true
     elif event.is_action_pressed("roll"):
         request_roll()
     elif event.is_action_pressed("interact"):
+        print("[PLAYER_INTERACTION] E pressed player=%s scene=%s position=%s" % [get_path(), get_tree().current_scene.scene_file_path, global_position])
         if not _try_context_interaction():
+            print("[PLAYER_INTERACTION] rejected reason=no_interactable_in_range")
             request_ultimate()
     elif event.is_action_pressed("potion"):
         drink_potion()
@@ -437,7 +458,10 @@ func _physics_process(delta: float) -> void:
 
     if controls_locked:
         _process_cinematic_movement(delta)
+        var cinematic_velocity_before := velocity
+        var cinematic_direction := signf(cinematic_velocity_before.x)
         move_and_slide()
+        _log_blocked_horizontal_collisions(cinematic_direction, cinematic_velocity_before, cinematic_direction, "_process_cinematic_movement")
         _update_cinematic_animation()
         return
 
@@ -471,7 +495,26 @@ func _physics_process(delta: float) -> void:
         else:
             _process_normal_movement(delta)
 
+    var velocity_before_slide := velocity
+    var horizontal_input := _get_horizontal_input()
+    var requested_horizontal_direction := horizontal_input
+    if is_zero_approx(requested_horizontal_direction):
+        requested_horizontal_direction = signf(velocity_before_slide.x)
     move_and_slide()
+    var movement_function := "_process_normal_movement"
+    if _action == PlayerAction.ROLL:
+        movement_function = "_process_roll"
+    elif _action in [PlayerAction.ATTACK, PlayerAction.ULTIMATE]:
+        movement_function = "_process_attack_movement"
+    elif _action == PlayerAction.AIR_ATTACK:
+        movement_function = "_process_air_attack_movement"
+    elif _action == PlayerAction.HURT:
+        movement_function = "_process_hurt_movement"
+    elif _action == PlayerAction.DEFEND:
+        movement_function = "_process_defense_movement"
+    elif _climbing:
+        movement_function = "_process_climbing"
+    _log_blocked_horizontal_collisions(requested_horizontal_direction, velocity_before_slide, horizontal_input, movement_function)
 
     if global_position.y > _fall_limit:
         die()
@@ -510,6 +553,8 @@ func set_controls_locked(locked: bool) -> void:
     _jump_requested = false
     _climbing = false
     if locked:
+        if GameManager.has_sword and is_instance_valid(sprite):
+            sprite.offset = _armed_sprite_offset
         _finish_action()
         velocity = Vector2.ZERO
 
@@ -527,7 +572,7 @@ func _process_cinematic_movement(delta: float) -> void:
 
 
 func _update_cinematic_animation() -> void:
-    sprite.scale = _base_sprite_scale
+    sprite.scale = _armed_sprite_scale if GameManager.has_sword else _base_sprite_scale
     sprite.speed_scale = 1.0
     if not GameManager.has_sword:
         if sprite.animation != &"idle" or not sprite.is_playing():
@@ -630,7 +675,152 @@ func _try_context_interaction() -> bool:
     if nearest == null:
         return false
 
-    return bool(nearest.call("interact", self))
+    print("[PLAYER_INTERACTION] selected target=%s distance=%.2f" % [nearest.get_path(), nearest_distance])
+    var handled := bool(nearest.call("interact", self))
+    print("[PLAYER_INTERACTION] result target=%s handled=%s" % [nearest.get_path(), handled])
+    return handled
+
+
+func _log_blocked_horizontal_collisions(
+    requested_direction: float,
+    velocity_before: Vector2,
+    horizontal_input: float,
+    movement_function: String
+) -> void:
+    if not debug_slide_collisions:
+        return
+
+    var scene := get_tree().current_scene
+    if scene == null or scene.scene_file_path not in [
+        "res://escenas/mapas/tiles_castillo.tscn",
+        "res://escenas/mapas/tiles_castillo_combate.tscn",
+    ]:
+        _last_blocked_contact_signature = ""
+        _armory_stuck_frames = 0
+        _armory_block_reported = false
+        return
+
+    # Keep the temporary trace focused on the route from PuertaArmeria to the equipment stand.
+    if global_position.x < 1180.0 or global_position.x > 1620.0 or global_position.y < 400.0 or global_position.y > 880.0:
+        _last_blocked_contact_signature = ""
+        _armory_stuck_frames = 0
+        _armory_block_reported = false
+        return
+
+    var displacement := get_position_delta()
+    if horizontal_input < 0.5 or requested_direction < 0.5 or absf(displacement.x) > 0.05:
+        _last_blocked_contact_signature = ""
+        _armory_stuck_frames = 0
+        _armory_block_reported = false
+        return
+    _armory_stuck_frames += 1
+    if _armory_stuck_frames < ARMORY_STUCK_FRAMES_TO_REPORT:
+        return
+
+    var contacts: Array[Dictionary] = []
+    var signature_parts := PackedStringArray()
+    for index in get_slide_collision_count():
+        var collision := get_slide_collision(index)
+        var collider := collision.get_collider() as Node
+        if collider == null:
+            continue
+        var normal := collision.get_normal()
+        var collider_rid := collision.get_collider_rid()
+
+        var contact: Dictionary = {
+            "collider": collider,
+            "rid": collider_rid,
+            "point": collision.get_position(),
+            "normal": normal,
+            "blocks_horizontal": normal.x * requested_direction < -0.5,
+            "tile_details": "",
+            "tile_key": "",
+            "shape_details": "",
+        }
+        if collider is TileMapLayer:
+            var layer := collider as TileMapLayer
+            var cell := layer.get_coords_for_body_rid(collider_rid)
+            var source_id := layer.get_cell_source_id(cell)
+            var tileset_name := "<none>"
+            if layer.tile_set != null:
+                tileset_name = layer.tile_set.resource_path
+                if tileset_name.is_empty():
+                    tileset_name = layer.tile_set.resource_name
+            contact["tile_details"] = " cell=%s source=%d atlas=%s alternative=%d tileset=%s" % [
+                cell,
+                source_id,
+                layer.get_cell_atlas_coords(cell),
+                layer.get_cell_alternative_tile(cell),
+                tileset_name,
+            ]
+            contact["tile_key"] = str(cell)
+        if collider is CollisionObject2D:
+            var collision_object := collider as CollisionObject2D
+            var shape_index := collision.get_collider_shape_index()
+            var owner_id := collision_object.shape_find_owner(shape_index)
+            var shape_details := " shape_index=%d" % shape_index
+            if owner_id >= 0:
+                var shape_owner := collision_object.shape_owner_get_owner(owner_id)
+                if shape_owner is Node:
+                    var shape_node := shape_owner as Node
+                    shape_details += " shape_node=%s shape_type=%s" % [shape_node.get_path(), shape_node.get_class()]
+                    if shape_node is CollisionShape2D and (shape_node as CollisionShape2D).shape != null:
+                        shape_details += " resource=%s" % (shape_node as CollisionShape2D).shape.get_class()
+            contact["shape_details"] = shape_details
+        contacts.append(contact)
+        signature_parts.append("%s|%s|%s|%s" % [collider.get_path(), contact["tile_key"], normal, contact["blocks_horizontal"]])
+
+    var signature := ";".join(signature_parts) if not signature_parts.is_empty() else "NO_PHYSICAL_COLLISION"
+    signature += "|action=%d|climbing=%s|controls_locked=%s|dead=%s|movement=%s" % [_action, _climbing, controls_locked, dead, movement_function]
+    if _armory_block_reported:
+        return
+    _armory_block_reported = true
+    _last_blocked_contact_signature = signature
+
+    var action_name := _action_name() if _action != PlayerAction.NORMAL else "NORMAL"
+    var horizontal_blocker_found := false
+    for contact in contacts:
+        if bool(contact["blocks_horizontal"]):
+            horizontal_blocker_found = true
+            break
+    var cause := "COLLISION_CANDIDATE" if horizontal_blocker_found else "NO_HORIZONTAL_COLLISION"
+    print("[BLOQUEO_ARMERIA] causa=%s escena=%s jugador=%s posición_global=%s entrada_horizontal=%.2f velocidad_objetivo_por_input=%.2f velocidad_horizontal_solicitada=%.2f velocidad_horizontal_después=%.2f movimiento_real=%s movimiento_función=%s acción=%s controls_locked=%s climbing=%s dead=%s suelo=%s pared=%s fotogramas_bloqueado=%d número_colisiones=%d" % [
+        cause,
+        scene.scene_file_path,
+        get_path(),
+        global_position,
+        horizontal_input,
+        horizontal_input * move_speed,
+        velocity_before.x,
+        velocity.x,
+        displacement,
+        movement_function,
+        action_name,
+        controls_locked,
+        _climbing,
+        dead,
+        is_on_floor(),
+        is_on_wall(),
+        _armory_stuck_frames,
+        get_slide_collision_count(),
+    ])
+    if not horizontal_blocker_found:
+        print("[BLOQUEO_ARMERIA_ESTADO] No hay normal de colisión que se oponga al movimiento horizontal. Revisar la función/estado indicado, velocidad previa, controles bloqueados, escalada y lógica que modifica velocity antes de move_and_slide().")
+    for contact in contacts:
+        var collider := contact["collider"] as Node
+        var contact_kind := "PARED_HORIZONTAL" if bool(contact["blocks_horizontal"]) else ("SUELO/TECHO" if absf((contact["normal"] as Vector2).x) < 0.5 else "CONTACTO_DIAGONAL")
+        print("[BLOQUEO_ARMERIA_CONTACTO] tipo=%s objeto=%s clase=%s ruta=%s rid=%s punto=%s normal=%s bloquea_horizontal=%s%s%s" % [
+            contact_kind,
+            collider.name,
+            collider.get_class(),
+            collider.get_path(),
+            contact["rid"],
+            contact["point"],
+            contact["normal"],
+            contact["blocks_horizontal"],
+            contact["tile_details"],
+            contact["shape_details"],
+        ])
 
 
 func request_ultimate() -> void:
@@ -925,7 +1115,7 @@ func _process_normal_movement(delta: float) -> void:
     if not is_on_floor():
         velocity.y = minf(velocity.y + gravity * delta, max_fall_speed)
 
-    if GameManager.has_sword and _jump_requested and is_on_floor():
+    if _jump_requested and is_on_floor():
         velocity.y = jump_velocity
     _jump_requested = false
 
@@ -1180,13 +1370,16 @@ func _get_horizontal_input() -> float:
 
 
 func _update_animation(direction: float) -> void:
+    if GameManager.has_sword:
+        # Los fotogramas ya comparten el mismo eje; conserva el offset base del nodo.
+        sprite.offset = _armed_sprite_offset
     if _action != PlayerAction.NORMAL:
         return
     if _hurt_time_left > 0.0:
         return
 
     sprite.speed_scale = 1.0
-    sprite.scale = _base_sprite_scale
+    sprite.scale = _armed_sprite_scale if GameManager.has_sword else _base_sprite_scale
 
     if direction < 0.0:
         sprite.flip_h = true
@@ -1194,6 +1387,30 @@ func _update_animation(direction: float) -> void:
         sprite.flip_h = false
 
     if not GameManager.has_sword:
+        # prisn.tscn trae la animacion singular "escalera". El bloque desarmado
+        # debe seleccionarla antes del retorno de idle/run o nunca se muestra.
+        if _climbing and sprite.sprite_frames.has_animation(&"escalera"):
+            sprite.position = _base_sprite_position
+            sprite.offset = _base_sprite_offset
+            sprite.scale = _base_sprite_scale
+            if sprite.animation != &"escalera":
+                sprite.play(&"escalera")
+            if absf(velocity.y) > 1.0 or absf(velocity.x) > 1.0:
+                if not sprite.is_playing():
+                    sprite.play(&"escalera")
+            else:
+                sprite.pause()
+            return
+        # Los cuadros desarmados que arma el código fuera de prisn.tscn no traen "jump".
+        if not is_on_floor() and sprite.sprite_frames.has_animation(&"jump"):
+            if sprite.animation != &"jump":
+                sprite.play(&"jump")
+            elif velocity.y >= 0.0 and sprite.is_playing():
+                # Conserva la pose aérea de caída hasta que la física confirme
+                # el aterrizaje; la animación no modifica velocity.y.
+                sprite.frame = mini(4, sprite.sprite_frames.get_frame_count(&"jump") - 1)
+                sprite.pause()
+            return
         var unarmed_animation: StringName = &"run" if absf(velocity.x) > 8.0 else &"idle"
         if sprite.animation != unarmed_animation or not sprite.is_playing():
             sprite.play(unarmed_animation)
@@ -1573,6 +1790,11 @@ func _is_flurry_active() -> bool:
     )
 
 
+func _hurt_animation_name() -> StringName:
+    var wanted: StringName = &"take hit" if GameManager.has_sword else &"takehit"
+    return wanted if sprite.sprite_frames.has_animation(wanted) else &"idle"
+
+
 func take_damage(
     amount: float,
     source_global_position: Vector2 = Vector2.ZERO,
@@ -1640,9 +1862,10 @@ func take_damage(
     _action = PlayerAction.HURT
     _current_attack_speed_multiplier = 1.0
     sprite.speed_scale = 1.0
-    _action_total_time = maxf(_animation_duration(&"take hit"), hurt_animation_time)
+    var hurt_animation := _hurt_animation_name()
+    _action_total_time = maxf(_animation_duration(hurt_animation), hurt_animation_time)
     _action_time_left = _action_total_time
-    sprite.play(&"take hit" if GameManager.has_sword else &"idle")
+    sprite.play(hurt_animation)
     _update_hud("DAÑO -%.2f" % amount)
     return true
 
@@ -1753,7 +1976,7 @@ func _block_guard_hit() -> void:
     _action_time_left = guard_break_stun_time
     _hurt_time_left = guard_break_stun_time
     velocity.x = 0.0
-    sprite.play(&"take hit" if GameManager.has_sword else &"idle")
+    sprite.play(_hurt_animation_name())
     UnderkingdomCombatFX.guard_break(self, sprite)
     _update_hud("GUARD BREAK")
 
@@ -1815,6 +2038,8 @@ func die() -> void:
     _disable_roll_enemy_passthrough()
     _action = PlayerAction.NORMAL
     _restore_sprite_visibility()
+    if GameManager.has_sword:
+        sprite.offset = _armed_sprite_offset
 
     health_changed.emit(current_health, max_health)
     died.emit()

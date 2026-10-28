@@ -1,13 +1,13 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://dgyfdhp1gxjw"]
 
-[ext_resource type="PackedScene" path="res://escenas/mapas/tiles_castillo.tscn" id="1_base"]
+[ext_resource type="PackedScene" uid="uid://ctrjomebdkafj" path="res://escenas/mapas/tiles_castillo.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://b8swqtsoxxxya" path="res://scripts/combat/boss_arena.gd" id="2_sala"]
 [ext_resource type="PackedScene" path="res://escenas/jefes/rey_caido.tscn" id="3_rey"]
 [ext_resource type="PackedScene" path="res://escenas/items/llave_jefe_m1.tscn" id="4_llave"]
 [ext_resource type="Script" uid="uid://b1wbjge6trnxt" path="res://scripts/environment/arena_barrier.gd" id="5_barrera"]
 [ext_resource type="Script" uid="uid://c5vs20q6x5qa5" path="res://scripts/environment/locked_door.gd" id="6_puerta_llave"]
-[ext_resource type="Texture2D" path="res://assets_prueba/raou_castillo/tileset_castillo.png" id="7_tileset"]
-[ext_resource type="Script" path="res://scripts/environment/map_ambience.gd" id="8_ambiente"]
+[ext_resource type="Texture2D" uid="uid://csysi8ilmgphc" path="res://assets_prueba/raou_castillo/tileset_castillo.png" id="7_tileset"]
+[ext_resource type="Script" uid="uid://h0keacdp4ta4" path="res://scripts/environment/map_ambience.gd" id="8_ambiente"]
 [ext_resource type="PackedScene" path="res://escenas/items/reliquia_habilidad.tscn" id="9_reliquia"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_activador"]
@@ -46,9 +46,22 @@ size = Vector2(48, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_puerta_llave"]
 size = Vector2(16, 64)
 
-[node name="TilesCastilloCombate" instance=ExtResource("1_base")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2h10h"]
+size = Vector2(333.8125, 18)
 
-[node name="SalaJefe" type="Node2D" parent="SistemasMapa" parent_id_path=PackedInt32Array(1141564958)]
+[node name="TilesCastilloCombate" unique_id=1561939315 instance=ExtResource("1_base")]
+
+[node name="Terreno2" parent="." index="2" unique_id=76505527]
+collision_visibility_mode = 1
+
+[node name="Terreno" parent="Terreno2" index="0" unique_id=1535674172]
+use_kinematic_bodies = true
+collision_visibility_mode = 1
+
+[node name="CollisionShape2D" parent="PuertaArmeria" parent_id_path=PackedInt32Array(771443847) index="1" unique_id=179093986]
+disabled = true
+
+[node name="SalaJefe" type="Node2D" parent="SistemasMapa" parent_id_path=PackedInt32Array(1141564958) index="9" unique_id=832458316]
 script = ExtResource("2_sala")
 encounter_id = "castillo_rey"
 boss_scene = ExtResource("3_rey")
@@ -56,30 +69,30 @@ key_scene = ExtResource("4_llave")
 key_id = "castillo_rey"
 boss_message = "EL REY CAÍDO"
 
-[node name="Activador" type="Area2D" parent="SistemasMapa/SalaJefe"]
+[node name="Activador" type="Area2D" parent="SistemasMapa/SalaJefe" index="0" unique_id=1100845998]
 position = Vector2(344, 824)
 collision_layer = 0
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaJefe/Activador"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaJefe/Activador" index="0" unique_id=1505516316]
 shape = SubResource("RectangleShape2D_activador")
 
-[node name="Puertas" type="Node2D" parent="SistemasMapa/SalaJefe"]
+[node name="Puertas" type="Node2D" parent="SistemasMapa/SalaJefe" index="1" unique_id=1044878865]
 
-[node name="PuertaEntrada" type="StaticBody2D" parent="SistemasMapa/SalaJefe/Puertas"]
+[node name="PuertaEntrada" type="StaticBody2D" parent="SistemasMapa/SalaJefe/Puertas" index="0" unique_id=1074817372]
 position = Vector2(600, 872)
 script = ExtResource("5_barrera")
 piece_start = SubResource("AtlasTexture_columna_tope")
 piece_middle = SubResource("AtlasTexture_columna_medio")
 piece_end = SubResource("AtlasTexture_columna_base")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaJefe/Puertas/PuertaEntrada"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaJefe/Puertas/PuertaEntrada" index="0" unique_id=1598653902]
 shape = SubResource("RectangleShape2D_puerta_entrada")
 disabled = true
 
-[node name="Atajos" type="Node2D" parent="SistemasMapa/SalaJefe"]
+[node name="Atajos" type="Node2D" parent="SistemasMapa/SalaJefe" index="2" unique_id=935037535]
 
-[node name="Trampilla" type="StaticBody2D" parent="SistemasMapa/SalaJefe/Atajos"]
+[node name="Trampilla" type="StaticBody2D" parent="SistemasMapa/SalaJefe/Atajos" index="0" unique_id=439413104]
 position = Vector2(408, 728)
 script = ExtResource("5_barrera")
 piece_start = SubResource("AtlasTexture_losa_izq")
@@ -87,24 +100,24 @@ piece_middle = SubResource("AtlasTexture_losa_medio")
 piece_end = SubResource("AtlasTexture_losa_der")
 start_closed = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaJefe/Atajos/Trampilla"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaJefe/Atajos/Trampilla" index="0" unique_id=947339008]
 shape = SubResource("RectangleShape2D_trampilla")
 
-[node name="PuntosJefe" type="Node2D" parent="SistemasMapa/SalaJefe"]
+[node name="PuntosJefe" type="Node2D" parent="SistemasMapa/SalaJefe" index="3" unique_id=1635060291]
 
-[node name="JefeOeste" type="Marker2D" parent="SistemasMapa/SalaJefe/PuntosJefe"]
+[node name="JefeOeste" type="Marker2D" parent="SistemasMapa/SalaJefe/PuntosJefe" index="0" unique_id=1988092954]
 position = Vector2(152, 862)
 
-[node name="JefeEste" type="Marker2D" parent="SistemasMapa/SalaJefe/PuntosJefe"]
+[node name="JefeEste" type="Marker2D" parent="SistemasMapa/SalaJefe/PuntosJefe" index="1" unique_id=1913193288]
 position = Vector2(536, 862)
 
-[node name="PuntoLlave" type="Marker2D" parent="SistemasMapa/SalaJefe"]
+[node name="PuntoLlave" type="Marker2D" parent="SistemasMapa/SalaJefe" index="4" unique_id=874864892]
 position = Vector2(344, 880)
 
-[node name="UI" type="CanvasLayer" parent="SistemasMapa/SalaJefe"]
+[node name="UI" type="CanvasLayer" parent="SistemasMapa/SalaJefe" index="5" unique_id=1326189414]
 layer = 9
 
-[node name="Aviso" type="Label" parent="SistemasMapa/SalaJefe/UI"]
+[node name="Aviso" type="Label" parent="SistemasMapa/SalaJefe/UI" index="0" unique_id=363792805]
 anchors_preset = 10
 anchor_right = 1.0
 offset_top = 40.0
@@ -116,7 +129,7 @@ theme_override_font_sizes/font_size = 16
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PuertaLlave" type="StaticBody2D" parent="SistemasMapa" parent_id_path=PackedInt32Array(1141564958)]
+[node name="PuertaLlave" type="StaticBody2D" parent="SistemasMapa" parent_id_path=PackedInt32Array(1141564958) index="10" unique_id=1007671194]
 position = Vector2(1528, 1200)
 script = ExtResource("6_puerta_llave")
 key_id = "castillo_rey"
@@ -125,26 +138,34 @@ piece_start = SubResource("AtlasTexture_columna_tope")
 piece_middle = SubResource("AtlasTexture_columna_medio")
 piece_end = SubResource("AtlasTexture_columna_base")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/PuertaLlave"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/PuertaLlave" index="0" unique_id=175478387]
 shape = SubResource("RectangleShape2D_puerta_llave")
 
-[node name="Ambientacion" type="Node2D" parent="."]
+[node name="Ambientacion" type="Node2D" parent="." index="15" unique_id=1088398461]
 script = ExtResource("8_ambiente")
 ambient_color = Color(0.44, 0.38, 0.56, 1)
 player_light_color = Color(0.9, 0.85, 1, 1)
 vignette_strength = 0.6
 
-[node name="Reliquias" type="Node2D" parent="."]
+[node name="Reliquias" type="Node2D" parent="." index="16" unique_id=1802450600]
 
-[node name="ReliquiaRodar" parent="Reliquias" instance=ExtResource("9_reliquia")]
-position = Vector2(1208, 756)
+[node name="ReliquiaRodar" parent="Reliquias" index="0" unique_id=1480014618 instance=ExtResource("9_reliquia")]
+position = Vector2(1159, 568)
 ability_id = "roll"
+
+[node name="collisionesarmeria" type="StaticBody2D" parent="." index="17" unique_id=17294907]
+position = Vector2(1465, 779)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="collisionesarmeria" index="0" unique_id=259612632]
+position = Vector2(-26, 0)
+shape = SubResource("RectangleShape2D_2h10h")
 
 [editable path="SistemasMapa/KillZones/Pinchos1"]
 [editable path="SistemasMapa/KillZones/Pinchos2"]
 [editable path="SistemasMapa/Escaleras/Escalera1"]
 [editable path="SistemasMapa/Escaleras/Escalera2"]
 [editable path="SistemasMapa/Escaleras/Escalera3"]
+[editable path="SistemasMapa/Escaleras/Escalera6"]
 [editable path="SistemasMapa/Escaleras/Escalera4"]
 [editable path="SistemasMapa/Escaleras/Escalera5"]
 [editable path="SistemasMapa/Transiciones/SalidaSiguiente1"]
