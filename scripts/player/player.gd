@@ -34,7 +34,7 @@ enum PlayerAction {
 ## lunge: el Player da un paso corto hacia delante al soltar el tajo.
 const ATTACK_PROFILES := {
     &"puch": {"start": 0, "end": 5, "hits": [
-        {"frames": Vector2i(2, 3), "ratio": 1.0, "area": "front", "knockback": true},
+        {"frames": Vector2i(3, 4), "ratio": 1.0, "area": "front", "knockback": true},
     ]},
     &"attack": {"start": 0, "end": 10, "lunge": true, "hits": [
         {"frames": Vector2i(4, 6), "ratio": 1.0, "area": "front", "knockback": true},

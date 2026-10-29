@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/run_ia/run_ia_6_frames_1626x724.png" id="5_evcc1"]
 [ext_resource type="PackedScene" path="res://escenas/ui/player_hud.tscn" id="5_hud"]
 [ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/takehit_prisn_normalizado.png" id="6_ia3ub"]
-[ext_resource type="Texture2D" uid="uid://b4jbre05emp6b" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/puch.png" id="7_puch"]
+[ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/puch_ia/puch_ia_6_frames_2172x724.png" id="7_puch"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i878l"]
 atlas = ExtResource("2_2pnct")
