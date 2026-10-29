@@ -17,6 +17,7 @@ func _init() -> void:
 	_add_action("interact", [_key(KEY_E), _button(JOY_BUTTON_Y)])
 	_add_action("defend", [_key(KEY_Q), _mouse(MOUSE_BUTTON_RIGHT), _button(JOY_BUTTON_LEFT_SHOULDER), _axis(JOY_AXIS_TRIGGER_LEFT, 1.0)])
 	_add_action("potion", [_key(KEY_C), _button(JOY_BUTTON_RIGHT_SHOULDER)])
+	_add_action("fireball", [_key(KEY_X), _button(JOY_BUTTON_RIGHT_STICK)])
 	_add_action("pause", [_key(KEY_ESCAPE), _button(JOY_BUTTON_START)])
 	_add_action("toggle_fullscreen", [_key(KEY_F11)])
 	_add_action("dialogue_advance", [_key(KEY_E), _key(KEY_ENTER), _key(KEY_SPACE), _button(JOY_BUTTON_A), _button(JOY_BUTTON_Y)])

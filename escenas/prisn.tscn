@@ -1,14 +1,15 @@
 [gd_scene format=3 uid="uid://bhstew457ls34"]
 
 [ext_resource type="Texture2D" uid="uid://dud00jrg5vwb2" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/death.png" id="2_2pnct"]
-[ext_resource type="Texture2D" uid="uid://bmbcr77vj4igm" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/idle.png" id="3_li5aj"]
+[ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/idle_ia/idle_ia_8_frames_2168x724.png" id="3_li5aj"]
 [ext_resource type="Script" uid="uid://iuqkl2w2cf3s" path="res://scripts/player/player.gd" id="3_player"]
 [ext_resource type="Texture2D" uid="uid://cx7gmwopfjyqh" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/escalera.png" id="3_rrco2"]
-[ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/jump/jump_prisn_normalizado.png" id="4_2pnct"]
+[ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/jump_ia/jump_ia_6_frames_2172x724.png" id="4_2pnct"]
 [ext_resource type="Script" uid="uid://ouv81xqammtp" path="res://scripts/camera/bounded_camera.gd" id="4_camera"]
-[ext_resource type="Texture2D" uid="uid://bvsmaullppkop" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/run.png" id="5_evcc1"]
+[ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/run_ia/run_ia_6_frames_1626x724.png" id="5_evcc1"]
 [ext_resource type="PackedScene" path="res://escenas/ui/player_hud.tscn" id="5_hud"]
 [ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/takehit_prisn_normalizado.png" id="6_ia3ub"]
+[ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/puch_ia/puch_ia_6_frames_2172x724.png" id="7_puch"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i878l"]
 atlas = ExtResource("2_2pnct")
@@ -178,20 +179,29 @@ region = Rect2(1448, 0, 362, 724)
 atlas = ExtResource("4_2pnct")
 region = Rect2(1810, 0, 362, 724)
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0bui0"]
-load_path = "res://.godot/imported/puch.png-61eca0e235a0f92a00c4cf9376e7af54.ctex"
+[sub_resource type="AtlasTexture" id="AtlasTexture_puch0"]
+atlas = ExtResource("7_puch")
+region = Rect2(0, 0, 362, 724)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kwq8m"]
-atlas = SubResource("CompressedTexture2D_0bui0")
-region = Rect2(0, 0, 352, 288)
+[sub_resource type="AtlasTexture" id="AtlasTexture_puch1"]
+atlas = ExtResource("7_puch")
+region = Rect2(362, 0, 362, 724)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kw62m"]
-atlas = SubResource("CompressedTexture2D_0bui0")
-region = Rect2(352, 0, 352, 288)
+[sub_resource type="AtlasTexture" id="AtlasTexture_puch2"]
+atlas = ExtResource("7_puch")
+region = Rect2(724, 0, 362, 724)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bw5co"]
-atlas = SubResource("CompressedTexture2D_0bui0")
-region = Rect2(704, 0, 352, 288)
+[sub_resource type="AtlasTexture" id="AtlasTexture_puch3"]
+atlas = ExtResource("7_puch")
+region = Rect2(1086, 0, 362, 724)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_puch4"]
+atlas = ExtResource("7_puch")
+region = Rect2(1448, 0, 362, 724)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_puch5"]
+atlas = ExtResource("7_puch")
+region = Rect2(1810, 0, 362, 724)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_42o6o"]
 atlas = ExtResource("5_evcc1")
@@ -216,14 +226,6 @@ region = Rect2(1084, 0, 271, 724)
 [sub_resource type="AtlasTexture" id="AtlasTexture_63sye"]
 atlas = ExtResource("5_evcc1")
 region = Rect2(1355, 0, 271, 724)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p2dys"]
-atlas = ExtResource("5_evcc1")
-region = Rect2(1626, 0, 271, 724)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ncn5m"]
-atlas = ExtResource("5_evcc1")
-region = Rect2(1897, 0, 271, 724)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1lyan"]
 atlas = ExtResource("6_ia3ub")
@@ -382,15 +384,24 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_kwq8m")
+"texture": SubResource("AtlasTexture_puch0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_kw62m")
+"texture": SubResource("AtlasTexture_puch1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_bw5co")
+"texture": SubResource("AtlasTexture_puch2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_puch3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_puch4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_puch5")
 }],
-"loop": 1,
+"loop": false,
 "name": &"puch",
 "speed": 5.0
 }, {
@@ -412,12 +423,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_63sye")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_p2dys")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ncn5m")
 }],
 "loop": 1,
 "name": &"run",
