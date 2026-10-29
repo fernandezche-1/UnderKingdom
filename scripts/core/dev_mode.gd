@@ -30,6 +30,7 @@ const OPTIONS: Array[Dictionary] = [
     {"text": "+%d pociones" % POTIONS_PER_GRANT, "action": "_grant_potions"},
     {"text": "Dar llaves de jefe", "action": "_grant_boss_keys"},
     {"text": "Desbloquear habilidades", "action": "_unlock_all_abilities"},
+    {"text": "Dar espada", "action": "_grant_sword"},
 ]
 
 var available: bool = false
@@ -70,7 +71,8 @@ func _input(event: InputEvent) -> void:
 
     if not _panel.visible:
         return
-    var index: int = int(key_event.physical_keycode) - int(KEY_1)
+    # La décima opción va en la tecla 0.
+    var index: int = 9 if key_event.physical_keycode == KEY_0 else int(key_event.physical_keycode) - int(KEY_1)
     if index >= 0 and index < OPTIONS.size():
         _activate(index)
         get_viewport().set_input_as_handled()
@@ -122,6 +124,12 @@ func _grant_potions() -> void:
 func _grant_boss_keys() -> void:
     for key_id in BOSS_KEY_IDS:
         GameManager.grant_key(key_id)
+
+
+## Abrir un mapa directo empieza sin espada (has_sword = false). Equivale a
+## recoger el equipo de la armería del castillo.
+func _grant_sword() -> void:
+    GameManager.recover_castle_equipment(_player())
 
 
 func _unlock_all_abilities() -> void:
@@ -192,7 +200,7 @@ func _refresh() -> void:
     for index in OPTIONS.size():
         var option: Dictionary = OPTIONS[index]
         var button: Button = _buttons[index]
-        var text: String = "%d  %s" % [index + 1, option.text]
+        var text: String = "%d  %s" % [(index + 1) % 10, option.text]
         var color: Color = COLOR_ACTION
         if option.has("flag"):
             var on: bool = bool(get(String(option.flag)))

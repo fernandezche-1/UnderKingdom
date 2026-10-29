@@ -880,13 +880,23 @@ func request_ultimate() -> void:
 
 
 func request_fireball() -> void:
-    if not fireball_enabled or dead or not GameManager.has_sword or _climbing or not is_on_floor():
-        return
-    if _fireball_cooldown_left > 0.0:
-        return
-    if _action not in [PlayerAction.NORMAL, PlayerAction.DEFEND]:
-        return
-    if not sprite.sprite_frames.has_animation(&"fireball"):
+    var blocked_reason := ""
+    if not fireball_enabled:
+        blocked_reason = "desactivada en el inspector"
+    elif dead:
+        blocked_reason = "muerto"
+    elif not GameManager.has_sword:
+        blocked_reason = "sin espada (modo dev: Dar espada)"
+    elif _climbing or not is_on_floor():
+        blocked_reason = "no está en el suelo"
+    elif _fireball_cooldown_left > 0.0:
+        blocked_reason = "enfriamiento %.1fs" % _fireball_cooldown_left
+    elif _action not in [PlayerAction.NORMAL, PlayerAction.DEFEND]:
+        blocked_reason = "ocupado en %s" % _action_name()
+    elif not sprite.sprite_frames.has_animation(&"fireball"):
+        blocked_reason = "falta la animación"
+    if blocked_reason != "":
+        print("[BOLA_FUEGO] no sale: %s" % blocked_reason)
         return
 
     if _action == PlayerAction.DEFEND:
