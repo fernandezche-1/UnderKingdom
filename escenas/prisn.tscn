@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bvsmaullppkop" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/run.png" id="5_evcc1"]
 [ext_resource type="PackedScene" path="res://escenas/ui/player_hud.tscn" id="5_hud"]
 [ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/takehit_prisn_normalizado.png" id="6_ia3ub"]
+[ext_resource type="Texture2D" uid="uid://b4jbre05emp6b" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/puch.png" id="7_puch"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i878l"]
 atlas = ExtResource("2_2pnct")
@@ -178,20 +179,29 @@ region = Rect2(1448, 0, 362, 724)
 atlas = ExtResource("4_2pnct")
 region = Rect2(1810, 0, 362, 724)
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0bui0"]
-load_path = "res://.godot/imported/puch.png-61eca0e235a0f92a00c4cf9376e7af54.ctex"
+[sub_resource type="AtlasTexture" id="AtlasTexture_puch0"]
+atlas = ExtResource("7_puch")
+region = Rect2(0, 0, 362, 724)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kwq8m"]
-atlas = SubResource("CompressedTexture2D_0bui0")
-region = Rect2(0, 0, 352, 288)
+[sub_resource type="AtlasTexture" id="AtlasTexture_puch1"]
+atlas = ExtResource("7_puch")
+region = Rect2(362, 0, 362, 724)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kw62m"]
-atlas = SubResource("CompressedTexture2D_0bui0")
-region = Rect2(352, 0, 352, 288)
+[sub_resource type="AtlasTexture" id="AtlasTexture_puch2"]
+atlas = ExtResource("7_puch")
+region = Rect2(724, 0, 362, 724)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bw5co"]
-atlas = SubResource("CompressedTexture2D_0bui0")
-region = Rect2(704, 0, 352, 288)
+[sub_resource type="AtlasTexture" id="AtlasTexture_puch3"]
+atlas = ExtResource("7_puch")
+region = Rect2(1086, 0, 362, 724)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_puch4"]
+atlas = ExtResource("7_puch")
+region = Rect2(1448, 0, 362, 724)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_puch5"]
+atlas = ExtResource("7_puch")
+region = Rect2(1810, 0, 362, 724)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_42o6o"]
 atlas = ExtResource("5_evcc1")
@@ -382,15 +392,24 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_kwq8m")
+"texture": SubResource("AtlasTexture_puch0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_kw62m")
+"texture": SubResource("AtlasTexture_puch1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_bw5co")
+"texture": SubResource("AtlasTexture_puch2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_puch3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_puch4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_puch5")
 }],
-"loop": 1,
+"loop": false,
 "name": &"puch",
 "speed": 5.0
 }, {
