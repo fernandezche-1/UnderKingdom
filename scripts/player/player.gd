@@ -18,7 +18,8 @@ enum PlayerAction {
     ROLL,
     DEFEND,
     ULTIMATE,
-    HURT
+    HURT,
+    CAST
 }
 
 ## Cómo se juega cada animación de ataque. Las del combo son acumulativas:
@@ -185,6 +186,19 @@ const ATTACK_PROFILES := {
 ## Muere al caer esta distancia por debajo del borde inferior del mapa.
 @export_range(0.0, 400.0, 4.0) var fall_margin_below_map: float = 64.0
 
+@export_category("Bola de fuego")
+## Prueba de una animación hecha con IA (Elementals_fire_knight_FREE_v1.1/bola_fuego/).
+@export var fireball_enabled: bool = true
+@export_range(0.25, 10.0, 0.25) var fireball_damage: float = 1.0
+@export_range(40.0, 900.0, 10.0) var fireball_speed: float = 300.0
+@export_range(0.0, 10.0, 0.1) var fireball_cooldown: float = 1.2
+@export_range(1.0, 30.0, 1.0) var fireball_fps: float = 10.0
+## Cuadro de la animación en que la bola sale de la mano.
+@export_range(0, 5, 1) var fireball_release_frame: int = 3
+## Dónde aparece la bola respecto al centro del sprite, mirando a la derecha
+## (en la hoja, la bola del cuadro 4 está en x 159, y 96 de 288x128).
+@export var fireball_spawn_offset: Vector2 = Vector2(16.0, 32.0)
+
 @export_category("Pruebas")
 @export var enable_debug_keys: bool = false
 @export var show_debug_hud: bool = false
@@ -236,6 +250,8 @@ var _combo_queue_left: float = 0.0
 var _combo_buffered_inputs: int = 0
 var _roll_direction: float = 1.0
 var _ultimate_cooldown_left: float = 0.0
+var _fireball_cooldown_left: float = 0.0
+var _fireball_released: bool = false
 var _attack_hit_targets: Array[int] = []
 var _attack_subwindow_index: int = -1
 var _current_attack_speed_multiplier: float = 1.0
@@ -269,6 +285,9 @@ const ARMORY_STUCK_FRAMES_TO_REPORT: int = 5
 const UNARMED_IDLE_SHEET: Texture2D = preload("res://Elementals_fire_knight_FREE_v1.1/idle_8_frames_288x128.png")
 const UNARMED_PUNCH_SHEET: Texture2D = preload("res://Elementals_fire_knight_FREE_v1.1/Right_Punch_6_frames_1728x128_alineado.png")
 const UNARMED_RUN_SHEET: Texture2D = preload("res://Elementals_fire_knight_FREE_v1.1/run_unarmed_8_frames_2304x128.png")
+const FIREBALL_SHEET: Texture2D = preload("res://Elementals_fire_knight_FREE_v1.1/bola_fuego/bola_fuego_6_frames_1728x128.png")
+const FIREBALL_FRAME_COUNT: int = 6
+const FIREBALL_SCENE: PackedScene = preload("res://escenas/proyectiles/bola_fuego_player.tscn")
 
 
 func _ready() -> void:
@@ -286,6 +305,7 @@ func _ready() -> void:
         _uses_normalized_prisoner_frames = true
         _unarmed_sprite_frames = sprite.sprite_frames
         _load_armed_sprite_frames()
+    _add_fireball_animation(_armed_sprite_frames)
     set_sword_equipped(GameManager.has_sword)
     floor_max_angle = deg_to_rad(max_stair_slope_degrees)
     floor_snap_length = floor_snap_distance
@@ -384,6 +404,21 @@ func _load_armed_sprite_frames() -> void:
     visual_reference.free()
 
 
+## La bola de fuego no está en el SpriteFrames de player.tscn: se añade al
+## cargar para no tocar la escena mientras sea una prueba.
+func _add_fireball_animation(frames: SpriteFrames) -> void:
+    if frames == null or frames.has_animation(&"fireball"):
+        return
+    frames.add_animation(&"fireball")
+    frames.set_animation_speed(&"fireball", fireball_fps)
+    frames.set_animation_loop(&"fireball", false)
+    for index in FIREBALL_FRAME_COUNT:
+        var atlas := AtlasTexture.new()
+        atlas.atlas = FIREBALL_SHEET
+        atlas.region = Rect2(index * 288, 0, 288, 128)
+        frames.add_frame(&"fireball", atlas)
+
+
 func _build_unarmed_sprite_frames() -> SpriteFrames:
     var frames := SpriteFrames.new()
     frames.remove_animation(&"default")
@@ -431,6 +466,8 @@ func _unhandled_input(event: InputEvent) -> void:
             request_ultimate()
     elif event.is_action_pressed("potion"):
         drink_potion()
+    elif event.is_action_pressed("fireball"):
+        request_fireball()
     elif event is InputEventKey and event.pressed and not event.echo:
         match event.keycode:
             KEY_R:
@@ -478,7 +515,7 @@ func _physics_process(delta: float) -> void:
         _process_attack_movement(delta)
     elif _action == PlayerAction.AIR_ATTACK:
         _process_air_attack_movement(delta)
-    elif _action == PlayerAction.ULTIMATE:
+    elif _action in [PlayerAction.ULTIMATE, PlayerAction.CAST]:
         _process_attack_movement(delta)
     elif _action == PlayerAction.HURT:
         _process_hurt_movement(delta)
@@ -504,7 +541,7 @@ func _physics_process(delta: float) -> void:
     var movement_function := "_process_normal_movement"
     if _action == PlayerAction.ROLL:
         movement_function = "_process_roll"
-    elif _action in [PlayerAction.ATTACK, PlayerAction.ULTIMATE]:
+    elif _action in [PlayerAction.ATTACK, PlayerAction.ULTIMATE, PlayerAction.CAST]:
         movement_function = "_process_attack_movement"
     elif _action == PlayerAction.AIR_ATTACK:
         movement_function = "_process_air_attack_movement"
@@ -522,6 +559,7 @@ func _physics_process(delta: float) -> void:
 
     _update_action_state()
     _update_attack_damage_window()
+    _update_fireball_release()
 
     var direction := _get_horizontal_input()
     _update_animation(direction)
@@ -841,6 +879,56 @@ func request_ultimate() -> void:
     _start_attack(&"attack ultimate", ultimate_damage, PlayerAction.ULTIMATE)
 
 
+func request_fireball() -> void:
+    if not fireball_enabled or dead or not GameManager.has_sword or _climbing or not is_on_floor():
+        return
+    if _fireball_cooldown_left > 0.0:
+        return
+    if _action not in [PlayerAction.NORMAL, PlayerAction.DEFEND]:
+        return
+    if not sprite.sprite_frames.has_animation(&"fireball"):
+        return
+
+    if _action == PlayerAction.DEFEND:
+        _leave_guard_for_action()
+
+    _fireball_cooldown_left = fireball_cooldown
+    _fireball_released = false
+    _combo_step = 0
+    _combo_queued = false
+    _combo_buffered_inputs = 0
+    _action = PlayerAction.CAST
+    _current_attack_animation = &"fireball"
+    _current_attack_damage = 0.0
+    _attack_lunge_left = 0.0
+    sprite.speed_scale = 1.0
+    _action_total_time = _animation_duration(&"fireball")
+    _action_time_left = _action_total_time
+    sprite.play(&"fireball")
+    sprite.frame = 0
+    sprite.frame_progress = 0.0
+
+
+func _update_fireball_release() -> void:
+    if _action != PlayerAction.CAST or _fireball_released:
+        return
+    if sprite.animation != &"fireball" or sprite.frame < fireball_release_frame:
+        return
+
+    _fireball_released = true
+    var facing := -1.0 if sprite.flip_h else 1.0
+    var fireball := FIREBALL_SCENE.instantiate() as UnderkingdomPlayerProjectile
+    fireball.speed = fireball_speed
+    get_parent().add_child(fireball)
+    # El cuadro se voltea sobre el centro del sprite, no sobre el del Player.
+    var sprite_center := sprite.position + sprite.offset
+    fireball.setup(
+        global_position + sprite_center + Vector2(fireball_spawn_offset.x * facing, fireball_spawn_offset.y),
+        facing,
+        fireball_damage
+    )
+
+
 ## start_frame >= 0 arranca la animación en ese cuadro en vez del "start" de su
 ## perfil (el primer tajo repetido se salta la preparación).
 func _start_attack(
@@ -900,6 +988,8 @@ func _start_combo_step(step: int) -> void:
 func _update_combat_timers(delta: float) -> void:
     if _ultimate_cooldown_left > 0.0:
         _ultimate_cooldown_left = maxf(_ultimate_cooldown_left - delta, 0.0)
+    if _fireball_cooldown_left > 0.0:
+        _fireball_cooldown_left = maxf(_fireball_cooldown_left - delta, 0.0)
 
     # La guardia solo se recarga después de pasar un tiempo fuera de DEFEND.
     if _action == PlayerAction.DEFEND:
@@ -925,7 +1015,8 @@ func _update_combat_timers(delta: float) -> void:
         PlayerAction.AIR_ATTACK,
         PlayerAction.ROLL,
         PlayerAction.ULTIMATE,
-        PlayerAction.HURT
+        PlayerAction.HURT,
+        PlayerAction.CAST
     ]:
         _action_time_left = maxf(_action_time_left - delta, 0.0)
 
@@ -960,7 +1051,8 @@ func _update_action_state() -> void:
         PlayerAction.AIR_ATTACK,
         PlayerAction.ROLL,
         PlayerAction.ULTIMATE,
-        PlayerAction.HURT
+        PlayerAction.HURT,
+        PlayerAction.CAST
     ]:
         _finish_action()
 
@@ -2118,6 +2210,8 @@ func _action_name() -> String:
             return "ULTIMATE"
         PlayerAction.HURT:
             return "DAÑO"
+        PlayerAction.CAST:
+            return "BOLA DE FUEGO"
         _:
             return "JUGANDO"
 
@@ -2136,6 +2230,6 @@ func _update_hud(state: String) -> void:
         + "Vida: %.2f / %.2f   Ultimate: %s   Adrenalina: %s\n" % [current_health, max_health, ult_text, adrenaline_text]
         + "Robo de vida: %.2f / %.2f daño\n" % [_lifesteal_damage_bank, lifesteal_damage_required]
         + "A/D: mover  ESPACIO/W/↑: saltar  F/Z o CLICK: atacar\n"
-        + "Q o CLICK DER.: defender  SHIFT: roll  E: ultimate\n"
+        + "Q o CLICK DER.: defender  SHIFT: roll  E: ultimate  X: bola de fuego\n"
         + "H: daño 1/4  J: daño 1 corazón  K: morir  R: reaparecer"
     )
