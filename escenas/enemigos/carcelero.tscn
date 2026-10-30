@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://escenas/enemigos/guardia.tscn" id="1_guardia"]
+[ext_resource type="Script" path="res://scripts/combat/jailer_sword_drop.gd" id="2_script"]
+
+[node name="Carcelero" instance=ExtResource("1_guardia")]
+script = ExtResource("2_script")
+max_health = 2.0
+patrol_distance = 40.0
+patrol_speed = 20.0
+chase_speed = 42.0
+attack_damage = 0.25
+attack_cooldown = 1.8
+defense_enabled = false
+
+[node name="AnimatedSprite2D" parent="."]
+modulate = Color(0.78, 0.66, 0.52, 1)

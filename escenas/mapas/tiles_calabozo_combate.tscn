@@ -1,0 +1,45 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="PackedScene" path="res://escenas/mapas/tiles_calabozo.tscn" id="1_base"]
+[ext_resource type="PackedScene" path="res://escenas/enemigos/carcelero.tscn" id="2_carcelero"]
+[ext_resource type="Script" path="res://scripts/environment/arena_barrier.gd" id="3_barrera"]
+[ext_resource type="Texture2D" path="res://assets_prueba/raou_castillo/tileset_castillo.png" id="4_tileset"]
+[ext_resource type="Script" path="res://scripts/environment/map_ambience.gd" id="5_ambiente"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna_tope"]
+atlas = ExtResource("4_tileset")
+region = Rect2(48, 256, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna_medio"]
+atlas = ExtResource("4_tileset")
+region = Rect2(48, 272, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna_base"]
+atlas = ExtResource("4_tileset")
+region = Rect2(48, 288, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_reja"]
+size = Vector2(16, 48)
+
+[node name="TilesCalabozoCombate" instance=ExtResource("1_base")]
+
+[node name="RejaSalida" type="StaticBody2D" parent="SistemasMapa"]
+position = Vector2(1416, 184)
+script = ExtResource("3_barrera")
+piece_start = SubResource("AtlasTexture_columna_tope")
+piece_middle = SubResource("AtlasTexture_columna_medio")
+piece_end = SubResource("AtlasTexture_columna_base")
+start_closed = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/RejaSalida"]
+shape = SubResource("RectangleShape2D_reja")
+
+[node name="Carcelero" parent="Enemigos" node_paths=PackedStringArray("exit_gate") instance=ExtResource("2_carcelero")]
+position = Vector2(1128, 186)
+exit_gate = NodePath("../../SistemasMapa/RejaSalida")
+
+[node name="Ambientacion" type="Node2D" parent="."]
+script = ExtResource("5_ambiente")
+ambient_color = Color(0.44, 0.38, 0.56, 1)
+player_light_color = Color(0.9, 0.85, 1, 1)
+vignette_strength = 0.6

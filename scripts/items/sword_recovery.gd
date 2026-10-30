@@ -2,6 +2,8 @@ extends Node2D
 class_name UnderkingdomSwordRecovery
 
 @export_range(24.0, 96.0, 4.0) var interaction_radius: float = 56.0
+@export var notice_title: String = "Espada recuperada"
+@export_multiline var notice_text: String = "Mi arma ha vuelto a mis manos... pero mi llama continúa debilitada."
 
 @onready var icon: Sprite2D = $Sprite2D
 @onready var prompt: Label = $Prompt
@@ -68,10 +70,6 @@ func _recover(player: UnderkingdomPlayer) -> void:
 	UnderkingdomCombatFX.pickup_sparkle(self)
 	var hud := player.get_node_or_null("PlayerHUD")
 	if hud != null and hud.has_method("show_story_notice"):
-		hud.call(
-			"show_story_notice",
-			"Espada recuperada",
-			"Mi arma ha vuelto a mis manos... pero mi llama continúa debilitada."
-		)
+		hud.call("show_story_notice", notice_title, notice_text)
 	player.set_controls_locked(false)
 	queue_free()

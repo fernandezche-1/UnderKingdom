@@ -53,6 +53,7 @@ cofre_pociones: 1
 | `parallax` | Imágenes de fondo que se mueven más lento, de la más lejana a la más cercana: `fondos/cielo.png 0.05; fondos/nubes.png 0.2`. El número es la velocidad horizontal (0 = quieta, 1 = como el mapa). Si la imagen es más baja que la pantalla (270 px), se agrega `x2` para dibujarla al doble: `fondos/cielo.png 0.05 x2`. En vertical cada imagen recorre el mapa: se ve su borde de arriba con la cámara arriba del todo y el de abajo con la cámara abajo. Necesita `fondo: ninguno`. |
 | `siguiente` / `anterior` | Mapa al que llevan las salidas azules / moradas. Por defecto se llega a su spawn `DesdeAnterior` / `DesdeSiguiente`, que el constructor crea solo. Para llegar a otro spawn: `res://escenas/mapas/mundo_2.tscn#SpawnInicio`. |
 | `cofre_monedas`, `cofre_pociones` | Botín de cada cofre del nivel (por defecto 3 y 1). |
+| `jugador` | Escena del Player que se pone en la `P`. Por defecto `res://escenas/player.tscn`; el calabozo usa `res://escenas/prisn.tscn`, el protagonista sin espada. |
 | `depuracion` | `si` activa las teclas de prueba del Player (R reaparecer, H/J daño, K morir) y su panel de depuración. Solo para mapas de prueba como `arena_enemigos`; por defecto `no`. Para probar los niveles de la ruta está el Modo dev (tecla º). |
 
 ## 4. Generar el nivel
