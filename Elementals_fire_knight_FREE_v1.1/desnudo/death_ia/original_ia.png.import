@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://diay5ivviexdf"
-path="res://.godot/imported/original_ia.jpg-2b925523595baf205aa2c2c1d1cc1f05.ctex"
+uid="uid://ksl6h4a1uh24"
+path="res://.godot/imported/original_ia.png-88a76eb22ecaf4ab6a68249712931541.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Elementals_fire_knight_FREE_v1.1/desnudo/death_ia/original_ia.jpg"
-dest_files=["res://.godot/imported/original_ia.jpg-2b925523595baf205aa2c2c1d1cc1f05.ctex"]
+source_file="res://Elementals_fire_knight_FREE_v1.1/desnudo/death_ia/original_ia.png"
+dest_files=["res://.godot/imported/original_ia.png-88a76eb22ecaf4ab6a68249712931541.ctex"]
 
 [params]
 
