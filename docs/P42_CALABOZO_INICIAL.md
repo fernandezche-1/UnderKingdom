@@ -27,7 +27,7 @@
 - Pensado para ganarle a puño, donde cada puño quita 0.25:
   - 2 corazones de vida, es decir, 8 puñetazos;
   - sin escudo;
-  - quita 0.25 cada 1.8 s;
+  - quita 0.75 cada 1.8 s;
   - es lento (patrulla a 20, persigue a 42).
 - Al cargar el mapa arranca la misión de la espada (`start_sword_mission`). Al terminar su muerte:
   - `mark_encounter_completed("calabozo_carcelero_derrotado")` y `mark_sword_guard_defeated()`;
@@ -42,12 +42,16 @@ Se pusieron a mano en `tiles_calabozo_combate.tscn` para ver cómo reaccionan; n
 
 | Enemigo | Escena | Dónde | Vida | Puños | Ataque |
 |---|---|---|---|---|---|
-| Rata | `enemigos/rata.tscn` | pasillo, x 300 | 0.5 | 2 | mordisco, 0.25 cada 1.6 s |
-| Murciélago grande | `enemigos/murcielago_grande.tscn` | pasillo, x 470 | 1 | 4 | embestida (`lunge_enemy.gd`), 0.25 cada 1.8 s |
-| Slime | `enemigos/slime.tscn` | entrada de la sala, x 840 | 0.75 | 3 | escupitajo, 0.25 cada 2 s |
-| Esqueleto | `enemigos/esqueleto_lanza.tscn` (como carcelero) | fondo de la sala, x 1128 | 2 | 8 | lanza, 0.25 cada 1.8 s |
+| Rata | `enemigos/rata.tscn` | pasillo, x 300 | 0.75 | 3 | mordisco, 0.5 cada 1.6 s |
+| Murciélago grande | `enemigos/murcielago_grande.tscn` | pasillo, x 470 | 1 | 4 | embestida (`lunge_enemy.gd`), 0.5 cada 1.8 s |
+| Slime | `enemigos/slime.tscn` | entrada de la sala, x 840 | 0.75 | 3 | escupitajo, 0.5 cada 2 s |
+| Esqueleto | `enemigos/esqueleto_lanza.tscn` (como carcelero) | fondo de la sala, x 1128 | 2 | 8 | lanza, 0.75 cada 1.8 s |
 
 - El puñetazo no llega al ras del suelo: le faltan unos 12 px. Por eso rata y slime tienen 18 px de colisión, aunque se vean bajitos. Si se reduce, dejan de recibir golpes.
+- **Sin bloqueo por machacar:** cada golpe cancelaba el ataque y aturdía, y el puñetazo se repite cada 0.5 s, así que nunca llegaban a pegar. `enemy_base.gd` tiene dos opciones nuevas, apagadas por defecto y activas en estos cuatro:
+  - `attack_ignores_hits`: los golpes quitan vida durante su ataque, sin interrumpirlo;
+  - `stun_immunity_time` (1 s aquí): tras aturdirse, los golpes no lo aturden ni lo empujan durante ese tiempo, contado desde que termina el aturdimiento.
+- La rata subió a 3 puños porque con 2 moría antes de morder.
 - Escala 1 en todos. El arte está en `assets_prueba/esqueleto_lanza/` y `assets_prueba/monster_creatures_2/`, cada uno con su `ORIGEN.txt`.
 - Las hojas del Skeleton tienen cuadros de ancho distinto. `esqueleto_lanza.png` las une en celdas de 80x40 con el cuerpo al centro.
 

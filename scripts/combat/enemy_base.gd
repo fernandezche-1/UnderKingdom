@@ -27,6 +27,13 @@ enum AIState {
 @export_range(0.25, 100.0, 0.25) var max_health: float = 3.0
 @export_range(0.0, 2.0, 0.05) var invulnerability_time: float = 0.18
 
+@export_category("Aguante")
+## Los golpes recibidos mientras ataca quitan vida, pero no lo interrumpen.
+@export var attack_ignores_hits: bool = false
+## Tras aturdirse, segundos en los que los golpes no vuelven a aturdirlo ni
+## empujarlo, para que machacar no lo deje sin atacar. 0 = siempre se aturde.
+@export_range(0.0, 10.0, 0.05) var stun_immunity_time: float = 0.0
+
 @export_category("Física")
 @export var use_gravity: bool = true
 @export_range(100.0, 5000.0, 50.0) var gravity: float = 1500.0
@@ -115,6 +122,7 @@ var ai_state: AIState = AIState.PATROL
 
 var _invulnerability_left: float = 0.0
 var _hurt_time_left: float = 0.0
+var _stun_immunity_left: float = 0.0
 var _spawn_global_position: Vector2
 var _patrol_direction: float = 1.0
 var _has_aggro: bool = false
@@ -220,6 +228,9 @@ func _update_damage_timers(delta: float) -> void:
 
     if _hurt_time_left > 0.0:
         _hurt_time_left = maxf(_hurt_time_left - delta, 0.0)
+
+    if _stun_immunity_left > 0.0:
+        _stun_immunity_left = maxf(_stun_immunity_left - delta, 0.0)
 
 
 func _update_combat_timers(delta: float) -> void:
@@ -702,8 +713,10 @@ func take_damage(
         _block_defense_hit()
         return true
 
-    _cancel_attack()
-    _cancel_special_state_on_hit()
+    var resists_stun := _resists_stun()
+    if not resists_stun:
+        _cancel_attack()
+        _cancel_special_state_on_hit()
 
     current_health = maxf(current_health - amount, 0.0)
     damaged.emit(amount)
@@ -714,6 +727,9 @@ func take_damage(
         return true
 
     _invulnerability_left = invulnerability_time
+    if resists_stun:
+        return true
+
     # Sin animación de daño, _hurt_animation_name() devuelve idle; su duración
     # completa (hasta 1.6 s en el mino) dejaría al enemigo aturdido de más.
     var hurt_animation := _hurt_animation_name()
@@ -722,6 +738,7 @@ func take_damage(
         if hurt_animation != &"idle"
         else 0.25
     )
+    _stun_immunity_left = _hurt_time_left + stun_immunity_time
 
     if apply_knockback:
         var direction := signf(global_position.x - source_global_position.x)
@@ -732,6 +749,12 @@ func take_damage(
 
     _restart_if_exists(_hurt_animation_name())
     return true
+
+
+func _resists_stun() -> bool:
+    if stun_immunity_time > 0.0 and _stun_immunity_left > 0.0:
+        return true
+    return attack_ignores_hits and _attack_time_left > 0.0
 
 
 ## El Player hizo parry a este ataque: se corta y queda aturdido.
