@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dud00jrg5vwb2" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/death.png" id="2_2pnct"]
 [ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/idle_ia/idle_ia_8_frames_2168x724.png" id="3_li5aj"]
 [ext_resource type="Script" uid="uid://iuqkl2w2cf3s" path="res://scripts/player/player.gd" id="3_player"]
-[ext_resource type="Texture2D" uid="uid://cx7gmwopfjyqh" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/escalera.png" id="3_rrco2"]
+[ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/escalera_ia/escalera_ia_6_frames_2172x724.png" id="3_rrco2"]
 [ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/jump_ia/jump_ia_6_frames_2172x724.png" id="4_2pnct"]
 [ext_resource type="Script" uid="uid://ouv81xqammtp" path="res://scripts/camera/bounded_camera.gd" id="4_camera"]
 [ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/run_ia/run_ia_6_frames_1626x724.png" id="5_evcc1"]
@@ -65,63 +65,27 @@ region = Rect2(0, 596, 525, 149)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0bui0"]
 atlas = ExtResource("3_rrco2")
-region = Rect2(0, 0, 362, 362)
-margin = Rect2(13, 181, 96, 362)
+region = Rect2(0, 0, 362, 724)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tgstc"]
 atlas = ExtResource("3_rrco2")
-region = Rect2(362, 0, 362, 362)
-margin = Rect2(3, 181, 96, 362)
+region = Rect2(362, 0, 362, 724)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nhg87"]
 atlas = ExtResource("3_rrco2")
-region = Rect2(724, 0, 362, 362)
-margin = Rect2(9, 181, 96, 362)
+region = Rect2(724, 0, 362, 724)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ntutr"]
 atlas = ExtResource("3_rrco2")
-region = Rect2(1086, 0, 362, 362)
-margin = Rect2(31, 181, 96, 362)
+region = Rect2(1086, 0, 362, 724)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qdlc8"]
 atlas = ExtResource("3_rrco2")
-region = Rect2(1448, 0, 362, 362)
-margin = Rect2(41, 181, 96, 362)
+region = Rect2(1448, 0, 362, 724)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k8trk"]
 atlas = ExtResource("3_rrco2")
-region = Rect2(1810, 0, 362, 362)
-margin = Rect2(66, 181, 96, 362)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_35v5c"]
-atlas = ExtResource("3_rrco2")
-region = Rect2(0, 362, 362, 362)
-margin = Rect2(15, 181, 96, 362)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_l0rmv"]
-atlas = ExtResource("3_rrco2")
-region = Rect2(362, 362, 362, 362)
-margin = Rect2(10, 181, 96, 362)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_samoc"]
-atlas = ExtResource("3_rrco2")
-region = Rect2(724, 362, 362, 362)
-margin = Rect2(20, 181, 96, 362)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_clybw"]
-atlas = ExtResource("3_rrco2")
-region = Rect2(1086, 362, 362, 362)
-margin = Rect2(36, 181, 96, 362)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_b3dn2"]
-atlas = ExtResource("3_rrco2")
-region = Rect2(1448, 362, 362, 362)
-margin = Rect2(43, 181, 96, 362)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pfg3i"]
-atlas = ExtResource("3_rrco2")
-region = Rect2(1810, 362, 362, 362)
-margin = Rect2(71, 181, 96, 362)
+region = Rect2(1810, 0, 362, 724)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c0ote"]
 atlas = ExtResource("3_li5aj")
@@ -307,24 +271,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_k8trk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_35v5c")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_l0rmv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_samoc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_clybw")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_b3dn2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pfg3i")
 }],
 "loop": 1,
 "name": &"escalera",
