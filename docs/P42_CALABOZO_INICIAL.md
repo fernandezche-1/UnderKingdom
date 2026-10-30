@@ -23,7 +23,7 @@
 
 ## 2. El carcelero
 
-- `escenas/enemigos/carcelero.tscn` hereda de `guardia.tscn` (provisional: mismo arte, teñido) y cambia su script por `scripts/combat/jailer_sword_drop.gd`.
+- `escenas/enemigos/carcelero.tscn` hereda de `esqueleto_lanza.tscn` (arte Skeleton) y cambia su script por `scripts/combat/jailer_sword_drop.gd`.
 - Pensado para ganarle a puño, donde cada puño quita 0.25:
   - 2 corazones de vida, es decir, 8 puñetazos;
   - sin escudo;
@@ -35,6 +35,21 @@
   - suelta `espada_oxidada.tscn` donde cayó.
 - Si se vuelve al mapa con el carcelero ya vencido, no aparece, la reja queda abierta y la espada vuelve a estar ahí si no se recogió.
 - Se pone a mano en la escena `_combate` (es único, sin letra del constructor).
+
+### Primeros enemigos
+
+Se pusieron a mano en `tiles_calabozo_combate.tscn` para ver cómo reaccionan; no tienen letra del constructor. Son los primeros del juego, y el esqueleto en este mapa es una excepción pedida a la regla de profundidad de P33.
+
+| Enemigo | Escena | Dónde | Vida | Puños | Ataque |
+|---|---|---|---|---|---|
+| Rata | `enemigos/rata.tscn` | pasillo, x 300 | 0.5 | 2 | mordisco, 0.25 cada 1.6 s |
+| Murciélago grande | `enemigos/murcielago_grande.tscn` | pasillo, x 470 | 1 | 4 | embestida (`lunge_enemy.gd`), 0.25 cada 1.8 s |
+| Slime | `enemigos/slime.tscn` | entrada de la sala, x 840 | 0.75 | 3 | escupitajo, 0.25 cada 2 s |
+| Esqueleto | `enemigos/esqueleto_lanza.tscn` (como carcelero) | fondo de la sala, x 1128 | 2 | 8 | lanza, 0.25 cada 1.8 s |
+
+- El puñetazo no llega al ras del suelo: le faltan unos 12 px. Por eso rata y slime tienen 18 px de colisión, aunque se vean bajitos. Si se reduce, dejan de recibir golpes.
+- Escala 1 en todos. El arte está en `assets_prueba/esqueleto_lanza/` y `assets_prueba/monster_creatures_2/`, cada uno con su `ORIGEN.txt`.
+- Las hojas del Skeleton tienen cuadros de ancho distinto. `esqueleto_lanza.png` las une en celdas de 80x40 con el cuerpo al centro.
 
 ## 3. La espada oxidada
 
@@ -60,6 +75,7 @@
 
 ## Pendiente
 
-- Arte del carcelero y de la espada oxidada (hoy, Guardia y espada teñidos).
-- Jugarlo con ventana y ajustar la vida y el ataque del carcelero.
+- Arte de la espada oxidada (hoy, espada teñida).
+- Jugarlo con ventana y ajustar la vida y el ataque de los enemigos del calabozo.
+- Confirmar la licencia de los paquetes Skeleton y Monsters Creatures Fantasy 2.
 - Decidir dónde va la espada buena con armadura y qué da de más.
