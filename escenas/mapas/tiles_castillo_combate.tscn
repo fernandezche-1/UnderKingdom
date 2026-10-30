@@ -51,12 +51,8 @@ size = Vector2(333.8125, 18)
 
 [node name="TilesCastilloCombate" unique_id=1561939315 instance=ExtResource("1_base")]
 
-[node name="Terreno2" parent="." index="2" unique_id=76505527]
-collision_visibility_mode = 1
-
 [node name="Terreno" parent="Terreno2" index="0" unique_id=1535674172]
 use_kinematic_bodies = true
-collision_visibility_mode = 1
 
 [node name="CollisionShape2D" parent="PuertaArmeria" parent_id_path=PackedInt32Array(771443847) index="1" unique_id=179093986]
 disabled = true
