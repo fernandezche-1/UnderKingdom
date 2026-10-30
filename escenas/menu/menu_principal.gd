@@ -1,6 +1,8 @@
 extends Control
 
-## "Nueva partida" empieza en la cinemática de la prisión, que sale al cementerio.
+## "Nueva partida" empieza en la cinemática inicial, que sale a la prisión.
+const NEW_GAME_SCENE := "res://escenas/cinematica/cinematica_inicial.tscn"
+## La prisión también es el fondo del menú.
 const GAME_SCENE := "res://escenas/mapas/prologo_prision/camara_sellado_alma.tscn"
 const ORNAMENT := preload("res://escenas/ui/texturas/adorno_linea.png")
 
@@ -548,8 +550,8 @@ func _on_confirm_accepted() -> void:
 
 
 func _start_new_game(slot_id: int, overwrite: bool) -> void:
-	if not ResourceLoader.exists(GAME_SCENE):
-		push_error("No existe la escena inicial: %s" % GAME_SCENE)
+	if not ResourceLoader.exists(NEW_GAME_SCENE):
+		push_error("No existe la escena inicial: %s" % NEW_GAME_SCENE)
 		return
 	GameManager.reset_for_new_game()
 	if not GameManager.create_new_profile(slot_id, _profile_name.text, overwrite):
@@ -559,7 +561,7 @@ func _start_new_game(slot_id: int, overwrite: bool) -> void:
 		return
 	get_tree().set_meta(GameManager.PRISON_CINEMATIC_META_KEY, false)
 	await _fade_out()
-	var error := get_tree().change_scene_to_file(GAME_SCENE)
+	var error := get_tree().change_scene_to_file(NEW_GAME_SCENE)
 	if error != OK:
 		push_error("No se pudo iniciar la partida. Error de escena: %s" % error)
 
