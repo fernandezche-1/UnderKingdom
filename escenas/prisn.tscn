@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/escalera_ia/escalera_ia_6_frames_2172x724.png" id="3_rrco2"]
 [ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/jump_ia/jump_ia_6_frames_2172x724.png" id="4_2pnct"]
 [ext_resource type="Script" uid="uid://ouv81xqammtp" path="res://scripts/camera/bounded_camera.gd" id="4_camera"]
-[ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/run_ia/run_ia_6_frames_1626x724.png" id="5_evcc1"]
+[ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/caminar_ia/caminar_ia_8_frames_2168x724.png" id="5_evcc1"]
 [ext_resource type="PackedScene" path="res://escenas/ui/player_hud.tscn" id="5_hud"]
 [ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/takehit_ia/takehit_ia_4_frames_1372x764.png" id="6_ia3ub"]
 [ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/puch_ia/puch_ia_6_frames_2172x724.png" id="7_puch"]
@@ -166,6 +166,14 @@ region = Rect2(1084, 0, 271, 724)
 [sub_resource type="AtlasTexture" id="AtlasTexture_63sye"]
 atlas = ExtResource("5_evcc1")
 region = Rect2(1355, 0, 271, 724)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_caminar6"]
+atlas = ExtResource("5_evcc1")
+region = Rect2(1626, 0, 271, 724)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_caminar7"]
+atlas = ExtResource("5_evcc1")
+region = Rect2(1897, 0, 271, 724)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1lyan"]
 atlas = ExtResource("6_ia3ub")
@@ -327,6 +335,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_63sye")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_caminar6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_caminar7")
 }],
 "loop": 1,
 "name": &"run",
