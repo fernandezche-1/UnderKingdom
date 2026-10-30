@@ -21,7 +21,10 @@ Ejemplo completo: `ejemplo_nivel.txt` + `ejemplo_nivel.png`.
 - **Qué se apoya en el suelo.** El Player, los enemigos, el cofre, el fuego y el checkpoint se dibujan en el píxel **justo encima del suelo**. Los pinchos también, encima del bloque sobre el que están.
 - **Monedas y pociones** pueden ir flotando.
 - **Decorados grandes** (árbol, estantería, tienda): el píxel marca su pieza de **abajo a la izquierda**.
-- **Escaleras.** Dejar una pieza libre entre la escalera y el bloque al que sube; si están pegados, el Player se golpea la cabeza.
+- **Escaleras.** El Player mide 20 px y su caja está corrida 7 px a la izquierda de su origen. Para que suba y salga arriba sin atascarse:
+  - libres las dos columnas vecinas (izquierda y derecha) en todo el tramo de la escalera;
+  - tres filas libres encima de la escalera;
+  - si atraviesa un piso, un hueco de tres piezas en ese piso, con la escalera en la del medio.
 - **Salidas.** Una columna de 2 o 3 píxeles azules (siguiente) o morados (anterior) en el borde izquierdo o derecho. El Player llega a cada mapa dos piezas hacia dentro de la salida, así que no vuelve a cruzarla sin querer.
 - **Inicio del Player.** Tiene que haber exactamente un píxel de inicio (`P`).
 
@@ -44,12 +47,13 @@ cofre_pociones: 1
 |---|---|
 | `escena` | Dónde se guarda el nivel; siempre en `res://escenas/mapas/`. **Nunca sobrescribe** un mapa hecho a mano. |
 | `imagen` | El PNG del nivel. Si en vez de imagen se escribe el mapa con letras después de una línea `---`, se omite. |
-| `tileset` | Qué juego de piezas usar. Hoy solo existe `mazmorra`; cada tileset nuevo es un archivo en `herramientas/constructor_mapas/tilesets/`. |
-| `bloques` | Estilo de los bloques. En mazmorra: `verde`, `verde_claro`, `ladrillo`, `violeta`, `oro`, `oliva` o `madera`. |
-| `fondo` | Pared detrás de todo: `cueva` o `ninguno`. |
+| `tileset` | Qué juego de piezas usar: `mazmorra`, `cementerio` (el de mazmorra más piezas de Gothicvania Cemetery; en él `T` es una lápida, `g` puntas de pasto y `r` zarzas) o `castillo` (el de mazmorra más el muro de ladrillo morado de Raou; en él `T` es una armadura 2x2, `h` un estandarte 1x2, `g` una cadena 1x2, `r` una ventana en arco 2x2, `C` una puerta en arco 2x3, `E` una estantería 2x2 y `f` unas rejas de celda 2x2; el estandarte y la cadena cuelgan del techo: su letra va dos piezas debajo de él). Cada tileset es un archivo en `herramientas/constructor_mapas/tilesets/`. |
+| `bloques` | Estilo de los bloques. En mazmorra: `verde`, `verde_claro`, `ladrillo`, `violeta`, `oro`, `oliva` o `madera`. En cementerio, además, `cementerio`, y en castillo, `castillo`. |
+| `fondo` | Pared detrás de todo: `cueva`, `castillo` (ladrillo oscuro, solo con el tileset castillo) o `ninguno`. |
 | `parallax` | Imágenes de fondo que se mueven más lento, de la más lejana a la más cercana: `fondos/cielo.png 0.05; fondos/nubes.png 0.2`. El número es la velocidad horizontal (0 = quieta, 1 = como el mapa). Si la imagen es más baja que la pantalla (270 px), se agrega `x2` para dibujarla al doble: `fondos/cielo.png 0.05 x2`. En vertical cada imagen recorre el mapa: se ve su borde de arriba con la cámara arriba del todo y el de abajo con la cámara abajo. Necesita `fondo: ninguno`. |
 | `siguiente` / `anterior` | Mapa al que llevan las salidas azules / moradas. Por defecto se llega a su spawn `DesdeAnterior` / `DesdeSiguiente`, que el constructor crea solo. Para llegar a otro spawn: `res://escenas/mapas/mundo_2.tscn#SpawnInicio`. |
 | `cofre_monedas`, `cofre_pociones` | Botín de cada cofre del nivel (por defecto 3 y 1). |
+| `depuracion` | `si` activa las teclas de prueba del Player (R reaparecer, H/J daño, K morir) y su panel de depuración. Solo para mapas de prueba como `arena_enemigos`; por defecto `no`. Para probar los niveles de la ruta está el Modo dev (tecla º). |
 
 ## 4. Generar el nivel
 Desde la carpeta del proyecto:
@@ -113,6 +117,10 @@ El mapa original no se toca. El PNG es un punto de partida: faltan las salidas, 
 | `q` | #800080 | 128, 0, 128 | kolbo3 (resistente) |
 | `d` | #c00060 | 192, 0, 96 | diablillo (vuela y lanza fuego) |
 | `M` | #503000 | 80, 48, 0 | mino |
+| `m` | #402060 | 64, 32, 96 | murciélago (vuela y embiste; se dibuja donde flota) |
+| `e` | #d0d0b0 | 208, 208, 176 | esqueleto (camina y embiste) |
+| `u` | #706050 | 112, 96, 80 | esqueleto de tumba (enterrado hasta que el Player se acerca) |
+| `G` | #b0b0d0 | 176, 176, 208 | Guardia del castillo (se cubre con el escudo) |
 | `t` | #ffc090 | 255, 192, 144 | antorcha |
 | `f` | #c03000 | 192, 48, 0 | fogata (decorado) |
 | `b` | #a08060 | 160, 128, 96 | barril |

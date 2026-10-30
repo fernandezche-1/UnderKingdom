@@ -333,7 +333,7 @@ No hizo falta código nuevo.
 **Falta jugarlo con ventana:** el encuadre de la cámara en la sala y el ritmo del diálogo antes del combate.
 
 ## Pendientes, en orden de prioridad
-1. Probar jugando: la intro, el reencuentro con el Capitán, el combate y la muerte con reaparición en el checkpoint. Ninguna de las dos versiones del compañero se había ejecutado en Godot.
+1. ~~Probar jugando: la intro, el reencuentro con el Capitán, el combate y la muerte con reaparición en el checkpoint.~~ Hecho: se jugó (marcado el 2026-10-20).
 2. Pausa, menú principal y guardado persistente. Hoy todo se pierde al cerrar el juego.
 3. Jefe de Mundo 2 (`escenas/jefes/boss_mina.tscn`) y jefe final (Cthulhu, `escenas/jefes/boss.tscn`): los dos son sprites sin script. Nadie llama a `GameManager.reveal_cthulhu()`.
 4. Transiciones definitivas para reemplazar los portales de `world_test_route.gd`, y zonas Kill, Burn y One Way en los mapas. `pinchos` y `trampa de fuego` de Mundo 1 no hacen daño. Las marcas las coloca una persona en el editor o las pasa como coordenadas.

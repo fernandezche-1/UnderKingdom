@@ -44,13 +44,10 @@ func _unhandled_input(event: InputEvent) -> void:
         return
     if not enabled or _changing_scene:
         return
-    if not (event is InputEventKey):
-        return
-
     var key_event := event as InputEventKey
-    if not key_event.pressed or key_event.echo:
-        return
-    if key_event.keycode != interaction_keycode:
+    var by_key: bool = key_event != null and key_event.pressed and not key_event.echo and key_event.keycode == interaction_keycode
+    var by_action: bool = interaction_keycode == KEY_E and event.is_action_pressed("interact")
+    if not by_key and not by_action:
         return
 
     get_viewport().set_input_as_handled()
@@ -115,6 +112,12 @@ func _request_transition() -> void:
         _prompt.visible = false
 
     GameManager.set_transition(target_spawn_id)
+    if GameManager.is_autosave_region(target_scene_path):
+        GameManager.request_autosave({
+            "scene_path": target_scene_path,
+            "spawn_id": String(target_spawn_id),
+            "clear_position": true,
+        })
 
     if trigger_delay > 0.0:
         await get_tree().create_timer(trigger_delay).timeout

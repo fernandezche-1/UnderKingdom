@@ -11,13 +11,18 @@ config_version=5
 [application]
 
 config/name="UnderKingdom"
-run/main_scene="res://escenas/mapas/tiles_cementerio_combate.tscn"
+config/version="0.04.049"
+run/main_scene="res://escenas/menu/menu_principal.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
+InputConfig="*res://scripts/core/input_config.gd"
 GameManager="*res://scripts/core/game_manager.gd"
+PauseMenu="*res://scripts/ui/pause_menu_manager.gd"
+DevMode="*res://scripts/core/dev_mode.gd"
+DisplaySettings="*res://scripts/core/display_settings.gd"
 
 [display]
 
@@ -27,6 +32,10 @@ window/size/window_width_override=1440
 window/size/window_height_override=810
 window/stretch/mode="canvas_items"
 window/stretch/scale_mode="integer"
+
+[gui]
+
+theme/custom="res://escenas/ui/tema_underkingdom.tres"
 
 [physics]
 

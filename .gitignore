@@ -8,3 +8,8 @@
 # Windows
 Thumbs.db
 Desktop.ini
+
+# Basura del sistema y respaldos locales
+.DS_Store
+__MACOSX/
+*.backup*

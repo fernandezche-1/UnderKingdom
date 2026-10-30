@@ -2,13 +2,13 @@
 
 **Objetivo:** convertir los siete niveles `tiles_*` en niveles jugables y bonitos. Tienen la forma de los mapas hechos a mano, pero están hechos con tiles. Más adelante el equipo decide si reemplazan a los mapas pintados.
 
-**Estado (2026-10-16):** los siete niveles existen, están unidos en ruta y pasan las pruebas sin ventana. **Nadie los ha jugado todavía.** Rama `edwin/integrar-0.04.047`, sin subir a GitHub.
+**Estado (2026-10-20):** los siete niveles existen, están unidos en ruta, pasan las pruebas sin ventana y ya se jugaron (sección 1). Los enemigos siguen la progresión por profundidad (`docs/P33_ENEMIGOS_POR_PROFUNDIDAD.md`). Rama `edwin/integrar-0.04.047`, sin subir a GitHub.
 
 **Para probar:** abrir `escenas/mapas/tiles_cementerio_combate.tscn` y pulsar F6. Es el cementerio generado más la sala del Capitán, su llave y la puerta que la pide. Las minas se juegan igual desde `tiles_mineria_combate.tscn`. Cada salida azul del borde derecho lleva al siguiente nivel:
 
-`tiles_cementerio` → `tiles_mineria` → `tiles_mazmorra` → `tiles_ruina` → `tiles_profundidades` → `tiles_jefe`
+`tiles_castillo` → `tiles_cementerio` → `tiles_mineria` → `tiles_mazmorra` → `tiles_ruina` → `tiles_profundidades` → `tiles_jefe`
 
-Las teclas de prueba están activas: R reaparecer, H/J daño, K morir.
+Para probar, el Modo dev (tecla º): vida, pociones y monedas infinitas, llaves de jefe. Las teclas R/H/J/K y el panel de depuración del Player ya no están en los niveles de la ruta; se activan con `depuracion: si` en el `.txt` (lo llevan `arena_enemigos` y los ejemplos).
 
 **Documentación:**
 - Guía para dibujar niveles: `mapas_texto/LEYENDA.md`; la sección 7 explica el calco.
@@ -21,33 +21,34 @@ Las teclas de prueba están activas: R reaparecer, H/J daño, K morir.
 
 ---
 
-## 1. Jugar los niveles (lo primero)
+## 1. Jugar los niveles (hecho)
 
-Hasta ahora todo se comprobó sin ventana, con una simulación aproximada. En cada nivel hay que revisar:
+Los niveles ya se jugaron tal como estaban (marcado el 2026-10-20). En cada nivel se revisó:
 
-- [ ] Se puede ir de la entrada (borde izquierdo) a la salida (borde derecho) sin trucos.
-- [ ] Al volver por la salida izquierda se llega bien al nivel anterior, junto a su salida derecha.
-- [ ] Se sube bien por las escaleras y se sale arriba de ellas hacia la plataforma.
-- [ ] El checkpoint guarda el punto de reaparición. Morir en lava o pinchos devuelve ahí.
-- [ ] Los cofres se abren y las monedas y pociones se recogen.
-- [ ] Los enemigos quedan sobre el suelo y no se atascan.
-- [ ] El parallax se ve bien al moverse en horizontal y en vertical, sin franjas vacías arriba ni abajo.
-- [ ] La cámara no muestra fuera del mapa.
-- [ ] No hay saltos imposibles ni sitios donde el Player quede encerrado.
+- [x] Se puede ir de la entrada (borde izquierdo) a la salida (borde derecho) sin trucos.
+- [x] Al volver por la salida izquierda se llega bien al nivel anterior, junto a su salida derecha.
+- [x] Se sube bien por las escaleras y se sale arriba de ellas hacia la plataforma.
+- [x] El checkpoint guarda el punto de reaparición. Morir en lava o pinchos devuelve ahí.
+- [x] Los cofres se abren y las monedas y pociones se recogen.
+- [x] Los enemigos quedan sobre el suelo y no se atascan.
+- [x] El parallax se ve bien al moverse en horizontal y en vertical, sin franjas vacías arriba ni abajo.
+- [x] La cámara no muestra fuera del mapa.
+- [x] No hay saltos imposibles ni sitios donde el Player quede encerrado.
 
-Anotar lo que se encuentre en la sección 2 con nivel y coordenadas en piezas (x, fila). Esas coordenadas se ven abriendo el PNG en Aseprite o GIMP.
+Si se vuelve a jugar tras un cambio, anotar lo que se encuentre en la sección 2 con nivel y coordenadas en piezas (x, fila). Esas coordenadas se ven abriendo el PNG en Aseprite o GIMP.
 
 ### Datos de cada nivel
 
 | Nivel | Tamaño (piezas) | Bloques | Enemigos | Escaleras | Además |
 |---|---|---|---|---|---|
-| `tiles_cementerio` | 120 x 78 | verde | 9 Vanguardia, 4 Aprendis + Capitán | 4 | Primer mundo estilo Hollow Knight, de bajada: superficie, cripta, catacumbas, sala del jefe y abismo con la puerta con llave y la salida en el fondo. Se juega desde `tiles_cementerio_combate.tscn`. Ya no es un calco de `mundo_1`. |
+| `tiles_castillo` | 100 x 80 | castillo | 6 Guardias, 5 Vanguardias, 5 murciélagos + Rey Caído | 5 | Primer mundo, entre la prisión y el cementerio: galería de las celdas, gran salón, biblioteca, antecámara, sala del trono y criptas con la puerta con llave y la salida. Tileset propio (ladrillo morado de Raou). Se juega desde `tiles_castillo_combate.tscn` (P40). |
+| `tiles_cementerio` | 120 x 78 | cementerio | 13 Vanguardia + Capitán | 4 | Segundo mundo (antes el primero) estilo Hollow Knight, de bajada: superficie, cripta, catacumbas, sala del jefe y abismo con la puerta con llave y la salida en el fondo. Se juega desde `tiles_cementerio_combate.tscn`. Ya no es un calco de `mundo_1`. |
 | `tiles_casa` | 104 x 58 | violeta | 4 diablillos | 3 | 3 huecos de 3 piezas en pisos. Las 2 escaleras del mapa original se reemplazaron. **Fuera de la ruta:** el cementerio lleva ahora a las minas. |
-| `tiles_mineria` | 104 x 90 | madera | 4 kolbo, 3 kolbo2, 2 kolbo3, 2 mino, 2 diablillos + Caballero de la Reina | 4 | Segundo mundo, con la misma estructura que el cementerio: bocamina, galerías, sala del jefe y veta ardiente con la puerta con llave y la salida en el fondo. Se juega desde `tiles_mineria_combate.tscn`. Ya no es un calco. |
-| `tiles_mazmorra` | 78 x 71 | oliva | 4 kolbo2, 1 mino | 13 | 9 huecos, 29 pinchos en pozos sin salida y túnel de 18 piezas hasta la salida derecha. Recortado: lo de abajo era vacío. |
-| `tiles_ruina` | 104 x 58 | ladrillo | kolbo, kolbo2, kolbo3, mino | 5 | 3 huecos; túnel de 4 piezas hasta la salida derecha. |
-| `tiles_profundidades` | 104 x 58 | oro | 4 diablillos | 2 | 2 huecos, lava en todo el fondo y 3 trampas de fuego. |
-| `tiles_jefe` | 104 x 58 | ladrillo | 2 diablillos, 1 Vanguardia, 1 mino | 4 | 4 huecos, lava en el fondo, 2 trampas de fuego y 1 pinchos. Es el último: no tiene salida derecha. **No tiene jefe** (ver sección 3). |
+| `tiles_mineria` | 104 x 90 | madera | 4 kolbo, 4 kolbo2, 4 kolbo3 + Caballero de la Reina | 4 | Segundo mundo, con la misma estructura que el cementerio: bocamina, galerías, sala del jefe y veta ardiente con la puerta con llave y la salida en el fondo. Se juega desde `tiles_mineria_combate.tscn`. Ya no es un calco. |
+| `tiles_mazmorra` | 78 x 71 | oliva | 2 Aprendis, 2 kolbo3, 1 mino, 3 esqueletos + la Reina | 13 | 9 huecos, 29 pinchos en pozos sin salida y túnel de 18 piezas hasta la salida derecha. Recortado: lo de abajo era vacío. Se juega desde `tiles_mazmorra_combate.tscn`: la Reina está en la cámara del fondo a la derecha y la puerta con llave tapa la salida (P34). |
+| `tiles_ruina` | 104 x 58 | ladrillo | 2 Aprendis, 1 kolbo3, 1 mino, 3 esqueletos + Guardián de hielo | 5 | 3 huecos; túnel de 4 piezas hasta la salida derecha. Se juega desde `tiles_ruina_combate.tscn` (P34). |
+| `tiles_profundidades` | 104 x 58 | oro | 4 diablillos + Demon Slime | 2 | 2 huecos, lava en todo el fondo y 3 trampas de fuego. Se juega desde `tiles_profundidades_combate.tscn` (P34). |
+| `tiles_jefe` | 104 x 58 | ladrillo | 4 diablillos | 4 | 4 huecos, lava en el fondo, 2 trampas de fuego y 1 pinchos. Es el último: no tiene salida derecha. Se juega desde `tiles_jefe_combate.tscn`, con Cthulhu en el pasillo central (P34). |
 
 Todos tienen un checkpoint, dos cofres (jefe uno), 12 monedas, una o dos pociones, antorchas y decorados del tema.
 
@@ -66,17 +67,12 @@ Todos tienen un checkpoint, dos cofres (jefe uno), 12 monedas, una o dos pocione
 - [ ] **Antorchas y decorados** se repartieron al azar sobre el suelo alcanzable. Puede haber antorchas en medio de un pasillo o decorados amontonados. Moverlos en el PNG.
 - [ ] **Escala de los enemigos.** El constructor los pone a escala 1, y el diablillo se ve bastante más grande que el Player. En los mapas pintados está entre 0.34 y 0.66, pero esa escala no es entera y no cumple la regla de pixel art. Decidir si hace falta un sprite más pequeño.
 - [ ] **Lava y pinchos** en profundidades, jefe y mazmorra son decisión de diseño, no vienen de los mapas originales. Confirmar que se quieren.
-- [ ] **Las teclas y el panel de depuración** están activos en todos los niveles generados. Apagarlos (`enable_debug_keys`, `show_debug_hud` del Player) cuando dejen de ser de prueba.
+- [x] **Las teclas y el panel de depuración** estaban activos en todos los niveles generados. Ahora el constructor solo los pone con la opción `depuracion: si`, y se quitaron de las escenas `tiles_*`.
 
 ### En el resto del proyecto (encontrados durante esta tarea)
 - [ ] **`primer_boss_mundo_1.tscn`:** la ruta de prueba tiene dos líneas `# W2: ...` entre sus propiedades. Godot pierde la propiedad siguiente, `spawn_position = Vector2(1535, 650)`, y el `SpawnInicio` de ese mapa queda en (160, 160), arriba a la izquierda. Arreglo: borrar esas dos líneas del `.tscn`. Es un mapa hecho a mano: confirmar con Armando antes.
 - [ ] **`arena_enemigos.tscn` está desactualizada:** se generó antes del último cambio del diablillo. Al regenerarla cambian sus valores de IA. Regenerarla con `-- mapas_texto/arena_enemigos.txt` y revisar que siga bien.
-- [ ] **`LEYENDA.md`, regla de escaleras:** hoy dice solo "dejar una pieza libre entre la escalera y el bloque". La regla probada es más estricta:
-  - libres las dos columnas vecinas en todo el tramo de la escalera;
-  - tres filas libres encima;
-  - si atraviesa un piso, un hueco de tres piezas.
-
-  El Player mide 20 px y su caja está corrida 7 px a la izquierda del origen. Actualizar la guía.
+- [x] **`LEYENDA.md`, regla de escaleras:** decía solo "dejar una pieza libre entre la escalera y el bloque". Ahora la sección 2 tiene la regla probada: columnas vecinas libres, tres filas libres encima y hueco de tres piezas al atravesar un piso.
 
 ---
 
@@ -87,9 +83,8 @@ Todos tienen un checkpoint, dos cofres (jefe uno), 12 monedas, una o dos pocione
   - ~~Capitán (cementerio)~~: hecho en `tiles_cementerio_combate.tscn`, una escena que hereda del nivel generado (ver changelog, "Cementerio con tiles: primer mundo estilo Hollow Knight");
   - Caballero de la Reina, Reina y Cthulhu (casa);
   - ~~jefe de las minas~~: el Caballero de la Reina, en `tiles_mineria_combate.tscn` (ver changelog, "Minas con tiles: segundo mundo");
-  - Reina (mazmorra);
-  - demonslime (profundidades);
-  - jefe final (jefe).
+  - ~~Reina (mazmorra)~~: en `tiles_mazmorra_combate.tscn` (ver `docs/P34_ENEMIGOS_DE_LOS_PAQUETES.md`);
+  - ~~demonslime (profundidades)~~ y ~~jefe final (jefe)~~: Demon Slime y Cthulhu, más el Guardián de hielo en la ruina (ver `docs/P34_ENEMIGOS_DE_LOS_PAQUETES.md`).
 
   Opciones: añadir letras para jefes al constructor, o colocarlos a mano en una escena que herede del nivel generado. `tiles_jefe` necesita al menos su jefe para tener sentido.
 - [ ] **Conectar con los mapas hechos a mano.** Hoy la ruta de tiles es independiente. Con `siguiente: res://escenas/mapas/<mapa>.tscn#<Spawn>` se puede enlazar con un spawn existente.
@@ -98,14 +93,20 @@ Todos tienen un checkpoint, dos cofres (jefe uno), 12 monedas, una o dos pocione
 
 ### Arte con los paquetes nuevos
 - [ ] **Tileset propio por tema**, en lugar de los estilos de mazmorra. Los paquetes recibidos no traen un juego de bloques de 16 px listo: hay que armar un atlas con la forma que espera el constructor a partir de sus piezas. Candidatos:
-  - cementerio: `Final.zip` (tumbas, verja, columnas, tierra con pasto) o Gothicvania `Gothic-Horror-Files`;
+  - ~~cementerio~~: hecho con Gothicvania Cemetery, tileset `cementerio` (ver `docs/P34_ENEMIGOS_DE_LOS_PAQUETES.md`);
   - casa y mazmorra: Gothicvania `Gothic-Castle-Files` u `Old-dark-Castle-tileset-Files`;
   - mineria: `PixelFantasy_Caves` (`mainlev_build.png`, `props1/2.png`);
   - profundidades y jefe: Gothicvania `Living-Tissue-Platform-Files` o rocas con lava.
 
   Pasos en "Receta: integrar un paquete" (abajo).
 - [ ] **Enemigos de Gothicvania** (`Legacy Collection/Assets/Gothicvania/Characters/`): Ghost, Hell-Hound, Hell-Beast, Fire-Skull, flying-eye-demon, Ogre, Nightmare, crow, entre otros. Cada uno necesita una escena con `enemy_base.gd`, una letra en el constructor y una prueba en `arena_enemigos`.
+- [x] **Enemigos que faltan para la progresión por profundidad** (`docs/P33_ENEMIGOS_POR_PROFUNDIDAD.md`): murciélagos para el cementerio y las minas, esqueletos para la mazmorra y la ruina. Hechos con Super Grotto Escape y Gothicvania Cemetery (ver `docs/P34_ENEMIGOS_DE_LOS_PAQUETES.md`).
 - [ ] **Decorados de los paquetes:** velas, jaulas, cadenas, estandartes, vagonetas. Necesitan estar en el atlas del tileset y tener letra.
+
+### Hecho en P34 (paquetes nuevos)
+- [x] Murciélagos, esqueletos, efectos con sprites, jefes de la mazmorra a la profundidad final, tileset del cementerio, NPC que hablan y el Barquero (`docs/P34_ENEMIGOS_DE_LOS_PAQUETES.md`).
+- [ ] Jugar a mano los cinco jefes nuevos y ajustar su dificultad.
+- [ ] Que el parallax del cielo no se vea en las cuevas (el constructor pone un solo parallax por mapa).
 
 ### Herramientas
 - [ ] **Decidir si los scripts de diseño entran al repo.** Las salidas, escaleras, objetos y decorados se pusieron con un script de Python (`disenar.py`). Un verificador (`recorrido.py`) simula los saltos del Player para comprobar que todo se alcanza. Los dos están fuera del repo y necesitan Python con Pillow. Si entran, irían en `herramientas/constructor_mapas/`, con instrucciones en `LEYENDA.md`.

@@ -1,3 +1,11 @@
+; ÚLTIMO MUNDO (infierno). La pelea con Cthulhu es en el pasillo central, entre
+; las rejas de las columnas 46 y 74, filas 30-39: desde su suelo (fila 40) el
+; Player no alcanza las plataformas de la fila 29, así que las dos rejas bastan
+; para cerrarlo. No hay llave: es el final.
+; Si se mueven en el PNG, mover también los nodos de tiles_jefe_combate.tscn.
+; La sala vive en tiles_jefe_combate.tscn, que hereda de esta escena:
+; regenerarla no lo borra. Jugar el nivel desde esa.
+;
 ; NIVEL CON TILES calcado de fondos/jefe.png: la forma sale de las
 ; colisiones del mapa hecho a mano (constructor -- --desde-mapa) y encima se
 ; dibujaron las salidas, escaleras, objetos y decorados.
@@ -10,4 +18,4 @@ tileset: mazmorra
 bloques: ladrillo
 fondo: ninguno
 parallax: assets_prueba/gothicvania/lava/fondo.png 0.05 x2; assets_prueba/gothicvania/lava/rocas.png 0.2 x2
-anterior: res://escenas/mapas/tiles_profundidades.tscn
+anterior: res://escenas/mapas/tiles_profundidades_combate.tscn

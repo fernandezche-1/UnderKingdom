@@ -1,0 +1,33 @@
+Gothicvania Cemetery de Luis Zuno (Ansimuz)
+
+Recibido como "gothicvania-cemetery-files.zip" el 2026-10-20.
+Licencia: CC0 (public-license.pdf del paquete): uso libre, personal o
+comercial, sin crédito obligatorio; se puede modificar y redistribuir.
+Página del autor: https://ansimuz.itch.io
+
+Solo se copió lo que usa el juego, sin cambiar el arte:
+- esqueleto.png   cuadros sueltos de Assets/Characters/Enemies/ juntados en
+                  una hoja de 44x52 por cuadro, una fila por animación:
+                  1. skeleton/Sprites/Walk (8)
+                  2. skeleton/Sprites/walk-clothed (8)
+                  3. skeleton/skeleton-rise (6)
+                  4. skeleton/skeleton-rise-clothed (6)
+                  5. EnemyDeath/Sprites (5), nube de muerte
+                  (enemigos/esqueleto.tscn y enemigos/esqueleto_tumba.tscn)
+- tileset_cementerio.png
+                  atlas del tileset "cementerio" del constructor
+                  (herramientas/constructor_mapas/tilesets/cementerio.gd).
+                  Filas 0-15: copia sin cambios de
+                  assets_prueba/dungeon_platformer/dungeontilesetfull.png (CC0),
+                  por las antorchas, lava, agua, escalera y fogata.
+                  Filas 16-19: piezas de Assets/Environment/tileset.png copiadas
+                  tal cual en el orden del juego de 4x4 que espera el
+                  constructor (solo piezas macizas, para que cada bloque siga
+                  siendo un cuadrado de colisión completo), dos decorados de
+                  1x1 (puntas de pasto, zarzas) y la lápida
+                  sliced-objects/stone-1.png en un hueco de 2x3 piezas.
+- fondo/*.png     capas de parallax del cementerio, de Assets/Environment/:
+                  cielo = background.png, montes = mountains.png,
+                  cementerio = graveyard.png. Cada una puesta en un lienzo de
+                  224 px de alto, alineada abajo, sin cambiar el arte (igual
+                  que assets_prueba/gothicvania/pueblo_noche).

@@ -1,0 +1,21 @@
+; MUNDO DEL CASTILLO (el primero, antes del cementerio), de bajada: galería de
+; las celdas y armería, gran salón, biblioteca, antecámara, sala del trono y
+; criptas con la salida en el fondo. La sala del trono (jefe) ocupa x 6-36,
+; filas 46-56, como en el cementerio; su puerta va en la columna 37, la
+; trampilla del atajo en x 24-26 fila 45 y la puerta con llave en la columna 95,
+; filas 73-76. La reliquia de rodar va en el nicho de la biblioteca, en (75, 47).
+; Si se mueven en el PNG, mover también los nodos de tiles_castillo_combate.tscn.
+; Generar desde la carpeta del proyecto:
+;   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/tiles_castillo.txt
+
+escena: res://escenas/mapas/tiles_castillo.tscn
+; La sala del jefe, la puerta con llave y la reliquia viven en
+; tiles_castillo_combate.tscn, que hereda de esta escena: regenerarla no lo
+; borra. Jugar el nivel desde esa.
+imagen: mapas_texto/tiles_castillo.png
+tileset: castillo
+bloques: castillo
+fondo: castillo
+; Las criptas dan al cementerio. Sin vuelta: es la huida del castillo.
+siguiente: res://escenas/mapas/tiles_cementerio_combate.tscn#SpawnInicio
+---

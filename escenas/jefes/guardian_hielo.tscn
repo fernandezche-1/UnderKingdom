@@ -1,0 +1,402 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/boss_health_bar.gd" id="4_ujblj"]
+[ext_resource type="PackedScene" path="res://escenas/ui/boss_health_bar.tscn" id="extra_0"]
+[ext_resource type="Script" path="res://scripts/bosses/simple_boss.gd" id="script"]
+[ext_resource type="Texture2D" path="res://Frost_Guardian_FREE_v1.0/frost_guardian_free_192x128_SpriteSheet.png" id="tex_0"]
+
+[sub_resource type="AtlasTexture" id="Atlas_17"]
+atlas = ExtResource("tex_0")
+region = Rect2(0, 256, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_18"]
+atlas = ExtResource("tex_0")
+region = Rect2(192, 256, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_19"]
+atlas = ExtResource("tex_0")
+region = Rect2(384, 256, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_20"]
+atlas = ExtResource("tex_0")
+region = Rect2(576, 256, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_21"]
+atlas = ExtResource("tex_0")
+region = Rect2(768, 256, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_22"]
+atlas = ExtResource("tex_0")
+region = Rect2(960, 256, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_23"]
+atlas = ExtResource("tex_0")
+region = Rect2(1152, 256, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_24"]
+atlas = ExtResource("tex_0")
+region = Rect2(1344, 256, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_25"]
+atlas = ExtResource("tex_0")
+region = Rect2(1536, 256, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_26"]
+atlas = ExtResource("tex_0")
+region = Rect2(1728, 256, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_27"]
+atlas = ExtResource("tex_0")
+region = Rect2(1920, 256, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_28"]
+atlas = ExtResource("tex_0")
+region = Rect2(2112, 256, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_29"]
+atlas = ExtResource("tex_0")
+region = Rect2(2304, 256, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_30"]
+atlas = ExtResource("tex_0")
+region = Rect2(2496, 256, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_31"]
+atlas = ExtResource("tex_0")
+region = Rect2(0, 512, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_32"]
+atlas = ExtResource("tex_0")
+region = Rect2(192, 512, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_33"]
+atlas = ExtResource("tex_0")
+region = Rect2(384, 512, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_34"]
+atlas = ExtResource("tex_0")
+region = Rect2(576, 512, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_35"]
+atlas = ExtResource("tex_0")
+region = Rect2(768, 512, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_36"]
+atlas = ExtResource("tex_0")
+region = Rect2(960, 512, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_37"]
+atlas = ExtResource("tex_0")
+region = Rect2(1152, 512, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_38"]
+atlas = ExtResource("tex_0")
+region = Rect2(1344, 512, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_39"]
+atlas = ExtResource("tex_0")
+region = Rect2(1536, 512, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_40"]
+atlas = ExtResource("tex_0")
+region = Rect2(1728, 512, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_41"]
+atlas = ExtResource("tex_0")
+region = Rect2(1920, 512, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_42"]
+atlas = ExtResource("tex_0")
+region = Rect2(2112, 512, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_43"]
+atlas = ExtResource("tex_0")
+region = Rect2(2304, 512, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_44"]
+atlas = ExtResource("tex_0")
+region = Rect2(2496, 512, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_45"]
+atlas = ExtResource("tex_0")
+region = Rect2(2688, 512, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_46"]
+atlas = ExtResource("tex_0")
+region = Rect2(2880, 512, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_1"]
+atlas = ExtResource("tex_0")
+region = Rect2(0, 0, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_2"]
+atlas = ExtResource("tex_0")
+region = Rect2(192, 0, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_3"]
+atlas = ExtResource("tex_0")
+region = Rect2(384, 0, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_4"]
+atlas = ExtResource("tex_0")
+region = Rect2(576, 0, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_5"]
+atlas = ExtResource("tex_0")
+region = Rect2(768, 0, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_6"]
+atlas = ExtResource("tex_0")
+region = Rect2(960, 0, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_7"]
+atlas = ExtResource("tex_0")
+region = Rect2(0, 128, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_8"]
+atlas = ExtResource("tex_0")
+region = Rect2(192, 128, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_9"]
+atlas = ExtResource("tex_0")
+region = Rect2(384, 128, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_10"]
+atlas = ExtResource("tex_0")
+region = Rect2(576, 128, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_11"]
+atlas = ExtResource("tex_0")
+region = Rect2(768, 128, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_12"]
+atlas = ExtResource("tex_0")
+region = Rect2(960, 128, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_13"]
+atlas = ExtResource("tex_0")
+region = Rect2(1152, 128, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_14"]
+atlas = ExtResource("tex_0")
+region = Rect2(1344, 128, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_15"]
+atlas = ExtResource("tex_0")
+region = Rect2(1536, 128, 192, 128)
+
+[sub_resource type="AtlasTexture" id="Atlas_16"]
+atlas = ExtResource("tex_0")
+region = Rect2(1728, 128, 192, 128)
+
+[sub_resource type="SpriteFrames" id="Frames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_17")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_18")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_19")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_20")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_21")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_22")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_23")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_24")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_25")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_26")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_27")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_28")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_29")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_30")
+}],
+"loop": 0,
+"name": &"attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_31")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_32")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_33")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_34")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_35")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_36")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_37")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_38")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_39")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_40")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_41")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_42")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_43")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_44")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_45")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_46")
+}],
+"loop": 0,
+"name": &"death",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_6")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_7")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_8")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_9")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_10")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_11")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_12")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_13")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_14")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_15")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_16")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="Body"]
+size = Vector2(44, 76)
+
+[node name="GuardianHielo" type="CharacterBody2D" unique_id=141968385]
+collision_layer = 5
+script = ExtResource("script")
+attack_profiles = {
+"attack": {
+"blast_frame": 7,
+"blast_min_phase": 2,
+"damage": 1.0,
+"frames": Vector2i(6, 8),
+"offset": Vector2(44, 14),
+"size": Vector2(96, 64)
+}
+}
+blast_distance = 80.0
+max_health = 16.0
+knockback_horizontal = 0.0
+knockback_vertical = 0.0
+patrol_distance = 40.0
+patrol_speed = 22.0
+chase_speed = 44.0
+detection_range = 520.0
+detection_vertical_range = 220.0
+lose_aggro_range = 700.0
+lose_aggro_vertical_range = 280.0
+attack_range = 72.0
+attack_stop_margin = 4.0
+minimum_player_distance = 34.0
+separation_speed = 40.0
+return_to_origin = false
+attack_damage = 1.0
+attack_cooldown = 1.5
+sprite_faces_right = false
+show_health_bar = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=757155081]
+sprite_frames = SubResource("Frames")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1133502684]
+position = Vector2(0, 8)
+shape = SubResource("Body")
+
+[node name="BossHealthBar" type="CanvasLayer" parent="." unique_id=892152593 instance=ExtResource("extra_0")]
+layer = 10
+script = ExtResource("4_ujblj")
+boss_name = "GUARDIÁN DE HIELO"

@@ -1,3 +1,12 @@
+; QUINTO MUNDO (profundidades). La sala del Demon Slime es la cámara de abajo a
+; la derecha, x 81-102, filas 43-51. Tiene dos entradas: el hueco de x 97-102 en
+; la fila 42 (trampilla) y el paso de la columna 81, filas 47-51, junto a la
+; escalera (reja). La puerta con llave tapa la salida derecha en la columna
+; 102, filas 33-37.
+; Si se mueven en el PNG, mover también los nodos de tiles_profundidades_combate.tscn.
+; La sala y la puerta viven en tiles_profundidades_combate.tscn, que hereda de
+; esta escena: regenerarla no lo borra. Jugar el nivel desde esa.
+;
 ; NIVEL CON TILES calcado de fondos/profundidades.png: la forma sale de las
 ; colisiones del mapa hecho a mano (constructor -- --desde-mapa) y encima se
 ; dibujaron las salidas, escaleras, objetos y decorados.
@@ -10,5 +19,5 @@ tileset: mazmorra
 bloques: oro
 fondo: ninguno
 parallax: assets_prueba/gothicvania/lava/fondo.png 0.05 x2; assets_prueba/gothicvania/lava/rocas.png 0.2 x2
-siguiente: res://escenas/mapas/tiles_jefe.tscn
-anterior: res://escenas/mapas/tiles_ruina.tscn
+siguiente: res://escenas/mapas/tiles_jefe_combate.tscn
+anterior: res://escenas/mapas/tiles_ruina_combate.tscn
