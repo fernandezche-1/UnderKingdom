@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://ouv81xqammtp" path="res://scripts/camera/bounded_camera.gd" id="4_camera"]
 [ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/run_ia/run_ia_6_frames_1626x724.png" id="5_evcc1"]
 [ext_resource type="PackedScene" path="res://escenas/ui/player_hud.tscn" id="5_hud"]
-[ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/takehit_prisn_normalizado.png" id="6_ia3ub"]
+[ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/takehit_ia/takehit_ia_4_frames_1372x764.png" id="6_ia3ub"]
 [ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/puch_ia/puch_ia_6_frames_2172x724.png" id="7_puch"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i878l"]
@@ -233,15 +233,15 @@ region = Rect2(0, 0, 343, 764)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a2sk4"]
 atlas = ExtResource("6_ia3ub")
-region = Rect2(1029, 0, 343, 764)
+region = Rect2(343, 0, 343, 764)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tghav"]
 atlas = ExtResource("6_ia3ub")
-region = Rect2(1372, 0, 343, 764)
+region = Rect2(686, 0, 343, 764)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dmjlv"]
 atlas = ExtResource("6_ia3ub")
-region = Rect2(1715, 0, 343, 764)
+region = Rect2(1029, 0, 343, 764)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2h10h"]
 animations = [{
