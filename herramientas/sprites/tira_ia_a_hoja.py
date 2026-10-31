@@ -6,7 +6,8 @@ Uso: tira_ia_a_hoja.py original.png salida.png --cuadros 8 --factor 2
 Quita el fondo y su halo, alinea los cuadros por los pies y reduce con una paleta
 común para que el color no parpadee. --factor es la altura de la figura en la tira
 entre 120. Al reducir, cada píxel toma un color de la paleta en vez de un promedio:
-así el contorno no se emborrona.
+así el contorno no se emborrona. El borde exterior se suaviza y se repinta con un
+contorno de un solo grosor y color, sin restos del fondo.
 La hoja se dibuja a escala 1/3 (ver ARMED_ANIMATION_SCALES en player.gd): figura de
 40 px como la caja de colisión, con el mismo detalle en pantalla que el prisionero.
 El pie y el centro caen donde en las hojas 288x128 del Player, multiplicados por 3.
@@ -24,6 +25,9 @@ FILAS_PIES = 18  # Filas de la hoja final, desde abajo, con las que se alinea.
 PROPORCION_OSCURA = 0.3  # Parte de un bloque que debe ser oscura para contar como contorno.
 LUMA_OSCURA = 0.55  # Suma de canales, en 0..3, por debajo de la que un color es oscuro.
 TONO_PARECIDO = 0.75  # Distancia, suma de canales en 0..3, que se considera ruido entre cuadros.
+COLOR_CONTORNO = (0.09, 0.05, 0.07)
+GROSOR_CONTORNO = 1  # Píxeles de la hoja: el resto del grosor ya viene en el dibujo.
+RADIO_SUAVIZADO = 2  # Vecindario de la silueta que decide si un píxel se queda.
 
 
 def quitar_fondo(rgb: np.ndarray) -> np.ndarray:
@@ -95,6 +99,28 @@ def estabilizar(cuadros: list[np.ndarray]) -> list[np.ndarray]:
     return list(resultado)
 
 
+def vecinos(mascara: np.ndarray, radio: int) -> np.ndarray:
+    """Cuenta, para cada píxel, cuántos del cuadrado de ese radio están activos."""
+    cuenta = np.zeros(mascara.shape, dtype=int)
+    for dy in range(-radio, radio + 1):
+        for dx in range(-radio, radio + 1):
+            cuenta += np.roll(np.roll(mascara, dy, axis=0), dx, axis=1)
+    return cuenta
+
+
+def limpiar_borde(cuadro: np.ndarray) -> np.ndarray:
+    """Quita los dientes de la silueta y repinta su borde con el contorno."""
+    opaco = cuadro[..., 3] > 0.0
+    lado = RADIO_SUAVIZADO * 2 + 1
+    silueta = vecinos(opaco, RADIO_SUAVIZADO) * 2 > lado * lado
+    lado_contorno = GROSOR_CONTORNO * 2 + 1
+    interior = vecinos(silueta, GROSOR_CONTORNO) == lado_contorno * lado_contorno
+    resultado = cuadro.copy()
+    resultado[..., 3] = silueta.astype(float)
+    resultado[silueta & (~interior | ~opaco), :3] = COLOR_CONTORNO
+    return resultado
+
+
 def main() -> None:
     argumentos = argparse.ArgumentParser(description=__doc__)
     argumentos.add_argument("entrada")
@@ -124,6 +150,7 @@ def main() -> None:
         alineados = [np.roll(c, opciones.factor - resto, axis=0) for c in alineados]
     paleta, tabla = crear_paleta(alineados, opciones.colores)
     reducidos = estabilizar([reducir(c, paleta, tabla, opciones.factor) for c in alineados])
+    reducidos = [limpiar_borde(c) for c in reducidos]
 
     # Eje: centro de los pies del primer cuadro, común a todos.
     pies = np.where(reducidos[0][-(FILAS_PIES + 24):, :, 3].max(axis=0) > 0)[0]
