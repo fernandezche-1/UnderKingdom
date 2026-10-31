@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
-"""Convierte una tira de la IA sobre fondo magenta en una hoja de 288x128 por cuadro.
+"""Convierte una tira de la IA sobre fondo magenta en una hoja de 864x384 por cuadro.
 
-Uso: tira_ia_a_hoja.py original.png salida.png --cuadros 8 --factor 6
+Uso: tira_ia_a_hoja.py original.png salida.png --cuadros 8 --factor 2
 
 Quita el fondo y su halo, alinea los cuadros por los pies y reduce con una paleta
 común para que el color no parpadee. --factor es la altura de la figura en la tira
-entre 40, el tamaño de la caja de colisión. Al reducir, cada píxel toma un color
-de la paleta en vez de un promedio: así el contorno no se emborrona.
-El pie queda en la fila que usan las hojas 288x128 del Player.
+entre 120. Al reducir, cada píxel toma un color de la paleta en vez de un promedio:
+así el contorno no se emborrona.
+La hoja se dibuja a escala 1/3 (ver ARMED_ANIMATION_SCALES en player.gd): figura de
+40 px como la caja de colisión, con el mismo detalle en pantalla que el prisionero.
+El pie y el centro caen donde en las hojas 288x128 del Player, multiplicados por 3.
 """
 import argparse
 
@@ -15,10 +17,10 @@ import numpy as np
 from PIL import Image
 
 MAGENTA = np.array([253.0, 0.0, 248.0])
-ANCHO_CUADRO = 288
-ALTO_CUADRO = 128
-FILA_PIES = 126
-FILAS_PIES = 6  # Filas de la hoja final, desde abajo, con las que se alinea.
+ANCHO_CUADRO = 864
+ALTO_CUADRO = 384
+FILA_PIES = 380
+FILAS_PIES = 18  # Filas de la hoja final, desde abajo, con las que se alinea.
 PROPORCION_OSCURA = 0.3  # Parte de un bloque que debe ser oscura para contar como contorno.
 LUMA_OSCURA = 0.55  # Suma de canales, en 0..3, por debajo de la que un color es oscuro.
 TONO_PARECIDO = 0.75  # Distancia, suma de canales en 0..3, que se considera ruido entre cuadros.
@@ -98,9 +100,9 @@ def main() -> None:
     argumentos.add_argument("entrada")
     argumentos.add_argument("salida")
     argumentos.add_argument("--cuadros", type=int, required=True)
-    argumentos.add_argument("--factor", type=int, default=3)
+    argumentos.add_argument("--factor", type=int, default=2)
     argumentos.add_argument("--colores", type=int, default=32)
-    argumentos.add_argument("--centro-x", type=int, default=144, help="Columna del cuadro para el centro de los pies")
+    argumentos.add_argument("--centro-x", type=int, default=432, help="Columna del cuadro para el centro de los pies")
     opciones = argumentos.parse_args()
 
     tira = quitar_fondo(np.array(Image.open(opciones.entrada).convert("RGB")).astype(float))
@@ -124,7 +126,7 @@ def main() -> None:
     reducidos = estabilizar([reducir(c, paleta, tabla, opciones.factor) for c in alineados])
 
     # Eje: centro de los pies del primer cuadro, común a todos.
-    pies = np.where(reducidos[0][-(FILAS_PIES + 8):, :, 3].max(axis=0) > 0)[0]
+    pies = np.where(reducidos[0][-(FILAS_PIES + 24):, :, 3].max(axis=0) > 0)[0]
     eje_x = (int(pies.min()) + int(pies.max())) // 2
     fila_base = int(np.where(reducidos[0][..., 3].max(axis=1) > 0)[0].max())
 

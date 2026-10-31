@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cri1dw0s1jxb5"
-path="res://.godot/imported/idle_ia_8_frames_2304x128.png-7eb82b2b6bcf7458fcf855b332a42c39.ctex"
+uid="uid://y6yjjrjfnibt"
+path="res://.godot/imported/idle_ia_8_frames_6912x384.png-595d669530d1066cc203bd2e5de82eaa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Elementals_fire_knight_FREE_v1.1/espada/idle_ia/idle_ia_8_frames_2304x128.png"
-dest_files=["res://.godot/imported/idle_ia_8_frames_2304x128.png-7eb82b2b6bcf7458fcf855b332a42c39.ctex"]
+source_file="res://Elementals_fire_knight_FREE_v1.1/espada/idle_ia/idle_ia_8_frames_6912x384.png"
+dest_files=["res://.godot/imported/idle_ia_8_frames_6912x384.png-595d669530d1066cc203bd2e5de82eaa.ctex"]
 
 [params]
 

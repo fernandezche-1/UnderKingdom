@@ -286,6 +286,9 @@ var _last_blocked_contact_signature: String = ""
 var _armory_stuck_frames: int = 0
 var _armory_block_reported: bool = false
 const ARMORY_STUCK_FRAMES_TO_REPORT: int = 5
+## Animaciones con espada en hojas de alta resolución (864x384 por cuadro): se
+## dibujan más pequeñas para dar el mismo detalle en pantalla que el prisionero.
+const ARMED_ANIMATION_SCALES: Dictionary = {&"idle": 1.0 / 3.0}
 const UNARMED_IDLE_SHEET: Texture2D = preload("res://Elementals_fire_knight_FREE_v1.1/idle_8_frames_288x128.png")
 const UNARMED_PUNCH_SHEET: Texture2D = preload("res://Elementals_fire_knight_FREE_v1.1/Right_Punch_6_frames_1728x128_alineado.png")
 const UNARMED_RUN_SHEET: Texture2D = preload("res://Elementals_fire_knight_FREE_v1.1/run_unarmed_8_frames_2304x128.png")
@@ -310,6 +313,7 @@ func _ready() -> void:
         _unarmed_sprite_frames = sprite.sprite_frames
         _load_armed_sprite_frames()
     _add_fireball_animation(_armed_sprite_frames)
+    sprite.animation_changed.connect(_on_sprite_animation_changed)
     set_sword_equipped(GameManager.has_sword)
     floor_max_angle = deg_to_rad(max_stair_slope_degrees)
     floor_snap_length = floor_snap_distance
@@ -347,7 +351,7 @@ func set_sword_equipped(equipped: bool) -> void:
         sprite.sprite_frames = _armed_sprite_frames
         sprite.position = _armed_sprite_position
         sprite.offset = _armed_sprite_offset
-        sprite.scale = _armed_sprite_scale
+        sprite.scale = _current_armed_scale()
     else:
         if _unarmed_sprite_frames == null:
             _unarmed_sprite_frames = _build_unarmed_sprite_frames()
@@ -382,7 +386,7 @@ func set_sword_equipped(equipped: bool) -> void:
     _active_climb_zone = null
     _drop_through_left = 0.0
     sprite.speed_scale = 1.0
-    sprite.scale = _armed_sprite_scale if equipped else _base_sprite_scale
+    sprite.scale = _current_armed_scale() if equipped else _base_sprite_scale
     sprite.stop()
     sprite.play(&"idle")
     sprite.frame = 0
@@ -412,6 +416,16 @@ func _load_armed_sprite_frames() -> void:
         if reference_body != null and own_body != null:
             _armed_sprite_position += _body_feet(own_body) - _body_feet(reference_body)
     visual_reference.free()
+
+
+func _current_armed_scale() -> Vector2:
+    return _armed_sprite_scale * float(ARMED_ANIMATION_SCALES.get(sprite.animation, 1.0))
+
+
+## Las acciones cambian de animación sin pasar por _update_animation.
+func _on_sprite_animation_changed() -> void:
+    if sprite.sprite_frames == _armed_sprite_frames:
+        sprite.scale = _current_armed_scale()
 
 
 func _body_feet(body: CollisionShape2D) -> Vector2:
@@ -624,7 +638,7 @@ func _process_cinematic_movement(delta: float) -> void:
 
 
 func _update_cinematic_animation() -> void:
-    sprite.scale = _armed_sprite_scale if GameManager.has_sword else _base_sprite_scale
+    sprite.scale = _current_armed_scale() if GameManager.has_sword else _base_sprite_scale
     sprite.speed_scale = 1.0
     if not GameManager.has_sword:
         if sprite.animation != &"idle" or not sprite.is_playing():
@@ -1495,7 +1509,7 @@ func _update_animation(direction: float) -> void:
         return
 
     sprite.speed_scale = 1.0
-    sprite.scale = _armed_sprite_scale if GameManager.has_sword else _base_sprite_scale
+    sprite.scale = _current_armed_scale() if GameManager.has_sword else _base_sprite_scale
 
     if direction < 0.0:
         sprite.flip_h = true
