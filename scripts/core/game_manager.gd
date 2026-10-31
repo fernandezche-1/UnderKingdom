@@ -356,10 +356,10 @@ func _restore_game_state(state: Dictionary) -> void:
 	sword_guard_defeated = bool(state.get("sword_guard_defeated", false))
 	castle_equipment_recovered = bool(state.get("castle_equipment_recovered", false))
 	# Se restaura el estado armado si el guardado registra un arma recogida: la
-	# espada oxidada del carcelero del calabozo o el equipo de la armería.
+	# espada oxidada del conducto del calabozo o el equipo de la armería.
 	has_sword = bool(state.get("has_sword", false)) and (
 		castle_equipment_recovered
-		or (sword_guard_defeated and bool(state.get("sword_mission_completed", false)))
+		or bool(state.get("sword_mission_completed", false))
 	)
 	sword_mission_started = bool(state.get("sword_mission_started", false)) and not has_sword
 	sword_mission_completed = bool(state.get("sword_mission_completed", false)) and has_sword
@@ -1122,8 +1122,8 @@ func start_sword_mission() -> void:
 	request_autosave()
 
 
-func recover_sword(player: Node = null) -> bool:
-	if has_sword or not sword_guard_defeated:
+func recover_sword(player: Node = null, requires_guard: bool = true) -> bool:
+	if has_sword or (requires_guard and not sword_guard_defeated):
 		return false
 	has_sword = true
 	sword_mission_started = true

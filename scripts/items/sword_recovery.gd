@@ -4,6 +4,8 @@ class_name UnderkingdomSwordRecovery
 @export_range(24.0, 96.0, 4.0) var interaction_radius: float = 56.0
 @export var notice_title: String = "Espada recuperada"
 @export_multiline var notice_text: String = "Mi arma ha vuelto a mis manos... pero mi llama continúa debilitada."
+## Falso si la espada se encuentra en el mapa, sin vencer antes a un guardia.
+@export var requires_guard_defeated: bool = true
 
 @onready var icon: Sprite2D = $Sprite2D
 @onready var prompt: Label = $Prompt
@@ -62,7 +64,7 @@ func _recover(player: UnderkingdomPlayer) -> void:
 	await tween.finished
 	if not is_instance_valid(player):
 		return
-	if not GameManager.recover_sword(player):
+	if not GameManager.recover_sword(player, requires_guard_defeated):
 		player.set_controls_locked(false)
 		_busy = false
 		return
