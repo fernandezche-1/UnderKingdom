@@ -6,30 +6,35 @@
   - al pasar a la zona dura, el prisionero dice que son demasiados y señala el hueco del suelo;
   - desnudo es peligroso pelear, y conviene esquivar;
   - la reja interior corta el paso y obliga a ir por el conducto;
-  - en el conducto está el cadáver de otro preso con la primera arma, una **espada oxidada**;
+  - el conducto baja hasta una zona honda con ratas y murciélagos;
+  - al fondo está el cadáver de otro preso con la primera arma, una **espada oxidada**, y su atuendo. El prisionero lo comenta;
   - con ella se vence al carcelero, que suelta la llave de la salida.
 - Ruta: cinemática inicial → prisión → **calabozo** → castillo → cementerio…
 
 ## 1. El mapa
 
-- `mapas_texto/tiles_calabozo.txt` (mapa de letras, 136 x 24 piezas, tileset `castillo`) genera `escenas/mapas/tiles_calabozo.tscn`. Se juega desde `tiles_calabozo_combate.tscn`.
+- `mapas_texto/tiles_calabozo.txt` (mapa de letras, 136 x 46 piezas, tileset `castillo`) genera `escenas/mapas/tiles_calabozo.tscn`. Se juega desde `tiles_calabozo_combate.tscn`.
 - Tramos:
   1. Tramo lineal (x 2-40), con el inicio en (4, 9), dos ratas y checkpoint en (38, 9).
   2. Paso bajo (x 41-42), de 3 piezas de alto, que separa las dos zonas.
-  3. Entrada al conducto: escalera en la columna 56, en un hueco de 3 piezas en el suelo, antes de los enemigos.
+  3. Entrada a la zona honda: escalera en la columna 56, filas 10-37, en un hueco de 3 piezas en el suelo, antes de los enemigos.
   4. Pasillo de celdas con enemigos (x 58-73).
   5. Rampa de bajada (x 74-76) y checkpoint en (81, 12).
   6. Sala izquierda (x 77-101), con cofre en (98, 12).
   7. Reja interior en la columna 102, filas 10-12, bajo un muro.
-  8. Conducto (filas 17-19, x 54-108), sin enemigos.
-  9. Cámara del preso (x 86-92), con la espada y un checkpoint en (90, 19).
-  10. Reja del conducto en la columna 94.
-  11. Salida del conducto: escalera en la columna 106.
-  12. Sala del carcelero (x 103-127).
-  13. Reja de la salida en la columna 128, filas 10-12, bajo un muro.
-  14. Salida azul en la columna 135, filas 10-12, a `tiles_castillo_combate.tscn#SpawnInicio`.
+  8. Cueva de llegada (x 53-70, filas 32-37), con checkpoint en (59, 37), rata y murciélago.
+  9. Rampa de bajada (x 71-73).
+  10. Sala larga (x 74-89, filas 35-40), con dos ratas, un murciélago y dos plataformas a 48 px del suelo para esquivar.
+  11. Paso bajo (x 90-92, filas 38-40).
+  12. Cámara del preso (x 93-103), con checkpoint en (94, 40), la espada y el atuendo.
+  13. Reja del conducto en la columna 104, filas 38-40.
+  14. Salida: escalera en la columna 106, filas 13-40.
+  15. Sala del carcelero (x 103-127).
+  16. Reja de la salida en la columna 128, filas 10-12, bajo un muro.
+  17. Salida azul en la columna 135, filas 10-12, a `tiles_castillo_combate.tscn#SpawnInicio`.
 - El tramo lineal se añadió a la izquierda en el mismo mapa, para caminarlo sin carga. Todo lo colocado a mano se movió 640 px.
-- El conducto queda a más de 90 px por debajo de la sala, fuera del alcance vertical de los enemigos de suelo.
+- **Zona honda:** sustituye al conducto antiguo (filas 17-19, x 54-108, sin enemigos), que quedó relleno. Las filas 0-12 no cambiaron ni un tile. Son unas 18 filas más de escalera (de 160 a 448 px) y unas 47 columnas de recorrido, antes 32.
+- Las salas miden 6 piezas de alto o más, como el pasillo de arriba, para saltar a las ratas: el salto sin espada es de 50 px y pide esa altura. Donde se pelea no hay tramos de 3 piezas.
 - **Escaleras que cruzan un piso:** el hueco es de 3 piezas, `.H.`. Con `=H=` no se baja: el Player mide 20 px, más que la pieza de 16, y las plataformas lo frenan. Al llegar arriba hay que pulsar hacia un lado para salir al suelo.
 - Sin espada, el hueco se salta corriendo.
 - Los enemigos no caen por los huecos porque tienen `avoid_ledges`.
@@ -43,7 +48,7 @@ Las tres son `locked_door.gd`, a mano en la escena `_combate`.
 | Reja | Posición | Se abre con | Para qué |
 |---|---|---|---|
 | `RejaInterior` | (1640, 184) | espada (`requires_sword`) | corta la sala; armado es un atajo para volver a por los enemigos esquivados |
-| `RejaConducto` | (1512, 296) | espada (`requires_sword`) | impide llegar al carcelero sin recoger la espada |
+| `RejaConducto` | (1672, 632) | espada (`requires_sword`) | impide llegar al carcelero sin recoger la espada |
 | `RejaSalida` | (2056, 184) | llave `calabozo_salida` | salida al castillo |
 
 ### El aviso del prisionero
@@ -52,6 +57,11 @@ Las tres son `locked_door.gd`, a mano en la escena `_combate`.
 - El texto está en `dialogues/calabozo_aviso_conducto.json`. Sale una vez por partida (`cinematic_id = "calabozo_aviso_conducto"`) y es invulnerable mientras dura.
 - La descripción del objetivo cambió a "Busca un arma: a puños no llegarás lejos.", porque hablaba de la llave de la armería.
 - Sin ventana, `VisibleOnScreenNotifier2D` no se dispara: el aviso solo se puede probar con pantalla.
+
+### El hallazgo del preso
+
+- `SistemasMapa/Cinematicas/HallazgoPreso` funciona igual que el aviso: enfoca `PuntoPreso` y se dispara al quedar a 80 px, unos 1473 de x, al salir del paso bajo.
+- El texto está en `dialogues/calabozo_preso_atuendo.json`.
 
 ## 2. Sin espada
 
@@ -93,6 +103,8 @@ Se pusieron a mano en `tiles_calabozo_combate.tscn` para ver cómo reaccionan; n
 | Slime | `enemigos/slime.tscn` | pasillo, x 1200 | 0.75 | 3 | escupitajo, 0.75 cada 2 s |
 | Rata | `enemigos/rata.tscn` | sala izquierda, x 1380 | 1.25 | 5 | mordisco, 0.75 cada 1.6 s |
 | Slime | `enemigos/slime.tscn` | sala izquierda, x 1480 | 0.75 | 3 | escupitajo, 0.75 cada 2 s |
+| Rata | `enemigos/rata.tscn` | zona honda, x 1072, 1248 y 1400 | 1.25 | 5 | mordisco, 0.75 cada 1.6 s |
+| Murciélago grande | `enemigos/murcielago_grande.tscn` | zona honda, x 1000 y 1336 | 1 | 4 | embestida (`lunge_enemy.gd`), 0.75 cada 1.8 s |
 
 - El puñetazo no llega al ras del suelo: le faltan unos 12 px. Por eso rata y slime tienen 18 px de colisión, aunque se vean bajitos. Si se reduce, dejan de recibir golpes.
 - **Sin bloqueo por machacar:** cada golpe cancelaba el ataque y aturdía, y el puñetazo se repite cada 0.5 s, así que nunca llegaban a pegar. `enemy_base.gd` tiene dos opciones nuevas, apagadas por defecto y activas en estos enemigos y el carcelero:
@@ -107,7 +119,9 @@ Se pusieron a mano en `tiles_calabozo_combate.tscn` para ver cómo reaccionan; n
 
 - `escenas/objetos/espada_oxidada.tscn` hereda de `espada_recuperable.tscn`: la misma espada, teñida de óxido, con "E - TOMAR ESPADA OXIDADA".
 - `sword_recovery.gd` exporta el aviso del HUD (`notice_title`, `notice_text`); aquí dice "Espada oxidada / No es gran cosa... pero corta.".
-- Está colocada a mano en la cámara del preso, junto a `PresoMuerto`, el último cuadro de la muerte del Skeleton como cadáver provisional.
+- Está colocada a mano en la cámara del preso, clavada junto a `PresoMuerto`, el último cuadro de la muerte del Skeleton como cadáver provisional.
+- **Atuendo:** `Elementals_fire_knight_FREE_v1.1/atuendo_preso.png`, una túnica doblada de 22x10 px hecha a mano con la paleta del sprite armado. Es hijo del `Sprite2D` de la espada: se desvanece con ella y desaparece al recogerla. Por eso el tinte de óxido pasó a `self_modulate`. Se recoge todo con una pulsación, y es lo que explica que el Player cambie de aspecto.
+- **Distancia a la reja:** `locked_door.gd` abre al entrar en su detector, a 20 px de cada lado. La espada queda a 100 px de la reja: si se recogiera dentro del detector, no abriría hasta salir y volver.
 - `requires_guard_defeated = false`: `sword_recovery.gd` lo pasa a `GameManager.recover_sword(player, requires_guard)`, porque aquí no hay que vencer a nadie. Por defecto sigue pidiendo el guardia.
 - `has_sword = true` y el Player pasa a tener espada.
 - **Guardado:** `_restore_game_state` devuelve la espada si viene de la armería o si la misión está completa. No hay campos nuevos ni cambia `SAVE_FORMAT_VERSION`.
@@ -132,10 +146,17 @@ Se pusieron a mano en `tiles_calabozo_combate.tscn` para ver cómo reaccionan; n
   - las ratas no caen al perseguir por el borde del hueco, y el hueco se salta corriendo;
   - las dos escaleras se suben y se bajan.
 - Con ventana, el aviso se dispara solo a unos 755 de x y dice sus dos líneas. El Player recupera el control y la cámara.
+- Zona honda, simulada con el Player real, sin enemigos en el recorrido:
+  - se baja hasta la cueva y se llega caminando a la reja, que no abre sin espada;
+  - el hallazgo se dispara solo con ventana, a unos 1473 de x, y devuelve el control;
+  - espada y atuendo se recogen juntos, la reja abre y se sube a la sala del carcelero;
+  - desde el pie se sube por la escalera de entrada, con y sin espada, y arriba se sale al suelo por los dos lados.
+- Las ratas y murciélagos nuevos patrullan sin caer ni atravesar paredes. La dificultad de la zona honda a puños sigue sin probar jugando.
 
 ## Pendiente
 
 - Arte de la espada oxidada (hoy, espada teñida).
+- Arte definitivo del atuendo (hoy, túnica provisional).
 - Arte del preso muerto (hoy, cadáver de Skeleton).
 - Jugarlo con ventana y ajustar velocidad, salto, vida y ataque de los enemigos del calabozo, y ver si el conducto se encuentra sin ayuda.
 - Jugar la prisión con la velocidad y el salto reducidos.

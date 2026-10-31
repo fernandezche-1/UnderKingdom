@@ -59,7 +59,7 @@ piece_end = SubResource("AtlasTexture_columna_base")
 shape = SubResource("RectangleShape2D_reja")
 
 [node name="RejaConducto" type="StaticBody2D" parent="SistemasMapa"]
-position = Vector2(1512, 296)
+position = Vector2(1672, 632)
 script = ExtResource("3_puerta")
 requires_sword = true
 locked_message = "NECESITAS UN ARMA PARA FORZARLA"
@@ -76,6 +76,11 @@ position = Vector2(904, 150)
 
 [node name="Visible" type="VisibleOnScreenNotifier2D" parent="SistemasMapa/PuntoConducto"]
 
+[node name="PuntoPreso" type="Marker2D" parent="SistemasMapa"]
+position = Vector2(1552, 630)
+
+[node name="Visible" type="VisibleOnScreenNotifier2D" parent="SistemasMapa/PuntoPreso"]
+
 [node name="Cinematicas" type="Node2D" parent="SistemasMapa"]
 
 [node name="AvisoConducto" type="Node2D" parent="SistemasMapa/Cinematicas"]
@@ -87,6 +92,16 @@ focus_actor_path = NodePath("../../PuntoConducto")
 visible_notifier_path = NodePath("../../PuntoConducto/Visible")
 dialogue_path = "res://dialogues/calabozo_aviso_conducto.json"
 visible_max_distance_x = 150.0
+
+[node name="HallazgoPreso" type="Node2D" parent="SistemasMapa/Cinematicas"]
+script = ExtResource("11_cinematica")
+cinematic_id = "calabozo_hallazgo_preso"
+activation = 1
+player_path = NodePath("../../../player")
+focus_actor_path = NodePath("../../PuntoPreso")
+visible_notifier_path = NodePath("../../PuntoPreso/Visible")
+dialogue_path = "res://dialogues/calabozo_preso_atuendo.json"
+visible_max_distance_x = 80.0
 
 [node name="Carcelero" parent="Enemigos" instance=ExtResource("2_carcelero")]
 position = Vector2(1896, 188)
@@ -115,12 +130,27 @@ position = Vector2(1480, 199)
 [node name="RataSala" parent="Enemigos" instance=ExtResource("6_rata")]
 position = Vector2(1380, 198)
 
+[node name="RataCueva" parent="Enemigos" instance=ExtResource("6_rata")]
+position = Vector2(1072, 598)
+
+[node name="RataHonda1" parent="Enemigos" instance=ExtResource("6_rata")]
+position = Vector2(1248, 646)
+
+[node name="RataHonda2" parent="Enemigos" instance=ExtResource("6_rata")]
+position = Vector2(1400, 646)
+
+[node name="MurcielagoCueva" parent="Enemigos" instance=ExtResource("8_murcielago")]
+position = Vector2(1000, 558)
+
+[node name="MurcielagoHondo" parent="Enemigos" instance=ExtResource("8_murcielago")]
+position = Vector2(1336, 596)
+
 [node name="PresoMuerto" type="Sprite2D" parent="Objetos"]
-position = Vector2(1400, 300)
+position = Vector2(1544, 636)
 texture = SubResource("AtlasTexture_preso_muerto")
 
 [node name="EspadaOxidada" parent="Objetos" instance=ExtResource("9_espada")]
-position = Vector2(1416, 304)
+position = Vector2(1572, 626)
 
 [node name="Ambientacion" type="Node2D" parent="."]
 script = ExtResource("5_ambiente")

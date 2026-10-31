@@ -1,0 +1,20 @@
+[
+  {
+    "speaker_id": "player",
+    "name": "GUERRERO (PENSAMIENTO)",
+    "text": "Otro preso... llegó hasta aquí y ya no pudo seguir.",
+    "expression": "fear"
+  },
+  {
+    "speaker_id": "player",
+    "name": "GUERRERO (PENSAMIENTO)",
+    "text": "Dejó su espada y su ropa. A él ya no le sirven.",
+    "expression": "neutral"
+  },
+  {
+    "speaker_id": "player",
+    "name": "GUERRERO (PENSAMIENTO)",
+    "text": "Perdóname, amigo. Yo sí voy a salir de aquí.",
+    "expression": "neutral"
+  }
+]

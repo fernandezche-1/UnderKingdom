@@ -1,14 +1,20 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="PackedScene" path="res://escenas/objetos/espada_recuperable.tscn" id="1_base"]
+[ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/atuendo_preso.png" id="2_atuendo"]
 
 [node name="EspadaOxidada" instance=ExtResource("1_base")]
-notice_title = "Espada oxidada"
+notice_title = "Espada oxidada y atuendo"
 notice_text = "No es gran cosa... pero corta."
 requires_guard_defeated = false
 
 [node name="Sprite2D" parent="."]
-modulate = Color(0.72, 0.5, 0.36, 1)
+self_modulate = Color(0.72, 0.5, 0.36, 1)
+
+[node name="Atuendo" type="Sprite2D" parent="Sprite2D"]
+position = Vector2(12, 12.5)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_atuendo")
 
 [node name="Prompt" parent="."]
-text = "E - TOMAR ESPADA OXIDADA"
+text = "E - TOMAR ESPADA Y ROPA"
