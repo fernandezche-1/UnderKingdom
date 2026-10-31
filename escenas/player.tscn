@@ -31,7 +31,7 @@
 [ext_resource type="Texture2D" uid="uid://y6yjjrjfnibt" path="res://Elementals_fire_knight_FREE_v1.1/espada/idle_ia/idle_ia_8_frames_6912x384.png" id="108_idle_espada"]
 [ext_resource type="Texture2D" uid="uid://b5pj25bahqdqj" path="res://Elementals_fire_knight_FREE_v1.1/espada/run_ia/run_ia_8_frames_6912x384.png" id="109_run_espada"]
 [ext_resource type="Texture2D" uid="uid://cdmka0pqncuul" path="res://Elementals_fire_knight_FREE_v1.1/espada/jump_ia/jump_ia_6_frames_5184x384.png" id="110_jump_espada"]
-[ext_resource type="Texture2D" uid="uid://bup4fqh6my7c8" path="res://Elementals_fire_knight_FREE_v1.1/espada/death_ia/death_ia_7_frames_6048x384.png" id="114_death_espada"]
+[ext_resource type="Texture2D" uid="uid://cwst6cfwkjcok" path="res://Elementals_fire_knight_FREE_v1.1/espada/death_ia/death_ia_6_frames_5184x384.png" id="114_death_espada"]
 [ext_resource type="Texture2D" uid="uid://ifenikq20i0p" path="res://Elementals_fire_knight_FREE_v1.1/espada/take_hit_ia/take_hit_ia_4_frames_3456x384.png" id="113_take_hit_espada"]
 [ext_resource type="Texture2D" uid="uid://wi3d254fxypc" path="res://Elementals_fire_knight_FREE_v1.1/espada/air_attack_ia/air_attack_ia_6_frames_5184x384.png" id="112_air_attack_espada"]
 [ext_resource type="Texture2D" uid="uid://d22u818n01d0s" path="res://Elementals_fire_knight_FREE_v1.1/espada/attack_ia/attack_ia_6_frames_5184x384.png" id="111_attack_espada"]
@@ -248,10 +248,6 @@ region = Rect2(3456, 0, 864, 384)
 atlas = ExtResource("114_death_espada")
 region = Rect2(4320, 0, 864, 384)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_death_espada_6"]
-atlas = ExtResource("114_death_espada")
-region = Rect2(5184, 0, 864, 384)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_jump_espada_0"]
 atlas = ExtResource("110_jump_espada")
 region = Rect2(0, 0, 864, 384)
@@ -429,11 +425,8 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_death_espada_4")
 }, {
-"duration": 1.0,
+"duration": 8.0,
 "texture": SubResource("AtlasTexture_death_espada_5")
-}, {
-"duration": 7.0,
-"texture": SubResource("AtlasTexture_death_espada_6")
 }],
 "loop": false,
 "name": &"death",

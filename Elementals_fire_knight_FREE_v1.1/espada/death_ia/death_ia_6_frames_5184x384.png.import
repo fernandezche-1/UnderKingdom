@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bup4fqh6my7c8"
-path="res://.godot/imported/death_ia_7_frames_6048x384.png-22299ebe2efa863af93012010d99c133.ctex"
+uid="uid://cwst6cfwkjcok"
+path="res://.godot/imported/death_ia_6_frames_5184x384.png-78336e7d440e2c0a6912791c07b6d1c2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Elementals_fire_knight_FREE_v1.1/espada/death_ia/death_ia_7_frames_6048x384.png"
-dest_files=["res://.godot/imported/death_ia_7_frames_6048x384.png-22299ebe2efa863af93012010d99c133.ctex"]
+source_file="res://Elementals_fire_knight_FREE_v1.1/espada/death_ia/death_ia_6_frames_5184x384.png"
+dest_files=["res://.godot/imported/death_ia_6_frames_5184x384.png-78336e7d440e2c0a6912791c07b6d1c2.ctex"]
 
 [params]
 

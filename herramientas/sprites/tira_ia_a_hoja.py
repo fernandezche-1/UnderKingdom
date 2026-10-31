@@ -20,7 +20,7 @@ a --movimiento (ataque aéreo) se centra por el torso, porque los pies no están
 Con --pies-centrados (recibir golpe) se queda ese centrado: la postura de los pies cambia
 tanto que buscar su encaje entre cuadros los despega del suelo.
 --escala amplía la tira, sin mezclar colores, antes de todo lo demás: si la figura mide
-165 px, 165 * 3 / 4 da los 120 de siempre con --escala 3 --factor 4.
+197 px, 197 * 5 / 8 da los 120 de siempre con --escala 5 --factor 8.
 --fila-pies sube la figura, para que la cabeza coincida con la de otra animación.
 La hoja se dibuja a escala 1/3 (ver ARMED_ANIMATION_SCALES en player.gd): figura de
 40 px como la caja de colisión, con el mismo detalle en pantalla que el prisionero.
