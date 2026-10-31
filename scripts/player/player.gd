@@ -40,8 +40,8 @@ const ATTACK_PROFILES := {
     &"attack 2": {"start": 0, "end": 2, "hits": [
         {"frames": Vector2i(1, 1), "ratio": 1.0, "area": "sword", "knockback": true},
     ]},
-    &"air attack": {"start": 0, "end": 7, "hits": [
-        {"frames": Vector2i(3, 5), "ratio": 1.0, "area": "front", "knockback": true},
+    &"air attack": {"start": 0, "end": 4, "hits": [
+        {"frames": Vector2i(1, 2), "ratio": 1.0, "area": "sword", "knockback": true},
     ]},
     &"attack ultimate": {"start": 0, "end": 17, "hits": [
         {"frames": Vector2i(10, 10), "ratio": 0.15, "area": "wide", "knockback": false},
@@ -120,7 +120,7 @@ const ATTACK_PROFILES := {
 @export_range(1.0, 2.0, 0.05) var attack_1_speed_multiplier: float = 1.35
 ## Velocidad de los dos tajos con la Ráfaga, sobre la propia de cada uno.
 @export_range(1.0, 2.0, 0.05) var rafaga_speed_multiplier: float = 1.20
-## Velocidad propia del ataque aéreo (la animación del pack va a 9 fps).
+## Velocidad propia del ataque aéreo (la animación va a 8 fps).
 @export_range(1.0, 3.0, 0.05) var air_attack_speed_multiplier: float = 1.80
 ## Velocidad del puñetazo sin espada (la animación va a 5 fps: 2.4 la deja en 12).
 @export_range(1.0, 4.0, 0.05) var unarmed_attack_speed_multiplier: float = 2.40
@@ -271,6 +271,7 @@ const ARMORY_STUCK_FRAMES_TO_REPORT: int = 5
 ## Animaciones con espada en hojas de alta resolución (864x384 por cuadro): se
 ## dibujan más pequeñas para dar el mismo detalle en pantalla que el prisionero.
 const ARMED_ANIMATION_SCALES: Dictionary = {
+    &"air attack": 1.0 / 3.0,
     &"attack": 1.0 / 3.0,
     &"attack 2": 1.0 / 3.0,
     &"idle": 1.0 / 3.0,
@@ -1481,7 +1482,11 @@ func _update_animation(direction: float) -> void:
 
     # El salto no va en bucle: se queda en su último cuadro hasta cambiar.
     if sprite.animation != wanted or (not sprite.is_playing() and sprite.sprite_frames.get_animation_loop(wanted)):
+        var after_air_attack := sprite.animation == &"air attack"
         sprite.play(wanted)
+        # Tras un ataque en plena subida no se vuelve a la pose agachada del despegue.
+        if after_air_attack and wanted == &"jump up":
+            sprite.frame = sprite.sprite_frames.get_frame_count(wanted) - 1
 
 
 func _update_attack_hitbox_position() -> void:
@@ -1572,7 +1577,7 @@ func _reset_attack_hitbox() -> void:
     _update_attack_hitbox_position()
     # La física ve la caja un tick después de moverla: en los tajos ya debe
     # estar en su sitio antes de que llegue el cuadro del golpe.
-    if _current_attack_animation in [&"attack", &"attack 2"]:
+    if _current_attack_animation in [&"attack", &"attack 2", &"air attack"]:
         _place_sword_hitbox()
 
 

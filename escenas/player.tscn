@@ -1,13 +1,5 @@
 [gd_scene format=3 uid="uid://crgen4tbgq8y1"]
 
-[ext_resource type="Texture2D" uid="uid://dvlx34xxisfcf" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/air_atk/air_atk_1.png" id="1_psiyq"]
-[ext_resource type="Texture2D" uid="uid://swe2qtmvjq2q" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/air_atk/air_atk_2.png" id="2_lqqhn"]
-[ext_resource type="Texture2D" uid="uid://dgvdvh310k5l1" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/air_atk/air_atk_3.png" id="3_i6m80"]
-[ext_resource type="Texture2D" uid="uid://cj11rc0krwwo0" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/air_atk/air_atk_4.png" id="4_5uixq"]
-[ext_resource type="Texture2D" uid="uid://b006jpr3o4r4j" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/air_atk/air_atk_5.png" id="5_gbimq"]
-[ext_resource type="Texture2D" uid="uid://djt2d30pfoa6x" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/air_atk/air_atk_6.png" id="6_q2tq5"]
-[ext_resource type="Texture2D" uid="uid://bcv7a8pr4qqqp" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/air_atk/air_atk_7.png" id="7_vw21y"]
-[ext_resource type="Texture2D" uid="uid://ntphvlbmuus8" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/air_atk/air_atk_8.png" id="8_7nxk2"]
 [ext_resource type="Texture2D" uid="uid://bnpwqe0x2c6ry" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/08_sp_atk/sp_atk_1.png" id="67_3mcc7"]
 [ext_resource type="Texture2D" uid="uid://cwxc6tdmqe7br" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/08_sp_atk/sp_atk_2.png" id="68_qhy54"]
 [ext_resource type="Texture2D" uid="uid://bl0lr14d3ebl5" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/08_sp_atk/sp_atk_3.png" id="69_xaxod"]
@@ -52,6 +44,7 @@
 [ext_resource type="Texture2D" uid="uid://y6yjjrjfnibt" path="res://Elementals_fire_knight_FREE_v1.1/espada/idle_ia/idle_ia_8_frames_6912x384.png" id="108_idle_espada"]
 [ext_resource type="Texture2D" uid="uid://b5pj25bahqdqj" path="res://Elementals_fire_knight_FREE_v1.1/espada/run_ia/run_ia_8_frames_6912x384.png" id="109_run_espada"]
 [ext_resource type="Texture2D" uid="uid://cdmka0pqncuul" path="res://Elementals_fire_knight_FREE_v1.1/espada/jump_ia/jump_ia_6_frames_5184x384.png" id="110_jump_espada"]
+[ext_resource type="Texture2D" uid="uid://wi3d254fxypc" path="res://Elementals_fire_knight_FREE_v1.1/espada/air_attack_ia/air_attack_ia_6_frames_5184x384.png" id="112_air_attack_espada"]
 [ext_resource type="Texture2D" uid="uid://d22u818n01d0s" path="res://Elementals_fire_knight_FREE_v1.1/espada/attack_ia/attack_ia_6_frames_5184x384.png" id="111_attack_espada"]
 [ext_resource type="Texture2D" uid="uid://cd26we843dh0r" path="res://escaleras_12_frames_288x128.png" id="109_o7gi0"]
 [ext_resource type="Texture2D" uid="uid://bwha3pdeds124" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/03_jump/jump_1.png" id="116_uedpq"]
@@ -212,6 +205,26 @@ region = Rect2(3456, 0, 864, 384)
 atlas = ExtResource("111_attack_espada")
 region = Rect2(4320, 0, 864, 384)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_air_attack_espada_1"]
+atlas = ExtResource("112_air_attack_espada")
+region = Rect2(864, 0, 864, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_air_attack_espada_2"]
+atlas = ExtResource("112_air_attack_espada")
+region = Rect2(1728, 0, 864, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_air_attack_espada_3"]
+atlas = ExtResource("112_air_attack_espada")
+region = Rect2(2592, 0, 864, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_air_attack_espada_4"]
+atlas = ExtResource("112_air_attack_espada")
+region = Rect2(3456, 0, 864, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_air_attack_espada_5"]
+atlas = ExtResource("112_air_attack_espada")
+region = Rect2(4320, 0, 864, 384)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_jump_espada_0"]
 atlas = ExtResource("110_jump_espada")
 region = Rect2(0, 0, 864, 384)
@@ -268,32 +281,23 @@ region = Rect2(6048, 0, 864, 384)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_psiyq")
+"texture": SubResource("AtlasTexture_air_attack_espada_1")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_lqqhn")
+"texture": SubResource("AtlasTexture_air_attack_espada_2")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_i6m80")
+"texture": SubResource("AtlasTexture_air_attack_espada_3")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_5uixq")
+"texture": SubResource("AtlasTexture_air_attack_espada_4")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_gbimq")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_q2tq5")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_vw21y")
-}, {
-"duration": 1.0,
-"texture": ExtResource("8_7nxk2")
+"texture": SubResource("AtlasTexture_air_attack_espada_5")
 }],
-"loop": 0,
+"loop": false,
 "name": &"air attack",
-"speed": 9.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,

@@ -2,7 +2,7 @@
 """Convierte una tira de la IA sobre fondo magenta en una hoja de 864x384 por cuadro.
 
 Uso: tira_ia_a_hoja.py original.png salida.png --cuadros 8 --factor 2 [--movimiento]
-     [--aire [--en-suelo 0]] [--separar]
+     [--aire [--en-suelo 0]] [--separar] [--fila-pies 380]
 
 Quita el fondo y su halo, alinea los cuadros por los pies y reduce con una paleta
 común para que el color no parpadee. --factor es la altura de la figura en la tira
@@ -15,7 +15,9 @@ Con --aire (saltar, junto a --movimiento) la tira dibuja una subida que ya hace 
 física: todos los cuadros comparten la altura de la cabeza y son las piernas las que
 suben. --en-suelo da los cuadros que sí van con los pies en el suelo, como agacharse.
 Con --separar (ataques) la espada invade la casilla vecina: cada figura se recorta por
-su silueta y se centra por los pies, en vez de partir la tira en partes iguales.
+su silueta y se centra por los pies, en vez de partir la tira en partes iguales. Junto
+a --movimiento (ataque aéreo) se centra por el torso, porque los pies no están quietos.
+--fila-pies sube la figura, para que la cabeza coincida con la de otra animación.
 La hoja se dibuja a escala 1/3 (ver ARMED_ANIMATION_SCALES en player.gd): figura de
 40 px como la caja de colisión, con el mismo detalle en pantalla que el prisionero.
 El pie y el centro caen donde en las hojas 288x128 del Player, multiplicados por 3.
@@ -37,6 +39,7 @@ TONO_PARECIDO = 0.75  # Distancia, suma de canales en 0..3, que se considera rui
 COLOR_CONTORNO = (0.09, 0.05, 0.07)
 GROSOR_CONTORNO = 1  # Píxeles de la hoja: el resto del grosor ya viene en el dibujo.
 RADIO_SUAVIZADO = 2  # Vecindario de la silueta que decide si un píxel se queda.
+FRANJA_TORSO = (0.3, 0.5)  # Parte de la altura de la tira donde cae el torso.
 
 
 def quitar_fondo(rgb: np.ndarray) -> np.ndarray:
@@ -47,13 +50,17 @@ def quitar_fondo(rgb: np.ndarray) -> np.ndarray:
     return np.dstack((np.clip(color, 0.0, 255.0) / 255.0, alfa))
 
 
-def separar_figuras(tira: np.ndarray, cuadros: int, filas_pies: int) -> list[np.ndarray]:
-    """Saca las figuras, de izquierda a derecha, en cuadros iguales con los pies al centro."""
+def separar_figuras(tira: np.ndarray, cuadros: int, filas_pies: int, por_torso: bool) -> list[np.ndarray]:
+    """Saca las figuras, de izquierda a derecha, en cuadros iguales con pies o torso al centro."""
     etiquetas = ndimage.label(tira[..., 3] > 0.5, structure=np.ones((3, 3)))[0]
     mayores = np.argsort(np.bincount(etiquetas.ravel())[1:])[-cuadros:] + 1
     mascaras = sorted((etiquetas == e for e in mayores), key=lambda m: np.where(m)[1].mean())
     centros = []
+    alto = tira.shape[0]
     for mascara in mascaras:
+        if por_torso:  # La mediana no se va detrás de la espada.
+            centros.append(int(np.median(np.where(mascara[int(alto * FRANJA_TORSO[0]):int(alto * FRANJA_TORSO[1])])[1])))
+            continue
         filas = np.where(mascara.any(axis=1))[0]
         pies = np.where(mascara[filas.max() - filas_pies:].any(axis=0))[0]
         centros.append((int(pies.min()) + int(pies.max())) // 2)
@@ -181,13 +188,14 @@ def main() -> None:
     argumentos.add_argument("--aire", action="store_true", help="Todos los cuadros con la cabeza a la misma altura")
     argumentos.add_argument("--en-suelo", type=int, nargs="*", default=[], help="Con --aire, cuadros que se quedan con los pies en el suelo")
     argumentos.add_argument("--separar", action="store_true", help="Recorta cada figura por su silueta, no en partes iguales")
+    argumentos.add_argument("--fila-pies", type=int, default=FILA_PIES, help="Fila de la hoja donde queda el punto más bajo")
     argumentos.add_argument("--centro-x", type=int, default=432, help="Columna del cuadro para el centro de los pies")
     opciones = argumentos.parse_args()
 
     tira = quitar_fondo(np.array(Image.open(opciones.entrada).convert("RGB")).astype(float))
     ancho_tira = tira.shape[1] // opciones.cuadros
     if opciones.separar:
-        cuadros = separar_figuras(tira, opciones.cuadros, FILAS_PIES * opciones.factor)
+        cuadros = separar_figuras(tira, opciones.cuadros, FILAS_PIES * opciones.factor, opciones.movimiento)
     else:
         cuadros = [tira[:, i * ancho_tira:(i + 1) * ancho_tira] for i in range(opciones.cuadros)]
     # Margen para que alinear no recorte cabeza ni pies.
@@ -195,7 +203,9 @@ def main() -> None:
     referencia = cuadros[0][..., 3]
     alineados = []
     for cuadro in cuadros:
-        if opciones.movimiento:
+        if opciones.movimiento and opciones.separar:
+            dx, dy = 0, 0  # separar_figuras ya los dejó centrados.
+        elif opciones.movimiento:
             dx, dy = centro_torso(cuadros[0]) - centro_torso(cuadro), 0
         else:
             dx, dy = desplazamiento_pies(cuadro[..., 3], referencia, FILAS_PIES * opciones.factor)
@@ -216,16 +226,18 @@ def main() -> None:
     # Eje común: centro de los pies del primer cuadro, o su torso si se mueven.
     pies = np.where(reducidos[0][-(FILAS_PIES + 24):, :, 3].max(axis=0) > 0)[0]
     eje_x = centro_torso(reducidos[0]) if opciones.movimiento else (int(pies.min()) + int(pies.max())) // 2
+    if opciones.movimiento and opciones.separar:
+        eje_x = reducidos[0].shape[1] // 2
     filas = [np.where(c[..., 3].max(axis=1) > 0)[0] for c in reducidos]
     fila_base = max(int(f.max()) for f in filas)
-    fila_cabeza = FILA_PIES - max(int(f.max() - f.min()) for f in filas)
+    fila_cabeza = opciones.fila_pies - max(int(f.max() - f.min()) for f in filas)
 
     hoja = Image.new("RGBA", (ANCHO_CUADRO * opciones.cuadros, ALTO_CUADRO), (0, 0, 0, 0))
     for i, cuadro in enumerate(reducidos):
         imagen = Image.fromarray((cuadro * 255.0).round().astype(np.uint8), "RGBA")
-        y = FILA_PIES - fila_base
+        y = opciones.fila_pies - fila_base
         if opciones.aire:
-            y = FILA_PIES - int(filas[i].max()) if i in opciones.en_suelo else fila_cabeza - int(filas[i].min())
+            y = opciones.fila_pies - int(filas[i].max()) if i in opciones.en_suelo else fila_cabeza - int(filas[i].min())
         hoja.alpha_composite(imagen, (i * ANCHO_CUADRO + opciones.centro_x - eje_x, y))
 
     hoja.save(opciones.salida)
