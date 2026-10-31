@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """Convierte una tira de la IA sobre fondo magenta en una hoja de 864x384 por cuadro.
 
-Uso: tira_ia_a_hoja.py original.png salida.png --cuadros 8 --factor 2
+Uso: tira_ia_a_hoja.py original.png salida.png --cuadros 8 --factor 2 [--movimiento]
 
 Quita el fondo y su halo, alinea los cuadros por los pies y reduce con una paleta
 común para que el color no parpadee. --factor es la altura de la figura en la tira
 entre 120. Al reducir, cada píxel toma un color de la paleta en vez de un promedio:
 así el contorno no se emborrona. El borde exterior se suaviza y se repinta con un
 contorno de un solo grosor y color, sin restos del fondo.
+Con --movimiento (correr, saltar) los pies se mueven: cada cuadro conserva su altura,
+se centra por el torso y no se estabiliza el color.
 La hoja se dibuja a escala 1/3 (ver ARMED_ANIMATION_SCALES en player.gd): figura de
 40 px como la caja de colisión, con el mismo detalle en pantalla que el prisionero.
 El pie y el centro caen donde en las hojas 288x128 del Player, multiplicados por 3.
@@ -99,6 +101,13 @@ def estabilizar(cuadros: list[np.ndarray]) -> list[np.ndarray]:
     return list(resultado)
 
 
+def centro_torso(cuadro: np.ndarray) -> int:
+    """Columna media de la mitad superior de la figura, donde están cabeza y torso."""
+    filas = np.where(cuadro[..., 3].max(axis=1) > 0.5)[0]
+    mitad = (int(filas.min()) + int(filas.max())) // 2
+    return int(round(np.where(cuadro[:mitad, :, 3] > 0.5)[1].mean()))
+
+
 def vecinos(mascara: np.ndarray, radio: int) -> np.ndarray:
     """Cuenta, para cada píxel, cuántos del cuadrado de ese radio están activos."""
     cuenta = np.zeros(mascara.shape, dtype=int)
@@ -108,11 +117,23 @@ def vecinos(mascara: np.ndarray, radio: int) -> np.ndarray:
     return cuenta
 
 
+def solo_figura(mascara: np.ndarray) -> np.ndarray:
+    """Quita los restos sueltos: deja lo unido a la zona más densa de la silueta."""
+    densidad = vecinos(mascara, 8)
+    figura = np.zeros(mascara.shape, dtype=bool)
+    figura[np.unravel_index(int(densidad.argmax()), densidad.shape)] = True
+    while True:
+        creciente = (vecinos(figura, 1) > 0) & mascara
+        if (creciente == figura).all():
+            return figura
+        figura = creciente
+
+
 def limpiar_borde(cuadro: np.ndarray) -> np.ndarray:
     """Quita los dientes de la silueta y repinta su borde con el contorno."""
     opaco = cuadro[..., 3] > 0.0
     lado = RADIO_SUAVIZADO * 2 + 1
-    silueta = vecinos(opaco, RADIO_SUAVIZADO) * 2 > lado * lado
+    silueta = solo_figura(vecinos(opaco, RADIO_SUAVIZADO) * 2 > lado * lado)
     lado_contorno = GROSOR_CONTORNO * 2 + 1
     interior = vecinos(silueta, GROSOR_CONTORNO) == lado_contorno * lado_contorno
     resultado = cuadro.copy()
@@ -128,6 +149,7 @@ def main() -> None:
     argumentos.add_argument("--cuadros", type=int, required=True)
     argumentos.add_argument("--factor", type=int, default=2)
     argumentos.add_argument("--colores", type=int, default=32)
+    argumentos.add_argument("--movimiento", action="store_true", help="Para animaciones en las que los pies no se quedan quietos")
     argumentos.add_argument("--centro-x", type=int, default=432, help="Columna del cuadro para el centro de los pies")
     opciones = argumentos.parse_args()
 
@@ -139,7 +161,10 @@ def main() -> None:
     referencia = cuadros[0][..., 3]
     alineados = []
     for cuadro in cuadros:
-        dx, dy = desplazamiento_pies(cuadro[..., 3], referencia, FILAS_PIES * opciones.factor)
+        if opciones.movimiento:
+            dx, dy = centro_torso(cuadros[0]) - centro_torso(cuadro), 0
+        else:
+            dx, dy = desplazamiento_pies(cuadro[..., 3], referencia, FILAS_PIES * opciones.factor)
         print(f"alineado dx={dx} dy={dy}")
         alineados.append(np.roll(np.roll(cuadro, dy, axis=0), dx, axis=1))
 
@@ -149,12 +174,14 @@ def main() -> None:
     if resto:
         alineados = [np.roll(c, opciones.factor - resto, axis=0) for c in alineados]
     paleta, tabla = crear_paleta(alineados, opciones.colores)
-    reducidos = estabilizar([reducir(c, paleta, tabla, opciones.factor) for c in alineados])
+    reducidos = [reducir(c, paleta, tabla, opciones.factor) for c in alineados]
+    if not opciones.movimiento:
+        reducidos = estabilizar(reducidos)
     reducidos = [limpiar_borde(c) for c in reducidos]
 
-    # Eje: centro de los pies del primer cuadro, común a todos.
+    # Eje común: centro de los pies del primer cuadro, o su torso si se mueven.
     pies = np.where(reducidos[0][-(FILAS_PIES + 24):, :, 3].max(axis=0) > 0)[0]
-    eje_x = (int(pies.min()) + int(pies.max())) // 2
+    eje_x = centro_torso(reducidos[0]) if opciones.movimiento else (int(pies.min()) + int(pies.max())) // 2
     fila_base = int(np.where(reducidos[0][..., 3].max(axis=1) > 0)[0].max())
 
     hoja = Image.new("RGBA", (ANCHO_CUADRO * opciones.cuadros, ALTO_CUADRO), (0, 0, 0, 0))

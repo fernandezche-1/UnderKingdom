@@ -288,7 +288,7 @@ var _armory_block_reported: bool = false
 const ARMORY_STUCK_FRAMES_TO_REPORT: int = 5
 ## Animaciones con espada en hojas de alta resolución (864x384 por cuadro): se
 ## dibujan más pequeñas para dar el mismo detalle en pantalla que el prisionero.
-const ARMED_ANIMATION_SCALES: Dictionary = {&"idle": 1.0 / 3.0}
+const ARMED_ANIMATION_SCALES: Dictionary = {&"idle": 1.0 / 3.0, &"run": 1.0 / 3.0}
 const UNARMED_IDLE_SHEET: Texture2D = preload("res://Elementals_fire_knight_FREE_v1.1/idle_8_frames_288x128.png")
 const UNARMED_PUNCH_SHEET: Texture2D = preload("res://Elementals_fire_knight_FREE_v1.1/Right_Punch_6_frames_1728x128_alineado.png")
 const UNARMED_RUN_SHEET: Texture2D = preload("res://Elementals_fire_knight_FREE_v1.1/run_unarmed_8_frames_2304x128.png")

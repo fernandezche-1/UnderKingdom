@@ -108,6 +108,7 @@
 [ext_resource type="Texture2D" uid="uid://c12ujky2ecpr7" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/09_defend/defend_9.png" id="106_vovmj"]
 [ext_resource type="Texture2D" uid="uid://v3si5n5qiki4" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/09_defend/defend_10.png" id="107_aqux1"]
 [ext_resource type="Texture2D" uid="uid://y6yjjrjfnibt" path="res://Elementals_fire_knight_FREE_v1.1/espada/idle_ia/idle_ia_8_frames_6912x384.png" id="108_idle_espada"]
+[ext_resource type="Texture2D" uid="uid://b5pj25bahqdqj" path="res://Elementals_fire_knight_FREE_v1.1/espada/run_ia/run_ia_8_frames_6912x384.png" id="109_run_espada"]
 [ext_resource type="Texture2D" uid="uid://cd26we843dh0r" path="res://escaleras_12_frames_288x128.png" id="109_o7gi0"]
 [ext_resource type="Texture2D" uid="uid://bwha3pdeds124" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/03_jump/jump_1.png" id="116_uedpq"]
 [ext_resource type="Texture2D" uid="uid://b1knyjpdmesel" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/03_jump/jump_2.png" id="117_4hk4x"]
@@ -143,14 +144,6 @@
 [ext_resource type="Texture2D" uid="uid://b7prdnahhj0q5" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/04_roll/roll_6.png" id="147_anf5i"]
 [ext_resource type="Texture2D" uid="uid://cdwexn5larp17" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/04_roll/roll_7.png" id="148_m5fv3"]
 [ext_resource type="Texture2D" uid="uid://d21erib0mmca3" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/04_roll/roll_8.png" id="149_me2p2"]
-[ext_resource type="Texture2D" uid="uid://dp1j5fkvkf3j7" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/02_run/run_1.png" id="150_fh6bh"]
-[ext_resource type="Texture2D" uid="uid://chgmnydq10jgs" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/02_run/run_2.png" id="151_0tr64"]
-[ext_resource type="Texture2D" uid="uid://b4ywjb77e4d8s" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/02_run/run_3.png" id="152_85q8o"]
-[ext_resource type="Texture2D" uid="uid://bculxpa6e5m5n" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/02_run/run_4.png" id="153_fsjtd"]
-[ext_resource type="Texture2D" uid="uid://bkiy3mo1gidki" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/02_run/run_5.png" id="154_vdnfr"]
-[ext_resource type="Texture2D" uid="uid://d3nl82ck3kklw" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/02_run/run_6.png" id="155_jerri"]
-[ext_resource type="Texture2D" uid="uid://3wjjdmhvi7qj" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/02_run/run_7.png" id="156_52bss"]
-[ext_resource type="Texture2D" uid="uid://x4ba0kkv35eg" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/02_run/run_8.png" id="157_plm6x"]
 [ext_resource type="Texture2D" uid="uid://sl8skj5abpon" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/10_take_hit/take_hit_1.png" id="158_002n8"]
 [ext_resource type="Texture2D" uid="uid://c605qdbhl310e" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/10_take_hit/take_hit_2.png" id="159_0uuwr"]
 [ext_resource type="Texture2D" uid="uid://2d558deba6s4" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/10_take_hit/take_hit_3.png" id="160_7tsse"]
@@ -299,6 +292,38 @@ region = Rect2(5184, 0, 864, 384)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_upmpc"]
 atlas = ExtResource("108_idle_espada")
+region = Rect2(6048, 0, 864, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run_espada_0"]
+atlas = ExtResource("109_run_espada")
+region = Rect2(0, 0, 864, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run_espada_1"]
+atlas = ExtResource("109_run_espada")
+region = Rect2(864, 0, 864, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run_espada_2"]
+atlas = ExtResource("109_run_espada")
+region = Rect2(1728, 0, 864, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run_espada_3"]
+atlas = ExtResource("109_run_espada")
+region = Rect2(2592, 0, 864, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run_espada_4"]
+atlas = ExtResource("109_run_espada")
+region = Rect2(3456, 0, 864, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run_espada_5"]
+atlas = ExtResource("109_run_espada")
+region = Rect2(4320, 0, 864, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run_espada_6"]
+atlas = ExtResource("109_run_espada")
+region = Rect2(5184, 0, 864, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run_espada_7"]
+atlas = ExtResource("109_run_espada")
 region = Rect2(6048, 0, 864, 384)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_br1p4"]
@@ -870,28 +895,28 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("150_fh6bh")
+"texture": SubResource("AtlasTexture_run_espada_0")
 }, {
 "duration": 1.0,
-"texture": ExtResource("151_0tr64")
+"texture": SubResource("AtlasTexture_run_espada_1")
 }, {
 "duration": 1.0,
-"texture": ExtResource("152_85q8o")
+"texture": SubResource("AtlasTexture_run_espada_2")
 }, {
 "duration": 1.0,
-"texture": ExtResource("153_fsjtd")
+"texture": SubResource("AtlasTexture_run_espada_3")
 }, {
 "duration": 1.0,
-"texture": ExtResource("154_vdnfr")
+"texture": SubResource("AtlasTexture_run_espada_4")
 }, {
 "duration": 1.0,
-"texture": ExtResource("155_jerri")
+"texture": SubResource("AtlasTexture_run_espada_5")
 }, {
 "duration": 1.0,
-"texture": ExtResource("156_52bss")
+"texture": SubResource("AtlasTexture_run_espada_6")
 }, {
 "duration": 1.0,
-"texture": ExtResource("157_plm6x")
+"texture": SubResource("AtlasTexture_run_espada_7")
 }],
 "loop": 1,
 "name": &"run",
