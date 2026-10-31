@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene load_steps=17 format=3]
 
 [ext_resource type="PackedScene" path="res://escenas/mapas/tiles_calabozo.tscn" id="1_base"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/carcelero.tscn" id="2_carcelero"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" path="res://escenas/enemigos/murcielago_grande.tscn" id="8_murcielago"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/espada_oxidada.tscn" id="9_espada"]
 [ext_resource type="Texture2D" path="res://assets_prueba/esqueleto_lanza/esqueleto_lanza.png" id="10_esqueleto"]
+[ext_resource type="Script" path="res://scripts/cinematics/cinematic_controller.gd" id="11_cinematica"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_columna_tope"]
 atlas = ExtResource("4_tileset")
@@ -33,7 +34,7 @@ size = Vector2(16, 48)
 [node name="TilesCalabozoCombate" instance=ExtResource("1_base")]
 
 [node name="RejaSalida" type="StaticBody2D" parent="SistemasMapa"]
-position = Vector2(1416, 184)
+position = Vector2(2056, 184)
 script = ExtResource("3_puerta")
 key_id = "calabozo_salida"
 locked_message = "NECESITAS LA LLAVE DEL CARCELERO"
@@ -45,7 +46,7 @@ piece_end = SubResource("AtlasTexture_columna_base")
 shape = SubResource("RectangleShape2D_reja")
 
 [node name="RejaInterior" type="StaticBody2D" parent="SistemasMapa"]
-position = Vector2(1000, 184)
+position = Vector2(1640, 184)
 script = ExtResource("3_puerta")
 requires_sword = true
 locked_message = "EL CERROJO ESTÁ AL OTRO LADO"
@@ -58,7 +59,7 @@ piece_end = SubResource("AtlasTexture_columna_base")
 shape = SubResource("RectangleShape2D_reja")
 
 [node name="RejaConducto" type="StaticBody2D" parent="SistemasMapa"]
-position = Vector2(872, 296)
+position = Vector2(1512, 296)
 script = ExtResource("3_puerta")
 requires_sword = true
 locked_message = "NECESITAS UN ARMA PARA FORZARLA"
@@ -70,27 +71,56 @@ piece_end = SubResource("AtlasTexture_columna_base")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/RejaConducto"]
 shape = SubResource("RectangleShape2D_reja")
 
-[node name="Carcelero" parent="Enemigos" instance=ExtResource("2_carcelero")]
-position = Vector2(1256, 188)
+[node name="PuntoConducto" type="Marker2D" parent="SistemasMapa"]
+position = Vector2(904, 150)
 
-[node name="Rata" parent="Enemigos" instance=ExtResource("6_rata")]
+[node name="Visible" type="VisibleOnScreenNotifier2D" parent="SistemasMapa/PuntoConducto"]
+
+[node name="Cinematicas" type="Node2D" parent="SistemasMapa"]
+
+[node name="AvisoConducto" type="Node2D" parent="SistemasMapa/Cinematicas"]
+script = ExtResource("11_cinematica")
+cinematic_id = "calabozo_aviso_conducto"
+activation = 1
+player_path = NodePath("../../../player")
+focus_actor_path = NodePath("../../PuntoConducto")
+visible_notifier_path = NodePath("../../PuntoConducto/Visible")
+dialogue_path = "res://dialogues/calabozo_aviso_conducto.json"
+visible_max_distance_x = 150.0
+
+[node name="Carcelero" parent="Enemigos" instance=ExtResource("2_carcelero")]
+position = Vector2(1896, 188)
+
+[node name="RataInicio1" parent="Enemigos" instance=ExtResource("6_rata")]
 position = Vector2(300, 150)
 
+[node name="RataInicio2" parent="Enemigos" instance=ExtResource("6_rata")]
+position = Vector2(500, 150)
+
+[node name="Rata" parent="Enemigos" instance=ExtResource("6_rata")]
+position = Vector2(940, 150)
+
+[node name="RataPasillo" parent="Enemigos" instance=ExtResource("6_rata")]
+position = Vector2(1120, 150)
+
+[node name="SlimePasillo" parent="Enemigos" instance=ExtResource("7_slime")]
+position = Vector2(1200, 151)
+
 [node name="MurcielagoGrande" parent="Enemigos" instance=ExtResource("8_murcielago")]
-position = Vector2(390, 110)
+position = Vector2(1030, 110)
 
 [node name="Slime" parent="Enemigos" instance=ExtResource("7_slime")]
-position = Vector2(840, 199)
+position = Vector2(1480, 199)
 
 [node name="RataSala" parent="Enemigos" instance=ExtResource("6_rata")]
-position = Vector2(740, 198)
+position = Vector2(1380, 198)
 
 [node name="PresoMuerto" type="Sprite2D" parent="Objetos"]
-position = Vector2(760, 300)
+position = Vector2(1400, 300)
 texture = SubResource("AtlasTexture_preso_muerto")
 
 [node name="EspadaOxidada" parent="Objetos" instance=ExtResource("9_espada")]
-position = Vector2(776, 304)
+position = Vector2(1416, 304)
 
 [node name="Ambientacion" type="Node2D" parent="."]
 script = ExtResource("5_ambiente")

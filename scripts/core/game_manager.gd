@@ -36,7 +36,7 @@ var sword_mission_completed: bool = false
 var sword_guard_defeated: bool = false
 var castle_equipment_recovered: bool = false
 const SWORD_MISSION_TITLE := "Recuperar la espada"
-const SWORD_MISSION_DESCRIPTION := "Encuentra la llave de la armería y recupera tu armadura y espada."
+const SWORD_MISSION_DESCRIPTION := "Busca un arma: a puños no llegarás lejos."
 
 const SAVE_DIRECTORY := "user://saves"
 ## 2: las habilidades se guardan como "abilities" (ABILITY_DEFINITIONS) en vez

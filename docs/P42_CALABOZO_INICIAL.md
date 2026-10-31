@@ -2,6 +2,8 @@
 
 - El protagonista sale de la prisión desnudo y sin arma. Antes llegaba así al castillo y la espada solo se recuperaba en la armería.
 - Ahora, entre la prisión y el castillo, está el **calabozo**:
+  - un primer tramo lineal y tranquilo, con dos ratas, enseña a pelear a puño;
+  - al pasar a la zona dura, el prisionero dice que son demasiados y señala el hueco del suelo;
   - desnudo es peligroso pelear, y conviene esquivar;
   - la reja interior corta el paso y obliga a ir por el conducto;
   - en el conducto está el cadáver de otro preso con la primera arma, una **espada oxidada**;
@@ -10,23 +12,26 @@
 
 ## 1. El mapa
 
-- `mapas_texto/tiles_calabozo.txt` (mapa de letras, 96 x 24 piezas, tileset `castillo`) genera `escenas/mapas/tiles_calabozo.tscn`. Se juega desde `tiles_calabozo_combate.tscn`.
+- `mapas_texto/tiles_calabozo.txt` (mapa de letras, 136 x 24 piezas, tileset `castillo`) genera `escenas/mapas/tiles_calabozo.tscn`. Se juega desde `tiles_calabozo_combate.tscn`.
 - Tramos:
-  1. Pasillo de celdas (x 2-33), con el inicio en (4, 9).
-  2. Entrada al conducto: escalera en la columna 28, en un hueco de 3 piezas en el suelo.
-  3. Rampa de bajada (x 34-36) y checkpoint en (41, 12).
-  4. Sala izquierda (x 37-61), con cofre en (58, 12).
-  5. Reja interior en la columna 62, filas 10-12, bajo un muro.
-  6. Conducto (filas 17-19, x 25-68), sin enemigos.
-  7. Cámara del preso (x 46-52), con la espada y un checkpoint en (50, 19).
-  8. Reja del conducto en la columna 54.
-  9. Salida del conducto: escalera en la columna 66.
-  10. Sala del carcelero (x 63-87).
-  11. Reja de la salida en la columna 88, filas 10-12, bajo un muro.
-  12. Salida azul en la columna 95, filas 10-12, a `tiles_castillo_combate.tscn#SpawnInicio`.
-- Las filas 18-23 se añadieron al final para no mover nada de lo ya colocado.
+  1. Tramo lineal (x 2-40), con el inicio en (4, 9), dos ratas y checkpoint en (38, 9).
+  2. Paso bajo (x 41-42), de 3 piezas de alto, que separa las dos zonas.
+  3. Entrada al conducto: escalera en la columna 56, en un hueco de 3 piezas en el suelo, antes de los enemigos.
+  4. Pasillo de celdas con enemigos (x 58-73).
+  5. Rampa de bajada (x 74-76) y checkpoint en (81, 12).
+  6. Sala izquierda (x 77-101), con cofre en (98, 12).
+  7. Reja interior en la columna 102, filas 10-12, bajo un muro.
+  8. Conducto (filas 17-19, x 54-108), sin enemigos.
+  9. Cámara del preso (x 86-92), con la espada y un checkpoint en (90, 19).
+  10. Reja del conducto en la columna 94.
+  11. Salida del conducto: escalera en la columna 106.
+  12. Sala del carcelero (x 103-127).
+  13. Reja de la salida en la columna 128, filas 10-12, bajo un muro.
+  14. Salida azul en la columna 135, filas 10-12, a `tiles_castillo_combate.tscn#SpawnInicio`.
+- El tramo lineal se añadió a la izquierda en el mismo mapa, para caminarlo sin carga. Todo lo colocado a mano se movió 640 px.
 - El conducto queda a más de 90 px por debajo de la sala, fuera del alcance vertical de los enemigos de suelo.
-- **Escaleras que cruzan un piso:** el hueco es de 3 piezas, `.H.`. Con `=H=` no se baja: el Player mide 20 px, más que la pieza de 16, y las plataformas lo frenan.
+- **Escaleras que cruzan un piso:** el hueco es de 3 piezas, `.H.`. Con `=H=` no se baja: el Player mide 20 px, más que la pieza de 16, y las plataformas lo frenan. Al llegar arriba hay que pulsar hacia un lado para salir al suelo.
+- Sin espada, el hueco se salta corriendo.
 - Los enemigos no caen por los huecos porque tienen `avoid_ledges`.
 - Opción nueva del constructor, `jugador:`, para elegir la escena del Player. El calabozo usa `res://escenas/prisn.tscn`, el Player del prólogo. Por defecto sigue `player.tscn`.
 - La prisión (`camara_sellado_alma.tscn`) sale ahora al calabozo. Solo cambió su `target_scene_path`.
@@ -37,9 +42,16 @@ Las tres son `locked_door.gd`, a mano en la escena `_combate`.
 
 | Reja | Posición | Se abre con | Para qué |
 |---|---|---|---|
-| `RejaInterior` | (1000, 184) | espada (`requires_sword`) | corta la sala; armado es un atajo para volver a por los enemigos esquivados |
-| `RejaConducto` | (872, 296) | espada (`requires_sword`) | impide llegar al carcelero sin recoger la espada |
-| `RejaSalida` | (1416, 184) | llave `calabozo_salida` | salida al castillo |
+| `RejaInterior` | (1640, 184) | espada (`requires_sword`) | corta la sala; armado es un atajo para volver a por los enemigos esquivados |
+| `RejaConducto` | (1512, 296) | espada (`requires_sword`) | impide llegar al carcelero sin recoger la espada |
+| `RejaSalida` | (2056, 184) | llave `calabozo_salida` | salida al castillo |
+
+### El aviso del prisionero
+
+- `SistemasMapa/Cinematicas/AvisoConducto` es un `cinematic_controller.gd` con activación `ON_VISIBLE`. Enfoca `PuntoConducto`, un `Marker2D` sobre el hueco, y se dispara al quedar a 150 px, unos 755 de x.
+- El texto está en `dialogues/calabozo_aviso_conducto.json`. Sale una vez por partida (`cinematic_id = "calabozo_aviso_conducto"`) y es invulnerable mientras dura.
+- La descripción del objetivo cambió a "Busca un arma: a puños no llegarás lejos.", porque hablaba de la llave de la armería.
+- Sin ventana, `VisibleOnScreenNotifier2D` no se dispara: el aviso solo se puede probar con pantalla.
 
 ## 2. Sin espada
 
@@ -75,10 +87,12 @@ Se pusieron a mano en `tiles_calabozo_combate.tscn` para ver cómo reaccionan; n
 
 | Enemigo | Escena | Dónde | Vida | Puños | Ataque |
 |---|---|---|---|---|---|
-| Rata | `enemigos/rata.tscn` | pasillo, x 300 | 1.25 | 5 | mordisco, 0.75 cada 1.6 s |
-| Murciélago grande | `enemigos/murcielago_grande.tscn` | pasillo, x 390 | 1 | 4 | embestida (`lunge_enemy.gd`), 0.75 cada 1.8 s |
-| Rata | `enemigos/rata.tscn` | sala izquierda, x 740 | 1.25 | 5 | mordisco, 0.75 cada 1.6 s |
-| Slime | `enemigos/slime.tscn` | sala izquierda, x 840 | 0.75 | 3 | escupitajo, 0.75 cada 2 s |
+| Rata | `enemigos/rata.tscn` | tramo lineal, x 300 y 500 | 1.25 | 5 | mordisco, 0.75 cada 1.6 s |
+| Rata | `enemigos/rata.tscn` | pasillo, x 940 y 1120 | 1.25 | 5 | mordisco, 0.75 cada 1.6 s |
+| Murciélago grande | `enemigos/murcielago_grande.tscn` | pasillo, x 1030 | 1 | 4 | embestida (`lunge_enemy.gd`), 0.75 cada 1.8 s |
+| Slime | `enemigos/slime.tscn` | pasillo, x 1200 | 0.75 | 3 | escupitajo, 0.75 cada 2 s |
+| Rata | `enemigos/rata.tscn` | sala izquierda, x 1380 | 1.25 | 5 | mordisco, 0.75 cada 1.6 s |
+| Slime | `enemigos/slime.tscn` | sala izquierda, x 1480 | 0.75 | 3 | escupitajo, 0.75 cada 2 s |
 
 - El puñetazo no llega al ras del suelo: le faltan unos 12 px. Por eso rata y slime tienen 18 px de colisión, aunque se vean bajitos. Si se reduce, dejan de recibir golpes.
 - **Sin bloqueo por machacar:** cada golpe cancelaba el ataque y aturdía, y el puñetazo se repite cada 0.5 s, así que nunca llegaban a pegar. `enemy_base.gd` tiene dos opciones nuevas, apagadas por defecto y activas en estos enemigos y el carcelero:
@@ -114,7 +128,10 @@ Se pusieron a mano en `tiles_calabozo_combate.tscn` para ver cómo reaccionan; n
   - con espada, un golpe de 0.75 quita 0.75 y las dos rejas se abren;
   - el carcelero cae con 8 golpes de 0.5 y suelta la llave;
   - la reja de la salida sigue cerrada sin llave y abre con ella;
-  - la llave reaparece al recargar si no se recogió.
+  - la llave reaparece al recargar si no se recogió;
+  - las ratas no caen al perseguir por el borde del hueco, y el hueco se salta corriendo;
+  - las dos escaleras se suben y se bajan.
+- Con ventana, el aviso se dispara solo a unos 755 de x y dice sus dos líneas. El Player recupera el control y la cámara.
 
 ## Pendiente
 
