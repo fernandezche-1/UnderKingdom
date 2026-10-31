@@ -1,0 +1,8 @@
+Skeleton (carpeta "Skeleton" de Documentos/RecursosUnderKingdom, Sprite Sheets).
+El paquete no trae archivo de licencia: confirmarla antes de publicar.
+
+esqueleto_lanza.png junta Idle, Walk, Attack, Hit y Dead en una sola hoja, sin
+cambiar el arte. Las hojas originales tienen cuadros de ancho distinto: aquí se
+alinean en celdas de 80x40 con el cuerpo al centro y los pies abajo, para que
+no salte al cambiar de animación. Filas: idle, walk, attack, hurt, death.
+No se usó Skeleton React.

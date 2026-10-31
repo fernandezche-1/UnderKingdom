@@ -2146,7 +2146,7 @@ func die() -> void:
     health_changed.emit(current_health, max_health)
     died.emit()
 
-    sprite.play(&"death" if GameManager.has_sword else &"idle")
+    sprite.play(&"death" if sprite.sprite_frames.has_animation(&"death") else &"idle")
     _update_hud("MUERTO — reapareciendo...")
 
     # No cortar la muerte: esperamos como mínimo la duración completa de la

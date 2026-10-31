@@ -492,7 +492,7 @@ func _build(text_path: String) -> String:
     var options := {
         "tileset": "mazmorra", "bloques": "", "fondo": "cueva", "escena": "", "imagen": "",
         "siguiente": "", "anterior": "", "cofre_monedas": "3", "cofre_pociones": "1", "parallax": "",
-        "depuracion": "no",
+        "depuracion": "no", "jugador": PLAYER_SCENE,
     }
     var error := _read_map_file(text_path, options)
     if error != "":
@@ -597,7 +597,7 @@ func _build(text_path: String) -> String:
     var kill_zones := _child(sistemas, Node2D.new(), "KillZones")
     var climb_zones := _child(sistemas, Node2D.new(), "Escaleras")
     var enemies := _child(root, Node2D.new(), "Enemigos")
-    var player_feet := _feet_offset(PLAYER_SCENE)
+    var player_feet := _feet_offset(String(options.jugador))
 
     var set_base: Vector2i = _ts.bloques[options.bloques][0]
     var slope_base: Vector2i = _ts.bloques[options.bloques][1]
@@ -718,7 +718,7 @@ func _build(text_path: String) -> String:
         return "Falta la P (inicio del Player) en el mapa."
     var marker: Node2D = _child(sistemas, (load(SPAWN_SCENE) as PackedScene).instantiate(), "SpawnInicio")
     marker.position = spawn - Vector2(0, player_feet)
-    var player := _place_on_floor(root, PLAYER_SCENE, int(spawn.x / T), int(spawn.y / T) - 1, "player")
+    var player := _place_on_floor(root, String(options.jugador), int(spawn.x / T), int(spawn.y / T) - 1, "player")
     # Teclas de depuración (R/H/J/K) y panel solo en mapas de prueba ("depuracion: si").
     if String(options.depuracion) == "si":
         player.set("enable_debug_keys", true)

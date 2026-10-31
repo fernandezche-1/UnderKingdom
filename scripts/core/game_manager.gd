@@ -355,9 +355,12 @@ func _restore_game_state(state: Dictionary) -> void:
 	# No se concede la espada implícitamente al migrarlos al sistema nuevo.
 	sword_guard_defeated = bool(state.get("sword_guard_defeated", false))
 	castle_equipment_recovered = bool(state.get("castle_equipment_recovered", false))
-	# La derrota de un guardia ya no concede equipo. Solo se restaura el estado
-	# armado si el guardado registra que se recuperó en la armería.
-	has_sword = bool(state.get("has_sword", false)) and castle_equipment_recovered
+	# Se restaura el estado armado si el guardado registra un arma recogida: la
+	# espada oxidada del carcelero del calabozo o el equipo de la armería.
+	has_sword = bool(state.get("has_sword", false)) and (
+		castle_equipment_recovered
+		or (sword_guard_defeated and bool(state.get("sword_mission_completed", false)))
+	)
 	sword_mission_started = bool(state.get("sword_mission_started", false)) and not has_sword
 	sword_mission_completed = bool(state.get("sword_mission_completed", false)) and has_sword
 	sword_mission_changed.emit(sword_mission_started, sword_mission_completed)
