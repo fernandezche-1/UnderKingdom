@@ -2,7 +2,7 @@
 """Convierte una tira de la IA sobre fondo magenta en una hoja de 864x384 por cuadro.
 
 Uso: tira_ia_a_hoja.py original.png salida.png --cuadros 8 --factor 2 [--movimiento]
-     [--aire [--en-suelo 0]] [--separar [--pies-centrados]] [--fila-pies 380]
+     [--aire [--en-suelo 0]] [--separar [--pies-centrados]] [--fila-pies 380] [--escala 3]
 
 Quita el fondo y su halo, alinea los cuadros por los pies y reduce con una paleta
 común para que el color no parpadee. --factor es la altura de la figura en la tira
@@ -19,6 +19,8 @@ su silueta y se centra por los pies, en vez de partir la tira en partes iguales.
 a --movimiento (ataque aéreo) se centra por el torso, porque los pies no están quietos.
 Con --pies-centrados (recibir golpe) se queda ese centrado: la postura de los pies cambia
 tanto que buscar su encaje entre cuadros los despega del suelo.
+--escala amplía la tira, sin mezclar colores, antes de todo lo demás: si la figura mide
+165 px, 165 * 3 / 4 da los 120 de siempre con --escala 3 --factor 4.
 --fila-pies sube la figura, para que la cabeza coincida con la de otra animación.
 La hoja se dibuja a escala 1/3 (ver ARMED_ANIMATION_SCALES en player.gd): figura de
 40 px como la caja de colisión, con el mismo detalle en pantalla que el prisionero.
@@ -191,11 +193,14 @@ def main() -> None:
     argumentos.add_argument("--en-suelo", type=int, nargs="*", default=[], help="Con --aire, cuadros que se quedan con los pies en el suelo")
     argumentos.add_argument("--separar", action="store_true", help="Recorta cada figura por su silueta, no en partes iguales")
     argumentos.add_argument("--pies-centrados", action="store_true", help="Con --separar, no busca el encaje de los pies entre cuadros")
+    argumentos.add_argument("--escala", type=int, default=1, help="Amplía la tira por este entero antes de procesarla")
     argumentos.add_argument("--fila-pies", type=int, default=FILA_PIES, help="Fila de la hoja donde queda el punto más bajo")
     argumentos.add_argument("--centro-x", type=int, default=432, help="Columna del cuadro para el centro de los pies")
     opciones = argumentos.parse_args()
 
-    tira = quitar_fondo(np.array(Image.open(opciones.entrada).convert("RGB")).astype(float))
+    original = Image.open(opciones.entrada).convert("RGB")
+    original = original.resize((original.width * opciones.escala, original.height * opciones.escala), Image.Resampling.NEAREST)
+    tira = quitar_fondo(np.array(original).astype(float))
     ancho_tira = tira.shape[1] // opciones.cuadros
     if opciones.separar:
         cuadros = separar_figuras(tira, opciones.cuadros, FILAS_PIES * opciones.factor, opciones.movimiento)

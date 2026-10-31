@@ -18,19 +18,6 @@
 [ext_resource type="Texture2D" uid="uid://d0kpkvq5x6nnh" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/08_sp_atk/sp_atk_16.png" id="82_yikyh"]
 [ext_resource type="Texture2D" uid="uid://bkd77ofyygdli" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/08_sp_atk/sp_atk_17.png" id="83_7svvh"]
 [ext_resource type="Texture2D" uid="uid://bsjeiv1h0owdk" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/08_sp_atk/sp_atk_18.png" id="84_ust5d"]
-[ext_resource type="Texture2D" uid="uid://xdmnk4q387aq" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/11_death/death_1.png" id="85_07g20"]
-[ext_resource type="Texture2D" uid="uid://booihsrwjbckd" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/11_death/death_2.png" id="86_ukemv"]
-[ext_resource type="Texture2D" uid="uid://bt1cacvsxwy0e" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/11_death/death_3.png" id="87_3loli"]
-[ext_resource type="Texture2D" uid="uid://cbjvfoyvbj8t5" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/11_death/death_4.png" id="88_uw8ex"]
-[ext_resource type="Texture2D" uid="uid://ccn5yko7hqn66" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/11_death/death_5.png" id="89_ubltn"]
-[ext_resource type="Texture2D" uid="uid://b4w7n1la3u0cg" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/11_death/death_6.png" id="90_nc541"]
-[ext_resource type="Texture2D" uid="uid://btry0b7wdm6cm" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/11_death/death_7.png" id="91_t0a8g"]
-[ext_resource type="Texture2D" uid="uid://b1kprxhdt6a15" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/11_death/death_8.png" id="92_dxdmm"]
-[ext_resource type="Texture2D" uid="uid://t5w4kvpvfplj" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/11_death/death_9.png" id="93_5ede2"]
-[ext_resource type="Texture2D" uid="uid://ius1ygdgn4x4" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/11_death/death_10.png" id="94_kavsk"]
-[ext_resource type="Texture2D" uid="uid://captq05ef0i2t" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/11_death/death_11.png" id="95_rvvxx"]
-[ext_resource type="Texture2D" uid="uid://do3a1emqggs6u" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/11_death/death_12.png" id="96_fw6gj"]
-[ext_resource type="Texture2D" uid="uid://bwb2wrodvftsx" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/11_death/death_13.png" id="97_l17c0"]
 [ext_resource type="Texture2D" uid="uid://7un50sk3j7wu" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/09_defend/defend_1.png" id="98_8b0go"]
 [ext_resource type="Texture2D" uid="uid://b82ax3aq7x1ot" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/09_defend/defend_2.png" id="99_03lry"]
 [ext_resource type="Texture2D" uid="uid://c2dx3rtqasli8" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/09_defend/defend_3.png" id="100_38dc3"]
@@ -44,6 +31,7 @@
 [ext_resource type="Texture2D" uid="uid://y6yjjrjfnibt" path="res://Elementals_fire_knight_FREE_v1.1/espada/idle_ia/idle_ia_8_frames_6912x384.png" id="108_idle_espada"]
 [ext_resource type="Texture2D" uid="uid://b5pj25bahqdqj" path="res://Elementals_fire_knight_FREE_v1.1/espada/run_ia/run_ia_8_frames_6912x384.png" id="109_run_espada"]
 [ext_resource type="Texture2D" uid="uid://cdmka0pqncuul" path="res://Elementals_fire_knight_FREE_v1.1/espada/jump_ia/jump_ia_6_frames_5184x384.png" id="110_jump_espada"]
+[ext_resource type="Texture2D" uid="uid://bup4fqh6my7c8" path="res://Elementals_fire_knight_FREE_v1.1/espada/death_ia/death_ia_7_frames_6048x384.png" id="114_death_espada"]
 [ext_resource type="Texture2D" uid="uid://ifenikq20i0p" path="res://Elementals_fire_knight_FREE_v1.1/espada/take_hit_ia/take_hit_ia_4_frames_3456x384.png" id="113_take_hit_espada"]
 [ext_resource type="Texture2D" uid="uid://wi3d254fxypc" path="res://Elementals_fire_knight_FREE_v1.1/espada/air_attack_ia/air_attack_ia_6_frames_5184x384.png" id="112_air_attack_espada"]
 [ext_resource type="Texture2D" uid="uid://d22u818n01d0s" path="res://Elementals_fire_knight_FREE_v1.1/espada/attack_ia/attack_ia_6_frames_5184x384.png" id="111_attack_espada"]
@@ -236,6 +224,34 @@ region = Rect2(1728, 0, 864, 384)
 atlas = ExtResource("113_take_hit_espada")
 region = Rect2(2592, 0, 864, 384)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_death_espada_0"]
+atlas = ExtResource("114_death_espada")
+region = Rect2(0, 0, 864, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_death_espada_1"]
+atlas = ExtResource("114_death_espada")
+region = Rect2(864, 0, 864, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_death_espada_2"]
+atlas = ExtResource("114_death_espada")
+region = Rect2(1728, 0, 864, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_death_espada_3"]
+atlas = ExtResource("114_death_espada")
+region = Rect2(2592, 0, 864, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_death_espada_4"]
+atlas = ExtResource("114_death_espada")
+region = Rect2(3456, 0, 864, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_death_espada_5"]
+atlas = ExtResource("114_death_espada")
+region = Rect2(4320, 0, 864, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_death_espada_6"]
+atlas = ExtResource("114_death_espada")
+region = Rect2(5184, 0, 864, 384)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_jump_espada_0"]
 atlas = ExtResource("110_jump_espada")
 region = Rect2(0, 0, 864, 384)
@@ -399,45 +415,27 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("85_07g20")
+"texture": SubResource("AtlasTexture_death_espada_0")
 }, {
 "duration": 1.0,
-"texture": ExtResource("86_ukemv")
+"texture": SubResource("AtlasTexture_death_espada_1")
 }, {
 "duration": 1.0,
-"texture": ExtResource("87_3loli")
+"texture": SubResource("AtlasTexture_death_espada_2")
 }, {
 "duration": 1.0,
-"texture": ExtResource("88_uw8ex")
+"texture": SubResource("AtlasTexture_death_espada_3")
 }, {
 "duration": 1.0,
-"texture": ExtResource("89_ubltn")
+"texture": SubResource("AtlasTexture_death_espada_4")
 }, {
 "duration": 1.0,
-"texture": ExtResource("90_nc541")
+"texture": SubResource("AtlasTexture_death_espada_5")
 }, {
-"duration": 1.0,
-"texture": ExtResource("91_t0a8g")
-}, {
-"duration": 1.0,
-"texture": ExtResource("92_dxdmm")
-}, {
-"duration": 1.0,
-"texture": ExtResource("93_5ede2")
-}, {
-"duration": 1.0,
-"texture": ExtResource("94_kavsk")
-}, {
-"duration": 1.0,
-"texture": ExtResource("95_rvvxx")
-}, {
-"duration": 1.0,
-"texture": ExtResource("96_fw6gj")
-}, {
-"duration": 1.0,
-"texture": ExtResource("97_l17c0")
+"duration": 7.0,
+"texture": SubResource("AtlasTexture_death_espada_6")
 }],
-"loop": 0,
+"loop": false,
 "name": &"death",
 "speed": 9.0
 }, {

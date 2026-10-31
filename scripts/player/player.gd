@@ -277,6 +277,7 @@ const ARMED_ANIMATION_SCALES: Dictionary = {
     &"idle": 1.0 / 3.0,
     &"run": 1.0 / 3.0,
     &"take hit": 1.0 / 3.0,
+    &"death": 1.0 / 3.0,
     &"jump up": 1.0 / 3.0,
     &"jump down": 1.0 / 3.0,
 }
