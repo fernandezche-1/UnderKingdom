@@ -44,6 +44,7 @@
 [ext_resource type="Texture2D" uid="uid://y6yjjrjfnibt" path="res://Elementals_fire_knight_FREE_v1.1/espada/idle_ia/idle_ia_8_frames_6912x384.png" id="108_idle_espada"]
 [ext_resource type="Texture2D" uid="uid://b5pj25bahqdqj" path="res://Elementals_fire_knight_FREE_v1.1/espada/run_ia/run_ia_8_frames_6912x384.png" id="109_run_espada"]
 [ext_resource type="Texture2D" uid="uid://cdmka0pqncuul" path="res://Elementals_fire_knight_FREE_v1.1/espada/jump_ia/jump_ia_6_frames_5184x384.png" id="110_jump_espada"]
+[ext_resource type="Texture2D" uid="uid://ifenikq20i0p" path="res://Elementals_fire_knight_FREE_v1.1/espada/take_hit_ia/take_hit_ia_4_frames_3456x384.png" id="113_take_hit_espada"]
 [ext_resource type="Texture2D" uid="uid://wi3d254fxypc" path="res://Elementals_fire_knight_FREE_v1.1/espada/air_attack_ia/air_attack_ia_6_frames_5184x384.png" id="112_air_attack_espada"]
 [ext_resource type="Texture2D" uid="uid://d22u818n01d0s" path="res://Elementals_fire_knight_FREE_v1.1/espada/attack_ia/attack_ia_6_frames_5184x384.png" id="111_attack_espada"]
 [ext_resource type="Texture2D" uid="uid://cd26we843dh0r" path="res://escaleras_12_frames_288x128.png" id="109_o7gi0"]
@@ -75,12 +76,6 @@
 [ext_resource type="Texture2D" uid="uid://b7prdnahhj0q5" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/04_roll/roll_6.png" id="147_anf5i"]
 [ext_resource type="Texture2D" uid="uid://cdwexn5larp17" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/04_roll/roll_7.png" id="148_m5fv3"]
 [ext_resource type="Texture2D" uid="uid://d21erib0mmca3" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/04_roll/roll_8.png" id="149_me2p2"]
-[ext_resource type="Texture2D" uid="uid://sl8skj5abpon" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/10_take_hit/take_hit_1.png" id="158_002n8"]
-[ext_resource type="Texture2D" uid="uid://c605qdbhl310e" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/10_take_hit/take_hit_2.png" id="159_0uuwr"]
-[ext_resource type="Texture2D" uid="uid://2d558deba6s4" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/10_take_hit/take_hit_3.png" id="160_7tsse"]
-[ext_resource type="Texture2D" uid="uid://dx0ebkxf526un" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/10_take_hit/take_hit_4.png" id="161_mcabr"]
-[ext_resource type="Texture2D" uid="uid://dx7pbcpslbkgj" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/10_take_hit/take_hit_5.png" id="162_gi2v7"]
-[ext_resource type="Texture2D" uid="uid://n44co6hu6v0i" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/10_take_hit/take_hit_6.png" id="163_fyre4"]
 [ext_resource type="Script" uid="uid://iuqkl2w2cf3s" path="res://scripts/player/player.gd" id="p2_player_script"]
 [ext_resource type="Script" uid="uid://ouv81xqammtp" path="res://scripts/camera/bounded_camera.gd" id="p3_camera_script"]
 [ext_resource type="PackedScene" path="res://escenas/ui/player_hud.tscn" id="p31_player_hud"]
@@ -224,6 +219,22 @@ region = Rect2(3456, 0, 864, 384)
 [sub_resource type="AtlasTexture" id="AtlasTexture_air_attack_espada_5"]
 atlas = ExtResource("112_air_attack_espada")
 region = Rect2(4320, 0, 864, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_take_hit_espada_0"]
+atlas = ExtResource("113_take_hit_espada")
+region = Rect2(0, 0, 864, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_take_hit_espada_1"]
+atlas = ExtResource("113_take_hit_espada")
+region = Rect2(864, 0, 864, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_take_hit_espada_2"]
+atlas = ExtResource("113_take_hit_espada")
+region = Rect2(1728, 0, 864, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_take_hit_espada_3"]
+atlas = ExtResource("113_take_hit_espada")
+region = Rect2(2592, 0, 864, 384)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jump_espada_0"]
 atlas = ExtResource("110_jump_espada")
@@ -705,26 +716,20 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("158_002n8")
+"texture": SubResource("AtlasTexture_take_hit_espada_0")
 }, {
 "duration": 1.0,
-"texture": ExtResource("159_0uuwr")
+"texture": SubResource("AtlasTexture_take_hit_espada_1")
 }, {
 "duration": 1.0,
-"texture": ExtResource("160_7tsse")
+"texture": SubResource("AtlasTexture_take_hit_espada_2")
 }, {
 "duration": 1.0,
-"texture": ExtResource("161_mcabr")
-}, {
-"duration": 1.0,
-"texture": ExtResource("162_gi2v7")
-}, {
-"duration": 1.0,
-"texture": ExtResource("163_fyre4")
+"texture": SubResource("AtlasTexture_take_hit_espada_3")
 }],
-"loop": 1,
+"loop": false,
 "name": &"take hit",
-"speed": 11.0
+"speed": 8.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lgnrr"]
