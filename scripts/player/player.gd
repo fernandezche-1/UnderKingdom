@@ -111,6 +111,10 @@ const ATTACK_PROFILES := {
 @export_category("Combate")
 @export_range(0.1, 10.0, 0.05) var attack_1_damage: float = 0.50
 @export_range(0.05, 0.5, 0.05) var unarmed_attack_damage: float = 0.25
+## Sin espada: se corre y se salta menos, y cada golpe quita esto de más.
+@export_range(20.0, 800.0, 5.0) var unarmed_move_speed: float = 130.0
+@export_range(-1200.0, -100.0, 10.0) var unarmed_jump_velocity: float = -380.0
+@export_range(0.0, 2.0, 0.25) var unarmed_extra_damage_taken: float = 0.25
 @export_range(0.1, 10.0, 0.05) var attack_2_damage: float = 0.75
 @export_range(0.1, 10.0, 0.05) var attack_3_damage: float = 1.00
 @export_range(0.1, 10.0, 0.05) var air_attack_damage: float = 0.75
@@ -1210,7 +1214,7 @@ func _process_normal_movement(delta: float) -> void:
     _try_start_drop_through()
 
     var direction := _get_horizontal_input()
-    var target_speed := direction * move_speed
+    var target_speed := direction * (move_speed if GameManager.has_sword else unarmed_move_speed)
     var change_rate := acceleration if direction != 0.0 else deceleration
     velocity.x = move_toward(velocity.x, target_speed, change_rate * delta)
 
@@ -1218,7 +1222,7 @@ func _process_normal_movement(delta: float) -> void:
         velocity.y = minf(velocity.y + gravity * delta, max_fall_speed)
 
     if _jump_requested and is_on_floor():
-        velocity.y = jump_velocity
+        velocity.y = jump_velocity if GameManager.has_sword else unarmed_jump_velocity
     _jump_requested = false
 
 
@@ -1927,6 +1931,9 @@ func take_damage(
                 velocity.x = away * block_pushback
                 _block_push_left = 0.25
         return true
+
+    if not GameManager.has_sword:
+        amount += unarmed_extra_damage_taken
 
     # Modo dev: el golpe se recibe (animación, empuje, invulnerabilidad) pero
     # no quita vida.
