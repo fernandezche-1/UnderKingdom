@@ -278,6 +278,7 @@ const ARMED_ANIMATION_SCALES: Dictionary = {
     &"run": 1.0 / 3.0,
     &"take hit": 1.0 / 3.0,
     &"death": 1.0 / 3.0,
+    &"escaleras": 1.0 / 3.0,
     &"jump up": 1.0 / 3.0,
     &"jump down": 1.0 / 3.0,
 }
@@ -1464,8 +1465,7 @@ func _update_animation(direction: float) -> void:
             sprite.play(unarmed_animation)
         return
 
-    # En escaleras, la animación propia (de espaldas). Ya viene angosta, así
-    # que se dibuja a la escala normal; quieto en la escalera se congela.
+    # En escaleras, la animación propia (de espaldas); quieto en la escalera se congela.
     if _climbing:
         if sprite.animation != &"escaleras":
             sprite.play(&"escaleras")
