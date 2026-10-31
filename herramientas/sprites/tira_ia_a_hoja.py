@@ -2,6 +2,7 @@
 """Convierte una tira de la IA sobre fondo magenta en una hoja de 864x384 por cuadro.
 
 Uso: tira_ia_a_hoja.py original.png salida.png --cuadros 8 --factor 2 [--movimiento]
+     [--aire [--en-suelo 0]]
 
 Quita el fondo y su halo, alinea los cuadros por los pies y reduce con una paleta
 común para que el color no parpadee. --factor es la altura de la figura en la tira
@@ -10,6 +11,9 @@ así el contorno no se emborrona. El borde exterior se suaviza y se repinta con 
 contorno de un solo grosor y color, sin restos del fondo.
 Con --movimiento (correr, saltar) los pies se mueven: cada cuadro conserva su altura,
 se centra por el torso y no se estabiliza el color.
+Con --aire (saltar, junto a --movimiento) la tira dibuja una subida que ya hace la
+física: todos los cuadros comparten la altura de la cabeza y son las piernas las que
+suben. --en-suelo da los cuadros que sí van con los pies en el suelo, como agacharse.
 La hoja se dibuja a escala 1/3 (ver ARMED_ANIMATION_SCALES en player.gd): figura de
 40 px como la caja de colisión, con el mismo detalle en pantalla que el prisionero.
 El pie y el centro caen donde en las hojas 288x128 del Player, multiplicados por 3.
@@ -150,6 +154,8 @@ def main() -> None:
     argumentos.add_argument("--factor", type=int, default=2)
     argumentos.add_argument("--colores", type=int, default=32)
     argumentos.add_argument("--movimiento", action="store_true", help="Para animaciones en las que los pies no se quedan quietos")
+    argumentos.add_argument("--aire", action="store_true", help="Todos los cuadros con la cabeza a la misma altura")
+    argumentos.add_argument("--en-suelo", type=int, nargs="*", default=[], help="Con --aire, cuadros que se quedan con los pies en el suelo")
     argumentos.add_argument("--centro-x", type=int, default=432, help="Columna del cuadro para el centro de los pies")
     opciones = argumentos.parse_args()
 
@@ -182,12 +188,17 @@ def main() -> None:
     # Eje común: centro de los pies del primer cuadro, o su torso si se mueven.
     pies = np.where(reducidos[0][-(FILAS_PIES + 24):, :, 3].max(axis=0) > 0)[0]
     eje_x = centro_torso(reducidos[0]) if opciones.movimiento else (int(pies.min()) + int(pies.max())) // 2
-    fila_base = max(int(np.where(c[..., 3].max(axis=1) > 0)[0].max()) for c in reducidos)
+    filas = [np.where(c[..., 3].max(axis=1) > 0)[0] for c in reducidos]
+    fila_base = max(int(f.max()) for f in filas)
+    fila_cabeza = FILA_PIES - max(int(f.max() - f.min()) for f in filas)
 
     hoja = Image.new("RGBA", (ANCHO_CUADRO * opciones.cuadros, ALTO_CUADRO), (0, 0, 0, 0))
     for i, cuadro in enumerate(reducidos):
         imagen = Image.fromarray((cuadro * 255.0).round().astype(np.uint8), "RGBA")
-        hoja.alpha_composite(imagen, (i * ANCHO_CUADRO + opciones.centro_x - eje_x, FILA_PIES - fila_base))
+        y = FILA_PIES - fila_base
+        if opciones.aire:
+            y = FILA_PIES - int(filas[i].max()) if i in opciones.en_suelo else fila_cabeza - int(filas[i].min())
+        hoja.alpha_composite(imagen, (i * ANCHO_CUADRO + opciones.centro_x - eje_x, y))
 
     hoja.save(opciones.salida)
 
