@@ -1,13 +1,15 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=16 format=3]
 
 [ext_resource type="PackedScene" path="res://escenas/mapas/tiles_calabozo.tscn" id="1_base"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/carcelero.tscn" id="2_carcelero"]
-[ext_resource type="Script" path="res://scripts/environment/arena_barrier.gd" id="3_barrera"]
+[ext_resource type="Script" path="res://scripts/environment/locked_door.gd" id="3_puerta"]
 [ext_resource type="Texture2D" path="res://assets_prueba/raou_castillo/tileset_castillo.png" id="4_tileset"]
 [ext_resource type="Script" path="res://scripts/environment/map_ambience.gd" id="5_ambiente"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/rata.tscn" id="6_rata"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/slime.tscn" id="7_slime"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/murcielago_grande.tscn" id="8_murcielago"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/espada_oxidada.tscn" id="9_espada"]
+[ext_resource type="Texture2D" path="res://assets_prueba/esqueleto_lanza/esqueleto_lanza.png" id="10_esqueleto"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_columna_tope"]
 atlas = ExtResource("4_tileset")
@@ -21,6 +23,10 @@ region = Rect2(48, 272, 16, 16)
 atlas = ExtResource("4_tileset")
 region = Rect2(48, 288, 16, 16)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_preso_muerto"]
+atlas = ExtResource("10_esqueleto")
+region = Rect2(1120, 160, 80, 40)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_reja"]
 size = Vector2(16, 48)
 
@@ -28,27 +34,63 @@ size = Vector2(16, 48)
 
 [node name="RejaSalida" type="StaticBody2D" parent="SistemasMapa"]
 position = Vector2(1416, 184)
-script = ExtResource("3_barrera")
+script = ExtResource("3_puerta")
+key_id = "calabozo_salida"
+locked_message = "NECESITAS LA LLAVE DEL CARCELERO"
 piece_start = SubResource("AtlasTexture_columna_tope")
 piece_middle = SubResource("AtlasTexture_columna_medio")
 piece_end = SubResource("AtlasTexture_columna_base")
-start_closed = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/RejaSalida"]
 shape = SubResource("RectangleShape2D_reja")
 
-[node name="Carcelero" parent="Enemigos" node_paths=PackedStringArray("exit_gate") instance=ExtResource("2_carcelero")]
-position = Vector2(1128, 188)
-exit_gate = NodePath("../../SistemasMapa/RejaSalida")
+[node name="RejaInterior" type="StaticBody2D" parent="SistemasMapa"]
+position = Vector2(1000, 184)
+script = ExtResource("3_puerta")
+requires_sword = true
+locked_message = "EL CERROJO ESTÁ AL OTRO LADO"
+opened_message = "CORRES EL CERROJO"
+piece_start = SubResource("AtlasTexture_columna_tope")
+piece_middle = SubResource("AtlasTexture_columna_medio")
+piece_end = SubResource("AtlasTexture_columna_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/RejaInterior"]
+shape = SubResource("RectangleShape2D_reja")
+
+[node name="RejaConducto" type="StaticBody2D" parent="SistemasMapa"]
+position = Vector2(872, 296)
+script = ExtResource("3_puerta")
+requires_sword = true
+locked_message = "NECESITAS UN ARMA PARA FORZARLA"
+opened_message = "FUERZAS LA REJA"
+piece_start = SubResource("AtlasTexture_columna_tope")
+piece_middle = SubResource("AtlasTexture_columna_medio")
+piece_end = SubResource("AtlasTexture_columna_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/RejaConducto"]
+shape = SubResource("RectangleShape2D_reja")
+
+[node name="Carcelero" parent="Enemigos" instance=ExtResource("2_carcelero")]
+position = Vector2(1256, 188)
 
 [node name="Rata" parent="Enemigos" instance=ExtResource("6_rata")]
 position = Vector2(300, 150)
 
 [node name="MurcielagoGrande" parent="Enemigos" instance=ExtResource("8_murcielago")]
-position = Vector2(470, 110)
+position = Vector2(390, 110)
 
 [node name="Slime" parent="Enemigos" instance=ExtResource("7_slime")]
 position = Vector2(840, 199)
+
+[node name="RataSala" parent="Enemigos" instance=ExtResource("6_rata")]
+position = Vector2(740, 198)
+
+[node name="PresoMuerto" type="Sprite2D" parent="Objetos"]
+position = Vector2(760, 300)
+texture = SubResource("AtlasTexture_preso_muerto")
+
+[node name="EspadaOxidada" parent="Objetos" instance=ExtResource("9_espada")]
+position = Vector2(776, 304)
 
 [node name="Ambientacion" type="Node2D" parent="."]
 script = ExtResource("5_ambiente")

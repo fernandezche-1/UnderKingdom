@@ -6,6 +6,8 @@ class_name UnderkingdomLockedDoor
 ## partida (se guarda como objeto consumido, igual que los cofres).
 
 @export var key_id: String = ""
+## Se abre al llegar con espada, en vez de con la llave.
+@export var requires_sword: bool = false
 @export var player_group: StringName = &"player"
 ## Distancia a cada lado de la puerta a la que se detecta al Player.
 @export_range(0.0, 64.0, 1.0) var detect_margin: float = 20.0
@@ -48,7 +50,8 @@ func _on_detector_body_entered(body: Node2D) -> void:
     # El mensaje sale hacia el lado del Player: así no se corta cuando la
     # puerta está junto al borde del mapa.
     var side := signf(body.global_position.x - global_position.x)
-    if not GameManager.has_key(key_id):
+    var unlocked := GameManager.has_sword if requires_sword else GameManager.has_key(key_id)
+    if not unlocked:
         _show_message(locked_message, side)
         return
     GameManager.mark_object_consumed(self)
