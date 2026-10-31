@@ -141,3 +141,11 @@ Se pusieron a mano en `tiles_calabozo_combate.tscn` para ver cómo reaccionan; n
 - Jugar la prisión con la velocidad y el salto reducidos.
 - Confirmar la licencia de los paquetes Skeleton y Monsters Creatures Fantasy 2.
 - Decidir dónde va la espada buena con armadura y qué da de más.
+
+## Sprites nuevos con espada
+
+- Lo que se ve al recoger la espada era el Fire Knight de prueba. Se sustituye animación por animación, en el `SpriteFrames` de `escenas/player.tscn`; las que no tienen tira todavía siguen siendo del caballero.
+- **Hecho:** `idle` (8 cuadros, 5 fps), en `Elementals_fire_knight_FREE_v1.1/espada/idle_ia/`, con `original_ia.png` al lado, como las tiras del prisionero.
+- **Cómo se procesa una tira:** `python3 herramientas/sprites/tira_ia_a_hoja.py original_ia.png hoja.png --cuadros 8`. Quita el magenta y su halo, reduce 3:1 (la figura queda de 39 px, como el prisionero y la caja de colisión), fija los pies entre cuadros y da una paleta común.
+- Las hojas son de 288x128 por cuadro y escala 1, como las demás hojas con espada: el pie en la fila 126 y el centro en la columna 144. Así el `idle` empalma con el resto de animaciones.
+- `prisn.tscn` tiene la colisión en otro sitio que `player.tscn`: `_load_armed_sprite_frames` lleva el sprite armado a los pies de la caja de cada escena.

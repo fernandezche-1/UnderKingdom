@@ -405,7 +405,17 @@ func _load_armed_sprite_frames() -> void:
         _armed_sprite_offset = armed_sprite.offset
         _armed_sprite_position = armed_sprite.position
         _armed_sprite_scale = armed_sprite.scale
+        # Los cuadros con espada se ajustan a la caja de player.tscn: se llevan
+        # a la de esta escena para que los pies pisen donde está el cuerpo.
+        var reference_body := visual_reference.get_node_or_null("CollisionShape2D") as CollisionShape2D
+        var own_body := get_node_or_null("CollisionShape2D") as CollisionShape2D
+        if reference_body != null and own_body != null:
+            _armed_sprite_position += _body_feet(own_body) - _body_feet(reference_body)
     visual_reference.free()
+
+
+func _body_feet(body: CollisionShape2D) -> Vector2:
+    return body.position + Vector2(0.0, (body.shape as RectangleShape2D).size.y * 0.5)
 
 
 ## La bola de fuego no está en el SpriteFrames de player.tscn: se añade al
