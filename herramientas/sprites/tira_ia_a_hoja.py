@@ -182,7 +182,7 @@ def main() -> None:
     # Eje común: centro de los pies del primer cuadro, o su torso si se mueven.
     pies = np.where(reducidos[0][-(FILAS_PIES + 24):, :, 3].max(axis=0) > 0)[0]
     eje_x = centro_torso(reducidos[0]) if opciones.movimiento else (int(pies.min()) + int(pies.max())) // 2
-    fila_base = int(np.where(reducidos[0][..., 3].max(axis=1) > 0)[0].max())
+    fila_base = max(int(np.where(c[..., 3].max(axis=1) > 0)[0].max()) for c in reducidos)
 
     hoja = Image.new("RGBA", (ANCHO_CUADRO * opciones.cuadros, ALTO_CUADRO), (0, 0, 0, 0))
     for i, cuadro in enumerate(reducidos):
