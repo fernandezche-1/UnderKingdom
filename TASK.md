@@ -99,7 +99,7 @@ Todos tienen un checkpoint, dos cofres (jefe uno), 12 monedas, una o dos pocione
   - profundidades y jefe: Gothicvania `Living-Tissue-Platform-Files` o rocas con lava.
 
   Pasos en "Receta: integrar un paquete" (abajo).
-- [ ] **Enemigos de Gothicvania** (`Legacy Collection/Assets/Gothicvania/Characters/`): Ghost, Hell-Hound, Hell-Beast, Fire-Skull, flying-eye-demon, Ogre, Nightmare, crow, entre otros. Cada uno necesita una escena con `enemy_base.gd`, una letra en el constructor y una prueba en `arena_enemigos`.
+- [ ] **Enemigos de Gothicvania** (`Legacy Collection/Assets/Gothicvania/Characters/`): Ghost, Hell-Hound, Hell-Beast, Fire-Skull, flying-eye-demon, Ogre, Nightmare, crow, entre otros. Cada uno necesita una escena con `enemy_base.gd`, una letra en el constructor y una prueba en la zona de pruebas (`zona_pruebas_combate.tscn`).
 - [x] **Enemigos que faltan para la progresión por profundidad** (`docs/P33_ENEMIGOS_POR_PROFUNDIDAD.md`): murciélagos para el cementerio y las minas, esqueletos para la mazmorra y la ruina. Hechos con Super Grotto Escape y Gothicvania Cemetery (ver `docs/P34_ENEMIGOS_DE_LOS_PAQUETES.md`).
 - [ ] **Decorados de los paquetes:** velas, jaulas, cadenas, estandartes, vagonetas. Necesitan estar en el atlas del tileset y tener letra.
 
@@ -159,7 +159,7 @@ Para empezar de cero desde un mapa hecho a mano, se usa `-- --desde-mapa` (secci
    Si el paquete no trae ese juego de 4x4, se arma un atlas nuevo copiando sus piezas, sin dibujar arte nuevo.
 5. **Probarlo** con un mapa de muestra.
 6. **Letras y colores nuevos:** si trae decorados o enemigos sin letra, se agregan a `COLORS` / `ENEMIES` del constructor. Después se regenera la paleta (`-- --paleta`) y se actualiza la tabla de `LEYENDA.md`.
-7. **Enemigos:** escena con `enemy_base.gd` y sus valores (cuadros de golpe, hitbox, `collision_layer = 5`), siguiendo el patrón de `kolbo` y `mino`. Se prueban en `arena_enemigos`.
+7. **Enemigos:** escena con `enemy_base.gd` y sus valores (cuadros de golpe, hitbox, `collision_layer = 5`), siguiendo el patrón de `kolbo` y `mino`. Se prueban en la zona de pruebas (`zona_pruebas_combate.tscn`).
 
 ## Límites conocidos del constructor
 - **Pinchos:** son estáticos (un recorte de `spike Trap5.png`) y matan al tocarlos. No hay versión animada ni de daño parcial.

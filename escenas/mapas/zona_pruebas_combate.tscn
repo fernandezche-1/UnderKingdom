@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas.tscn" id="1_base"]
+[ext_resource type="PackedScene" path="res://escenas/enemigos/rata.tscn" id="2_rata"]
+[ext_resource type="PackedScene" path="res://escenas/enemigos/slime.tscn" id="3_slime"]
+[ext_resource type="PackedScene" path="res://escenas/enemigos/esqueleto_lanza.tscn" id="4_esqueleto_lanza"]
+
+[node name="ZonaPruebasCombate" instance=ExtResource("1_base")]
+
+[node name="Rata" parent="Enemigos" instance=ExtResource("2_rata")]
+position = Vector2(1240, 300)
+
+[node name="Slime" parent="Enemigos" instance=ExtResource("3_slime")]
+position = Vector2(1400, 300)
+
+[node name="EsqueletoLanza" parent="Enemigos" instance=ExtResource("4_esqueleto_lanza")]
+position = Vector2(1720, 300)

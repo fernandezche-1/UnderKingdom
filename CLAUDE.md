@@ -24,6 +24,12 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
 - **Cuarto mundo, la mazmorra:** se juega desde `tiles_mazmorra_combate.tscn`, que hereda de `tiles_mazmorra.tscn`. Su jefa es la Reina (`escenas/jefes/reina_jefe.tscn`), en la cámara del fondo a la derecha. Sigue siendo un calco: no baja como los primeros. Detalle en `docs/P34_ENEMIGOS_DE_LOS_PAQUETES.md`.
 - **Mundos 5 a 7:** la ruina (Guardián de hielo, `escenas/jefes/guardian_hielo.tscn`), las profundidades (Demon Slime, `demon_slime_jefe.tscn`) y el infierno (Cthulhu, `cthulhu_jefe.tscn`, jefe final sin llave) se juegan desde su escena `_combate`. Los tres jefes usan `scripts/bosses/simple_boss.gd`. Siguen siendo calcos: la sala es una cámara que ya existía, cerrada con trampillas y rejas, sin tocar colisiones. Detalle en `docs/P34_ENEMIGOS_DE_LOS_PAQUETES.md`.
 - **Ruta actual:** cinemática inicial → prisión → `tiles_calabozo` → `tiles_castillo` → `tiles_cementerio` → `tiles_mineria` → `tiles_mazmorra` → `tiles_ruina` → `tiles_profundidades` → `tiles_jefe`, cada uno por su escena `_combate`. Desde la mazmorra, los mapas todavía no siguen la idea de bajar (ver `TASK.md`). `tiles_casa` quedó fuera de la ruta.
+- **Zona de pruebas (`escenas/mapas/zona_pruebas_combate.tscn`):** aquí se prueba siempre todo sprite, animación o enemigo nuevo antes de llevarlo a un mapa de la ruta.
+  - Abrir esa escena y pulsar F6. Hereda de `zona_pruebas.tscn`, generada desde `mapas_texto/zona_pruebas.txt`.
+  - Lo que se añada para probar (un enemigo sin letra, un sprite suelto) va en la `_combate`, en `Enemigos` u `Objetos`; un enemigo con letra va en el `.txt`.
+  - El Player es `prisn.tscn` y sale sin espada. Con espada: Modo dev (tecla º), "Dar espada". Para volver a sin espada, reiniciar con F6. Teclas de prueba: R reaparecer, H daño de ¼, J daño de 1, K morir.
+  - No forma parte de la ruta y nada lleva a ella: no tiene salidas. La regla de enemigos por profundidad no aplica aquí.
+  - Detalle en `docs/P43_ZONA_DE_PRUEBAS.md`.
 - **Cómo se monta un mundo:**
   - El trazado se dibuja en el PNG y la escena base la genera el constructor; no se edita a mano.
   - Jefe, puertas y llave van en una escena que hereda de la base. Así se puede regenerar sin perderlos.
@@ -72,6 +78,7 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
 - La prisión, que va después: `godot --headless res://escenas/mapas/prologo_prision/camara_sellado_alma.tscn --quit-after 120`.
 - El castillo: `godot --headless res://escenas/mapas/tiles_castillo_combate.tscn --quit-after 120`.
 - El cementerio: `godot --headless res://escenas/mapas/tiles_cementerio_combate.tscn --quit-after 120`.
+- La zona de pruebas: `godot --headless res://escenas/mapas/zona_pruebas_combate.tscn --quit-after 120`. Es donde se prueban los sprites y enemigos nuevos; con ventana, F6 en esa escena.
 - Mundo 1, el mapa viejo: `godot --headless res://escenas/mapas/mundo_1.tscn --quit-after 120`. Comprobarlo cuando se toquen scripts compartidos (Player, enemigos, GameManager, Capitán).
 - Un mapa concreto: `godot --headless res://escenas/mapas/<mapa>.tscn --quit-after 60`.
 - Tras crear un script con `class_name` nuevo, correr `godot --headless --import` para actualizar la caché de clases.
