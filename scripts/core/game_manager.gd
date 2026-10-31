@@ -89,8 +89,8 @@ const UPGRADE_DEFINITIONS := {
 ## "hint" es la tecla o la forma de usarla; sale en el aviso al conseguirla.
 const ABILITY_DEFINITIONS := {
 	"roll": {"name": "Rodar", "hint": "Shift: esquiva y atraviesa enemigos"},
-	"combo_2": {"name": "Ráfaga", "hint": "Ataca otra vez durante el primer golpe"},
-	"combo_3": {"name": "Golpe final", "hint": "Tercer ataque seguido del combo"},
+	"combo_2": {"name": "Ráfaga", "hint": "Tus tajos son más rápidos"},
+	"combo_3": {"name": "Golpe final", "hint": "El tajo ascendente golpea más fuerte"},
 	"air_attack": {"name": "Tajo aéreo", "hint": "Ataca en el aire"},
 	"parry": {"name": "Parry", "hint": "Cúbrete [Q] justo antes del golpe"},
 	"ultimate": {"name": "Ultimate", "hint": "E"},

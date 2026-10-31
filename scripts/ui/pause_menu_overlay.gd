@@ -253,8 +253,8 @@ func _update_player_info() -> void:
 		lifesteal_text = "%.2f cada %.2f de daño" % [_player.lifesteal_heal_amount, damage_required]
 	(_stat_values.lifesteal as Label).text = lifesteal_text
 	(_stat_values.lifesteal_progress as Label).text = "%.2f / %.2f" % [_player.get_lifesteal_progress(), damage_required]
-	(_stat_values.combo as Label).text = "%.2f · %.2f · %.2f" % [
-		_player.attack_1_damage, _player.attack_2_damage, _player.attack_3_damage,
+	(_stat_values.combo as Label).text = "%.2f · %.2f" % [
+		_player.attack_1_damage, _player.rising_slash_damage(),
 	]
 	(_stat_values.speed as Label).text = "%.0f px/s" % _player.move_speed
 	_refresh_abilities()

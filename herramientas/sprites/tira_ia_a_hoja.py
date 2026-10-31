@@ -2,7 +2,7 @@
 """Convierte una tira de la IA sobre fondo magenta en una hoja de 864x384 por cuadro.
 
 Uso: tira_ia_a_hoja.py original.png salida.png --cuadros 8 --factor 2 [--movimiento]
-     [--aire [--en-suelo 0]]
+     [--aire [--en-suelo 0]] [--separar]
 
 Quita el fondo y su halo, alinea los cuadros por los pies y reduce con una paleta
 común para que el color no parpadee. --factor es la altura de la figura en la tira
@@ -14,6 +14,8 @@ se centra por el torso y no se estabiliza el color.
 Con --aire (saltar, junto a --movimiento) la tira dibuja una subida que ya hace la
 física: todos los cuadros comparten la altura de la cabeza y son las piernas las que
 suben. --en-suelo da los cuadros que sí van con los pies en el suelo, como agacharse.
+Con --separar (ataques) la espada invade la casilla vecina: cada figura se recorta por
+su silueta y se centra por los pies, en vez de partir la tira en partes iguales.
 La hoja se dibuja a escala 1/3 (ver ARMED_ANIMATION_SCALES en player.gd): figura de
 40 px como la caja de colisión, con el mismo detalle en pantalla que el prisionero.
 El pie y el centro caen donde en las hojas 288x128 del Player, multiplicados por 3.
@@ -22,6 +24,7 @@ import argparse
 
 import numpy as np
 from PIL import Image
+from scipy import ndimage
 
 MAGENTA = np.array([253.0, 0.0, 248.0])
 ANCHO_CUADRO = 864
@@ -42,6 +45,27 @@ def quitar_fondo(rgb: np.ndarray) -> np.ndarray:
     alfa = 1.0 - cantidad
     color = (rgb - cantidad[..., None] * MAGENTA) / np.maximum(alfa, 0.05)[..., None]
     return np.dstack((np.clip(color, 0.0, 255.0) / 255.0, alfa))
+
+
+def separar_figuras(tira: np.ndarray, cuadros: int, filas_pies: int) -> list[np.ndarray]:
+    """Saca las figuras, de izquierda a derecha, en cuadros iguales con los pies al centro."""
+    etiquetas = ndimage.label(tira[..., 3] > 0.5, structure=np.ones((3, 3)))[0]
+    mayores = np.argsort(np.bincount(etiquetas.ravel())[1:])[-cuadros:] + 1
+    mascaras = sorted((etiquetas == e for e in mayores), key=lambda m: np.where(m)[1].mean())
+    centros = []
+    for mascara in mascaras:
+        filas = np.where(mascara.any(axis=1))[0]
+        pies = np.where(mascara[filas.max() - filas_pies:].any(axis=0))[0]
+        centros.append((int(pies.min()) + int(pies.max())) // 2)
+    medio = max(max(c - np.where(m)[1].min(), np.where(m)[1].max() - c) for c, m in zip(centros, mascaras)) + 4
+    resultado = []
+    for mascara, centro in zip(mascaras, centros):
+        # El halo queda fuera de la silueta: se recoge sin tocar a la figura vecina.
+        ajena = etiquetas.astype(bool) & ~mascara
+        visible = ndimage.binary_dilation(mascara, iterations=2) & ~ndimage.binary_dilation(ajena, iterations=1)
+        cuadro = tira * visible[..., None]
+        resultado.append(np.pad(cuadro, ((0, 0), (medio, medio), (0, 0)))[:, centro:centro + 2 * medio])
+    return resultado
 
 
 def desplazamiento_pies(cuadro: np.ndarray, referencia: np.ndarray, franja: int) -> tuple[int, int]:
@@ -156,12 +180,16 @@ def main() -> None:
     argumentos.add_argument("--movimiento", action="store_true", help="Para animaciones en las que los pies no se quedan quietos")
     argumentos.add_argument("--aire", action="store_true", help="Todos los cuadros con la cabeza a la misma altura")
     argumentos.add_argument("--en-suelo", type=int, nargs="*", default=[], help="Con --aire, cuadros que se quedan con los pies en el suelo")
+    argumentos.add_argument("--separar", action="store_true", help="Recorta cada figura por su silueta, no en partes iguales")
     argumentos.add_argument("--centro-x", type=int, default=432, help="Columna del cuadro para el centro de los pies")
     opciones = argumentos.parse_args()
 
     tira = quitar_fondo(np.array(Image.open(opciones.entrada).convert("RGB")).astype(float))
     ancho_tira = tira.shape[1] // opciones.cuadros
-    cuadros = [tira[:, i * ancho_tira:(i + 1) * ancho_tira] for i in range(opciones.cuadros)]
+    if opciones.separar:
+        cuadros = separar_figuras(tira, opciones.cuadros, FILAS_PIES * opciones.factor)
+    else:
+        cuadros = [tira[:, i * ancho_tira:(i + 1) * ancho_tira] for i in range(opciones.cuadros)]
     # Margen para que alinear no recorte cabeza ni pies.
     cuadros = [np.pad(c, ((12, 12), (24, 24), (0, 0))) for c in cuadros]
     referencia = cuadros[0][..., 3]

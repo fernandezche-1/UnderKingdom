@@ -23,7 +23,7 @@
 | Id | Efecto sin la habilidad |
 |---|---|
 | `roll` | `request_roll()` no hace nada. |
-| `combo_2`, `combo_3` | `_max_combo_step()` sustituye el `3` fijo del buffer del combo: sin `combo_2`, solo sale el primer tajo; con `combo_2`, hasta la ráfaga; con las dos, el combo completo. |
+| `combo_2`, `combo_3` | Ya no bloquean etapas: los dos tajos se alternan desde que se tiene la espada. `combo_2` multiplica su velocidad por `rafaga_speed_multiplier` y `combo_3` sube el tajo ascendente de `attack_2_damage` a `attack_3_damage` (ver `P42_CALABOZO_INICIAL.md`). |
 | `air_attack` | Atacar en el aire no hace nada. |
 | `parry` | La guardia bloquea, pero nunca hace parry. |
 | `ultimate` | `request_ultimate()` no hace nada; el HUD oculta la barra y la pestaña de estadísticas dice "Sin conseguir". |

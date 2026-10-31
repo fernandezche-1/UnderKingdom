@@ -8,6 +8,8 @@
 
 ## 1. El primer tajo se encadena consigo mismo
 
+> Sustituido: con la tira nueva hay dos tajos alternos y desaparecen `attack_1_repeat_frame`, `attack_1_repeat_chain_frame` y las etapas 1 → 2 → 3. Sigue en pie que el tajo descendente repetido no aturde. Ver `P42_CALABOZO_INICIAL.md`.
+
 - Sin la Ráfaga (`combo_2`), una pulsación guardada durante el tajo lo repite desde `attack_1_chain_frame` (7), igual que hoy se encadena con la Ráfaga.
 - El tajo repetido empieza en `attack_1_repeat_frame` (2): los cuadros 0-1 son una preparación agachada con la misma pose que el final, y saltárselos deja el ciclo limpio.
 - En `player.gd`:

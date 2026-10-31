@@ -22,12 +22,10 @@ enum PlayerAction {
     CAST
 }
 
-## Cómo se juega cada animación de ataque. Las del combo son acumulativas:
-## "attack 2" empieza repitiendo el tajo de "attack" (cuadros 0-7) y
-## "attack 3" repite todo "attack 2" (0-16) antes de su remate, así que cada
-## etapa arranca en el cuadro donde empieza lo suyo. Cada golpe es una ventana
-## de cuadros [desde, hasta]: un enemigo recibe un impacto por ventana.
-## area: "front" delante, "wide" delante y más grande, "blast" explosión más
+## Cómo se juega cada animación de ataque. "attack" y "attack 2" son los dos
+## tajos de la espada, que se alternan sin fin en cada pulsación. Cada golpe es
+## una ventana de cuadros [desde, hasta]: un enemigo recibe un impacto por ventana.
+## area: "sword" al alcance de la espada, "front" delante, "wide" delante y más grande, "blast" explosión más
 ## lejos, "around" alrededor del Player (la ráfaga golpea delante y detrás).
 ## knockback: false = daño sin empuje ni aturdir, para que los golpes
 ## seguidos de una ráfaga conecten todos; el último de cada ataque empuja.
@@ -36,22 +34,11 @@ const ATTACK_PROFILES := {
     &"puch": {"start": 0, "end": 5, "hits": [
         {"frames": Vector2i(3, 4), "ratio": 1.0, "area": "front", "knockback": true},
     ]},
-    &"attack": {"start": 0, "end": 10, "lunge": true, "hits": [
-        {"frames": Vector2i(4, 6), "ratio": 1.0, "area": "front", "knockback": true},
+    &"attack": {"start": 0, "end": 2, "lunge": true, "hits": [
+        {"frames": Vector2i(1, 1), "ratio": 1.0, "area": "sword", "knockback": true},
     ]},
-    &"attack 2": {"start": 8, "end": 18, "hits": [
-        {"frames": Vector2i(9, 9), "ratio": 0.125, "area": "around", "knockback": false},
-        {"frames": Vector2i(10, 10), "ratio": 0.125, "area": "around", "knockback": false},
-        {"frames": Vector2i(11, 11), "ratio": 0.125, "area": "around", "knockback": false},
-        {"frames": Vector2i(12, 12), "ratio": 0.125, "area": "around", "knockback": false},
-        {"frames": Vector2i(13, 13), "ratio": 0.125, "area": "around", "knockback": false},
-        {"frames": Vector2i(14, 14), "ratio": 0.125, "area": "around", "knockback": false},
-        {"frames": Vector2i(15, 15), "ratio": 0.125, "area": "around", "knockback": false},
-        {"frames": Vector2i(16, 16), "ratio": 0.125, "area": "around", "knockback": true},
-    ]},
-    &"attack 3": {"start": 17, "end": 27, "lunge": true, "hits": [
-        {"frames": Vector2i(22, 22), "ratio": 0.4, "area": "wide", "knockback": false},
-        {"frames": Vector2i(23, 25), "ratio": 0.6, "area": "blast", "knockback": true},
+    &"attack 2": {"start": 0, "end": 2, "hits": [
+        {"frames": Vector2i(1, 1), "ratio": 1.0, "area": "sword", "knockback": true},
     ]},
     &"air attack": {"start": 0, "end": 7, "hits": [
         {"frames": Vector2i(3, 5), "ratio": 1.0, "area": "front", "knockback": true},
@@ -115,33 +102,28 @@ const ATTACK_PROFILES := {
 @export_range(20.0, 800.0, 5.0) var unarmed_move_speed: float = 130.0
 @export_range(-1200.0, -100.0, 10.0) var unarmed_jump_velocity: float = -380.0
 @export_range(0.0, 2.0, 0.25) var unarmed_extra_damage_taken: float = 0.25
-@export_range(0.1, 10.0, 0.05) var attack_2_damage: float = 0.75
+## Tajo ascendente ("attack 2"); con el Golpe final hace attack_3_damage.
+@export_range(0.1, 10.0, 0.05) var attack_2_damage: float = 0.50
 @export_range(0.1, 10.0, 0.05) var attack_3_damage: float = 1.00
 @export_range(0.1, 10.0, 0.05) var air_attack_damage: float = 0.75
 @export_range(0.1, 20.0, 0.05) var ultimate_damage: float = 2.00
 @export_range(0.0, 1.0, 0.01) var attack_active_start_ratio: float = 0.28
 @export_range(0.0, 1.0, 0.01) var attack_active_end_ratio: float = 0.72
 @export_range(10.0, 300.0, 1.0) var attack_hitbox_offset_x: float = 52.0
+## Área "sword": la hoja llega a unos 24 px del centro, y la caja llega un poco más.
+@export_range(0.0, 100.0, 1.0) var sword_hitbox_offset_x: float = 20.0
+@export_range(0.1, 2.0, 0.05) var sword_hitbox_scale_x: float = 0.60
 @export_range(-100.0, 200.0, 1.0) var attack_hitbox_offset_y: float = 34.0
 @export_range(0.05, 2.0, 0.05) var combo_queue_window: float = 0.45
 @export_range(1.0, 2.0, 0.05) var combo_base_speed_multiplier: float = 1.35
-## Velocidad propia del primer tajo, que sustituye a combo_base_speed_multiplier:
-## es el golpe que más se usa y el único al empezar una partida.
+## Velocidad propia del tajo descendente, que sustituye a combo_base_speed_multiplier.
 @export_range(1.0, 2.0, 0.05) var attack_1_speed_multiplier: float = 1.35
+## Velocidad de los dos tajos con la Ráfaga, sobre la propia de cada uno.
+@export_range(1.0, 2.0, 0.05) var rafaga_speed_multiplier: float = 1.20
 ## Velocidad propia del ataque aéreo (la animación del pack va a 9 fps).
 @export_range(1.0, 3.0, 0.05) var air_attack_speed_multiplier: float = 1.80
 ## Velocidad del puñetazo sin espada (la animación va a 5 fps: 2.4 la deja en 12).
 @export_range(1.0, 4.0, 0.05) var unarmed_attack_speed_multiplier: float = 2.40
-@export_range(0, 30, 1) var attack_1_chain_frame: int = 7
-## Sin la Ráfaga, el primer tajo se encadena consigo mismo desde
-## attack_1_chain_frame y vuelve a empezar en este cuadro, saltándose la
-## preparación agachada (cuadros 0-1, la misma pose que el final).
-@export_range(0, 10, 1) var attack_1_repeat_frame: int = 2
-## Sin la Ráfaga, cuadro desde el que el tajo se encadena consigo mismo. Va
-## después de attack_1_chain_frame para que machacar el botón haga menos daño
-## por segundo que el combo.
-@export_range(0, 10, 1) var attack_1_repeat_chain_frame: int = 9
-@export_range(0, 40, 1) var attack_2_chain_frame: int = 17
 ## Si está activado, moverse, saltar o rodar corta los ataques. Desactivado por defecto.
 @export var movement_cancels_attacks: bool = false
 ## Distancia total del roll. Arranca rápido y frena hasta detenerse al
@@ -289,6 +271,8 @@ const ARMORY_STUCK_FRAMES_TO_REPORT: int = 5
 ## Animaciones con espada en hojas de alta resolución (864x384 por cuadro): se
 ## dibujan más pequeñas para dar el mismo detalle en pantalla que el prisionero.
 const ARMED_ANIMATION_SCALES: Dictionary = {
+    &"attack": 1.0 / 3.0,
+    &"attack 2": 1.0 / 3.0,
     &"idle": 1.0 / 3.0,
     &"run": 1.0 / 3.0,
     &"jump up": 1.0 / 3.0,
@@ -671,17 +655,13 @@ func request_attack() -> void:
         return
 
     if _action == PlayerAction.ATTACK:
-        var remaining_steps := _remaining_combo_inputs()
-        if remaining_steps > 0:
-            # Guardamos pulsaciones reales, no solo un booleano. Asi, si el
-            # jugador pulsa dos veces durante attack 1, quedan preparados
-            # attack 2 Y attack 3 en vez de perderse la tercera pulsacion.
-            _combo_buffered_inputs = mini(_combo_buffered_inputs + 1, remaining_steps)
-            _combo_queued = _combo_buffered_inputs > 0
-            _combo_queue_left = maxf(
-                _combo_queue_left,
-                _action_time_left + combo_queue_window + 0.25
-            )
+        # Basta con recordar una pulsación: los tajos se alternan sin fin.
+        _combo_buffered_inputs = 1
+        _combo_queued = true
+        _combo_queue_left = maxf(
+            _combo_queue_left,
+            _action_time_left + combo_queue_window + 0.25
+        )
         return
 
     if _action not in [PlayerAction.NORMAL, PlayerAction.DEFEND]:
@@ -972,18 +952,11 @@ func _update_fireball_release() -> void:
     )
 
 
-## start_frame >= 0 arranca la animación en ese cuadro en vez del "start" de su
-## perfil (el primer tajo repetido se salta la preparación).
-func _start_attack(
-    animation_name: StringName,
-    damage: float,
-    action_type: PlayerAction,
-    start_frame: int = -1
-) -> void:
+func _start_attack(animation_name: StringName, damage: float, action_type: PlayerAction) -> void:
     if not GameManager.has_sword and animation_name != &"puch":
         return
     var profile := _attack_profile(animation_name)
-    var first_frame := int(profile.start) if start_frame < 0 else start_frame
+    var first_frame := int(profile.start)
     _attack_sequence_id += 1
     _action = action_type
     _current_attack_damage = damage
@@ -1006,26 +979,6 @@ func _start_attack(
     sprite.frame = first_frame
     sprite.frame_progress = 0.0
     attack_started.emit(animation_name, damage)
-
-
-func _start_combo_step(step: int) -> void:
-    _combo_step = step
-    _combo_queued = _combo_buffered_inputs > 0
-    _combo_queue_left = 0.0
-
-    match step:
-        2:
-            _start_attack(&"attack 2", attack_2_damage, PlayerAction.ATTACK)
-        3:
-            _start_attack(&"attack 3", attack_3_damage, PlayerAction.ATTACK)
-        _:
-            _finish_action()
-            return
-
-    # Si el jugador ya habia pulsado el siguiente ataque, conservamos ese
-    # input durante esta nueva etapa para que el combo no se corte.
-    if _combo_buffered_inputs > 0:
-        _combo_queue_left = _action_time_left + combo_queue_window + 0.25
 
 
 func _update_combat_timers(delta: float) -> void:
@@ -1070,24 +1023,12 @@ func _update_action_state() -> void:
         _finish_action()
         return
 
-    # Cancelamos solo los frames de recuperacion de attack 1 y attack 2.
-    # El siguiente golpe puede arrancar antes de que termine toda la animacion,
-    # siempre que el jugador ya lo haya dejado en el buffer.
-    if (
-        _action == PlayerAction.ATTACK
-        and _remaining_combo_inputs() > 0
-        and _combo_buffered_inputs > 0
-        and _can_chain_combo_early()
-    ):
-        _consume_combo_buffer_and_start_next()
-        return
-
     if _action_time_left > 0.0:
         return
 
     if _action == PlayerAction.ATTACK:
-        if _combo_buffered_inputs > 0 and _remaining_combo_inputs() > 0:
-            _consume_combo_buffer_and_start_next()
+        if _combo_buffered_inputs > 0:
+            _start_next_slash()
         else:
             _finish_action()
     elif _action in [
@@ -1098,20 +1039,6 @@ func _update_action_state() -> void:
         PlayerAction.CAST
     ]:
         _finish_action()
-
-
-func _can_chain_combo_early() -> bool:
-    if sprite.animation != _current_attack_animation:
-        return false
-
-    match _current_attack_animation:
-        &"attack":
-            var chain_frame := attack_1_repeat_chain_frame if _repeats_first_attack() else attack_1_chain_frame
-            return sprite.frame >= maxi(chain_frame, _last_hit_frame() + 1)
-        &"attack 2":
-            return sprite.frame >= maxi(attack_2_chain_frame, _last_hit_frame() + 1)
-        _:
-            return false
 
 
 func _try_cancel_attack_by_movement() -> void:
@@ -1149,40 +1076,23 @@ func _last_hit_frame() -> int:
     return last
 
 
-func _consume_combo_buffer_and_start_next() -> void:
-    if _combo_buffered_inputs <= 0 or _remaining_combo_inputs() <= 0:
+## Alterna los dos tajos. El descendente repetido no empuja, para que machacar
+## el botón no deje al enemigo aturdido todo el rato.
+func _start_next_slash() -> void:
+    _combo_buffered_inputs = 0
+    _combo_queued = false
+    _combo_queue_left = 0.0
+    if _combo_step == 1:
+        _combo_step = 2
+        _start_attack(&"attack 2", rising_slash_damage(), PlayerAction.ATTACK)
         return
-
-    _combo_buffered_inputs -= 1
-    _combo_queued = _combo_buffered_inputs > 0
-    if _repeats_first_attack():
-        _start_attack(&"attack", attack_1_damage, PlayerAction.ATTACK, attack_1_repeat_frame)
-        _attack_is_repeat = true
-        return
-    _start_combo_step(_combo_step + 1)
+    _combo_step = 1
+    _start_attack(&"attack", attack_1_damage, PlayerAction.ATTACK)
+    _attack_is_repeat = true
 
 
-## Pulsaciones que se pueden guardar ahora para seguir atacando.
-func _remaining_combo_inputs() -> int:
-    if _repeats_first_attack():
-        return 1
-    return maxi(_max_combo_step() - _combo_step, 0)
-
-
-## Sin la Ráfaga, el primer tajo se encadena consigo mismo: machacar el botón
-## da tajos seguidos en vez de perder las pulsaciones.
-func _repeats_first_attack() -> bool:
-    return _max_combo_step() == 1 and _combo_step == 1
-
-
-## Etapas del combo en suelo que el Player ya tiene (GameManager: combo_2,
-## combo_3). Sin la Ráfaga, el Golpe final tampoco se encadena.
-func _max_combo_step() -> int:
-    if not GameManager.has_sword:
-        return 1
-    if not GameManager.has_ability("combo_2"):
-        return 1
-    return 3 if GameManager.has_ability("combo_3") else 2
+func rising_slash_damage() -> float:
+    return attack_3_damage if GameManager.has_ability("combo_3") else attack_2_damage
 
 
 func _finish_action() -> void:
@@ -1622,6 +1532,8 @@ func _update_attack_damage_window() -> void:
         "around":
             attack_hitbox.position = Vector2(0.0, attack_hitbox_offset_y)
             attack_hitbox.scale = Vector2(1.90, 1.35)
+        "sword":
+            _place_sword_hitbox()
         "wide":
             _update_attack_hitbox_position()
             attack_hitbox.scale = Vector2(1.45, 1.20)
@@ -1639,7 +1551,8 @@ func _update_attack_damage_window() -> void:
     )
     if connected:
         # El tajo repetido no aturde, pero se siente igual que el primero.
-        _play_hit_impact(bool(hit.knockback), area == "blast")
+        var heavy := area == "blast" or (_current_attack_animation == &"attack 2" and GameManager.has_ability("combo_3"))
+        _play_hit_impact(bool(hit.knockback), heavy)
 
 
 ## Hitstop y temblor al conectar con un enemigo: el peso de la espada se nota
@@ -1657,6 +1570,16 @@ func _reset_attack_hitbox() -> void:
     attack_hitbox.scale = Vector2.ONE
     _attack_subwindow_index = -1
     _update_attack_hitbox_position()
+    # La física ve la caja un tick después de moverla: en los tajos ya debe
+    # estar en su sitio antes de que llegue el cuadro del golpe.
+    if _current_attack_animation in [&"attack", &"attack 2"]:
+        _place_sword_hitbox()
+
+
+func _place_sword_hitbox() -> void:
+    var facing := -1.0 if sprite.flip_h else 1.0
+    attack_hitbox.position = Vector2(sword_hitbox_offset_x * facing, attack_hitbox_offset_y)
+    attack_hitbox.scale = Vector2(sword_hitbox_scale_x, 1.0)
 
 
 func _attack_profile(animation_name: StringName) -> Dictionary:
@@ -1838,12 +1761,15 @@ func _attack_speed_multiplier_for(animation_name: StringName) -> float:
     # aéreo se aceleran un poco incluso con vida normal.
     if animation_name == &"attack":
         multiplier *= maxf(attack_1_speed_multiplier, 1.0)
-    elif animation_name in [&"attack 2", &"attack 3"]:
+    elif animation_name == &"attack 2":
         multiplier *= maxf(combo_base_speed_multiplier, 1.0)
     elif animation_name == &"air attack":
         multiplier *= maxf(air_attack_speed_multiplier, 1.0)
     elif animation_name == &"puch":
         multiplier *= maxf(unarmed_attack_speed_multiplier, 1.0)
+
+    if animation_name in [&"attack", &"attack 2"] and GameManager.has_ability("combo_2"):
+        multiplier *= maxf(rafaga_speed_multiplier, 1.0)
 
     if is_adrenaline_active():
         if animation_name != &"attack ultimate" or adrenaline_affects_ultimate:
@@ -1916,16 +1842,6 @@ func _frames_duration(animation_name: StringName, from_frame: int, to_frame: int
     return maxf(duration, 0.08)
 
 
-func _is_flurry_active() -> bool:
-    # La ráfaga de attack 2 (cuadros 8-16) no se interrumpe al recibir daño.
-    return (
-        _action == PlayerAction.ATTACK
-        and _current_attack_animation == &"attack 2"
-        and sprite.animation == &"attack 2"
-        and sprite.frame <= 16
-    )
-
-
 func _hurt_animation_name() -> StringName:
     var wanted: StringName = &"take hit" if GameManager.has_sword else &"takehit"
     return wanted if sprite.sprite_frames.has_animation(wanted) else &"idle"
@@ -1974,17 +1890,6 @@ func take_damage(
 
     if current_health <= 0.0:
         die()
-        return true
-
-    # Durante la ráfaga de attack 2 el Player NO es invulnerable: pierde vida
-    # normalmente, pero el golpe no interrumpe la ráfaga ni cambia la animación
-    # a take hit. Conservamos la invulnerabilidad breve posterior para evitar
-    # que una sola Hitbox enemiga vacíe toda la vida en un frame.
-    if _is_flurry_active():
-        _invulnerability_left = invulnerability_time
-        _blink_accumulator = 0.0
-        _blink_visible = true
-        _update_hud("DAÑO -%.2f (RÁFAGA)" % amount)
         return true
 
     _invulnerability_left = invulnerability_time
