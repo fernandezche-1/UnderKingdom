@@ -7,6 +7,7 @@
 [node name="LaReina" instance=ExtResource("1_reina")]
 script = ExtResource("2_script")
 max_health = 14.0
+contact_damage = 0.5
 patrol_distance = 48.0
 patrol_speed = 34.0
 chase_speed = 85.0

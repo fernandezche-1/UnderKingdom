@@ -1925,6 +1925,15 @@ func take_damage_from(source_global_position: Vector2, amount: float) -> bool:
     return take_damage(amount, source_global_position, true)
 
 
+## Tocar a un enemigo. No es un golpe: cubrirse lo evita sin gastar guardia ni
+## hacer parry, rodar lo atraviesa de principio a fin y atacar no se corta, o el
+## paso adelante del tajo acabaría en daño antes de conectar.
+func take_contact_damage_from(source_global_position: Vector2, amount: float) -> bool:
+    if _action in [PlayerAction.DEFEND, PlayerAction.ROLL, PlayerAction.ATTACK]:
+        return false
+    return take_damage_from(source_global_position, amount)
+
+
 func _apply_knockback(source_global_position: Vector2) -> void:
     var horizontal_direction := signf(global_position.x - source_global_position.x)
 

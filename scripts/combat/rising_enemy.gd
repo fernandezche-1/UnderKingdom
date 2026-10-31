@@ -69,3 +69,7 @@ func _wake(direction_to_target: float) -> void:
 func _is_special_invulnerable() -> bool:
     return _dormant or _rise_time_left > 0.0
 
+
+
+func _can_deal_contact_damage() -> bool:
+    return not _is_special_invulnerable() and super._can_deal_contact_damage()

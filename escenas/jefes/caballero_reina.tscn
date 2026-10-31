@@ -5,6 +5,7 @@
 
 [node name="CaballeroDeLaReina" instance=ExtResource("1_elfo")]
 max_health = 12.0
+contact_damage = 0.5
 patrol_distance = 48.0
 patrol_speed = 34.0
 chase_speed = 90.0

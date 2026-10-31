@@ -73,6 +73,16 @@ enum AIState {
 ## (por ejemplo dos hachazos). Vacío = una sola ventana (attack_active_*).
 @export var attack_hit_windows: Array[Vector2i] = []
 
+@export_category("Contacto")
+## Daño al tocarlo sin que esté atacando. 0 = tocarlo no hace nada.
+@export_range(0.0, 5.0, 0.25) var contact_damage: float = 0.25
+## Segundos entre dos daños de contacto de este enemigo: el empuje puede no
+## bastar contra una pared y la invulnerabilidad del Player dura menos.
+@export_range(0.1, 10.0, 0.05) var contact_cooldown: float = 0.90
+## Lo que la zona de contacto sobresale del cuerpo. Hace falta: los cuerpos
+## chocan, así que nunca llegan a solaparse.
+@export_range(0.0, 16.0, 1.0) var contact_margin: float = 2.0
+
 @export_category("Defensa")
 @export var defense_enabled: bool = false
 @export var defense_animation: StringName = &"defense"
@@ -137,6 +147,9 @@ var _attack_hit_targets: Array[int] = []
 var _attack_hitbox: Area2D = null
 var _attack_shape: RectangleShape2D = null
 
+var _contact_area: Area2D = null
+var _contact_cooldown_left: float = 0.0
+
 var _defense_time_left: float = 0.0
 var _defense_cooldown_left: float = 0.0
 var _defense_hits_remaining: int = 3
@@ -153,6 +166,7 @@ func _ready() -> void:
     _patrol_direction = _normalized_direction(initial_patrol_direction)
     _find_target()
     _ensure_attack_hitbox()
+    _ensure_contact_area()
     _defense_hits_remaining = defense_max_hits
     _face_direction(_patrol_direction)
     _play_if_exists(&"idle")
@@ -165,6 +179,7 @@ func _physics_process(delta: float) -> void:
 
     _update_damage_timers(delta)
     _update_combat_timers(delta)
+    _update_contact_damage()
     _apply_gravity(delta)
 
     # Recibir daño siempre tiene prioridad sobre IA y ataque.
@@ -236,6 +251,9 @@ func _update_damage_timers(delta: float) -> void:
 func _update_combat_timers(delta: float) -> void:
     if _attack_cooldown_left > 0.0:
         _attack_cooldown_left = maxf(_attack_cooldown_left - delta, 0.0)
+
+    if _contact_cooldown_left > 0.0:
+        _contact_cooldown_left = maxf(_contact_cooldown_left - delta, 0.0)
 
     if _defense_cooldown_left > 0.0:
         _defense_cooldown_left = maxf(_defense_cooldown_left - delta, 0.0)
@@ -484,6 +502,65 @@ func _update_attack_hitbox_transform(animation_name: StringName) -> void:
         _body_center_x() + profile_offset.x * _facing_direction(),
         profile_offset.y
     )
+
+
+func _ensure_contact_area() -> void:
+    if contact_damage <= 0.0 or body_collision == null or body_collision.shape == null:
+        return
+
+    var shape_node := CollisionShape2D.new()
+    shape_node.name = "CollisionShape2D"
+    shape_node.transform = body_collision.transform
+    shape_node.shape = _grown_body_shape()
+
+    _contact_area = Area2D.new()
+    _contact_area.name = "ContactArea"
+    _contact_area.collision_layer = 0
+    _contact_area.collision_mask = 1
+    _contact_area.monitorable = false
+    _contact_area.add_child(shape_node)
+    add_child(_contact_area)
+
+
+func _grown_body_shape() -> Shape2D:
+    var shape := body_collision.shape.duplicate() as Shape2D
+
+    if shape is RectangleShape2D:
+        (shape as RectangleShape2D).size += Vector2.ONE * contact_margin * 2.0
+    elif shape is CapsuleShape2D:
+        (shape as CapsuleShape2D).radius += contact_margin
+        (shape as CapsuleShape2D).height += contact_margin * 2.0
+    elif shape is CircleShape2D:
+        (shape as CircleShape2D).radius += contact_margin
+
+    return shape
+
+
+func _update_contact_damage() -> void:
+    if _contact_area == null or _contact_cooldown_left > 0.0 or not _can_deal_contact_damage():
+        return
+
+    if not is_instance_valid(_target):
+        _find_target()
+    if not is_instance_valid(_target) or not _target.has_method("take_contact_damage_from"):
+        return
+    if not _contact_area.overlaps_body(_target):
+        return
+
+    var accepted: Variant = _target.call(
+        "take_contact_damage_from",
+        Vector2(_body_global_x(), global_position.y),
+        contact_damage
+    )
+    if accepted:
+        _contact_cooldown_left = contact_cooldown
+
+
+## Quieto por una cinemática no hace daño. Tampoco mientras ataca, porque la
+## invulnerabilidad del contacto se tragaría el golpe, que quita más, ni
+## aturdido, para que el paso adelante del tajo no castigue al que está ganando.
+func _can_deal_contact_damage() -> bool:
+    return ai_enabled and _attack_time_left <= 0.0 and _hurt_time_left <= 0.0
 
 
 func _select_attack_animation() -> StringName:
