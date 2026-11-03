@@ -69,9 +69,11 @@ Exportados en `player.gd`, categoría "Combate". Valen en todo el juego mientras
 
 | Ajuste | Sin espada | Con espada |
 |---|---|---|
-| `unarmed_move_speed` | 130 | 230 (`move_speed`) |
-| `unarmed_jump_velocity` | -380, unos 50 px | -560, unos 104 px |
+| `unarmed_move_speed` | 130 | 170 (`move_speed`); 230 con Agilidad |
+| `unarmed_jump_velocity` | -380, unos 50 px | -470, unos 74 px (`jump_velocity`); -560, unos 104 px, con Agilidad |
 | `unarmed_extra_damage_taken` | +0.25 a cada golpe | nada |
+
+- Los valores con espada y con Agilidad son de P45.
 
 - Los enemigos siguen en 0.75: desnudo quitan 1 corazón y armado, 0.75.
 - Con 4 corazones se aguantan 3 golpes y el cuarto mata.

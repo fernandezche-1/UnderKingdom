@@ -9,7 +9,7 @@
 
 ## 1. Datos en `GameManager`
 
-- `ABILITY_DEFINITIONS`: por cada id, su `name` y su `hint` (tecla o forma de usarla). Los ids son `roll`, `combo_2`, `combo_3`, `air_attack`, `parry`, `ultimate`, `lifesteal` y `adrenaline`.
+- `ABILITY_DEFINITIONS`: por cada id, su `name` y su `hint` (tecla o forma de usarla). Los ids son `roll`, `combo_2`, `combo_3`, `air_attack`, `parry`, `ultimate`, `lifesteal`, `adrenaline` y `agility` (P45).
 - `STARTING_ABILITIES`: las que se tienen al empezar. Por ahora están aquí las que todavía no tienen dónde conseguirse: `air_attack`, `parry`, `lifesteal` y `adrenaline`. Cuando se coloque su fuente, se quitan de esta lista.
 - `abilities_locked` y `unlocked_abilities`. Se reinician en `reset_abilities_for_new_game()`, que llama `reset_for_new_game()`.
 - Funciones:
@@ -29,6 +29,7 @@
 | `ultimate` | `request_ultimate()` no hace nada; el HUD oculta la barra y la pestaña de estadísticas dice "Sin conseguir". |
 | `lifesteal` | `is_lifesteal_active()` (nueva) combina el `@export lifesteal_enabled` con la habilidad. |
 | `adrenaline` | `is_adrenaline_active()` exige además la habilidad. |
+| `agility` | Con espada, `get_move_speed()` y `get_jump_velocity()` dan los valores normales en vez de los de Agilidad (P45). |
 
 ## 3. Reliquia
 

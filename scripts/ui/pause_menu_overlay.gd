@@ -256,7 +256,7 @@ func _update_player_info() -> void:
 	(_stat_values.combo as Label).text = "%.2f · %.2f" % [
 		_player.attack_1_damage, _player.rising_slash_damage(),
 	]
-	(_stat_values.speed as Label).text = "%.0f px/s" % _player.move_speed
+	(_stat_values.speed as Label).text = "%.0f px/s" % _player.get_move_speed()
 	_refresh_abilities()
 
 	var ult_left: float = _player.get_ultimate_cooldown_left()

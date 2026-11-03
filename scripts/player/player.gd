@@ -53,10 +53,14 @@ const ATTACK_PROFILES := {
 }
 
 @export_category("Movimiento")
-@export_range(20.0, 800.0, 5.0) var move_speed: float = 230.0
+## Con espada. -470 son unas 4,6 piezas (74 px) de salto.
+@export_range(20.0, 800.0, 5.0) var move_speed: float = 170.0
 @export_range(100.0, 5000.0, 50.0) var acceleration: float = 1800.0
 @export_range(100.0, 5000.0, 50.0) var deceleration: float = 2200.0
-@export_range(-1200.0, -100.0, 10.0) var jump_velocity: float = -560.0
+@export_range(-1200.0, -100.0, 10.0) var jump_velocity: float = -470.0
+## Con la habilidad Agilidad ("agility"). -560 son unas 6,5 piezas (104 px).
+@export_range(20.0, 800.0, 5.0) var agility_move_speed: float = 230.0
+@export_range(-1200.0, -100.0, 10.0) var agility_jump_velocity: float = -560.0
 @export_range(100.0, 5000.0, 50.0) var gravity: float = 1500.0
 @export_range(100.0, 3000.0, 50.0) var max_fall_speed: float = 1000.0
 
@@ -845,7 +849,7 @@ func _log_blocked_horizontal_collisions(
         get_path(),
         global_position,
         horizontal_input,
-        horizontal_input * move_speed,
+        horizontal_input * get_move_speed(),
         velocity_before.x,
         velocity.x,
         displacement,
@@ -1157,7 +1161,7 @@ func _process_normal_movement(delta: float) -> void:
     _try_start_drop_through()
 
     var direction := _get_horizontal_input()
-    var target_speed := direction * (move_speed if GameManager.has_sword else unarmed_move_speed)
+    var target_speed := direction * get_move_speed()
     var change_rate := acceleration if direction != 0.0 else deceleration
     velocity.x = move_toward(velocity.x, target_speed, change_rate * delta)
 
@@ -1165,7 +1169,7 @@ func _process_normal_movement(delta: float) -> void:
         velocity.y = minf(velocity.y + gravity * delta, max_fall_speed)
 
     if _jump_requested and is_on_floor():
-        velocity.y = jump_velocity if GameManager.has_sword else unarmed_jump_velocity
+        velocity.y = get_jump_velocity()
     _jump_requested = false
 
 
@@ -1792,6 +1796,19 @@ func is_adrenaline_active() -> bool:
         and max_health > 0.0
         and current_health <= max_health * adrenaline_health_ratio
     )
+
+
+## Sin espada, con espada o con Agilidad. La usa también el menú de pausa.
+func get_move_speed() -> float:
+    if not GameManager.has_sword:
+        return unarmed_move_speed
+    return agility_move_speed if GameManager.has_ability("agility") else move_speed
+
+
+func get_jump_velocity() -> float:
+    if not GameManager.has_sword:
+        return unarmed_jump_velocity
+    return agility_jump_velocity if GameManager.has_ability("agility") else jump_velocity
 
 
 func is_lifesteal_active() -> bool:

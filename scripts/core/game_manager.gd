@@ -96,6 +96,7 @@ const ABILITY_DEFINITIONS := {
 	"ultimate": {"name": "Ultimate", "hint": "E"},
 	"lifesteal": {"name": "Robo de vida", "hint": "Golpear te cura"},
 	"adrenaline": {"name": "Adrenalina", "hint": "Con media vida o menos atacas más rápido"},
+	"agility": {"name": "Agilidad", "hint": "Corres más rápido y saltas más alto"},
 }
 ## Con las que empieza una partida nueva. Las que todavía no tienen dónde
 ## conseguirse (minijefe del tajo aéreo, reliquia de la adrenalina, tienda de
