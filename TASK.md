@@ -38,7 +38,7 @@ Mientras una zona no esté marcada aquí, sigue como la describe la tarea de los
   - [ ] Generar el nivel y montar la `_combate` (Rey con `ability_reward` de Rodar, reja de `[H2]`, trampillas).
 - [ ] Cementerio: exterior con la casa del sepulturero y dos tumbas sello; cripta debajo con la tumba real y el Capitán; salida `[S3]` en el fondo de la cripta.
   - [x] ASCII, primera pasada (`mapas_texto/macro/zonas/cementerio.txt`), colocado y verificado.
-  - [ ] Segunda pasada: enemigos (v, u, m), objetos y decorados.
+  - [x] Segunda pasada: enemigos (v, u, m), objetos y decorados.
   - [ ] Generar el nivel y montar la `_combate` (Capitán sin llave, tres tumbas sello y su contador, losa de `[S3]`, trampillas del atajo y de la fosa, casa del sepulturero, E3).
 - [ ] Minas: `[L4]`, salida lateral hacia la mazmorra.
 - [ ] Mazmorra: `[!5]`, derrumbe tras la Reina.
