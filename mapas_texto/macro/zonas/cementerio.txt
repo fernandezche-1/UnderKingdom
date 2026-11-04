@@ -70,7 +70,9 @@
 ;   x 10-12 en el suelo (filas 87-89), abierto en el borde de abajo, hacia las
 ;   minas: lo tapa una losa que se abre con los tres sellos. Se llega también
 ;   antes del jefe por la escalera de la columna 14 (se ve la losa cerrada).
-;   Cómo se vuelve a subir desde las minas: se decide al dibujar las minas.
+;   Desde las minas se vuelve a subir por la escalera de su pozo del sello
+;   (columna 107 de las minas); arriba, la transición lleva al spawn
+;   DesdeMinas, junto al hueco, hacia (8, 86).
 ; - E3, CABALLERO DE LA CRIPTA (opcional): panteón del caballero, x 88-117,
 ;   filas 76-86 (suelo 87), al fondo este de la catacumba baja, tras la gatera
 ;   y la escalera de la columna 110. La armadura va en (91, 83), sobre el

@@ -245,6 +245,13 @@ Una zona no se da por hecha mientras el verificador dé errores.
   - Atajo interno: escalera de la columna 22 de la catacumba alta a la entrada, con trampilla que se abre desde abajo.
   - Coordenadas de cada pieza en los comentarios del archivo. Comprobado con una simulación de saltos de 3 piezas: se llega a todo y desde todo se vuelve a la entrada.
   - Segunda pasada hecha: 4 Vanguardias, 16 esqueletos de tumba, 11 murciélagos, 4 cofres, 20 monedas, 3 pociones y decorados del tileset cementerio. La repisa alta del osario pasa a ser maciza para llevar el cofre. Probada generando una escena temporal con el constructor, sin errores.
+- **Minas (ASCII, primera pasada, 2026-11-04):** `mapas_texto/macro/zonas/minas.txt`, 150 x 90, en el mundo en (150, 133): justo debajo del cementerio, y bajo el sótano del castillo, para cubrir las columnas de `:C:` (170 del mundo) y `[S3]` (256).
+  - Recibe `[S3]` por el borde de arriba, columnas 106-108, en el pozo del sello, con escalera en la columna 107 para volver al cementerio. `:C:` entra por el borde de arriba, columnas 20-22: el pozo del ascensor baja a la estación, con la palanca en (12, 40). Entre el sótano del castillo y las minas el pozo recorre 53 piezas (el verificador lo avisa como túnel).
+  - `[L4]` sale por el borde izquierdo, filas 66-68 (fila 199 del mundo), 3 piezas, por un túnel encima de la sala del Caballero con la puerta con llave en la columna 28. `:D:` es un hueco de 3 piezas en el borde de abajo, columnas 132-134 (columna 282 del mundo), al fondo este de la galería honda.
+  - Bocamina (checkpoint), galería alta, galería de las vagonetas, veta ardiente con dos fosos de lava, galería honda, antecámara (checkpoint) y sala del Caballero (31 x 13, la de hoy) en la parte más honda, junto a `[L4]`. Tres bucles y un atajo interno: la escalera de la columna 48, de la antecámara a una trampilla de la galería de las vagonetas que se abre desde abajo. Hoy ese atajo sale de la sala del jefe; ahora sale de la antecámara, y la sala ya no tiene `Atajos`.
+  - Secreto de la Agilidad en la pared este de la bocamina: un escalón de 5 piezas, como la poción de (29, 6) de las minas de hoy (P45).
+  - Coordenadas de cada pieza en los comentarios del archivo. Comprobado con una simulación de saltos de 3 piezas: se llega a todo menos al secreto (tampoco con 4; sí con 6) y desde todo se vuelve a la bocamina. Probada generando una escena temporal con el constructor, sin errores.
+  - Falta la segunda pasada: enemigos de profundidad 2 (k, j, q, m), cofres (sitios en los comentarios), objetos y decorados.
 - Las demás zonas van con `?`.
 
 ## 10. Progreso del personaje: atuendos y desbloqueos por zona
