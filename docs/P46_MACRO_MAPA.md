@@ -251,7 +251,7 @@ Una zona no se da por hecha mientras el verificador dé errores.
   - Bocamina (checkpoint), galería alta, galería de las vagonetas, veta ardiente con dos fosos de lava, galería honda, antecámara (checkpoint) y sala del Caballero (31 x 13, la de hoy) en la parte más honda, junto a `[L4]`. Tres bucles y un atajo interno: la escalera de la columna 48, de la antecámara a una trampilla de la galería de las vagonetas que se abre desde abajo. Hoy ese atajo sale de la sala del jefe; ahora sale de la antecámara, y la sala ya no tiene `Atajos`.
   - Secreto de la Agilidad en la pared este de la bocamina: un escalón de 5 piezas, como la poción de (29, 6) de las minas de hoy (P45).
   - Coordenadas de cada pieza en los comentarios del archivo. Comprobado con una simulación de saltos de 3 piezas: se llega a todo menos al secreto (tampoco con 4; sí con 6) y desde todo se vuelve a la bocamina. Probada generando una escena temporal con el constructor, sin errores.
-  - Falta la segunda pasada: enemigos de profundidad 2 (k, j, q, m), cofres (sitios en los comentarios), objetos y decorados.
+  - Segunda pasada hecha: 6 kolbo, 6 kolbo2, 4 kolbo3, 10 murciélagos, 4 trampas de fuego en la veta, 4 cofres (uno en el secreto), 15 monedas, 3 pociones y decorados del tileset mazmorra (campamento en la bocamina, vagonetas de cajas y barriles). Con saltos de 3 se alcanza todo menos lo del secreto. Probada generando una escena temporal con el constructor, sin errores.
 - Las demás zonas van con `?`.
 
 ## 10. Progreso del personaje: atuendos y desbloqueos por zona

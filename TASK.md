@@ -42,7 +42,7 @@ Mientras una zona no esté marcada aquí, sigue como la describe la tarea de los
   - [ ] Generar el nivel y montar la `_combate` (Capitán sin llave, tres tumbas sello y su contador, losa de `[S3]`, trampillas del atajo y de la fosa, casa del sepulturero, E3).
 - [ ] Minas: `[L4]`, salida lateral hacia la mazmorra.
   - [x] ASCII, primera pasada (`mapas_texto/macro/zonas/minas.txt`), colocado y verificado.
-  - [ ] Segunda pasada: enemigos (k, j, q, m), cofres, objetos y decorados.
+  - [x] Segunda pasada: enemigos (k, j, q, m), cofres, objetos y decorados.
   - [ ] Generar el nivel y montar la `_combate` (Caballero en la sala nueva, puerta con llave de `[L4]`, ascensor y palanca de `:C:`, trampilla del atajo, reja de `:D:`, transiciones de `[S3]` y `:C:`).
 - [ ] Mazmorra: `[!5]`, derrumbe tras la Reina.
 - [ ] Ruina helada: `[P6]`, derretir el hielo con la llama eterna.
