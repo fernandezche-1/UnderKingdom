@@ -144,7 +144,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 
 ## 6. Diferencias con lo que hay hoy y decisiones
 
-- **Castillo:** hoy sale por la puerta con la llave del Rey Caído (`castillo_rey`), en las criptas de abajo. En el plan sale por `[H2]` hacia un lado. **Decidido (2026-11-04):** la llave `castillo_rey` se descarta y la salida es solo rodando. Al rehacer el castillo se quitan la puerta con llave, la llave que suelta el Rey y su entrada en la pestaña de llaves y en `BOSS_KEY_IDS`.
+- **Castillo:** hoy sale por la puerta con la llave del Rey Caído (`castillo_rey`), en las criptas de abajo. En el plan sale por `[H2]` hacia un lado. **Decidido (2026-11-04):** la llave `castillo_rey` se descarta y la salida es solo rodando. Al rehacer el castillo se quitan la puerta con llave, la llave que suelta el Rey y su entrada en la pestaña de llaves y en `BOSS_KEY_IDS`. Como el Rey deja de dar llave, da Rodar (`ability_reward`), y la reliquia de la biblioteca se quita.
 - **Cementerio:**
   - Hoy ya es de bajada: superficie, cripta, catacumbas, sala del jefe y abismo. Eso encaja con el plan.
   - Pero tiene jefe: el Capitán, que da la Ráfaga y una llave para la salida. **Decidido (2026-11-04):** el Capitán guarda la tercera tumba sello, la tumba real de la cripta. Su sala de jefe es la cámara de esa tumba, y al vencerlo se activa el último sello y se abre `[S3]`. Sigue dando la Ráfaga y deja de dar llave. Se mantienen el Capitán, su sala y la cinemática del reencuentro.
@@ -231,8 +231,13 @@ python3 herramientas/macro_mapa/verificar_mundo.py --unir /ruta/mundo.txt
 Una zona no se da por hecha mientras el verificador dé errores.
 
 ### Estado
-- **Calabozo:** es la única zona dibujada. Su salida `[L1]` ya está fija: borde derecho, fila 10, 3 piezas. El castillo tiene que recibirla igual en su borde izquierdo.
-- Las demás posiciones van con `?`, y no hay ninguna zona colocada en el mundo todavía.
+- **Calabozo:** su salida `[L1]` está fija: borde derecho, fila 10, 3 piezas. Colocado en el mundo en (0, 34).
+- **Castillo (ASCII, primera pasada, 2026-11-04):** `mapas_texto/macro/zonas/castillo.txt`, 110 x 80, en el mundo en (136, 0).
+  - Recibe `[L1]` en su borde izquierdo, filas 44-46. `[H2]` sale por el borde derecho, filas 67-69, 3 piezas, por el paso bajo el trono. `:C:` es un hueco de 3 piezas en el borde de abajo, columnas 34-36, desde el sótano.
+  - Subzonas, coordenadas y sitio de cada pieza (Rey, reja, trampillas, E2, cofres) en los comentarios del archivo.
+  - Rodar pasa a ser el premio del Rey Caído (`ability_reward`), en lugar de la reliquia de la biblioteca de hoy.
+  - Falta la segunda pasada: enemigos, objetos y decorados.
+- Las demás zonas van con `?`.
 
 ## 10. Progreso del personaje: atuendos y desbloqueos por zona
 
@@ -269,7 +274,7 @@ Cada atuendo cambia el aspecto del Player (su `SpriteFrames`) y su arma, y da al
 |---|---|---|---|
 | Prisión | E0; tajo aéreo, parry, robo de vida y adrenalina (`STARTING_ABILITIES`) | — | — |
 | Calabozo | E0 (salto de unas 3 piezas) | E1 (hoy); llave del carcelero (hoy) | `[L1]` llave del carcelero |
-| Castillo | E1 (salto de unas 4,6 piezas) | Rodar, por reliquia (hoy); E2 (plan) | `[H2]` Rodar |
+| Castillo | E1 (salto de unas 4,6 piezas) | Rodar, por reliquia en la biblioteca (hoy); en el plan, premio del Rey Caído (`ability_reward`); E2 en la armería (plan) | `[H2]` Rodar |
 | Cementerio | E1 o E2; Rodar | Ráfaga, con el Capitán, guardián de la tercera tumba; E3 y la Agilidad (plan) | `[S3]` tres tumbas sello (la última, vencer al Capitán) |
 | Minas | Ráfaga; con E3, Agilidad (salto de unas 6,5 piezas) | Golpe final, con el Caballero (hoy); llave del Caballero | `[L4]` llave del Caballero |
 | Mazmorra | Golpe final | Ultimate, con la Reina (hoy) | `[!5]` derrumbe tras la Reina |
