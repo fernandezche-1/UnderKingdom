@@ -236,7 +236,8 @@ Una zona no se da por hecha mientras el verificador dé errores.
   - Recibe `[L1]` en su borde izquierdo, filas 44-46. `[H2]` sale por el borde derecho, filas 67-69, 3 piezas, por el paso bajo el trono. `:C:` es un hueco de 3 piezas en el borde de abajo, columnas 34-36, desde el sótano.
   - Subzonas, coordenadas y sitio de cada pieza (Rey, reja, trampillas, E2, cofres) en los comentarios del archivo.
   - Rodar pasa a ser el premio del Rey Caído (`ability_reward`), en lugar de la reliquia de la biblioteca de hoy.
-  - Falta la segunda pasada: enemigos, objetos y decorados.
+  - Segunda pasada hecha: 7 Guardias, 5 Vanguardias, 11 murciélagos, 4 cofres y decorados del tileset castillo. Probada generando una escena temporal con el constructor, sin errores.
+  - La puerta del gran salón a la antecámara solo se abre desde la antecámara (cerrojo en la `_combate`): el camino obligatorio pasa por la biblioteca, las almenas y la armería.
 - Las demás zonas van con `?`.
 
 ## 10. Progreso del personaje: atuendos y desbloqueos por zona

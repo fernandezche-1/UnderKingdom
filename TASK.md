@@ -34,7 +34,7 @@ Mientras una zona no esté marcada aquí, sigue como la describe la tarea de los
 - [x] Calabozo: `[L1]` llave del carcelero. Ya está.
 - [ ] Castillo: `[H2]`, salida lateral hacia el cementerio.
   - [x] ASCII, primera pasada (`mapas_texto/macro/zonas/castillo.txt`), colocado y verificado.
-  - [ ] Segunda pasada: enemigos (G, v, m), objetos y decorados.
+  - [x] Segunda pasada: enemigos (G, v, m), objetos y decorados.
   - [ ] Generar el nivel y montar la `_combate` (Rey con `ability_reward` de Rodar, reja de `[H2]`, trampillas).
 - [ ] Cementerio: exterior con la casa del sepulturero y dos tumbas sello; cripta debajo con la tumba real y el Capitán; salida `[S3]` en el fondo de la cripta.
 - [ ] Minas: `[L4]`, salida lateral hacia la mazmorra.
