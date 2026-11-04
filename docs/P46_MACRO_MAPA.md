@@ -143,7 +143,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 
 ## 6. Diferencias con lo que hay hoy (decisiones pendientes)
 
-- **Castillo:** hoy sale por la puerta con la llave del Rey Caído (`castillo_rey`), en las criptas de abajo. En el plan sale por `[H2]` hacia un lado. Falta decidir qué pasa con la llave `castillo_rey` (quitarla o darle otro uso).
+- **Castillo:** hoy sale por la puerta con la llave del Rey Caído (`castillo_rey`), en las criptas de abajo. En el plan sale por `[H2]` hacia un lado. **Decidido (2026-11-04):** la llave `castillo_rey` se descarta y la salida es solo rodando. Al rehacer el castillo se quitan la puerta con llave, la llave que suelta el Rey y su entrada en la pestaña de llaves y en `BOSS_KEY_IDS`.
 - **Cementerio:**
   - Hoy ya es de bajada: superficie, cripta, catacumbas, sala del jefe y abismo. Eso encaja con el plan.
   - Pero tiene jefe: el Capitán, que da la Ráfaga y una llave para la salida. Falta decidir el papel del Capitán con `[S3]`: que guarde uno de los sellos, que sea el reto final antes de la cripta, o mantener la llave y cambiar la forma de otra transición.

@@ -10,7 +10,7 @@
 Mientras una zona no esté marcada aquí, sigue como la describe la tarea de los calcos, más abajo, y `CLAUDE.md`.
 
 **Antes de empezar** (sección 6 del plan):
-- [ ] Decidir qué pasa con la llave `castillo_rey` si el castillo sale por `[H2]`.
+- [x] Llave `castillo_rey`: se descarta; el castillo sale solo rodando por `[H2]` (decidido el 2026-11-04).
 - [ ] Decidir el papel del Capitán en el cementerio con `[S3]`.
 
 **Piezas nuevas** (sección 5 del plan):
