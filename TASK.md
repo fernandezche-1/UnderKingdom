@@ -20,6 +20,14 @@ Mientras una zona no esté marcada aquí, sigue como la describe la tarea de los
 - [ ] Secuencia de derrumbe y huida (`[!5]`).
 - [ ] Ascensor minero (`:C:`).
 
+**Atuendos** (plan, sección 10; con qué llega el jugador a cada zona y qué se consigue allí):
+- [ ] Decidir de dónde sale el fuego o el ataque hacia abajo que pide `[P6]`.
+- [ ] Atuendo actual y `OUTFIT_DEFINITIONS` en `GameManager` (guardado, reinicio, `SAVE_FORMAT_VERSION`).
+- [ ] Un `SpriteFrames` por atuendo; separar el Fire Knight (E5) de los harapos (E1).
+- [ ] Escena de atuendo para recoger, generalizando `espada_oxidada.tscn`.
+- [ ] Sección "Equipo" en el menú de pausa.
+- [ ] Arte con IA de E2 (soldado), E3 (caballero de la cripta) y E4 (abrigo); terminar las tiras que faltan de E1.
+
 **Zonas** (salida según el plan):
 - [x] Prisión: paso libre hacia abajo. Ya está.
 - [x] Calabozo: `[L1]` llave del carcelero. Ya está.

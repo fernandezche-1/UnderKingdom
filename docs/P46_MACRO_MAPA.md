@@ -202,7 +202,7 @@ El macro mapa (sección 1) solo dice qué zona va al lado de cuál; no está a e
 
 ### Orden de trabajo
 1. Las zonas se hacen bajando por la ruta: calabozo (ya hecho), castillo, cementerio, minas…
-2. Antes de dibujar una zona se leen `conexiones.txt` y `zonas.txt`. Las aperturas hacia zonas ya hechas tienen posición fija y se copian. Las de las zonas que faltan se proponen y se apuntan en la tabla antes de dibujarlas.
+2. Antes de dibujar una zona se leen `conexiones.txt`, `zonas.txt` y la sección 10 (con qué llega el jugador y qué se consigue en la zona). Las aperturas hacia zonas ya hechas tienen posición fija y se copian. Las de las zonas que faltan se proponen y se apuntan en la tabla antes de dibujarlas.
 3. Se dibuja el ASCII, se le da posición en `zonas.txt` y se corre el verificador.
 4. Si hay que mover una apertura de una zona ya hecha, se cambia primero en la tabla. El verificador dice qué otra zona hay que ajustar.
 
@@ -231,3 +231,73 @@ Una zona no se da por hecha mientras el verificador dé errores.
 ### Estado
 - **Calabozo:** es la única zona dibujada. Su salida `[L1]` ya está fija: borde derecho, fila 10, 3 piezas. El castillo tiene que recibirla igual en su borde izquierdo.
 - Las demás posiciones van con `?`, y no hay ninguna zona colocada en el mundo todavía.
+
+## 10. Progreso del personaje: atuendos y desbloqueos por zona
+
+El protagonista empieza desnudo y sin nada, y se hace más fuerte con lo que encuentra al bajar: atuendos con su arma, habilidades y llaves.
+
+**Al trabajar en una zona** (su ASCII, su nivel, sus enemigos, su jefe o su dificultad), mirar esta sección:
+- con qué llega el jugador: sus saltos, su arma y sus habilidades;
+- qué se consigue en la zona, que hay que colocar en su ASCII;
+- qué pide su salida.
+
+Los retos obligatorios solo pueden pedir lo que el jugador ya tiene al llegar.
+
+### Atuendos (conjuntos)
+Cada atuendo cambia el aspecto del Player (su `SpriteFrames`) y su arma, y da algo jugable. No se cambia a mano: siempre se lleva el mejor que se tenga.
+
+| # | Atuendo | Dónde | Qué da | Estado |
+|---|---|---|---|---|
+| E0 | Desnudo | prisión (inicio) | puñetazos; movimiento corto | hecho (`prisn.tscn`) |
+| E1 | Harapos + espada oxidada | calabozo, cadáver del preso | espada y tajos | hecho (P42); faltan algunas tiras propias |
+| E2 | Soldado del castillo (cota y espada de guardia) | castillo, en la armería | más daño o alcance del tajo | plan; opcional |
+| E3 | Caballero de la cripta (armadura de un caballero enterrado) | cementerio, en una tumba real de la cripta | la **Agilidad** (P45) y más resistencia | plan; opcional |
+| E4 | Abrigo de la ruina | ruina helada, en un secreto | el frío de la ruina no hace daño | plan; opcional |
+| E5 | Fire Knight (espada grande) | profundidades | el más fuerte; resiste el fuego | arte existente; falta separarlo de E1 |
+
+- **Más daño o alcance:** se ajusta con `sword_hitbox_offset_x` y `sword_hitbox_scale_x`, para que un arma más larga alcance más.
+- **Resistencias:** en múltiplos de 0.25, o "no hace daño".
+- **E3 da la Agilidad.** Resuelve el pendiente de P45 (dónde se consigue, antes de las minas).
+- **E5 responde al pendiente de P42** sobre la espada buena con armadura.
+
+### Desbloqueos por zona
+"Hoy" es lo que ya está en las escenas `_combate`; "plan" es lo de esta propuesta.
+
+| Zona | Llega con | Se consigue aquí | La salida pide |
+|---|---|---|---|
+| Prisión | E0; tajo aéreo, parry, robo de vida y adrenalina (`STARTING_ABILITIES`) | — | — |
+| Calabozo | E0 (salto de unas 3 piezas) | E1 (hoy); llave del carcelero (hoy) | `[L1]` llave del carcelero |
+| Castillo | E1 (salto de unas 4,6 piezas) | Rodar, por reliquia (hoy); E2 (plan) | `[H2]` Rodar |
+| Cementerio | E1 o E2; Rodar | Ráfaga, con el Capitán (hoy); E3 y la Agilidad (plan) | `[S3]` tres tumbas sello |
+| Minas | Ráfaga; con E3, Agilidad (salto de unas 6,5 piezas) | Golpe final, con el Caballero (hoy); llave del Caballero | `[L4]` llave del Caballero |
+| Mazmorra | Golpe final | Ultimate, con la Reina (hoy) | `[!5]` derrumbe tras la Reina |
+| Ruina helada | Ultimate | E4 (plan) | `[P6]` romper el hielo (ver pendientes) |
+| Profundidades | E4 si se encontró | E5 (plan) | `[S7]` tres altares y el Demon Slime; con E5 se llega al altar rodeado de fuego |
+| Infierno | E5 | — | — |
+
+- **Mejoras de la tienda** (vida máxima, robo de vida, enfriamiento de la Ultimate): se compran con monedas en cualquier momento. Nunca son necesarias para avanzar (P35).
+- **Opcionales no obligatorios:** E2, E3 y E4 son premios por explorar. Ningún reto obligatorio puede pedirlos. Sí pueden pedirlos los secretos y los objetos opcionales: la Agilidad, los de las minas, la ruina y `tiles_jefe` (P45); el Abrigo, las zonas de frío.
+
+### Arte de los atuendos (con IA)
+Como los harapos (P42, "Sprites nuevos con espada"), el arte se genera con IA y se procesa con `herramientas/sprites/tira_ia_a_hoja.py`. Lo que importa es que todos se vean como el mismo personaje:
+1. **Figura de referencia:** primero se genera y se aprueba una sola imagen del personaje con el atuendo, en pose `idle`. Todas sus tiras se piden a partir de ella.
+2. **Poses de los harapos como guía:** cada animación se pide con la `original_ia.png` equivalente de los harapos de referencia. Así se repiten pose, número de cuadros y encuadre, y se procesa con las mismas opciones anotadas en P42.
+3. **Mismas condiciones de tira:** fondo magenta, figura de perfil mirando a la derecha y de unos 120 px de alto, sin salirse mucho de su casilla.
+4. **Mismas medidas de hoja:** 864x384 por cuadro, pie en la fila 380, centro en la columna 432 y escala 1/3. Así el cambio de atuendo no mueve la colisión ni la caja de la espada.
+5. **Todas las animaciones de una vez:** `idle`, `run`, salto, `attack` / `attack 2`, `air attack`, `take hit`, `death`, `escaleras`, rodar y defensa, seguidas y con el mismo prompt base.
+6. **Una carpeta por atuendo:** cada hoja con su `original_ia.png` al lado y un archivo con los prompts exactos usados, para poder regenerar.
+
+### Implementación (pendiente)
+- **`GameManager`:**
+  - un atuendo actual (`outfit_id` o nivel) y una tabla `OUTFIT_DEFINITIONS`, como `UPGRADE_DEFINITIONS`, con nombre, `SpriteFrames`, ajustes del arma, habilidad que da y resistencias;
+  - `has_sword` se mantiene como "E1 o más";
+  - se reinicia en `reset_for_new_game`, se guarda en la partida y se sube `SAVE_FORMAT_VERSION`.
+- **Player:** un `SpriteFrames` por atuendo, como recurso aparte. Si falta una animación, se usa la del atuendo anterior. Hay que separar el Fire Knight de las tiras de E1, que hoy comparten `SpriteFrames` en `player.tscn`.
+- **Objeto para recoger:** generalizar `escenas/objetos/espada_oxidada.tscn` en una escena de atuendo con `outfit_id` exportado.
+- **Menú de pausa:** sección "Equipo".
+- **Probar** cada atuendo en la zona de pruebas antes de llevarlo a un mapa.
+
+### Pendientes
+- **`[P6]` pide romper el hielo con fuego o con un ataque hacia abajo**, y hoy no existe ninguno de los dos. Hay que decidir de dónde sale antes de la ruina: una habilidad nueva de "tajo hacia abajo" (`ABILITY_DEFINITIONS`), por ejemplo como premio de la Reina o de una reliquia de la mazmorra, o cambiar la forma de `[P6]`.
+- Confirmar que E2, E3 y E4 son opcionales y E5 obligatorio, o cambiarlo.
+- Confirmar qué da exactamente cada atuendo (números de daño, alcance y resistencias) al jugarlo.

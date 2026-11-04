@@ -33,6 +33,11 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
     - Claude dibuja el ASCII de cada zona por separado, a escala real (un carácter = una pieza de 16 px), con las letras del constructor. Lo guarda en `mapas_texto/macro/zonas/<zona>.txt`.
     - Con ese ASCII aprobado se genera el nivel real, igual que el castillo y el cementerio: constructor y escena `_combate`. Al generarlo, el archivo pasa a ser `mapas_texto/tiles_<zona>.txt`, y su ruta se cambia en `zonas.txt`.
     - No generar el nivel de una zona sin su ASCII, ni dibujar una zona sin que se pida.
+  - **Progreso del personaje** (sección 10 de P46): empieza desnudo (E0) y encuentra atuendos con su arma al bajar. E1 son los harapos con la espada oxidada (calabozo); E2 el soldado (castillo), E3 el caballero de la cripta con la Agilidad (cementerio) y E4 el abrigo (ruina), los tres opcionales; E5 el Fire Knight (profundidades), la versión final.
+    - **Siempre que se trabaje en una zona** (ASCII, nivel, enemigos, jefe, dificultad), mirar su fila en la tabla "Desbloqueos por zona": con qué llega el jugador, qué se consigue allí (colocarlo en el ASCII) y qué pide su salida.
+    - Un reto obligatorio solo puede pedir lo que el jugador tiene al llegar. Nunca pide un atuendo opcional ni una mejora de la tienda.
+    - El arte de los atuendos se hace con IA, como los harapos, siguiendo la receta de esa sección.
+    - Si cambia un desbloqueo (un jefe da otra habilidad, un atuendo cambia de sitio), actualizar esa tabla.
   - **Conexiones entre zonas:** la fuente de verdad es `mapas_texto/macro/conexiones.txt` (lado, posición y ancho de cada apertura). La posición de cada zona en el mundo está en `mapas_texto/macro/zonas.txt`.
     - Antes de dibujar o cambiar el ASCII de una zona, leer las dos tablas. Las aperturas hacia zonas ya hechas se copian tal cual; las nuevas se apuntan primero en la tabla.
     - Toda apertura del borde de una zona tiene que estar en la tabla.
