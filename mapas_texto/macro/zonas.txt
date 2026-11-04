@@ -15,7 +15,7 @@ calabozo       tiles_calabozo_combate.tscn               mapas_texto/tiles_calab
 castillo       tiles_castillo_combate.tscn               mapas_texto/macro/zonas/castillo.txt   136  0
 cementerio     tiles_cementerio_combate.tscn             mapas_texto/macro/zonas/cementerio.txt 246  43
 minas          tiles_mineria_combate.tscn                mapas_texto/macro/zonas/minas.txt      150  133
-mazmorra       tiles_mazmorra_combate.tscn               mapas_texto/macro/zonas/mazmorra.txt   ?  ?
+mazmorra       tiles_mazmorra_combate.tscn               mapas_texto/macro/zonas/mazmorra.txt   30  133
 ruina          tiles_ruina_combate.tscn                  mapas_texto/macro/zonas/ruina.txt      ?  ?
 profundidades  tiles_profundidades_combate.tscn          mapas_texto/macro/zonas/profundidades.txt  ?  ?
 infierno       tiles_jefe_combate.tscn                   mapas_texto/macro/zonas/infierno.txt   ?  ?

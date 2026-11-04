@@ -252,6 +252,16 @@ Una zona no se da por hecha mientras el verificador dé errores.
   - Secreto de la Agilidad en la pared este de la bocamina: un escalón de 5 piezas, como la poción de (29, 6) de las minas de hoy (P45).
   - Coordenadas de cada pieza en los comentarios del archivo. Comprobado con una simulación de saltos de 3 piezas: se llega a todo menos al secreto (tampoco con 4; sí con 6) y desde todo se vuelve a la bocamina. Probada generando una escena temporal con el constructor, sin errores.
   - Segunda pasada hecha: 6 kolbo, 6 kolbo2, 4 kolbo3, 10 murciélagos, 4 trampas de fuego en la veta, 4 cofres (uno en el secreto), 15 monedas, 3 pociones y decorados del tileset mazmorra (campamento en la bocamina, vagonetas de cajas y barriles). Con saltos de 3 se alcanza todo menos lo del secreto. Probada generando una escena temporal con el constructor, sin errores.
+- **Mazmorra (ASCII, primera pasada, 2026-11-04):** `mapas_texto/macro/zonas/mazmorra.txt`, 120 x 90, en el mundo en (30, 133): a la izquierda de las minas, a su misma profundidad. Su borde derecho es la columna 149 y su borde de abajo, la fila 222, como el de las minas.
+  - Recibe `[L4]` en su borde derecho, filas 66-68, sin túnel: `<` pegada a la `>` de las minas. `[!5]` sale por el borde de abajo, columnas 115-117 (145-147 del mundo), 3 piezas, al final de la huida. La ruina tendrá que cubrir de la columna 145 a la 284 del mundo (`[!5]` y `:D:`): unas 140 piezas de ancho, empezando en la fila 223.
+  - Llegada (checkpoint), cuerpo de guardia, celdas bajas y altas, gran sala de guardia (43 x 35), torre del alcaide, sala de tortura, desagües y antesala (checkpoint). La sala de la Reina (23 x 17, la de hoy) está en la parte más honda, al suroeste, con su única entrada de 3 piezas por arriba.
+  - Bucle por las celdas altas, la torre y la gran sala. Atajo interno: la compuerta de los desagües, que se abre desde la antesala.
+  - Derrumbe: al morir la Reina se hunden 15 piezas del suelo de su sala (x 8-22, fila 75) y la trampilla de entrada queda tapada. La huida corre hacia el este bajo los desagües, con 4 fosos de pinchos de 3 de ancho y escalones de 3 como mucho, hasta `[!5]`.
+  - Añadido al plan: la escalera del colector, que va de la huida al cuerpo de guardia y tiene una trampilla que solo se abre desde abajo. Antes de la Reina no deja bajar a la huida. Después, permite volver desde la ruina.
+  - El suelo que se hunde está dibujado como bloque: la sala queda entera durante el combate, y la pieza nueva tiene que quitar esas celdas al hundirse.
+  - Secreto de la Agilidad al fondo este de la torre: un escalón de 5 piezas, como el de las minas.
+  - `:B:` no está dibujado. Sitio sugerido: borde de arriba de la mazmorra, columnas 67-69, que son las 97-99 del mundo y del calabozo. Bajaría por un pozo con escalera hasta la repisa alta de la gran sala. Se decide al rehacer el calabozo.
+  - Coordenadas de cada pieza en los comentarios del archivo. Comprobado con una simulación de saltos de 3 piezas: se llega a todo menos al secreto (tampoco con 4; sí con 6), desde todo se vuelve a la llegada y la huida solo se alcanza tras el derrumbe. Probada generando una escena temporal con el constructor, sin errores.
 - Las demás zonas van con `?`.
 
 ## 10. Progreso del personaje: atuendos y desbloqueos por zona
