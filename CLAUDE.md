@@ -29,7 +29,14 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
   - En resumen: castillo y cementerio en la superficie, uno al lado del otro; el cementerio baja a su cripta, la cripta a las minas, las minas siguen de lado a la mazmorra, y desde ahí se baja a la ruina, las profundidades y el infierno.
   - Salidas: `[L1]` llave del carcelero, `[H2]` rodar bajo la reja del trono, `[S3]` tumbas sello del cementerio, `[L4]` llave del Caballero, `[!5]` derrumbe tras la Reina, `[P6]` romper el hielo, `[S7]` altares más el Demon Slime. Atajos `:B:` a `:E:`, que se abren desde abajo.
   - Choca con lo que hay hoy en el castillo (llave `castillo_rey`) y en el cementerio (el Capitán y su llave). Está anotado en su sección 6 como decisión pendiente: preguntar antes de cambiarlo.
-  - **Forma de trabajo con el plan:** primero se dibuja en ASCII (`#`) el mapa de cada zona, como el macro mapa. Ese ASCII se pasa a Claude, y Claude genera el nivel real igual que se generaron el castillo y el cementerio: `mapas_texto/tiles_<zona>.txt` y PNG, constructor y escena `_combate`. No generar el nivel de una zona hasta recibir su ASCII.
+  - **Forma de trabajo con el plan** (detalle en la sección 9 de P46):
+    - Claude dibuja el ASCII de cada zona por separado, a escala real (un carácter = una pieza de 16 px), con las letras del constructor. Lo guarda en `mapas_texto/macro/zonas/<zona>.txt`.
+    - Con ese ASCII aprobado se genera el nivel real, igual que el castillo y el cementerio: constructor y escena `_combate`. Al generarlo, el archivo pasa a ser `mapas_texto/tiles_<zona>.txt`, y su ruta se cambia en `zonas.txt`.
+    - No generar el nivel de una zona sin su ASCII, ni dibujar una zona sin que se pida.
+  - **Conexiones entre zonas:** la fuente de verdad es `mapas_texto/macro/conexiones.txt` (lado, posición y ancho de cada apertura). La posición de cada zona en el mundo está en `mapas_texto/macro/zonas.txt`.
+    - Antes de dibujar o cambiar el ASCII de una zona, leer las dos tablas. Las aperturas hacia zonas ya hechas se copian tal cual; las nuevas se apuntan primero en la tabla.
+    - Toda apertura del borde de una zona tiene que estar en la tabla.
+    - Al terminar, correr `python3 herramientas/macro_mapa/verificar_mundo.py` (con `--unir <archivo>` saca el mapa del mundo unido). Una zona no se da por hecha con errores.
   - Si un cambio se aparta del plan, actualizar primero el documento y su dibujo (`herramientas/macro_mapa/macro_mapa.py`). El avance zona por zona se marca en `TASK.md`, "Macro mapa".
 - **Zona de pruebas (`escenas/mapas/zona_pruebas_combate.tscn`):** aquí se prueba siempre todo sprite, animación o enemigo nuevo antes de llevarlo a un mapa de la ruta.
   - Abrir esa escena y pulsar F6. Hereda de `zona_pruebas.tscn`, generada desde `mapas_texto/zona_pruebas.txt`.

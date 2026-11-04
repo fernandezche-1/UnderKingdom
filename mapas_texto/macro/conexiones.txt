@@ -1,0 +1,32 @@
+; CONEXIONES ENTRE ZONAS: la fuente de verdad (docs/P46_MACRO_MAPA.md, sección 9).
+; Antes de dibujar o cambiar el ASCII de una zona, leer esta tabla. Toda
+; apertura del borde de una zona tiene que estar aquí, y las dos zonas de cada
+; conexión la dibujan en el mismo sitio.
+;
+; Una línea por conexión:
+;   id  tipo  zona_a  lado_a  pos_a  zona_b  lado_b  pos_b  ancho  coloca
+; - zona_a es la de arriba en la ruta (o la de arriba del atajo); zona_b, la que sigue.
+; - lado: arriba | abajo | izq | der (borde de la zona por el que sale).
+; - pos: primera pieza de la apertura sobre ese borde, contando desde 0:
+;   columna si el lado es arriba/abajo, fila si es izq/der. "?" sin dibujar;
+;   "-" si en esa zona no es una apertura del borde (se llega a un spawn).
+; - ancho: piezas de la apertura (las dos zonas iguales). "?" sin dibujar.
+; - coloca: constructor = salida > (en zona_a) y < (en zona_b) del mapa de
+;   letras, solo en los bordes izq/der; combate = transición puesta en la
+;   escena _combate, con spawn Desde<Zona> en cada lado.
+; - tipo: llave, habilidad, sellos, puzle, derrumbe, libre o atajo (se abre
+;   desde zona_b, la de abajo).
+
+P0   libre      prision       abajo  -  calabozo       arriba  -  -  combate
+; P0: la prisión no es de tiles; su cinemática carga el calabozo en su spawn de inicio.
+L1   llave      calabozo      der   10  castillo       izq     ?  3  constructor
+H2   habilidad  castillo      der    ?  cementerio     izq     ?  ?  constructor
+S3   sellos     cementerio    abajo  ?  minas          arriba  ?  ?  combate
+L4   llave      minas         izq    ?  mazmorra       der     ?  ?  constructor
+!5   derrumbe   mazmorra      abajo  ?  ruina          arriba  ?  ?  combate
+P6   puzle      ruina         abajo  ?  profundidades  arriba  ?  ?  combate
+S7   sellos     profundidades abajo  ?  infierno       arriba  ?  ?  combate
+:B:  atajo      calabozo      abajo  ?  mazmorra       arriba  ?  ?  combate
+:C:  atajo      castillo      abajo  ?  minas          arriba  ?  ?  combate
+:D:  atajo      minas         abajo  ?  ruina          arriba  ?  ?  combate
+:E:  atajo      ruina         abajo  ?  profundidades  arriba  ?  ?  combate

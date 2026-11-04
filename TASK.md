@@ -2,7 +2,10 @@
 
 **Plan:** `docs/P46_MACRO_MAPA.md`, con el dibujo, la ruta, los atajos y las decisiones pendientes. Las zonas se rehacen una a una siguiéndolo.
 
-**Cómo se trabaja:** cada zona se dibuja primero en ASCII (`#`), como el macro mapa, y se pasa a Claude. Claude genera entonces el nivel real como se hizo con el castillo y el cementerio (`.txt` y PNG, constructor y escena `_combate`). Sin el ASCII de una zona, no se genera su nivel.
+**Cómo se trabaja** (plan, sección 9):
+- Claude dibuja el ASCII de cada zona por separado (`mapas_texto/macro/zonas/<zona>.txt`), a escala real y con las letras del constructor. Con él se genera el nivel real. Sin el ASCII de una zona, no se genera su nivel.
+- Las conexiones se fijan en `mapas_texto/macro/conexiones.txt`, y la posición de cada zona en el mundo en `mapas_texto/macro/zonas.txt`.
+- Una zona está hecha cuando tiene su ASCII, su posición y `python3 herramientas/macro_mapa/verificar_mundo.py` no da errores.
 
 Mientras una zona no esté marcada aquí, sigue como la describe la tarea de los calcos, más abajo, y `CLAUDE.md`.
 

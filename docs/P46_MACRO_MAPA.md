@@ -121,7 +121,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 
 ## 5. Cómo rehacer una zona con este plan
 
-- **Primero el ASCII:** el mapa de cada zona se dibuja en ASCII con `#`, igual que este macro mapa, y se pasa a Claude. Con ese ASCII se genera el nivel real. No se genera ningún nivel antes de tener su ASCII.
+- **Primero el ASCII:** Claude dibuja el ASCII de cada zona por separado, y con ese ASCII se genera el nivel real. No se genera ningún nivel antes de tener su ASCII. Método completo en la sección 9.
 - Se sigue montando como dice `CLAUDE.md` ("Cómo se monta un mundo"): PNG, constructor y escena `_combate` que hereda de la base.
 - La entrada y la salida van en el lado que marca el mapa (arriba, abajo o lateral), y la salida en la parte más honda cuando baja.
 - Los atajos entre zonas son transiciones entre escenas. Su lado cerrado puede ser un `arena_barrier.gd` que se abre desde abajo y se recuerda en `completed_encounters` de `GameManager`.
@@ -169,3 +169,65 @@ python3 herramientas/macro_mapa/macro_mapa.py
 ```
 
 La salida se pega en la sección 1. Todas las líneas deben medir 74 columnas.
+
+## 9. ASCII de cada zona y conexiones
+
+El macro mapa (sección 1) solo dice qué zona va al lado de cuál; no está a escala. Cada zona se dibuja después por separado, a escala real, y un script comprueba que encajen.
+
+### Archivos
+| Qué | Dónde |
+|---|---|
+| ASCII de una zona mientras se dibuja | `mapas_texto/macro/zonas/<zona>.txt` |
+| Zonas: escena, fuente del ASCII y posición en el mundo | `mapas_texto/macro/zonas.txt` |
+| Conexiones: la fuente de verdad | `mapas_texto/macro/conexiones.txt` |
+| Verificar y unir | `herramientas/macro_mapa/verificar_mundo.py` |
+
+### El ASCII de una zona
+- **Un carácter = una pieza de 16 px**, con las letras del constructor (`mapas_texto/LEYENDA.md`, sección 5): `#` bloque, `.` vacío, `=` plataforma, `H` escalera, `>`/`<` salidas…
+- Tiene el formato de un mapa de letras del constructor: cabecera de opciones, línea `---` y el mapa, como `mapas_texto/tiles_calabozo.txt`. Así el ASCII ya es la fuente del nivel, sin traducirlo.
+- Primero solo la estructura: salas, pasillos y aperturas. Enemigos, objetos y checkpoints se añaden después, sobre el mismo archivo.
+- **Al generar el nivel**, el archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambia su ruta en `zonas.txt`. Así hay una sola fuente en todo momento.
+
+### Conexiones
+- Cada conexión de la sección 3 y cada atajo de la sección 4 es una línea de `conexiones.txt` con:
+  - el lado de salida y el de entrada (`arriba`, `abajo`, `izq`, `der`), que deben ser opuestos;
+  - la posición de la apertura en cada zona: columna o fila, desde 0, sobre ese borde;
+  - el ancho, igual en las dos zonas;
+  - quién la pone (`coloca`).
+- Lo que no se sabe todavía va con `?`.
+- **`coloca`:**
+  - `constructor`: salida `>` en la zona de arriba de la ruta y `<` en la siguiente, en la columna del borde. Solo en los bordes `izq` y `der`, y como mucho una de cada por zona: el constructor solo tiene un destino "siguiente" y uno "anterior".
+  - `combate`: transición puesta en la escena `_combate`, con un spawn `Desde<Zona>` a cada lado. Es lo que se usa para las conexiones de arriba y abajo y para los atajos.
+- **Posición en el mundo** (`zonas.txt`): la esquina de arriba a la izquierda de cada zona en una cuadrícula global, en piezas. Se fija al dibujar la zona, guiándose por el macro mapa.
+
+### Orden de trabajo
+1. Las zonas se hacen bajando por la ruta: calabozo (ya hecho), castillo, cementerio, minas…
+2. Antes de dibujar una zona se leen `conexiones.txt` y `zonas.txt`. Las aperturas hacia zonas ya hechas tienen posición fija y se copian. Las de las zonas que faltan se proponen y se apuntan en la tabla antes de dibujarlas.
+3. Se dibuja el ASCII, se le da posición en `zonas.txt` y se corre el verificador.
+4. Si hay que mover una apertura de una zona ya hecha, se cambia primero en la tabla. El verificador dice qué otra zona hay que ajustar.
+
+### El verificador
+```
+python3 herramientas/macro_mapa/verificar_mundo.py
+python3 herramientas/macro_mapa/verificar_mundo.py --unir /ruta/mundo.txt
+```
+- **Errores** (sale con código 1):
+  - la apertura no está, o no tiene ese ancho, en alguna de las dos zonas;
+  - falta el `>`/`<` de una conexión `constructor`;
+  - los lados no son opuestos;
+  - dos zonas se solapan en el mundo;
+  - las aperturas no quedan en la misma fila o columna del mundo;
+  - la zona de destino no está del lado que toca;
+  - el túnel entre dos zonas atraviesa otra.
+- **Avisos:**
+  - zonas sin dibujar;
+  - posiciones con `?`;
+  - aperturas del borde que no están en la tabla;
+  - zonas que no se tocan (túnel entre ellas).
+- **`--unir`** pega las zonas dibujadas y colocadas en un solo mapa a escala real. Los túneles salen como `|` y `-`.
+
+Una zona no se da por hecha mientras el verificador dé errores.
+
+### Estado
+- **Calabozo:** es la única zona dibujada. Su salida `[L1]` ya está fija: borde derecho, fila 10, 3 piezas. El castillo tiene que recibirla igual en su borde izquierdo.
+- Las demás posiciones van con `?`, y no hay ninguna zona colocada en el mundo todavía.
