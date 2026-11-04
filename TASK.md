@@ -1,4 +1,42 @@
-# Tarea actual: niveles con tiles calcados de los fondos
+# Macro mapa: rehacer las zonas como mapas reales
+
+**Plan:** `docs/P46_MACRO_MAPA.md`, con el dibujo, la ruta, los atajos y las decisiones pendientes. Las zonas se rehacen una a una siguiéndolo.
+
+Mientras una zona no esté marcada aquí, sigue como la describe la tarea de los calcos, más abajo, y `CLAUDE.md`.
+
+**Antes de empezar** (sección 6 del plan):
+- [ ] Decidir qué pasa con la llave `castillo_rey` si el castillo sale por `[H2]`.
+- [ ] Decidir el papel del Capitán en el cementerio con `[S3]`.
+
+**Piezas nuevas** (sección 5 del plan):
+- [ ] Reja baja que solo se pasa rodando (`[H2]`).
+- [ ] Contador de sellos que abre una puerta (`[S3]`, `[S7]`).
+- [ ] Suelo o muro frágil que se rompe con un ataque (`[P6]`, `[!5]`).
+- [ ] Secuencia de derrumbe y huida (`[!5]`).
+- [ ] Ascensor minero (`:C:`).
+
+**Zonas** (salida según el plan):
+- [x] Prisión: paso libre hacia abajo. Ya está.
+- [x] Calabozo: `[L1]` llave del carcelero. Ya está.
+- [ ] Castillo: `[H2]`, salida lateral hacia el cementerio.
+- [ ] Cementerio: exterior con la casa del sepulturero y cripta debajo; salida `[S3]` en el fondo de la cripta.
+- [ ] Minas: `[L4]`, salida lateral hacia la mazmorra.
+- [ ] Mazmorra: `[!5]`, derrumbe tras la Reina.
+- [ ] Ruina helada: `[P6]`, romper el hielo.
+- [ ] Profundidades: `[S7]`, tres altares y el Demon Slime.
+- [ ] Infierno: Cthulhu, sin salida.
+
+**Atajos:**
+- [ ] `:B:` calabozo ↔ mazmorra.
+- [ ] `:C:` castillo ↔ minas.
+- [ ] `:D:` minas ↔ ruina.
+- [ ] `:E:` ruina ↔ profundidades.
+
+---
+
+# Tarea anterior: niveles con tiles calcados de los fondos
+
+Sigue valiendo como estado de las zonas que todavía no se han rehecho.
 
 **Objetivo:** convertir los siete niveles `tiles_*` en niveles jugables y bonitos. Tienen la forma de los mapas hechos a mano, pero están hechos con tiles. Más adelante el equipo decide si reemplazan a los mapas pintados.
 
