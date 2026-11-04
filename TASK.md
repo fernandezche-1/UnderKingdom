@@ -49,6 +49,9 @@ Mientras una zona no esté marcada aquí, sigue como la describe la tarea de los
   - [x] Segunda pasada: enemigos (a, M, q, e), cofres, objetos y decorados.
   - [ ] Generar el nivel y montar la `_combate` (Reina con `ability_reward` del Ultimate y sin llave, suelo que se hunde y derrumbe, compuerta y palanca del atajo, trampilla del colector, transición de `[!5]`).
 - [ ] Ruina helada: `[P6]`, derretir el hielo con la llama eterna.
+  - [x] ASCII, primera pasada (`mapas_texto/macro/zonas/ruina.txt`), colocado y verificado.
+  - [ ] Segunda pasada: enemigos (a, M, q, e), cofres, objetos y decorados.
+  - [ ] Generar el nivel y montar la `_combate` (Guardián, reja de salida en `Atajos`, hielo de `[P6]` y llama eterna, luz de la parte oscura, palanca y reja de `:D:`, trampillas del atajo y de `:E:`, transiciones de `[!5]`, `:D:`, `[P6]` y `:E:`).
 - [ ] Profundidades: `[S7]`, tres altares y el Demon Slime.
 - [ ] Infierno: Cthulhu, sin salida.
 

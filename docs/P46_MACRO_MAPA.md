@@ -157,6 +157,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 
 - Aplicar las decisiones de la sección 6 al rehacer cada zona.
 - Rehacer las zonas una a una (lista en `TASK.md`, "Macro mapa").
+- Ruina: qué da el Guardián de hielo al caer (el plan no lo dice), y confirmar que la reja tras su sala, que se abre al vencerlo, es el camino a `[P6]`.
 
 ## 8. Regenerar el dibujo
 
@@ -263,6 +264,17 @@ Una zona no se da por hecha mientras el verificador dé errores.
   - `:B:` no está dibujado. Sitio sugerido: borde de arriba de la mazmorra, columnas 67-69, que son las 97-99 del mundo y del calabozo. Bajaría por un pozo con escalera hasta la repisa alta de la gran sala. Se decide al rehacer el calabozo.
   - Coordenadas de cada pieza en los comentarios del archivo. Comprobado con una simulación de saltos de 3 piezas: se llega a todo menos al secreto (tampoco con 4; sí con 6), desde todo se vuelve a la llegada y la huida solo se alcanza tras el derrumbe. Probada generando una escena temporal con el constructor, sin errores.
   - Segunda pasada hecha: 5 Aprendis, 2 mino, 7 kolbo3 y 6 esqueletos, 4 cofres (uno en el secreto), 14 monedas, 3 pociones y decorados del tileset mazmorra (estanterías en la torre y la gran sala, la fogata de la guardia y agua y hongos en los desagües). El mino mide 5 piezas de alto y solo cabe en la gran sala y en la torre. Las plataformas del cuerpo de guardia bajan una fila (66 y 63): estaban a 4 piezas. Con saltos de 3 se alcanza todo menos lo del secreto. Probada generando una escena temporal con el constructor, sin errores; tras 3 s de física cada enemigo sigue en su sitio.
+- **Ruina helada (ASCII, primera pasada, 2026-11-04):** `mapas_texto/macro/zonas/ruina.txt`, 156 x 80, en el mundo en (136, 223): justo debajo de la mazmorra y las minas, que acaban en la fila 222, de la columna 136 a la 291.
+  - Recibe `[!5]` por el borde de arriba, columnas 9-11 (145-147 del mundo), y `:D:` también por arriba, columnas 146-148 (282-284). Las dos sin túnel, con su escalera en la misma columna que la de la mazmorra (116) y la de las minas (133).
+  - `[!5]`: el Player cae unas 15 piezas (no hay daño por caída) a la llegada, suelo liso y sin enemigos. La única vuelta atrás es esa escalera, hacia la huida y el colector.
+  - `:D:`: el pie del pozo tiene la palanca que abre la reja de las minas, en (140, 17).
+  - `[P6]` sale por el borde de abajo, columnas 145-147 (281-283 del mundo), 3 piezas. `:E:` es un pozo de 3 piezas en el suelo de la antesala, columnas 90-92 (226-228), con trampilla cerrada desde la ruina. **Las profundidades tendrán que cubrir de la columna 226 a la 283 del mundo, empezando en la fila 303.**
+  - Llegada (checkpoint), exterior helado, torre caída, pasillo y pie del pozo arriba; galería alta y baja en medio; capilla de la llama eterna, criptas oscuras, refugio del explorador, antesala (checkpoint), sala del Guardián (38 x 11, la de hoy), cámara del deshielo y pozo de `[P6]` abajo.
+  - Bucles por las dos galerías (escaleras 5 y 118) y por el pie del pozo, la torre y la galería alta (escalera 151). Atajo interno: la escalera 5, de la galería baja a la llegada, con trampilla que se abre desde abajo.
+  - La llama eterna está en la capilla, en (5, 62), fuera del camino directo al jefe. La parte oscura son las criptas (x 32-62, filas 50-64): solo se entra por la capilla, así que siempre se llega con la llama. Tras ellas, el refugio del explorador con el Abrigo (E4), en (69, 56), como secreto.
+  - Zonas frías, opcionales: la cumbre del viento (x 66-103, filas 2-11) y el lago helado (x 50-70, filas 18-23). Secreto de la Agilidad al fondo este de la galería baja, un escalón de 5 piezas, como en las minas y la mazmorra.
+  - **Añadido al plan:** el hielo de `[P6]` es un muro de 1 x 3 (columna 144, filas 70-72) tras la sala del Guardián, y a él se llega por una reja en la pared este de la sala (columna 134), que va en `Atajos` de `boss_arena.gd` y se abre al vencerlo. Así la salida pide el jefe y la llama eterna. Qué da el Guardián al caer queda pendiente (sección 7).
+  - Coordenadas de cada pieza en los comentarios del archivo. Comprobado con una simulación de saltos de 4 piezas y huecos de 3: se llega a todo menos al secreto (sí con 6) y a la cámara del deshielo, que pide abrir la reja; desde todo se vuelve a la llegada. El camino obligatorio sale incluso con saltos de 3.
 - Las demás zonas van con `?`.
 
 ## 10. Progreso del personaje: atuendos y desbloqueos por zona
