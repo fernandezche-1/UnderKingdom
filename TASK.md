@@ -2,6 +2,8 @@
 
 **Plan:** `docs/P46_MACRO_MAPA.md`, con el dibujo, la ruta, los atajos y las decisiones pendientes. Las zonas se rehacen una a una siguiéndolo.
 
+**Cómo se trabaja:** cada zona se dibuja primero en ASCII (`#`), como el macro mapa, y se pasa a Claude. Claude genera entonces el nivel real como se hizo con el castillo y el cementerio (`.txt` y PNG, constructor y escena `_combate`). Sin el ASCII de una zona, no se genera su nivel.
+
 Mientras una zona no esté marcada aquí, sigue como la describe la tarea de los calcos, más abajo, y `CLAUDE.md`.
 
 **Antes de empezar** (sección 6 del plan):

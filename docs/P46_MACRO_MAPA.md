@@ -121,6 +121,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 
 ## 5. Cómo rehacer una zona con este plan
 
+- **Primero el ASCII:** el mapa de cada zona se dibuja en ASCII con `#`, igual que este macro mapa, y se pasa a Claude. Con ese ASCII se genera el nivel real. No se genera ningún nivel antes de tener su ASCII.
 - Se sigue montando como dice `CLAUDE.md` ("Cómo se monta un mundo"): PNG, constructor y escena `_combate` que hereda de la base.
 - La entrada y la salida van en el lado que marca el mapa (arriba, abajo o lateral), y la salida en la parte más honda cuando baja.
 - Los atajos entre zonas son transiciones entre escenas. Su lado cerrado puede ser un `arena_barrier.gd` que se abre desde abajo y se recuerda en `completed_encounters` de `GameManager`.
