@@ -11,17 +11,18 @@ Mientras una zona no esté marcada aquí, sigue como la describe la tarea de los
 
 **Antes de empezar** (sección 6 del plan):
 - [x] Llave `castillo_rey`: se descarta; el castillo sale solo rodando por `[H2]` (decidido el 2026-11-04).
-- [ ] Decidir el papel del Capitán en el cementerio con `[S3]`.
+- [x] Capitán: guarda la tercera tumba sello, deja de dar llave y sigue dando la Ráfaga (decidido el 2026-11-04).
 
 **Piezas nuevas** (sección 5 del plan):
 - [ ] Reja baja que solo se pasa rodando (`[H2]`).
 - [ ] Contador de sellos que abre una puerta (`[S3]`, `[S7]`).
-- [ ] Suelo o muro frágil que se rompe con un ataque (`[P6]`, `[!5]`).
+- [ ] Suelo que se hunde (`[!5]`).
+- [ ] Hielo que se derrite con la llama eterna, y la luz de la antorcha (`[P6]`).
 - [ ] Secuencia de derrumbe y huida (`[!5]`).
 - [ ] Ascensor minero (`:C:`).
 
 **Atuendos** (plan, sección 10; con qué llega el jugador a cada zona y qué se consigue allí):
-- [ ] Decidir de dónde sale el fuego o el ataque hacia abajo que pide `[P6]`.
+- [x] `[P6]`: la llama eterna, una antorcha que se encuentra en la ruina (decidido el 2026-11-04).
 - [ ] Atuendo actual y `OUTFIT_DEFINITIONS` en `GameManager` (guardado, reinicio, `SAVE_FORMAT_VERSION`).
 - [ ] Un `SpriteFrames` por atuendo; separar el Fire Knight (E5) de los harapos (E1).
 - [ ] Escena de atuendo para recoger, generalizando `espada_oxidada.tscn`.
@@ -32,10 +33,10 @@ Mientras una zona no esté marcada aquí, sigue como la describe la tarea de los
 - [x] Prisión: paso libre hacia abajo. Ya está.
 - [x] Calabozo: `[L1]` llave del carcelero. Ya está.
 - [ ] Castillo: `[H2]`, salida lateral hacia el cementerio.
-- [ ] Cementerio: exterior con la casa del sepulturero y cripta debajo; salida `[S3]` en el fondo de la cripta.
+- [ ] Cementerio: exterior con la casa del sepulturero y dos tumbas sello; cripta debajo con la tumba real y el Capitán; salida `[S3]` en el fondo de la cripta.
 - [ ] Minas: `[L4]`, salida lateral hacia la mazmorra.
 - [ ] Mazmorra: `[!5]`, derrumbe tras la Reina.
-- [ ] Ruina helada: `[P6]`, romper el hielo.
+- [ ] Ruina helada: `[P6]`, derretir el hielo con la llama eterna.
 - [ ] Profundidades: `[S7]`, tres altares y el Demon Slime.
 - [ ] Infierno: Cthulhu, sin salida.
 

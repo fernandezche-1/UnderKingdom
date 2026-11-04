@@ -90,10 +90,10 @@ El número de cada marca es el orden de la transición en la ruta.
 | 1 | Prisión | `prologo_prision/camara_sellado_alma.tscn` | paso libre hacia abajo | Inicio, sin jefe. |
 | 2 | Calabozo | `tiles_calabozo_combate.tscn` | `[L1]` llave del carcelero, hacia el castillo | El carcelero tiene las llaves. **Ya está así.** |
 | 3 | Castillo | `tiles_castillo_combate.tscn` | `[H2]` reja baja bajo el trono: solo se pasa rodando | La reliquia de rodar se consigue en el castillo. |
-| 4 | Cementerio | `tiles_cementerio_combate.tscn` | `[S3]` tres tumbas sello abren el fondo de la cripta, que baja a las minas | Usa la exploración de la zona. |
+| 4 | Cementerio | `tiles_cementerio_combate.tscn` | `[S3]` tres tumbas sello abren el fondo de la cripta, que baja a las minas. Dos están en el exterior; la tercera es la tumba real de la cripta y la guarda el Capitán | Mezcla exploración y jefe; la salida se abre justo tras la pelea. |
 | 5 | Minas | `tiles_mineria_combate.tscn` | `[L4]` llave del Caballero de la Reina, hacia la mazmorra | El Caballero guarda la mazmorra de su señora. |
 | 6 | Mazmorra | `tiles_mazmorra_combate.tscn` | `[!5]` al morir la Reina la mazmorra se derrumba: huida hacia abajo | Cierre de capítulo con otro ritmo. |
-| 7 | Ruina helada | `tiles_ruina_combate.tscn` | `[P6]` hielo que se rompe con fuego o con un ataque hacia abajo; se debilita al vencer al Guardián de hielo | Usa el tema de la zona. |
+| 7 | Ruina helada | `tiles_ruina_combate.tscn` | `[P6]` muro o suelo de hielo que se derrite con la llama eterna, una antorcha que se encuentra explorando la ruina | Fuego contra hielo; la antorcha también alumbra una parte oscura de la ruina. |
 | 8 | Profundidades | `tiles_profundidades_combate.tscn` | `[S7]` tres altares demoníacos con un minijefe cada uno, más el Demon Slime | Sube la tensión antes del final. |
 | 9 | Infierno | `tiles_jefe_combate.tscn` | sin salida: Cthulhu, jefe final | |
 
@@ -135,25 +135,27 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 - Estado guardado: `completed_encounters`.
 
 ### Piezas que faltan
-- Suelo o muro frágil que se rompe con un ataque (`[P6]`, y con el derrumbe de `[!5]`).
+- Suelo que se hunde para el derrumbe de `[!5]`.
+- Hielo que se derrite con la llama eterna (`[P6]`): puerta con llave genérica (`grant_key("antorcha")`, `locked_door.gd`) con otro dibujo y efecto de derretirse, más la luz de la antorcha en la parte oscura.
 - Un contador de sellos que abre una puerta al activarlos todos (`[S3]`, `[S7]`).
 - La secuencia de huida o derrumbe tras la Reina (`[!5]`).
 - La reja baja que solo se pasa rodando (`[H2]`).
 - El ascensor minero (`:C:`).
 
-## 6. Diferencias con lo que hay hoy (decisiones pendientes)
+## 6. Diferencias con lo que hay hoy y decisiones
 
 - **Castillo:** hoy sale por la puerta con la llave del Rey Caído (`castillo_rey`), en las criptas de abajo. En el plan sale por `[H2]` hacia un lado. **Decidido (2026-11-04):** la llave `castillo_rey` se descarta y la salida es solo rodando. Al rehacer el castillo se quitan la puerta con llave, la llave que suelta el Rey y su entrada en la pestaña de llaves y en `BOSS_KEY_IDS`.
 - **Cementerio:**
   - Hoy ya es de bajada: superficie, cripta, catacumbas, sala del jefe y abismo. Eso encaja con el plan.
-  - Pero tiene jefe: el Capitán, que da la Ráfaga y una llave para la salida. Falta decidir el papel del Capitán con `[S3]`: que guarde uno de los sellos, que sea el reto final antes de la cripta, o mantener la llave y cambiar la forma de otra transición.
+  - Pero tiene jefe: el Capitán, que da la Ráfaga y una llave para la salida. **Decidido (2026-11-04):** el Capitán guarda la tercera tumba sello, la tumba real de la cripta. Su sala de jefe es la cámara de esa tumba, y al vencerlo se activa el último sello y se abre `[S3]`. Sigue dando la Ráfaga y deja de dar llave. Se mantienen el Capitán, su sala y la cinemática del reencuentro.
+- **Ruina:** **decidido (2026-11-04):** `[P6]` se abre con la llama eterna, una antorcha que se encuentra explorando la ruina. Se usa delante del hielo (tecla E) y también alumbra una parte oscura de la ruina. Así ya no hace falta un ataque hacia abajo. Idea opcional para más adelante: que el hielo también se derrita si lo alcanza una bola de fuego de un Aprendis, como truco secreto.
 - **Minas:** hoy salen por una puerta con llave en el fondo. En el plan, `[L4]` es lateral, hacia la mazmorra.
 - **Mazmorra, ruina, profundidades e infierno:** siguen siendo calcos con la salida por la derecha. Se rehacen con este plan.
 - **Atajos:** no existe ninguno todavía.
 
 ## 7. Pendiente
 
-- Resolver las decisiones de la sección 6.
+- Aplicar las decisiones de la sección 6 al rehacer cada zona.
 - Rehacer las zonas una a una (lista en `TASK.md`, "Macro mapa").
 
 ## 8. Regenerar el dibujo
@@ -268,10 +270,10 @@ Cada atuendo cambia el aspecto del Player (su `SpriteFrames`) y su arma, y da al
 | Prisión | E0; tajo aéreo, parry, robo de vida y adrenalina (`STARTING_ABILITIES`) | — | — |
 | Calabozo | E0 (salto de unas 3 piezas) | E1 (hoy); llave del carcelero (hoy) | `[L1]` llave del carcelero |
 | Castillo | E1 (salto de unas 4,6 piezas) | Rodar, por reliquia (hoy); E2 (plan) | `[H2]` Rodar |
-| Cementerio | E1 o E2; Rodar | Ráfaga, con el Capitán (hoy); E3 y la Agilidad (plan) | `[S3]` tres tumbas sello |
+| Cementerio | E1 o E2; Rodar | Ráfaga, con el Capitán, guardián de la tercera tumba; E3 y la Agilidad (plan) | `[S3]` tres tumbas sello (la última, vencer al Capitán) |
 | Minas | Ráfaga; con E3, Agilidad (salto de unas 6,5 piezas) | Golpe final, con el Caballero (hoy); llave del Caballero | `[L4]` llave del Caballero |
 | Mazmorra | Golpe final | Ultimate, con la Reina (hoy) | `[!5]` derrumbe tras la Reina |
-| Ruina helada | Ultimate | E4 (plan) | `[P6]` romper el hielo (ver pendientes) |
+| Ruina helada | Ultimate | la llama eterna (plan); E4 (plan) | `[P6]` la llama eterna |
 | Profundidades | E4 si se encontró | E5 (plan) | `[S7]` tres altares y el Demon Slime; con E5 se llega al altar rodeado de fuego |
 | Infierno | E5 | — | — |
 
@@ -298,6 +300,5 @@ Como los harapos (P42, "Sprites nuevos con espada"), el arte se genera con IA y 
 - **Probar** cada atuendo en la zona de pruebas antes de llevarlo a un mapa.
 
 ### Pendientes
-- **`[P6]` pide romper el hielo con fuego o con un ataque hacia abajo**, y hoy no existe ninguno de los dos. Hay que decidir de dónde sale antes de la ruina: una habilidad nueva de "tajo hacia abajo" (`ABILITY_DEFINITIONS`), por ejemplo como premio de la Reina o de una reliquia de la mazmorra, o cambiar la forma de `[P6]`.
 - Confirmar que E2, E3 y E4 son opcionales y E5 obligatorio, o cambiarlo.
 - Confirmar qué da exactamente cada atuendo (números de daño, alcance y resistencias) al jugarlo.
