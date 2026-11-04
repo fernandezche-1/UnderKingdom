@@ -13,7 +13,7 @@
 prision        prologo_prision/camara_sellado_alma.tscn  -                                      -  -
 calabozo       tiles_calabozo_combate.tscn               mapas_texto/tiles_calabozo.txt         0  34
 castillo       tiles_castillo_combate.tscn               mapas_texto/macro/zonas/castillo.txt   136  0
-cementerio     tiles_cementerio_combate.tscn             mapas_texto/macro/zonas/cementerio.txt ?  ?
+cementerio     tiles_cementerio_combate.tscn             mapas_texto/macro/zonas/cementerio.txt 246  43
 minas          tiles_mineria_combate.tscn                mapas_texto/macro/zonas/minas.txt      ?  ?
 mazmorra       tiles_mazmorra_combate.tscn               mapas_texto/macro/zonas/mazmorra.txt   ?  ?
 ruina          tiles_ruina_combate.tscn                  mapas_texto/macro/zonas/ruina.txt      ?  ?

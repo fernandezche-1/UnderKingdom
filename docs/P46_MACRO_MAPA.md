@@ -238,6 +238,13 @@ Una zona no se da por hecha mientras el verificador dé errores.
   - Rodar pasa a ser el premio del Rey Caído (`ability_reward`), en lugar de la reliquia de la biblioteca de hoy.
   - Segunda pasada hecha: 7 Guardias, 5 Vanguardias, 11 murciélagos, 4 cofres y decorados del tileset castillo. Probada generando una escena temporal con el constructor, sin errores.
   - La puerta del gran salón a la antecámara solo se abre desde la antecámara (cerrojo en la `_combate`): el camino obligatorio pasa por la biblioteca, las almenas y la armería.
+- **Cementerio (ASCII, primera pasada, 2026-11-04):** `mapas_texto/macro/zonas/cementerio.txt`, 120 x 90, en el mundo en (246, 43): pegado al castillo por la derecha y más abajo que su cima, al pie de la colina, para que `[H2]` caiga en las filas 67-69 del mundo.
+  - Recibe `[H2]` en su borde izquierdo, filas 24-26, por un túnel bajo la colina del castillo. `[S3]` sale por el borde de abajo, columnas 10-12 (columna 256 del mundo), 3 piezas, desde el pozo del sello, al oeste de la sala del Capitán.
+  - Exterior con la fosa común (tumba sello 1, reto de combate), la casa del sepulturero (checkpoint, tienda o NPC y escalera a la cripta), el hueco al osario y el foso de pinchos con la colina del panteón (tumba sello 2, reto de plataformas).
+  - Cripta en tres pisos: antecripta y osario, catacumba alta y baja (con bucle) y, al fondo, la antesala, la cámara de la tumba real (el Capitán, 31 x 11 como la sala de hoy, tumba sello 3) y el pozo del sello. E3 en el panteón del caballero, al fondo este, fuera del camino.
+  - Atajo interno: escalera de la columna 22 de la catacumba alta a la entrada, con trampilla que se abre desde abajo.
+  - Coordenadas de cada pieza en los comentarios del archivo. Comprobado con una simulación de saltos de 3 piezas: se llega a todo y desde todo se vuelve a la entrada.
+  - Falta la segunda pasada (enemigos `v`, `u`, `m`, cofres y decorados).
 - Las demás zonas van con `?`.
 
 ## 10. Progreso del personaje: atuendos y desbloqueos por zona
