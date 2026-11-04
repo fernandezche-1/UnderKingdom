@@ -262,6 +262,7 @@ Una zona no se da por hecha mientras el verificador dé errores.
   - Secreto de la Agilidad al fondo este de la torre: un escalón de 5 piezas, como el de las minas.
   - `:B:` no está dibujado. Sitio sugerido: borde de arriba de la mazmorra, columnas 67-69, que son las 97-99 del mundo y del calabozo. Bajaría por un pozo con escalera hasta la repisa alta de la gran sala. Se decide al rehacer el calabozo.
   - Coordenadas de cada pieza en los comentarios del archivo. Comprobado con una simulación de saltos de 3 piezas: se llega a todo menos al secreto (tampoco con 4; sí con 6), desde todo se vuelve a la llegada y la huida solo se alcanza tras el derrumbe. Probada generando una escena temporal con el constructor, sin errores.
+  - Segunda pasada hecha: 5 Aprendis, 2 mino, 7 kolbo3 y 6 esqueletos, 4 cofres (uno en el secreto), 14 monedas, 3 pociones y decorados del tileset mazmorra (estanterías en la torre y la gran sala, la fogata de la guardia y agua y hongos en los desagües). El mino mide 5 piezas de alto y solo cabe en la gran sala y en la torre. Las plataformas del cuerpo de guardia bajan una fila (66 y 63): estaban a 4 piezas. Con saltos de 3 se alcanza todo menos lo del secreto. Probada generando una escena temporal con el constructor, sin errores; tras 3 s de física cada enemigo sigue en su sitio.
 - Las demás zonas van con `?`.
 
 ## 10. Progreso del personaje: atuendos y desbloqueos por zona

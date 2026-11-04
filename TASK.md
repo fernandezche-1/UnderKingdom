@@ -46,7 +46,7 @@ Mientras una zona no esté marcada aquí, sigue como la describe la tarea de los
   - [ ] Generar el nivel y montar la `_combate` (Caballero en la sala nueva, puerta con llave de `[L4]`, ascensor y palanca de `:C:`, trampilla del atajo, reja de `:D:`, transiciones de `[S3]` y `:C:`).
 - [ ] Mazmorra: `[!5]`, derrumbe tras la Reina.
   - [x] ASCII, primera pasada (`mapas_texto/macro/zonas/mazmorra.txt`), colocado y verificado.
-  - [ ] Segunda pasada: enemigos (a, M, q, e), cofres, objetos y decorados.
+  - [x] Segunda pasada: enemigos (a, M, q, e), cofres, objetos y decorados.
   - [ ] Generar el nivel y montar la `_combate` (Reina con `ability_reward` del Ultimate y sin llave, suelo que se hunde y derrumbe, compuerta y palanca del atajo, trampilla del colector, transición de `[!5]`).
 - [ ] Ruina helada: `[P6]`, derretir el hielo con la llama eterna.
 - [ ] Profundidades: `[S7]`, tres altares y el Demon Slime.
