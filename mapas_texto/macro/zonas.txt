@@ -18,4 +18,4 @@ minas          tiles_mineria_combate.tscn                mapas_texto/macro/zonas
 mazmorra       tiles_mazmorra_combate.tscn               mapas_texto/macro/zonas/mazmorra.txt   30  133
 ruina          tiles_ruina_combate.tscn                  mapas_texto/macro/zonas/ruina.txt      136  223
 profundidades  tiles_profundidades_combate.tscn          mapas_texto/macro/zonas/profundidades.txt  100  303
-infierno       tiles_jefe_combate.tscn                   mapas_texto/macro/zonas/infierno.txt   ?  ?
+infierno       tiles_jefe_combate.tscn                   mapas_texto/macro/zonas/infierno.txt   160  388
