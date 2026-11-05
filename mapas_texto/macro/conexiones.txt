@@ -24,9 +24,9 @@ H2   habilidad  castillo      der   67  cementerio     izq    24  3  constructor
 S3   sellos     cementerio    abajo 10  minas          arriba 106 3  combate
 L4   llave      minas         izq   66  mazmorra       der    66  3  constructor
 !5   derrumbe   mazmorra      abajo 115 ruina          arriba  9  3  combate
-P6   puzle      ruina         abajo 145 profundidades  arriba  ?  3  combate
-S7   sellos     profundidades abajo  ?  infierno       arriba  ?  ?  combate
+P6   puzle      ruina         abajo 145 profundidades  arriba 181 3  combate
+S7   sellos     profundidades abajo 114 infierno       arriba  ?  3  combate
 :B:  atajo      calabozo      abajo  ?  mazmorra       arriba  ?  ?  combate
 :C:  atajo      castillo      abajo 34  minas          arriba 20  3  combate
 :D:  atajo      minas         abajo 132 ruina          arriba 146 3  combate
-:E:  atajo      ruina         abajo 90  profundidades  arriba  ?  3  combate
+:E:  atajo      ruina         abajo 90  profundidades  arriba 126 3  combate

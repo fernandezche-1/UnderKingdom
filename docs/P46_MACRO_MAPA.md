@@ -141,6 +141,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 - La secuencia de huida o derrumbe tras la Reina (`[!5]`).
 - La reja baja que solo se pasa rodando (`[H2]`).
 - El ascensor minero (`:C:`).
+- El fuego infernal del altar este de las profundidades (`[S7]`): fuego que sin E5 no deja pasar (quema hasta matar o empuja hacia atrás) y con E5 no hace daño. En el ASCII son trampas de fuego `F`.
 
 ## 6. Diferencias con lo que hay hoy y decisiones
 
@@ -158,6 +159,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 - Aplicar las decisiones de la sección 6 al rehacer cada zona.
 - Rehacer las zonas una a una (lista en `TASK.md`, "Macro mapa").
 - Ruina: qué da el Guardián de hielo al caer (el plan no lo dice), y confirmar que la reja tras su sala, que se abre al vencerlo, es el camino a `[P6]`.
+- Profundidades: los minijefes de los tres altares (el plan no los dice). Propuesta, sin arte nuevo: en el coliseo, oleadas de diablillos y el demonslime común (`escenas/enemigos/demonslime.tscn`); en el lago de magma, un diablillo mayor (`diablillo.tscn` a escala 2 y con más vida); en el santuario de las llamas, el Crystal Mauler (`escenas/jefes/boss_mina.tscn`) o un segundo demonslime.
 
 ## 8. Regenerar el dibujo
 
@@ -276,6 +278,17 @@ Una zona no se da por hecha mientras el verificador dé errores.
   - **Añadido al plan:** el hielo de `[P6]` es un muro de 1 x 3 (columna 144, filas 70-72) tras la sala del Guardián, y a él se llega por una reja en la pared este de la sala (columna 134), que va en `Atajos` de `boss_arena.gd` y se abre al vencerlo. Así la salida pide el jefe y la llama eterna. Qué da el Guardián al caer queda pendiente (sección 7).
   - Coordenadas de cada pieza en los comentarios del archivo. Comprobado con una simulación de saltos de 4 piezas y huecos de 3: se llega a todo menos al secreto (sí con 6) y a la cámara del deshielo, que pide abrir la reja; desde todo se vuelve a la llegada. El camino obligatorio sale incluso con saltos de 3.
   - Segunda pasada hecha: 6 Aprendis, 2 mino, 7 kolbo3 y 8 esqueletos, 4 cofres (uno en el secreto), 18 monedas, 3 pociones y decorados del tileset mazmorra (cristales de hielo, antorchas salvo en el exterior y la parte oscura, estanterías en las galerías, cajas de los mineros en el pie del pozo, agua y hongos en el lago). El mino solo cabe en el exterior helado. Con saltos de 4 se alcanza todo menos lo del secreto. Probada generando una escena temporal con el constructor, sin errores; tras 3 s de física cada enemigo sigue en su sitio.
+- **Profundidades (ASCII, primera pasada, 2026-11-05):** `mapas_texto/macro/zonas/profundidades.txt`, 231 x 85, en el mundo en (100, 303): justo debajo de la ruina, que acaba en la fila 302, de la columna 100 a la 330. Es más ancha que la ruina y sobresale por los dos lados, bajo la mazmorra (oeste) y bajo el cementerio (este), para que el infierno quede centrado debajo de todo.
+  - Recibe `:E:` por el borde de arriba, columnas 126-128 (226-228 del mundo), y `[P6]` también por arriba, columnas 181-183 (281-283). Las dos sin túnel, con su escalera en la misma columna que la de la ruina (91 y 146). Las dos llevan al mismo camino: el pie de `:E:` está en él, unido a la llegada de `[P6]` por el puente de ceniza.
+  - `:E:`: el pie del pozo tiene la palanca que abre la trampilla de la antesala de la ruina, en (119, 13).
+  - `[S7]` sale por el borde de abajo, columnas 114-116 (214-216 del mundo), 3 piezas, desde un pozo al este de la sala del Demon Slime. El infierno tendrá que recibirlo en esas columnas, empezando en la fila 388.
+  - Tres partes: el centro (llegada, puente de ceniza, pie de `:E:`, gran caverna con cornisa y puente de huesos, encrucijada, lago de magma, antesala, sala del Demon Slime y pozo de `[S7]`), el oeste (galería de los condenados, coliseo, forja y secreto) y el este (chimenea de azufre y santuario de las llamas). Cada punta lleva un altar y un checkpoint.
+  - Tres altares (sellos, con el contador de `[S3]`): el coliseo de ceniza al oeste (combate), el lago de magma en el centro (plataformas sobre lava) y el santuario de las llamas al este, en lo más hondo de la chimenea, rodeado de fuego.
+  - E5 (el Fire Knight) está en la forja, bajo el coliseo, a saltos de 3. El santuario es el único reto que lo pide.
+  - Sala del Demon Slime (22 x 9, la de hoy) en la parte más honda, con sus dos entradas de hoy: reja de 5 en su primera columna, junto a la escalera de la antesala, y trampilla de 6 por arriba. Las dos van en `Puertas` y siguen cerradas hasta activar los tres altares. La reja de salida, en `Atajos`, lleva al pozo de `[S7]`.
+  - Bucles por los dos pisos de la caverna, por el oeste (galería, coliseo, forja, antesala, encrucijada y caverna) y por la chimenea. Atajo interno: la escalera 68, de la antesala a la galería de los condenados, con trampilla que se abre desde abajo. Secreto de la Agilidad al fondo oeste de la galería, un escalón de 5 piezas.
+  - **Añadido al plan:** la isla del lago vuelve a la caverna por una escalera con trampilla que se abre desde abajo (así no se saltan los pilares); el pozo de `[S7]` lleva escalera para volver desde el infierno, como el de `[P6]`; el fuego del santuario es una pieza nueva (sección 5). Los minijefes quedan pendientes (sección 7).
+  - Coordenadas de cada pieza en los comentarios del archivo. Comprobado con una simulación de saltos de 4 piezas y huecos de 3: se llega a todo menos al secreto (sí con 6), al santuario (pide E5), a la sala (pide los tres altares) y al pozo de `[S7]` (pide el jefe); desde todo se vuelve a la llegada. El camino obligatorio sale incluso con saltos de 3.
 - Las demás zonas van con `?`.
 
 ## 10. Progreso del personaje: atuendos y desbloqueos por zona
