@@ -55,7 +55,7 @@ Mientras una zona no esté marcada aquí, sigue como la describe la tarea de los
   - [ ] Generar el nivel y montar la `_combate` (Guardián, reja de salida en `Atajos`, hielo de `[P6]` y llama eterna, luz de la parte oscura, palanca y reja de `:D:`, trampillas del atajo y de `:E:`, transiciones de `[!5]`, `:D:`, `[P6]` y `:E:`).
 - [ ] Profundidades: `[S7]`, tres altares y el Demon Slime.
   - [x] ASCII, primera pasada (`mapas_texto/macro/zonas/profundidades.txt`), colocado y verificado.
-  - [ ] Segunda pasada: enemigos (d), cofres, objetos y decorados.
+  - [x] Segunda pasada: enemigos (d), cofres, objetos y decorados.
   - [ ] Elegir los minijefes de los tres altares (propuesta en P46, sección 7).
   - [ ] Generar el nivel y montar la `_combate` (tres altares y su contador, minijefes, fuego infernal, E5, Demon Slime con reja y trampilla en `Puertas` y reja de salida en `Atajos`, palanca de `:E:`, trampillas del atajo, del lago y del coliseo, transiciones de `[P6]`, `:E:` y `[S7]`).
 - [ ] Infierno: Cthulhu, sin salida.
