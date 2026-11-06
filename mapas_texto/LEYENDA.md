@@ -122,6 +122,9 @@ El mapa original no se toca. El PNG es un punto de partida: faltan las salidas, 
 | `e` | #d0d0b0 | 208, 208, 176 | esqueleto (camina y embiste) |
 | `u` | #706050 | 112, 96, 80 | esqueleto de tumba (enterrado hasta que el Player se acerca) |
 | `G` | #b0b0d0 | 176, 176, 208 | Guardia del castillo (se cubre con el escudo) |
+| `R` | #b07050 | 176, 112, 80 | rata (calabozo, profundidad 0) |
+| `L` | #40c0a0 | 64, 192, 160 | slime (calabozo, profundidad 0; escupe) |
+| `B` | #a040a0 | 160, 64, 160 | murciélago grande (calabozo, profundidad 0; embiste; se dibuja donde flota) |
 | `t` | #ffc090 | 255, 192, 144 | antorcha |
 | `f` | #c03000 | 192, 48, 0 | fogata (decorado) |
 | `b` | #a08060 | 160, 128, 96 | barril |

@@ -11,7 +11,7 @@
 
 | Profundidad | Mundo | Enemigos (letra) | Faltan (sin arte todavía) |
 |---|---|---|---|
-| 0 | `tiles_calabozo` (antes del castillo) | rata, murciélago grande, slime y esqueleto carcelero (sin letra, en la escena `_combate`; ver `P42_CALABOZO_INICIAL.md`) | |
+| 0 | `tiles_calabozo` (antes del castillo) | rata, murciélago grande, slime y esqueleto carcelero (en el nivel de hoy, a mano en la escena `_combate`, ver `P42_CALABOZO_INICIAL.md`; en el calabozo rehecho, con letra: `R` rata, `L` slime y `B` murciélago grande; el carcelero sigue a mano) | |
 | 0 | `tiles_castillo` (el castillo, sobre el cementerio) | Guardia `G` (caballero con escudo, ver `P40_CASTILLO_CON_TILES.md`), Vanguardia `v`, murciélago `m` | |
 | 1 | `tiles_cementerio` (superficie) | Vanguardia `v` (el viejito), murciélago `m` (cripta y abismo), esqueleto de tumba `u` | |
 | 2 | `tiles_mineria` (bajo tierra) | kolbo `k`, kolbo2 `j`, kolbo3 `q`, murciélago `m` | |
