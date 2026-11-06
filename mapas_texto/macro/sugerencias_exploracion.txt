@@ -1,0 +1,337 @@
+SUGERENCIAS PARA QUE LA EXPLORACIÓN TENGA SENTIDO
+Macro mapa (docs/P46_MACRO_MAPA.md), con las 7 zonas ya en ASCII.
+Fecha: 2026-11-06
+
+Fase del proyecto: seguimos con el diseño en ASCII. Los enemigos, los
+tilesets, los decorados y el reparto de recursos de cada zona se decidirán
+más adelante, al montar cada zona en Godot con sus sprites nuevos. Por eso
+aquí solo va lo que cambia el trazado del ASCII o las decisiones de diseño
+que lo condicionan.
+
+Las sugerencias van ordenadas por prioridad: primero lo que conviene decidir
+ya, porque obliga a tocar el ASCII de zonas ya dibujadas.
+
+
+==============================================================================
+EL PROBLEMA, EN RESUMEN
+==============================================================================
+
+- La ruta, los bucles y los atajos están bien resueltos.
+- Pero cada habilidad solo se usa en su zona o en la siguiente. Nada de arriba
+  queda cerrado esperando algo que se consiga abajo.
+- Por eso los atajos solo sirven para acortar el camino: en las zonas de
+  arriba no queda nada por buscar.
+- Los premios de la exploración son siempre iguales: cofres con monedas y una
+  poción, y un secreto de la Agilidad clonado en cuatro zonas.
+
+
+==============================================================================
+1. PUERTAS HACIA ATRÁS (prioridad alta: toca el ASCII de zonas hechas)
+==============================================================================
+
+La idea: en las zonas de arriba se ven sitios a los que todavía no se puede
+llegar. Se abren con algo que se consigue más abajo, y entonces volver por los
+atajos tiene premio.
+
+Hay que decidirlo ahora, porque cuesta poco mientras los mapas son ASCII y
+mucho cuando ya sean escenas de Godot.
+
+Lo que se busca es la sensación de un metroidvania: al volver a una zona de
+arriba con algo conseguido abajo, el jugador ve el sitio de otra forma. Por
+eso cada puerta pide una llave distinta y cada premio es único (nada de
+cofres con monedas como premio principal).
+
+Hoy ninguna llave abre nada hacia atrás. E2, la Ráfaga, el Golpe final y la
+Ultimate ni siquiera dan un verbo nuevo; aquí se les da a dos:
+- el Golpe final (tajo ascendente de 1.0) rompe losas agrietadas desde abajo;
+- la Ultimate (2.0) rompe la estatua de la Reina.
+El filtro es por TIPO de golpe, no por daño, para que E2 o E5 no los rompan
+antes de tiempo.
+
+Datos del código que lo condicionan:
+- Las llaves no se gastan (locked_door.gd solo mira has_key): la llave del
+  Caballero puede abrir una segunda puerta.
+- La trampa F de hoy (¼ cada ½ s) no corta el paso: un pasillo de 9 piezas se
+  cruza corriendo con medio corazón de daño. Para cerrar un paso hace falta el
+  fuego infernal, la pieza prevista para el santuario.
+
+Llaves nuevas (sin arte de personaje):
+- llave del alcaide: en la torre del alcaide de la mazmorra, en lugar del
+  cofre de (73, 21);
+- ascua del Demon Slime: cae al vencerlo (PuntoLlave de boss_arena);
+- "ánimas liberadas": se marca al superar el coliseo del infierno.
+
+Propuestas (coordenadas en piezas de cada ASCII, columna y fila):
+
+1. CALABOZO, el depósito del alcaide.
+   - Sitio: al pie de la escalera 56, en la zona honda. Reja en la columna 52
+     (filas 35-37); sala nueva x 42-51, filas 33-37.
+   - Se ve: a través de la reja, una estantería y un arcón.
+   - Lo abre: la llave del alcaide (mazmorra).
+   - Premio: el acta de la condena del prisionero (lore: su nombre tachado) y
+     la empuñadura de su espada: +0.25 de daño en todos los tajos.
+   - Vuelta: :B: (punto 3). Coste medio.
+2. CASTILLO, los aposentos de la Reina.
+   - Sitio: puerta en arco (C) en la pared este de la capilla (columna 61,
+     filas 16-18); sala x 62-74, filas 11-18. La columna 75 queda de pared
+     (la armería no entra) y la antorcha de (60, 18) pasa a (59, 18).
+   - Lo abre: la llave del Caballero de la Reina (minas).
+   - Premio: página I del diario de la Reina y fragmento de vida 1/4.
+   - Vuelta: :C:. Coste bajo.
+3. CASTILLO (la zona entera), el castillo sin hechizo.
+   - Lo abre: la muerte de la Reina (completed_encounters).
+   - Cambio: los 7 Guardias desaparecen; en su lugar, soldados de rodillas
+     (NPC) que cuentan la noche del ritual. Vanguardias y murciélagos se
+     quedan. El Capitán, vencido pero vivo, espera junto al trono (x 62-64,
+     filas 61-62) y señala la estatua de la idea 4.
+   - La pista no va en el ASCII: es el arte de los Guardias y la frase del
+     Capitán ("nuestros propios soldados se volvieron contra nosotros").
+   - Vuelta: :C:. Coste medio (generalizar story_hidden_actor.gd para que
+     mire un encounter_id).
+4. CEMENTERIO (exterior), la estatua de la Reina.
+   - Sitio: extremo este de la cornisa de la colina (x 104-110, suelo 18). La
+     estatua tapa la columna 111 (filas 15-17); detrás, una cueva x 111-118,
+     filas 12-17, bajo la meseta del panteón.
+   - Lo abre: la Ultimate (mazmorra).
+   - Premio: la fosa escondida de los soldados leales (los cuerpos que
+     encontró el Capitán), con sus notas, y el amuleto de la guardia: las
+     pociones curan 0.25 más.
+   - Vuelta: :C: y [H2], o [S3]. Coste medio (estatua_rompible existe).
+5. CRIPTA, la cripta de la primera reina (Golpe final + llama eterna).
+   - Sitio: bajo el mausoleo, x 62-74, filas 29-34 (suelo 35). Se entra por
+     un nicho en el techo del osario (x 67-69, filas 36-37) tapado por una
+     losa (fila 35). Plataformas nuevas en las filas 45 (x 69-73) y 42
+     (x 65-70). La columna 75 queda de pared (el hueco al osario no entra).
+   - Lo abre: la losa, el tajo ascendente con el Golpe final (minas); dentro,
+     velas que se encienden con la llama eterna (ruina).
+   - Premio: la corona de la primera reina, con una carta a su hija la
+     princesa, y fragmento de vida 2/4.
+   - Vuelta: [S3]. Coste medio.
+6. MINAS, la gruta de cristal (Agilidad + E5).
+   - Sitio: boca en la pared este de la veta (columna 131, suelo 56, 5 piezas
+     sobre la veta); pasillo x 131-143, filas 52-55, con fuego infernal en
+     x 133-141; bajada x 144-146 (trampilla de entrada en la fila 63); gruta
+     x 132-147, filas 64-77; salida por el suelo x 138-140 con escalera en la
+     columna 139 hasta la galería honda. Se apartan la caja de (139, 86) a
+     (135, 86) y el murciélago de (138, 82).
+   - Lo abre: la Agilidad (cementerio) para el escalón y E5 (profundidades)
+     para el fuego.
+   - Premio: jefe opcional, el Crystal Mauler (escenas/jefes/boss_mina.tscn),
+     que da la reliquia de la Adrenalina (sale de STARTING_ABILITIES).
+   - Comprobar que el Mauler quepa en 16 x 14; si no, la gruta va bajo la veta
+     (x 80-110, filas 64-77, roca maciza).
+   - Vuelta: :E: y :D:, y la escalera 62. Coste medio.
+7. MAZMORRA, el pozo de los condenados (atajo nuevo :F:).
+   - Sitio: suelo de la huida, x 88-90 (columnas 118-120 del mundo), junto al
+     colector; baja hasta la galería de los condenados de las profundidades
+     (x 18-20). No cruza la ruina, que empieza en la columna 136. Se aparta la
+     antorcha de (20, 21) de las profundidades.
+   - Lo abre: una palanca en la galería de los condenados, desde abajo.
+   - Premio: el atajo (la vuelta más rápida desde el abismo hacia :B: y
+     [L4]), el lore de los condenados y la página II del diario.
+   - Coste medio (mismas piezas que :C:, :D: y :E:; línea nueva en
+     conexiones.txt).
+8. RUINA, el hielo negro.
+   - Sitio: pared este de la antesala (columna 113, filas 56-58); cámara
+     x 114-130, filas 52-58.
+   - Se ve: un hielo como el de [P6], pero oscuro: "LA LLAMA NO BASTA".
+   - Lo abre: la ascua del Demon Slime, que aviva la llama eterna.
+   - Premio: página III del diario y fragmento de vida 3/4.
+   - Vuelta: :E:, que cae en la misma antesala. Coste medio.
+9. PROFUNDIDADES, el rey encadenado.
+   - Sitio: jaula en el techo de la galería de los condenados (x 44-48, filas
+     16-19, con rejilla en la fila 20), junto al checkpoint de (50, 25).
+   - Lo abre: superar el coliseo de los condenados del infierno.
+   - Premio: el alma del Rey Caído (lore final antes de Cthulhu: "no fue ella
+     sola") y fragmento de vida 4/4.
+   - Vuelta: la escalera de [S7] y la escalera 68. Coste medio.
+10. (En reserva) MINAS, el campamento helado: el frío de la ruina sube por :D:
+    y hiela una galería junto a la galería honda; se pasa con E4. Solo si se
+    hace la mecánica del frío. Coste alto.
+
+Descartadas: Rodar en el calabozo (ya luce en el infierno), E5 en el castillo
+o el cementerio (arriba no hay fuego) y más escalones de la Agilidad (ya
+tiene 4 secretos).
+
+Cuándo se abre cada una (cada hito da un motivo para subir):
+- tras las minas: 2, y la losa de 5 (dentro se ve que falta la llama);
+- con la llave del alcaide, en la mazmorra: 1;
+- tras la Reina: 3 y 4;
+- tras la ruina: el interior de 5;
+- al llegar a las profundidades: 6 y 7;
+- tras el Demon Slime: 8;
+- en el infierno, antes de Cthulhu: 9.
+
+Piezas compartidas (se hacen una vez y sirven a varias ideas):
+- fragmento de vida: objeto, GameManager, guardado y menú (2, 5, 8, 9);
+- rompible que solo acepta un tipo de golpe (4, 5);
+- locked_door con otro dibujo: velas y hielo negro, la misma del hielo de
+  [P6] (5, 8);
+- mostrar u ocultar según un encuentro superado (3, 9);
+- objeto de lore que abre un diálogo (1, 2, 4, 5, 7, 8);
+- fuego infernal, ya previsto para el santuario (6).
+
+Decisiones que pide este conjunto:
+- Vida: 4 fragmentos dan 1 corazón; la tienda baja a 1 nivel de vida máxima
+  para no pasar de 6.
+- El Mauler va a la gruta: el minijefe del santuario queda en el segundo
+  demonslime (P46, sección 7).
+- La Adrenalina sale de STARTING_ABILITIES.
+- El Capitán sobrevive a su combate.
+- El lore (diario de la Reina, fosa de los soldados, alma del rey) lo decide
+  Armando.
+- La idea 1 necesita :B: (punto 3); :F: es una conexión nueva.
+
+Reglas que se mantienen:
+- Nada de esto es obligatorio. Son premios opcionales; la ruta sigue pidiendo
+  solo lo que el jugador tiene al llegar.
+- Cada puerta hacia atrás se apunta en los comentarios del ASCII de su zona y
+  en la tabla "Desbloqueos por zona" de P46 (sección 10), en una columna
+  nueva "Puertas hacia atrás".
+
+
+==============================================================================
+2. EL PREMIO DEL GUARDIÁN DE HIELO (prioridad alta: decisión pendiente)
+==============================================================================
+
+- Hoy está pendiente qué da el Guardián al caer (P46, sección 7).
+- Es la mejor ocasión del juego para dar una HABILIDAD DE MOVIMIENTO nueva.
+  Opciones:
+  - ataque hacia abajo que rebota en enemigos y pinchos (pogo);
+  - salto en pared;
+  - un dash corto en el aire.
+- Con esa habilidad se cierran sitios en TODAS las zonas de arriba (punto 1),
+  y los atajos :D: y :E: pasan a tener sentido: son el camino de vuelta para
+  usarla.
+- Conviene elegirla antes de cerrar los ASCII, porque fija qué forma tienen
+  esos sitios: un pozo de pinchos para el pogo, una pared alta y lisa para el
+  salto en pared o un hueco ancho para el dash.
+- Cuidado: el infierno no puede pedirla de forma obligatoria si no se decide
+  también así.
+
+
+==============================================================================
+3. DECIDIR EL ATAJO :B: (prioridad alta)
+==============================================================================
+
+- Es el único atajo sin dibujar. El verificador lo avisa.
+- Sitio sugerido en P46: borde de arriba de la mazmorra, columnas 67-69 (97-99
+  del mundo), bajando a la repisa alta de la gran sala.
+- Si el calabozo tiene una puerta hacia atrás (punto 1), :B: es el camino para
+  volver a ella. Esa es su razón de ser.
+
+
+==============================================================================
+4. SECRETOS DE DISTINTOS TIPOS (prioridad media: toca el ASCII)
+==============================================================================
+
+- Hoy el secreto de la Agilidad es el mismo en las minas, la mazmorra, la
+  ruina y las profundidades: un escalón de 5 piezas sin nada cerca. A partir
+  del segundo ya no sorprende.
+- Propuesta: el escalón de 5 queda en una o dos zonas, y los demás secretos
+  usan otra forma de descubrirse:
+  - una pared falsa que se rompe a golpes (pieza nueva: bloque rompible);
+  - un cofre que se ve desde un sitio al que todavía no se llega, y al que se
+    llega por otro camino;
+  - un paso que solo se abre desde el otro lado y queda como atajo;
+  - un techo falso o una plataforma escondida tras un decorado de primer
+    plano;
+  - uno que pida una habilidad de abajo (punto 1).
+- En el ASCII, cada secreto se apunta en los comentarios con su tipo y con qué
+  se abre, como ya se hace con E2, E3 y E4.
+
+
+==============================================================================
+5. PREMIOS QUE IMPORTEN (prioridad media: decisión de diseño)
+==============================================================================
+
+Aunque los recursos de cada zona se repartan más adelante, conviene decidir
+ya qué TIPO de premio va en los secretos, porque cambia cuántos secretos hacen
+falta en el ASCII.
+
+- FRAGMENTOS DE CORAZÓN:
+  - 4 fragmentos dan 1 corazón más, hasta el máximo de 6 que ya fija la regla
+    de la vida;
+  - harían falta 8 fragmentos en todo el mundo, en los secretos más difíciles;
+  - la vida máxima pasaría de la tienda a la exploración, o se podría conseguir
+    de las dos formas.
+- FRAGMENTOS DE ALMA (idea de lore):
+  - la prisión es la "cámara de sellado del alma", así que encaja que el alma
+    del protagonista esté repartida por el mundo;
+  - uno por zona, bien escondido;
+  - reunirlos todos da un final verdadero o una Ultimate más fuerte;
+  - es un objetivo de exploración que se entiende desde la historia.
+- Cada secreto lleva un premio único (fragmento, pieza de lore o atuendo) y no
+  un cofre normal.
+
+
+==============================================================================
+6. PARA QUÉ SIRVEN LAS MONEDAS (prioridad media: decisión de diseño)
+==============================================================================
+
+- Cuenta con lo que hay hoy en los ASCII: unas 113 monedas sueltas y 30 cofres
+  (3 monedas cada uno), unas 200 en total sin contar lo que sueltan los
+  enemigos.
+- Subir las tres mejoras de la tienda al máximo cuesta 108.
+- Hacia las minas o la mazmorra el jugador ya lo tiene todo comprado, y las
+  monedas dejan de servir.
+- Opciones (no excluyentes):
+  - que la tienda del sepulturero vaya ofreciendo más cosas conforme se baja;
+  - que venda el mapa de cada zona (punto 7);
+  - que haya otra tienda o un mercader más abajo;
+  - que al morir se pierdan las monedas y haya que volver al sitio a
+    recogerlas. Solo tiene sentido si las monedas sirven para algo.
+- La cantidad de monedas y cofres se ajusta después, al montar cada zona; aquí
+  solo hay que decidir para qué sirven.
+
+
+==============================================================================
+7. ORIENTACIÓN: EL MAPA DEL JUGADOR (prioridad media)
+==============================================================================
+
+- No hay mapa del jugador en el juego. En zonas de 110 a 230 piezas de ancho y
+  con bucles, sin mapa el jugador explora menos, porque teme perderse.
+- Propuesta: un mapa por zona, que se compra (al sepulturero o a un
+  cartógrafo) o se encuentra al poco de entrar.
+- Lo que toca al ASCII:
+  - dejar en cada zona, cerca de la llegada, un sitio para el vendedor o el
+    objeto del mapa;
+  - que cada zona tenga puntos que se reconozcan por su forma (una sala grande,
+    una torre, un pozo), para orientarse incluso sin mapa. La mayoría ya los
+    tiene.
+
+
+==============================================================================
+8. UN NPC QUE TAMBIÉN BAJA (prioridad baja)
+==============================================================================
+
+- El prisionero del calabozo o el sepulturero aparece en varias zonas con una
+  pista, un encargo o un trozo de historia.
+- Da ganas de mirar en los rincones sin poner ningún muro.
+- Lo que toca al ASCII: un rincón tranquilo por zona, apuntado en los
+  comentarios, donde pueda estar.
+
+
+==============================================================================
+FUERA DE ESTA FASE (ya contemplado)
+==============================================================================
+
+- Enemigos definitivos de cada zona y su variedad.
+- Tileset, fondo y decorados propios de cada zona.
+- Cantidad y sitio de monedas, pociones y cofres.
+
+Se deciden al montar cada zona en Godot con sus sprites y tilesets nuevos.
+
+
+==============================================================================
+ORDEN DE TRABAJO PROPUESTO
+==============================================================================
+
+1. Decidir el premio del Guardián (punto 2) y el tipo de premio de los
+   secretos (punto 5).
+2. Decidir :B: (punto 3).
+3. Repasar los ASCII de arriba abajo: puertas hacia atrás (punto 1) y tipos
+   de secreto (punto 4).
+4. Apuntar lo decidido en P46 (secciones 6, 7 y 10) y correr el verificador
+   (python3 herramientas/macro_mapa/verificar_mundo.py).
+5. Puntos 6, 7 y 8 cuando se monte la tienda, la interfaz y los NPC.
