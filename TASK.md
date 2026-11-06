@@ -58,10 +58,10 @@ Mientras una zona no esté marcada aquí, sigue como la describe la tarea de los
   - [x] Segunda pasada: enemigos (d), cofres, objetos y decorados.
   - [ ] Elegir los minijefes de los tres altares (propuesta en P46, sección 7).
   - [ ] Generar el nivel y montar la `_combate` (tres altares y su contador, minijefes, fuego infernal, E5, Demon Slime con reja y trampilla en `Puertas` y reja de salida en `Atajos`, palanca de `:E:`, trampillas del atajo, del lago y del coliseo, transiciones de `[P6]`, `:E:` y `[S7]`).
-- [ ] Infierno: Cthulhu, sin salida.
-  - [x] ASCII, primera pasada (`mapas_texto/macro/zonas/infierno.txt`), colocado y verificado.
-  - [x] Segunda pasada: enemigos (d), cofres, objetos y decorados.
-  - [ ] Generar el nivel y montar la `_combate` (Cthulhu en la sala nueva, reja de entrada en `Puertas`, activador, `PuntosJefe`, aviso del final, transición y spawn de `[S7]`).
+- [ ] Infierno: la prueba final y Cthulhu, sin salida.
+  - [x] ASCII, segunda versión: la prueba final (`mapas_texto/macro/zonas/infierno.txt`), colocado y verificado, con enemigos, objetos y decorados.
+  - [ ] Decidir los enemigos definitivos de la prueba final.
+  - [ ] Generar el nivel y montar la `_combate` (arenas con oleadas del coliseo y del salón, rejas bajas del pasillo, fuego infernal, Cthulhu en el trono con reja en `Puertas`, activador, `PuntosJefe`, aviso del final, transición y spawn de `[S7]`).
 
 **Atajos:**
 - [ ] `:B:` calabozo ↔ mazmorra. Sitio sugerido: columnas 97-99 del mundo (P46, sección 9, estado de la mazmorra); se decide al rehacer el calabozo.

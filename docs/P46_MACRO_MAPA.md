@@ -59,7 +59,7 @@ Cuanto más abajo está una zona, más profunda es: el juego se recorre bajando.
 #                 ############    #######################                #
 #                 #                                     #                #
 #                 #              INFIERNO               #                #
-#                 #          (Cthulhu, final)           #                #
+#                 #       (prueba final, Cthulhu)       #                #
 #                 #######################################                #
 #                                                                        #
 ##########################################################################
@@ -141,6 +141,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 - La secuencia de huida o derrumbe tras la Reina (`[!5]`).
 - La reja baja que solo se pasa rodando (`[H2]`).
 - El ascensor minero (`:C:`).
+- Las arenas con oleadas del infierno (coliseo de los condenados y salón de los verdugos): `arena_barrier.gd` más algo que saque una oleada tras otra.
 - El fuego infernal del altar este de las profundidades (`[S7]`): fuego que sin E5 no deja pasar (quema hasta matar o empuja hacia atrás) y con E5 no hace daño. En el ASCII son trampas de fuego `F`.
 
 ## 6. Diferencias con lo que hay hoy y decisiones
@@ -290,14 +291,16 @@ Una zona no se da por hecha mientras el verificador dé errores.
   - **Añadido al plan:** la isla del lago vuelve a la caverna por una escalera con trampilla que se abre desde abajo (así no se saltan los pilares); el pozo de `[S7]` lleva escalera para volver desde el infierno, como el de `[P6]`; el fuego del santuario es una pieza nueva (sección 5). Los minijefes quedan pendientes (sección 7).
   - Coordenadas de cada pieza en los comentarios del archivo. Comprobado con una simulación de saltos de 4 piezas y huecos de 3: se llega a todo menos al secreto (sí con 6), al santuario (pide E5), a la sala (pide los tres altares) y al pozo de `[S7]` (pide el jefe); desde todo se vuelve a la llegada. El camino obligatorio sale incluso con saltos de 3.
   - Segunda pasada hecha: 22 diablillos (vuelan, así que van en el aire), 5 cofres (uno en el secreto y otro en la isla del lago), 15 monedas, 4 pociones y decorados del tileset mazmorra (antorchas, ascuas con los cristales y la forja con fogatas, caja y barril). La plataforma alta del coliseo pasa a x 21-28: a x 22-27 quedaba a 5 de las otras. Con saltos de 4 se alcanza todo menos lo del secreto. Probada generando una escena temporal con el constructor, sin errores; tras 3 s de física cada enemigo sigue en su sitio.
-- **Infierno (ASCII, primera pasada, 2026-11-05):** `mapas_texto/macro/zonas/infierno.txt`, 111 x 66, en el mundo en (160, 388): justo debajo de las profundidades, que acaban en la fila 387, de la columna 160 a la 270. Su centro, la columna 55, es la 215 del mundo, el centro del conjunto de arriba (100-330): así queda centrado debajo de todo.
-  - Recibe `[S7]` por el borde de arriba, columnas 54-56 (214-216 del mundo), sin túnel, con su escalera en la columna 55, que sigue la de la columna 115 de las profundidades. Es la última zona: no tiene salida ni ninguna otra apertura.
-  - Recorrido corto y sin bucles ni atajos: llegada (checkpoint, sin enemigos), paso de las cadenas con un foso de lava, sima de las ánimas (bajada en zigzag por 11 repisas sobre el lago de lava del fondo), umbral (checkpoint antes del jefe, sitio de los cofres y la poción de reserva) y trono de Cthulhu. Opcional, al este de la llegada: el mirador de ceniza, con dos fosos de lava, y el osario, sin salida, como exploración mínima.
-  - Sala de Cthulhu propia: 56 x 21 (x 45-100, filas 40-60), en la parte más honda, con una sola entrada, la reja de la columna 44 (filas 57-60), que va en `Puertas` de `boss_arena.gd`. Cthulhu aparece en (96, 60), el extremo más lejano de la reja. Cinco plataformas de una vía a escalones de 4 para pelear cuando vuela. Sin llave: al vencerlo sale "HAS VENCIDO A CTHULHU" (P34, sección 6).
-  - Los escalones de la sima son de 4 piezas y los huecos de 3, como pide la zona. Distinto de las anteriores: con saltos de 3 se baja hasta la sala, pero no se vuelve a subir la sima. Llega con E5, así que no afecta al camino.
-  - Coordenadas de cada pieza en los comentarios del archivo. Comprobado con una simulación de saltos con la física del Player (velocidad 170, salto 470, gravedad 1500, caja de 20 x 40): con la reja cerrada se llega a todo menos a la sala y desde todo se vuelve a la llegada; con la reja abierta, a toda la sala y sus plataformas, y desde ella se vuelve.
-  - Segunda pasada pendiente: diablillos (`d`) en el aire, cofres y poción en el umbral, cofre en el osario y decorados. El demonslime común no se pone: es el jefe de la zona anterior y no tiene letra.
-  - Segunda pasada hecha: 18 diablillos en el aire (11 en la sima, 4 en el mirador, 2 en el osario, 1 en el paso de las cadenas; ninguno en la llegada, el umbral ni el trono), 4 cofres (mirador, osario y dos en el umbral), una poción de reserva en el umbral, 20 monedas y antorchas y fogatas. Coordenadas en la cabecera del archivo.
+- **Infierno (ASCII, segunda versión, 2026-11-06): la prueba final.** `mapas_texto/macro/zonas/infierno.txt`, 111 x 120, en el mundo en (160, 388). Misma posición y ancho que la primera versión (2026-11-05, 111 x 66, corta y sin bucles); crece solo hacia abajo. `[S7]` sigue en las columnas 54-56 (214-216 del mundo), sin túnel, con su escalera en la columna 55.
+  - **Por qué se rehízo:** la primera versión era un descenso corto hasta Cthulhu. Se decidió (2026-11-06) que el infierno sea la zona más difícil: una sucesión de pruebas, una por cada cosa que el jugador aprendió al bajar, con los enemigos más duros.
+  - **Pruebas, en orden:** fuego (paso de las cadenas, con fuego infernal, E5), salto (sima de las ánimas, la de la primera versión), combate (coliseo de los condenados: la antigua sala de Cthulhu, cerrada con oleadas), rodar (pasillo del filo: 4 de alto, con tres rejas bajas como la de `[H2]` y enemigos que no se saltan), aire (caverna del vuelo: repisas sobre lava con diablillos y murciélagos) y parry (salón de los verdugos: cerrado, con Guardias y minos). Después, el umbral (descanso) y el trono de Cthulhu.
+  - **Enemigos:** excepción a P33. El infierno reúne las ánimas de lo vencido al bajar, así que mezcla los más duros de todas las profundidades: mino, kolbo3, Aprendis, Guardia, esqueleto, kolbo2, diablillo y murciélago. Los definitivos están por decidir.
+  - **Checkpoints:** llegada, antesala del coliseo, tras el coliseo y umbral. Rodar, aire y parry van seguidas, sin checkpoint entre ellas.
+  - Trono de Cthulhu: misma medida (56 x 21), ahora en x 45-100, filas 96-116, con la reja de entrada en la columna 44 (filas 113-116), plataformas de una vía a escalones de 4 y Cthulhu en (96, 116). Sin llave: al vencerlo sale "HAS VENCIDO A CTHULHU" (P34, sección 6).
+  - Opcional: el mirador de ceniza y el osario (los de la primera versión, ahora con enemigos más duros) y un rincón con cofre al este del pasillo del filo.
+  - Ningún escalón obligatorio pide más de 4 piezas ni huecos de más de 3; nada pide E3 ni E4. Comprobado con una simulación de saltos sobre la cuadrícula: desde la P se llega a todo y desde todo se vuelve (con rejas y trampillas abiertas). Con saltos de 3 no se vuelve a subir la sima, como antes.
+  - **Piezas nuevas:** las arenas cerradas con oleadas del coliseo y del salón (`arena_barrier.gd` más un generador de oleadas, que no existe) y las rejas bajas del pasillo (la misma pieza que falta para `[H2]`).
+  - Coordenadas de cada pieza en la cabecera del archivo.
 - Con el infierno quedan dibujadas todas las zonas (primera pasada). Falta `:B:`, que se decide al rehacer el calabozo.
 
 ## 10. Progreso del personaje: atuendos y desbloqueos por zona

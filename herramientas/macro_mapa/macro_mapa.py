@@ -41,7 +41,7 @@ box(38, 22, 70, 27, 'MINAS', '(Caballero de la Reina)')
 box(3, 22, 32, 27, 'MAZMORRA', '(la Reina)')
 box(3, 31, 70, 35, 'RUINA HELADA', '(Guardián de hielo)')
 box(8, 39, 66, 43, 'PROFUNDIDADES', '(Demon Slime + 3 altares)')
-box(18, 47, 56, 51, 'INFIERNO', '(Cthulhu, final)')
+box(18, 47, 56, 51, 'INFIERNO', '(prueba final, Cthulhu)')
 
 vert(8, 9, 5, 8)                    # prisión -> calabozo
 horiz(18, 22, 9, 10, '[L1]')        # calabozo -> castillo: llave del carcelero

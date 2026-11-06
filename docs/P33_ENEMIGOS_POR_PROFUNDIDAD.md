@@ -18,7 +18,7 @@
 | 3 | `tiles_mazmorra` | Aprendis `a` (esqueleto de fuego), mino `M`, kolbo3 `q`, esqueleto `e` | |
 | 4 | `tiles_ruina` | Aprendis `a` (esqueleto de fuego), mino `M`, kolbo3 `q`, esqueleto `e` | |
 | 5 | `tiles_profundidades` (abismo) | diablillo `d` | |
-| 6 | `tiles_jefe` (infierno) | diablillo `d` | demonslime como enemigo común (hoy sin letra) |
+| 6 | `tiles_jefe` (infierno) | diablillo `d`. En el infierno rehecho (la prueba final, P46): los más duros de todas las profundidades, excepción a esta tabla | demonslime como enemigo común (hoy sin letra) |
 
 - `tiles_casa` está fuera de la ruta y no se tocó (4 diablillos).
 - Los jefes no entran en la tabla: van en la escena `_combate` de cada mundo.
