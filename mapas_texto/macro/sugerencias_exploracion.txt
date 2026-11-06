@@ -171,16 +171,19 @@ Piezas compartidas (se hacen una vez y sirven a varias ideas):
 - objeto de lore que abre un diálogo (1, 2, 4, 5, 7, 8);
 - fuego infernal, ya previsto para el santuario (6).
 
-Decisiones que pide este conjunto:
-- Vida: 4 fragmentos dan 1 corazón; la tienda baja a 1 nivel de vida máxima
-  para no pasar de 6.
-- El Mauler va a la gruta: el minijefe del santuario queda en el segundo
-  demonslime (P46, sección 7).
-- La Adrenalina sale de STARTING_ABILITIES.
-- El Capitán sobrevive a su combate.
-- El lore (diario de la Reina, fosa de los soldados, alma del rey) lo decide
-  Armando.
-- La idea 1 necesita :B: (punto 3); :F: es una conexión nueva.
+Decidido (2026-11-06; apuntado en P46, sección 6):
+- Vida: la tienda vende un solo nivel de vida máxima (de 4 a 5 corazones);
+  el sexto sale de los 4 fragmentos de vida. Tope de 6.
+- El Mauler va a la gruta de cristal: el minijefe del santuario queda en el
+  segundo demonslime (P46, sección 7).
+- La Adrenalina la da el Mauler y sale de STARTING_ABILITIES.
+- El Capitán sigue vivo tras su combate.
+- El lore nuevo (diario de la Reina, fosa de los soldados, acta del
+  prisionero, carta de la primera reina, alma del rey) va como marcador:
+  objetos y sitios con textos provisionales; Armando los escribe más
+  adelante.
+- La idea 1 necesita :B: (punto 3); :F: se añade a los atajos (P46,
+  sección 4).
 
 Reglas que se mantienen:
 - Nada de esto es obligatorio. Son premios opcionales; la ruta sigue pidiendo

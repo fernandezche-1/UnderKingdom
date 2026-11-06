@@ -118,6 +118,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 | `:C:` | Castillo ↔ Minas | las minas | ascensor minero |
 | `:D:` | Minas ↔ Ruina helada | la ruina | pozo minero |
 | `:E:` | Ruina ↔ Profundidades | las profundidades | vuelta rápida para la tienda o para farmear |
+| `:F:` | Mazmorra ↔ Profundidades | las profundidades (palanca en la galería de los condenados) | el pozo de los condenados: de la huida de la mazmorra (x 88-90, columnas 118-120 del mundo) a la galería de los condenados (x 18-20). Sin dibujar; idea 7 de las puertas hacia atrás |
 
 ## 5. Cómo rehacer una zona con este plan
 
@@ -154,13 +155,21 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 - **Minas:** hoy salen por una puerta con llave en el fondo. En el plan, `[L4]` es lateral, hacia la mazmorra.
 - **Mazmorra, ruina, profundidades e infierno:** siguen siendo calcos con la salida por la derecha. Se rehacen con este plan.
 - **Atajos:** no existe ninguno todavía.
+- **Puertas hacia atrás:** **decidido (2026-11-06).** Las zonas de arriba tienen sitios que se ven antes de poder abrirlos y se abren con algo que se consigue más abajo: 9 ideas, cada una con una llave distinta, en el punto 1 de `mapas_texto/macro/sugerencias_exploracion.txt` (sitio, llave, premio, vuelta y coste). Se dibujan en el ASCII de cada zona y se montan al rehacerla. Lo que fija:
+  - **Vida:** la tienda vende un solo nivel de vida máxima (de 4 a 5 corazones; `max_level` 1 en `UPGRADE_DEFINITIONS`). El sexto corazón sale de 4 fragmentos de vida repartidos en las puertas hacia atrás (ideas 2, 5, 8 y 9). El tope sigue siendo 6.
+  - **Crystal Mauler** (`escenas/jefes/boss_mina.tscn`): pasa a ser jefe opcional de la gruta de cristal de las minas (idea 6), que pide la Agilidad y E5. Deja de proponerse para el santuario de las llamas (sección 7).
+  - **Adrenalina:** la da el Mauler, con una reliquia. Sale de `STARTING_ABILITIES` cuando se monte la gruta.
+  - **El Capitán sigue vivo** tras su combate. Tras la muerte de la Reina espera junto al trono del castillo (idea 3).
+  - **Lore nuevo, como marcador:** el diario de la Reina (3 páginas), la fosa de los soldados leales, el acta del prisionero, la carta de la primera reina y el alma del rey encadenado. Sus objetos y sitios van en los ASCII y las escenas con textos provisionales; Armando escribe los definitivos más adelante.
+  - **Atajos:** la idea 1 necesita `:B:`. Se añade `:F:` (sección 4).
 
 ## 7. Pendiente
 
 - Aplicar las decisiones de la sección 6 al rehacer cada zona.
 - Rehacer las zonas una a una (lista en `TASK.md`, "Macro mapa").
 - Ruina: qué da el Guardián de hielo al caer (el plan no lo dice), y confirmar que la reja tras su sala, que se abre al vencerlo, es el camino a `[P6]`.
-- Profundidades: los minijefes de los tres altares (el plan no los dice). Propuesta, sin arte nuevo: en el coliseo, oleadas de diablillos y el demonslime común (`escenas/enemigos/demonslime.tscn`); en el lago de magma, un diablillo mayor (`diablillo.tscn` a escala 2 y con más vida); en el santuario de las llamas, el Crystal Mauler (`escenas/jefes/boss_mina.tscn`) o un segundo demonslime.
+- Profundidades: los minijefes de los tres altares (el plan no los dice). Propuesta, sin arte nuevo: en el coliseo, oleadas de diablillos y el demonslime común (`escenas/enemigos/demonslime.tscn`); en el lago de magma, un diablillo mayor (`diablillo.tscn` a escala 2 y con más vida); en el santuario de las llamas, un segundo demonslime (el Crystal Mauler pasa a la gruta de cristal de las minas, sección 6). El comentario del ASCII de las profundidades todavía nombra al Mauler: se corrige al repasar esa zona.
+- Puertas hacia atrás: dibujarlas zona por zona (punto 1 de `sugerencias_exploracion.txt`) y escribir los textos de lore que quedaron como marcador.
 
 ## 8. Regenerar el dibujo
 
@@ -334,19 +343,21 @@ Cada atuendo cambia el aspecto del Player (su `SpriteFrames`) y su arma, y da al
 ### Desbloqueos por zona
 "Hoy" es lo que ya está en las escenas `_combate`; "plan" es lo de esta propuesta.
 
-| Zona | Llega con | Se consigue aquí | La salida pide |
-|---|---|---|---|
-| Prisión | E0; tajo aéreo, parry, robo de vida y adrenalina (`STARTING_ABILITIES`) | — | — |
-| Calabozo | E0 (salto de unas 3 piezas) | E1 (hoy); llave del carcelero (hoy) | `[L1]` llave del carcelero |
-| Castillo | E1 (salto de unas 4,6 piezas) | Rodar, por reliquia en la biblioteca (hoy); en el plan, premio del Rey Caído (`ability_reward`); E2 en la armería (plan) | `[H2]` Rodar |
-| Cementerio | E1 o E2; Rodar | Ráfaga, con el Capitán, guardián de la tercera tumba; E3 y la Agilidad (plan) | `[S3]` tres tumbas sello (la última, vencer al Capitán) |
-| Minas | Ráfaga; con E3, Agilidad (salto de unas 6,5 piezas) | Golpe final, con el Caballero (hoy); llave del Caballero | `[L4]` llave del Caballero |
-| Mazmorra | Golpe final | Ultimate, con la Reina (hoy) | `[!5]` derrumbe tras la Reina |
-| Ruina helada | Ultimate | la llama eterna (plan); E4 (plan) | `[P6]` la llama eterna |
-| Profundidades | E4 si se encontró | E5 (plan) | `[S7]` tres altares y el Demon Slime; con E5 se llega al altar rodeado de fuego |
-| Infierno | E5 | — | — |
+La última columna son las puertas hacia atrás (sección 6): se ven en esa zona y se abren con lo que se consigue más abajo. Todas son opcionales. Detalle en el punto 1 de `mapas_texto/macro/sugerencias_exploracion.txt`.
 
-- **Mejoras de la tienda** (vida máxima, robo de vida, enfriamiento de la Ultimate): se compran con monedas en cualquier momento. Nunca son necesarias para avanzar (P35).
+| Zona | Llega con | Se consigue aquí | La salida pide | Puertas hacia atrás que hay aquí |
+|---|---|---|---|---|
+| Prisión | E0; tajo aéreo, parry, robo de vida y adrenalina (`STARTING_ABILITIES`; la adrenalina sale de la lista al montar la gruta de cristal) | — | — | — |
+| Calabozo | E0 (salto de unas 3 piezas) | E1 (hoy); llave del carcelero (hoy) | `[L1]` llave del carcelero | 1. Depósito del alcaide (llave del alcaide, mazmorra): acta del prisionero y +0.25 de daño. Vuelta por `:B:` |
+| Castillo | E1 (salto de unas 4,6 piezas) | Rodar, por reliquia en la biblioteca (hoy); en el plan, premio del Rey Caído (`ability_reward`); E2 en la armería (plan) | `[H2]` Rodar | 2. Aposentos de la Reina (llave del Caballero, minas): diario I y fragmento de vida. 3. El castillo sin hechizo (muerte de la Reina): soldados NPC y el Capitán junto al trono |
+| Cementerio | E1 o E2; Rodar | Ráfaga, con el Capitán, guardián de la tercera tumba; E3 y la Agilidad (plan) | `[S3]` tres tumbas sello (la última, vencer al Capitán) | 4. Estatua de la Reina (Ultimate, mazmorra): fosa de los soldados y amuleto (+0.25 en pociones). 5. Cripta de la primera reina (Golpe final, minas, y llama eterna, ruina): corona y fragmento de vida |
+| Minas | Ráfaga; con E3, Agilidad (salto de unas 6,5 piezas) | Golpe final, con el Caballero (hoy); llave del Caballero | `[L4]` llave del Caballero | 6. Gruta de cristal (Agilidad y E5): Crystal Mauler, que da la Adrenalina |
+| Mazmorra | Golpe final | Ultimate, con la Reina (hoy); llave del alcaide (plan, en la torre, en lugar del cofre de (73, 21)) | `[!5]` derrumbe tras la Reina | 7. Pozo de los condenados (palanca en las profundidades): atajo `:F:` y diario II |
+| Ruina helada | Ultimate | la llama eterna (plan); E4 (plan) | `[P6]` la llama eterna | 8. Hielo negro (ascua del Demon Slime): diario III y fragmento de vida |
+| Profundidades | E4 si se encontró | E5 (plan); ascua, al vencer al Demon Slime (plan) | `[S7]` tres altares y el Demon Slime; con E5 se llega al altar rodeado de fuego | 9. Rey encadenado (coliseo del infierno superado): lore final y fragmento de vida |
+| Infierno | E5 | — (superar el coliseo libera al rey de la idea 9) | — | — |
+
+- **Mejoras de la tienda** (vida máxima, robo de vida, enfriamiento de la Ultimate): se compran con monedas en cualquier momento. Nunca son necesarias para avanzar (P35). La vida máxima queda en un solo nivel (de 4 a 5 corazones); el sexto sale de los 4 fragmentos de vida (sección 6).
 - **Opcionales no obligatorios:** E2, E3 y E4 son premios por explorar. Ningún reto obligatorio puede pedirlos. Sí pueden pedirlos los secretos y los objetos opcionales: la Agilidad, los de las minas, la ruina y `tiles_jefe` (P45); el Abrigo, las zonas de frío.
 
 ### Arte de los atuendos (con IA)
