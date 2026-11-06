@@ -106,16 +106,16 @@
 ;
 ; - POZO DE :B: (atajo al calabozo, el desagüe entre las dos prisiones):
 ;   hueco de x 70-72 en el borde de arriba, filas 0-11 (columnas 100-102 del
-;   mundo, las mismas del calabozo, que está en x 0), en la esquina noreste de
+;   mundo, las mismas del pozo del calabozo, x 64-66), en la esquina noreste de
 ;   la gran sala, donde se junta la repisa alta con la torre. Escalera en la
 ;   columna 71 (filas 0-21) hasta el suelo de la fila 22, que sigue la de la
-;   columna 101 del calabozo. Desde el calabozo está cerrado (trampilla del
-;   suelo de la cámara del preso, x 100-102, fila 41). PALANCA que la abre en
+;   columna 65 del calabozo. Desde el calabozo está cerrado (trampilla del
+;   suelo de la cámara del preso, x 64-66, fila 46). PALANCA que la abre en
 ;   (67, 21), en la repisa alta; se recuerda en completed_encounters
 ;   (mazmorra_atajo_b_abierto). Spawn DesdeCalabozo hacia (69, 21). La llave
 ;   del alcaide (en lugar del cofre de (73, 21)) queda a dos piezas: con ella
 ;   se sube a abrir el depósito del alcaide del calabozo (puerta hacia atrás,
-;   idea 1). Entre las dos zonas el pozo recorre 53 piezas (el verificador lo
+;   idea 1). Entre las dos zonas el pozo recorre 45 piezas (el verificador lo
 ;   avisa como túnel). El pozo no se cierra por este lado: si se sube sin la
 ;   palanca, se llega bajo la trampilla cerrada y se vuelve a bajar.
 ;

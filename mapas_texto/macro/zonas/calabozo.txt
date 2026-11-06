@@ -1,0 +1,223 @@
+; CALABOZO (macro mapa, docs/P46_MACRO_MAPA.md): ASCII de la zona, rehecha con
+; el método del macro mapa (2026-11-06). Primera pasada (estructura, P,
+; checkpoints, aperturas y sitio de cada pieza) y segunda pasada (enemigos,
+; objetos y decorados) hechas.
+; NO GENERAR TODAVÍA: la escena de abajo es la del calabozo que se juega hoy
+; (mapas_texto/tiles_calabozo.txt, P42, con colisiones validadas jugando) y el
+; constructor la reemplazaría. Al aprobarlo, este archivo pasa a
+; mapas_texto/tiles_calabozo.txt (sección 9) y la _combate se rehace entera.
+;
+; Coordenadas (columna, fila), desde 0. 100 x 52 piezas, la zona más pequeña:
+; es la primera y hace de tutorial. En el mundo en (36, 36): su borde derecho
+; es la columna 135 (el castillo empieza en la 136) y [L1] queda en la fila
+; 44 del mundo, la de la entrada del castillo. Las columnas 0-35 del mundo
+; quedan vacías.
+; Llega con E0 (desnudo, a puños, sin rodar, saltos de unas 3 piezas). Se
+; consigue E1 (harapos y espada oxidada) en la cámara del preso y la llave
+; del carcelero; la salida [L1] pide esa llave (P46, sección 10).
+; Ningún escalón obligatorio pide más de 3 piezas de salto ni huecos de más de
+; 3. Donde se pelea, las salas miden 7 piezas de alto o más, para saltar por
+; encima de las ratas (el salto sin espada es de unos 50 px).
+;
+; Camino obligatorio (tres pisos en zigzag: se baja a por la espada y se
+; vuelve a subir con ella):
+;   celda de inicio -> pasillo de las celdas -> cuerpo de guardia -> paso bajo
+;   -> sala del aviso -> conducto (escalera 58) -> galería de los presos ->
+;   bajada (escalera 23) -> pie de la bajada -> sala larga -> paso bajo ->
+;   cámara del preso (espada) -> reja del conducto -> pie de la subida ->
+;   escalera 81 -> sala del carcelero (llave) -> reja de salida -> [L1].
+; Qué enseña cada tramo: caminar y saltar (pasillo), pelear a puño con
+; enemigos sueltos (cuerpo de guardia), bajar escaleras (conducto y bajada),
+; esquivar (sala larga), volver con algo nuevo (celda cerrada) y la primera
+; pelea con espada (carcelero). Sin bucles. Atajo interno: la reja interior,
+; que con la espada une la sala del carcelero con la del aviso, como hoy.
+;
+; ARRIBA (suelo 11):
+; - CELDA CERRADA: x 2-7, filas 6-10. REJA en la columna 8 (filas 8-10), que
+;   solo se abre con la espada (locked_door, requires_sword). Se ve desde el
+;   inicio; enseña a volver con algo nuevo antes de las puertas hacia atrás.
+;   Poción en (4, 10).
+; - CELDA DE INICIO: x 9-15, filas 5-10. P en (12, 10), donde la cinemática
+;   de la prisión deja al Player (P0). Puerta abierta en la columna 16 (filas
+;   8-10) al pasillo.
+; - PASILLO DE LAS CELDAS: x 17-33, filas 4-10. Para aprender a moverse y
+;   saltar: escalón de 1 en (20, 10), escalón de 2 en x 23-24 y foso de
+;   práctica en x 27-29 (2 de hondo, sin pinchos: se sale con un salto), con
+;   una moneda encima en (28, 8). Checkpoint en (32, 10).
+; - CUERPO DE GUARDIA: x 34-53, filas 4-10 (7 de alto). Pelea a puño,
+;   tranquila: una rata y un slime, separados. El primer cofre del juego en
+;   (51, 10), tras ellos.
+; - PASO BAJO: x 54-55, filas 8-10. Separa la zona tranquila de la dura.
+; - SALA DEL AVISO: x 56-76, filas 4-10. Al entrar, el prisionero avisa de que
+;   son demasiados y señala el CONDUCTO: hueco de x 57-59 en el suelo, con
+;   escalera en la columna 58 (filas 11-26) a la galería de los presos. Al
+;   fondo se ven los "demasiados" (dos ratas y un murciélago) y la REJA
+;   INTERIOR en la columna 77 (filas 8-10, requires_sword), que corta el paso
+;   a la sala del carcelero y obliga a bajar.
+; - SALA DEL CARCELERO: x 78-94, filas 4-10. Escalera de la columna 81 (filas
+;   11-45) desde el pie de la subida, por un hueco de x 80-82 en el suelo. El
+;   carcelero, la primera pelea con espada, suelta la llave calabozo_salida.
+;   REJA DE SALIDA en la columna 95 (filas 8-10, la llave), vestíbulo x 96-98
+;   y salida ">" en la columna 99, filas 8-10 (fila 44 del mundo), hacia el
+;   castillo. El Player llega dos piezas hacia dentro de la salida, en el
+;   vestíbulo, fuera de la reja.
+;
+; EN MEDIO (suelo 27):
+; - GALERÍA DE LOS PRESOS: x 20-62, filas 20-26. Llega el conducto en la
+;   columna 58; checkpoint al pie, en (52, 26). Se recorre hacia el oeste
+;   hasta la BAJADA: hueco de x 22-24 en el suelo, con escalera en la columna
+;   23 (filas 27-45) al pie de la bajada.
+; - DEPÓSITO DEL ALCAIDE (puerta hacia atrás, idea 1): sala x 12-18, filas
+;   22-26, tras una REJA en la columna 19 (filas 24-26) que se abre con la
+;   llave del alcaide (mazmorra, locked_door). Se ve desde la galería, al otro
+;   lado de la bajada (el hueco de 3 se salta): una estantería (13, 26), una
+;   caja y un barril. Premio, en la _combate: el acta de la condena del
+;   prisionero (lore, texto provisional) y la empuñadura de su espada, +0.25
+;   de daño en todos los tajos. El arcón del premio va en (15, 26).
+; - SECRETO, EL ESCONDITE DEL PRESO (tipo: pared falsa, punto 4 de las
+;   sugerencias): al fondo este de la galería, PARED AGRIETADA en la columna 63
+;   (filas 24-26) y, tras ella, la sala x 64-72, filas 22-26. Se descubre por
+;   las grietas del ladrillo y porque la galería sigue más allá del conducto
+;   sin motivo; se abre a golpes, también a puños (pieza nueva: una escena con
+;   breakable_object.gd y arte de ladrillo agrietado, que se recuerda al
+;   romperse). Premio: cofre en (70, 26), dos monedas y las marcas que el
+;   preso grabó en la pared (lore, texto provisional, en (65, 26)). No es
+;   necesario para avanzar. En el ASCII la pared queda abierta.
+;
+; ABAJO (suelo 46):
+; - PIE DE LA BAJADA: x 14-31, filas 38-45, sin enemigos.
+; - SALA LARGA: x 32-60, filas 36-45 (10 de alto). Para esquivar: plataformas
+;   de una vía en la fila 43 (x 38-41 y x 50-53), a 3 piezas del suelo, con
+;   una moneda encima de cada una. Dos ratas y un murciélago.
+; - PASO BAJO: x 61-62, filas 43-45.
+; - CÁMARA DEL PRESO: x 63-74, filas 39-45. Sitio tranquilo, sin enemigos.
+;   Checkpoint en (68, 45). El cadáver del preso en (71, 45) y la ESPADA
+;   OXIDADA con su atuendo (E1) en (72, 45), a 3 piezas de la reja del
+;   conducto (el detector de locked_door abre a 20 px). REJA DEL CONDUCTO en
+;   la columna 75 (filas 43-45, requires_sword): sin la espada no se llega al
+;   carcelero.
+; - POZO DE :B: (atajo a la mazmorra, el desagüe entre las dos prisiones):
+;   hueco de x 64-66 en el suelo de la cámara, filas 46-51, abierto en el
+;   borde de abajo (columnas 100-102 del mundo, las del pozo de la mazmorra,
+;   x 70-72). Escalera en la columna 65. TRAMPILLA en x 64-66, fila 46,
+;   cerrada desde el calabozo y abierta si completed_encounters tiene
+;   mazmorra_atajo_b_abierto (palanca de la repisa alta de la mazmorra). Entre
+;   las dos zonas el pozo recorre 45 piezas (el verificador lo avisa como
+;   túnel). Desde :B: se llega al depósito: cámara, sala larga, pie de la
+;   bajada, escalera 23 y galería. En el ASCII queda abierta.
+; - PIE DE LA SUBIDA: x 76-92, filas 39-45. Checkpoint en (88, 45), antes de
+;   subir al carcelero.
+;
+; Comprobado con una simulación de saltos sobre la cuadrícula (cuerpo de 3
+; piezas de alto, saltos de 3 y huecos de 3), con las rejas, la pared y la
+; trampilla cerradas o abiertas según el caso: sin espada, desde la P se llega
+; a la espada y no al carcelero, a la celda cerrada, al depósito ni al
+; secreto; con espada, se llega al carcelero, a la celda cerrada y, rota la
+; pared, al secreto; con la llave, a [L1]; desde todo se vuelve a la P. El
+; depósito no se alcanza sin su llave, ni el secreto sin romper la pared (ni
+; con saltos de 7). Con la trampilla de :B: cerrada, desde el calabozo no se
+; baja a la mazmorra (ni con saltos de 7); con ella abierta, desde la P de la
+; mazmorra se llega al depósito y se vuelve. Se alcanzan todos los cofres,
+; monedas y pociones.
+;
+; Segunda pasada (profundidad 0, P33: rata, slime y murciélago grande, sin
+; letra; van a mano en la _combate):
+; - Enemigos: 4 ratas, 1 slime, 4 murciélagos grandes y el carcelero.
+;   - Cuerpo de guardia: rata en (42, 10) y slime en (48, 10).
+;   - Sala del aviso (los "demasiados"; con espada se vuelve a por ellos): ratas
+;     en (67, 10) y (75, 10) y murciélago en (72, 6).
+;   - Galería de los presos: rata en (38, 26) y murciélago en (28, 22).
+;   - Sala larga: ratas en (42, 45) y (56, 45) y murciélago en (47, 38).
+;   - Sala del carcelero: el carcelero en (89, 10).
+;   - Ninguno en la celda de inicio, la celda cerrada, el pie de la bajada, la
+;     cámara del preso, el pie de la subida, el depósito ni el secreto, ni a
+;     menos de 9 piezas de la P o de un checkpoint.
+; - Cofres (c): cuerpo de guardia (51, 10) y secreto (70, 26). Monedas ($)
+;   sobre el foso de práctica, en el cuerpo de guardia, sobre las plataformas
+;   de la sala larga y en el secreto. Poción (!) en la celda cerrada (4, 10).
+; - Decorados del tileset castillo: antorchas (t) en todas las salas menos las
+;   celdas, el vestíbulo, el depósito y el secreto; rejas de celda (f, 2x2) en
+;   el pasillo y la galería; cadenas (g) y estandartes (h), que cuelgan del
+;   techo; una armadura (T) en la sala del carcelero; estantería (E), cajas (x)
+;   y barriles (b) en el depósito, el cuerpo de guardia, el secreto y el pie de
+;   la subida. Ninguno pisa una escalera, sus columnas vecinas ni las tres filas
+;   de encima, un spawn ni otro decorado.
+;
+; Viven en tiles_calabozo_combate.tscn (se rehace al generar este mapa):
+; - Rejas (locked_door): RejaCelda (columna 8) y RejaInterior (77), con
+;   requires_sword; RejaConducto (75), requires_sword; RejaSalida (95), llave
+;   calabozo_salida; RejaDeposito (19), llave del alcaide.
+; - Cinemáticas: AvisoConducto, con PuntoConducto sobre el hueco, en (58, 9),
+;   al entrar en la sala del aviso; HallazgoPreso, con PuntoPreso en (71, 44),
+;   al salir del paso bajo de la cámara.
+; - Enemigos de la lista de arriba y el carcelero (jailer_key_drop.gd).
+; - PresoMuerto y EspadaOxidada (con el atuendo) en la cámara del preso.
+; - Pared agrietada del secreto (pieza nueva) y sus marcas de lore; arcón del
+;   depósito con el acta y la empuñadura (piezas de lore y de mejora, nuevas).
+; - TrampillaAtajoB (arena_barrier que lee completed_encounters, pieza que
+;   falta), transición en el borde de abajo, x 64-66, a
+;   tiles_mazmorra_combate.tscn#DesdeCalabozo, y spawn DesdeMazmorra hacia
+;   (62, 45), junto al paso bajo de la cámara.
+; - La salida [L1] la pone el constructor ("siguiente"); la entrada desde la
+;   prisión es la P.
+
+escena: res://escenas/mapas/tiles_calabozo.tscn
+tileset: castillo
+bloques: castillo
+fondo: castillo
+; Llega sin espada: el Player es el del prólogo (camina y da puñetazos).
+jugador: res://escenas/prisn.tscn
+siguiente: res://escenas/mapas/tiles_castillo_combate.tscn#SpawnInicio
+---
+####################################################################################################
+####################################################################################################
+####################################################################################################
+####################################################################################################
+#################.....................................##.....................#.................#####
+#########.......#..........................h..........##..........g..........#...........h.....#####
+##......#.....g.#.....................................##.....................#.................#####
+##......#.......#..t......t..........t........t.......##......t........t.....#......t.......t..#####
+##........t.................$......................................................................>
+##.....................##..........................................................................>
+##..!.......P....f..#..##f......S..bx...$..........c.................................T.............>
+###########################...###########################.H.####################.H.#################
+###########################...###########################.H.####################.H.#################
+#########################################################.H.####################.H.#################
+#########################################################.H.####################.H.#################
+#########################################################.H.####################.H.#################
+#########################################################.H.####################.H.#################
+#########################################################.H.####################.H.#################
+#########################################################.H.####################.H.#################
+#########################################################.H.####################.H.#################
+####################......................................H....#################.H.#################
+####################......................................H....#################.H.#################
+############.......#......................................H....#.........#######.H.#################
+############.......#..........t.............t..........t..H....#.....g...#######.H.#################
+############..............................................H..............#######.H.#################
+############..............................................H..............#######.H.#################
+############.E..xb.................f...........f....S.....H.......$$..cx.#######.H.#################
+######################.H.#######################################################.H.#################
+######################.H.#######################################################.H.#################
+######################.H.#######################################################.H.#################
+######################.H.#######################################################.H.#################
+######################.H.#######################################################.H.#################
+######################.H.#######################################################.H.#################
+######################.H.#######################################################.H.#################
+######################.H.#######################################################.H.#################
+######################.H.#######################################################.H.#################
+######################.H.#######.............................###################.H.#################
+######################.H.#######.............................###################.H.#################
+##############.........H.....................................###################.H.#################
+##############.........H.....................................##............#.....H...........#######
+##############.........H...........t..........t..........t...##............#.....H...........#######
+##############....t....H....t................................##t.........t.#..t..H........t..#######
+##############.........H...............$...........$.........##............#.....H...........#######
+##############.........H..............====........====...........................H...........#######
+##############.........H.........................................................H...........#######
+##############.........H............................................S............H......S..b.#######
+################################################################.H.#################################
+################################################################.H.#################################
+################################################################.H.#################################
+################################################################.H.#################################
+################################################################.H.#################################
+################################################################.H.#################################

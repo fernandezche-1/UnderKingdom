@@ -20,6 +20,7 @@ Mientras una zona no esté marcada aquí, sigue como la describe la tarea de los
 - [ ] Hielo que se derrite con la llama eterna, y la luz de la antorcha (`[P6]`).
 - [ ] Secuencia de derrumbe y huida (`[!5]`).
 - [ ] Ascensor minero (`:C:`).
+- [ ] Pared agrietada que se rompe a golpes (secreto del calabozo; `breakable_object.gd` con arte de ladrillo agrietado).
 - [ ] Palanca y barrera que se abre según `completed_encounters` (atajos `:B:`, `:D:`, `:E:`, `:F:` y compuerta de la mazmorra).
 - [ ] Fuego infernal que solo se pasa con E5 (altar este de las profundidades, `[S7]`).
 
@@ -33,10 +34,9 @@ Mientras una zona no esté marcada aquí, sigue como la describe la tarea de los
 
 **Zonas** (salida según el plan):
 - [x] Prisión: paso libre hacia abajo. Ya está.
-- [x] Calabozo: `[L1]` llave del carcelero. Ya está.
-  - [x] `:B:` dibujado en `mapas_texto/tiles_calabozo.txt` (columnas 100-102, suelo de la cámara del preso), sin regenerar.
-  - [ ] Regenerar la escena base y, en el mismo cambio, montar en la `_combate` la trampilla, la transición y el spawn de `:B:` (P46, sección 9).
-  - [ ] Depósito del alcaide (idea 1 de las puertas hacia atrás): reja en la columna 52 y sala x 42-51.
+- [ ] Calabozo: `[L1]` llave del carcelero. Hoy se juega el tramo lineal de P42; se rehace como zona tutorial.
+  - [x] ASCII rehecho (`mapas_texto/macro/zonas/calabozo.txt`, 100 x 52), colocado y verificado, con primera y segunda pasada: tutorial en tres pisos, celda cerrada con la espada, depósito del alcaide (idea 1), secreto tras una pared agrietada y `:B:` en el suelo de la cámara del preso.
+  - [ ] Generar el nivel (el archivo pasa a `mapas_texto/tiles_calabozo.txt`) y rehacer la `_combate` entera: cinco rejas, las dos cinemáticas y sus puntos, enemigos y carcelero, espada y preso, pared agrietada, arcón del depósito, trampilla, transición y spawn de `:B:`. Luego jugarlo: se pierden las colisiones validadas de hoy.
 - [ ] Castillo: `[H2]`, salida lateral hacia el cementerio.
   - [x] ASCII, primera pasada (`mapas_texto/macro/zonas/castillo.txt`), colocado y verificado.
   - [x] Segunda pasada: enemigos (G, v, m), objetos y decorados.
@@ -68,7 +68,7 @@ Mientras una zona no esté marcada aquí, sigue como la describe la tarea de los
   - [ ] Generar el nivel y montar la `_combate` (arenas con oleadas del coliseo y del salón, rejas bajas del pasillo, fuego infernal, Cthulhu en el trono con reja en `Puertas`, activador, `PuntosJefe`, aviso del final, transición y spawn de `[S7]`).
 
 **Atajos:**
-- [ ] `:B:` calabozo ↔ mazmorra. Dibujado (2026-11-06): columnas 100-102 del mundo, de la cámara del preso a la repisa alta de la mazmorra; palanca en la mazmorra. Falta montarlo en las dos `_combate`.
+- [ ] `:B:` calabozo ↔ mazmorra. Dibujado (2026-11-06): columnas 100-102 del mundo, de la cámara del preso del calabozo rehecho a la repisa alta de la mazmorra; palanca en la mazmorra. Falta montarlo en las dos `_combate`.
 - [ ] `:C:` castillo ↔ minas.
 - [ ] `:D:` minas ↔ ruina.
 - [ ] `:E:` ruina ↔ profundidades.

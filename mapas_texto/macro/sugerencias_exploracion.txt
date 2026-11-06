@@ -64,8 +64,10 @@ Llaves nuevas (sin arte de personaje):
 Propuestas (coordenadas en piezas de cada ASCII, columna y fila):
 
 1. CALABOZO, el depósito del alcaide.
-   - Sitio: al pie de la escalera 56, en la zona honda. Reja en la columna 52
-     (filas 35-37); sala nueva x 42-51, filas 33-37.
+   - Sitio (calabozo rehecho, mapas_texto/macro/zonas/calabozo.txt): al
+     fondo oeste de la galería de los presos, al otro lado de la bajada
+     (escalera 23). Reja en la columna 19 (filas 24-26); sala x 12-18,
+     filas 22-26.
    - Se ve: a través de la reja, una estantería y un arcón.
    - Lo abre: la llave del alcaide (mazmorra).
    - Premio: el acta de la condena del prisionero (lore: su nombre tachado) y
@@ -220,17 +222,19 @@ Reglas que se mantienen:
 - HECHO (2026-11-06). Dibujado en mapas_texto/tiles_calabozo.txt (sin
   regenerar) y en el ASCII de la mazmorra; apuntado en conexiones.txt y en
   P46 (secciones 4 y 9).
-- Sitio: columnas 100-102 del mundo. En el calabozo, el suelo de la cámara del
-  preso (x 100-102, filas 41-45, escalera en la 101), a la derecha de la
-  espada. Las columnas 97-99 de la primera sugerencia caían bajo la espada y
-  el preso. En la mazmorra, un pozo en x 70-72 con escalera en la columna 71
+- Sitio: columnas 100-102 del mundo. En el calabozo rehecho
+  (mapas_texto/macro/zonas/calabozo.txt), el suelo de la cámara del preso
+  (x 64-66, filas 46-51, escalera en la 65), entre el checkpoint y la espada.
+  El primer dibujo, en tiles_calabozo.txt (x 100-102), queda obsoleto. En la
+  mazmorra, un pozo en x 70-72 con escalera en la columna 71
   hasta la esquina noreste de la gran sala (repisa alta), a dos piezas de la
   llave del alcaide.
 - Cierre: trampilla en el suelo de la cámara del preso, cerrada desde el
   calabozo; se abre con una palanca de la repisa alta de la mazmorra, en
   (67, 21), y se recuerda en completed_encounters.
 - Es el camino para volver al depósito del alcaide (punto 1, idea 1): desde
-  la cámara se camina al oeste hasta la cueva.
+  la cámara se va al oeste por la sala larga y se sube por la escalera 23 a la
+  galería de los presos.
 
 
 ==============================================================================
