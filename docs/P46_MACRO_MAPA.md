@@ -197,6 +197,7 @@ El macro mapa (sección 1) solo dice qué zona va al lado de cuál; no está a e
 | Zonas: escena, fuente del ASCII y posición en el mundo | `mapas_texto/macro/zonas.txt` |
 | Conexiones: la fuente de verdad | `mapas_texto/macro/conexiones.txt` |
 | Verificar y unir | `herramientas/macro_mapa/verificar_mundo.py` |
+| Datos del atlas (artefacto con el mundo unido, sus zonas, notas y conexiones) | `herramientas/macro_mapa/datos_atlas.py <atlas.html>`: sustituye su línea `const D = ...;` por los datos de hoy; tras cada cambio de mapa se vuelve a publicar |
 
 ### El ASCII de una zona
 - **Un carácter = una pieza de 16 px**, con las letras del constructor (`mapas_texto/LEYENDA.md`, sección 5): `#` bloque, `.` vacío, `=` plataforma, `H` escalera, `>`/`<` salidas…
