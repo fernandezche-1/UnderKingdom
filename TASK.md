@@ -20,6 +20,7 @@ Mientras una zona no esté marcada aquí, sigue como la describe la tarea de los
 - [ ] Hielo que se derrite con la llama eterna, y la luz de la antorcha (`[P6]`).
 - [ ] Secuencia de derrumbe y huida (`[!5]`).
 - [ ] Ascensor minero (`:C:`).
+- [ ] Palanca y barrera que se abre según `completed_encounters` (atajos `:B:`, `:D:`, `:E:`, `:F:` y compuerta de la mazmorra).
 - [ ] Fuego infernal que solo se pasa con E5 (altar este de las profundidades, `[S7]`).
 
 **Atuendos** (plan, sección 10; con qué llega el jugador a cada zona y qué se consigue allí):
@@ -33,6 +34,9 @@ Mientras una zona no esté marcada aquí, sigue como la describe la tarea de los
 **Zonas** (salida según el plan):
 - [x] Prisión: paso libre hacia abajo. Ya está.
 - [x] Calabozo: `[L1]` llave del carcelero. Ya está.
+  - [x] `:B:` dibujado en `mapas_texto/tiles_calabozo.txt` (columnas 100-102, suelo de la cámara del preso), sin regenerar.
+  - [ ] Regenerar la escena base y, en el mismo cambio, montar en la `_combate` la trampilla, la transición y el spawn de `:B:` (P46, sección 9).
+  - [ ] Depósito del alcaide (idea 1 de las puertas hacia atrás): reja en la columna 52 y sala x 42-51.
 - [ ] Castillo: `[H2]`, salida lateral hacia el cementerio.
   - [x] ASCII, primera pasada (`mapas_texto/macro/zonas/castillo.txt`), colocado y verificado.
   - [x] Segunda pasada: enemigos (G, v, m), objetos y decorados.
@@ -48,7 +52,7 @@ Mientras una zona no esté marcada aquí, sigue como la describe la tarea de los
 - [ ] Mazmorra: `[!5]`, derrumbe tras la Reina.
   - [x] ASCII, primera pasada (`mapas_texto/macro/zonas/mazmorra.txt`), colocado y verificado.
   - [x] Segunda pasada: enemigos (a, M, q, e), cofres, objetos y decorados.
-  - [ ] Generar el nivel y montar la `_combate` (Reina con `ability_reward` del Ultimate y sin llave, suelo que se hunde y derrumbe, compuerta y palanca del atajo, trampilla del colector, transición de `[!5]`).
+  - [ ] Generar el nivel y montar la `_combate` (Reina con `ability_reward` del Ultimate y sin llave, suelo que se hunde y derrumbe, compuerta y palanca del atajo, trampilla del colector, transición de `[!5]`, palanca, transición y spawn de `:B:`, llave del alcaide).
 - [ ] Ruina helada: `[P6]`, derretir el hielo con la llama eterna.
   - [x] ASCII, primera pasada (`mapas_texto/macro/zonas/ruina.txt`), colocado y verificado.
   - [x] Segunda pasada: enemigos (a, M, q, e), cofres, objetos y decorados.
@@ -64,7 +68,7 @@ Mientras una zona no esté marcada aquí, sigue como la describe la tarea de los
   - [ ] Generar el nivel y montar la `_combate` (arenas con oleadas del coliseo y del salón, rejas bajas del pasillo, fuego infernal, Cthulhu en el trono con reja en `Puertas`, activador, `PuntosJefe`, aviso del final, transición y spawn de `[S7]`).
 
 **Atajos:**
-- [ ] `:B:` calabozo ↔ mazmorra. Sitio sugerido: columnas 97-99 del mundo (P46, sección 9, estado de la mazmorra); se decide al rehacer el calabozo.
+- [ ] `:B:` calabozo ↔ mazmorra. Dibujado (2026-11-06): columnas 100-102 del mundo, de la cámara del preso a la repisa alta de la mazmorra; palanca en la mazmorra. Falta montarlo en las dos `_combate`.
 - [ ] `:C:` castillo ↔ minas.
 - [ ] `:D:` minas ↔ ruina.
 - [ ] `:E:` ruina ↔ profundidades.

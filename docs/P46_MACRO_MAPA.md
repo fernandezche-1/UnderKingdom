@@ -114,7 +114,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 
 | Atajo | Une | Se abre desde | Idea |
 |---|---|---|---|
-| `:B:` | Calabozo ↔ Mazmorra | la mazmorra | desagüe entre las dos prisiones |
+| `:B:` | Calabozo ↔ Mazmorra | la mazmorra (palanca en la repisa alta, en (67, 21)) | el desagüe entre las dos prisiones: del suelo de la cámara del preso del calabozo (x 100-102, a la derecha de la espada) a la esquina noreste de la gran sala de la mazmorra (x 70-72), por un pozo de 53 piezas. Es la vuelta al depósito del alcaide (idea 1 de las puertas hacia atrás). Dibujado (2026-11-06) |
 | `:C:` | Castillo ↔ Minas | las minas | ascensor minero |
 | `:D:` | Minas ↔ Ruina helada | la ruina | pozo minero |
 | `:E:` | Ruina ↔ Profundidades | las profundidades | vuelta rápida para la tienda o para farmear |
@@ -142,6 +142,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 - La secuencia de huida o derrumbe tras la Reina (`[!5]`).
 - La reja baja que solo se pasa rodando (`[H2]`).
 - El ascensor minero (`:C:`).
+- La palanca y la barrera que se abre si ya se tiró de ella (lee `completed_encounters`; `arena_barrier.gd` hoy solo tiene `start_closed`, `open()` y `close()`): trampillas y rejas de los atajos (`:B:`, `:D:`, `:E:`, `:F:`) y compuerta de la mazmorra.
 - Las arenas con oleadas del infierno (coliseo de los condenados y salón de los verdugos): `arena_barrier.gd` más algo que saque una oleada tras otra.
 - El fuego infernal del altar este de las profundidades (`[S7]`): fuego que sin E5 no deja pasar (quema hasta matar o empuja hacia atrás) y con E5 no hace daño. En el ASCII son trampas de fuego `F`.
 
@@ -245,6 +246,9 @@ Una zona no se da por hecha mientras el verificador dé errores.
 
 ### Estado
 - **Calabozo:** su salida `[L1]` está fija: borde derecho, fila 10, 3 piezas. Colocado en el mundo en (0, 34).
+  - **`:B:` dibujado (2026-11-06)** en `mapas_texto/tiles_calabozo.txt`, sin regenerar la escena: hueco de 3 piezas en el borde de abajo, columnas 100-102, en el suelo de la cámara del preso (filas 41-45), con escalera en la columna 101. Está a la derecha de la espada (columna 98) y del preso (columna 96); las columnas 97-99 de la primera sugerencia caían bajo ellos. La antorcha de (101, 40) pasó a (103, 40). Son 15 bloques menos de una colisión validada, aprobado.
+  - En la `_combate`: `TrampillaAtajoB` en x 100-102, fila 41, cerrada y abierta si existe `mazmorra_atajo_b_abierto`; transición en el borde de abajo a `tiles_mazmorra_combate.tscn#DesdeCalabozo` y spawn `DesdeMazmorra` hacia (99, 40). **Al regenerar el calabozo** entran en el mismo cambio: sin ellas el Player cae por el fondo del mapa.
+  - Comprobado con una simulación de saltos sobre el mundo unido: desde la mazmorra se sube por `:B:` a la cámara, al pie del depósito y al inicio del calabozo, y desde ahí se vuelve; con la trampilla cerrada, desde el calabozo no se llega a la mazmorra (ni con saltos de 7), y bajo ella no se queda atrapado; con saltos de 3 el alcance del calabozo es idéntico al de antes en sus tres tramos (sin espada, con espada y con la llave). Probados el calabozo y la mazmorra generando escenas temporales con el constructor, sin errores; la escena real del calabozo no se regeneró.
 - **Castillo (ASCII, primera pasada, 2026-11-04):** `mapas_texto/macro/zonas/castillo.txt`, 110 x 80, en el mundo en (136, 0).
   - Recibe `[L1]` en su borde izquierdo, filas 44-46. `[H2]` sale por el borde derecho, filas 67-69, 3 piezas, por el paso bajo el trono. `:C:` es un hueco de 3 piezas en el borde de abajo, columnas 34-36, desde el sótano.
   - Subzonas, coordenadas y sitio de cada pieza (Rey, reja, trampillas, E2, cofres) en los comentarios del archivo.
@@ -273,7 +277,7 @@ Una zona no se da por hecha mientras el verificador dé errores.
   - Añadido al plan: la escalera del colector, que va de la huida al cuerpo de guardia y tiene una trampilla que solo se abre desde abajo. Antes de la Reina no deja bajar a la huida. Después, permite volver desde la ruina.
   - El suelo que se hunde está dibujado como bloque: la sala queda entera durante el combate, y la pieza nueva tiene que quitar esas celdas al hundirse.
   - Secreto de la Agilidad al fondo este de la torre: un escalón de 5 piezas, como el de las minas.
-  - `:B:` no está dibujado. Sitio sugerido: borde de arriba de la mazmorra, columnas 67-69, que son las 97-99 del mundo y del calabozo. Bajaría por un pozo con escalera hasta la repisa alta de la gran sala. Se decide al rehacer el calabozo.
+  - `:B:` (2026-11-06): pozo de 3 piezas en el borde de arriba, columnas 70-72 (100-102 del mundo), con escalera en la columna 71 (filas 0-21) hasta la esquina noreste de la gran sala, donde la repisa alta se junta con la torre. Palanca en (67, 21) y spawn `DesdeCalabozo` hacia (69, 21); la llave del alcaide de (73, 21) queda a dos piezas. El kolbo3 de la repisa pasa de (66, 21) a (62, 21). Por este lado no se cierra.
   - Coordenadas de cada pieza en los comentarios del archivo. Comprobado con una simulación de saltos de 3 piezas: se llega a todo menos al secreto (tampoco con 4; sí con 6), desde todo se vuelve a la llegada y la huida solo se alcanza tras el derrumbe. Probada generando una escena temporal con el constructor, sin errores.
   - Segunda pasada hecha: 5 Aprendis, 2 mino, 7 kolbo3 y 6 esqueletos, 4 cofres (uno en el secreto), 14 monedas, 3 pociones y decorados del tileset mazmorra (estanterías en la torre y la gran sala, la fogata de la guardia y agua y hongos en los desagües). El mino mide 5 piezas de alto y solo cabe en la gran sala y en la torre. Las plataformas del cuerpo de guardia bajan una fila (66 y 63): estaban a 4 piezas. Con saltos de 3 se alcanza todo menos lo del secreto. Probada generando una escena temporal con el constructor, sin errores; tras 3 s de física cada enemigo sigue en su sitio.
 - **Ruina helada (ASCII, primera pasada, 2026-11-04):** `mapas_texto/macro/zonas/ruina.txt`, 156 x 80, en el mundo en (136, 223): justo debajo de la mazmorra y las minas, que acaban en la fila 222, de la columna 136 a la 291.
@@ -310,7 +314,7 @@ Una zona no se da por hecha mientras el verificador dé errores.
   - Ningún escalón obligatorio pide más de 4 piezas ni huecos de más de 3; nada pide E3 ni E4. Comprobado con una simulación de saltos sobre la cuadrícula: desde la P se llega a todo y desde todo se vuelve (con rejas y trampillas abiertas). Con saltos de 3 no se vuelve a subir la sima, como antes.
   - **Piezas nuevas:** las arenas cerradas con oleadas del coliseo y del salón (`arena_barrier.gd` más un generador de oleadas, que no existe) y las rejas bajas del pasillo (la misma pieza que falta para `[H2]`).
   - Coordenadas de cada pieza en la cabecera del archivo.
-- Con el infierno quedan dibujadas todas las zonas (primera pasada). Falta `:B:`, que se decide al rehacer el calabozo.
+- Con el infierno quedan dibujadas todas las zonas (primera pasada). `:B:` quedó dibujado el 2026-11-06 (ver el calabozo y la mazmorra). Falta `:F:`. El verificador da 0 errores y avisa del túnel de 53 piezas de `:B:` y de `:C:`.
 
 ## 10. Progreso del personaje: atuendos y desbloqueos por zona
 

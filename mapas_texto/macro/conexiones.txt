@@ -26,7 +26,7 @@ L4   llave      minas         izq   66  mazmorra       der    66  3  constructor
 !5   derrumbe   mazmorra      abajo 115 ruina          arriba  9  3  combate
 P6   puzle      ruina         abajo 145 profundidades  arriba 181 3  combate
 S7   sellos     profundidades abajo 114 infierno       arriba 54  3  combate
-:B:  atajo      calabozo      abajo  ?  mazmorra       arriba  ?  ?  combate
+:B:  atajo      calabozo      abajo 100 mazmorra       arriba 70  3  combate
 :C:  atajo      castillo      abajo 34  minas          arriba 20  3  combate
 :D:  atajo      minas         abajo 132 ruina          arriba 146 3  combate
 :E:  atajo      ruina         abajo 90  profundidades  arriba 126 3  combate

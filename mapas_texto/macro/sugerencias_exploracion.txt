@@ -217,11 +217,20 @@ Reglas que se mantienen:
 3. DECIDIR EL ATAJO :B: (prioridad alta)
 ==============================================================================
 
-- Es el único atajo sin dibujar. El verificador lo avisa.
-- Sitio sugerido en P46: borde de arriba de la mazmorra, columnas 67-69 (97-99
-  del mundo), bajando a la repisa alta de la gran sala.
-- Si el calabozo tiene una puerta hacia atrás (punto 1), :B: es el camino para
-  volver a ella. Esa es su razón de ser.
+- HECHO (2026-11-06). Dibujado en mapas_texto/tiles_calabozo.txt (sin
+  regenerar) y en el ASCII de la mazmorra; apuntado en conexiones.txt y en
+  P46 (secciones 4 y 9).
+- Sitio: columnas 100-102 del mundo. En el calabozo, el suelo de la cámara del
+  preso (x 100-102, filas 41-45, escalera en la 101), a la derecha de la
+  espada. Las columnas 97-99 de la primera sugerencia caían bajo la espada y
+  el preso. En la mazmorra, un pozo en x 70-72 con escalera en la columna 71
+  hasta la esquina noreste de la gran sala (repisa alta), a dos piezas de la
+  llave del alcaide.
+- Cierre: trampilla en el suelo de la cámara del preso, cerrada desde el
+  calabozo; se abre con una palanca de la repisa alta de la mazmorra, en
+  (67, 21), y se recuerda en completed_encounters.
+- Es el camino para volver al depósito del alcaide (punto 1, idea 1): desde
+  la cámara se camina al oeste hasta la cueva.
 
 
 ==============================================================================

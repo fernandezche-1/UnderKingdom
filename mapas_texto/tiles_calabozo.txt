@@ -8,6 +8,20 @@
 ; y 128), la espada, los enemigos y los diálogos del prisionero viven en
 ; tiles_calabozo_combate.tscn, que hereda de esta escena: regenerarla no los borra.
 ; Jugar el nivel desde esa.
+; ATAJO :B: (macro mapa, docs/P46_MACRO_MAPA.md, sección 4): el desagüe entre
+; las dos prisiones. Hueco de x 100-102 en el suelo de la cámara del preso
+; (filas 41-45, abierto en el borde de abajo; columnas 100-102 del mundo y
+; 70-72 de la mazmorra), con escalera en la columna 101, a la derecha de la
+; espada (columna 98) y del preso (columna 96). La antorcha de (101, 40) pasó
+; a (103, 40). Se abre desde la mazmorra: TRAMPILLA (arena_barrier) en
+; x 100-102, fila 41, cerrada desde aquí y abierta si completed_encounters
+; tiene mazmorra_atajo_b_abierto (palanca de la mazmorra, en su repisa alta).
+; Transición en el borde de abajo, x 100-102, a
+; tiles_mazmorra_combate.tscn#DesdeCalabozo; spawn DesdeMazmorra hacia
+; (99, 40). Por ella se vuelve al depósito del alcaide (puerta hacia atrás,
+; idea 1). AVISO: la escena base todavía no tiene el hueco. Al regenerarla,
+; la trampilla, la transición y el spawn entran en la _combate en el mismo
+; cambio; sin ellos el Player cae por el fondo del mapa.
 ; Generar desde la carpeta del proyecto:
 ;   godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/tiles_calabozo.txt
 
@@ -59,9 +73,9 @@ siguiente: res://escenas/mapas/tiles_castillo_combate.tscn#SpawnInicio
 #####################################################.x.H..S..t.f...t.....................###...........#.H.############################
 #######################################################################\......====...====.................H..###########################
 ########################################################################\.................................H..###########################
-#########################################################################\..t.......t....t..t.S......t....H..###########################
-########################################################################################################################################
-########################################################################################################################################
-########################################################################################################################################
-########################################################################################################################################
-########################################################################################################################################
+#########################################################################\..t.......t....t..t.S........t..H..###########################
+####################################################################################################.H.#################################
+####################################################################################################.H.#################################
+####################################################################################################.H.#################################
+####################################################################################################.H.#################################
+####################################################################################################.H.#################################
