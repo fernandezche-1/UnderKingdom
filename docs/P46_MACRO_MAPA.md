@@ -297,6 +297,7 @@ Una zona no se da por hecha mientras el verificador dé errores.
   - Los escalones de la sima son de 4 piezas y los huecos de 3, como pide la zona. Distinto de las anteriores: con saltos de 3 se baja hasta la sala, pero no se vuelve a subir la sima. Llega con E5, así que no afecta al camino.
   - Coordenadas de cada pieza en los comentarios del archivo. Comprobado con una simulación de saltos con la física del Player (velocidad 170, salto 470, gravedad 1500, caja de 20 x 40): con la reja cerrada se llega a todo menos a la sala y desde todo se vuelve a la llegada; con la reja abierta, a toda la sala y sus plataformas, y desde ella se vuelve.
   - Segunda pasada pendiente: diablillos (`d`) en el aire, cofres y poción en el umbral, cofre en el osario y decorados. El demonslime común no se pone: es el jefe de la zona anterior y no tiene letra.
+  - Segunda pasada hecha: 18 diablillos en el aire (11 en la sima, 4 en el mirador, 2 en el osario, 1 en el paso de las cadenas; ninguno en la llegada, el umbral ni el trono), 4 cofres (mirador, osario y dos en el umbral), una poción de reserva en el umbral, 20 monedas y antorchas y fogatas. Coordenadas en la cabecera del archivo.
 - Con el infierno quedan dibujadas todas las zonas (primera pasada). Falta `:B:`, que se decide al rehacer el calabozo.
 
 ## 10. Progreso del personaje: atuendos y desbloqueos por zona

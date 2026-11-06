@@ -60,7 +60,7 @@ Mientras una zona no esté marcada aquí, sigue como la describe la tarea de los
   - [ ] Generar el nivel y montar la `_combate` (tres altares y su contador, minijefes, fuego infernal, E5, Demon Slime con reja y trampilla en `Puertas` y reja de salida en `Atajos`, palanca de `:E:`, trampillas del atajo, del lago y del coliseo, transiciones de `[P6]`, `:E:` y `[S7]`).
 - [ ] Infierno: Cthulhu, sin salida.
   - [x] ASCII, primera pasada (`mapas_texto/macro/zonas/infierno.txt`), colocado y verificado.
-  - [ ] Segunda pasada: enemigos (d), cofres, objetos y decorados.
+  - [x] Segunda pasada: enemigos (d), cofres, objetos y decorados.
   - [ ] Generar el nivel y montar la `_combate` (Cthulhu en la sala nueva, reja de entrada en `Puertas`, activador, `PuntosJefe`, aviso del final, transición y spawn de `[S7]`).
 
 **Atajos:**
