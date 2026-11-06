@@ -145,3 +145,25 @@ Una foto de papel cuadriculado o una captura de un juego de referencia también 
 - **Historia:** si hay una escena con diálogo, su guion.
 
 Con eso se pasa a PNG, se genera el nivel y se revisa jugando.
+
+## 8. Integrar un paquete de arte
+1. El ZIP se descomprime en una carpeta aparte, nunca encima del proyecto.
+2. **Revisar la licencia** y anotarla en un `ORIGEN.txt`, como en `assets_prueba/dungeon_platformer/ORIGEN.txt`.
+3. **Medir el tamaño de tile.** Si es de 16 px, entra directo. Si es de otro tamaño, el nivel usa esa cuadrícula sin escalar a medias; el constructor toma el tamaño del archivo del tileset.
+4. **Crear `herramientas/constructor_mapas/tilesets/<nombre>.gd`** copiando `mazmorra.gd`, y ubicar en el PNG:
+   - el juego de bloques de 4x4 (esquinas, bordes e interior en 3x3, columna a la derecha y plataformas abajo) y las rampas;
+   - los decorados y las piezas animadas;
+   - los líquidos y la escalera;
+   - la pieza del checkpoint y el fondo.
+
+   Si el paquete no trae ese juego de 4x4, se arma un atlas nuevo copiando sus piezas, sin dibujar arte nuevo.
+5. **Probarlo** con un mapa de muestra.
+6. **Letras y colores nuevos:** si trae decorados o enemigos sin letra, se agregan a `COLORS` / `ENEMIES` del constructor. Después se regenera la paleta (`-- --paleta`) y se actualiza la tabla de la sección 5.
+7. **Enemigos:** escena con `enemy_base.gd` y sus valores (cuadros de golpe, hitbox, `collision_layer = 5`), siguiendo el patrón de `kolbo` y `mino`. Se prueban en la zona de pruebas (`zona_pruebas_combate.tscn`).
+
+## 9. Límites del constructor
+- **Pinchos:** son estáticos (un recorte de `spike Trap5.png`) y matan al tocarlos. No hay versión animada ni de daño parcial.
+- **Salidas:** si un mapa tiene varias salidas en la misma dirección, todas comparten el mismo spawn de llegada.
+- **Enemigos:** siempre a la escala de su escena.
+- **Parallax:** se vio en capturas a 480 x 270, pero falta verlo en movimiento.
+- **Arte:** no se dibuja pixel art nuevo; los niveles se arman con piezas de los paquetes.
