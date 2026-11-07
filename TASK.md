@@ -57,7 +57,7 @@ Responde en español.
 - [x] 0. Decisiones de las puertas (P46, sección 6), atajo `:B:` (columnas 100-102 del mundo) y calabozo rehecho como zona tutorial (`mapas_texto/macro/zonas/calabozo.txt`, 100 x 52). Incluye la idea 1, el depósito del alcaide, y la llave del alcaide en la torre de la mazmorra.
 - [x] 1. **Castillo:** ideas 2 (aposentos de la Reina, x 62-74, filas 11-18, al este de la capilla) y 3 (el castillo sin hechizo). La 3 no cambia el trazado: los sitios de los soldados y del Capitán, en (68, 62), van en los comentarios.
 - [x] 2. **Cementerio:** ideas 4 (estatua de la Reina, cueva x 112-118, filas 12-17, tras el hueco de la columna 111) y 5 (cripta de la primera reina, x 62-74, filas 29-34, con escalera nueva en la columna 68, losa en la fila 35 y puerta de velas en la columna 65).
-- [ ] 3. **Minas:** idea 6 (gruta de cristal). Comprobar que el Crystal Mauler cabe en 16 x 14; si no, la gruta va bajo la veta.
+- [x] 3. **Minas:** idea 6 (gruta de cristal, x 132-147, filas 64-77, tras la boca de la columna 131 y el pasillo del fuego, con checkpoint en (142, 55) y salida por la escalera 139). El Crystal Mauler cabe en 16 x 14 a escala 1, justo.
 - [ ] 4. **Mazmorra y profundidades:** idea 7 (pozo de los condenados).
   - Añadir `:F:` a `conexiones.txt` y dibujarlo en los dos ASCII.
   - Añadirlo también al dibujo del macro mapa (`herramientas/macro_mapa/macro_mapa.py`, P46 sección 1).
@@ -87,6 +87,7 @@ Cada pieza se prueba en la zona de pruebas (`escenas/mapas/zona_pruebas_combate.
 - [ ] Pared agrietada que se rompe a golpes (secreto del calabozo).
 - [ ] Palanca y barrera que se abre según `completed_encounters` (atajos `:B:` a `:F:` y compuerta de la mazmorra).
 - [ ] Fuego infernal que solo se pasa con E5 (santuario, gruta de cristal, infierno).
+- [ ] IA del Crystal Mauler: hoy `escenas/jefes/boss_mina.tscn` es solo sprite y colisión, sin script (¿`simple_boss.gd`?). Su sala, la gruta de cristal, mide 16 x 14.
 - [ ] Arenas con oleadas (coliseo y salón de los verdugos del infierno).
 
 **Piezas de las puertas hacia atrás** (punto 1 de las sugerencias, "Piezas compartidas"):
@@ -123,7 +124,7 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
   - la estatua de la Reina, con las notas y el amuleto; la losa, la puerta de velas, la corona con la carta y el fragmento de vida 2/4 de la cripta de la primera reina.
 - [ ] **Minas:**
   - el Caballero en su sala nueva, la puerta con llave de `[L4]`, el ascensor y la palanca de `:C:`, la trampilla del atajo, la reja de `:D:` y las transiciones de `[S3]` y `:C:`;
-  - la gruta de cristal con el Mauler.
+  - la gruta de cristal: fuego infernal, checkpoint y el Mauler con su `boss_arena` (trampilla de entrada en `Puertas`, la del suelo en `Atajos`, `ability_reward adrenaline`).
 - [ ] **Mazmorra:**
   - la Reina con `ability_reward` del Ultimate y sin llave, el suelo que se hunde y el derrumbe, la compuerta y la palanca del atajo, la trampilla del colector y la transición de `[!5]`;
   - la palanca, la transición y el spawn de `:B:`, y la llave del alcaide;

@@ -141,6 +141,14 @@ Propuestas (coordenadas en piezas de cada ASCII, columna y fila):
    - Comprobar que el Mauler quepa en 16 x 14; si no, la gruta va bajo la veta
      (x 80-110, filas 64-77, roca maciza).
    - Vuelta: :E: y :D:, y la escalera 62. Coste medio.
+   - HECHO (2026-11-06): dibujada en mapas_texto/macro/zonas/minas.txt
+     tal como se propone. El Mauler cabe en 16 x 14 a escala 1 (cuerpo de
+     unas 3 x 2,5 piezas; su sp_atk, de unas 12,5 x 6), aunque es la sala de
+     jefe más pequeña. La trampilla de entrada (fila 63) va en Puertas y la
+     del suelo (fila 78), en Atajos: cerrada hasta vencerlo, y se ve desde la
+     galería honda. La bajada no tiene escalera. Se añade un checkpoint en
+     (142, 55), tras el fuego. El murciélago pasa a (136, 82). Hoy
+     boss_mina.tscn no tiene script: falta su IA.
 7. MAZMORRA, el pozo de los condenados (atajo nuevo :F:).
    - Sitio: suelo de la huida, x 88-90 (columnas 118-120 del mundo), junto al
      colector; baja hasta la galería de los condenados de las profundidades
