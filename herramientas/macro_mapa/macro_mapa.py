@@ -39,7 +39,7 @@ put(57, 12, 'CRIPTA')
 put(56, 13, '(osarios)')
 box(38, 22, 70, 27, 'MINAS', '(Caballero de la Reina)')
 box(3, 22, 32, 27, 'MAZMORRA', '(la Reina)')
-box(3, 31, 70, 35, 'RUINA HELADA', '(Guardián de hielo)')
+box(16, 31, 70, 35, 'RUINA HELADA', '(Guardián de hielo)')
 box(8, 39, 66, 43, 'PROFUNDIDADES', '(Demon Slime + 3 altares)')
 box(18, 47, 56, 51, 'INFIERNO', '(prueba final, Cthulhu)')
 
@@ -50,9 +50,10 @@ vert(58, 61, 18, 22, '[S3]')        # cripta -> minas: 3 tumbas sello
 vert(40, 42, 11, 22, ':C:')         # atajo castillo <-> minas (ascensor minero)
 horiz(32, 38, 24, 25, '[L4]')       # minas -> mazmorra: llave del Caballero
 vert(10, 12, 13, 22, ':B:')         # atajo calabozo <-> mazmorra (desagüe)
-vert(10, 13, 27, 31, '[!5]')        # mazmorra -> ruina: derrumbe y huida
+vert(20, 23, 27, 31, '[!5]')        # mazmorra -> ruina: derrumbe y huida
 vert(64, 66, 27, 31, ':D:')         # atajo minas <-> ruina
 vert(50, 53, 35, 39, '[P6]')        # ruina -> profundidades: romper el hielo
-vert(14, 16, 35, 39, ':E:')         # atajo ruina <-> profundidades
+vert(27, 29, 35, 39, ':E:')         # atajo ruina <-> profundidades
+vert(9, 11, 27, 39, ':F:')          # atajo mazmorra <-> profundidades (pozo de los condenados)
 vert(30, 33, 43, 47, '[S7]')        # profundidades -> infierno: 3 altares + jefe
 print('\n'.join(''.join(r) for r in g))

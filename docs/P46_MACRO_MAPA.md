@@ -36,19 +36,19 @@ Cuanto más abajo está una zona, más profunda es: el juego se recorre bajando.
 #  #          MAZMORRA           [L4]               MINAS             #  #
 #  #         (la Reina)                    (Caballero de la Reina)    #  #
 #  #                            #######                               #  #
-#  #######    ###################     ##########################   ####  #
-#        #    #                                                #   #     #
-#        #[!5]#                                                #:D:#     #
-#        #    #                                                #   #     #
-#  #######    ##################################################   ####  #
-#  #                                                                  #  #
-#  #                           RUINA HELADA                           #  #
-#  #                        (Guardián de hielo)                       #  #
-#  ###########   #################################    #################  #
-#            #   #                               #    #                  #
-#            #:E:#                               #[P6]#                  #
-#            #   #                               #    #                  #
-#       ######   #################################    #############      #
+#  ######   ########    #########     ##########################   ####  #
+#       #   #      #    #                                      #   #     #
+#       #   #      #[!5]#                                      #:D:#     #
+#       #   #      #    #                                      #   #     #
+#       #   #   ####    ########################################   ####  #
+#       #   #   #                                                     #  #
+#       #:F:#   #                    RUINA HELADA                     #  #
+#       #   #   #                 (Guardián de hielo)                 #  #
+#       #   #   ###########   ####################    #################  #
+#       #   #             #   #                  #    #                  #
+#       #   #             #:E:#                  #[P6]#                  #
+#       #   #             #   #                  #    #                  #
+#       #   ###############   ####################    #############      #
 #       #                                                         #      #
 #       #                      PROFUNDIDADES                      #      #
 #       #                (Demon Slime + 3 altares)                #      #
@@ -73,7 +73,7 @@ Cuanto más abajo está una zona, más profunda es: el juego se recorre bajando.
 | `[S]` | sellos o piezas repartidos por la zona |
 | `[P]` | puzle del entorno |
 | `[!]` | derrumbe o huida |
-| `:B:` … `:E:` | atajo que se abre desde el lado de abajo |
+| `:B:` … `:F:` | atajo que se abre desde el lado de abajo |
 
 El número de cada marca es el orden de la transición en la ruta.
 
@@ -118,7 +118,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 | `:C:` | Castillo ↔ Minas | las minas | ascensor minero |
 | `:D:` | Minas ↔ Ruina helada | la ruina | pozo minero |
 | `:E:` | Ruina ↔ Profundidades | las profundidades | vuelta rápida para la tienda o para farmear |
-| `:F:` | Mazmorra ↔ Profundidades | las profundidades (palanca en la galería de los condenados) | el pozo de los condenados: de la huida de la mazmorra (x 88-90, columnas 118-120 del mundo) a la galería de los condenados (x 18-20). Sin dibujar; idea 7 de las puertas hacia atrás |
+| `:F:` | Mazmorra ↔ Profundidades | las profundidades (palanca en la galería de los condenados) | el pozo de los condenados: de la huida de la mazmorra (x 88-90, columnas 118-120 del mundo) a la galería de los condenados (x 18-20), con palanca en (23, 25) de las profundidades. Túnel de 80 piezas, al oeste de la ruina. Idea 7 de las puertas hacia atrás. Dibujado (2026-11-06) |
 
 ## 5. Cómo rehacer una zona con este plan
 
@@ -171,7 +171,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 - Rehacer las zonas una a una (lista en `TASK.md`, "Macro mapa").
 - Ruina: qué da el Guardián de hielo al caer (el plan no lo dice), y confirmar que la reja tras su sala, que se abre al vencerlo, es el camino a `[P6]`.
 - Profundidades: los minijefes de los tres altares (el plan no los dice). Propuesta, sin arte nuevo: en el coliseo, oleadas de diablillos y el demonslime común (`escenas/enemigos/demonslime.tscn`); en el lago de magma, un diablillo mayor (`diablillo.tscn` a escala 2 y con más vida); en el santuario de las llamas, un segundo demonslime (el Crystal Mauler pasa a la gruta de cristal de las minas, sección 6). El comentario del ASCII de las profundidades todavía nombra al Mauler: se corrige al repasar esa zona.
-- Puertas hacia atrás: dibujarlas zona por zona (punto 1 de `sugerencias_exploracion.txt`) y escribir los textos de lore que quedaron como marcador. Dibujadas: 1 (calabozo), 2 y 3 (castillo), 4 y 5 (cementerio).
+- Puertas hacia atrás: dibujarlas zona por zona (punto 1 de `sugerencias_exploracion.txt`) y escribir los textos de lore que quedaron como marcador. Dibujadas: 1 (calabozo), 2 y 3 (castillo), 4 y 5 (cementerio), 6 (minas) y 7 (mazmorra y profundidades).
 
 ## 8. Regenerar el dibujo
 
@@ -315,6 +315,13 @@ Una zona no se da por hecha mientras el verificador dé errores.
   - `:B:` (2026-11-06): pozo de 3 piezas en el borde de arriba, columnas 70-72 (100-102 del mundo), con escalera en la columna 71 (filas 0-21) hasta la esquina noreste de la gran sala, donde la repisa alta se junta con la torre. Palanca en (67, 21) y spawn `DesdeCalabozo` hacia (69, 21); la llave del alcaide de (73, 21) queda a dos piezas. El kolbo3 de la repisa pasa de (66, 21) a (62, 21). Por este lado no se cierra.
   - Coordenadas de cada pieza en los comentarios del archivo. Comprobado con una simulación de saltos de 3 piezas: se llega a todo menos al secreto (tampoco con 4; sí con 6), desde todo se vuelve a la llegada y la huida solo se alcanza tras el derrumbe. Probada generando una escena temporal con el constructor, sin errores.
   - Segunda pasada hecha: 5 Aprendis, 2 mino, 7 kolbo3 y 6 esqueletos, 4 cofres (uno en el secreto), 14 monedas, 3 pociones y decorados del tileset mazmorra (estanterías en la torre y la gran sala, la fogata de la guardia y agua y hongos en los desagües). El mino mide 5 piezas de alto y solo cabe en la gran sala y en la torre. Las plataformas del cuerpo de guardia bajan una fila (66 y 63): estaban a 4 piezas. Con saltos de 3 se alcanza todo menos lo del secreto. Probada generando una escena temporal con el constructor, sin errores; tras 3 s de física cada enemigo sigue en su sitio.
+  - **Puerta hacia atrás (2026-11-06), idea 7, el pozo de los condenados (`:F:`):**
+    - **Trazado:** hueco de 3 en el suelo de la huida, x 88-90 (columnas 118-120 del mundo), junto al pie de la escalera del colector, con escalera en la columna 89 (filas 84-89) hasta el borde de abajo. La trampilla de la fila 84 está cerrada desde la mazmorra: se ve en el suelo de la huida y la abre la palanca de las profundidades (`mazmorra_atajo_f_abierto` en `completed_encounters`). Spawn `DesdeProfundidades` hacia (92, 83).
+    - Abierta, deja un hueco de 3 en el suelo de la huida: se salta, y quien cae baja a las profundidades. Es la vuelta más rápida desde el abismo hacia `:B:` y `[L4]`, subiendo por el colector.
+    - **Simulación de saltos**, comparando el ASCII de antes y el de después con las mismas reglas (cuerpo de 2 y de 3, saltos de 3 y de 4, huecos de 3):
+      - con la trampilla cerrada, el alcance desde la P es idéntico al de antes, también tras la Reina (suelo hundido, entrada tapada y colector abierto), y desde la huida no se baja por el pozo;
+      - abierta, desde el pie del pozo se llega a la P por el colector y a `[!5]`, y lo único nuevo es el pozo. El camino obligatorio no cambia.
+    - Probado generando una escena temporal con el constructor, sin errores.
 - **Ruina helada (ASCII, primera pasada, 2026-11-04):** `mapas_texto/macro/zonas/ruina.txt`, 156 x 80, en el mundo en (136, 223): justo debajo de la mazmorra y las minas, que acaban en la fila 222, de la columna 136 a la 291.
   - Recibe `[!5]` por el borde de arriba, columnas 9-11 (145-147 del mundo), y `:D:` también por arriba, columnas 146-148 (282-284). Las dos sin túnel, con su escalera en la misma columna que la de la mazmorra (116) y la de las minas (133).
   - `[!5]`: el Player cae unas 15 piezas (no hay daño por caída) a la llegada, suelo liso y sin enemigos. La única vuelta atrás es esa escalera, hacia la huida y el colector.
@@ -339,6 +346,15 @@ Una zona no se da por hecha mientras el verificador dé errores.
   - **Añadido al plan:** la isla del lago vuelve a la caverna por una escalera con trampilla que se abre desde abajo (así no se saltan los pilares); el pozo de `[S7]` lleva escalera para volver desde el infierno, como el de `[P6]`; el fuego del santuario es una pieza nueva (sección 5). Los minijefes quedan pendientes (sección 7).
   - Coordenadas de cada pieza en los comentarios del archivo. Comprobado con una simulación de saltos de 4 piezas y huecos de 3: se llega a todo menos al secreto (sí con 6), al santuario (pide E5), a la sala (pide los tres altares) y al pozo de `[S7]` (pide el jefe); desde todo se vuelve a la llegada. El camino obligatorio sale incluso con saltos de 3.
   - Segunda pasada hecha: 22 diablillos (vuelan, así que van en el aire), 5 cofres (uno en el secreto y otro en la isla del lago), 15 monedas, 4 pociones y decorados del tileset mazmorra (antorchas, ascuas con los cristales y la forja con fogatas, caja y barril). La plataforma alta del coliseo pasa a x 21-28: a x 22-27 quedaba a 5 de las otras. Con saltos de 4 se alcanza todo menos lo del secreto. Probada generando una escena temporal con el constructor, sin errores; tras 3 s de física cada enemigo sigue en su sitio.
+  - **Pozo de `:F:` (2026-11-06), idea 7 de las puertas hacia atrás:**
+    - **Trazado:** pozo x 18-20, filas 0-19 (columnas 118-120 del mundo), que se abre al techo de la galería de los condenados, con escalera en la columna 19 (filas 0-25), que sigue la 89 de la mazmorra. Entre las dos zonas hay un túnel de 80 piezas (filas 223-302 del mundo), al oeste de la ruina, que empieza en la columna 136.
+    - En la `_combate`: la palanca en (23, 25), el spawn `DesdeMazmorra` hacia (16, 25), y al pie del pozo los restos de los condenados (lore) en (14, 25) y la página II del diario en (12, 25), con textos de marcador (sección 6). La antorcha de (20, 21) pasa a (24, 21), fuera de la columna vecina de la escalera.
+    - El premio se alcanza al llegar, sin abrir nada; lo que se abre hacia atrás es el atajo, como proponía la sugerencia ("al llegar a las profundidades: 6 y 7"). Por este lado no se cierra: quien sube sin la palanca llega bajo la trampilla cerrada y vuelve a bajar.
+    - **Simulación de saltos** (cuerpo de 2 y de 3, saltos de 3 y de 4, huecos de 3, también con E5):
+      - no se pierde ninguna posición, y los únicos sitios nuevos donde estar de pie son los de la escalera 19;
+      - el secreto de la Agilidad sigue sin alcanzarse con saltos de 4 (antes y después se alcanza desde 5);
+      - desde la P se llega a lo alto del pozo, y desde ahí se vuelve a la P.
+    - Probado generando una escena temporal con el constructor, sin errores.
 - **Infierno (ASCII, segunda versión, 2026-11-06): la prueba final.** `mapas_texto/macro/zonas/infierno.txt`, 111 x 120, en el mundo en (160, 388). Misma posición y ancho que la primera versión (2026-11-05, 111 x 66, corta y sin bucles); crece solo hacia abajo. `[S7]` sigue en las columnas 54-56 (214-216 del mundo), sin túnel, con su escalera en la columna 55.
   - **Por qué se rehízo:** la primera versión era un descenso corto hasta Cthulhu. Se decidió (2026-11-06) que el infierno sea la zona más difícil: una sucesión de pruebas, una por cada cosa que el jugador aprendió al bajar, con los enemigos más duros.
   - **Pruebas, en orden:** fuego (paso de las cadenas, con fuego infernal, E5), salto (sima de las ánimas, la de la primera versión), combate (coliseo de los condenados: la antigua sala de Cthulhu, cerrada con oleadas), rodar (pasillo del filo: 4 de alto, con tres rejas bajas como la de `[H2]` y enemigos que no se saltan), aire (caverna del vuelo: repisas sobre lava con diablillos y murciélagos) y parry (salón de los verdugos: cerrado, con Guardias y minos). Después, el umbral (descanso) y el trono de Cthulhu.
@@ -349,7 +365,7 @@ Una zona no se da por hecha mientras el verificador dé errores.
   - Ningún escalón obligatorio pide más de 4 piezas ni huecos de más de 3; nada pide E3 ni E4. Comprobado con una simulación de saltos sobre la cuadrícula: desde la P se llega a todo y desde todo se vuelve (con rejas y trampillas abiertas). Con saltos de 3 no se vuelve a subir la sima, como antes.
   - **Piezas nuevas:** las arenas cerradas con oleadas del coliseo y del salón (`arena_barrier.gd` más un generador de oleadas, que no existe) y las rejas bajas del pasillo (la misma pieza que falta para `[H2]`).
   - Coordenadas de cada pieza en la cabecera del archivo.
-- Con el infierno quedan dibujadas todas las zonas (primera pasada). `:B:` quedó dibujado el 2026-11-06 (ver el calabozo y la mazmorra). Falta `:F:`. El verificador da 0 errores y avisa de los túneles de `:B:` (45 piezas) y `:C:` (53).
+- Con el infierno quedan dibujadas todas las zonas (primera pasada). `:B:` y `:F:` quedaron dibujados el 2026-11-06 (ver el calabozo, la mazmorra y las profundidades). El verificador da 0 errores y avisa de los túneles de `:B:` (45 piezas), `:C:` (53) y `:F:` (80).
 
 ## 10. Progreso del personaje: atuendos y desbloqueos por zona
 
@@ -391,7 +407,7 @@ La última columna son las puertas hacia atrás (sección 6): se ven en esa zona
 | Castillo | E1 (salto de unas 4,6 piezas) | Rodar, por reliquia en la biblioteca (hoy); en el plan, premio del Rey Caído (`ability_reward`); E2 en la armería (plan) | `[H2]` Rodar | 2. Aposentos de la Reina, al este de la capilla (llave del Caballero, minas): diario I y fragmento de vida 1/4. 3. El castillo sin hechizo (muerte de la Reina): soldados NPC en lugar de los Guardias y el Capitán al pie del trono. Las dos dibujadas en el ASCII (2026-11-06). Vuelta por `:C:` |
 | Cementerio | E1 o E2; Rodar | Ráfaga, con el Capitán, guardián de la tercera tumba; E3 y la Agilidad (plan) | `[S3]` tres tumbas sello (la última, vencer al Capitán) | 4. Estatua de la Reina (Ultimate, mazmorra): fosa de los soldados y amuleto (+0.25 en pociones). 5. Cripta de la primera reina, bajo el mausoleo (Golpe final, minas, para la losa, y llama eterna, ruina, para las velas): corona y fragmento de vida 2/4. Las dos dibujadas en el ASCII (2026-11-06). Vuelta por `[S3]`, o por `:C:` y `[H2]` |
 | Minas | Ráfaga; con E3, Agilidad (salto de unas 6,5 piezas) | Golpe final, con el Caballero (hoy); llave del Caballero | `[L4]` llave del Caballero | 6. Gruta de cristal, tras la boca de la pared este de la veta (Agilidad para el escalón y E5 para el fuego infernal): Crystal Mauler, que da la Adrenalina. Dibujada en el ASCII (2026-11-06). Vuelta por `:E:` y `:D:`, y la escalera 62 |
-| Mazmorra | Golpe final | Ultimate, con la Reina (hoy); llave del alcaide (plan, en la torre, en lugar del cofre de (73, 21)) | `[!5]` derrumbe tras la Reina | 7. Pozo de los condenados (palanca en las profundidades): atajo `:F:` y diario II |
+| Mazmorra | Golpe final | Ultimate, con la Reina (hoy); llave del alcaide (plan, en la torre, en lugar del cofre de (73, 21)) | `[!5]` derrumbe tras la Reina | 7. Pozo de los condenados, trampilla en el suelo de la huida, x 88-90 (palanca en la galería de los condenados de las profundidades): atajo `:F:`; los restos de los condenados y el diario II están al pie del pozo, abajo. Dibujada en el ASCII (2026-11-06). Vuelta por el propio `:F:` |
 | Ruina helada | Ultimate | la llama eterna (plan); E4 (plan) | `[P6]` la llama eterna | 8. Hielo negro (ascua del Demon Slime): diario III y fragmento de vida |
 | Profundidades | E4 si se encontró | E5 (plan); ascua, al vencer al Demon Slime (plan) | `[S7]` tres altares y el Demon Slime; con E5 se llega al altar rodeado de fuego | 9. Rey encadenado (coliseo del infierno superado): lore final y fragmento de vida |
 | Infierno | E5 | — (superar el coliseo libera al rey de la idea 9) | — | — |

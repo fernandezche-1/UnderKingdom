@@ -159,6 +159,17 @@ Propuestas (coordenadas en piezas de cada ASCII, columna y fila):
      [L4]), el lore de los condenados y la página II del diario.
    - Coste medio (mismas piezas que :C:, :D: y :E:; línea nueva en
      conexiones.txt).
+   - HECHO (2026-11-06): dibujada en mapas_texto/macro/zonas/mazmorra.txt y
+     profundidades.txt tal como se propone, con :F: en conexiones.txt
+     (mazmorra abajo 88, profundidades arriba 18). Escaleras en la columna 89
+     de la mazmorra y 19 de las profundidades; trampilla en el suelo de la
+     huida (fila 84), cerrada desde arriba. Palanca en (23, 25), spawn
+     DesdeMazmorra hacia (16, 25) y DesdeProfundidades hacia (92, 83). Los
+     restos de los condenados, en (14, 25), y la página II, en (12, 25),
+     están al pie del pozo: se cogen al llegar a las profundidades, sin abrir
+     nada; lo que se abre hacia atrás es el atajo. La antorcha va a (24, 21).
+     Túnel de 80 piezas. En el dibujo del macro mapa la ruina empieza más a
+     la derecha para que :F: no la cruce.
 8. RUINA, el hielo negro.
    - Sitio: pared este de la antesala (columna 113, filas 56-58); cámara
      x 114-130, filas 52-58.

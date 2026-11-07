@@ -30,3 +30,4 @@ S7   sellos     profundidades abajo 114 infierno       arriba 54  3  combate
 :C:  atajo      castillo      abajo 34  minas          arriba 20  3  combate
 :D:  atajo      minas         abajo 132 ruina          arriba 146 3  combate
 :E:  atajo      ruina         abajo 90  profundidades  arriba 126 3  combate
+:F:  atajo      mazmorra      abajo 88  profundidades  arriba 18  3  combate

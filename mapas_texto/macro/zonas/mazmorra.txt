@@ -1,6 +1,7 @@
 ; MAZMORRA (macro mapa, docs/P46_MACRO_MAPA.md): ASCII de la zona. Primera pasada
 ; (estructura, P, checkpoints, aperturas, sala de la Reina, derrumbe y huida, y
 ; sitio de cada pieza) y segunda pasada (enemigos, objetos y decorados) hechas.
+; Pozo de :F: (puerta hacia atrás, idea 7) dibujado el 2026-11-06.
 ; NO GENERAR TODAVÍA: la escena de abajo es la de la mazmorra que se juega hoy
 ; (mapas_texto/tiles_mazmorra.txt) y el constructor la reemplazaría. Al
 ; aprobarlo, este archivo pasa a mapas_texto/tiles_mazmorra.txt (sección 9).
@@ -22,7 +23,7 @@
 ; Bucle: celdas altas, escalera 78, torre del alcaide, repisa alta, plataformas
 ; de la gran sala y balcón. Atajo interno: la compuerta de los desagües, entre
 ; la antesala y el cuerpo de guardia. Vuelta desde la huida: la escalera del
-; colector.
+; colector. Atajos a otras zonas: :B: (calabozo) y :F: (profundidades).
 ;
 ; ARRIBA:
 ; - GRAN SALA DE GUARDIA: x 28-70, filas 12-46 (suelo 47), 43 x 35. Se sube por
@@ -118,6 +119,23 @@
 ;   idea 1). Entre las dos zonas el pozo recorre 45 piezas (el verificador lo
 ;   avisa como túnel). El pozo no se cierra por este lado: si se sube sin la
 ;   palanca, se llega bajo la trampilla cerrada y se vuelve a bajar.
+; - POZO DE :F: (atajo a las profundidades, el pozo de los condenados; puerta
+;   hacia atrás, idea 7, 2026-11-06): hueco de x 88-90 en el suelo de la huida
+;   (fila 84), junto al pie de la escalera del colector, hasta el borde de
+;   abajo (filas 84-89; columnas 118-120 del mundo). Escalera en la columna 89
+;   (filas 84-89), que sigue la de la columna 19 de las profundidades.
+;   TRAMPILLA en x 88-90, fila 84, cerrada desde la mazmorra: desde aquí se ve
+;   en el suelo de la huida y no se abre. La abre una palanca de la galería de
+;   los condenados de las profundidades, en su (23, 25); se recuerda en
+;   completed_encounters (mazmorra_atajo_f_abierto). En el ASCII queda
+;   abierta. Spawn DesdeProfundidades hacia (92, 83). Entre las dos zonas el
+;   pozo recorre 80 piezas (filas 223-302 del mundo), al oeste de la ruina,
+;   que empieza en la columna 136: el verificador lo avisa como túnel. Abierta,
+;   deja un hueco de 3 en el suelo de la huida (se salta; quien cae baja a las
+;   profundidades). Es la vuelta más rápida desde el abismo hacia :B: y [L4]:
+;   se sube a la huida y, por el colector, al cuerpo de guardia. El premio
+;   (lore de los condenados y página II del diario) está abajo, al pie del
+;   pozo (ver las profundidades).
 ;
 ; Comprobado con una simulación de saltos de 3 piezas y huecos de 3, con la
 ; compuerta y la trampilla del colector cerradas: desde la P se llega a todo
@@ -132,6 +150,14 @@
 ; al inicio del calabozo, y desde ahí se vuelve a la P. Con la trampilla del
 ; calabozo cerrada, desde el calabozo no se baja, y quien sube sin la palanca
 ; vuelve a bajar.
+; :F: (2026-11-06), comparando el ASCII de antes y el de después con las
+; mismas reglas (cuerpo de 2 y de 3, saltos de 3 y de 4, huecos de 3): con la
+; trampilla de :F: cerrada, el alcance desde la P es idéntico al de antes,
+; también tras la Reina (suelo hundido, entrada tapada, colector abierto), y
+; desde la huida no se baja por el pozo. Abierta, desde el pie del pozo se
+; sube a la huida y se llega a la P (por el colector) y a [!5], y desde la P
+; se llega al pozo; lo único nuevo es el pozo. El camino obligatorio no
+; cambia.
 ;
 ; Segunda pasada (profundidad 3, P33: a, M, q, e):
 ; - Enemigos: 5 Aprendis, 2 mino, 7 kolbo3 y 6 esqueletos.
@@ -169,8 +195,9 @@
 ; Viven en tiles_mazmorra_combate.tscn: sala de la Reina (trampilla,
 ; activador, puntos del jefe, ability_reward), suelo que se hunde y secuencia
 ; de derrumbe, compuerta y palanca del atajo, trampilla del colector,
-; transición y spawn de [!5], y palanca, transición y spawn de :B:. No hay "siguiente": [!5] sale por abajo, no por
-; una salida ">".
+; transición y spawn de [!5], palanca, transición y spawn de :B:, y
+; trampilla, transición y spawn de :F:. No hay "siguiente": [!5] sale por
+; abajo, no por una salida ">".
 
 escena: res://escenas/mapas/tiles_mazmorra.tscn
 tileset: mazmorra
@@ -263,9 +290,9 @@ anterior: res://escenas/mapas/tiles_mineria_combate.tscn
 ####...............................................########...#########...............H................................#
 ####...............................................########...#########...............H................................#
 ####...............................................########...#########...............H................................#
-####.......................##########...###################...###################...#########..........................#
-####.......................##########...###################...###################...#####################..............#
-####.......................##########...###################...###################...#####################..............#
-#####################################...###################...###################...#####################..............#
-#####################################^^^###################^^^###################^^^#####################^^^#######.H.##
-###################################################################################################################.H.##
+####.......................##########...###################...###################...####.H.##..........................#
+####.......................##########...###################...###################...####.H.##############..............#
+####.......................##########...###################...###################...####.H.##############..............#
+#####################################...###################...###################...####.H.##############..............#
+#####################################^^^###################^^^###################^^^####.H.##############^^^#######.H.##
+########################################################################################.H.########################.H.##
