@@ -106,6 +106,10 @@ Propuestas (coordenadas en piezas de cada ASCII, columna y fila):
      encontró el Capitán), con sus notas, y el amuleto de la guardia: las
      pociones curan 0.25 más.
    - Vuelta: :C: y [H2], o [S3]. Coste medio (estatua_rompible existe).
+   - HECHO (2026-11-06): dibujada en mapas_texto/macro/zonas/cementerio.txt.
+     La columna 111 solo se abre en las filas 15-17 (el hueco de la
+     estatua): con las 12-14 abiertas se pasaba por encima. La cueva queda en
+     x 112-118, filas 12-17. Notas en (113, 17) y amuleto en (115, 17).
 5. CRIPTA, la cripta de la primera reina (Golpe final + llama eterna).
    - Sitio: bajo el mausoleo, x 62-74, filas 29-34 (suelo 35). Se entra por
      un nicho en el techo del osario (x 67-69, filas 36-37) tapado por una
@@ -116,6 +120,13 @@ Propuestas (coordenadas en piezas de cada ASCII, columna y fila):
    - Premio: la corona de la primera reina, con una carta a su hija la
      princesa, y fragmento de vida 2/4.
    - Vuelta: [S3]. Coste medio.
+   - HECHO (2026-11-06): dibujada en mapas_texto/macro/zonas/cementerio.txt.
+     De la repisa de la fila 42 al suelo de la cripta había 7 piezas, así que
+     se añade una escalera en la columna 68 (filas 35-41) que sube por el
+     nicho, con la losa en la fila 35. La puerta de velas va en la columna 65
+     (filas 32-34), entre la antecámara (x 66-74) y el sepulcro (x 62-64,
+     sarcófago en x 62-63). La corona y la carta van en (63, 33) y el
+     fragmento en (64, 34). El murciélago de (72, 44) pasa a (76, 44).
 6. MINAS, la gruta de cristal (Agilidad + E5).
    - Sitio: boca en la pared este de la veta (columna 131, suelo 56, 5 piezas
      sobre la veta); pasillo x 131-143, filas 52-55, con fuego infernal en

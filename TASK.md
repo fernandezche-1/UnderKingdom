@@ -56,7 +56,7 @@ Responde en español.
 **Pasos, en orden** (una sesión cada uno):
 - [x] 0. Decisiones de las puertas (P46, sección 6), atajo `:B:` (columnas 100-102 del mundo) y calabozo rehecho como zona tutorial (`mapas_texto/macro/zonas/calabozo.txt`, 100 x 52). Incluye la idea 1, el depósito del alcaide, y la llave del alcaide en la torre de la mazmorra.
 - [x] 1. **Castillo:** ideas 2 (aposentos de la Reina, x 62-74, filas 11-18, al este de la capilla) y 3 (el castillo sin hechizo). La 3 no cambia el trazado: los sitios de los soldados y del Capitán, en (68, 62), van en los comentarios.
-- [ ] 2. **Cementerio:** ideas 4 (estatua de la Reina) y 5 (cripta de la primera reina).
+- [x] 2. **Cementerio:** ideas 4 (estatua de la Reina, cueva x 112-118, filas 12-17, tras el hueco de la columna 111) y 5 (cripta de la primera reina, x 62-74, filas 29-34, con escalera nueva en la columna 68, losa en la fila 35 y puerta de velas en la columna 65).
 - [ ] 3. **Minas:** idea 6 (gruta de cristal). Comprobar que el Crystal Mauler cabe en 16 x 14; si no, la gruta va bajo la veta.
 - [ ] 4. **Mazmorra y profundidades:** idea 7 (pozo de los condenados).
   - Añadir `:F:` a `conexiones.txt` y dibujarlo en los dos ASCII.
@@ -120,7 +120,7 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
   - los aposentos de la Reina y el castillo sin hechizo (soldados NPC y el Capitán).
 - [ ] **Cementerio:**
   - el Capitán sin llave, las tres tumbas sello y su contador, la losa de `[S3]`, las trampillas del atajo y de la fosa, la casa del sepulturero y E3;
-  - la estatua de la Reina y la cripta de la primera reina.
+  - la estatua de la Reina, con las notas y el amuleto; la losa, la puerta de velas, la corona con la carta y el fragmento de vida 2/4 de la cripta de la primera reina.
 - [ ] **Minas:**
   - el Caballero en su sala nueva, la puerta con llave de `[L4]`, el ascensor y la palanca de `:C:`, la trampilla del atajo, la reja de `:D:` y las transiciones de `[S3]` y `:C:`;
   - la gruta de cristal con el Mauler.

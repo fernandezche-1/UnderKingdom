@@ -1,6 +1,7 @@
 ; CEMENTERIO (macro mapa, docs/P46_MACRO_MAPA.md): ASCII de la zona. Primera
 ; pasada (estructura, P, checkpoints, aperturas y sitio de cada pieza) y
-; segunda pasada (enemigos, objetos y decorados) hechas.
+; segunda pasada (enemigos, objetos y decorados) hechas. Puertas hacia atrás 4
+; y 5 (2026-11-06).
 ; NO GENERAR TODAVÍA: la escena de abajo es la del cementerio que se juega hoy
 ; (mapas_texto/tiles_cementerio.txt) y el constructor la reemplazaría. Al
 ; aprobarlo, este archivo pasa a mapas_texto/tiles_cementerio.txt (sección 9).
@@ -40,6 +41,22 @@
 ;   21) hasta la cornisa de la colina (x 104-110, suelo 18). Plataformas en
 ;   las filas 15 y 12 hasta la meseta del panteón (x 111-118, suelo 9). La
 ;   tumba va en (115, 8).
+; - ESTATUA DE LA REINA (puerta hacia atrás, idea 4 del punto 1 de
+;   mapas_texto/macro/sugerencias_exploracion.txt), fuera del camino: al
+;   extremo este de la cornisa de la colina. La estatua tapa el hueco de la
+;   columna 111, filas 15-17 (en el ASCII queda en "."); las filas 12-14 de esa
+;   columna son de roca, para que no se pase por encima. Detrás, la cueva de
+;   la fosa escondida de los soldados leales: x 112-118, filas 12-17 (suelo
+;   18), bajo la meseta del panteón (techo filas 9-11). Estantería de huesos E
+;   en (116, 17).
+;   Lo abre la Ultimate (mazmorra): estatua_rompible.tscn en la _combate, que
+;   solo acepta ese golpe (rompible por tipo de golpe, pieza compartida).
+;   Premio, en la _combate: las notas de los soldados (objeto de lore con
+;   texto provisional, marcador de P46 sección 6) en (113, 17) y el amuleto de
+;   la guardia (las pociones curan 0.25 más) en (115, 17). Sin enemigos ni
+;   monedas. La Vanguardia de (108, 17) sigue en la cornisa, delante.
+;   Vuelta: :C: y [H2] (exterior -> pilares -> cornisa), o [S3] (pozo del
+;   sello -> catacumbas -> escalera 22 -> exterior).
 ;
 ; CRIPTA:
 ; - Antecripta: x 44-61, filas 42-50 (suelo 51), al pie de la escalera de la
@@ -47,6 +64,30 @@
 ; - Osario: x 62-100, filas 38-50 (suelo 51). Recibe la caída del hueco.
 ;   Repisas de huesos en las filas 48, 45 y 42; la de arriba (x 83-87) es
 ;   maciza y lleva un cofre. Escalera a la catacumba alta en la columna 96 (filas 51-60).
+;   Al oeste, repisas nuevas en las filas 45 (x 69-73) y 42 (x 65-70), desde
+;   la de la fila 48 (x 64-68), y la escalera de la columna 68 (filas 35-41)
+;   que sube por el nicho del techo a la cripta de la primera reina.
+; - CRIPTA DE LA PRIMERA REINA (puerta hacia atrás, idea 5), fuera del
+;   camino: bajo el mausoleo, x 62-74, filas 29-34 (suelo 35; techo filas
+;   27-28, bajo el suelo del exterior). La columna 75 queda de pared (el hueco
+;   al osario no entra) y la 59-61 también (la escalera de la casa no se toca).
+;   Se entra por el nicho del techo del osario (x 67-69, filas 36-37) y el
+;   hueco de x 67-69 en el suelo de la cripta (fila 35), con la escalera en la
+;   columna 68. LOSA en x 67-69, fila 35 (en el ASCII, abierta): rompible que
+;   solo acepta el tajo ascendente con el Golpe final (minas). Se golpea desde
+;   lo alto de la escalera o saltando desde la repisa de la fila 42.
+;   Dentro, dos partes:
+;   - antecámara x 66-74, con estantería de huesos E en (72, 34). Al oeste, la
+;     PUERTA DE VELAS en la columna 65, filas 32-34 (en el ASCII, abierta;
+;     encima, pared en las filas 29-31): locked_door con dibujo de velas, que
+;     se encienden con la llama eterna (ruina). Al entrar tras las minas se ve
+;     que falta la llama;
+;   - sepulcro x 62-64, con el sarcófago macizo de x 62-63 (fila 34).
+;   Premio, en la _combate: la corona de la primera reina con su carta a su
+;   hija la princesa (lore, marcador) sobre el sarcófago, en (63, 33), y el
+;   fragmento de vida 2/4 al pie, en (64, 34). Sin enemigos ni monedas.
+;   Vuelta: [S3] (pozo del sello -> catacumba baja -> escalera 84 -> catacumba
+;   alta -> escalera 96 -> osario), o :C: y [H2] por la casa.
 ; - Catacumba alta: x 20-116, filas 55-60 (suelo 61). Suelo más alto en
 ;   x 58-72 y pilares que cuelgan en x 40-41 y x 80-81. Al oeste, el pie del
 ;   atajo (columna 22). Al este, rincón con cofre en x 112-116, filas 52-54
@@ -86,6 +127,8 @@
 ;   Tres esqueletos en la fosa común (el reto de la tumba sello 1) y uno junto
 ;   a la tumba sello 2; dos guardan E3 en el panteón. Los murciélagos estorban
 ;   en el osario, la catacumba alta, la baja, el pozo del sello y el panteón.
+;   El murciélago del osario de (72, 44) pasó a (76, 44), lejos de la repisa
+;   nueva de la fila 45.
 ; - Cofres (c): rincón de la colina (5, 14), repisa alta del osario (85, 41),
 ;   rincón de la catacumba alta (114, 54) y meseta del panteón (117, 8), junto
 ;   a la tumba sello 2.
@@ -95,14 +138,28 @@
 ;   (99, 50), la antesala (68, 86), antes del Capitán, y el panteón (116, 86).
 ; - Decorados del tileset cementerio: T lápidas (2x3) en el exterior y el
 ;   panteón, g puntas de pasto y r zarzas en el exterior, E estanterías de
-;   huesos en el osario y la catacumba alta, t antorchas, h hongos, b barriles
+;   huesos en el osario, la catacumba alta, la cueva de la estatua y la
+;   cripta de la primera reina, t antorchas, h hongos, b barriles
 ;   y x cajas en la casa y el pozo. Ninguno pisa una escalera, un checkpoint ni
 ;   otro decorado (comparten capa), y todos se apoyan en el suelo.
 ;
 ; Sellos (el contador todavía no existe): (38, 32), (115, 8) y (39, 86).
 ; Viven en tiles_cementerio_combate.tscn: la trampilla del atajo, la trampilla
 ; de la fosa, las tres tumbas sello y su contador, la losa de [S3], la sala del
-; Capitán (puertas, activador, puntos del jefe), la casa (tienda o NPC) y E3.
+; Capitán (puertas, activador, puntos del jefe), la casa (tienda o NPC) y E3;
+; y, de las puertas hacia atrás, la estatua de la Reina, las notas y el
+; amuleto, la losa de la cripta, la puerta de velas, la corona con la carta y
+; el fragmento de vida 2/4.
+;
+; Puertas hacia atrás comprobadas con una simulación de saltos sobre la
+; cuadrícula (cuerpo de 3 piezas de alto, saltos de 3 y huecos de 3),
+; comparando el ASCII de antes y el de después: con la estatua, la losa y las
+; velas cerradas no se llega a la cueva ni a la cripta (ni con saltos de 7 y
+; huecos de 6) y, desde la P y desde la llegada de [S3], el alcance es el de
+; antes más las dos repisas y la escalera del osario: el camino obligatorio
+; no cambia. Rota la estatua, se llega a la cueva; rota la losa, a la
+; antecámara y no al sepulcro; abiertas las velas, al sepulcro. Desde todo se
+; vuelve a la P.
 
 escena: res://escenas/mapas/tiles_cementerio.tscn
 tileset: cementerio
@@ -123,12 +180,12 @@ anterior: res://escenas/mapas/tiles_castillo_combate.tscn
 ##########.....................................................................................................#########
 ##########.....................................................................................................#########
 ##########...................................................................................................$.#########
-####.......................................................................................................====#########
-####...........................................................................................................#########
-####.c....................................................................................................$....#########
-##########...............................................................................................====..#########
-##########...............................................$.....................................................#########
-##########...$..........................................................................................r...vg.#########
+####.......................................................................................................====#.......#
+####...........................................................................................................#.......#
+####.c....................................................................................................$....#.......#
+##########...............................................................................................====..........#
+##########...............................................$.............................................................#
+##########...$..........................................................................................r...vg......E..#
 ##########..====......................................#######...........................................################
 ##########..........................................###########...................................$.....################
 ##########.......$$...............................###############.......................................################
@@ -140,23 +197,23 @@ anterior: res://escenas/mapas/tiles_castillo_combate.tscn
 <..P.......g.S..T...g......v.gr...............gT.r.x.S.........b.g#########g...T..vT.ur...##...##...##..################
 #####################.H.#######...............##########.H.#################...########...##...##...##..################
 #####################.H.#######...............##########.H.#################...########...##...##...##..################
-#####################.H.#######.$...........$.##########.H.#################...########^^^##^^^##^^^##^^################
-#####################.H.#######===.........===##########.H.#################...#########################################
-#####################.H.#######...............##########.H.#################...#########################################
-#####################.H.#######..u...r.g.u..u.##########.H.#################...#########################################
-#####################.H.################################.H.#################...#########################################
-#####################.H.################################.H.#################...#########################################
-#####################.H.################################.H.#################...#########################################
-#####################.H.################################.H.#################...#########################################
-#####################.H.################################.H.#################...#########################################
-#####################.H.################################.H.###.......................................###################
-#####################.H.################################.H.###.......................................###################
-#####################.H.################################.H.###..............................m........###################
-#####################.H.################################.H.###.......................c...............###################
-#####################.H.####################.............H......t..................#####..........t..###################
+#####################.H.#######.$...........$.##########.H.###...#.........#...########^^^##^^^##^^^##^^################
+#####################.H.#######===.........===##########.H.###...#.........#...#########################################
+#####################.H.#######...............##########.H.###...#.........#...#########################################
+#####################.H.#######..u...r.g.u..u.##########.H.###.............#...#########################################
+#####################.H.################################.H.###.............#...#########################################
+#####################.H.################################.H.#####........E..#...#########################################
+#####################.H.################################.H.########.H.######...#########################################
+#####################.H.################################.H.########.H.######...#########################################
+#####################.H.################################.H.########.H.######...#########################################
+#####################.H.################################.H.###......H................................###################
+#####################.H.################################.H.###......H................................###################
+#####################.H.################################.H.###......H.......................m........###################
+#####################.H.################################.H.###......H................c...............###################
+#####################.H.####################.............H......t======............#####..........t..###################
 #####################.H.####################.............H...........................................###################
-#####################.H.####################.............H..............m..................$.........###################
-#####################.H.####################.............H...............................=====.......###################
+#####################.H.####################.............H..................m..............$.........###################
+#####################.H.####################.............H...........=====...............=====.......###################
 #####################.H.####################..t..........H...........................................###################
 #####################.H.####################.............H........$..................................###################
 #####################.H.####################.............H......=====..............=====.............###################
