@@ -181,7 +181,8 @@ Propuestas (coordenadas en piezas de cada ASCII, columna y fila):
      como se propone, con la cámara x 114-130, filas 52-58 (suelo 59) y una
      repisa de una vía en x 124-127, fila 56. La puerta de la columna 113
      queda abierta en el ASCII (la pieza vive en la _combate), como la de los
-     aposentos del castillo; el hielo de [P6] sigue dibujado como bloque.
+     aposentos del castillo. El hielo de [P6], que era bloque, también pasa
+     a quedar abierto en el ASCII.
      key_id profundidades_ascua: la ascua cae en el PuntoLlave de la sala
      del Demon Slime. Dentro, la página III en (117, 58) y el fragmento 3/4,
      sobre la repisa, en (125, 55).

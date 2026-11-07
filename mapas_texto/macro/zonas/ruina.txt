@@ -123,9 +123,11 @@
 ;   queda abierta.
 ; - CÁMARA DEL DESHIELO: x 135-143, filas 67-72 (suelo 73).
 ; - HIELO DE [P6] (pieza nueva, sin hacer): columna 144, filas 70-72, un muro
-;   de hielo de 1 x 3 entre la cámara y el pozo. En el ASCII es bloque; se
-;   derrite con la llama eterna (tecla E delante, grant_key("antorcha") y
-;   locked_door.gd con otro dibujo).
+;   de hielo de 1 x 3 entre la cámara y el pozo. Se derrite con la llama
+;   eterna (tecla E delante, grant_key("antorcha") y locked_door.gd con otro
+;   dibujo, en la _combate). En el ASCII queda abierto (desde el 2026-11-07;
+;   antes era bloque), para que el constructor no ponga ahí un tile macizo
+;   que la locked_door no podría quitar. Al cruzarlo se cae al hueco de [P6].
 ; - SALIDA [P6] (hacia las profundidades): pozo x 145-150, filas 67-72 (suelo
 ;   73), con hueco x 145-147 en el borde de abajo (filas 73-79; columnas
 ;   281-283 del mundo), 3 piezas. Escalera en la columna 146 (filas 70-79)
@@ -142,8 +144,8 @@
 ;   profundidades_ascua (la ascua del Demon Slime, que aviva la llama eterna;
 ;   quien la tiene ya pasó [P6], así que ya lleva la llama). Al pulsar E sin
 ;   la ascua sale "LA LLAMA NO BASTA" (texto de marcador). En el ASCII queda
-;   abierta, como la puerta de los aposentos del castillo, para que la
-;   locked_door pueda cerrarla.
+;   abierta, como la puerta de los aposentos del castillo y el hielo de [P6],
+;   para que la locked_door pueda cerrarla.
 ;   Repisa de una vía en x 124-127, fila 56, a 3 piezas del suelo. Premio, en
 ;   la _combate: la página III del diario de la Reina (objeto de lore con
 ;   texto provisional, marcador de P46 sección 6) en (117, 58) y el fragmento
@@ -165,6 +167,10 @@
 ; cofres, monedas y pociones menos los del secreto, que solo se alcanzan con
 ; la Agilidad. Con saltos de 3 faltan los de la cumbre, la parte alta de la
 ; cripta y el refugio, que ya pedían 4.
+; Hielo de [P6] abierto en el ASCII (2026-11-07), con las mismas reglas: con
+; el hielo cerrado el alcance es idéntico al de antes y no se sale por [P6] ni
+; con saltos de 7 y huecos de 6; solo se sale con la reja y el hielo abiertos;
+; desde el spawn DesdeProfundidades, con la reja abierta, se vuelve a la P.
 ; Hielo negro (2026-11-07), comparando el ASCII de antes y el de después con
 ; las mismas reglas (cuerpo de 3 y de 2, saltos de 3 y de 4, huecos de 3, con
 ; la reja de salida cerrada y abierta):
@@ -303,9 +309,9 @@ parallax: assets_prueba/gothicvania/cavernas/fondo.png 0.05; assets_prueba/gothi
 ##########################################################################################.H.###....H.................................#.........#......#####
 ##########################################################################################.H.###....H.................................#.........#......#####
 ##########################################################################################.H.###....H.=====................=====......#.........#......#####
-##########################################################################################.H.###....H...........................................#.H....#####
-##########################################################################################.H.###....H...........................................#.H....#####
-##########################################################################################.H.###....H...................................r....r..#.H....#####
+##########################################################################################.H.###....H.............................................H....#####
+##########################################################################################.H.###....H.............................................H....#####
+##########################################################################################.H.###....H...................................r....r....H....#####
 ##########################################################################################.H.####################################################.H.########
 ##########################################################################################.H.####################################################.H.########
 ##########################################################################################.H.####################################################.H.########
