@@ -80,6 +80,10 @@ Propuestas (coordenadas en piezas de cada ASCII, columna y fila):
    - Lo abre: la llave del Caballero de la Reina (minas).
    - Premio: página I del diario de la Reina y fragmento de vida 1/4.
    - Vuelta: :C:. Coste bajo.
+   - HECHO (2026-11-06): dibujada en mapas_texto/macro/zonas/castillo.txt
+     tal como se propone. Puerta con key_id minas_caballero; dentro, la
+     página I en (66, 18) y el fragmento sobre una repisa (x 70-73, fila 16),
+     en (71, 15).
 3. CASTILLO (la zona entera), el castillo sin hechizo.
    - Lo abre: la muerte de la Reina (completed_encounters).
    - Cambio: los 7 Guardias desaparecen; en su lugar, soldados de rodillas
@@ -90,6 +94,9 @@ Propuestas (coordenadas en piezas de cada ASCII, columna y fila):
      Capitán ("nuestros propios soldados se volvieron contra nosotros").
    - Vuelta: :C:. Coste medio (generalizar story_hidden_actor.gd para que
      mire un encounter_id).
+   - HECHO (2026-11-06): apuntada en la cabecera del ASCII del castillo, con
+     los sitios de los 7 soldados (los de los Guardias). El Capitán va en
+     (68, 62), al pie del estrado: x 62-64, filas 61-62 es el estrado macizo.
 4. CEMENTERIO (exterior), la estatua de la Reina.
    - Sitio: extremo este de la cornisa de la colina (x 104-110, suelo 18). La
      estatua tapa la columna 111 (filas 15-17); detrás, una cueva x 111-118,

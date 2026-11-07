@@ -55,7 +55,7 @@ Responde en español.
 
 **Pasos, en orden** (una sesión cada uno):
 - [x] 0. Decisiones de las puertas (P46, sección 6), atajo `:B:` (columnas 100-102 del mundo) y calabozo rehecho como zona tutorial (`mapas_texto/macro/zonas/calabozo.txt`, 100 x 52). Incluye la idea 1, el depósito del alcaide, y la llave del alcaide en la torre de la mazmorra.
-- [ ] 1. **Castillo:** ideas 2 (aposentos de la Reina) y 3 (el castillo sin hechizo). La 3 no cambia el trazado: solo se anotan en los comentarios los sitios de los soldados y del Capitán.
+- [x] 1. **Castillo:** ideas 2 (aposentos de la Reina, x 62-74, filas 11-18, al este de la capilla) y 3 (el castillo sin hechizo). La 3 no cambia el trazado: los sitios de los soldados y del Capitán, en (68, 62), van en los comentarios.
 - [ ] 2. **Cementerio:** ideas 4 (estatua de la Reina) y 5 (cripta de la primera reina).
 - [ ] 3. **Minas:** idea 6 (gruta de cristal). Comprobar que el Crystal Mauler cabe en 16 x 14; si no, la gruta va bajo la veta.
 - [ ] 4. **Mazmorra y profundidades:** idea 7 (pozo de los condenados).

@@ -1,6 +1,6 @@
 ; CASTILLO (macro mapa, docs/P46_MACRO_MAPA.md): ASCII de la zona. Primera
 ; pasada (estructura, P, checkpoints y aperturas) y segunda pasada (enemigos,
-; objetos y decorados) hechas.
+; objetos y decorados) hechas. Puertas hacia atrás 2 y 3 (2026-11-06).
 ; NO GENERAR TODAVÍA: la escena de abajo es la del castillo que se juega hoy y
 ; el constructor la reemplazaría. Al aprobarlo, este archivo pasa a
 ; mapas_texto/tiles_castillo.txt (sección 9 de P46).
@@ -31,6 +31,20 @@
 ;   x 62-66 (suelo en la fila 9). Unen la biblioteca, la capilla (escalera 52)
 ;   y la armería (escalera 82).
 ; - Capilla, fuera del camino: x 44-60, filas 8-18 (suelo 19). Cofre.
+; - Aposentos de la Reina (puerta hacia atrás, idea 2 del punto 1 de
+;   mapas_texto/macro/sugerencias_exploracion.txt), fuera del camino: x 62-74,
+;   filas 11-18 (suelo 19), al este de la capilla. Puerta en la pared este de
+;   la capilla, columna 61, filas 16-18, con el arco C en (60, 18) (ocupa
+;   x 60-61). PUERTA CON LLAVE en la _combate (locked_door.gd, key_id
+;   minas_caballero: la llave del Caballero de la Reina, de las minas, la
+;   misma de [L4]; las llaves no se gastan). La columna 75 queda de pared (la
+;   armería no entra) y el techo es la fila 10 (2 piezas bajo el tramo
+;   derrumbado de las almenas). Repisa en x 70-73, fila 16.
+;   Premio, en la _combate: la página I del diario de la Reina (objeto de
+;   lore con texto provisional, marcador de P46 sección 6) en (66, 18) y el
+;   fragmento de vida 1/4 sobre la repisa, en (71, 15). Sin enemigos ni
+;   monedas. Vuelta desde abajo por :C:: sótano -> galería -> gran salón ->
+;   biblioteca -> almenas -> escalera 52 -> capilla.
 ; - Armería: x 76-107, filas 8-19 (suelo 20). E2, el atuendo del soldado, en el
 ;   nicho alto de (101-107, 8-10), subiendo por los estantes de las filas 17 y
 ;   14. Se sale cayendo por el hueco de x 88-90 a la antecámara (sin vuelta).
@@ -64,12 +78,30 @@
 ;   almenas; pociones (!) en un candelabro del salón (52, 26), el estante de la
 ;   capilla (46, 14) y la antecámara (86, 36), antes del Rey.
 ; - Decorados del tileset castillo: f celdas de la galería, E estanterías de la
-;   biblioteca, T armaduras, h estandartes y g cadenas (cuelgan del techo), r
-;   ventanas, C arco tras el trono, t antorchas, b barriles y x cajas. Ninguno
+;   biblioteca y los aposentos, T armaduras, h estandartes y g cadenas
+;   (cuelgan del techo), r ventanas, C arcos tras el trono y en la puerta de
+;   los aposentos, t antorchas, b barriles y x cajas. Ninguno
 ;   pisa una escalera, un checkpoint ni otro decorado (comparten capa).
+; El castillo sin hechizo (puerta hacia atrás, idea 3; no cambia el trazado):
+; - Lo abre la muerte de la Reina (completed_encounters de su sala, en la
+;   mazmorra). Vuelta por :C:; a la sala del trono se llega por la antecámara
+;   y el vestíbulo (la trampilla del trono no tiene escalera).
+; - Los 7 Guardias desaparecen y en su sitio quedan soldados de rodillas
+;   (NPC) que cuentan la noche del ritual: (88, 5) almenas, (84, 19) armería,
+;   (22, 21) biblioteca, (20, 35) y (45, 35) gran salón, (78, 40) antecámara y
+;   (26, 46) galería. Las G siguen en el ASCII; en la _combate se ocultan los
+;   Guardias y se muestran los NPC según ese encuentro (story_hidden_actor.gd
+;   generalizado para mirar un encounter_id). Vanguardias y murciélagos se
+;   quedan.
+; - El Capitán, vencido pero vivo, espera al pie del estrado del trono, en
+;   (68, 62), el sitio donde empieza el Rey (el estrado, x 62-64, filas 61-62,
+;   es macizo). Su frase, marcador ("nuestros propios soldados se volvieron
+;   contra nosotros"), señala la estatua de la Reina del cementerio (idea 4).
 ; Viven en tiles_castillo_combate.tscn: el cerrojo de la puerta del gran salón,
 ; la reja de [H2], la puerta y la trampilla del trono, el Rey, la reliquia y la
-; trampilla de :C:.
+; trampilla de :C:; y, de las puertas hacia atrás, la puerta con llave de los
+; aposentos, la página I del diario, el fragmento de vida, los soldados NPC y
+; el Capitán.
 
 escena: res://escenas/mapas/tiles_castillo.tscn
 tileset: castillo
@@ -89,14 +121,14 @@ siguiente: res://escenas/mapas/tiles_cementerio_combate.tscn
 ##............#.H..................#########........H........#.$.$.#########......H.........................##
 ##.c..........#.H..................#########....h...H...h....###############......H....h...........h........##
 ##======......#.H..................#########........H........###############......H...................t.....##
-##............#.H..................#########........H........###############......H..................#########
-##............#.H..................#########........H..r.....###############......H..................#########
-##.....======.#.H..................#########........H........###############......H.............$$...#########
-##............#.H..................#########..!.....H...m....###############......H...........======.#########
-##........m...#.H............$$.E..#########======..H........###############......H..................#########
-##.======.....#.H...........======.#########........H........###############......H..................#########
-##............#.H..................#########........H........###############......H..======..........#########
-##............#.H..................#########.t......H.....c.t###############......H..................#########
+##............#.H..................#########........H........#.............#......H..................#########
+##............#.H..................#########........H..r.....#..h.......h..#......H..................#########
+##.....======.#.H..................#########........H........#.............#......H.............$$...#########
+##............#.H..................#########..!.....H...m....#.....r.......#......H...........======.#########
+##........m...#.H............$$.E..#########======..H........#.............#......H..................#########
+##.======.....#.H...........======.#########........H.................====.#......H..................#########
+##............#.H..................#########........H......................#......H..======..........#########
+##............#.H..................#########.t......H.....ctC..E....t......#......H..................#########
 ##......=====...H..........=======.#########################################.T....H.Gbx........v...T.#########
 ##..............H..................#####################################################...###################
 ##.E..t..E......H..E..G.....E..E...#####################################################...###################

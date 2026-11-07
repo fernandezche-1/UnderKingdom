@@ -171,7 +171,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 - Rehacer las zonas una a una (lista en `TASK.md`, "Macro mapa").
 - Ruina: qué da el Guardián de hielo al caer (el plan no lo dice), y confirmar que la reja tras su sala, que se abre al vencerlo, es el camino a `[P6]`.
 - Profundidades: los minijefes de los tres altares (el plan no los dice). Propuesta, sin arte nuevo: en el coliseo, oleadas de diablillos y el demonslime común (`escenas/enemigos/demonslime.tscn`); en el lago de magma, un diablillo mayor (`diablillo.tscn` a escala 2 y con más vida); en el santuario de las llamas, un segundo demonslime (el Crystal Mauler pasa a la gruta de cristal de las minas, sección 6). El comentario del ASCII de las profundidades todavía nombra al Mauler: se corrige al repasar esa zona.
-- Puertas hacia atrás: dibujarlas zona por zona (punto 1 de `sugerencias_exploracion.txt`) y escribir los textos de lore que quedaron como marcador.
+- Puertas hacia atrás: dibujarlas zona por zona (punto 1 de `sugerencias_exploracion.txt`) y escribir los textos de lore que quedaron como marcador. Dibujadas: 1 (calabozo), 2 y 3 (castillo).
 
 ## 8. Regenerar el dibujo
 
@@ -260,6 +260,15 @@ Una zona no se da por hecha mientras el verificador dé errores.
   - Rodar pasa a ser el premio del Rey Caído (`ability_reward`), en lugar de la reliquia de la biblioteca de hoy.
   - Segunda pasada hecha: 7 Guardias, 5 Vanguardias, 11 murciélagos, 4 cofres y decorados del tileset castillo. Probada generando una escena temporal con el constructor, sin errores.
   - La puerta del gran salón a la antecámara solo se abre desde la antecámara (cerrojo en la `_combate`): el camino obligatorio pasa por la biblioteca, las almenas y la armería.
+  - **Puertas hacia atrás (2026-11-06), ideas 2 y 3:**
+    - **Aposentos de la Reina (idea 2):** sala nueva en x 62-74, filas 11-18, al este de la capilla, con su puerta en la columna 61 (filas 16-18) y el arco `C` en (60, 18). La antorcha pasa a (59, 18). La puerta lleva `locked_door.gd` con la llave del Caballero (`minas_caballero`, la de `[L4]`). La columna 75 queda de pared y no toca la armería. Dentro, en la `_combate`: la página I del diario (marcador) en (66, 18) y el fragmento de vida 1/4 sobre la repisa de x 70-73, en (71, 15).
+    - **El castillo sin hechizo (idea 3):** no cambia el trazado. Tras la muerte de la Reina, los 7 Guardias pasan a ser soldados NPC de rodillas en sus mismos sitios, apuntados en la cabecera. El Capitán espera en (68, 62), al pie del estrado: el sitio que proponía la sugerencia, x 62-64, filas 61-62, es el estrado macizo.
+    - **Simulación de saltos**, comparando el ASCII de antes y el de después con las mismas reglas:
+      - con la puerta cerrada, el alcance es idéntico al de antes y la sala no se alcanza, ni con saltos de 7 y huecos de 6;
+      - abierta, se llega a la sala desde la P y desde la llegada de `:C:` con saltos de 3, y desde toda la sala se vuelve a la P;
+      - desde `:C:` también se llega al sitio del Capitán;
+      - lo único nuevo es la sala.
+    - Ningún decorado pisa otro, una escalera ni un checkpoint. Probado generando una escena temporal con el constructor, sin errores.
 - **Cementerio (ASCII, primera pasada, 2026-11-04):** `mapas_texto/macro/zonas/cementerio.txt`, 120 x 90, en el mundo en (246, 43): pegado al castillo por la derecha y más abajo que su cima, al pie de la colina, para que `[H2]` caiga en las filas 67-69 del mundo.
   - Recibe `[H2]` en su borde izquierdo, filas 24-26, por un túnel bajo la colina del castillo. `[S3]` sale por el borde de abajo, columnas 10-12 (columna 256 del mundo), 3 piezas, desde el pozo del sello, al oeste de la sala del Capitán.
   - Exterior con la fosa común (tumba sello 1, reto de combate), la casa del sepulturero (checkpoint, tienda o NPC y escalera a la cripta), el hueco al osario y el foso de pinchos con la colina del panteón (tumba sello 2, reto de plataformas).
@@ -358,7 +367,7 @@ La última columna son las puertas hacia atrás (sección 6): se ven en esa zona
 |---|---|---|---|---|
 | Prisión | E0; tajo aéreo, parry, robo de vida y adrenalina (`STARTING_ABILITIES`; la adrenalina sale de la lista al montar la gruta de cristal) | — | — | — |
 | Calabozo | E0 (salto de unas 3 piezas) | E1 (hoy); llave del carcelero (hoy) | `[L1]` llave del carcelero | 1. Depósito del alcaide (llave del alcaide, mazmorra): acta del prisionero y +0.25 de daño. Vuelta por `:B:` |
-| Castillo | E1 (salto de unas 4,6 piezas) | Rodar, por reliquia en la biblioteca (hoy); en el plan, premio del Rey Caído (`ability_reward`); E2 en la armería (plan) | `[H2]` Rodar | 2. Aposentos de la Reina (llave del Caballero, minas): diario I y fragmento de vida. 3. El castillo sin hechizo (muerte de la Reina): soldados NPC y el Capitán junto al trono |
+| Castillo | E1 (salto de unas 4,6 piezas) | Rodar, por reliquia en la biblioteca (hoy); en el plan, premio del Rey Caído (`ability_reward`); E2 en la armería (plan) | `[H2]` Rodar | 2. Aposentos de la Reina, al este de la capilla (llave del Caballero, minas): diario I y fragmento de vida 1/4. 3. El castillo sin hechizo (muerte de la Reina): soldados NPC en lugar de los Guardias y el Capitán al pie del trono. Las dos dibujadas en el ASCII (2026-11-06). Vuelta por `:C:` |
 | Cementerio | E1 o E2; Rodar | Ráfaga, con el Capitán, guardián de la tercera tumba; E3 y la Agilidad (plan) | `[S3]` tres tumbas sello (la última, vencer al Capitán) | 4. Estatua de la Reina (Ultimate, mazmorra): fosa de los soldados y amuleto (+0.25 en pociones). 5. Cripta de la primera reina (Golpe final, minas, y llama eterna, ruina): corona y fragmento de vida |
 | Minas | Ráfaga; con E3, Agilidad (salto de unas 6,5 piezas) | Golpe final, con el Caballero (hoy); llave del Caballero | `[L4]` llave del Caballero | 6. Gruta de cristal (Agilidad y E5): Crystal Mauler, que da la Adrenalina |
 | Mazmorra | Golpe final | Ultimate, con la Reina (hoy); llave del alcaide (plan, en la torre, en lugar del cofre de (73, 21)) | `[!5]` derrumbe tras la Reina | 7. Pozo de los condenados (palanca en las profundidades): atajo `:F:` y diario II |
