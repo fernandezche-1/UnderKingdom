@@ -59,10 +59,11 @@ Responde en español.
 - [x] 2. **Cementerio:** ideas 4 (estatua de la Reina, cueva x 112-118, filas 12-17, tras el hueco de la columna 111) y 5 (cripta de la primera reina, x 62-74, filas 29-34, con escalera nueva en la columna 68, losa en la fila 35 y puerta de velas en la columna 65).
 - [x] 3. **Minas:** idea 6 (gruta de cristal, x 132-147, filas 64-77, tras la boca de la columna 131 y el pasillo del fuego, con checkpoint en (142, 55) y salida por la escalera 139). El Crystal Mauler cabe en 16 x 14 a escala 1, justo.
 - [x] 4. **Mazmorra y profundidades:** idea 7 (pozo de los condenados). `:F:` en `conexiones.txt` (mazmorra abajo 88, profundidades arriba 18; túnel de 80 piezas). Trampilla en el suelo de la huida (x 88-90, fila 84) con escalera en la columna 89; pozo x 18-20 con escalera en la 19 hasta la galería, palanca en (23, 25) y, al pie, los restos de los condenados y la página II. En el dibujo del macro mapa la ruina empieza más a la derecha para que `:F:` no la cruce.
-- [ ] 5. **Ruina:** idea 8 (hielo negro).
+- [x] 5. **Ruina:** idea 8 (hielo negro, cámara x 114-130, filas 52-58, al este de la antesala, con la puerta en la columna 113, abierta en el ASCII, y `key_id` `profundidades_ascua`; página III en (117, 58) y fragmento 3/4 en (125, 55), sobre la repisa de la fila 56).
 - [ ] 6. **Profundidades e infierno:** idea 9 (rey encadenado).
   - Quitar al Mauler del comentario del santuario: ahora va el segundo demonslime.
   - Anotar en el infierno que su coliseo marca "ánimas liberadas".
+  - Anotar en la sala del Demon Slime el `PuntoLlave` de la ascua (`profundidades_ascua`, la llave del hielo negro de la ruina).
 - [ ] 7. **Cierre:**
   - repasar la tabla "Desbloqueos por zona" de P46 contra los ASCII;
   - verificador y Atlas;
@@ -130,11 +131,11 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
 - [ ] **Ruina:**
   - el Guardián, la reja de salida en `Atajos`, el hielo de `[P6]` y la llama eterna, la luz de la parte oscura;
   - la palanca y la reja de `:D:`, las trampillas del atajo y de `:E:`, y las transiciones de `[!5]`, `:D:`, `[P6]` y `:E:`;
-  - el hielo negro.
+  - el hielo negro (la misma pieza que el hielo de `[P6]`, con `key_id` `profundidades_ascua`), la página III y el fragmento de vida 3/4.
 - [ ] **Profundidades:**
   - elegir los minijefes de los altares (P46, sección 7);
   - los tres altares y su contador, el fuego infernal y E5;
-  - el Demon Slime, con reja y trampilla en `Puertas`, reja de salida en `Atajos` y la ascua;
+  - el Demon Slime, con reja y trampilla en `Puertas`, reja de salida en `Atajos` y la ascua (`profundidades_ascua`, en su `PuntoLlave`);
   - la palanca de `:E:`, las trampillas del atajo, del lago y del coliseo, y las transiciones de `[P6]`, `:E:` y `[S7]`;
   - la palanca, la transición y el spawn de `:F:`, los restos de los condenados y la página II del diario, y el rey encadenado.
 - [ ] **Infierno:**

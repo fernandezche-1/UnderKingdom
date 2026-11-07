@@ -14,6 +14,10 @@
 ; Llega con el Ultimate (más Rodar, la Ráfaga y el Golpe final; la Agilidad
 ; solo si se encontró E3). Se consigue la llama eterna y, opcional, E4 (el
 ; Abrigo, en un secreto). La salida [P6] pide la llama eterna (P46, sección 10).
+; Puerta hacia atrás (idea 8 del punto 1 de
+; mapas_texto/macro/sugerencias_exploracion.txt): la cámara del hielo negro,
+; al este de la antesala, que se abre con la ascua del Demon Slime
+; (profundidades). Opcional; vuelta por :E:.
 ; Ningún escalón obligatorio pide más de 4 piezas de salto (con E1 se saltan
 ; unas 4,6) ni huecos de más de 3; el camino obligatorio sale incluso con 3.
 ; Solo el secreto de la Agilidad pide más.
@@ -127,6 +131,28 @@
 ;   281-283 del mundo), 3 piezas. Escalera en la columna 146 (filas 70-79)
 ;   para subir desde las profundidades. Spawn DesdeProfundidades hacia
 ;   (149, 72).
+; - CÁMARA DEL HIELO NEGRO (puerta hacia atrás, idea 8; añadida el
+;   2026-11-07): x 114-130, filas 52-58 (suelo 59, el mismo de la antesala),
+;   fuera del camino. Encima quedan 4 filas de roca (48-51) bajo la galería
+;   baja (la escalera 118 acaba en la 47) y debajo 3 (59-61) sobre el techo de
+;   la sala del Guardián; no toca el secreto de la Agilidad (columna 131).
+;   PUERTA DE HIELO NEGRO en la pared este de la antesala, columna 113, filas
+;   56-58: un hielo como el de [P6], pero oscuro. Es la misma pieza (sin
+;   hacer): locked_door.gd con otro dibujo, en la _combate, con key_id
+;   profundidades_ascua (la ascua del Demon Slime, que aviva la llama eterna;
+;   quien la tiene ya pasó [P6], así que ya lleva la llama). Al pulsar E sin
+;   la ascua sale "LA LLAMA NO BASTA" (texto de marcador). En el ASCII queda
+;   abierta, como la puerta de los aposentos del castillo, para que la
+;   locked_door pueda cerrarla.
+;   Repisa de una vía en x 124-127, fila 56, a 3 piezas del suelo. Premio, en
+;   la _combate: la página III del diario de la Reina (objeto de lore con
+;   texto provisional, marcador de P46 sección 6) en (117, 58) y el fragmento
+;   de vida 3/4 sobre la repisa, en (125, 55). Sin enemigos ni monedas;
+;   cristales (r) en (121, 58) y (129, 58).
+;   Vuelta desde las profundidades, tras el Demon Slime: por :E: (palanca del
+;   pie del pozo, en las profundidades), que sube a esta misma antesala con
+;   el spawn en (94, 58); o por [P6] -> cámara del deshielo -> sala del
+;   Guardián -> escalera 100 -> antesala.
 ;
 ; Comprobado con una simulación de saltos de 4 piezas y huecos de 3, con la
 ; trampilla del atajo, la de :E: y la reja de salida cerradas: desde la P se
@@ -139,6 +165,17 @@
 ; cofres, monedas y pociones menos los del secreto, que solo se alcanzan con
 ; la Agilidad. Con saltos de 3 faltan los de la cumbre, la parte alta de la
 ; cripta y el refugio, que ya pedían 4.
+; Hielo negro (2026-11-07), comparando el ASCII de antes y el de después con
+; las mismas reglas (cuerpo de 3 y de 2, saltos de 3 y de 4, huecos de 3, con
+; la reja de salida cerrada y abierta):
+; - con la puerta cerrada, el alcance desde la P es idéntico al de antes, y
+;   no se llega a la cámara ni con saltos de 7 y huecos de 6, tampoco desde
+;   :E:; el camino obligatorio no cambia;
+; - abierta, lo único nuevo es la cámara (no se pierde ninguna posición), se
+;   alcanzan la página y el fragmento con saltos de 3, y desde toda la cámara
+;   se vuelve a la P;
+; - desde el spawn de :E: (trampilla abierta) se llega a la página, al
+;   fragmento y a la P.
 ;
 ; Segunda pasada (profundidad 4, P33: a, M, q, e):
 ; - Enemigos: 6 Aprendis, 2 mino, 7 kolbo3 y 8 esqueletos.
@@ -155,7 +192,8 @@
 ;     (126, 17), la galería alta (20, 33) y (98, 33), la baja (52, 47) y
 ;     (125, 47) y la cripta oscura (36, 64).
 ;   - Ninguno en la llegada, el pie del pozo, la antesala, la sala del
-;     Guardián, la cámara del deshielo ni los secretos, ni a menos de 8 piezas
+;     Guardián, la cámara del deshielo, la del hielo negro ni los secretos,
+;     ni a menos de 8 piezas
 ;     de la P, los checkpoints o los spawns.
 ; - Cofres (c): cumbre del viento (102, 5), lago helado (68, 23), secreto de la
 ;   Agilidad (139, 42) y cripta oscura (52, 64).
@@ -167,7 +205,8 @@
 ;   galería alta (8, 33).
 ; - Decorados del tileset mazmorra:
 ;   - cristales (r) por el suelo del exterior, la cumbre, el secreto, el fondo
-;     de la galería baja y la cámara del deshielo: el hielo de la ruina;
+;     de la galería baja, la cámara del deshielo y la del hielo negro: el
+;     hielo de la ruina;
 ;   - antorchas (t) en la llegada, la torre, el pasillo, el pie del pozo, las
 ;     dos galerías, la capilla, la antesala y la sala del Guardián; ninguna en
 ;     el exterior (a cielo abierto) ni en la parte oscura;
@@ -183,7 +222,8 @@
 ; Viven en tiles_ruina_combate.tscn: sala del Guardián (trampilla, activador,
 ; puntos del jefe, reja de salida en Atajos), hielo de [P6] y llama eterna,
 ; luz de la parte oscura, palanca y reja de :D:, trampillas del atajo y de
-; :E:, y las transiciones y spawns de [!5], :D:, [P6] y :E:. No hay
+; :E:, la puerta de hielo negro con la página III y el fragmento de vida 3/4,
+; y las transiciones y spawns de [!5], :D:, [P6] y :E:. No hay
 ; "siguiente" ni "anterior": todas las conexiones salen por arriba o por
 ; abajo.
 
@@ -245,13 +285,13 @@ parallax: assets_prueba/gothicvania/cavernas/fondo.png 0.05; assets_prueba/gothi
 #######################.H.########^^^##########################################.H.##########################################################################
 #######################.H.#############################........################.H.##########################################################################
 #######################.H.#############################........################.H.##########################################################################
-#######################.H.#############################........################.H.##########################################################################
-#######################.H.#############################........#.......#####....H................................###########################################
-#######################.H.#############################........#.......#####....H................................###########################################
-####....................H......########################............$$..#####..t.H...............t.............t..###########################################
-####....................H......########################......$....x....#####....H...!............................###########################################
-####....................H......########################....====#############....H................................###########################################
-####..t.................H...t..#...............................#############....H.....S...................xb.....###########################################
+#######################.H.#############################........################.H.################################.................#########################
+#######################.H.#############################........#.......#####....H................................#.................#########################
+#######################.H.#############################........#.......#####....H................................#.................#########################
+####....................H......########################............$$..#####..t.H...............t.............t..#.................#########################
+####....................H......########################......$....x....#####....H...!.......................................====...#########################
+####....................H......########################....====#############....H..................................................#########################
+####..t.................H...t..#...............................#############....H.....S...................xb.............r.......r.#########################
 ####..........a.........H......#...............................###########################.H.######.H.######################################################
 ####....................H......#.........................$.....###########################.H.######.H.######################################################
 ####....................H...............................===....###########################.H.######.H.######################################################
