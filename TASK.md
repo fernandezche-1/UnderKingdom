@@ -70,7 +70,7 @@ Responde en español.
 
 **Añadido tras el cierre (2026-11-08): el dash y los secretos** (puntos 2 y 4 de las sugerencias). El Guardián da el dash en el aire; los secretos de la Agilidad clonados se reparten en tipos distintos. Una zona por paso, con el recorte de antes y después aprobado y el mismo criterio de "hecho":
 - [x] 8. **Ruina:** secreto del dash en el fondo este de la galería baja (pasillo x 131-138, filas 44-47, foso de 6 en x 133-138, cámara x 139-148 con el cofre en (147, 47)).
-- [ ] 9. **Mazmorra:** el secreto de la torre pasa a ser del dash.
+- [x] 9. **Mazmorra:** el secreto de la torre pasa a ser del dash (pasillo desde la columna 109, filas 18-21, foso de 6 en x 109-114, nicho x 115-117 con el cofre en (117, 21)).
 - [ ] 10. **Profundidades:** el secreto de la galería pasa a ser una pared falsa.
 - [ ] 11. **Minas (si cabe):** un tercer sitio del dash cerca de `:D:`. El escalón de la Agilidad se queda.
 
