@@ -148,7 +148,7 @@ seguir. Responde en español.
 - [x] Fragmento de vida: 4 dan 1 corazón: `escenas/items/fragmento_vida.tscn` y `grant_life_fragment` de `GameManager` (P54). `SAVE_FORMAT_VERSION` pasa a 4. Falta su arte.
 
 **3. Cementerio:**
-- [ ] Contador de sellos que abre una puerta (`[S3]`, `[S7]`).
+- [x] Contador de sellos que abre una puerta (`[S3]`, `[S7]`): `escenas/objetos/sello.tscn` y `open_on_seal_group` de `arena_barrier.gd` (P55). No cambia el formato de guardado. Falta su arte.
 - [ ] Rompible que solo acepta un tipo de golpe: el ascendente con Golpe final (losa de la cripta) o la Ultimate (estatua de la Reina).
 - [ ] `locked_door` con otro dibujo: velas, y después hielo negro y el hielo de `[P6]`.
 - [ ] Mejora de +0.25 en pociones (el amuleto de la guardia).

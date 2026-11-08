@@ -20,6 +20,10 @@ const TILE := 16.0
 ## escena, empieza abierta. Varias barreras pueden escuchar el mismo id. No
 ## combinar con los Atajos de boss_arena.gd, que deciden ellos mismos.
 @export var open_on_encounter: String = ""
+## Si no está vacío, la barrera se abre al activarse todos los sellos de este
+## grupo (seal.gd, P55). Es lo mismo que poner "sellos:<grupo>" en
+## open_on_encounter, que tiene prioridad si también se rellena.
+@export var open_on_seal_group: String = ""
 
 @onready var collision: CollisionShape2D = $CollisionShape2D
 
@@ -30,6 +34,8 @@ var _tween: Tween = null
 
 func _ready() -> void:
     _build_pieces()
+    if open_on_encounter.is_empty() and not open_on_seal_group.is_empty():
+        open_on_encounter = GameManager.seal_group_encounter(open_on_seal_group)
     if not open_on_encounter.is_empty():
         if GameManager.is_encounter_completed(open_on_encounter):
             start_closed = false

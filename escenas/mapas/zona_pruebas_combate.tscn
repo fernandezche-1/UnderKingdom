@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3]
+[gd_scene load_steps=23 format=3]
 
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas.tscn" id="1_base"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/rata.tscn" id="2_rata"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" path="res://escenas/npc/barquero.tscn" id="13_barquero"]
 [ext_resource type="Script" path="res://scripts/environment/encounter_visibility.gd" id="14_visibilidad"]
 [ext_resource type="PackedScene" path="res://escenas/items/fragmento_vida.tscn" id="15_fragmento"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/sello.tscn" id="16_sello"]
 [ext_resource type="Texture2D" path="res://assets_prueba/raou_castillo/tileset_castillo.png" id="8_tileset"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_losa_izq"]
@@ -121,4 +122,35 @@ piece_end = SubResource("AtlasTexture_reja_base")
 start_closed = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Objetos/RejaBaja"]
+shape = SubResource("RectangleShape2D_reja")
+
+[node name="Sello1" parent="Objetos" instance=ExtResource("16_sello")]
+position = Vector2(1200, 144)
+seal_group = "pruebas_sellos"
+seal_id = "1"
+seal_total = 3
+
+[node name="Sello2" parent="Objetos" instance=ExtResource("16_sello")]
+position = Vector2(1232, 144)
+seal_group = "pruebas_sellos"
+seal_id = "2"
+seal_total = 3
+
+[node name="Sello3" parent="Objetos" instance=ExtResource("16_sello")]
+position = Vector2(1264, 144)
+seal_group = "pruebas_sellos"
+seal_id = "3"
+seal_total = 3
+listen_encounter = "pruebas_sello_3_escucha"
+
+[node name="PuertaSellos" type="StaticBody2D" parent="Objetos"]
+position = Vector2(1328, 128)
+script = ExtResource("7_barrera")
+piece_start = SubResource("AtlasTexture_reja_tope")
+piece_middle = SubResource("AtlasTexture_reja_medio")
+piece_end = SubResource("AtlasTexture_reja_base")
+start_closed = true
+open_on_seal_group = "pruebas_sellos"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objetos/PuertaSellos"]
 shape = SubResource("RectangleShape2D_reja")

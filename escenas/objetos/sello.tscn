@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://escenas/objetos/palanca.tscn" id="1_palanca"]
+[ext_resource type="Script" path="res://scripts/environment/seal.gd" id="2_script"]
+
+[node name="Sello" instance=ExtResource("1_palanca")]
+self_modulate = Color(0.75, 0.6, 1, 1)
+script = ExtResource("2_script")

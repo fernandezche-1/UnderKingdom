@@ -1121,6 +1121,26 @@ func is_encounter_completed(encounter_id: String) -> bool:
 	return bool(completed_encounters.get(encounter_id, false))
 
 
+## Sellos (contador de sellos, P55). Cada sello activado se guarda en
+## completed_encounters como "sello:<grupo>:<id>"; al llegar al total, el sello
+## que lo completa marca "sellos:<grupo>", que es lo que escuchan las barreras.
+func seal_key(group: String, seal_id: String) -> String:
+	return "sello:%s:%s" % [group, seal_id]
+
+
+func seal_group_encounter(group: String) -> String:
+	return "sellos:%s" % group
+
+
+func get_seal_count(group: String) -> int:
+	var prefix := "sello:%s:" % group
+	var count := 0
+	for key in completed_encounters:
+		if String(key).begins_with(prefix) and bool(completed_encounters[key]):
+			count += 1
+	return count
+
+
 func grant_key(key_id: String) -> void:
 	if key_id.is_empty() or has_key(key_id):
 		return
