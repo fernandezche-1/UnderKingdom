@@ -2,7 +2,7 @@
 ; pasada: estructura, P, checkpoints, aperturas, pie de :D: con su palanca,
 ; llama eterna, parte oscura, hielo de [P6], sala del Guardián, pozo de :E:,
 ; secretos y zonas frías. Segunda pasada (enemigos, objetos y decorados)
-; hecha.
+; hecha. Secreto del dash (punto 4 de las sugerencias), 2026-11-08.
 ; NO GENERAR TODAVÍA: la escena de abajo es la de la ruina que se juega hoy
 ; (mapas_texto/tiles_ruina.txt) y el constructor la reemplazaría. Al
 ; aprobarlo, este archivo pasa a mapas_texto/tiles_ruina.txt (sección 9).
@@ -12,15 +12,16 @@
 ; 222. Cubre de la columna 136 a la 291 del mundo: [!5] cae en la 145-147 y
 ; :D: en la 282-284, las dos sin túnel.
 ; Llega con el Ultimate (más Rodar, la Ráfaga y el Golpe final; la Agilidad
-; solo si se encontró E3). Se consigue la llama eterna y, opcional, E4 (el
-; Abrigo, en un secreto). La salida [P6] pide la llama eterna (P46, sección 10).
+; solo si se encontró E3). Se consigue la llama eterna, el dash en el aire
+; (premio del Guardián) y, opcional, E4 (el Abrigo, en un secreto). La salida
+; [P6] pide vencer al Guardián y la llama eterna (P46, sección 10).
 ; Puerta hacia atrás (idea 8 del punto 1 de
 ; mapas_texto/macro/sugerencias_exploracion.txt): la cámara del hielo negro,
 ; al este de la antesala, que se abre con la ascua del Demon Slime
 ; (profundidades). Opcional; vuelta por :E:.
 ; Ningún escalón obligatorio pide más de 4 piezas de salto (con E1 se saltan
 ; unas 4,6) ni huecos de más de 3; el camino obligatorio sale incluso con 3.
-; Solo el secreto de la Agilidad pide más.
+; Solo el secreto del dash pide más.
 ; Camino obligatorio: [!5] -> llegada -> exterior helado -> torre caída ->
 ; galería alta -> escalera 118 -> galería baja -> escalera 24 -> capilla
 ; (llama eterna) -> galería baja -> escalera 80 -> antesala -> sala del
@@ -73,11 +74,25 @@
 ;   66-67 y 110-111 (filas 42-43), tramo alto x 96-104 (suelo 46) y foso de
 ;   pinchos x 34-36 (camino a la capilla). Fondo este más alto: x 122-130,
 ;   filas 36-47. Escalera de la columna 118 (filas 34-47) a la galería alta.
-; - SECRETO DE LA AGILIDAD: x 131-140, filas 37-42 (suelo 43), al fondo este
-;   de la galería baja y abierto a su fondo alto por la columna 131. Su suelo
-;   está 5 piezas por encima del de la galería y no hay nada cerca a lo que
-;   subirse: con E1 no se llega; con la Agilidad, sí. Es el mismo escalón que
-;   los secretos de las minas y la mazmorra. Sitio de un cofre en (139, 42).
+; - SECRETO DEL DASH (tipo: pasillo bajo con foso; punto 4 de las
+;   sugerencias; 2026-11-08, antes era el escalón de 5 de la Agilidad, en
+;   x 131-140, filas 37-42, que pasó a roca): al fondo este de la galería
+;   baja, a dos escaleras de la sala del Guardián, que da el dash. Es donde se
+;   aprende a usarlo.
+;   - PASILLO de 4 de alto, x 131-138, filas 44-47 (suelo 48, el de la
+;     galería), abierto al fondo alto por la columna 131. FOSO DE PINCHOS de
+;     6 de ancho en x 133-138 (fila 48 vacía, pinchos en la 49), de 2 de
+;     hondo, como los demás de la ruina. Monedas sobre el foso, en (135, 47)
+;     y (136, 47): se cogen en pleno dash.
+;   - CÁMARA x 139-148, filas 40-47 (suelo 48). Cofre en (147, 47) y
+;     cristales (r) en (141, 47) y (144, 47).
+;   - Por qué no se cruza sin el dash: el techo del pasillo deja 1,3 piezas
+;     sobre la cabeza (el cuerpo mide 43 px), así que el salto, también con
+;     la Agilidad, no pasa de unas 3 piezas en horizontal, y rodar solo se
+;     puede en el suelo. El cuerpo, de 20 px de ancho, asoma media pieza por
+;     cada borde: el foso de 6 deja unas 4,75 piezas que cruzar. Con un salto
+;     corto y el dash (unas 7 piezas, sin gravedad) se pasa con margen. Es la
+;     regla de todos los sitios del dash.
 ; - ATAJO INTERNO: escalera de la columna 5 (filas 13-47), de la galería baja
 ;   a la llegada, pasando por la galería alta (pozo x 4-6, filas 14-27 y
 ;   34-41). TRAMPILLA en x 4-6, fila 13, el suelo de la llegada: cerrada desde
@@ -116,8 +131,10 @@
 ;   cierra (TrampillaEntrada, Puertas de boss_arena), en la fila 61.
 ;   Plataformas en la fila 69 (x 102-106 y x 123-127). Activador: el suelo de
 ;   la sala lejos de la escalera (x 103-133, filas 66-72). PuntosJefe hacia
-;   (98, 72) y (131, 72). No suelta llave: qué da al caer está pendiente (P46
-;   no lo dice).
+;   (98, 72) y (131, 72). No suelta llave. Al vencerlo da el DASH EN EL AIRE
+;   (ability_reward air_dash, habilidad nueva; decidido el 2026-11-08, P46
+;   sección 6). Se usa en el secreto del dash de esta zona y en el de la
+;   torre de la mazmorra.
 ; - REJA DE SALIDA: columna 134, filas 70-72, en la pared este de la sala.
 ;   Va en Atajos de boss_arena: cerrada hasta vencer al Guardián. En el ASCII
 ;   queda abierta.
@@ -137,7 +154,7 @@
 ;   2026-11-07): x 114-130, filas 52-58 (suelo 59, el mismo de la antesala),
 ;   fuera del camino. Encima quedan 4 filas de roca (48-51) bajo la galería
 ;   baja (la escalera 118 acaba en la 47) y debajo 3 (59-61) sobre el techo de
-;   la sala del Guardián; no toca el secreto de la Agilidad (columna 131).
+;   la sala del Guardián; no toca el secreto del dash (columna 131).
 ;   PUERTA DE HIELO NEGRO en la pared este de la antesala, columna 113, filas
 ;   56-58: un hielo como el de [P6], pero oscuro. Es la misma pieza (sin
 ;   hacer): locked_door.gd con otro dibujo, en la _combate, con key_id
@@ -158,14 +175,15 @@
 ;
 ; Comprobado con una simulación de saltos de 4 piezas y huecos de 3, con la
 ; trampilla del atajo, la de :E: y la reja de salida cerradas: desde la P se
-; llega a todo menos al secreto de la Agilidad, que se alcanza con saltos de 6,
+; llega a todo menos al secreto de la Agilidad (hoy, el del dash), que se
+; alcanzaba con saltos de 6,
 ; y a la cámara del deshielo, que se alcanza con la reja abierta; desde todo
 ; se vuelve a la P. Con saltos de 3 se llega también a la capilla, la antesala
 ; y la sala del jefe, pero no a la cumbre ni al refugio. Desde :D: se llega a
 ; la llegada. Con la trampilla del atajo abierta, de la galería alta se sube a
 ; la llegada. Tras la segunda pasada, con saltos de 4 se alcanzan todos los
-; cofres, monedas y pociones menos los del secreto, que solo se alcanzan con
-; la Agilidad. Con saltos de 3 faltan los de la cumbre, la parte alta de la
+; cofres, monedas y pociones menos los del secreto, que solo se alcanzaban
+; con la Agilidad (hoy, con el dash). Con saltos de 3 faltan los de la cumbre, la parte alta de la
 ; cripta y el refugio, que ya pedían 4.
 ; Hielo de [P6] abierto en el ASCII (2026-11-07), con las mismas reglas: con
 ; el hielo cerrado el alcance es idéntico al de antes y no se sale por [P6] ni
@@ -182,6 +200,21 @@
 ;   se vuelve a la P;
 ; - desde el spawn de :E: (trampilla abierta) se llega a la página, al
 ;   fragmento y a la P.
+; Secreto del dash (2026-11-08), comparando el ASCII de antes y el de después
+; (cuerpo de 3 y de 2, saltos de 3 y de 4, huecos de 3, con las trampillas,
+; la reja, el hielo de [P6] y el hielo negro cerrados; simulación con dash de
+; 7 piezas, una vez por salto):
+; - sin dash no se pierde ninguna posición fuera del viejo secreto, y lo
+;   único nuevo es la boca del pasillo (x 131-132): el camino obligatorio no
+;   cambia;
+; - sin dash no se llega a la cámara ni con saltos de 6 y 7 y huecos de 6 (el
+;   viejo secreto sí se alcanzaba con saltos de 6);
+; - con el dash se llega a toda la cámara y al cofre con saltos de 3, y desde
+;   toda ella se vuelve a la P;
+; - con todo cerrado, el dash no abre nada más en la ruina: lo único nuevo son
+;   las casillas de la cámara.
+; Probado generando una escena temporal con el constructor, sin errores (4
+; cofres, 18 monedas, como antes).
 ;
 ; Segunda pasada (profundidad 4, P33: a, M, q, e):
 ; - Enemigos: 6 Aprendis, 2 mino, 7 kolbo3 y 8 esqueletos.
@@ -201,11 +234,12 @@
 ;     Guardián, la cámara del deshielo, la del hielo negro ni los secretos,
 ;     ni a menos de 8 piezas
 ;     de la P, los checkpoints o los spawns.
-; - Cofres (c): cumbre del viento (102, 5), lago helado (68, 23), secreto de la
-;   Agilidad (139, 42) y cripta oscura (52, 64).
+; - Cofres (c): cumbre del viento (102, 5), lago helado (68, 23), secreto del
+;   dash (147, 47) y cripta oscura (52, 64).
 ; - Monedas ($) en las plataformas de la cumbre y la torre, los escombros de la
 ;   galería alta, el tramo alto de la baja, el lago, el pasillo, la parte alta
-;   de la cripta, el refugio, el secreto y sobre los dos fosos de la capilla
+;   de la cripta, el refugio, sobre el foso del secreto del dash (135, 47) y
+;   (136, 47), que se cogen en el dash, y sobre los dos fosos de la capilla
 ;   (11, 62) y (17, 62), que se cogen al saltarlos. Pociones (!) en la antesala
 ;   (84, 56), antes del Guardián, en el lago (53, 21) y al fondo oeste de la
 ;   galería alta (8, 33).
@@ -226,7 +260,7 @@
 ;   que no cuelgan de la pared se apoyan en el suelo.
 ;
 ; Viven en tiles_ruina_combate.tscn: sala del Guardián (trampilla, activador,
-; puntos del jefe, reja de salida en Atajos), hielo de [P6] y llama eterna,
+; puntos del jefe, reja de salida en Atajos, ability_reward air_dash), hielo de [P6] y llama eterna,
 ; luz de la parte oscura, palanca y reja de :D:, trampillas del atajo y de
 ; :E:, la puerta de hielo negro con la página III y el fragmento de vida 3/4,
 ; y las transiciones y spawns de [!5], :D:, [P6] y :E:. No hay
@@ -276,19 +310,19 @@ parallax: assets_prueba/gothicvania/cavernas/fondo.png 0.05; assets_prueba/gothi
 ####.H.#################################...##########################################################################.H.###############...##################
 ####.H.#################################^^^##########################################################################.H.###############^^^##################
 ####.H.##############################################################################################################.H.##.........#########################
-####.H.##############################################################################################################.H.##...................###############
-####.H.##############################################################################################################.H.##...................###############
-####.H.##############################################################################################################.H.##...................###############
-####.H.##############################################################################################################.H.##...................###############
-####.H.##############################################################################################################.H.##............$.$....###############
-####.H......................................##....................##..........................................##......H.............r....r.c.###############
-####.H......................................##....................##..........................................##......H............#########################
-####.H....t...................t...........................t...............t...............a...........$...t.........t.H............#########################
-####.H..............................................................................................q.................H............#########################
-####.H..........................................................................................#########.............H............#########################
-####.H........q.....................................e.......E.........bx........................#########.............H......e...r.#########################
-#######################.H.########...##########################################.H.##########################################################################
-#######################.H.########^^^##########################################.H.##########################################################################
+####.H.##############################################################################################################.H.##.........#########################
+####.H.##############################################################################################################.H.##.........#########################
+####.H.##############################################################################################################.H.##.........#########################
+####.H.##############################################################################################################.H.##.........########..........#######
+####.H.##############################################################################################################.H.##.........########..........#######
+####.H......................................##....................##..........................................##......H............########..........#######
+####.H......................................##....................##..........................................##......H............########..........#######
+####.H....t...................t...........................t...............t...............a...........$...t.........t.H..............................#######
+####.H..............................................................................................q.................H..............................#######
+####.H..........................................................................................#########.............H..............................#######
+####.H........q.....................................e.......E.........bx........................#########.............H......e...r.....$$....r..r..c.#######
+#######################.H.########...##########################################.H.###################################################......#################
+#######################.H.########^^^##########################################.H.###################################################^^^^^^#################
 #######################.H.#############################........################.H.##########################################################################
 #######################.H.#############################........################.H.##########################################################################
 #######################.H.#############################........################.H.################################.................#########################

@@ -265,6 +265,12 @@ Reglas que se mantienen:
 2. EL PREMIO DEL GUARDIÁN DE HIELO (prioridad alta: decisión pendiente)
 ==============================================================================
 
+DECIDIDO (2026-11-08; P46, sección 6): el dash corto en el aire. Sus sitios
+son pasillos de 4 de alto con un foso de pinchos de 6 (con la Agilidad, un
+hueco abierto tendría que medir más de 11). Nada obligatorio lo pide. Van en
+los secretos del punto 4: la ruina (hecho, 2026-11-08) y la mazmorra, y quizá
+un tercero en las minas, junto a :D:.
+
 - Hoy está pendiente qué da el Guardián al caer (P46, sección 7).
 - Es la mejor ocasión del juego para dar una HABILIDAD DE MOVIMIENTO nueva.
   Opciones:
@@ -306,6 +312,11 @@ Reglas que se mantienen:
 ==============================================================================
 4. SECRETOS DE DISTINTOS TIPOS (prioridad media: toca el ASCII)
 ==============================================================================
+
+DECIDIDO (2026-11-08; P46, sección 6): el escalón de 5 de la Agilidad queda
+en las minas. El de la ruina pasa a ser del dash (hecho, 2026-11-08), el de la
+mazmorra también y el de las profundidades, una pared falsa. Los premios
+siguen siendo cofres (punto 5).
 
 - Hoy el secreto de la Agilidad es el mismo en las minas, la mazmorra, la
   ruina y las profundidades: un escalón de 5 piezas sin nada cerca. A partir
