@@ -193,6 +193,15 @@ Propuestas (coordenadas en piezas de cada ASCII, columna y fila):
    - Premio: el alma del Rey Caído (lore final antes de Cthulhu: "no fue ella
      sola") y fragmento de vida 4/4.
    - Vuelta: la escalera de [S7] y la escalera 68. Coste medio.
+   - HECHO (2026-11-08): dibujada en mapas_texto/macro/zonas/profundidades.txt
+     tal como se propone: jaula x 44-48, filas 16-19, abierta en el techo de
+     la galería. La rejilla de la fila 20 (la de arriba de la galería) vive
+     en la _combate y en el ASCII queda abierta. No se entra en la jaula (no
+     tiene suelo): antes, el rey encadenado, con el sprite del Rey Caído
+     (rey_caido.tscn), está dentro, en (46, 19); con
+     infierno_animas_liberadas (lo marca el coliseo del infierno al vencer
+     su última oleada) la rejilla se abre, el rey se oculta y aparecen en el
+     suelo su alma en (46, 25) y el fragmento 4/4 en (44, 25).
 10. (En reserva) MINAS, el campamento helado: el frío de la ruina sube por :D:
     y hiela una galería junto a la galería honda; se pasa con E4. Solo si se
     hace la mecánica del frío. Coste alto.

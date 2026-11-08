@@ -79,6 +79,13 @@
 ;     (84, 46), murciélago (73, 44). Las demás oleadas van en la escena
 ;     _combate (pendiente: oleadas con spawn).
 ;   Las dos rejas y la trampilla quedan abiertas en el ASCII.
+;   - ÁNIMAS LIBERADAS: al vencer la última oleada se marca
+;     infierno_animas_liberadas en completed_encounters. Abre la jaula del
+;     rey encadenado de las profundidades (puerta hacia atrás, idea 9): su
+;     alma y el fragmento de vida 4/4 aparecen en la galería de los
+;     condenados. Vuelta opcional, antes de Cthulhu: sima arriba, escalera 55
+;     de [S7] y, en las profundidades, la sala del Demon Slime y la escalera
+;     68.
 ;
 ; ABAJO:
 ; - 4. PASILLO DEL FILO (prueba de rodar): x 18-108, filas 72-75 (suelo 76),
@@ -130,7 +137,8 @@
 ; la sima, como en la primera versión.
 ;
 ; Viven en tiles_jefe_combate.tscn: las rejas y trampillas del coliseo y del
-; salón (arena_barrier) con sus oleadas, las rejas bajas del pasillo, el
+; salón (arena_barrier) con sus oleadas, la marca infierno_animas_liberadas
+; del coliseo, las rejas bajas del pasillo, el
 ; fuego infernal, la sala de Cthulhu (reja en Puertas, activador, PuntosJefe
 ; y el aviso del final) y la transición y el spawn de [S7].
 

@@ -60,10 +60,10 @@ Responde en español.
 - [x] 3. **Minas:** idea 6 (gruta de cristal, x 132-147, filas 64-77, tras la boca de la columna 131 y el pasillo del fuego, con checkpoint en (142, 55) y salida por la escalera 139). El Crystal Mauler cabe en 16 x 14 a escala 1, justo.
 - [x] 4. **Mazmorra y profundidades:** idea 7 (pozo de los condenados). `:F:` en `conexiones.txt` (mazmorra abajo 88, profundidades arriba 18; túnel de 80 piezas). Trampilla en el suelo de la huida (x 88-90, fila 84) con escalera en la columna 89; pozo x 18-20 con escalera en la 19 hasta la galería, palanca en (23, 25) y, al pie, los restos de los condenados y la página II. En el dibujo del macro mapa la ruina empieza más a la derecha para que `:F:` no la cruce.
 - [x] 5. **Ruina:** idea 8 (hielo negro, cámara x 114-130, filas 52-58, al este de la antesala, con la puerta en la columna 113, abierta en el ASCII, y `key_id` `profundidades_ascua`; página III en (117, 58) y fragmento 3/4 en (125, 55), sobre la repisa de la fila 56).
-- [ ] 6. **Profundidades e infierno:** idea 9 (rey encadenado).
-  - Quitar al Mauler del comentario del santuario: ahora va el segundo demonslime.
-  - Anotar en el infierno que su coliseo marca "ánimas liberadas".
-  - Anotar en la sala del Demon Slime el `PuntoLlave` de la ascua (`profundidades_ascua`, la llave del hielo negro de la ruina).
+- [x] 6. **Profundidades e infierno:** idea 9 (rey encadenado: jaula x 44-48, filas 16-19, en el techo de la galería de los condenados, con la rejilla de la fila 20 en la `_combate`; el rey, con el sprite del Rey Caído, en (46, 19); con `infierno_animas_liberadas`, su alma en (46, 25) y el fragmento 4/4 en (44, 25)).
+  - El santuario ya no nombra al Mauler: va el segundo demonslime.
+  - El coliseo del infierno marca `infierno_animas_liberadas` al vencer su última oleada.
+  - La sala del Demon Slime lleva el `PuntoLlave` de la ascua (`profundidades_ascua`) hacia (100, 78).
 - [ ] 7. **Cierre:**
   - repasar la tabla "Desbloqueos por zona" de P46 contra los ASCII;
   - verificador y Atlas;
@@ -137,12 +137,13 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
   - los tres altares y su contador, el fuego infernal y E5;
   - el Demon Slime, con reja y trampilla en `Puertas`, reja de salida en `Atajos` y la ascua (`profundidades_ascua`, en su `PuntoLlave`);
   - la palanca de `:E:`, las trampillas del atajo, del lago y del coliseo, y las transiciones de `[P6]`, `:E:` y `[S7]`;
-  - la palanca, la transición y el spawn de `:F:`, los restos de los condenados y la página II del diario, y el rey encadenado.
+  - la palanca, la transición y el spawn de `:F:`, los restos de los condenados y la página II del diario;
+  - la jaula del rey encadenado: rejilla, el rey (sprite del Rey Caído), su alma y el fragmento de vida 4/4, según `infierno_animas_liberadas`.
 - [ ] **Infierno:**
   - decidir los enemigos definitivos de la prueba final;
   - las arenas con oleadas del coliseo y del salón, las rejas bajas del pasillo y el fuego infernal;
   - Cthulhu en el trono, con la reja en `Puertas`, el activador, `PuntosJefe` y el aviso del final;
-  - la transición y el spawn de `[S7]`, y la marca de "ánimas liberadas".
+  - la transición y el spawn de `[S7]`, y la marca `infierno_animas_liberadas` del coliseo.
 
 ---
 

@@ -2,7 +2,8 @@
 ; pasada: estructura, P, checkpoints, aperturas, pie de :E: con su palanca,
 ; los tres altares, E5, la sala del Demon Slime, el pozo de [S7] y el secreto.
 ; Segunda pasada (enemigos, objetos y decorados) hecha. Pozo de :F: (puerta
-; hacia atrás, idea 7) dibujado el 2026-11-06.
+; hacia atrás, idea 7) dibujado el 2026-11-06; jaula del rey encadenado
+; (idea 9), el 2026-11-08.
 ; NO GENERAR TODAVÍA: la escena de abajo es la de las profundidades que se
 ; juegan hoy (mapas_texto/tiles_profundidades.txt) y el constructor la
 ; reemplazaría. Al aprobarlo, este archivo pasa a
@@ -85,6 +86,29 @@
 ;   en (12, 25). Se alcanzan al llegar, sin abrir nada: lo que se abre hacia
 ;   atrás es el atajo. La antorcha de (20, 21) pasó a (24, 21) para dejar libre
 ;   la columna vecina de la escalera.
+; - JAULA DEL REY ENCADENADO (puerta hacia atrás, idea 9, 2026-11-08): hueco
+;   x 44-48, filas 16-19, en el techo de la galería, junto al checkpoint de
+;   (50, 25); las columnas 43 y 49 y la fila 15 son roca. REJILLA en x 44-48,
+;   fila 20 (la fila de arriba de la galería): pieza de la _combate, sólida
+;   (la barrera que se abre según completed_encounters, como las de :E: y
+;   :F:); en el ASCII queda abierta. Cerrada, el techo baja a la fila 21 en
+;   esas columnas (5 de alto). No se entra: dentro no hay suelo y la rejilla
+;   está 6 piezas sobre el suelo de la galería.
+;   - Antes: el REY ENCADENADO, con el sprite del Rey Caído
+;     (escenas/jefes/rey_caido.tscn, sin arte nuevo), en (46, 19), de pie
+;     sobre la rejilla. Se ve al pasar: la galería es camino obligatorio.
+;   - Lo abre: superar el coliseo de los condenados del infierno
+;     (infierno_animas_liberadas en completed_encounters, "ánimas
+;     liberadas"). Entonces la rejilla se abre, el rey de la jaula se oculta
+;     y se muestran, en el suelo de la galería, el ALMA DEL REY CAÍDO en
+;     (46, 25), con su texto de marcador (lore final antes de Cthulhu: "no
+;     fue ella sola"; P46 sección 6), y el FRAGMENTO DE VIDA 4/4 en (44, 25).
+;     Los dos quedan fuera de las columnas 40-42 (escalera 41 y vecinas).
+;     Pieza: mostrar u ocultar según un encuentro superado (generalizar
+;     story_hidden_actor.gd), la misma de la idea 3.
+;   - Vuelta desde el infierno: escalera 115 de [S7], sala del Demon Slime
+;     (reja de salida y reja 90, abiertas tras vencerlo), antesala y
+;     escalera 68 (su trampilla se abre desde abajo).
 ; - SECRETO DE LA AGILIDAD: x 4-11, filas 16-20, sobre el pilar x 4-8 (filas
 ;   21-25) del fondo oeste de la galería. Su suelo está 5 piezas por encima del
 ;   de la galería y no hay nada cerca a lo que subirse: con E1 no se llega; con
@@ -147,6 +171,8 @@
 ;   tres altares (el contador de sellos las abre). Activador: el suelo de la
 ;   sala lejos de la reja (x 94-111, filas 74-78); al pasarlo se cierran las
 ;   dos. PuntosJefe hacia (94, 78) y (109, 78). En el ASCII quedan abiertas.
+;   PuntoLlave hacia (100, 78): al vencerlo cae la ASCUA (key_id
+;   profundidades_ascua), la llave del hielo negro de la ruina (idea 8).
 ; - REJA DE SALIDA: columna 112, filas 76-78, en la pared este de la sala. Va
 ;   en Atajos de boss_arena: cerrada hasta vencer al Demon Slime. En el ASCII
 ;   queda abierta.
@@ -166,9 +192,9 @@
 ; - lago de magma: un diablillo mayor (diablillo.tscn a escala 2 y con más
 ;   vida, escena heredada), que sale al tocar el altar y dispara desde el
 ;   aire sobre la isla;
-; - santuario de las llamas: el Crystal Mauler de escenas/jefes/boss_mina.tscn
-;   (hoy solo en mapas viejos), o un segundo demonslime si se quiere que los
-;   tres sean demonios.
+; - santuario de las llamas: un segundo demonslime (escena heredada, como el
+;   del coliseo). El Crystal Mauler ya no va aquí: es el jefe opcional de la
+;   gruta de cristal de las minas (idea 6; P46, sección 6).
 ;
 ; Comprobado con una simulación de saltos de 4 piezas y huecos de 3, con la
 ; trampilla del atajo, la del lago, las dos puertas de la sala y la reja de
@@ -190,6 +216,16 @@
 ; saltos de 4 (antes y después se alcanza desde 5). Desde la P se llega a lo
 ; alto del pozo y desde ahí se vuelve a la P. La palanca, el spawn, los restos
 ; y la página quedan sobre el suelo de la galería y se alcanzan.
+; Jaula del rey encadenado (2026-11-08), con las mismas reglas y cierres
+; (cuerpo de 2 y de 3, saltos de 3 y de 4, huecos de 3, con y sin E5): con la
+; rejilla cerrada el alcance desde la P es idéntico al de antes, y abierta no
+; aparece ni se pierde ninguna posición, así que el camino obligatorio no
+; cambia. Dentro de la jaula no se está de pie nunca, ni con saltos de 7 y
+; huecos de 6. Desde el pie de [S7] (sala del Demon Slime y reja de salida
+; abiertas) se llega al alma, al fragmento y a la P, por la escalera 68 o, con
+; su trampilla cerrada, por la forja y el coliseo; desde el alma y el
+; fragmento se vuelve a la P y al pie de [S7]. En el infierno, desde el
+; coliseo se vuelve a [S7] con saltos de 4 (con 3, no: la sima).
 ;
 ; Segunda pasada (profundidad 5, P33: d):
 ; - Enemigos: 22 diablillos. Vuelan (use_gravity = false) y patrullan unos
@@ -228,11 +264,12 @@
 ;   cuelgan de la pared se apoyan en el suelo.
 ;
 ; Viven en tiles_profundidades_combate.tscn: las palancas de :E: y :F:, los
-; restos de los condenados y la página II del diario al pie de :F:, las
-; trampillas del atajo, del lago y del coliseo, los tres altares y su
+; restos de los condenados y la página II del diario al pie de :F:, la
+; rejilla de la jaula, el rey encadenado, su alma y el fragmento de vida 4/4,
+; las trampillas del atajo, del lago y del coliseo, los tres altares y su
 ; contador, sus minijefes, el fuego infernal, E5, la sala del Demon Slime
-; (reja, trampilla, activador, puntos del jefe, reja de salida en Atajos) y
-; las transiciones y spawns de [P6], :E:, :F: y [S7]. No hay "siguiente" ni
+; (reja, trampilla, activador, puntos del jefe, PuntoLlave de la ascua, reja
+; de salida en Atajos) y las transiciones y spawns de [P6], :E:, :F: y [S7]. No hay "siguiente" ni
 ; "anterior": todas las conexiones salen por arriba o por abajo.
 
 escena: res://escenas/mapas/tiles_profundidades.tscn
@@ -257,10 +294,10 @@ parallax: assets_prueba/gothicvania/lava/fondo.png 0.05 x2; assets_prueba/gothic
 ##################.H.###############################################################################################.x.........H...........b..........................................H...P.....S.....................................#
 ##################.H.#########################################################################################################.H.############======...=======...========#########################################################..H..#
 ##################.H.#########################################################################################################.H.############...........................#################################..........................H..#
-####........######.H.#########################################################################################################.H.############~~~~~~~~~~~~~~~~~~~~~~~~~~~#################################..........................H..#
-####........######.H.#########################################################################################################.H.########################################################################..........................H..#
-####...$.$..######.H.#########################################################################################################.H.########################################################################..........................H..#
-####........######.H.##########################################################################.........##..............##.....H......................##....................##............##...........##..........................H..#
+####........######.H.#######################.....#############################################################################.H.############~~~~~~~~~~~~~~~~~~~~~~~~~~~#################################..........................H..#
+####........######.H.#######################.....#############################################################################.H.########################################################################..........................H..#
+####...$.$..######.H.#######################.....#############################################################################.H.########################################################################..........................H..#
+####........######.H.#######################.....##############################################.........##..............##.....H......................##....................##............##...........##..........................H..#
 ####.c.............H..........................................................................#.........##..............##.....H......................##....................##............##...........##..........................H..#
 #########..........H....t...................................t...........................t......................................H...................................................................................................H..#
 #########..........H........d...........................................d...................................d..................H...................d..............................d................................................H..#
