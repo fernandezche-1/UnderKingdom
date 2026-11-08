@@ -12,7 +12,8 @@
 set -u
 cd "$(dirname "$0")/.."
 
-MAX_PIEZAS="${MAX_PIEZAS:-30}"
+# Tope de piezas por ejecución (3 para la entrega de mañana; MAX_PIEZAS=N para otro).
+MAX_PIEZAS="${MAX_PIEZAS:-3}"
 LOG_DIR=".fase2_logs"
 
 CLAUDE_BIN="${CLAUDE_BIN:-$(command -v claude || true)}"
