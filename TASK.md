@@ -71,7 +71,7 @@ Responde en español.
 **Añadido tras el cierre (2026-11-08): el dash y los secretos** (puntos 2 y 4 de las sugerencias). El Guardián da el dash en el aire; los secretos de la Agilidad clonados se reparten en tipos distintos. Una zona por paso, con el recorte de antes y después aprobado y el mismo criterio de "hecho":
 - [x] 8. **Ruina:** secreto del dash en el fondo este de la galería baja (pasillo x 131-138, filas 44-47, foso de 6 en x 133-138, cámara x 139-148 con el cofre en (147, 47)).
 - [x] 9. **Mazmorra:** el secreto de la torre pasa a ser del dash (pasillo desde la columna 109, filas 18-21, foso de 6 en x 109-114, nicho x 115-117 con el cofre en (117, 21)).
-- [ ] 10. **Profundidades:** el secreto de la galería pasa a ser una pared falsa.
+- [x] 10. **Profundidades:** el secreto de la galería pasa a ser una pared falsa (columna 8, filas 23-25; sala x 4-7, filas 21-25, con el cofre en (5, 25)).
 - [ ] 11. **Minas (si cabe):** un tercer sitio del dash cerca de `:D:`. El escalón de la Agilidad se queda.
 
 **Fuera de esta fase:** los puntos 5 (premios: siguen siendo cofres), 6 (monedas), 7 (mapa del jugador) y 8 (NPC que baja) de las sugerencias, y la idea 10, que sigue en reserva.
@@ -88,7 +88,7 @@ Cada pieza se prueba en la zona de pruebas (`escenas/mapas/zona_pruebas_combate.
 - [ ] Suelo que se hunde y secuencia de derrumbe y huida (`[!5]`).
 - [ ] Hielo que se derrite con la llama eterna, y la luz de la antorcha (`[P6]`).
 - [ ] Ascensor minero (`:C:`).
-- [ ] Pared agrietada que se rompe a golpes (secreto del calabozo).
+- [ ] Pared agrietada que se rompe a golpes (secretos del calabozo y de las profundidades).
 - [ ] Palanca y barrera que se abre según `completed_encounters` (atajos `:B:` a `:F:` y compuerta de la mazmorra).
 - [ ] Fuego infernal que solo se pasa con E5 (santuario, gruta de cristal, infierno).
 - [ ] Dash en el aire (`air_dash`, premio del Guardián con `ability_reward`): unas 7 piezas en horizontal, sin gravedad, una vez por salto. Probar en la zona de pruebas que el pasillo de 4 de alto con foso de 6 no se cruza sin él, ni con la Agilidad.

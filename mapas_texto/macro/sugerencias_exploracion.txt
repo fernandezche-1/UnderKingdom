@@ -315,7 +315,8 @@ un tercero en las minas, junto a :D:.
 
 DECIDIDO (2026-11-08; P46, sección 6): el escalón de 5 de la Agilidad queda
 en las minas. El de la ruina pasa a ser del dash (hecho, 2026-11-08), el de la
-mazmorra también (hecho, 2026-11-08) y el de las profundidades, una pared falsa. Los premios
+mazmorra también (hecho, 2026-11-08) y el de las profundidades, una pared falsa
+(hecho, 2026-11-08). Los premios
 siguen siendo cofres (punto 5).
 
 - Hoy el secreto de la Agilidad es el mismo en las minas, la mazmorra, la
