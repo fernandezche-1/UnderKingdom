@@ -82,6 +82,53 @@ Responde en español.
 
 Cada pieza se prueba en la zona de pruebas (`escenas/mapas/zona_pruebas_combate.tscn`) y se documenta en una etapa nueva de `docs/`. Si toca el Player o el `GameManager`, se comprueba también `mundo_1`.
 
+**Una pieza está hecha cuando:**
+- funciona en la zona de pruebas, montada en `zona_pruebas_combate.tscn` (o en el `.txt` si lleva letra), con un caso que muestre que cierra y otro que muestre que abre;
+- se probó sin ventana con una escena temporal que simula entradas e imprime el resultado, y esa escena se borró;
+- arrancan sin errores el juego (`godot --headless --quit-after 120`) y la zona de pruebas, y también `mundo_1` si se tocó el Player, un enemigo, el `GameManager` o el Capitán;
+- si guarda estado, se reinicia en `reset_for_new_game`, se guarda en `_make_save_data` / `_restore_game_state` y se sube `SAVE_FORMAT_VERSION`;
+- hay una etapa nueva en `docs/` (la siguiente libre es P47), con el formato de las demás, y está al día lo que la nombra: P46 (secciones 5 y 10), CLAUDE.md si cambia una regla o una pieza a reutilizar, y esta lista;
+- hay un commit, sin push.
+
+**Plantilla de prompt** (cambiar `<pieza>`, `<zona>` y lo que se quiera añadir en `<notas>`):
+
+```
+Tarea: Fase 2 de TASK.md, paso de <zona>: la pieza "<pieza>".
+
+Antes de escribir código, lee:
+- CLAUDE.md (reglas del proyecto, combate, validar cambios);
+- en TASK.md, la línea de la pieza y el criterio de "hecho" de la Fase 2;
+- docs/P46_MACRO_MAPA.md, secciones 5, 6 y 10, y lo que diga de la pieza
+  la cabecera del ASCII de cada zona que la usa (mapas_texto/macro/zonas/);
+- docs/P43_ZONA_DE_PRUEBAS.md;
+- los scripts y escenas que ya hacen algo parecido, para reutilizarlos en
+  vez de duplicarlos (por ejemplo locked_door.gd, arena_barrier.gd,
+  boss_arena.gd, breakable_object.gd, story_hidden_actor.gd, GameManager).
+
+Cómo trabajar:
+- Antes de programar, cuéntame en pocas líneas el plan: qué escena y qué
+  script nuevos o qué cambias, qué exporta (nombres y valores por defecto),
+  qué guarda, y cómo lo vas a probar. Si hay una decisión de diseño que
+  no esté en los documentos (números, comportamiento, arte), pregúntame
+  en vez de suponerla. Espera a que lo apruebe.
+- Static typing en todo el GDScript. Daño y curación en múltiplos de 0.25.
+  Pixel art a escala entera y texto con el tema global (CLAUDE.md).
+- Una pieza genérica y configurable desde el editor, que sirva a todas las
+  zonas que la piden, no solo a <zona>.
+- No toques los mapas de la ruta ni los ASCII: la pieza se monta en las
+  zonas en la Fase 3. No toques los ajustes del temblor al caminar.
+- Si editas un .tscn, dime cuál para recargarlo en el editor.
+- Si falta arte, usa uno provisional que ya exista y apúntalo como
+  pendiente.
+<notas>
+
+Al terminar, cumple el criterio de "hecho" de la Fase 2 de TASK.md:
+prueba en la zona de pruebas, prueba sin ventana, arranques sin errores,
+guardado si aplica, etapa en docs/, P46, TASK.md y un commit sin push.
+Si algo no cuadra con lo que encuentres en los archivos, dímelo antes de
+seguir. Responde en español.
+```
+
 **Orden (fijado el 2026-11-08):** por la primera zona de la ruta que pide cada pieza. Así la Fase 3 puede empezar por el calabozo en cuanto estén las suyas, sin esperar a tenerlo todo. Una pieza que sirve a varias zonas va en la primera que la pide; las demás la reutilizan.
 
 **0. Ajuste previo:**
