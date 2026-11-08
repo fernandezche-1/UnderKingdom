@@ -55,7 +55,8 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
   - Piezas a reutilizar:
     - `scripts/combat/boss_arena.gd`: sala de jefe, con `Puertas`, `Atajos`, `PuntosJefe` y `PuntoLlave`;
     - `scripts/environment/locked_door.gd`: puerta con llave;
-    - `scripts/environment/arena_barrier.gd`: puertas y trampillas;
+    - `scripts/environment/arena_barrier.gd`: puertas y trampillas; con `open_on_encounter`, se abre cuando `GameManager` marca ese encuentro, o empieza abierta si ya estaba marcado (P49);
+    - `escenas/objetos/palanca.tscn`: palanca que se tira con E y marca su `encounter_id` (`lever.gd`; P49);
     - `escenas/objetos/pared_agrietada.tscn`: pared falsa que se rompe a golpes y se recuerda (`breakable_object.gd`; raíz `AnimatableBody2D`, porque la AttackHitbox no detecta `StaticBody2D`; P48);
     - en `GameManager`, las llaves genéricas (`grant_key` / `has_key`) y `completed_encounters`.
   - Los jefes se reutilizan por su `.tscn`. El Capitán va con `counts_as_world1_boss = false`. Si un jefe necesita otros valores o su `BossHealthBar`, se le hace una escena heredada en `escenas/jefes/`, como `caballero_reina.tscn`.

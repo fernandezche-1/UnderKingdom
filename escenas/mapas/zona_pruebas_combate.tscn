@@ -1,10 +1,28 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas.tscn" id="1_base"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/rata.tscn" id="2_rata"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/slime.tscn" id="3_slime"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/esqueleto_lanza.tscn" id="4_esqueleto_lanza"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/pared_agrietada.tscn" id="5_pared_agrietada"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/palanca.tscn" id="6_palanca"]
+[ext_resource type="Script" path="res://scripts/environment/arena_barrier.gd" id="7_barrera"]
+[ext_resource type="Texture2D" path="res://assets_prueba/raou_castillo/tileset_castillo.png" id="8_tileset"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_losa_izq"]
+atlas = ExtResource("8_tileset")
+region = Rect2(0, 304, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_losa_medio"]
+atlas = ExtResource("8_tileset")
+region = Rect2(16, 304, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_losa_der"]
+atlas = ExtResource("8_tileset")
+region = Rect2(32, 304, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trampilla"]
+size = Vector2(48, 16)
 
 [node name="ZonaPruebasCombate" instance=ExtResource("1_base")]
 
@@ -19,3 +37,19 @@ position = Vector2(1720, 300)
 
 [node name="ParedAgrietada" parent="Objetos" instance=ExtResource("5_pared_agrietada")]
 position = Vector2(1424, 32)
+
+[node name="Palanca" parent="Objetos" instance=ExtResource("6_palanca")]
+position = Vector2(1072, 288)
+encounter_id = "pruebas_palanca_trampilla"
+
+[node name="TrampillaPalanca" type="StaticBody2D" parent="Objetos"]
+position = Vector2(1112, 184)
+script = ExtResource("7_barrera")
+piece_start = SubResource("AtlasTexture_losa_izq")
+piece_middle = SubResource("AtlasTexture_losa_medio")
+piece_end = SubResource("AtlasTexture_losa_der")
+start_closed = true
+open_on_encounter = "pruebas_palanca_trampilla"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objetos/TrampillaPalanca"]
+shape = SubResource("RectangleShape2D_trampilla")

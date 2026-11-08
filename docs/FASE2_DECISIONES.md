@@ -132,6 +132,10 @@ Hecha antes de este archivo: la pared agrietada (P48, commit `5c2c0b3`).
 
 (Las añade el agente: pieza, decisión, alternativa, por qué.)
 
+- **Palanca y barrera (P49), dónde va la escucha del encuentro.** Decisión: una exportación `open_on_encounter` en `arena_barrier.gd`, vacía por defecto. Alternativa: una escena o un script hijo aparte, como `locked_door.gd`. Por qué: las trampillas y rejas de los atajos ya son `arena_barrier.gd` con piezas del tileset de cada nivel; así basta con rellenar un campo, también en `locked_door.gd`, y con el valor por defecto ninguna barrera existente cambia.
+- **Palanca y barrera (P49), tamaño y arte.** Decisión: 1 x 2 piezas con origen arriba a la izquierda, como la pared agrietada; los ASCII dan la pieza del pie. Arte provisional: la lanza y la espada clavadas en un barril del tileset CC0 de la mazmorra. Alternativa: una sola pieza de 16 x 16. Por qué: es el único arte del proyecto que se parece a una palanca y ocupa 16 x 32.
+- **Palanca y barrera (P49), palanca ya tirada.** Decisión: no se puede volver a tirar ni sale el aviso; la E vuelve a lanzar la Ultimate, como cuando no hay nada cerca. Alternativa: dejarla accionable sin efecto. Por qué: C2 dice que la palanca marca el encuentro una vez y no hay nada que cerrar de nuevo.
+
 ## Piezas bloqueadas
 
 (Las añade el agente: pieza, motivo, qué falta para seguir.)

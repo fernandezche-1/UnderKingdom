@@ -15,6 +15,11 @@ const TILE := 16.0
 @export var piece_end: Texture2D
 @export_range(0.0, 1.0, 0.05) var fade_time: float = 0.25
 @export var start_closed: bool = false
+## Si no está vacío, la barrera se abre cuando GameManager marca este encuentro
+## (una palanca, una arena superada...). Si ya estaba marcado al cargar la
+## escena, empieza abierta. Varias barreras pueden escuchar el mismo id. No
+## combinar con los Atajos de boss_arena.gd, que deciden ellos mismos.
+@export var open_on_encounter: String = ""
 
 @onready var collision: CollisionShape2D = $CollisionShape2D
 
@@ -25,7 +30,17 @@ var _tween: Tween = null
 
 func _ready() -> void:
     _build_pieces()
+    if not open_on_encounter.is_empty():
+        if GameManager.is_encounter_completed(open_on_encounter):
+            start_closed = false
+        elif not GameManager.encounter_completed.is_connected(_on_encounter_completed):
+            GameManager.encounter_completed.connect(_on_encounter_completed)
     set_closed(start_closed, false)
+
+
+func _on_encounter_completed(encounter_id: String) -> void:
+    if encounter_id == open_on_encounter and closed:
+        open()
 
 
 func close() -> void:

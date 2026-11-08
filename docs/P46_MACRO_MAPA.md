@@ -125,7 +125,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 - **Primero el ASCII:** Claude dibuja el ASCII de cada zona por separado, y con ese ASCII se genera el nivel real. No se genera ningún nivel antes de tener su ASCII. Método completo en la sección 9.
 - Se sigue montando como dice `CLAUDE.md` ("Cómo se monta un mundo"): PNG, constructor y escena `_combate` que hereda de la base.
 - La entrada y la salida van en el lado que marca el mapa (arriba, abajo o lateral), y la salida en la parte más honda cuando baja.
-- Los atajos entre zonas son transiciones entre escenas. Su lado cerrado puede ser un `arena_barrier.gd` que se abre desde abajo y se recuerda en `completed_encounters` de `GameManager`.
+- Los atajos entre zonas son transiciones entre escenas. Su lado cerrado es un `arena_barrier.gd` con `open_on_encounter`, que se abre con la palanca del lado de abajo (`palanca.tscn`) y se recuerda en `completed_encounters` de `GameManager` (P49).
 - Los enemigos siguen la tabla de `docs/P33_ENEMIGOS_POR_PROFUNDIDAD.md`.
 - Al terminar una zona, marcarla en `TASK.md` ("Macro mapa") y anotar aquí lo que cambie.
 
@@ -135,6 +135,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 - Puertas que se abren con un evento: `arena_barrier.gd`.
 - Estado guardado: `completed_encounters`.
 - La pared agrietada que se rompe a golpes, también a puños (secretos del calabozo y de las profundidades): `escenas/objetos/pared_agrietada.tscn`, con `breakable_object.gd`, que recuerda si se rompió; 1 x 3 piezas, origen arriba a la izquierda. Arte provisional; en las profundidades, una escena heredada con otro `SpriteFrames` (P48).
+- La palanca que se tira con E y marca un `encounter_id` (`escenas/objetos/palanca.tscn`, `lever.gd`; 1 x 2 piezas, origen arriba a la izquierda), y la barrera que se abre con ese id, en esa escena o en otra, al marcarse o al cargarse (`open_on_encounter` de `arena_barrier.gd`): trampillas y rejas de los atajos `:B:` a `:F:`, compuerta de la mazmorra y rejilla de la jaula del rey encadenado (con `infierno_animas_liberadas`). Arte provisional (P49).
 
 ### Piezas que faltan
 - Suelo que se hunde para el derrumbe de `[!5]`.
@@ -143,7 +144,6 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 - La secuencia de huida o derrumbe tras la Reina (`[!5]`).
 - La reja baja que solo se pasa rodando (`[H2]`).
 - El ascensor minero (`:C:`).
-- La palanca y la barrera que se abre si ya se tiró de ella (lee `completed_encounters`; `arena_barrier.gd` hoy solo tiene `start_closed`, `open()` y `close()`): trampillas y rejas de los atajos (`:B:`, `:D:`, `:E:`, `:F:`) y compuerta de la mazmorra.
 - Las arenas con oleadas del infierno (coliseo de los condenados y salón de los verdugos): `arena_barrier.gd` más algo que saque una oleada tras otra.
 - El fuego infernal del altar este de las profundidades (`[S7]`): fuego que sin E5 no deja pasar (quema hasta matar o empuja hacia atrás) y con E5 no hace daño. En el ASCII son trampas de fuego `F`.
 - El dash en el aire (`air_dash`, habilidad nueva en `ABILITY_DEFINITIONS`), premio del Guardián de hielo: unas 7 piezas (112 px) en horizontal, sin gravedad, una vez por salto (se recarga al tocar el suelo). Sus sitios son pasillos de 4 de alto con un foso de pinchos de 6 (sección 6).
