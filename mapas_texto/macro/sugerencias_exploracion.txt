@@ -268,8 +268,8 @@ Reglas que se mantienen:
 DECIDIDO (2026-11-08; P46, sección 6): el dash corto en el aire. Sus sitios
 son pasillos de 4 de alto con un foso de pinchos de 6 (con la Agilidad, un
 hueco abierto tendría que medir más de 11). Nada obligatorio lo pide. Van en
-los secretos del punto 4: la ruina y la mazmorra (hechos, 2026-11-08), y quizá
-un tercero en las minas, junto a :D:.
+los secretos del punto 4: la ruina, la mazmorra y las minas, al fondo de la
+galería de los mineros (hechos, 2026-11-08; junto a :D: no cabía).
 
 - Hoy está pendiente qué da el Guardián al caer (P46, sección 7).
 - Es la mejor ocasión del juego para dar una HABILIDAD DE MOVIMIENTO nueva.

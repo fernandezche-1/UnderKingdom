@@ -5,7 +5,7 @@
 - **Lo que hay hoy en Godot no cuenta:** los niveles `tiles_*` y sus escenas `_combate` se descartan mientras dure la fase ASCII. No se usan como referencia ni se arreglan; cada zona se genera de nuevo desde su ASCII en la Fase 3.
 
 Las tres fases:
-1. **Fase 1, los ASCII:** cada zona dibujada a escala real, con sus puertas hacia atrás. Las puertas quedaron hechas el 2026-11-08; tras el cierre se añadieron el dash y los secretos variados (pasos 8 a 11).
+1. **Fase 1, los ASCII:** cada zona dibujada a escala real, con sus puertas hacia atrás. Hecha (2026-11-08): las puertas y, tras el cierre, el dash y los secretos variados (pasos 8 a 11).
 2. **Fase 2, piezas en Godot:** lo que las zonas necesitan y todavía no existe, probado en la zona de pruebas.
 3. **Fase 3, generar cada zona:** constructor y escena `_combate`, zona por zona.
 
@@ -72,7 +72,7 @@ Responde en español.
 - [x] 8. **Ruina:** secreto del dash en el fondo este de la galería baja (pasillo x 131-138, filas 44-47, foso de 6 en x 133-138, cámara x 139-148 con el cofre en (147, 47)).
 - [x] 9. **Mazmorra:** el secreto de la torre pasa a ser del dash (pasillo desde la columna 109, filas 18-21, foso de 6 en x 109-114, nicho x 115-117 con el cofre en (117, 21)).
 - [x] 10. **Profundidades:** el secreto de la galería pasa a ser una pared falsa (columna 8, filas 23-25; sala x 4-7, filas 21-25, con el cofre en (5, 25)).
-- [ ] 11. **Minas (si cabe):** un tercer sitio del dash cerca de `:D:`. El escalón de la Agilidad se queda.
+- [x] 11. **Minas:** un tercer sitio del dash, al fondo de la galería de los mineros (pasillo x 35-42, filas 53-56, foso de 6 en x 37-42, nicho x 43-45 con el cofre en (45, 56)); junto a `:D:` no cabía. El escalón de la Agilidad se queda.
 
 **Fuera de esta fase:** los puntos 5 (premios: siguen siendo cofres), 6 (monedas), 7 (mapa del jugador) y 8 (NPC que baja) de las sugerencias, y la idea 10, que sigue en reserva.
 

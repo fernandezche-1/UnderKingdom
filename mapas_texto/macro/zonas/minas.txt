@@ -14,7 +14,8 @@
 ; Golpe final y la llave del Caballero; la salida [L4] pide esa llave (P46,
 ; sección 10).
 ; Ningún escalón obligatorio pide más de 3 piezas de salto (con E1 se saltan
-; unas 4,6) ni huecos de más de 3. Solo el secreto pide la Agilidad.
+; unas 4,6) ni huecos de más de 3. Solo el secreto pide la Agilidad, y el
+; secreto del dash de la galería de los mineros, el dash.
 ; Camino obligatorio: [S3] -> bocamina -> pozo principal (o galería alta y su
 ; caída) -> galería de las vagonetas -> veta ardiente -> galería honda ->
 ; antecámara -> Caballero (llave) -> escalera 48 hasta la repisa -> túnel de
@@ -59,6 +60,20 @@
 ; - Galería de los mineros (sin salida): x 6-34, filas 50-56 (suelo 57), por la
 ;   escalera de la columna 26 (filas 41-56) desde la estación. Plataforma en la
 ;   fila 54 (x 10-14). Sitio de un cofre en (7, 56).
+; - SECRETO DEL DASH (tipo: pasillo bajo con foso; punto 4 de las
+;   sugerencias; 2026-11-08): al fondo este de la galería de los mineros,
+;   cavado en la roca. Se abre con el dash en el aire, premio del Guardián de
+;   la ruina: se vuelve a por él por :D: o desde el castillo por :C:. Junto a
+;   :D: no cabía (al este de la galería honda solo quedan 9 columnas).
+;   - PASILLO de 4 de alto, x 35-42, filas 53-56 (suelo 57, el de la
+;     galería). FOSO DE PINCHOS de 6 en x 37-42 (fila 57 vacía, pinchos en la
+;     58), con 2 piezas de pasillo antes. Monedas sobre el foso, en (39, 56) y
+;     (40, 56).
+;   - NICHO x 43-45, filas 50-56 (suelo 57). Cofre en (45, 56) y cristal (r)
+;     en (43, 56). La columna 46 queda de roca, entre el nicho y el pozo de la
+;     escalera 48.
+;   - No se cruza sin el dash: es la regla de la ruina (pasillo de 4 de alto,
+;     foso de 6; P46, sección 6).
 ;
 ; EN MEDIO:
 ; - GALERÍA DE LAS VAGONETAS: x 33-130, filas 34-40 (suelo 41). La vía corre a
@@ -159,6 +174,20 @@
 ; checkpoint y a la gruta, y con la trampilla del suelo cerrada no se sale.
 ; Vencido el Mauler, desde toda la gruta se vuelve a la P con saltos de 3 y
 ; sin E5, y desde el checkpoint con E5.
+; Secreto del dash (2026-11-08), comparando el ASCII de antes y el de después
+; (cuerpo de 3 y de 2, saltos de 3 y de 4, huecos de 3, con la trampilla del
+; atajo, la reja de :D:, la puerta de [L4] y las trampillas y el fuego de la
+; gruta cerrados; simulación con dash de 7 piezas, una vez por salto):
+; - sin dash no se pierde ninguna posición y lo único nuevo es la boca del
+;   pasillo (x 35-36): el camino obligatorio no cambia;
+; - sin dash no se llega al nicho ni con saltos de 6 y 7 y huecos de 6;
+; - con el dash se llega al nicho y al cofre con saltos de 3, y desde ahí se
+;   vuelve a la P;
+; - lo único más que abre el dash es la plataforma alta de la sala del
+;   Caballero (x 16-20, fila 79), desde las de los lados: está dentro de la
+;   sala, que ya se alcanza, y con E1 se llega igual (salto horizontal de
+;   unas 6,7 piezas).
+; Probado generando una escena temporal con el constructor, sin errores.
 ;
 ; Segunda pasada (profundidad 2, P33: k, j, q, m):
 ; - Enemigos: 6 kolbo, 6 kolbo2, 4 kolbo3 y 10 murciélagos. Arriba, sobre todo
@@ -171,11 +200,13 @@
 ; - Trampas de fuego (F) en el suelo de la veta: (69, 60), (81, 60), (92, 60)
 ;   y (113, 60).
 ; - Cofres (c): repisa de la galería alta (34, 16), galería de los mineros
-;   (7, 56), repisa de la veta (106, 54) y secreto de la Agilidad (140, 14).
+;   (7, 56), repisa de la veta (106, 54), secreto de la Agilidad (140, 14) y
+;   secreto del dash (45, 56).
 ; - Monedas ($) en el andamio de la bocamina, el secreto, el suelo alto de la
 ;   galería alta, la plataforma de los mineros, sobre el andén, sobre la
-;   plataforma del primer foso, en la repisa de la veta y sobre el suelo alto
-;   de la galería honda. Pociones (!) en la galería de los mineros (12, 53), al
+;   plataforma del primer foso, en la repisa de la veta, sobre el suelo alto
+;   de la galería honda y sobre el foso del secreto del dash (39, 56) y
+;   (40, 56), que se cogen en el dash. Pociones (!) en la galería de los mineros (12, 53), al
 ;   fondo este de la veta (130, 60) y en la antecámara (51, 86), antes del
 ;   Caballero.
 ; - Decorados del tileset mazmorra: tienda de campaña (C, 3x2) y fogata (f)
@@ -256,15 +287,15 @@ siguiente: res://escenas/mapas/tiles_mazmorra_combate.tscn
 #########################.H.###################.H.#######...#########################################################.H.##############################
 #########################.H.###################.H.######..........##..........................................##......H............###################
 #########################.H.###################.H.######..........##..........................................##......H............###################
-######....................H...#################.H.######..........##..........................................##...t..H............###################
-######............t.......H...#################.H.######..........##...............................m..........##......H............###################
-######...............m....H........############.H.######....t.........................................................H.m..........................###
-######....$.!.$...........H........############.H.######...................m............................$.............H............................###
-######....=====...........H........############.H.######...............................................r..c...........H............................###
-######....................H........############.H.######..................$$...........................#####..........H..............FFFFFFFFFS....###
-######.c....h...q.........H...h..x.############.H.######..............................................................H............#############...###
-###############################################.H.######.............................r..q.............................H............#############...###
-###############################################.H.######..................==........#######.......==..................H............#############...###
+######....................H...#############...#.H.######..........##..........................................##...t..H............###################
+######............t.......H...#############...#.H.######..........##...............................m..........##......H............###################
+######...............m....H........########...#.H.######....t.........................................................H.m..........................###
+######....$.!.$...........H...................#.H.######...................m............................$.............H............................###
+######....=====...........H...................#.H.######...............................................r..c...........H............................###
+######....................H...................#.H.######..................$$...........................#####..........H..............FFFFFFFFFS....###
+######.c....h...q.........H...h..x.....$$..r.c#.H.######..............................................................H............#############...###
+#####################################......####.H.######.............................r..q.............................H............#############...###
+#####################################^^^^^^####.H.######..................==........#######.......==..................H............#############...###
 ###############################################.H.######............................#######...........................H............#############...###
 ###############################################.H.######........r....F...........F.r#######.F...............j....F....H...j..r....!#############...###
 ###############################################.H.###########.H.########~~~~~~##################~~~~~~########################...###############...###
