@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=13 format=3]
 
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas.tscn" id="1_base"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/rata.tscn" id="2_rata"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" path="res://escenas/objetos/palanca.tscn" id="6_palanca"]
 [ext_resource type="Script" path="res://scripts/environment/arena_barrier.gd" id="7_barrera"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/objeto_lore.tscn" id="9_lore"]
+[ext_resource type="PackedScene" path="res://escenas/items/mejora_encontrada.tscn" id="10_mejora"]
 [ext_resource type="Texture2D" path="res://assets_prueba/raou_castillo/tileset_castillo.png" id="8_tileset"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_losa_izq"]
@@ -45,6 +46,9 @@ encounter_id = "pruebas_palanca_trampilla"
 
 [node name="ObjetoLore" parent="Objetos" instance=ExtResource("9_lore")]
 position = Vector2(264, 310)
+
+[node name="MejoraEncontrada" parent="Objetos" instance=ExtResource("10_mejora")]
+position = Vector2(328, 304)
 
 [node name="TrampillaPalanca" type="StaticBody2D" parent="Objetos"]
 position = Vector2(1112, 184)

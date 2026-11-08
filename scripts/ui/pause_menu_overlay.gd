@@ -56,6 +56,9 @@ var _ability_labels: Dictionary = {}
 ## Por mejora: {"level": Label, "detail": Label, "button": Button}.
 var _upgrade_rows: Dictionary = {}
 var _keys_signature: String = ""
+## Mejoras encontradas (sin precio), debajo de las de la tienda.
+var _found_box: VBoxContainer
+var _found_signature: String = ""
 
 
 func _ready() -> void:
@@ -207,6 +210,9 @@ func _build_upgrade_rows() -> void:
 		columns.add_child(button)
 
 		_upgrade_rows[upgrade_id] = {"level": level, "detail": detail, "button": button}
+	_found_box = VBoxContainer.new()
+	_found_box.add_theme_constant_override("separation", 4)
+	upgrades_list.add_child(_found_box)
 	_refresh_upgrades()
 
 
@@ -335,7 +341,47 @@ func _make_key_row(key_name: String, acquired: bool) -> Control:
 	return row
 
 
+func _refresh_found_upgrades() -> void:
+	if _found_box == null:
+		return
+	var found_ids: Array[String] = []
+	for upgrade_id: String in GameManager.FOUND_UPGRADE_DEFINITIONS:
+		if GameManager.has_found_upgrade(upgrade_id):
+			found_ids.append(upgrade_id)
+	var signature: String = str(found_ids)
+	if signature == _found_signature:
+		return
+	_found_signature = signature
+	for child: Node in _found_box.get_children():
+		child.queue_free()
+	for upgrade_id: String in found_ids:
+		var definition: Dictionary = GameManager.FOUND_UPGRADE_DEFINITIONS[upgrade_id]
+		var row := PanelContainer.new()
+		row.theme_type_variation = &"PanelFila"
+		var columns := HBoxContainer.new()
+		columns.add_theme_constant_override("separation", 6)
+		row.add_child(columns)
+		var info := VBoxContainer.new()
+		info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		info.add_theme_constant_override("separation", 2)
+		columns.add_child(info)
+		var title := Label.new()
+		title.theme_type_variation = &"TextoFuerte"
+		title.text = String(definition.name)
+		info.add_child(title)
+		var detail := Label.new()
+		detail.text = String(definition.hint)
+		info.add_child(detail)
+		var status := Label.new()
+		status.text = "Encontrada"
+		status.theme_type_variation = &"TextoAcento"
+		status.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		columns.add_child(status)
+		_found_box.add_child(row)
+
+
 func _refresh_upgrades() -> void:
+	_refresh_found_upgrades()
 	for upgrade_id: String in _upgrade_rows:
 		var row: Dictionary = _upgrade_rows[upgrade_id]
 		var info: Dictionary = GameManager.get_upgrade_info(upgrade_id)

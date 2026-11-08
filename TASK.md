@@ -87,7 +87,7 @@ Cada pieza se prueba en la zona de pruebas (`escenas/mapas/zona_pruebas_combate.
 - se probó sin ventana con una escena temporal que simula entradas e imprime el resultado, y esa escena se borró;
 - arrancan sin errores el juego (`godot --headless --quit-after 120`) y la zona de pruebas, y también `mundo_1` si se tocó el Player, un enemigo, el `GameManager` o el Capitán;
 - si guarda estado, se reinicia en `reset_for_new_game`, se guarda en `_make_save_data` / `_restore_game_state` y se sube `SAVE_FORMAT_VERSION`;
-- hay una etapa nueva en `docs/` (la siguiente libre es P51), con el formato de las demás, y está al día lo que la nombra: P46 (secciones 5 y 10), CLAUDE.md si cambia una regla o una pieza a reutilizar, y esta lista;
+- hay una etapa nueva en `docs/` (la siguiente libre es P52), con el formato de las demás, y está al día lo que la nombra: P46 (secciones 5 y 10), CLAUDE.md si cambia una regla o una pieza a reutilizar, y esta lista;
 - hay un commit, sin push.
 
 **Plantilla de prompt** (cambiar `<pieza>`, `<zona>` y lo que se quiera añadir en `<notas>`):
@@ -140,7 +140,7 @@ seguir. Responde en español.
 - [x] Pared agrietada que se rompe a golpes, también a puños (secretos del calabozo y de las profundidades): `escenas/objetos/pared_agrietada.tscn` (P48). Falta su arte; la caja y la estatua rompibles no reciben golpes (P48, sección 3).
 - [x] Palanca y barrera que se abre según `completed_encounters` (atajos `:B:` a `:F:`, compuerta de la mazmorra, rejilla de la jaula del rey encadenado): `escenas/objetos/palanca.tscn` y `open_on_encounter` de `arena_barrier.gd` (P49). Falta el arte de la palanca.
 - [x] Objeto de lore que abre un diálogo (`npc.gd` y `dialogue_ui`): el acta del prisionero y, después, el resto del lore de marcador: `escenas/objetos/objeto_lore.tscn` (P50). Falta su arte y los textos definitivos.
-- [ ] Mejora de +0.25 de daño en todos los tajos (la empuñadura del depósito del alcaide).
+- [x] Mejora de +0.25 de daño en todos los tajos (la empuñadura del depósito del alcaide): `escenas/items/mejora_encontrada.tscn` y `FOUND_UPGRADE_DEFINITIONS` de `GameManager` (P51). `SAVE_FORMAT_VERSION` pasa a 3. Falta su arte.
 
 **2. Castillo:**
 - [ ] Reja baja que solo se pasa rodando (`[H2]` y el pasillo del filo del infierno).

@@ -23,7 +23,7 @@ func _ready() -> void:
     collision_mask = 1
     monitorable = false
     _base_y = position.y
-    if ability_id.is_empty() or GameManager.is_ability_unlocked(ability_id):
+    if _already_owned():
         queue_free()
         return
     body_entered.connect(_on_body_entered)
@@ -64,11 +64,20 @@ func _on_body_entered(body: Node2D) -> void:
         _collect()
 
 
+## Qué comprueba para no reaparecer; las subclases (mejoras encontradas) lo cambian.
+func _already_owned() -> bool:
+    return ability_id.is_empty() or GameManager.is_ability_unlocked(ability_id)
+
+
+func _grant() -> void:
+    GameManager.unlock_ability(ability_id)
+
+
 func _collect() -> void:
     if _collected:
         return
     _collected = true
     set_deferred("monitoring", false)
     UnderkingdomCombatFX.pickup_sparkle(self)
-    GameManager.unlock_ability(ability_id)
+    _grant()
     queue_free()

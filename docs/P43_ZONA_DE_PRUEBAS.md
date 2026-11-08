@@ -9,7 +9,7 @@
 - `mapas_texto/zona_pruebas.txt` (mapa de letras, 146 x 24 piezas, tileset `castillo`) genera `escenas/mapas/zona_pruebas.tscn`.
 - `zona_pruebas_combate.tscn` hereda de esa escena y agrega los enemigos sin letra. Regenerar la base no los borra.
 - Tramos, de izquierda a derecha:
-  1. Inicio (x 2-22): pasillo plano para idle y correr, checkpoint, cofre y poción. En x 16, un objeto de lore para leer con E (en la `_combate`; P50).
+  1. Inicio (x 2-22): pasillo plano para idle y correr, checkpoint, cofre y poción. En x 16, un objeto de lore para leer con E (en la `_combate`; P50) y, en x 20, la mejora encontrada de +0.25 de daño (P51).
   2. Colina con rampas (x 24-32).
   3. Foso de pinchos (x 36-38), que prueba la muerte, y fuego en x 42, que prueba la quemadura.
   4. Plataformas de una vía (x 45-63), de dos en dos filas, hasta la galería alta.

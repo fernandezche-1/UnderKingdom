@@ -14,6 +14,7 @@ signal cinematic_seen(cinematic_id: String)
 signal encounter_completed(encounter_id: String)
 signal key_changed(key_id: String, has_key: bool)
 signal upgrades_changed
+signal found_upgrade_collected(upgrade_id: String)
 signal ability_unlocked(ability_id: String)
 signal player_name_changed(player_name: String)
 signal save_slots_changed
@@ -41,7 +42,8 @@ const SWORD_MISSION_DESCRIPTION := "Busca un arma: a puños no llegarás lejos."
 const SAVE_DIRECTORY := "user://saves"
 ## 2: las habilidades se guardan como "abilities" (ABILITY_DEFINITIONS) en vez
 ## de los "skills" del alma fragmentada de la 0.04.049.
-const SAVE_FORMAT_VERSION := 2
+## 3: se suman las mejoras encontradas ("found_upgrades", P51).
+const SAVE_FORMAT_VERSION := 3
 const SAVE_SLOT_COUNT := 3
 const PRISON_SCENE_PATH := "res://escenas/mapas/prologo_prision/camara_sellado_alma.tscn"
 const CASTLE_SCENE_PATH := "res://escenas/mapas/tiles_castillo_combate.tscn"
@@ -83,6 +85,18 @@ const UPGRADE_DEFINITIONS := {
 		"costs": [10, 15, 20], "base": 6.0, "step": -0.5, "unit": "segundos",
 	},
 }
+
+## Mejoras que se encuentran en el mapa (la empuñadura del alcaide, el amuleto
+## de la guardia): no se compran ni suben de nivel. "stat" es lo que mejoran y
+## "bonus" lo que suman; se consulta con get_found_upgrade_bonus.
+const FOUND_UPGRADE_DEFINITIONS := {
+	"empunadura_alcaide": {
+		"name": "Empuñadura del alcaide", "stat": "slash_damage", "bonus": 0.25,
+		"hint": "+0.25 de daño en tus tajos",
+	},
+}
+## Mejoras encontradas, por id de FOUND_UPGRADE_DEFINITIONS.
+var found_upgrades: Dictionary = {}
 
 ## Habilidades del Player que se ganan jugando: reliquias del mapa
 ## (UnderkingdomAbilityPickup), jefes (BossArena.ability_reward) o la tienda.
@@ -343,6 +357,11 @@ func _restore_game_state(state: Dictionary) -> void:
 	var saved_upgrades: Dictionary = state.get("upgrades", {})
 	for upgrade_id in UPGRADE_DEFINITIONS:
 		upgrade_levels[upgrade_id] = clampi(int(saved_upgrades.get(upgrade_id, 0)), 0, int(UPGRADE_DEFINITIONS[upgrade_id].max_level))
+	found_upgrades.clear()
+	var saved_found: Dictionary = state.get("found_upgrades", {})
+	for found_id: String in FOUND_UPGRADE_DEFINITIONS:
+		if bool(saved_found.get(found_id, false)):
+			found_upgrades[found_id] = true
 	cinematics_seen = state.get("cinematics_seen", {}).duplicate(true)
 	completed_encounters = state.get("completed_encounters", {}).duplicate(true)
 	collected_keys = state.get("collected_keys", {}).duplicate(true)
@@ -529,6 +548,9 @@ func _make_save_data(slot_id: int, location: Dictionary, player: Node) -> Dictio
 	var upgrades: Dictionary = {}
 	for upgrade_id in UPGRADE_DEFINITIONS:
 		upgrades[String(upgrade_id)] = int(upgrade_levels.get(upgrade_id, 0))
+	var found: Dictionary = {}
+	for found_id: String in FOUND_UPGRADE_DEFINITIONS:
+		found[found_id] = has_found_upgrade(found_id)
 	var respawn_position_data: Array = [respawn_position.x, respawn_position.y]
 	var respawn_scene := respawn_scene_path
 	if respawn_scene.is_empty():
@@ -553,6 +575,7 @@ func _make_save_data(slot_id: int, location: Dictionary, player: Node) -> Dictio
 			"abilities_locked": abilities_locked,
 			"abilities": abilities,
 			"upgrades": upgrades,
+			"found_upgrades": found,
 			"cinematics_seen": _string_key_dictionary(cinematics_seen),
 			"completed_encounters": _string_key_dictionary(completed_encounters),
 			"collected_keys": _string_key_dictionary(collected_keys),
@@ -911,6 +934,34 @@ func purchase_upgrade(upgrade_id: String) -> bool:
 	return true
 
 
+func has_found_upgrade(upgrade_id: String) -> bool:
+	return bool(found_upgrades.get(upgrade_id, false))
+
+
+## Suma de los bonos de las mejoras encontradas que mejoran "stat".
+func get_found_upgrade_bonus(stat: String) -> float:
+	var total: float = 0.0
+	for upgrade_id: String in found_upgrades:
+		if not has_found_upgrade(upgrade_id) or not FOUND_UPGRADE_DEFINITIONS.has(upgrade_id):
+			continue
+		var definition: Dictionary = FOUND_UPGRADE_DEFINITIONS[upgrade_id]
+		if String(definition.stat) == stat:
+			total += float(definition.bonus)
+	return total
+
+
+func grant_found_upgrade(upgrade_id: String) -> void:
+	if not FOUND_UPGRADE_DEFINITIONS.has(upgrade_id):
+		push_warning("GameManager: mejora encontrada desconocida '%s'." % upgrade_id)
+		return
+	if has_found_upgrade(upgrade_id):
+		return
+	found_upgrades[upgrade_id] = true
+	found_upgrade_collected.emit(upgrade_id)
+	upgrades_changed.emit()
+	request_autosave()
+
+
 func apply_upgrades_to_player(player: UnderkingdomPlayer, heal_max_health_increase: bool = false) -> void:
 	if not is_instance_valid(player):
 		return
@@ -1097,6 +1148,7 @@ func reset_for_new_game() -> void:
 	reset_cinematics_for_new_game()
 	reset_abilities_for_new_game()
 	reset_upgrades_for_new_game()
+	found_upgrades.clear()
 	last_checkpoint_id = ""
 	has_sword = false
 	sword_mission_started = false

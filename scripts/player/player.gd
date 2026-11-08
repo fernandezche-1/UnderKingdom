@@ -963,6 +963,10 @@ func _update_fireball_release() -> void:
 func _start_attack(animation_name: StringName, damage: float, action_type: PlayerAction) -> void:
     if not GameManager.has_sword and animation_name != &"puch":
         return
+    # Mejoras encontradas (empuñadura): solo los tajos con espada, el aéreo
+    # incluido; ni los puñetazos ni la Ultimate.
+    if animation_name in [&"attack", &"attack 2", &"air attack"]:
+        damage += GameManager.get_found_upgrade_bonus("slash_damage")
     var profile := _attack_profile(animation_name)
     var first_frame := int(profile.start)
     _attack_sequence_id += 1
