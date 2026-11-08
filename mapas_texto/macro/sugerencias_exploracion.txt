@@ -339,6 +339,16 @@ siguen siendo cofres (punto 5).
 5. PREMIOS QUE IMPORTEN (prioridad media: decisión de diseño)
 ==============================================================================
 
+DECIDIDO (2026-11-08; P46, sección 6):
+- Fragmentos de corazón: son los 4 fragmentos de vida de las puertas hacia
+  atrás (ideas 2, 5, 8 y 9), no 8. La tienda vende un solo nivel de vida
+  máxima (de 4 a 5 corazones) y los fragmentos dan el sexto.
+- Los secretos del punto 4 siguen llevando cofres: no se cambian por premios
+  únicos. Los premios únicos son los de las puertas hacia atrás.
+- Fragmentos de alma: pendiente de Armando (si hay final verdadero o una
+  Ultimate más fuerte). No cambia el trazado: si se aprueban, van dentro de
+  secretos que ya existen.
+
 Aunque los recursos de cada zona se repartan más adelante, conviene decidir
 ya qué TIPO de premio va en los secretos, porque cambia cuántos secretos hacen
 falta en el ASCII.
@@ -363,10 +373,15 @@ falta en el ASCII.
 6. PARA QUÉ SIRVEN LAS MONEDAS (prioridad media: decisión de diseño)
 ==============================================================================
 
-- Cuenta con lo que hay hoy en los ASCII: unas 113 monedas sueltas y 30 cofres
-  (3 monedas cada uno), unas 200 en total sin contar lo que sueltan los
-  enemigos.
-- Subir las tres mejoras de la tienda al máximo cuesta 108.
+PARA MÁS ADELANTE (2026-11-08): no toca el ASCII. Se decide al montar la
+tienda (Fase 2 o 3 de TASK.md). Si se elige un segundo mercader, se le busca
+sitio entonces en una llegada o una antesala.
+
+- Cuenta con lo que hay en los ASCII (2026-11-08): 121 monedas sueltas y 32
+  cofres (3 monedas cada uno), unas 217 en total sin contar lo que sueltan
+  los enemigos.
+- Subir las tres mejoras de la tienda al máximo cuesta 98, con la vida
+  máxima en un solo nivel (5 + 48 + 45; antes, con dos niveles, 108).
 - Hacia las minas o la mazmorra el jugador ya lo tiene todo comprado, y las
   monedas dejan de servir.
 - Opciones (no excluyentes):
@@ -383,6 +398,10 @@ falta en el ASCII.
 7. ORIENTACIÓN: EL MAPA DEL JUGADOR (prioridad media)
 ==============================================================================
 
+PARA MÁS ADELANTE (2026-11-08): es interfaz. El ASCII ya tiene lo que pide:
+cada zona tiene puntos que se reconocen por su forma, y el vendedor o el
+objeto del mapa cabe en cualquier llegada con checkpoint.
+
 - No hay mapa del jugador en el juego. En zonas de 110 a 230 piezas de ancho y
   con bucles, sin mapa el jugador explora menos, porque teme perderse.
 - Propuesta: un mapa por zona, que se compra (al sepulturero o a un
@@ -398,6 +417,9 @@ falta en el ASCII.
 ==============================================================================
 8. UN NPC QUE TAMBIÉN BAJA (prioridad baja)
 ==============================================================================
+
+PARA MÁS ADELANTE (2026-11-08): va con los NPC. No hace falta dibujar nada:
+las antesalas y las llegadas con checkpoint sirven de rincón tranquilo.
 
 - El prisionero del calabozo o el sepulturero aparece en varias zonas con una
   pista, un encargo o un trozo de historia.
@@ -421,11 +443,16 @@ Se deciden al montar cada zona en Godot con sus sprites y tilesets nuevos.
 ORDEN DE TRABAJO PROPUESTO
 ==============================================================================
 
-1. Decidir el premio del Guardián (punto 2) y el tipo de premio de los
-   secretos (punto 5).
-2. Decidir :B: (punto 3).
-3. Repasar los ASCII de arriba abajo: puertas hacia atrás (punto 1) y tipos
-   de secreto (punto 4).
-4. Apuntar lo decidido en P46 (secciones 6, 7 y 10) y correr el verificador
-   (python3 herramientas/macro_mapa/verificar_mundo.py).
+1. [hecho] Decidir el premio del Guardián (punto 2) y el tipo de premio de
+   los secretos (punto 5).
+2. [hecho] Decidir :B: (punto 3).
+3. [hecho] Repasar los ASCII de arriba abajo: puertas hacia atrás (punto 1)
+   y tipos de secreto (punto 4).
+4. [hecho] Apuntar lo decidido en P46 (secciones 6, 7 y 10) y correr el
+   verificador (python3 herramientas/macro_mapa/verificar_mundo.py).
 5. Puntos 6, 7 y 8 cuando se monte la tienda, la interfaz y los NPC.
+
+Estado (2026-11-08): la parte del ASCII está terminada. Quedan los puntos
+6, 7 y 8, para cuando se monten la tienda, la interfaz y los NPC; los
+fragmentos de alma (punto 5), pendientes de Armando, y la idea 10, en
+reserva.
