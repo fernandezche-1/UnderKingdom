@@ -136,6 +136,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 - Estado guardado: `completed_encounters`.
 - La pared agrietada que se rompe a golpes, también a puños (secretos del calabozo y de las profundidades): `escenas/objetos/pared_agrietada.tscn`, con `breakable_object.gd`, que recuerda si se rompió; 1 x 3 piezas, origen arriba a la izquierda. Arte provisional; en las profundidades, una escena heredada con otro `SpriteFrames` (P48).
 - La palanca que se tira con E y marca un `encounter_id` (`escenas/objetos/palanca.tscn`, `lever.gd`; 1 x 2 piezas, origen arriba a la izquierda), y la barrera que se abre con ese id, en esa escena o en otra, al marcarse o al cargarse (`open_on_encounter` de `arena_barrier.gd`): trampillas y rejas de los atajos `:B:` a `:F:`, compuerta de la mazmorra y rejilla de la jaula del rey encadenado (con `infierno_animas_liberadas`). Arte provisional (P49).
+- El objeto de lore que se lee con E y abre un diálogo JSON (`escenas/objetos/objeto_lore.tscn`, `lore_object.gd`, hereda de `npc.gd`; marca `lore_<lore_id>` en `completed_encounters` y se puede releer; P50): acta del prisionero, diario de la Reina, fosa de los soldados leales, restos de los condenados, carta de la primera reina y alma del rey encadenado. Arte y textos provisionales.
 
 ### Piezas que faltan
 - Suelo que se hunde para el derrumbe de `[!5]`.

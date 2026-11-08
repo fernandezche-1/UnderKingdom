@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" path="res://escenas/objetos/pared_agrietada.tscn" id="5_pared_agrietada"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/palanca.tscn" id="6_palanca"]
 [ext_resource type="Script" path="res://scripts/environment/arena_barrier.gd" id="7_barrera"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/objeto_lore.tscn" id="9_lore"]
 [ext_resource type="Texture2D" path="res://assets_prueba/raou_castillo/tileset_castillo.png" id="8_tileset"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_losa_izq"]
@@ -41,6 +42,9 @@ position = Vector2(1424, 32)
 [node name="Palanca" parent="Objetos" instance=ExtResource("6_palanca")]
 position = Vector2(1072, 288)
 encounter_id = "pruebas_palanca_trampilla"
+
+[node name="ObjetoLore" parent="Objetos" instance=ExtResource("9_lore")]
+position = Vector2(264, 310)
 
 [node name="TrampillaPalanca" type="StaticBody2D" parent="Objetos"]
 position = Vector2(1112, 184)
