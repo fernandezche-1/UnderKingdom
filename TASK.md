@@ -80,34 +80,49 @@ Responde en español.
 
 ## Fase 2: piezas en Godot
 
-Cada pieza se prueba en la zona de pruebas (`escenas/mapas/zona_pruebas_combate.tscn`) y se documenta en una etapa nueva de `docs/`. Si toca el Player o el `GameManager`, se comprueba también `mundo_1`. El orden se fija al terminar la Fase 1.
+Cada pieza se prueba en la zona de pruebas (`escenas/mapas/zona_pruebas_combate.tscn`) y se documenta en una etapa nueva de `docs/`. Si toca el Player o el `GameManager`, se comprueba también `mundo_1`.
 
-**Piezas de las zonas** (P46, sección 5):
+**Orden (fijado el 2026-11-08):** por la primera zona de la ruta que pide cada pieza. Así la Fase 3 puede empezar por el calabozo en cuanto estén las suyas, sin esperar a tenerlo todo. Una pieza que sirve a varias zonas va en la primera que la pide; las demás la reutilizan.
+
+**0. Ajuste previo:**
+- [ ] La tienda vende un solo nivel de vida máxima (`max_level` 1 en `UPGRADE_DEFINITIONS`; P46, sección 6).
+
+**1. Calabozo** (con estas cuatro piezas ya se puede generar en la Fase 3):
+- [ ] Pared agrietada que se rompe a golpes, también a puños (secretos del calabozo y de las profundidades).
+- [ ] Palanca y barrera que se abre según `completed_encounters` (atajos `:B:` a `:F:`, compuerta de la mazmorra, rejilla de la jaula del rey encadenado).
+- [ ] Objeto de lore que abre un diálogo (`npc.gd` y `dialogue_ui`): el acta del prisionero y, después, el resto del lore de marcador.
+- [ ] Mejora de +0.25 de daño en todos los tajos (la empuñadura del depósito del alcaide).
+
+**2. Castillo:**
 - [ ] Reja baja que solo se pasa rodando (`[H2]` y el pasillo del filo del infierno).
-- [ ] Contador de sellos que abre una puerta (`[S3]`, `[S7]`).
-- [ ] Suelo que se hunde y secuencia de derrumbe y huida (`[!5]`).
-- [ ] Hielo que se derrite con la llama eterna, y la luz de la antorcha (`[P6]`).
-- [ ] Ascensor minero (`:C:`).
-- [ ] Pared agrietada que se rompe a golpes (secretos del calabozo y de las profundidades).
-- [ ] Palanca y barrera que se abre según `completed_encounters` (atajos `:B:` a `:F:` y compuerta de la mazmorra).
-- [ ] Fuego infernal que solo se pasa con E5 (santuario, gruta de cristal, infierno).
-- [ ] Dash en el aire (`air_dash`, premio del Guardián con `ability_reward`): unas 7 piezas en horizontal, sin gravedad, una vez por salto. Probar en la zona de pruebas que el pasillo de 4 de alto con foso de 6 no se cruza sin él, ni con la Agilidad.
-- [ ] IA del Crystal Mauler: hoy `escenas/jefes/boss_mina.tscn` es solo sprite y colisión, sin script (¿`simple_boss.gd`?). Su sala, la gruta de cristal, mide 16 x 14.
-- [ ] Arenas con oleadas (coliseo y salón de los verdugos del infierno).
-
-**Piezas de las puertas hacia atrás** (punto 1 de las sugerencias, "Piezas compartidas"):
+- [ ] Mostrar u ocultar según un encuentro superado (generalizar `story_hidden_actor.gd`): el castillo sin hechizo y el rey encadenado.
 - [ ] Fragmento de vida: 4 dan 1 corazón. Hay que tocar el guardado y subir `SAVE_FORMAT_VERSION`.
-- [ ] Objeto de lore que abre un diálogo (`npc.gd` y `dialogue_ui`).
-- [ ] Rompible que solo acepta un tipo de golpe: el ascendente con Golpe final o la Ultimate.
-- [ ] `locked_door` con otro dibujo: velas y hielo negro, la misma pieza del hielo de `[P6]`.
-- [ ] Mostrar u ocultar según un encuentro superado (generalizar `story_hidden_actor.gd`).
-- [ ] Mejoras de +0.25 de daño y +0.25 en pociones.
 
-**Ajustes de lo decidido** (P46, sección 6):
-- [ ] La tienda vende un solo nivel de vida máxima (`max_level` 1 en `UPGRADE_DEFINITIONS`).
-- [ ] La Adrenalina sale de `STARTING_ABILITIES` (la da el Mauler).
+**3. Cementerio:**
+- [ ] Contador de sellos que abre una puerta (`[S3]`, `[S7]`).
+- [ ] Rompible que solo acepta un tipo de golpe: el ascendente con Golpe final (losa de la cripta) o la Ultimate (estatua de la Reina).
+- [ ] `locked_door` con otro dibujo: velas, y después hielo negro y el hielo de `[P6]`.
+- [ ] Mejora de +0.25 en pociones (el amuleto de la guardia).
 
-**Atuendos** (P46, sección 10):
+**4. Minas:**
+- [ ] Ascensor minero (`:C:`).
+- [ ] Fuego infernal que solo se pasa con E5 (gruta de cristal, santuario de las profundidades, infierno).
+- [ ] IA del Crystal Mauler: hoy `escenas/jefes/boss_mina.tscn` es solo sprite y colisión, sin script (¿`simple_boss.gd`?). Su sala, la gruta de cristal, mide 16 x 14.
+- [ ] La Adrenalina sale de `STARTING_ABILITIES` y la da el Mauler (`ability_reward adrenaline`). Va con su IA: antes nadie la daría.
+
+**5. Mazmorra:**
+- [ ] Suelo que se hunde y secuencia de derrumbe y huida (`[!5]`).
+
+**6. Ruina:**
+- [ ] Hielo que se derrite con la llama eterna, y la luz de la antorcha (`[P6]`), sobre la `locked_door` con otro dibujo del paso 3.
+- [ ] Dash en el aire (`air_dash`, premio del Guardián con `ability_reward`): unas 7 piezas en horizontal, sin gravedad, una vez por salto. Probar en la zona de pruebas que el pasillo de 4 de alto con foso de 6 no se cruza sin él, ni con la Agilidad.
+
+**7. Infierno:**
+- [ ] Arenas con oleadas (coliseo y salón de los verdugos).
+
+Las profundidades no piden piezas nuevas: reutilizan el contador de sellos, el fuego infernal, la barrera, la pared agrietada y el mostrar u ocultar.
+
+**En paralelo: atuendos** (P46, sección 10). Dependen sobre todo del arte, así que no frenan el orden de arriba:
 - [ ] Atuendo actual y `OUTFIT_DEFINITIONS` en `GameManager` (guardado, reinicio, `SAVE_FORMAT_VERSION`).
 - [ ] Un `SpriteFrames` por atuendo; separar el Fire Knight (E5) de los harapos (E1).
 - [ ] Escena de atuendo para recoger, generalizando `espada_oxidada.tscn`.
