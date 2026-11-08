@@ -380,8 +380,9 @@ sitio entonces en una llegada o una antesala.
 - Cuenta con lo que hay en los ASCII (2026-11-08): 121 monedas sueltas y 32
   cofres (3 monedas cada uno), unas 217 en total sin contar lo que sueltan
   los enemigos.
-- Subir las tres mejoras de la tienda al máximo cuesta 98, con la vida
-  máxima en un solo nivel (5 + 48 + 45; antes, con dos niveles, 108).
+- Subir las tres mejoras de la tienda al máximo cuesta 103, con la vida
+  máxima en un solo nivel de 10 monedas (10 + 48 + 45; antes, con dos
+  niveles, 108).
 - Hacia las minas o la mazmorra el jugador ya lo tiene todo comprado, y las
   monedas dejan de servir.
 - Opciones (no excluyentes):

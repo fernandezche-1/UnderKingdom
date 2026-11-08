@@ -69,8 +69,8 @@ var upgrade_levels: Dictionary = {
 
 const UPGRADE_DEFINITIONS := {
 	"max_health": {
-		"name": "Vida máxima", "max_level": 2,
-		"costs": [5, 10], "base": 4.0, "step": 1.0, "unit": "corazones",
+		"name": "Vida máxima", "max_level": 1,
+		"costs": [10], "base": 4.0, "step": 1.0, "unit": "corazones",
 	},
 	## La curación sigue siendo de un cuarto de corazón: la mejora baja el daño
 	## que hay que hacer para ganarlo (Player.lifesteal_damage_required).
@@ -394,8 +394,9 @@ func restore_saved_player(player: Node, state: Dictionary, restore_position: boo
 		var location: Variant = state.get("position")
 		if location is Array and location.size() == 2:
 			(player as Node2D).global_position = Vector2(float(location[0]), float(location[1]))
-	if player.get("max_health") != null:
-		player.set("max_health", float(state.get("max_health", player.get("max_health"))))
+	## La vida máxima no se lee del guardado: sale de las mejoras, que ya puso
+	## apply_upgrades_to_player. Así una partida de cuando la tienda vendía dos
+	## niveles queda en el tope de hoy (P47).
 	if player.get("current_health") != null:
 		player.set("current_health", clampf(
 			float(state.get("health", player.get("current_health"))),

@@ -65,7 +65,7 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
 
 - Las colisiones sólidas de los mapas que ya se validaron jugando no se redibujan ni se eliminan. Si un cambio las afecta, preguntar antes.
 - No tocar los ajustes que quitaron el temblor al caminar salvo que se pida: smoothing de la Camera2D (desactivado, proceso en física), pixel snapping 2D, `floor_snap_length` (4) y `safe_margin` (0.02) del Player.
-- La vida se mide en cuartos de corazón: 4 corazones al empezar y hasta 6 con la mejora de vida máxima; 0.25 es el daño mínimo. Toda curación y todo daño van en múltiplos de 0.25.
+- La vida se mide en cuartos de corazón: 4 corazones al empezar, 5 con la mejora de vida máxima de la tienda (un solo nivel, P47) y 6 con los 4 fragmentos de vida (pendiente, P46); 0.25 es el daño mínimo. Toda curación y todo daño van en múltiplos de 0.25.
 - Colores de las marcas en los mapas: verde = plataforma one-way, rojo/rosado = kill zone, blanco = burn zone, azul = transición al mapa siguiente, morado = transición al mapa anterior, amarillo = puerta interna.
 - Las zonas que dependen de marcas visuales las coloca una persona en el editor o pasa coordenadas; no inferir su posición por la forma o el color de una colisión.
 - (Mapa viejo) `PuertaJefeM1Bloqueo`, `PasoPuertaWS` y `OneWayPasoPuertaWS` de Mundo 1 no se mueven ni se modifican (secuencia Capitán → llave → reja).
