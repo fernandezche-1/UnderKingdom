@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3]
+[gd_scene load_steps=24 format=3]
 
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas.tscn" id="1_base"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/rata.tscn" id="2_rata"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" path="res://escenas/objetos/palanca.tscn" id="6_palanca"]
 [ext_resource type="Script" path="res://scripts/environment/arena_barrier.gd" id="7_barrera"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/objeto_lore.tscn" id="9_lore"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/rompible_selectivo.tscn" id="17_selectivo"]
 [ext_resource type="PackedScene" path="res://escenas/items/mejora_encontrada.tscn" id="10_mejora"]
 [ext_resource type="Script" path="res://scripts/environment/roll_gate.gd" id="11_reja"]
 [ext_resource type="PackedScene" path="res://escenas/npc/anciano.tscn" id="12_anciano"]
@@ -154,3 +155,12 @@ open_on_seal_group = "pruebas_sellos"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Objetos/PuertaSellos"]
 shape = SubResource("RectangleShape2D_reja")
+
+[node name="LosaGolpeFinal" parent="Objetos" instance=ExtResource("17_selectivo")]
+position = Vector2(240, 272)
+coin_drop_count = 2
+
+[node name="EstatuaUltimate" parent="Objetos" instance=ExtResource("17_selectivo")]
+position = Vector2(320, 272)
+accepted_hit = 1
+coin_drop_count = 2

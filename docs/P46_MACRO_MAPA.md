@@ -140,11 +140,13 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 - La mejora encontrada (`escenas/items/mejora_encontrada.tscn`, `found_upgrade_pickup.gd`; tabla `FOUND_UPGRADE_DEFINITIONS` de `GameManager`, que se guarda como `found_upgrades`; P51): la empuñadura del alcaide (+0.25 de daño en los tajos con espada, el aéreo y el golpe final, no en puños ni Ultimate) y, después, el amuleto de la guardia (+0.25 en pociones). Sin precio ni niveles; sale en la pestaña de mejoras del menú de pausa como "Encontrada". Arte provisional.
 - El fragmento de vida (`escenas/items/fragmento_vida.tscn`, `life_fragment_pickup.gd`; `fragment_id` único por partida, `<zona>_<n>`; `GameManager.grant_life_fragment`, guardado como `life_fragments`; P54): 4 dan +1 corazón de vida máxima, con tope 6, y llenan la vida; el recuento sale en la pestaña de estadísticas. Arte provisional.
 - El sello (`escenas/objetos/sello.tscn`, `seal.gd`; P55): hereda de la palanca. Se activa con E o solo, cuando se marca su `listen_encounter` (arena de la fosa, Capitán). Guarda `sello:<grupo>:<id>` en `completed_encounters`; al llegar a `seal_total` marca `sellos:<grupo>` y se abren las barreras con `open_on_seal_group`. Arte provisional.
+- El rompible selectivo (`escenas/objetos/rompible_selectivo.tscn`, `selective_breakable.gd`; P56): hereda de `breakable_object.gd` y solo cede a un tipo de golpe, `accepted_hit` = Golpe final (tajo ascendente con `combo_3`, losa de la cripta) o Ultimate (estatua de la Reina). Los demás golpes sacan chispa y "RESISTE EL GOLPE". Arte provisional.
 
 ### Piezas que faltan
 - Suelo que se hunde para el derrumbe de `[!5]`.
 - Hielo que se derrite con la llama eterna (`[P6]`): puerta con llave genérica (`grant_key("antorcha")`, `locked_door.gd`) con otro dibujo y efecto de derretirse, más la luz de la antorcha en la parte oscura.
 - El contador de sellos que abre una puerta al activarlos todos (`[S3]`, `[S7]`): hecho, `escenas/objetos/sello.tscn` (P55).
+- El rompible que solo acepta un tipo de golpe (losa de la cripta y estatua de la Reina): hecho, `escenas/objetos/rompible_selectivo.tscn` (P56).
 - La secuencia de huida o derrumbe tras la Reina (`[!5]`).
 - La reja baja que solo se pasa rodando (`[H2]`): hecha, `scripts/environment/roll_gate.gd` (P52).
 - El ascensor minero (`:C:`).
