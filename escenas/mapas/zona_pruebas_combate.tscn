@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3]
+[gd_scene load_steps=22 format=3]
 
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas.tscn" id="1_base"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/rata.tscn" id="2_rata"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" path="res://escenas/npc/anciano.tscn" id="12_anciano"]
 [ext_resource type="PackedScene" path="res://escenas/npc/barquero.tscn" id="13_barquero"]
 [ext_resource type="Script" path="res://scripts/environment/encounter_visibility.gd" id="14_visibilidad"]
+[ext_resource type="PackedScene" path="res://escenas/items/fragmento_vida.tscn" id="15_fragmento"]
 [ext_resource type="Texture2D" path="res://assets_prueba/raou_castillo/tileset_castillo.png" id="8_tileset"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_losa_izq"]
@@ -82,6 +83,22 @@ position = Vector2(264, 310)
 
 [node name="MejoraEncontrada" parent="Objetos" instance=ExtResource("10_mejora")]
 position = Vector2(328, 304)
+
+[node name="FragmentoVida1" parent="Objetos" instance=ExtResource("15_fragmento")]
+position = Vector2(120, 304)
+fragment_id = "prueba_1"
+
+[node name="FragmentoVida2" parent="Objetos" instance=ExtResource("15_fragmento")]
+position = Vector2(152, 304)
+fragment_id = "prueba_2"
+
+[node name="FragmentoVida3" parent="Objetos" instance=ExtResource("15_fragmento")]
+position = Vector2(184, 304)
+fragment_id = "prueba_3"
+
+[node name="FragmentoVida4" parent="Objetos" instance=ExtResource("15_fragmento")]
+position = Vector2(216, 304)
+fragment_id = "prueba_4"
 
 [node name="TrampillaPalanca" type="StaticBody2D" parent="Objetos"]
 position = Vector2(1112, 184)

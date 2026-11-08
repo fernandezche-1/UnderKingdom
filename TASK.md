@@ -87,7 +87,7 @@ Cada pieza se prueba en la zona de pruebas (`escenas/mapas/zona_pruebas_combate.
 - se probó sin ventana con una escena temporal que simula entradas e imprime el resultado, y esa escena se borró;
 - arrancan sin errores el juego (`godot --headless --quit-after 120`) y la zona de pruebas, y también `mundo_1` si se tocó el Player, un enemigo, el `GameManager` o el Capitán;
 - si guarda estado, se reinicia en `reset_for_new_game`, se guarda en `_make_save_data` / `_restore_game_state` y se sube `SAVE_FORMAT_VERSION`;
-- hay una etapa nueva en `docs/` (la siguiente libre es P54), con el formato de las demás, y está al día lo que la nombra: P46 (secciones 5 y 10), CLAUDE.md si cambia una regla o una pieza a reutilizar, y esta lista;
+- hay una etapa nueva en `docs/` (la siguiente libre es P55), con el formato de las demás, y está al día lo que la nombra: P46 (secciones 5 y 10), CLAUDE.md si cambia una regla o una pieza a reutilizar, y esta lista;
 - hay un commit, sin push.
 
 **Plantilla de prompt** (cambiar `<pieza>`, `<zona>` y lo que se quiera añadir en `<notas>`):
@@ -145,7 +145,7 @@ seguir. Responde en español.
 **2. Castillo:**
 - [x] Reja baja que solo se pasa rodando (`[H2]` y el pasillo del filo del infierno): `scripts/environment/roll_gate.gd` (P52). Sin escena propia: es una `arena_barrier.gd` con otro script; falta su arte.
 - [x] Mostrar u ocultar según un encuentro superado (el castillo sin hechizo y el rey encadenado): `scripts/environment/encounter_visibility.gd`, componente hijo del nodo (P53). `story_hidden_actor.gd` no cambia.
-- [ ] Fragmento de vida: 4 dan 1 corazón. Hay que tocar el guardado y subir `SAVE_FORMAT_VERSION`.
+- [x] Fragmento de vida: 4 dan 1 corazón: `escenas/items/fragmento_vida.tscn` y `grant_life_fragment` de `GameManager` (P54). `SAVE_FORMAT_VERSION` pasa a 4. Falta su arte.
 
 **3. Cementerio:**
 - [ ] Contador de sellos que abre una puerta (`[S3]`, `[S7]`).

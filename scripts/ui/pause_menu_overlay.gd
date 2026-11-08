@@ -15,6 +15,7 @@ const STAT_ROWS: Array[Array] = [
 	["lifesteal_progress", "Progreso del robo"],
 	["combo", "Combo"],
 	["speed", "Velocidad"],
+	["life_fragments", "Fragmentos de vida"],
 ]
 ## Nombre de la fila de cada mejora, qué mide y su unidad.
 const UPGRADE_TEXTS := {
@@ -263,6 +264,9 @@ func _update_player_info() -> void:
 		_player.attack_1_damage, _player.rising_slash_damage(),
 	]
 	(_stat_values.speed as Label).text = "%.0f px/s" % _player.get_move_speed()
+	(_stat_values.life_fragments as Label).text = "%d/%d" % [
+		GameManager.get_life_fragment_count(), GameManager.LIFE_FRAGMENTS_PER_HEART,
+	]
 	_refresh_abilities()
 
 	var ult_left: float = _player.get_ultimate_cooldown_left()

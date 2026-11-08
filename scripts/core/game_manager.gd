@@ -15,6 +15,7 @@ signal encounter_completed(encounter_id: String)
 signal key_changed(key_id: String, has_key: bool)
 signal upgrades_changed
 signal found_upgrade_collected(upgrade_id: String)
+signal life_fragment_collected(fragment_id: String, count: int, completed: bool)
 signal ability_unlocked(ability_id: String)
 signal player_name_changed(player_name: String)
 signal save_slots_changed
@@ -43,7 +44,8 @@ const SAVE_DIRECTORY := "user://saves"
 ## 2: las habilidades se guardan como "abilities" (ABILITY_DEFINITIONS) en vez
 ## de los "skills" del alma fragmentada de la 0.04.049.
 ## 3: se suman las mejoras encontradas ("found_upgrades", P51).
-const SAVE_FORMAT_VERSION := 3
+## 4: se suman los fragmentos de vida ("life_fragments", P54).
+const SAVE_FORMAT_VERSION := 4
 const SAVE_SLOT_COUNT := 3
 const PRISON_SCENE_PATH := "res://escenas/mapas/prologo_prision/camara_sellado_alma.tscn"
 const CASTLE_SCENE_PATH := "res://escenas/mapas/tiles_castillo_combate.tscn"
@@ -97,6 +99,13 @@ const FOUND_UPGRADE_DEFINITIONS := {
 }
 ## Mejoras encontradas, por id de FOUND_UPGRADE_DEFINITIONS.
 var found_upgrades: Dictionary = {}
+
+## Fragmentos de vida: con LIFE_FRAGMENTS_PER_HEART recogidos la vida máxima sube
+## un corazón, sin pasar de MAX_HEARTS_CAP (P46, P54). Se guardan los ids de los
+## recogidos, no solo cuántos hay, para que uno no cuente dos veces.
+const LIFE_FRAGMENTS_PER_HEART := 4
+const MAX_HEARTS_CAP := 6.0
+var life_fragments: Dictionary = {}
 
 ## Habilidades del Player que se ganan jugando: reliquias del mapa
 ## (UnderkingdomAbilityPickup), jefes (BossArena.ability_reward) o la tienda.
@@ -362,6 +371,12 @@ func _restore_game_state(state: Dictionary) -> void:
 	for found_id: String in FOUND_UPGRADE_DEFINITIONS:
 		if bool(saved_found.get(found_id, false)):
 			found_upgrades[found_id] = true
+	life_fragments.clear()
+	var saved_fragments: Variant = state.get("life_fragments", [])
+	if saved_fragments is Array:
+		for fragment_id: Variant in saved_fragments:
+			if fragment_id is String and not String(fragment_id).is_empty():
+				life_fragments[String(fragment_id)] = true
 	cinematics_seen = state.get("cinematics_seen", {}).duplicate(true)
 	completed_encounters = state.get("completed_encounters", {}).duplicate(true)
 	collected_keys = state.get("collected_keys", {}).duplicate(true)
@@ -537,7 +552,7 @@ func _make_save_data(slot_id: int, location: Dictionary, player: Node) -> Dictio
 		elif is_instance_valid(player) and player is Node2D:
 			var player_position := (player as Node2D).global_position
 			saved_position = [player_position.x, player_position.y]
-	var max_health := float(get_upgrade_info("max_health").value)
+	var max_health := get_max_health_value()
 	var health := max_health
 	if is_instance_valid(player):
 		max_health = float(player.get("max_health"))
@@ -576,6 +591,7 @@ func _make_save_data(slot_id: int, location: Dictionary, player: Node) -> Dictio
 			"abilities": abilities,
 			"upgrades": upgrades,
 			"found_upgrades": found,
+			"life_fragments": life_fragments.keys(),
 			"cinematics_seen": _string_key_dictionary(cinematics_seen),
 			"completed_encounters": _string_key_dictionary(completed_encounters),
 			"collected_keys": _string_key_dictionary(collected_keys),
@@ -962,11 +978,48 @@ func grant_found_upgrade(upgrade_id: String) -> void:
 	request_autosave()
 
 
+## Fragmentos de vida recogidos, de 0 a LIFE_FRAGMENTS_PER_HEART (los que sobran no cuentan).
+func get_life_fragment_count() -> int:
+	return mini(life_fragments.size(), LIFE_FRAGMENTS_PER_HEART)
+
+
+func has_life_fragment(fragment_id: String) -> bool:
+	return bool(life_fragments.get(fragment_id, false))
+
+
+## Vida máxima: la de la tienda más un corazón con todos los fragmentos, con tope.
+func get_max_health_value() -> float:
+	var value := float(get_upgrade_info("max_health").value)
+	if get_life_fragment_count() >= LIFE_FRAGMENTS_PER_HEART:
+		value += 1.0
+	return minf(value, MAX_HEARTS_CAP)
+
+
+## Recoge un fragmento. Con el último sube la vida máxima y se llena la vida.
+## Devuelve false si ese id ya estaba recogido.
+func grant_life_fragment(fragment_id: String) -> bool:
+	if fragment_id.is_empty() or has_life_fragment(fragment_id):
+		return false
+	life_fragments[fragment_id] = true
+	var count := get_life_fragment_count()
+	var completed := count == LIFE_FRAGMENTS_PER_HEART
+	var player := get_tree().get_first_node_in_group("player") as UnderkingdomPlayer
+	if is_instance_valid(player):
+		apply_upgrades_to_player(player, true)
+		if completed:
+			player.current_health = player.max_health
+			player.health_changed.emit(player.current_health, player.max_health)
+	life_fragment_collected.emit(fragment_id, count, completed)
+	upgrades_changed.emit()
+	request_autosave()
+	return true
+
+
 func apply_upgrades_to_player(player: UnderkingdomPlayer, heal_max_health_increase: bool = false) -> void:
 	if not is_instance_valid(player):
 		return
 	var old_max: float = player.max_health
-	var new_max: float = float(get_upgrade_info("max_health").value)
+	var new_max: float = get_max_health_value()
 	var old_cooldown: float = player.ultimate_cooldown
 	var ready_ratio: float = player.get_ultimate_ready_ratio()
 
@@ -1149,6 +1202,7 @@ func reset_for_new_game() -> void:
 	reset_abilities_for_new_game()
 	reset_upgrades_for_new_game()
 	found_upgrades.clear()
+	life_fragments.clear()
 	last_checkpoint_id = ""
 	has_sword = false
 	sword_mission_started = false

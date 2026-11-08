@@ -61,6 +61,7 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
     - `escenas/objetos/palanca.tscn`: palanca que se tira con E y marca su `encounter_id` (`lever.gd`; P49);
     - `escenas/objetos/objeto_lore.tscn`: objeto que se lee con E y abre un diálogo JSON (acta, diario, restos); marca `lore_<lore_id>` en `completed_encounters` y se puede releer (`lore_object.gd`, hereda de `npc.gd`; P50);
     - `escenas/items/mejora_encontrada.tscn`: mejora que se recoge en el mapa y suma a una estadística (empuñadura del alcaide, +0.25 de daño en tajos; amuleto, pociones). Tabla `GameManager.FOUND_UPGRADE_DEFINITIONS`, se guarda como `found_upgrades` y se lee con `get_found_upgrade_bonus(stat)` (`found_upgrade_pickup.gd`; P51);
+    - `escenas/items/fragmento_vida.tscn`: fragmento de vida (`fragment_id` único por partida); 4 dan +1 corazón de vida máxima (tope 6) y llenan la vida. `GameManager.grant_life_fragment`, se guarda como `life_fragments` (`life_fragment_pickup.gd`; P54);
     - `escenas/objetos/pared_agrietada.tscn`: pared falsa que se rompe a golpes y se recuerda (`breakable_object.gd`; raíz `AnimatableBody2D`, porque la AttackHitbox no detecta `StaticBody2D`; P48);
     - en `GameManager`, las llaves genéricas (`grant_key` / `has_key`) y `completed_encounters`.
   - Los jefes se reutilizan por su `.tscn`. El Capitán va con `counts_as_world1_boss = false`. Si un jefe necesita otros valores o su `BossHealthBar`, se le hace una escena heredada en `escenas/jefes/`, como `caballero_reina.tscn`.
@@ -71,7 +72,7 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
 
 - Las colisiones sólidas de los mapas que ya se validaron jugando no se redibujan ni se eliminan. Si un cambio las afecta, preguntar antes.
 - No tocar los ajustes que quitaron el temblor al caminar salvo que se pida: smoothing de la Camera2D (desactivado, proceso en física), pixel snapping 2D, `floor_snap_length` (4) y `safe_margin` (0.02) del Player.
-- La vida se mide en cuartos de corazón: 4 corazones al empezar, 5 con la mejora de vida máxima de la tienda (un solo nivel, P47) y 6 con los 4 fragmentos de vida (pendiente, P46); 0.25 es el daño mínimo. Toda curación y todo daño van en múltiplos de 0.25.
+- La vida se mide en cuartos de corazón: 4 corazones al empezar, 5 con la mejora de vida máxima de la tienda (un solo nivel, P47) y 6 con los 4 fragmentos de vida (P54); 0.25 es el daño mínimo. Toda curación y todo daño van en múltiplos de 0.25.
 - Colores de las marcas en los mapas: verde = plataforma one-way, rojo/rosado = kill zone, blanco = burn zone, azul = transición al mapa siguiente, morado = transición al mapa anterior, amarillo = puerta interna.
 - Las zonas que dependen de marcas visuales las coloca una persona en el editor o pasa coordenadas; no inferir su posición por la forma o el color de una colisión.
 - (Mapa viejo) `PuertaJefeM1Bloqueo`, `PasoPuertaWS` y `OneWayPasoPuertaWS` de Mundo 1 no se mueven ni se modifican (secuencia Capitán → llave → reja).
