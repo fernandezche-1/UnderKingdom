@@ -12,8 +12,10 @@
 ; de abajo, la fila 222, como el de las minas. Así [L4] queda en la fila 66 de
 ; las dos zonas (fila 199 del mundo), sin túnel entre ellas.
 ; Llega con la Ráfaga, Rodar y el Golpe final (la Agilidad solo si se encontró
-; E3). Se consigue el Ultimate con la Reina; la salida [!5] se abre con el
-; derrumbe que sigue a su muerte (P46, sección 10).
+; E3). Se consigue el Ultimate con la Reina y, en la torre, la llave del
+; alcaide, que abre el depósito del alcaide del calabozo (puerta hacia atrás,
+; idea 1); la salida [!5] se abre con el derrumbe que sigue a su muerte (P46,
+; sección 10).
 ; Ningún escalón obligatorio pide más de 3 piezas de salto (con E1 se saltan
 ; unas 4,6) ni huecos de más de 3. Solo el secreto pide la Agilidad.
 ; Camino obligatorio: [L4] -> llegada -> cuerpo de guardia -> escalera 90 ->
@@ -37,7 +39,8 @@
 ;   la gran sala. Sitio de un cofre en (7, 46).
 ; - TORRE DEL ALCAIDE: x 71-108, filas 12-21 (suelo 22), unida a lo alto de la
 ;   gran sala por la repisa alta. Escalera de la columna 78 (filas 22-37) a las
-;   celdas altas. Sitio de un cofre en (73, 21).
+;   celdas altas. LLAVE DEL ALCAIDE en (73, 21), en la _combate, donde antes
+;   iba un cofre (quitado el 2026-11-08, al cerrar la Fase 1).
 ; - SECRETO DE LA AGILIDAD: x 109-117, filas 12-16 (suelo 17), al fondo este de
 ;   la torre y abierto a ella por la columna 109. Su suelo está 5 piezas por
 ;   encima del de la torre y no hay nada cerca a lo que subirse: con E1 (unas
@@ -174,8 +177,9 @@
 ;   - Ninguno en la llegada, la antesala, la sala de la Reina, la huida ni el
 ;     secreto, ni junto a la P o los checkpoints. El kolbo3 de la repisa alta
 ;     pasó de (66, 21) a (62, 21) para dejar libre el pie del pozo de :B:.
-; - Cofres (c): sala de tortura (7, 46), torre (73, 21), fondo de las celdas
-;   bajas (117, 48) y secreto de la Agilidad (117, 16).
+; - Cofres (c): sala de tortura (7, 46), fondo de las celdas bajas (117, 48)
+;   y secreto de la Agilidad (117, 16). El de la torre (73, 21) se quitó: ahí
+;   va la llave del alcaide, en la _combate.
 ; - Monedas ($) en las plataformas de la gran sala y sus repisas del oeste, en la
 ;   plataforma alta del cuerpo de guardia, en la sala de tortura, los desagües,
 ;   la torre, el fondo de las celdas altas y el secreto. Pociones (!) en la
@@ -195,8 +199,8 @@
 ; Viven en tiles_mazmorra_combate.tscn: sala de la Reina (trampilla,
 ; activador, puntos del jefe, ability_reward), suelo que se hunde y secuencia
 ; de derrumbe, compuerta y palanca del atajo, trampilla del colector,
-; transición y spawn de [!5], palanca, transición y spawn de :B:, y
-; trampilla, transición y spawn de :F:. No hay "siguiente": [!5] sale por
+; transición y spawn de [!5], palanca, transición y spawn de :B:, la llave
+; del alcaide (73, 21), y trampilla, transición y spawn de :F:. No hay "siguiente": [!5] sale por
 ; abajo, no por una salida ">".
 
 escena: res://escenas/mapas/tiles_mazmorra.tscn
@@ -227,7 +231,7 @@ anterior: res://escenas/mapas/tiles_mineria_combate.tscn
 ############################...........................................H.....................................###########
 ############################...........................................H................$.................$..###########
 ############################.t.........................................H.....................................###########
-############################..................................q........H.c..........E.......M.....E.....q....###########
+############################..................................q........H............E.......M.....E.....q....###########
 ############################.............................$....###############.H.########################################
 ############################...........................======..........######.H.########################################
 ############################...........................................######.H.########################################

@@ -29,6 +29,12 @@ EL PROBLEMA, EN RESUMEN
 1. PUERTAS HACIA ATRÁS (prioridad alta: toca el ASCII de zonas hechas)
 ==============================================================================
 
+HECHO (2026-11-08): las 9 ideas están dibujadas en los ASCII de sus zonas y
+apuntadas en P46 (secciones 6, 9 y 10). Lo que falta es de Godot: las piezas
+compartidas (abajo) en la Fase 2 de TASK.md y cada puerta al generar su zona
+en la Fase 3. La idea 10 sigue en reserva. Los textos de lore siguen como
+marcador.
+
 La idea: en las zonas de arriba se ven sitios a los que todavía no se puede
 llegar. Se abren con algo que se consigue más abajo, y entonces volver por los
 atajos tiene premio.
@@ -73,6 +79,11 @@ Propuestas (coordenadas en piezas de cada ASCII, columna y fila):
    - Premio: el acta de la condena del prisionero (lore: su nombre tachado) y
      la empuñadura de su espada: +0.25 de daño en todos los tajos.
    - Vuelta: :B: (punto 3). Coste medio.
+   - HECHO (2026-11-06): dibujada en mapas_texto/macro/zonas/calabozo.txt
+     tal como se propone, con la reja en la columna 19 (locked_door con la
+     llave del alcaide) y el arcón del premio en (15, 26). La llave del
+     alcaide va en la torre de la mazmorra, en (73, 21), donde estaba el
+     cofre, que se quitó del ASCII al cerrar la fase (2026-11-08).
 2. CASTILLO, los aposentos de la Reina.
    - Sitio: puerta en arco (C) en la pared este de la capilla (columna 61,
      filas 16-18); sala x 62-74, filas 11-18. La columna 75 queda de pared

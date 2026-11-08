@@ -5,13 +5,13 @@
 - **Lo que hay hoy en Godot no cuenta:** los niveles `tiles_*` y sus escenas `_combate` se descartan mientras dure la fase ASCII. No se usan como referencia ni se arreglan; cada zona se genera de nuevo desde su ASCII en la Fase 3.
 
 Las tres fases:
-1. **Fase 1, los ASCII:** cada zona dibujada a escala real, con sus puertas hacia atrás. Todas las zonas tienen ya su primera y segunda pasada; falta sumar las puertas.
+1. **Fase 1, los ASCII:** cada zona dibujada a escala real, con sus puertas hacia atrás. Hecha (2026-11-08): todas las zonas tienen su primera y segunda pasada y sus puertas.
 2. **Fase 2, piezas en Godot:** lo que las zonas necesitan y todavía no existe, probado en la zona de pruebas.
 3. **Fase 3, generar cada zona:** constructor y escena `_combate`, zona por zona.
 
 ---
 
-## Fase 1: puertas hacia atrás en los ASCII
+## Fase 1: puertas hacia atrás en los ASCII (hecha)
 
 **Un paso está hecho cuando:**
 - el ASCII de la zona y sus comentarios de cabecera están al día;
@@ -64,10 +64,9 @@ Responde en español.
   - El santuario ya no nombra al Mauler: va el segundo demonslime.
   - El coliseo del infierno marca `infierno_animas_liberadas` al vencer su última oleada.
   - La sala del Demon Slime lleva el `PuntoLlave` de la ascua (`profundidades_ascua`) hacia (100, 78).
-- [ ] 7. **Cierre:**
-  - repasar la tabla "Desbloqueos por zona" de P46 contra los ASCII;
-  - verificador y Atlas;
-  - marcar el punto 1 de las sugerencias como hecho.
+- [x] 7. **Cierre:** tabla "Desbloqueos por zona" de P46 repasada contra los ASCII, verificador con 0 errores, Atlas regenerado y el punto 1 de las sugerencias marcado como hecho.
+  - En la mazmorra se quitó el cofre de la torre, en (73, 21): ahí va la llave del alcaide, como ya decía el plan.
+  - En la tabla: el calabozo marca su puerta como dibujada, la salida de la ruina pide también al Guardián y las profundidades llegan con la llama eterna.
 
 **Fuera de esta fase:** los puntos 2 (premio del Guardián), 4 (secretos variados), 5 (premios), 6 (monedas), 7 (mapa del jugador) y 8 (NPC que baja) de las sugerencias.
 
