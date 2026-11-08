@@ -2,7 +2,7 @@
 
 Decisiones de diseño de las piezas de la Fase 2 (`TASK.md`) que los documentos no fijan. Se resuelven aquí, de una vez, para que las piezas se puedan hacer seguidas sin parar a preguntar. Cada una trae una propuesta. Lo que no se cambie se da por bueno.
 
-**Estado: PROPUESTA** (cambiar a `Estado: APROBADO` al revisarlo; `herramientas/fase2_auto.sh` no arranca hasta entonces).
+**Estado: APROBADO** (cambiar a `Estado: APROBADO` al revisarlo; `herramientas/fase2_auto.sh` no arranca hasta entonces).
 
 Reglas para el modo autónomo:
 - Lo que diga este archivo manda sobre lo que el agente supondría.
