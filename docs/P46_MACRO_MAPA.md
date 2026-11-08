@@ -134,6 +134,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 - Habilidades como premio: `ability_reward` de `boss_arena.gd` y `escenas/items/reliquia_habilidad.tscn`.
 - Puertas que se abren con un evento: `arena_barrier.gd`.
 - Estado guardado: `completed_encounters`.
+- La pared agrietada que se rompe a golpes, también a puños (secretos del calabozo y de las profundidades): `escenas/objetos/pared_agrietada.tscn`, con `breakable_object.gd`, que recuerda si se rompió; 1 x 3 piezas, origen arriba a la izquierda. Arte provisional; en las profundidades, una escena heredada con otro `SpriteFrames` (P48).
 
 ### Piezas que faltan
 - Suelo que se hunde para el derrumbe de `[!5]`.
@@ -142,7 +143,6 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 - La secuencia de huida o derrumbe tras la Reina (`[!5]`).
 - La reja baja que solo se pasa rodando (`[H2]`).
 - El ascensor minero (`:C:`).
-- La pared agrietada que se rompe a golpes, también a puños (secreto del calabozo): una escena con `breakable_object.gd`, que ya existe y recuerda si se rompió, y arte de ladrillo de castillo agrietado.
 - La palanca y la barrera que se abre si ya se tiró de ella (lee `completed_encounters`; `arena_barrier.gd` hoy solo tiene `start_closed`, `open()` y `close()`): trampillas y rejas de los atajos (`:B:`, `:D:`, `:E:`, `:F:`) y compuerta de la mazmorra.
 - Las arenas con oleadas del infierno (coliseo de los condenados y salón de los verdugos): `arena_barrier.gd` más algo que saque una oleada tras otra.
 - El fuego infernal del altar este de las profundidades (`[S7]`): fuego que sin E5 no deja pasar (quema hasta matar o empuja hacia atrás) y con E5 no hace daño. En el ASCII son trampas de fuego `F`.
@@ -256,7 +256,7 @@ Una zona no se da por hecha mientras el verificador dé errores.
   - Es la primera zona y hace de tutorial: la más pequeña, lineal y sin bucles. Tres pisos en zigzag: se baja a por la espada y se vuelve a subir con ella al carcelero. Enseña por orden a caminar y saltar (pasillo de las celdas), pelear a puño (cuerpo de guardia), bajar escaleras (conducto y bajada), esquivar (sala larga), volver con algo nuevo (celda cerrada que se abre con la espada) y la primera pelea con espada (carcelero).
   - `[L1]` sale por el borde derecho, filas 8-10 (44-46 del mundo), con la salida `>` del constructor, pegado al castillo (columna 135). `:B:` sale por el borde de abajo, columnas 64-66 (100-102 del mundo, las del pozo de la mazmorra), desde el suelo de la cámara del preso, con trampilla cerrada desde el calabozo. El pozo recorre 45 piezas hasta la mazmorra (aviso de túnel).
   - Mantiene la historia de P42: aviso del prisionero y conducto, reja interior que obliga a bajar, cámara del preso tranquila con la espada oxidada y el atuendo (E1), y carcelero con la llave. Enemigos de la profundidad 0 con letras nuevas del constructor, `R` rata, `L` slime y `B` murciélago grande (6 ratas, 1 slime y 3 murciélagos grandes), y el carcelero a mano en la `_combate`.
-  - Depósito del alcaide (idea 1) en la galería de los presos, x 12-18, tras la reja de la columna 19. Secreto: el escondite del preso, tras una pared agrietada en la columna 63 que se rompe a golpes, también a puños (pieza nueva, sección 5).
+  - Depósito del alcaide (idea 1) en la galería de los presos, x 12-18, tras la reja de la columna 19. Secreto: el escondite del preso, tras una pared agrietada en la columna 63 que se rompe a golpes, también a puños (`pared_agrietada.tscn`, P48).
   - Coordenadas de cada pieza y lista de lo que va en la `_combate` en la cabecera del archivo. Comprobado con una simulación de saltos de 3 piezas y huecos de 3: sin espada se llega a la espada y no al carcelero, la celda, el depósito ni el secreto; con espada y la llave, a todo y a `[L1]`, y desde todo se vuelve a la P; el depósito pide su llave y el secreto romper la pared (ni con saltos de 7); con `:B:` cerrado no se baja a la mazmorra y, abierto, desde la mazmorra se llega al depósito y se vuelve; se alcanzan todos los cofres, monedas y pociones; ningún decorado ni enemigo pisa una escalera. Probado generando una escena temporal con el constructor, sin errores; tras 3 s de física cada enemigo sigue en su sitio.
   - **Al generarlo**, el archivo pasa a `mapas_texto/tiles_calabozo.txt` y la `_combate` se rehace entera: se pierden las colisiones validadas del calabozo de hoy y hay que volver a jugarlo.
 - **Castillo (ASCII, primera pasada, 2026-11-04):** `mapas_texto/macro/zonas/castillo.txt`, 110 x 80, en el mundo en (136, 0).
@@ -394,7 +394,7 @@ Una zona no se da por hecha mientras el verificador dé errores.
       - desde el pie de `[S7]`, con la sala y la reja de salida abiertas, se llega al alma, al fragmento y a la P, por la escalera 68 o, con su trampilla cerrada, por la forja y el coliseo; desde ahí se vuelve a la P y a `[S7]`;
       - en el infierno, desde el coliseo se vuelve a `[S7]` con saltos de 4.
     - Probado generando una escena temporal con el constructor, sin errores.
-  - **Pared falsa (2026-11-08), punto 4 de las sugerencias:** el escalón de 5 de la Agilidad (x 4-11, filas 16-20, sobre un pilar) pasa a roca. En su lugar, una sala x 4-7, filas 21-25, al suelo de la galería, tras una pared agrietada en la columna 8 (filas 23-25), la misma pieza del escondite del calabozo. Queda abierta en el ASCII. Cofre en (5, 25) y dos monedas. Se ve desde el pie del pozo de `:F:`.
+  - **Pared falsa (2026-11-08), punto 4 de las sugerencias:** el escalón de 5 de la Agilidad (x 4-11, filas 16-20, sobre un pilar) pasa a roca. En su lugar, una sala x 4-7, filas 21-25, al suelo de la galería, tras una pared agrietada en la columna 8 (filas 23-25), la misma pieza del escondite del calabozo (`pared_agrietada.tscn`, P48; aquí con el arte de su tileset). Queda abierta en el ASCII. Cofre en (5, 25) y dos monedas. Se ve desde el pie del pozo de `:F:`.
     - **Simulación de saltos**, con las mismas reglas y cierres: con la pared cerrada no se pierde ni aparece ninguna posición fuera del viejo nicho, y no se llega a la sala ni con saltos de 7 y huecos de 6 ni con el dash; rota, se llega con saltos de 3 y se vuelve a la P.
     - Probado generando una escena temporal con el constructor, sin errores.
 - **Infierno (ASCII, segunda versión, 2026-11-06): la prueba final.** `mapas_texto/macro/zonas/infierno.txt`, 111 x 120, en el mundo en (160, 388). Misma posición y ancho que la primera versión (2026-11-05, 111 x 66, corta y sin bucles); crece solo hacia abajo. `[S7]` sigue en las columnas 54-56 (214-216 del mundo), sin túnel, con su escalera en la columna 55.

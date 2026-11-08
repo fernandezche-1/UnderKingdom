@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Texture2D" path="res://assets_prueba/raou_castillo/tileset_castillo.png" id="1_tex"]
+[ext_resource type="Script" path="res://scripts/environment/breakable_object.gd" id="2_script"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna"]
+atlas = ExtResource("1_tex")
+region = Rect2(48, 256, 16, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pared"]
+animations = [{
+"frames": [{"duration": 1.0, "texture": SubResource("AtlasTexture_columna")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_columna")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_columna")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_columna")}],
+"loop": false,
+"name": &"states",
+"speed": 1.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pared"]
+size = Vector2(16, 48)
+
+[node name="ParedAgrietada" type="AnimatableBody2D" groups=["breakable"]]
+collision_layer = 5
+collision_mask = 0
+sync_to_physics = false
+script = ExtResource("2_script")
+max_health = 1.0
+hide_sprite_when_destroyed = true
+break_puff = true
+break_shake_strength = 3.0
+break_shake_time = 0.25
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_pared")
+animation = &"states"
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(8, 24)
+shape = SubResource("RectangleShape2D_pared")

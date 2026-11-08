@@ -19,6 +19,18 @@ const POTION_SCENE: PackedScene = preload("res://escenas/objetos/potion_pickup.t
 @export_range(0, 10, 1) var destroyed_frame: int = 3
 @export_range(0.0, 1.0, 0.05) var critical_health_ratio: float = 0.50
 @export var disable_collision_when_destroyed: bool = true
+## Oculta el sprite al romperse (para piezas sin cuadro de escombros, como la
+## pared agrietada mientras no tenga su arte).
+@export var hide_sprite_when_destroyed: bool = false
+
+@export_category("Al romperse")
+## Nube de polvo (efecto "muerte" de UnderkingdomCombatFX) en el centro de la
+## colisión. Solo al romperlo el Player, no al recargar el mapa ya roto.
+@export var break_puff: bool = false
+## Sacudida de la cámara en píxeles (0 = sin sacudida). Usa shake() de la
+## cámara, que solo mueve offset.
+@export_range(0.0, 8.0, 1.0) var break_shake_strength: float = 0.0
+@export_range(0.0, 1.0, 0.01) var break_shake_time: float = 0.2
 
 @export_category("Drops")
 @export_range(0, 20, 1) var coin_drop_count: int = 0
@@ -87,11 +99,24 @@ func _break_object(give_drops: bool = true) -> void:
     collision_mask = 0
     if disable_collision_when_destroyed and collision_shape != null:
         collision_shape.set_deferred("disabled", true)
+    if hide_sprite_when_destroyed and sprite != null:
+        sprite.visible = false
 
     if give_drops:
         GameManager.mark_object_consumed(self)
         _spawn_configured_drops()
+        _play_break_feedback()
         destroyed.emit()
+
+
+func _play_break_feedback() -> void:
+    if break_puff:
+        UnderkingdomCombatFX.death_puff(self)
+    if break_shake_strength <= 0.0:
+        return
+    var camera := get_viewport().get_camera_2d()
+    if camera != null and camera.has_method("shake"):
+        camera.call("shake", break_shake_strength, break_shake_time)
 
 
 func _set_frame(frame_index: int) -> void:
