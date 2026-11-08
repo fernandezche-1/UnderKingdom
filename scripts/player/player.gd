@@ -1975,6 +1975,12 @@ func is_climbing() -> bool:
     return _climbing
 
 
+## Mientras dura la rodada. La reja baja (roll_gate.gd) la deja pasar solo
+## entonces.
+func is_rolling() -> bool:
+    return _action == PlayerAction.ROLL
+
+
 func _update_damage_timers(delta: float) -> void:
     if _hurt_time_left > 0.0:
         _hurt_time_left = maxf(_hurt_time_left - delta, 0.0)

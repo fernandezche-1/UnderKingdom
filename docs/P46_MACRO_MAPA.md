@@ -144,7 +144,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 - Hielo que se derrite con la llama eterna (`[P6]`): puerta con llave genérica (`grant_key("antorcha")`, `locked_door.gd`) con otro dibujo y efecto de derretirse, más la luz de la antorcha en la parte oscura.
 - Un contador de sellos que abre una puerta al activarlos todos (`[S3]`, `[S7]`).
 - La secuencia de huida o derrumbe tras la Reina (`[!5]`).
-- La reja baja que solo se pasa rodando (`[H2]`).
+- La reja baja que solo se pasa rodando (`[H2]`): hecha, `scripts/environment/roll_gate.gd` (P52).
 - El ascensor minero (`:C:`).
 - Las arenas con oleadas del infierno (coliseo de los condenados y salón de los verdugos): `arena_barrier.gd` más algo que saque una oleada tras otra.
 - El fuego infernal del altar este de las profundidades (`[S7]`): fuego que sin E5 no deja pasar (quema hasta matar o empuja hacia atrás) y con E5 no hace daño. En el ASCII son trampas de fuego `F`.
@@ -407,7 +407,7 @@ Una zona no se da por hecha mientras el verificador dé errores.
   - Trono de Cthulhu: misma medida (56 x 21), ahora en x 45-100, filas 96-116, con la reja de entrada en la columna 44 (filas 113-116), plataformas de una vía a escalones de 4 y Cthulhu en (96, 116). Sin llave: al vencerlo sale "HAS VENCIDO A CTHULHU" (P34, sección 6).
   - Opcional: el mirador de ceniza y el osario (los de la primera versión, ahora con enemigos más duros) y un rincón con cofre al este del pasillo del filo.
   - Ningún escalón obligatorio pide más de 4 piezas ni huecos de más de 3; nada pide E3 ni E4. Comprobado con una simulación de saltos sobre la cuadrícula: desde la P se llega a todo y desde todo se vuelve (con rejas y trampillas abiertas). Con saltos de 3 no se vuelve a subir la sima, como antes.
-  - **Piezas nuevas:** las arenas cerradas con oleadas del coliseo y del salón (`arena_barrier.gd` más un generador de oleadas, que no existe) y las rejas bajas del pasillo (la misma pieza que falta para `[H2]`).
+  - **Piezas nuevas:** las arenas cerradas con oleadas del coliseo y del salón (`arena_barrier.gd` más un generador de oleadas, que no existe) y las rejas bajas del pasillo (la misma pieza de `[H2]`, ya hecha: `roll_gate.gd`, P52).
   - Coordenadas de cada pieza en la cabecera del archivo.
   - El coliseo marca `infierno_animas_liberadas` al vencer su última oleada (2026-11-08): abre la jaula del rey encadenado de las profundidades (idea 9).
 - Con el infierno quedan dibujadas todas las zonas (primera pasada). `:B:` y `:F:` quedaron dibujados el 2026-11-06 (ver el calabozo, la mazmorra y las profundidades). El verificador da 0 errores y avisa de los túneles de `:B:` (45 piezas), `:C:` (53) y `:F:` (80).

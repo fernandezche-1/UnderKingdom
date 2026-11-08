@@ -143,7 +143,7 @@ seguir. Responde en español.
 - [x] Mejora de +0.25 de daño en todos los tajos (la empuñadura del depósito del alcaide): `escenas/items/mejora_encontrada.tscn` y `FOUND_UPGRADE_DEFINITIONS` de `GameManager` (P51). `SAVE_FORMAT_VERSION` pasa a 3. Falta su arte.
 
 **2. Castillo:**
-- [ ] Reja baja que solo se pasa rodando (`[H2]` y el pasillo del filo del infierno).
+- [x] Reja baja que solo se pasa rodando (`[H2]` y el pasillo del filo del infierno): `scripts/environment/roll_gate.gd` (P52). Sin escena propia: es una `arena_barrier.gd` con otro script; falta su arte.
 - [ ] Mostrar u ocultar según un encuentro superado (generalizar `story_hidden_actor.gd`): el castillo sin hechizo y el rey encadenado.
 - [ ] Fragmento de vida: 4 dan 1 corazón. Hay que tocar el guardado y subir `SAVE_FORMAT_VERSION`.
 

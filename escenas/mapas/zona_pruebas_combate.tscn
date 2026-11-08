@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=18 format=3]
 
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas.tscn" id="1_base"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/rata.tscn" id="2_rata"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://scripts/environment/arena_barrier.gd" id="7_barrera"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/objeto_lore.tscn" id="9_lore"]
 [ext_resource type="PackedScene" path="res://escenas/items/mejora_encontrada.tscn" id="10_mejora"]
+[ext_resource type="Script" path="res://scripts/environment/roll_gate.gd" id="11_reja"]
 [ext_resource type="Texture2D" path="res://assets_prueba/raou_castillo/tileset_castillo.png" id="8_tileset"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_losa_izq"]
@@ -22,6 +23,21 @@ region = Rect2(16, 304, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_losa_der"]
 atlas = ExtResource("8_tileset")
 region = Rect2(32, 304, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_reja_tope"]
+atlas = ExtResource("8_tileset")
+region = Rect2(48, 256, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_reja_medio"]
+atlas = ExtResource("8_tileset")
+region = Rect2(48, 272, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_reja_base"]
+atlas = ExtResource("8_tileset")
+region = Rect2(48, 288, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_reja"]
+size = Vector2(16, 96)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trampilla"]
 size = Vector2(48, 16)
@@ -61,3 +77,14 @@ open_on_encounter = "pruebas_palanca_trampilla"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Objetos/TrampillaPalanca"]
 shape = SubResource("RectangleShape2D_trampilla")
+
+[node name="RejaBaja" type="StaticBody2D" parent="Objetos"]
+position = Vector2(248, 272)
+script = ExtResource("11_reja")
+piece_start = SubResource("AtlasTexture_reja_tope")
+piece_middle = SubResource("AtlasTexture_reja_medio")
+piece_end = SubResource("AtlasTexture_reja_base")
+start_closed = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objetos/RejaBaja"]
+shape = SubResource("RectangleShape2D_reja")
