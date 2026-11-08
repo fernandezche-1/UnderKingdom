@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene load_steps=21 format=3]
 
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas.tscn" id="1_base"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/rata.tscn" id="2_rata"]
@@ -10,6 +10,9 @@
 [ext_resource type="PackedScene" path="res://escenas/objetos/objeto_lore.tscn" id="9_lore"]
 [ext_resource type="PackedScene" path="res://escenas/items/mejora_encontrada.tscn" id="10_mejora"]
 [ext_resource type="Script" path="res://scripts/environment/roll_gate.gd" id="11_reja"]
+[ext_resource type="PackedScene" path="res://escenas/npc/anciano.tscn" id="12_anciano"]
+[ext_resource type="PackedScene" path="res://escenas/npc/barquero.tscn" id="13_barquero"]
+[ext_resource type="Script" path="res://scripts/environment/encounter_visibility.gd" id="14_visibilidad"]
 [ext_resource type="Texture2D" path="res://assets_prueba/raou_castillo/tileset_castillo.png" id="8_tileset"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_losa_izq"]
@@ -59,6 +62,20 @@ position = Vector2(1424, 32)
 [node name="Palanca" parent="Objetos" instance=ExtResource("6_palanca")]
 position = Vector2(1072, 288)
 encounter_id = "pruebas_palanca_trampilla"
+
+[node name="AncianoAparece" parent="Objetos" instance=ExtResource("12_anciano")]
+position = Vector2(1000, 300)
+
+[node name="Visibilidad" type="Node" parent="Objetos/AncianoAparece"]
+script = ExtResource("14_visibilidad")
+show_when_encounter = "pruebas_palanca_trampilla"
+
+[node name="BarqueroDesaparece" parent="Objetos" instance=ExtResource("13_barquero")]
+position = Vector2(1150, 300)
+
+[node name="Visibilidad" type="Node" parent="Objetos/BarqueroDesaparece"]
+script = ExtResource("14_visibilidad")
+hide_when_encounter = "pruebas_palanca_trampilla"
 
 [node name="ObjetoLore" parent="Objetos" instance=ExtResource("9_lore")]
 position = Vector2(264, 310)
