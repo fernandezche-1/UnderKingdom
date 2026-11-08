@@ -1,0 +1,137 @@
+# Fase 2: decisiones previas
+
+Decisiones de diseño de las piezas de la Fase 2 (`TASK.md`) que los documentos no fijan. Se resuelven aquí, de una vez, para que las piezas se puedan hacer seguidas sin parar a preguntar. Cada una trae una propuesta. Lo que no se cambie se da por bueno.
+
+**Estado: PROPUESTA** (cambiar a `Estado: APROBADO` al revisarlo; `herramientas/fase2_auto.sh` no arranca hasta entonces).
+
+Reglas para el modo autónomo:
+- Lo que diga este archivo manda sobre lo que el agente supondría.
+- Si una pieza pide una decisión que no está aquí ni en P46, el agente elige la opción más conservadora y coherente con P46. Después la apunta al final, en "Decisiones tomadas durante la ejecución", con la alternativa y el porqué.
+- Si una pieza no se puede terminar, se marca `- [~]` en `TASK.md` y el motivo se apunta al final, en "Piezas bloqueadas".
+
+Hecha antes de este archivo: la pared agrietada (P48, commit `5c2c0b3`).
+
+---
+
+## 0. Generales
+
+- **G1. Guardados viejos.** Al subir `SAVE_FORMAT_VERSION`, las partidas guardadas con la versión anterior dejan de cargar (`_validate_save_data` exige la versión exacta). Esta fase la sube al menos dos veces: con los fragmentos de vida y con los atuendos.
+  **Propuesta:** se acepta. El juego está en desarrollo y no hay partidas que conservar. No se escribe migración.
+- **G2. Orden.** El fuego infernal (paso 4) necesita saber si el jugador lleva E5.
+  **Propuesta:** la pieza de atuendos "Atuendo actual y `OUTFIT_DEFINITIONS`" se adelanta al principio del paso 4, antes del fuego infernal. Las otras tres piezas de atuendos quedan al final.
+- **G3. Textos provisionales.** Todos los mensajes nuevos van en mayúsculas, como los de `locked_door` ("NECESITAS UNA LLAVE"), y se exportan para poder cambiarlos por instancia.
+- **G4. Arte provisional.** Si falta arte, se usa uno que ya exista en el proyecto y se apunta como pendiente en la etapa de `docs/`, como hizo P48.
+- **G5. Tecla de interactuar.** Todo lo que se activa a mano usa la misma acción que `npc.gd` (E), con su mismo aviso flotante ("E  Tirar", "E  Leer"…).
+
+## 1. Calabozo
+
+### Palanca y barrera según `completed_encounters`
+- **C1. Cómo se acciona.** **Propuesta:** con E, no a golpes. Así no se activa por error en mitad de un combate.
+- **C2. Varias barreras.** Una palanca marca un `encounter_id`. Toda barrera con ese id, en esa escena o en otra, se abre al cargarse o en ese momento. Una palanca puede abrir varias.
+- **C3. Aviso.** **Propuesta:** la palanca cambia de cuadro, hay una sacudida ligera (`shake()`, la de la pared) y un texto de marcador: "SE OYE UN MECANISMO". La cámara no se desplaza hasta la barrera.
+- **C4. Barrera que se cierra desde un lado.** La palanca solo existe en el lado de abajo. Desde el otro lado la barrera se ve cerrada y no se puede abrir. No hace falta código extra para eso.
+
+### Objeto de lore que abre un diálogo
+- **C5. Releer.** **Propuesta:** el objeto se queda y se puede releer. La primera lectura se marca en `completed_encounters` (`lore_<id>`) para una futura pestaña de diario. Esa pestaña no se hace en esta fase.
+- **C6. Formato.** Reutiliza `npc.gd` y `dialogue_ui` con su `.json` de líneas. Es una escena genérica, con el sprite exportado.
+
+### Empuñadura: +0.25 de daño en todos los tajos
+- **C7. A qué ataques afecta.** **Propuesta:** a los dos tajos con espada, al ataque aéreo y al golpe final del ascendente; no a los puñetazos ni a la Ultimate. Si el jugador recoge la empuñadura antes de tener espada (no debería poder), la mejora queda guardada y se aplica al tenerla.
+- **C8. Cómo se guarda.** **Propuesta:** con una tabla genérica de "mejoras encontradas" en `GameManager` (`FOUND_UPGRADE_DEFINITIONS`, aparte de las de la tienda), que sirva también al amuleto. Se guarda en la partida, se reinicia en `reset_for_new_game` y sube `SAVE_FORMAT_VERSION`. Aparece en la pestaña de mejoras del menú de pausa como "encontrada", sin precio.
+
+## 2. Castillo
+
+### Reja baja que solo se pasa rodando
+- **K1. Comportamiento.** **Propuesta:** la reja bloquea al Player si no está rodando. Rodando la atraviesa. Si la rodada acaba con el Player dentro de la reja, se le empuja hacia el lado del que vino. Los enemigos nunca la cruzan.
+- **K2. Rodar sin espada.** No aplica: Rodar se consigue en el castillo y la reja está después.
+
+### Mostrar u ocultar según un encuentro superado
+- **K3.** Es un componente genérico con `show_when_encounter` y `hide_when_encounter`. Sirve para cualquier nodo: NPC, enemigo u objeto. Mientras el nodo está oculto, no colisiona ni procesa. `story_hidden_actor.gd` se queda como está o pasa a usar el componente, sin cambiar lo que ya hace en `mundo_1`.
+
+### Fragmento de vida
+- **K4. Al recoger.** **Propuesta:** el texto "FRAGMENTO DE VIDA n/4". Con el cuarto, la vida máxima sube 1 corazón (tope 6) y se llena la vida.
+- **K5. Dónde se ve.** **Propuesta:** en la pestaña de estadísticas del menú de pausa, con el texto "Fragmentos de vida: n/4". No va en el HUD.
+- **K6. Guardado.** Se guarda la lista de ids de los fragmentos recogidos, no solo cuántos hay, para que un fragmento no cuente dos veces. La vida máxima se calcula con las mejoras de la tienda más los fragmentos (P47).
+
+## 3. Cementerio
+
+### Contador de sellos
+- **S1. Cómo se activa cada sello.** Escucha un `encounter_id` (la arena de la tumba 1, el Capitán de la tumba 3) o se activa con E al llegar a él (la tumba 2, tras las plataformas). Cada sello se configura por instancia.
+- **S2. Aviso.** **Propuesta:** al activarse un sello, el sello se enciende, como cambio de cuadro, y sale el texto "SELLO n/3". Con el último sale "ALGO SE HA ABIERTO" y la puerta se abre aunque esté fuera de pantalla.
+- **S3. Contador.** Cuenta los sellos de un grupo (`seal_group`) y abre las barreras que tienen ese grupo. Sirve igual para `[S3]` y para `[S7]`.
+
+### Rompible que solo acepta un tipo de golpe
+- **S4. Golpe equivocado.** **Propuesta:** no hace daño, sale un destello o chispa metálica y, la primera vez, el texto "RESISTE EL GOLPE".
+- **S5. Vida.** **Propuesta:** se rompe con 1 golpe del tipo correcto.
+- **S6. Raíz.** P48 vio que la AttackHitbox no detecta `StaticBody2D`. La estatua de la Reina usa `estatua_rompible.tscn`, así que la pieza le cambia la raíz a `AnimatableBody2D`, como la pared, y comprueba que `mundo_1` sigue igual. Si eso cambiara algo de `mundo_1`, se hace una escena aparte.
+
+### `locked_door` con otro dibujo
+- **S7. Cómo se abre.** Hoy `locked_door` se abre sola al acercarse con la llave. **Propuesta:** una exportación nueva, `require_interact`. Con ella, la puerta se abre con E delante. Las velas, el hielo de `[P6]` y el hielo negro la usan (la ruina ya dice "tecla E delante"); las puertas normales siguen abriéndose solas.
+- **S8. Al abrirse.** **Propuesta:** las velas se encienden y la puerta se desvanece. El hielo se derrite: se desvanece hacia abajo con gotas o vapor si hay partículas a mano y, si no, con el `fade` que ya tiene.
+
+### Amuleto: +0.25 en pociones
+- **S9.** Las pociones pasan de curar 1.0 a curar 1.25. Usa la misma tabla de mejoras encontradas que la empuñadura (C8).
+
+## 4. Minas
+
+### Ascensor minero (`:C:`)
+- **M1. Qué es.** `:C:` une dos escenas (el castillo y las minas), así que la cabina no recorre las 53 piezas dentro de una escena. **Propuesta:** hay una cabina en cada escena. El jugador sube a ella y pulsa E ("E  Subir" o "E  Bajar"). La cabina se mueve 1 s, la pantalla se funde y hace la transición al spawn de la cabina de la otra escena.
+- **M2. Bloqueo.** Hasta tirar de la palanca de las minas, la cabina de las minas dice "NO HAY CORRIENTE". Del lado del castillo no se llega a la cabina, porque la trampilla está cerrada (C2).
+
+### Fuego infernal (pide E5)
+- **M3. Sin E5.** **Propuesta:** quita 0.5 de daño y empuja al Player hacia el lado por el que entró, con su invulnerabilidad de siempre. No mata de un golpe, pero insistir sí mata. Otras opciones: un muro sólido que no deja pasar, o un daño por segundo hasta morir.
+- **M4. Con E5.** No hace daño ni empuja. Las `burn_zone` normales siguen igual: el Fire Knight solo resiste el fuego infernal, salvo que se decida otra cosa en A3.
+- **M5. Enemigos.** No les afecta.
+
+### IA del Crystal Mauler
+- **M6. Base.** Usa `simple_boss.gd` con `attack_profiles`, como el Guardián: `1_atk`, `2_atk` y `3_atk` en la fase 1, y además `sp_atk` en la fase 2. `air_atk`, `defend` y `roll` no se usan en esta fase.
+- **M7. Números.** **Propuesta:** 16 de vida (como el Guardián), contacto 0.5, tajos de 0.5 y `sp_atk` de 1.0. Es un jefe opcional al que se llega con E5, casi al final del juego.
+- **M8. Escena.** Una escena heredada o rehecha en `escenas/jefes/` con `BossHealthBar`, a escala 1. Se prueba en la zona de pruebas con una cámara de 16 x 14 para comprobar que cabe.
+
+### Adrenalina
+- Sin decisiones: sale de `STARTING_ABILITIES` y la da el Mauler con `ability_reward adrenaline`.
+
+## 5. Mazmorra
+
+### Suelo que se hunde y derrumbe
+- **Z1. Secuencia.** **Propuesta:** muere la Reina, la sala tiembla 1.5 s, el suelo se rompe a trozos y se cae. La trampilla de entrada queda tapada para siempre.
+- **Z2. Huida.** **Propuesta:** sin tiempo límite. Mientras dura la huida, la cámara tiembla un poco y caen escombros del techo en sitios fijos, con un aviso de polvo antes de caer. Cada escombro quita 0.5. Otra opción: un frente de derrumbe que persigue al jugador y lo mata si lo alcanza.
+- **Z3. Al volver.** El suelo sigue hundido y ya no tiembla nada. Se recuerda en `completed_encounters`.
+
+## 6. Ruina
+
+### Hielo, llama eterna y luz
+- **R1. La llama.** Es un objeto que se recoge en el altar y da `grant_key("antorcha")`. Funciona sola: no hay que equiparla.
+- **R2. La luz.** **Propuesta:** la parte oscura se oscurece mucho (con `CanvasModulate` o una capa negra) y, con la llama, el Player lleva una luz de unas 5 piezas de radio. Si a escala entera no queda bien, una máscara de oscuridad recortada alrededor del Player.
+
+### Dash en el aire
+- **R3. Botón.** **Propuesta:** el de rodar, pulsado en el aire. Rodar solo funciona en el suelo, así que no choca, y no hace falta tecla nueva.
+- **R4. Números.** 112 px (7 piezas) en unos 0.18 s, sin gravedad, una vez por salto. Se recarga al tocar el suelo o una escalera. **Propuesta:** sin invulnerabilidad; la rodada sí la tiene y el dash no.
+- **R5. Animación.** Provisional: la de rodar o el primer cuadro del salto, con estela si hay una a mano.
+
+## 7. Infierno
+
+### Arenas con oleadas
+- **I1.** Es una pieza genérica: cada oleada es un nodo hijo con sus enemigos, desactivados hasta que la oleada empieza. Hay 1.5 s entre oleadas y una nube de humo (`death_puff`) al aparecer cada enemigo. Al vencer la última, se abren las barreras y se marca el `encounter_id`.
+- **I2. Al morir.** La arena se reinicia entera: barreras abiertas, oleadas desde la primera.
+- **I3.** El número de oleadas y los enemigos de cada una se deciden en la Fase 3, por instancia.
+
+## 8. Atuendos
+
+- **A1. Qué da cada uno, provisional** (P46 dice que se ajusta jugando):
+  - E2, soldado: un 25 % más de alcance del tajo (`sword_hitbox_scale_x` 1.25). Da alcance y no daño, para no sumarse a la empuñadura.
+  - E3, caballero de la cripta: la Agilidad y 0.25 menos de daño en los golpes de 0.75 o más, con un mínimo de 0.25.
+  - E4, abrigo: inmunidad al frío. **Aviso:** hoy no existe el daño por frío y no está en la lista de la Fase 2. **Propuesta:** se deja el campo de resistencia preparado y la zona de frío se apunta como pieza que falta.
+  - E5, Fire Knight: +0.25 de daño, alcance 1.25 e inmunidad al fuego infernal. La lava sigue matando.
+- **A2. Menú "Equipo".** Lista los atuendos encontrados y lo que da cada uno, y marca el que se lleva puesto. No se cambia a mano (P46).
+- **A3. Arte.** La pieza "Arte con IA de E2, E3 y E4" no se hace en modo autónomo: necesita generar imágenes y aprobarlas. Se deja sin marcar. Mientras tanto, cada atuendo usa el `SpriteFrames` del anterior.
+
+---
+
+## Decisiones tomadas durante la ejecución
+
+(Las añade el agente: pieza, decisión, alternativa, por qué.)
+
+## Piezas bloqueadas
+
+(Las añade el agente: pieza, motivo, qué falta para seguir.)

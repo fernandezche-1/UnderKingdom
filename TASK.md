@@ -131,6 +131,8 @@ seguir. Responde en español.
 
 **Orden (fijado el 2026-11-08):** por la primera zona de la ruta que pide cada pieza. Así la Fase 3 puede empezar por el calabozo en cuanto estén las suyas, sin esperar a tenerlo todo. Una pieza que sirve a varias zonas va en la primera que la pide; las demás la reutilizan.
 
+**Modo autónomo:** `herramientas/fase2_auto.sh` hace las piezas una tras otra, con una sesión de Claude Code por pieza y un commit cada una, sin pedir aprobación. Las decisiones de diseño que los documentos no fijaban están en `docs/FASE2_DECISIONES.md`: el script no arranca hasta que ese archivo diga "Estado: APROBADO". Una pieza que no se puede terminar se marca `- [~]` y su motivo va a ese archivo.
+
 **0. Ajuste previo:**
 - [x] La tienda vende un solo nivel de vida máxima (`max_level` 1 en `UPGRADE_DEFINITIONS`, 10 monedas; P46, sección 6). La vida máxima ya no se lee del guardado: sale de las mejoras (P47).
 
