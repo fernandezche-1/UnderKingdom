@@ -1,0 +1,255 @@
+#!/usr/bin/env python3
+"""Convierte una tira de la IA sobre fondo magenta en una hoja de 864x384 por cuadro.
+
+Uso: tira_ia_a_hoja.py original.png salida.png --cuadros 8 --factor 2 [--movimiento]
+     [--aire [--en-suelo 0]] [--separar [--pies-centrados]] [--fila-pies 380] [--escala 3]
+
+Quita el fondo y su halo, alinea los cuadros por los pies y reduce con una paleta
+común para que el color no parpadee. --factor es la altura de la figura en la tira
+entre 120. Al reducir, cada píxel toma un color de la paleta en vez de un promedio:
+así el contorno no se emborrona. El borde exterior se suaviza y se repinta con un
+contorno de un solo grosor y color, sin restos del fondo.
+Con --movimiento (correr, saltar) los pies se mueven: cada cuadro conserva su altura,
+se centra por el torso y no se estabiliza el color.
+Con --aire (saltar, junto a --movimiento) la tira dibuja una subida que ya hace la
+física: todos los cuadros comparten la altura de la cabeza y son las piernas las que
+suben. --en-suelo da los cuadros que sí van con los pies en el suelo, como agacharse.
+Con --separar (ataques) la espada invade la casilla vecina: cada figura se recorta por
+su silueta y se centra por los pies, en vez de partir la tira en partes iguales. Junto
+a --movimiento (ataque aéreo) se centra por el torso, porque los pies no están quietos.
+Con --pies-centrados (recibir golpe) se queda ese centrado: la postura de los pies cambia
+tanto que buscar su encaje entre cuadros los despega del suelo.
+--escala amplía la tira, sin mezclar colores, antes de todo lo demás: si la figura mide
+197 px, 197 * 5 / 8 da los 120 de siempre con --escala 5 --factor 8.
+--fila-pies sube la figura, para que la cabeza coincida con la de otra animación.
+La hoja se dibuja a escala 1/3 (ver ARMED_ANIMATION_SCALES en player.gd): figura de
+40 px como la caja de colisión, con el mismo detalle en pantalla que el prisionero.
+El pie y el centro caen donde en las hojas 288x128 del Player, multiplicados por 3.
+"""
+import argparse
+
+import numpy as np
+from PIL import Image
+from scipy import ndimage
+
+MAGENTA = np.array([253.0, 0.0, 248.0])
+ANCHO_CUADRO = 864
+ALTO_CUADRO = 384
+FILA_PIES = 380
+FILAS_PIES = 18  # Filas de la hoja final, desde abajo, con las que se alinea.
+PROPORCION_OSCURA = 0.3  # Parte de un bloque que debe ser oscura para contar como contorno.
+LUMA_OSCURA = 0.55  # Suma de canales, en 0..3, por debajo de la que un color es oscuro.
+TONO_PARECIDO = 0.75  # Distancia, suma de canales en 0..3, que se considera ruido entre cuadros.
+COLOR_CONTORNO = (0.09, 0.05, 0.07)
+GROSOR_CONTORNO = 1  # Píxeles de la hoja: el resto del grosor ya viene en el dibujo.
+RADIO_SUAVIZADO = 2  # Vecindario de la silueta que decide si un píxel se queda.
+FRANJA_TORSO = (0.3, 0.5)  # Parte de la altura de la tira donde cae el torso.
+
+
+def quitar_fondo(rgb: np.ndarray) -> np.ndarray:
+    """Devuelve RGBA en 0..1: alfa por cantidad de magenta y color sin el halo."""
+    cantidad = np.clip((np.minimum(rgb[..., 0], rgb[..., 2]) - rgb[..., 1] - 40.0) / 150.0, 0.0, 1.0)
+    alfa = 1.0 - cantidad
+    color = (rgb - cantidad[..., None] * MAGENTA) / np.maximum(alfa, 0.05)[..., None]
+    return np.dstack((np.clip(color, 0.0, 255.0) / 255.0, alfa))
+
+
+def separar_figuras(tira: np.ndarray, cuadros: int, filas_pies: int, por_torso: bool) -> list[np.ndarray]:
+    """Saca las figuras, de izquierda a derecha, en cuadros iguales con pies o torso al centro."""
+    etiquetas = ndimage.label(tira[..., 3] > 0.5, structure=np.ones((3, 3)))[0]
+    mayores = np.argsort(np.bincount(etiquetas.ravel())[1:])[-cuadros:] + 1
+    mascaras = sorted((etiquetas == e for e in mayores), key=lambda m: np.where(m)[1].mean())
+    centros = []
+    alto = tira.shape[0]
+    for mascara in mascaras:
+        if por_torso:  # La mediana no se va detrás de la espada.
+            centros.append(int(np.median(np.where(mascara[int(alto * FRANJA_TORSO[0]):int(alto * FRANJA_TORSO[1])])[1])))
+            continue
+        filas = np.where(mascara.any(axis=1))[0]
+        pies = np.where(mascara[filas.max() - filas_pies:].any(axis=0))[0]
+        centros.append((int(pies.min()) + int(pies.max())) // 2)
+    medio = max(max(c - np.where(m)[1].min(), np.where(m)[1].max() - c) for c, m in zip(centros, mascaras)) + 4
+    resultado = []
+    for mascara, centro in zip(mascaras, centros):
+        # El halo queda fuera de la silueta: se recoge sin tocar a la figura vecina.
+        ajena = etiquetas.astype(bool) & ~mascara
+        visible = ndimage.binary_dilation(mascara, iterations=2) & ~ndimage.binary_dilation(ajena, iterations=1)
+        cuadro = tira * visible[..., None]
+        resultado.append(np.pad(cuadro, ((0, 0), (medio, medio), (0, 0)))[:, centro:centro + 2 * medio])
+    return resultado
+
+
+def desplazamiento_pies(cuadro: np.ndarray, referencia: np.ndarray, franja: int) -> tuple[int, int]:
+    """Busca el desplazamiento entero que mejor encaja los pies con los de referencia."""
+    alto = cuadro.shape[0]
+    mejor = (0, 0)
+    mejor_error = float("inf")
+    for dy in range(-6, 7):
+        for dx in range(-20, 21):
+            movido = np.roll(np.roll(cuadro, dy, axis=0), dx, axis=1)
+            error = np.abs(movido[alto - franja:] - referencia[alto - franja:]).sum()
+            if error < mejor_error:
+                mejor_error = error
+                mejor = (dx, dy)
+    return mejor
+
+
+def crear_paleta(cuadros: list[np.ndarray], colores: int) -> tuple[Image.Image, np.ndarray]:
+    """Paleta común a todos los cuadros, con sus colores en 0..1."""
+    tira = np.hstack(cuadros)
+    opacos = tira[tira[..., 3] > 0.5, :3]  # Solo la figura: el fondo gastaría colores.
+    imagen = Image.fromarray((opacos[:, None] * 255.0).round().astype(np.uint8), "RGB")
+    paleta = imagen.quantize(colores, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
+    return paleta, np.array(paleta.getpalette()[:colores * 3]).reshape(-1, 3) / 255.0
+
+
+def reducir(cuadro: np.ndarray, paleta: Image.Image, tabla: np.ndarray, factor: int) -> np.ndarray:
+    """Da a cada bloque el color más frecuente, salvo que tenga bastante contorno."""
+    imagen = Image.fromarray((cuadro[..., :3] * 255.0).round().astype(np.uint8), "RGB")
+    indices = np.array(imagen.quantize(palette=paleta, dither=Image.Dither.NONE))
+    oscuros = tabla.sum(axis=1) < LUMA_OSCURA
+    alto = cuadro.shape[0] // factor
+    ancho = cuadro.shape[1] // factor
+    resultado = np.zeros((alto, ancho, 4))
+    for fila in range(alto):
+        for columna in range(ancho):
+            bloque = (fila * factor, (fila + 1) * factor, columna * factor, (columna + 1) * factor)
+            opaco = cuadro[bloque[0]:bloque[1], bloque[2]:bloque[3], 3] > 0.5
+            if opaco.mean() < 0.5:
+                continue
+            cuenta = np.bincount(indices[bloque[0]:bloque[1], bloque[2]:bloque[3]][opaco], minlength=len(tabla))
+            if cuenta[oscuros].sum() >= opaco.sum() * PROPORCION_OSCURA:
+                cuenta = cuenta * oscuros
+            resultado[fila, columna, :3] = tabla[int(cuenta.argmax())]
+            resultado[fila, columna, 3] = 1.0
+    return resultado
+
+
+def estabilizar(cuadros: list[np.ndarray]) -> list[np.ndarray]:
+    """Quita el ruido de color entre cuadros: lo parecido al color habitual del píxel lo toma."""
+    pila = np.stack(cuadros)
+    opacos = pila[..., 3] > 0.0
+    resultado = pila.copy()
+    for fila, columna in zip(*np.nonzero(opacos.sum(axis=0) > len(cuadros) // 2)):
+        colores = pila[:, fila, columna]
+        visibles = colores[opacos[:, fila, columna], :3]
+        unicos, cuenta = np.unique(visibles, axis=0, return_counts=True)
+        habitual = unicos[int(cuenta.argmax())]
+        parecidos = np.abs(colores[:, :3] - habitual).sum(axis=1) < TONO_PARECIDO
+        resultado[parecidos & opacos[:, fila, columna], fila, columna, :3] = habitual
+    return list(resultado)
+
+
+def centro_torso(cuadro: np.ndarray) -> int:
+    """Columna media de la mitad superior de la figura, donde están cabeza y torso."""
+    filas = np.where(cuadro[..., 3].max(axis=1) > 0.5)[0]
+    mitad = (int(filas.min()) + int(filas.max())) // 2
+    return int(round(np.where(cuadro[:mitad, :, 3] > 0.5)[1].mean()))
+
+
+def vecinos(mascara: np.ndarray, radio: int) -> np.ndarray:
+    """Cuenta, para cada píxel, cuántos del cuadrado de ese radio están activos."""
+    cuenta = np.zeros(mascara.shape, dtype=int)
+    for dy in range(-radio, radio + 1):
+        for dx in range(-radio, radio + 1):
+            cuenta += np.roll(np.roll(mascara, dy, axis=0), dx, axis=1)
+    return cuenta
+
+
+def solo_figura(mascara: np.ndarray) -> np.ndarray:
+    """Quita los restos sueltos: deja lo unido a la zona más densa de la silueta."""
+    densidad = vecinos(mascara, 8)
+    figura = np.zeros(mascara.shape, dtype=bool)
+    figura[np.unravel_index(int(densidad.argmax()), densidad.shape)] = True
+    while True:
+        creciente = (vecinos(figura, 1) > 0) & mascara
+        if (creciente == figura).all():
+            return figura
+        figura = creciente
+
+
+def limpiar_borde(cuadro: np.ndarray) -> np.ndarray:
+    """Quita los dientes de la silueta y repinta su borde con el contorno."""
+    opaco = cuadro[..., 3] > 0.0
+    lado = RADIO_SUAVIZADO * 2 + 1
+    silueta = solo_figura(vecinos(opaco, RADIO_SUAVIZADO) * 2 > lado * lado)
+    lado_contorno = GROSOR_CONTORNO * 2 + 1
+    interior = vecinos(silueta, GROSOR_CONTORNO) == lado_contorno * lado_contorno
+    resultado = cuadro.copy()
+    resultado[..., 3] = silueta.astype(float)
+    resultado[silueta & (~interior | ~opaco), :3] = COLOR_CONTORNO
+    return resultado
+
+
+def main() -> None:
+    argumentos = argparse.ArgumentParser(description=__doc__)
+    argumentos.add_argument("entrada")
+    argumentos.add_argument("salida")
+    argumentos.add_argument("--cuadros", type=int, required=True)
+    argumentos.add_argument("--factor", type=int, default=2)
+    argumentos.add_argument("--colores", type=int, default=32)
+    argumentos.add_argument("--movimiento", action="store_true", help="Para animaciones en las que los pies no se quedan quietos")
+    argumentos.add_argument("--aire", action="store_true", help="Todos los cuadros con la cabeza a la misma altura")
+    argumentos.add_argument("--en-suelo", type=int, nargs="*", default=[], help="Con --aire, cuadros que se quedan con los pies en el suelo")
+    argumentos.add_argument("--separar", action="store_true", help="Recorta cada figura por su silueta, no en partes iguales")
+    argumentos.add_argument("--pies-centrados", action="store_true", help="Con --separar, no busca el encaje de los pies entre cuadros")
+    argumentos.add_argument("--escala", type=int, default=1, help="Amplía la tira por este entero antes de procesarla")
+    argumentos.add_argument("--fila-pies", type=int, default=FILA_PIES, help="Fila de la hoja donde queda el punto más bajo")
+    argumentos.add_argument("--centro-x", type=int, default=432, help="Columna del cuadro para el centro de los pies")
+    opciones = argumentos.parse_args()
+
+    original = Image.open(opciones.entrada).convert("RGB")
+    original = original.resize((original.width * opciones.escala, original.height * opciones.escala), Image.Resampling.NEAREST)
+    tira = quitar_fondo(np.array(original).astype(float))
+    ancho_tira = tira.shape[1] // opciones.cuadros
+    if opciones.separar:
+        cuadros = separar_figuras(tira, opciones.cuadros, FILAS_PIES * opciones.factor, opciones.movimiento)
+    else:
+        cuadros = [tira[:, i * ancho_tira:(i + 1) * ancho_tira] for i in range(opciones.cuadros)]
+    # Margen para que alinear no recorte cabeza ni pies.
+    cuadros = [np.pad(c, ((12, 12), (24, 24), (0, 0))) for c in cuadros]
+    referencia = cuadros[0][..., 3]
+    alineados = []
+    for cuadro in cuadros:
+        if opciones.separar and (opciones.movimiento or opciones.pies_centrados):
+            dx, dy = 0, 0  # separar_figuras ya los dejó centrados.
+        elif opciones.movimiento:
+            dx, dy = centro_torso(cuadros[0]) - centro_torso(cuadro), 0
+        else:
+            dx, dy = desplazamiento_pies(cuadro[..., 3], referencia, FILAS_PIES * opciones.factor)
+        print(f"alineado dx={dx} dy={dy}")
+        alineados.append(np.roll(np.roll(cuadro, dy, axis=0), dx, axis=1))
+
+    # La fila del pie debe caer en el borde de un bloque de la reducción.
+    fila_pies = int(np.where(alineados[0][..., 3].max(axis=(1)) > 0.5)[0].max())
+    resto = (fila_pies + 1) % opciones.factor
+    if resto:
+        alineados = [np.roll(c, opciones.factor - resto, axis=0) for c in alineados]
+    paleta, tabla = crear_paleta(alineados, opciones.colores)
+    reducidos = [reducir(c, paleta, tabla, opciones.factor) for c in alineados]
+    if not opciones.movimiento:
+        reducidos = estabilizar(reducidos)
+    reducidos = [limpiar_borde(c) for c in reducidos]
+
+    # Eje común: centro de los pies del primer cuadro, o su torso si se mueven.
+    pies = np.where(reducidos[0][-(FILAS_PIES + 24):, :, 3].max(axis=0) > 0)[0]
+    eje_x = centro_torso(reducidos[0]) if opciones.movimiento else (int(pies.min()) + int(pies.max())) // 2
+    if opciones.separar and (opciones.movimiento or opciones.pies_centrados):
+        eje_x = reducidos[0].shape[1] // 2
+    filas = [np.where(c[..., 3].max(axis=1) > 0)[0] for c in reducidos]
+    fila_base = max(int(f.max()) for f in filas)
+    fila_cabeza = opciones.fila_pies - max(int(f.max() - f.min()) for f in filas)
+
+    hoja = Image.new("RGBA", (ANCHO_CUADRO * opciones.cuadros, ALTO_CUADRO), (0, 0, 0, 0))
+    for i, cuadro in enumerate(reducidos):
+        imagen = Image.fromarray((cuadro * 255.0).round().astype(np.uint8), "RGBA")
+        y = opciones.fila_pies - fila_base
+        if opciones.aire:
+            y = opciones.fila_pies - int(filas[i].max()) if i in opciones.en_suelo else fila_cabeza - int(filas[i].min())
+        hoja.alpha_composite(imagen, (i * ANCHO_CUADRO + opciones.centro_x - eje_x, y))
+
+    hoja.save(opciones.salida)
+
+
+if __name__ == "__main__":
+    main()

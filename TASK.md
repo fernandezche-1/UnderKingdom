@@ -1,205 +1,230 @@
-# Tarea actual: niveles con tiles calcados de los fondos
+# Macro mapa: rehacer el mundo desde cero
 
-**Objetivo:** convertir los siete niveles `tiles_*` en niveles jugables y bonitos. Tienen la forma de los mapas hechos a mano, pero están hechos con tiles. Más adelante el equipo decide si reemplazan a los mapas pintados.
+- **Plan:** `docs/P46_MACRO_MAPA.md` (dibujo, ruta, atajos, decisiones y desbloqueos por zona). La forma de trabajo está en su sección 9.
+- **Puertas hacia atrás:** el punto 1 de `mapas_texto/macro/sugerencias_exploracion.txt`, ideas 1 a 9, con sitio, llave, premio, vuelta y coste de cada una.
+- **Lo que hay hoy en Godot no cuenta:** los niveles `tiles_*` y sus escenas `_combate` se descartan mientras dure la fase ASCII. No se usan como referencia ni se arreglan; cada zona se genera de nuevo desde su ASCII en la Fase 3.
 
-**Estado (2026-10-20):** los siete niveles existen, están unidos en ruta, pasan las pruebas sin ventana y ya se jugaron (sección 1). Los enemigos siguen la progresión por profundidad (`docs/P33_ENEMIGOS_POR_PROFUNDIDAD.md`). Rama `edwin/integrar-0.04.047`, sin subir a GitHub.
-
-**Para probar:** abrir `escenas/mapas/tiles_cementerio_combate.tscn` y pulsar F6. Es el cementerio generado más la sala del Capitán, su llave y la puerta que la pide. Las minas se juegan igual desde `tiles_mineria_combate.tscn`. Cada salida azul del borde derecho lleva al siguiente nivel:
-
-`tiles_castillo` → `tiles_cementerio` → `tiles_mineria` → `tiles_mazmorra` → `tiles_ruina` → `tiles_profundidades` → `tiles_jefe`
-
-Para probar, el Modo dev (tecla º): vida, pociones y monedas infinitas, llaves de jefe. Las teclas R/H/J/K y el panel de depuración del Player ya no están en los niveles de la ruta; se activan con `depuracion: si` en el `.txt` (lo llevan `arena_enemigos` y los ejemplos).
-
-**Documentación:**
-- Guía para dibujar niveles: `mapas_texto/LEYENDA.md`; la sección 7 explica el calco.
-- Historial: `docs/CHANGELOG_0.04.047.md`, secciones "Niveles con tiles" y "Niveles con tiles calcados de los fondos".
-
-**Decisiones tomadas:**
-- Los mapas hechos a mano no se tocan. Los niveles con tiles se suman a ellos.
-- **La fuente de cada nivel es su PNG** (`mapas_texto/tiles_<nivel>.png`, un píxel = una pieza). Se cambia el PNG y se regenera la escena. Si alguien pinta tiles a mano en Godot, ese nivel deja de poder regenerarse.
-- El terreno usa el tileset mazmorra, con un estilo de bloque por tema. Los paquetes nuevos solo aportan los fondos de parallax (ver "Tileset propio por tema").
+Las tres fases:
+1. **Fase 1, los ASCII:** cada zona dibujada a escala real, con sus puertas hacia atrás. Hecha (2026-11-08): las puertas y, tras el cierre, el dash y los secretos variados (pasos 8 a 11).
+2. **Fase 2, piezas en Godot:** lo que las zonas necesitan y todavía no existe, probado en la zona de pruebas.
+3. **Fase 3, generar cada zona:** constructor y escena `_combate`, zona por zona.
 
 ---
 
-## 1. Jugar los niveles (hecho)
+## Fase 1: puertas hacia atrás en los ASCII
 
-Los niveles ya se jugaron tal como estaban (marcado el 2026-10-20). En cada nivel se revisó:
+**Un paso está hecho cuando:**
+- el ASCII de la zona y sus comentarios de cabecera están al día;
+- la simulación de saltos confirma tres cosas:
+  - la puerta no se alcanza sin su llave;
+  - desde dentro se vuelve;
+  - el camino obligatorio no cambia;
+- `python3 herramientas/macro_mapa/verificar_mundo.py` da 0 errores;
+- están actualizados P46 (estado en la sección 9, tabla de la sección 10), el punto 1 de las sugerencias y esta lista;
+- el Atlas está regenerado con `herramientas/macro_mapa/datos_atlas.py` y vuelto a publicar en su misma URL;
+- hay un commit, sin push.
 
-- [x] Se puede ir de la entrada (borde izquierdo) a la salida (borde derecho) sin trucos.
-- [x] Al volver por la salida izquierda se llega bien al nivel anterior, junto a su salida derecha.
-- [x] Se sube bien por las escaleras y se sale arriba de ellas hacia la plataforma.
-- [x] El checkpoint guarda el punto de reaparición. Morir en lava o pinchos devuelve ahí.
-- [x] Los cofres se abren y las monedas y pociones se recogen.
-- [x] Los enemigos quedan sobre el suelo y no se atascan.
-- [x] El parallax se ve bien al moverse en horizontal y en vertical, sin franjas vacías arriba ni abajo.
-- [x] La cámara no muestra fuera del mapa.
-- [x] No hay saltos imposibles ni sitios donde el Player quede encerrado.
+**Plantilla de prompt** (cambiar `<zona>`, `<ideas>` y lo que se quiera añadir en `<notas>`):
 
-Si se vuelve a jugar tras un cambio, anotar lo que se encuentre en la sección 2 con nivel y coordenadas en piezas (x, fila). Esas coordenadas se ven abriendo el PNG en Aseprite o GIMP.
+```
+Tarea: Fase 1 de TASK.md, paso de <zona>. Dibuja en su ASCII las puertas
+hacia atrás <ideas> del punto 1 de mapas_texto/macro/sugerencias_exploracion.txt.
 
-### Datos de cada nivel
+Antes de dibujar, lee:
+- docs/P46_MACRO_MAPA.md, secciones 6, 9 y 10;
+- mapas_texto/macro/conexiones.txt y zonas.txt;
+- el ASCII de la zona (mapas_texto/macro/zonas/<zona>.txt), sobre todo su
+  cabecera de comentarios;
+- las ideas por su número en las sugerencias (sitio, llave, premio, vuelta).
 
-| Nivel | Tamaño (piezas) | Bloques | Enemigos | Escaleras | Además |
-|---|---|---|---|---|---|
-| `tiles_castillo` | 100 x 80 | castillo | 6 Guardias, 5 Vanguardias, 5 murciélagos + Rey Caído | 5 | Primer mundo, entre la prisión y el cementerio: galería de las celdas, gran salón, biblioteca, antecámara, sala del trono y criptas con la puerta con llave y la salida. Tileset propio (ladrillo morado de Raou). Se juega desde `tiles_castillo_combate.tscn` (P40). |
-| `tiles_cementerio` | 120 x 78 | cementerio | 13 Vanguardia + Capitán | 4 | Segundo mundo (antes el primero) estilo Hollow Knight, de bajada: superficie, cripta, catacumbas, sala del jefe y abismo con la puerta con llave y la salida en el fondo. Se juega desde `tiles_cementerio_combate.tscn`. Ya no es un calco de `mundo_1`. |
-| `tiles_casa` | 104 x 58 | violeta | 4 diablillos | 3 | 3 huecos de 3 piezas en pisos. Las 2 escaleras del mapa original se reemplazaron. **Fuera de la ruta:** el cementerio lleva ahora a las minas. |
-| `tiles_mineria` | 104 x 90 | madera | 4 kolbo, 4 kolbo2, 4 kolbo3 + Caballero de la Reina | 4 | Segundo mundo, con la misma estructura que el cementerio: bocamina, galerías, sala del jefe y veta ardiente con la puerta con llave y la salida en el fondo. Se juega desde `tiles_mineria_combate.tscn`. Ya no es un calco. |
-| `tiles_mazmorra` | 78 x 71 | oliva | 2 Aprendis, 2 kolbo3, 1 mino, 3 esqueletos + la Reina | 13 | 9 huecos, 29 pinchos en pozos sin salida y túnel de 18 piezas hasta la salida derecha. Recortado: lo de abajo era vacío. Se juega desde `tiles_mazmorra_combate.tscn`: la Reina está en la cámara del fondo a la derecha y la puerta con llave tapa la salida (P34). |
-| `tiles_ruina` | 104 x 58 | ladrillo | 2 Aprendis, 1 kolbo3, 1 mino, 3 esqueletos + Guardián de hielo | 5 | 3 huecos; túnel de 4 piezas hasta la salida derecha. Se juega desde `tiles_ruina_combate.tscn` (P34). |
-| `tiles_profundidades` | 104 x 58 | oro | 4 diablillos + Demon Slime | 2 | 2 huecos, lava en todo el fondo y 3 trampas de fuego. Se juega desde `tiles_profundidades_combate.tscn` (P34). |
-| `tiles_jefe` | 104 x 58 | ladrillo | 4 diablillos | 4 | 4 huecos, lava en el fondo, 2 trampas de fuego y 1 pinchos. Es el último: no tiene salida derecha. Se juega desde `tiles_jefe_combate.tscn`, con Cthulhu en el pasillo central (P34). |
+Cómo trabajar:
+- Enséñame primero un recorte del ASCII con regla de columnas, antes y
+  después, y espera a que lo apruebe.
+- Respeta las reglas de escaleras de mapas_texto/LEYENDA.md y no rompas
+  nada del camino obligatorio.
+- No toques escenas ni .tscn: lo que vive en la _combate (puertas, objetos,
+  NPC) solo se describe en los comentarios.
+- Los textos de lore van como marcador (P46, sección 6).
+<notas>
 
-Todos tienen un checkpoint, dos cofres (jefe uno), 12 monedas, una o dos pociones, antorchas y decorados del tema.
+Al terminar, cumple el criterio de "hecho" de la Fase 1 de TASK.md: simulación
+de saltos, verificador, P46, sugerencias, TASK.md, Atlas y un commit sin push.
+Si algo no cuadra con lo que encuentres en los archivos, dímelo antes de seguir.
+Responde en español.
+```
 
----
+**Pasos, en orden** (una sesión cada uno):
+- [x] 0. Decisiones de las puertas (P46, sección 6), atajo `:B:` (columnas 100-102 del mundo) y calabozo rehecho como zona tutorial (`mapas_texto/macro/zonas/calabozo.txt`, 100 x 52). Incluye la idea 1, el depósito del alcaide, y la llave del alcaide en la torre de la mazmorra.
+- [x] 1. **Castillo:** ideas 2 (aposentos de la Reina, x 62-74, filas 11-18, al este de la capilla) y 3 (el castillo sin hechizo). La 3 no cambia el trazado: los sitios de los soldados y del Capitán, en (68, 62), van en los comentarios.
+- [x] 2. **Cementerio:** ideas 4 (estatua de la Reina, cueva x 112-118, filas 12-17, tras el hueco de la columna 111) y 5 (cripta de la primera reina, x 62-74, filas 29-34, con escalera nueva en la columna 68, losa en la fila 35 y puerta de velas en la columna 65).
+- [x] 3. **Minas:** idea 6 (gruta de cristal, x 132-147, filas 64-77, tras la boca de la columna 131 y el pasillo del fuego, con checkpoint en (142, 55) y salida por la escalera 139). El Crystal Mauler cabe en 16 x 14 a escala 1, justo.
+- [x] 4. **Mazmorra y profundidades:** idea 7 (pozo de los condenados). `:F:` en `conexiones.txt` (mazmorra abajo 88, profundidades arriba 18; túnel de 80 piezas). Trampilla en el suelo de la huida (x 88-90, fila 84) con escalera en la columna 89; pozo x 18-20 con escalera en la 19 hasta la galería, palanca en (23, 25) y, al pie, los restos de los condenados y la página II. En el dibujo del macro mapa la ruina empieza más a la derecha para que `:F:` no la cruce.
+- [x] 5. **Ruina:** idea 8 (hielo negro, cámara x 114-130, filas 52-58, al este de la antesala, con la puerta en la columna 113, abierta en el ASCII, y `key_id` `profundidades_ascua`; página III en (117, 58) y fragmento 3/4 en (125, 55), sobre la repisa de la fila 56).
+- [x] 6. **Profundidades e infierno:** idea 9 (rey encadenado: jaula x 44-48, filas 16-19, en el techo de la galería de los condenados, con la rejilla de la fila 20 en la `_combate`; el rey, con el sprite del Rey Caído, en (46, 19); con `infierno_animas_liberadas`, su alma en (46, 25) y el fragmento 4/4 en (44, 25)).
+  - El santuario ya no nombra al Mauler: va el segundo demonslime.
+  - El coliseo del infierno marca `infierno_animas_liberadas` al vencer su última oleada.
+  - La sala del Demon Slime lleva el `PuntoLlave` de la ascua (`profundidades_ascua`) hacia (100, 78).
+- [x] 7. **Cierre:** tabla "Desbloqueos por zona" de P46 repasada contra los ASCII, verificador con 0 errores, Atlas regenerado y el punto 1 de las sugerencias marcado como hecho.
+  - En la mazmorra se quitó el cofre de la torre, en (73, 21): ahí va la llave del alcaide, como ya decía el plan.
+  - En la tabla: el calabozo marca su puerta como dibujada, la salida de la ruina pide también al Guardián y las profundidades llegan con la llama eterna.
 
-## 2. Bugs y cosas a revisar
+**Añadido tras el cierre (2026-11-08): el dash y los secretos** (puntos 2 y 4 de las sugerencias). El Guardián da el dash en el aire; los secretos de la Agilidad clonados se reparten en tipos distintos. Una zona por paso, con el recorte de antes y después aprobado y el mismo criterio de "hecho":
+- [x] 8. **Ruina:** secreto del dash en el fondo este de la galería baja (pasillo x 131-138, filas 44-47, foso de 6 en x 133-138, cámara x 139-148 con el cofre en (147, 47)).
+- [x] 9. **Mazmorra:** el secreto de la torre pasa a ser del dash (pasillo desde la columna 109, filas 18-21, foso de 6 en x 109-114, nicho x 115-117 con el cofre en (117, 21)).
+- [x] 10. **Profundidades:** el secreto de la galería pasa a ser una pared falsa (columna 8, filas 23-25; sala x 4-7, filas 21-25, con el cofre en (5, 25)).
+- [x] 11. **Minas:** un tercer sitio del dash, al fondo de la galería de los mineros (pasillo x 35-42, filas 53-56, foso de 6 en x 37-42, nicho x 43-45 con el cofre en (45, 56)); junto a `:D:` no cabía. El escalón de la Agilidad se queda.
 
-### En los niveles nuevos
-- [x] **`tiles_jefe`: hueco junto a la llegada.** El Player aparecía en (2, fila 31) y caía por el hueco con escalera de x=3-5, fila 32, al dar un paso a la derecha. La llegada no se puede mover, porque el constructor la pone dos piezas dentro de la salida. Se tapó el hueco y la escalera pasó al valle de la bajada: hueco en x=14-16 de la fila 36, escalera en x=15 de las filas 36 a 43 y suelo nuevo en (15-16, fila 44). Lleva a la misma cueva de abajo a la izquierda. Comprobado sin ventana: llegar y caminar, subir y salir por los dos lados, caer por el hueco y volver a subir, y saltarlo con carrerilla.
-- [ ] **`tiles_mazmorra`: 3 piezas sin salida** en la orilla de un pozo con pinchos: (26, 58), (31, 59) y (34, 63). No dejan al Player encerrado, porque puede caer a los pinchos y reaparecer, pero queda feo. Revisar al jugar.
-- [ ] **`tiles_mazmorra`: un enemigo en una cámara cerrada.** No se puede llegar a él. Quitarlo del PNG o abrir la cámara.
-- [ ] **`tiles_mazmorra`: demasiadas escaleras y huecos** (13 y 9). Es el nivel que más se alejó del original. Ver si conviene simplificarlo.
-- [ ] **Túneles hacia las salidas.** El de mazmorra mide 18 piezas y atraviesa la cámara de arriba a la derecha. Revisar que se vea bien o mover la salida.
-- [ ] **Zonas sin acceso**, cerradas por roca en el mapa original: unas 21 piezas en mineria, 27 en mazmorra, 12 en ruina y 4 en profundidades. Quedan como decorado. Abrirlas solo si se quieren usar.
-- [ ] **Escaleras sin apoyo visual.** Algunas suben por el aire hasta una plataforma; el dibujo de la escalera queda flotando. Valorar al jugar.
-- [ ] **Antorchas y decorados** se repartieron al azar sobre el suelo alcanzable. Puede haber antorchas en medio de un pasillo o decorados amontonados. Moverlos en el PNG.
-- [ ] **Escala de los enemigos.** El constructor los pone a escala 1, y el diablillo se ve bastante más grande que el Player. En los mapas pintados está entre 0.34 y 0.66, pero esa escala no es entera y no cumple la regla de pixel art. Decidir si hace falta un sprite más pequeño.
-- [ ] **Lava y pinchos** en profundidades, jefe y mazmorra son decisión de diseño, no vienen de los mapas originales. Confirmar que se quieren.
-- [x] **Las teclas y el panel de depuración** estaban activos en todos los niveles generados. Ahora el constructor solo los pone con la opción `depuracion: si`, y se quitaron de las escenas `tiles_*`.
-
-### En el resto del proyecto (encontrados durante esta tarea)
-- [ ] **`primer_boss_mundo_1.tscn`:** la ruta de prueba tiene dos líneas `# W2: ...` entre sus propiedades. Godot pierde la propiedad siguiente, `spawn_position = Vector2(1535, 650)`, y el `SpawnInicio` de ese mapa queda en (160, 160), arriba a la izquierda. Arreglo: borrar esas dos líneas del `.tscn`. Es un mapa hecho a mano: confirmar con Armando antes.
-- [ ] **`arena_enemigos.tscn` está desactualizada:** se generó antes del último cambio del diablillo. Al regenerarla cambian sus valores de IA. Regenerarla con `-- mapas_texto/arena_enemigos.txt` y revisar que siga bien.
-- [x] **`LEYENDA.md`, regla de escaleras:** decía solo "dejar una pieza libre entre la escalera y el bloque". Ahora la sección 2 tiene la regla probada: columnas vecinas libres, tres filas libres encima y hueco de tres piezas al atravesar un piso.
-
----
-
-## 3. Cosas a agregar
-
-### Jugabilidad
-- [ ] **Jefes y personajes.** El calco dejó fuera lo que no tiene letra en el constructor:
-  - ~~Capitán (cementerio)~~: hecho en `tiles_cementerio_combate.tscn`, una escena que hereda del nivel generado (ver changelog, "Cementerio con tiles: primer mundo estilo Hollow Knight");
-  - Caballero de la Reina, Reina y Cthulhu (casa);
-  - ~~jefe de las minas~~: el Caballero de la Reina, en `tiles_mineria_combate.tscn` (ver changelog, "Minas con tiles: segundo mundo");
-  - ~~Reina (mazmorra)~~: en `tiles_mazmorra_combate.tscn` (ver `docs/P34_ENEMIGOS_DE_LOS_PAQUETES.md`);
-  - ~~demonslime (profundidades)~~ y ~~jefe final (jefe)~~: Demon Slime y Cthulhu, más el Guardián de hielo en la ruina (ver `docs/P34_ENEMIGOS_DE_LOS_PAQUETES.md`).
-
-  Opciones: añadir letras para jefes al constructor, o colocarlos a mano en una escena que herede del nivel generado. `tiles_jefe` necesita al menos su jefe para tener sentido.
-- [ ] **Conectar con los mapas hechos a mano.** Hoy la ruta de tiles es independiente. Con `siguiente: res://escenas/mapas/<mapa>.tscn#<Spawn>` se puede enlazar con un spawn existente.
-- [ ] **Agua decorativa (`%`)** donde el fondo original tiene agua: los estanques de ruina y mazmorra, y el río de mineria.
-- [ ] **Objetos rompibles:** no tienen letra. Primero hace falta un sprite pequeño, porque `caja_rompible` y `estatua_rompible` son arte en alta resolución.
-
-### Arte con los paquetes nuevos
-- [ ] **Tileset propio por tema**, en lugar de los estilos de mazmorra. Los paquetes recibidos no traen un juego de bloques de 16 px listo: hay que armar un atlas con la forma que espera el constructor a partir de sus piezas. Candidatos:
-  - ~~cementerio~~: hecho con Gothicvania Cemetery, tileset `cementerio` (ver `docs/P34_ENEMIGOS_DE_LOS_PAQUETES.md`);
-  - casa y mazmorra: Gothicvania `Gothic-Castle-Files` u `Old-dark-Castle-tileset-Files`;
-  - mineria: `PixelFantasy_Caves` (`mainlev_build.png`, `props1/2.png`);
-  - profundidades y jefe: Gothicvania `Living-Tissue-Platform-Files` o rocas con lava.
-
-  Pasos en "Receta: integrar un paquete" (abajo).
-- [ ] **Enemigos de Gothicvania** (`Legacy Collection/Assets/Gothicvania/Characters/`): Ghost, Hell-Hound, Hell-Beast, Fire-Skull, flying-eye-demon, Ogre, Nightmare, crow, entre otros. Cada uno necesita una escena con `enemy_base.gd`, una letra en el constructor y una prueba en `arena_enemigos`.
-- [x] **Enemigos que faltan para la progresión por profundidad** (`docs/P33_ENEMIGOS_POR_PROFUNDIDAD.md`): murciélagos para el cementerio y las minas, esqueletos para la mazmorra y la ruina. Hechos con Super Grotto Escape y Gothicvania Cemetery (ver `docs/P34_ENEMIGOS_DE_LOS_PAQUETES.md`).
-- [ ] **Decorados de los paquetes:** velas, jaulas, cadenas, estandartes, vagonetas. Necesitan estar en el atlas del tileset y tener letra.
-
-### Hecho en P34 (paquetes nuevos)
-- [x] Murciélagos, esqueletos, efectos con sprites, jefes de la mazmorra a la profundidad final, tileset del cementerio, NPC que hablan y el Barquero (`docs/P34_ENEMIGOS_DE_LOS_PAQUETES.md`).
-- [ ] Jugar a mano los cinco jefes nuevos y ajustar su dificultad.
-- [ ] Que el parallax del cielo no se vea en las cuevas (el constructor pone un solo parallax por mapa).
-
-### Herramientas
-- [ ] **Decidir si los scripts de diseño entran al repo.** Las salidas, escaleras, objetos y decorados se pusieron con un script de Python (`disenar.py`). Un verificador (`recorrido.py`) simula los saltos del Player para comprobar que todo se alcanza. Los dos están fuera del repo y necesitan Python con Pillow. Si entran, irían en `herramientas/constructor_mapas/`, con instrucciones en `LEYENDA.md`.
-- [ ] **Prueba de escaleras en Godot** (sin ventana: sube por cada escalera y comprueba que el Player queda arriba). Se usó y se borró. Si se quiere repetir tras cambiar los PNG, guardarla como herramienta.
-
-### Licencias
-- [ ] **Pixel Fantasy Caves:** el ZIP no trae licencia. Confirmar de dónde se bajó y sus condiciones antes de usarlo fuera de pruebas (ver `assets_prueba/pixelfantasy_caves/ORIGEN.txt`).
-- [ ] **`Final.zip`** (Anokolisa): su nota pide no dar crédito si se cambia el arte. Anotarlo en un `ORIGEN.txt` cuando se use.
+**Fuera de esta fase:** los puntos 5 (premios: siguen siendo cofres), 6 (monedas), 7 (mapa del jugador) y 8 (NPC que baja) de las sugerencias, y la idea 10, que sigue en reserva.
 
 ---
 
-## 4. Cómo ajustar un nivel
+## Fase 2: piezas en Godot
 
-1. Abrir `mapas_texto/tiles_<nivel>.png` en Aseprite, GIMP o Krita con la paleta `mapas_texto/paleta_niveles.gpl`.
-   - Lápiz de 1 píxel y sin suavizado.
-   - Los colores y letras están en `LEYENDA.md`, sección 5.
-2. Regenerar desde la carpeta del proyecto:
-   ```
-   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/tiles_<nivel>.txt
-   ```
-3. Si el nivel estaba abierto en el editor, recargarlo sin guardar encima.
-4. Comprobar que arranca sin errores:
-   ```
-   ~/.local/bin/godot --headless res://escenas/mapas/tiles_<nivel>.tscn --quit-after 120
-   ```
-5. Jugarlo con F6.
+Cada pieza se prueba en la zona de pruebas (`escenas/mapas/zona_pruebas_combate.tscn`) y se documenta en una etapa nueva de `docs/`. Si toca el Player o el `GameManager`, se comprueba también `mundo_1`.
 
-Para empezar de cero desde un mapa hecho a mano, se usa `-- --desde-mapa` (sección 7 de `LEYENDA.md`). El calco no pone salidas, objetos ni escaleras nuevas.
+**Una pieza está hecha cuando:**
+- funciona en la zona de pruebas, montada en `zona_pruebas_combate.tscn` (o en el `.txt` si lleva letra), con un caso que muestre que cierra y otro que muestre que abre;
+- se probó sin ventana con una escena temporal que simula entradas e imprime el resultado, y esa escena se borró;
+- arrancan sin errores el juego (`godot --headless --quit-after 120`) y la zona de pruebas, y también `mundo_1` si se tocó el Player, un enemigo, el `GameManager` o el Capitán;
+- si guarda estado, se reinicia en `reset_for_new_game`, se guarda en `_make_save_data` / `_restore_game_state` y se sube `SAVE_FORMAT_VERSION`;
+- hay una etapa nueva en `docs/` (la siguiente libre es P71), con el formato de las demás, y está al día lo que la nombra: P46 (secciones 5 y 10), CLAUDE.md si cambia una regla o una pieza a reutilizar, y esta lista;
+- hay un commit, sin push.
 
-### Archivos de cada nivel
-| Qué | Dónde |
-|---|---|
-| Dibujo (fuente) | `mapas_texto/tiles_<nivel>.png` |
-| Opciones: tileset, bloques, parallax, salidas | `mapas_texto/tiles_<nivel>.txt` |
-| Escena generada (no editar a mano) | `escenas/mapas/tiles_<nivel>.tscn` |
-| Fondos de parallax | `assets_prueba/gothicvania/`, `assets_prueba/pixelfantasy_caves/` |
+**Plantilla de prompt** (cambiar `<pieza>`, `<zona>` y lo que se quiera añadir en `<notas>`):
+
+```
+Tarea: Fase 2 de TASK.md, paso de <zona>: la pieza "<pieza>".
+
+Antes de escribir código, lee:
+- CLAUDE.md (reglas del proyecto, combate, validar cambios);
+- en TASK.md, la línea de la pieza y el criterio de "hecho" de la Fase 2;
+- docs/P46_MACRO_MAPA.md, secciones 5, 6 y 10, y lo que diga de la pieza
+  la cabecera del ASCII de cada zona que la usa (mapas_texto/macro/zonas/);
+- docs/P43_ZONA_DE_PRUEBAS.md;
+- los scripts y escenas que ya hacen algo parecido, para reutilizarlos en
+  vez de duplicarlos (por ejemplo locked_door.gd, arena_barrier.gd,
+  boss_arena.gd, breakable_object.gd, story_hidden_actor.gd, GameManager).
+
+Cómo trabajar:
+- Antes de programar, cuéntame en pocas líneas el plan: qué escena y qué
+  script nuevos o qué cambias, qué exporta (nombres y valores por defecto),
+  qué guarda, y cómo lo vas a probar. Si hay una decisión de diseño que
+  no esté en los documentos (números, comportamiento, arte), pregúntame
+  en vez de suponerla. Espera a que lo apruebe.
+- Static typing en todo el GDScript. Daño y curación en múltiplos de 0.25.
+  Pixel art a escala entera y texto con el tema global (CLAUDE.md).
+- Una pieza genérica y configurable desde el editor, que sirva a todas las
+  zonas que la piden, no solo a <zona>.
+- No toques los mapas de la ruta ni los ASCII: la pieza se monta en las
+  zonas en la Fase 3. No toques los ajustes del temblor al caminar.
+- Si editas un .tscn, dime cuál para recargarlo en el editor.
+- Si falta arte, usa uno provisional que ya exista y apúntalo como
+  pendiente.
+<notas>
+
+Al terminar, cumple el criterio de "hecho" de la Fase 2 de TASK.md:
+prueba en la zona de pruebas, prueba sin ventana, arranques sin errores,
+guardado si aplica, etapa en docs/, P46, TASK.md y un commit sin push.
+Si algo no cuadra con lo que encuentres en los archivos, dímelo antes de
+seguir. Responde en español.
+```
+
+**Orden (fijado el 2026-11-08):** por la primera zona de la ruta que pide cada pieza. Así la Fase 3 puede empezar por el calabozo en cuanto estén las suyas, sin esperar a tenerlo todo. Una pieza que sirve a varias zonas va en la primera que la pide; las demás la reutilizan.
+
+**Modo autónomo:** `herramientas/fase2_auto.sh` hace las piezas una tras otra, con una sesión de Claude Code por pieza y un commit cada una, sin pedir aprobación. Las decisiones de diseño que los documentos no fijaban están en `docs/FASE2_DECISIONES.md`: el script no arranca hasta que ese archivo diga "Estado: APROBADO". Una pieza que no se puede terminar se marca `- [~]` y su motivo va a ese archivo.
+
+**0. Ajuste previo:**
+- [x] La tienda vende un solo nivel de vida máxima (`max_level` 1 en `UPGRADE_DEFINITIONS`, 10 monedas; P46, sección 6). La vida máxima ya no se lee del guardado: sale de las mejoras (P47).
+
+**1. Calabozo** (con estas cuatro piezas ya se puede generar en la Fase 3):
+- [x] Pared agrietada que se rompe a golpes, también a puños (secretos del calabozo y de las profundidades): `escenas/objetos/pared_agrietada.tscn` (P48). Falta su arte; la caja y la estatua rompibles no reciben golpes (P48, sección 3).
+- [x] Palanca y barrera que se abre según `completed_encounters` (atajos `:B:` a `:F:`, compuerta de la mazmorra, rejilla de la jaula del rey encadenado): `escenas/objetos/palanca.tscn` y `open_on_encounter` de `arena_barrier.gd` (P49). Falta el arte de la palanca.
+- [x] Objeto de lore que abre un diálogo (`npc.gd` y `dialogue_ui`): el acta del prisionero y, después, el resto del lore de marcador: `escenas/objetos/objeto_lore.tscn` (P50). Falta su arte y los textos definitivos.
+- [x] Mejora de +0.25 de daño en todos los tajos (la empuñadura del depósito del alcaide): `escenas/items/mejora_encontrada.tscn` y `FOUND_UPGRADE_DEFINITIONS` de `GameManager` (P51). `SAVE_FORMAT_VERSION` pasa a 3. Falta su arte.
+
+**2. Castillo:**
+- [x] Reja baja que solo se pasa rodando (`[H2]` y el pasillo del filo del infierno): `scripts/environment/roll_gate.gd` (P52). Sin escena propia: es una `arena_barrier.gd` con otro script; falta su arte.
+- [x] Mostrar u ocultar según un encuentro superado (el castillo sin hechizo y el rey encadenado): `scripts/environment/encounter_visibility.gd`, componente hijo del nodo (P53). `story_hidden_actor.gd` no cambia.
+- [x] Fragmento de vida: 4 dan 1 corazón: `escenas/items/fragmento_vida.tscn` y `grant_life_fragment` de `GameManager` (P54). `SAVE_FORMAT_VERSION` pasa a 4. Falta su arte.
+
+**3. Cementerio:**
+- [x] Contador de sellos que abre una puerta (`[S3]`, `[S7]`): `escenas/objetos/sello.tscn` y `open_on_seal_group` de `arena_barrier.gd` (P55). No cambia el formato de guardado. Falta su arte.
+- [x] Rompible que solo acepta un tipo de golpe: el ascendente con Golpe final (losa de la cripta) o la Ultimate (estatua de la Reina): `escenas/objetos/rompible_selectivo.tscn` (P56). No cambia el guardado. Falta su arte.
+- [x] `locked_door` con otro dibujo: velas, y después hielo negro y el hielo de `[P6]`: `locked_door.gd` con `require_interact`, `open_effect` y `piece_tint` (P57). No cambia el guardado. Falta su arte.
+- [x] Mejora de +0.25 en pociones (el amuleto de la guardia): fila `amuleto_guardia` de `FOUND_UPGRADE_DEFINITIONS` y `get_potion_heal_amount()` del Player, con `mejora_encontrada.tscn` (P58). No cambia el guardado. Falta su arte.
+
+**4. Minas:**
+- [x] Ascensor minero (`:C:`): `escenas/objetos/ascensor.tscn` (P60). Una cabina por escena; sin guardado nuevo. Falta su arte.
+- [x] Fuego infernal que solo se pasa con E5 (gruta de cristal, santuario de las profundidades, infierno): `escenas/sistemas/fuego_infernal.tscn` (P61). Sin guardado nuevo. Falta su arte.
+- [x] IA del Crystal Mauler: `escenas/jefes/crystal_mauler.tscn`, con `simple_boss.gd` (P62). `boss_mina.tscn` no se toca (lo usa `mundo_2`). Su sala, la gruta de cristal, mide 16 x 14. Sin guardado nuevo.
+- [x] La Adrenalina sale de `STARTING_ABILITIES` y la da el Mauler (`ability_reward adrenaline`): `SalaMauler` en la zona de pruebas (P63). `SAVE_FORMAT_VERSION` sigue en 5. Falta el arte de la reliquia (la de siempre).
+
+**5. Mazmorra:**
+- [x] Suelo que se hunde y secuencia de derrumbe y huida (`[!5]`): `scripts/environment/collapse_sequence.gd` y `falling_rubble.gd` (P64). Sin guardado nuevo. Falta su arte.
+
+**6. Ruina:**
+- [x] Hielo que se derrite con la llama eterna, y la luz de la antorcha (`[P6]`), sobre la `locked_door` con otro dibujo del paso 3: `escenas/items/llama_eterna.tscn` y `scripts/environment/dark_zone.gd` (P65). Sin guardado nuevo. Falta su arte.
+- [x] Dash en el aire (`air_dash`, premio del Guardián con `ability_reward`): unas 7 piezas en horizontal, sin gravedad, una vez por salto. Probar en la zona de pruebas que el pasillo de 4 de alto con foso de 6 no se cruza sin él, ni con la Agilidad: `PlayerAction.AIR_DASH` y `PasilloDash` en la zona de pruebas (P66). Sin guardado nuevo. Falta su arte.
+
+**7. Infierno:**
+- [x] Arenas con oleadas (coliseo y salón de los verdugos): `scripts/combat/wave_arena.gd` y `ArenaOleadas` en la zona de pruebas (P67). Sin guardado nuevo (solo `completed_encounters`). Sin arte propio.
+
+Las profundidades no piden piezas nuevas: reutilizan el contador de sellos, el fuego infernal, la barrera, la pared agrietada y el mostrar u ocultar.
+
+**En paralelo: atuendos** (P46, sección 10). Dependen sobre todo del arte, así que no frenan el orden de arriba:
+- [x] Atuendo actual y `OUTFIT_DEFINITIONS` en `GameManager` (guardado, reinicio, `SAVE_FORMAT_VERSION`): `outfits_found`, `grant_outfit` y rasgos en el Player (P59). `SAVE_FORMAT_VERSION` pasa a 5. Opción "Siguiente atuendo" en el modo dev; faltan su objeto, su aspecto y su menú.
+- [x] Un `SpriteFrames` por atuendo; separar el Fire Knight (E5) de los harapos (E1): `escenas/atuendos/fire_knight.tres` (generado con `herramientas/sprites/generar_atuendo_fire_knight.tscn`) y `ManiquiFireKnight` en la zona de pruebas (P68). Sin guardado nuevo. Faltan el arte de E2-E4 y las tiras propias de E1.
+- [x] Escena de atuendo para recoger, generalizando `espada_oxidada.tscn`: `escenas/objetos/atuendo.tscn` (`outfit_pickup.gd`, `outfit_id` exportado), del que hereda `espada_oxidada.tscn` con `harapos`; `EspadaOxidada` y `AtuendoSoldado` en la zona de pruebas (P69). Sin guardado nuevo. Falta su arte.
+- [x] Sección "Equipo" en el menú de pausa: pestaña `TabEquipo` / `PaginaEquipo` de `escenas/menu/menu_pausa.tscn`, rellenada por `pause_menu_overlay.gd`; se prueba con `EspadaOxidada` y `AtuendoSoldado` de la zona de pruebas (P70). Sin guardado nuevo. Sin arte propio (falta un retrato por atuendo).
+- [ ] Arte con IA de E2 (soldado), E3 (caballero de la cripta) y E4 (abrigo); terminar las tiras que faltan de E1.
 
 ---
 
-## Receta: integrar un paquete
-1. El ZIP se descomprime en una carpeta aparte, nunca encima del proyecto.
-2. **Revisar la licencia** y anotarla en un `ORIGEN.txt`, como en `assets_prueba/dungeon_platformer/ORIGEN.txt`.
-3. **Medir el tamaño de tile.** Si es de 16 px, entra directo. Si es de otro tamaño, el nivel usa esa cuadrícula sin escalar a medias; el constructor toma el tamaño del archivo del tileset.
-4. **Crear `herramientas/constructor_mapas/tilesets/<nombre>.gd`** copiando `mazmorra.gd`, y ubicar en el PNG:
-   - el juego de bloques de 4x4 (esquinas, bordes e interior en 3x3, columna a la derecha y plataformas abajo) y las rampas;
-   - los decorados y las piezas animadas;
-   - los líquidos y la escalera;
-   - la pieza del checkpoint y el fondo.
+## Fase 3: generar cada zona y montar su `_combate`
 
-   Si el paquete no trae ese juego de 4x4, se arma un atlas nuevo copiando sus piezas, sin dibujar arte nuevo.
-5. **Probarlo** con un mapa de muestra.
-6. **Letras y colores nuevos:** si trae decorados o enemigos sin letra, se agregan a `COLORS` / `ENEMIES` del constructor. Después se regenera la paleta (`-- --paleta`) y se actualiza la tabla de `LEYENDA.md`.
-7. **Enemigos:** escena con `enemy_base.gd` y sus valores (cuadros de golpe, hitbox, `collision_layer = 5`), siguiendo el patrón de `kolbo` y `mino`. Se prueban en `arena_enemigos`.
+Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambia su ruta en `zonas.txt` (P46, sección 9). Después hay que jugarla.
 
-## Límites conocidos del constructor
-- **Pinchos:** son estáticos (un recorte de `spike Trap5.png`) y matan al tocarlos. No hay versión animada ni de daño parcial.
-- **Salidas:** si un mapa tiene varias salidas en la misma dirección, todas comparten el mismo spawn de llegada.
-- **Enemigos:** siempre a la escala de su escena.
-- **Parallax:** se vio en capturas a 480 x 270, pero falta verlo en movimiento.
-- **Arte:** no se dibuja pixel art nuevo; los niveles se arman con piezas de los paquetes.
+- [ ] **Calabozo:** cinco rejas, las dos cinemáticas y sus puntos, enemigos y carcelero, espada y preso, pared agrietada, depósito del alcaide con el acta y la empuñadura, trampilla, transición y spawn de `:B:`.
+- [ ] **Castillo:**
+  - el Rey con `ability_reward` de Rodar, la reja de `[H2]`, las trampillas y la trampilla de `:C:`;
+  - los aposentos de la Reina y el castillo sin hechizo (soldados NPC y el Capitán).
+- [ ] **Cementerio:**
+  - el Capitán sin llave, las tres tumbas sello y su contador, la losa de `[S3]`, las trampillas del atajo y de la fosa, la casa del sepulturero y E3;
+  - la estatua de la Reina, con las notas y el amuleto; la losa, la puerta de velas, la corona con la carta y el fragmento de vida 2/4 de la cripta de la primera reina.
+- [ ] **Minas:**
+  - el Caballero en su sala nueva, la puerta con llave de `[L4]`, el ascensor y la palanca de `:C:`, la trampilla del atajo, la reja de `:D:` y las transiciones de `[S3]` y `:C:`;
+  - la gruta de cristal: fuego infernal, checkpoint y el Mauler con su `boss_arena` (trampilla de entrada en `Puertas`, la del suelo en `Atajos`, `ability_reward adrenaline`).
+- [ ] **Mazmorra:**
+  - la Reina con `ability_reward` del Ultimate y sin llave, el suelo que se hunde y el derrumbe, la compuerta y la palanca del atajo, la trampilla del colector y la transición de `[!5]`;
+  - la palanca, la transición y el spawn de `:B:`, y la llave del alcaide;
+  - la trampilla, la transición y el spawn del pozo de los condenados (`:F:`).
+- [ ] **Ruina:**
+  - el Guardián, la reja de salida en `Atajos`, el hielo de `[P6]` y la llama eterna, la luz de la parte oscura;
+  - la palanca y la reja de `:D:`, las trampillas del atajo y de `:E:`, y las transiciones de `[!5]`, `:D:`, `[P6]` y `:E:`;
+  - el hielo negro (la misma pieza que el hielo de `[P6]`, con `key_id` `profundidades_ascua`), la página III y el fragmento de vida 3/4.
+- [ ] **Profundidades:**
+  - elegir los minijefes de los altares (P46, sección 7);
+  - los tres altares y su contador, el fuego infernal y E5;
+  - el Demon Slime, con reja y trampilla en `Puertas`, reja de salida en `Atajos` y la ascua (`profundidades_ascua`, en su `PuntoLlave`);
+  - la palanca de `:E:`, las trampillas del atajo, del lago y del coliseo, y las transiciones de `[P6]`, `:E:` y `[S7]`;
+  - la palanca, la transición y el spawn de `:F:`, los restos de los condenados y la página II del diario;
+  - la jaula del rey encadenado: rejilla, el rey (sprite del Rey Caído), su alma y el fragmento de vida 4/4, según `infierno_animas_liberadas`.
+- [ ] **Infierno:**
+  - decidir los enemigos definitivos de la prueba final;
+  - las arenas con oleadas del coliseo y del salón, las rejas bajas del pasillo y el fuego infernal;
+  - Cthulhu en el trono, con la reja en `Puertas`, el activador, `PuntosJefe` y el aviso del final;
+  - la transición y el spawn de `[S7]`, y la marca `infierno_animas_liberadas` del coliseo.
 
-## Hecho
-- **Fase 1, el constructor:**
-  - tilesets como datos;
-  - nivel dibujado como PNG con paleta;
-  - pinchos, fuego, checkpoint, cofre, monedas, pociones y salidas;
-  - parallax;
-  - guía y nivel de muestra.
+---
 
-  Detalle en el changelog, sección "Niveles con tiles".
-- **Fase 2, en parte:** fondos de parallax de Gothicvania (CC0) y Pixel Fantasy Caves, con su `ORIGEN.txt`.
-- **Fase 3, primera tanda:**
-  - `-- --desde-mapa` y `parallax` con `x2`;
-  - los siete niveles `tiles_*`.
+## Otros pendientes del proyecto
 
-  Comprobado sin ventana:
-  - todos arrancan sin errores;
-  - las 12 salidas llevan a mapas y spawns que existen;
-  - el Player sube por las 32 escaleras y queda arriba;
-  - según la simulación, desde la P se alcanzan las salidas, el checkpoint y los objetos.
-
-  Commits `0ab5a4c`, `a5cc8f7`, `0a45be4` y `9b6f24c`.
-
-## Otros pendientes del proyecto (fuera de esta tarea)
-Ver "Pendientes" en `docs/CHANGELOG_0.04.047.md`:
-- probar jugando la 0.04.047;
-- pausa, menú y guardado;
-- jefes de Mundo 2 y final;
-- transiciones definitivas;
-- audio;
-- arte a escala entera.
-
-Además:
-- fusionar esta rama en `main` y subirla cuando el equipo lo apruebe;
-- decidir qué hacer con la rama `v5`, que apunta a la versión vieja;
-- confirmar si fue intencional rellenar el hueco de `ColisionPoligono_04` en Mundo 1.
+- **Licencias:**
+  - Pixel Fantasy Caves: el ZIP no trae licencia; confirmar de dónde se bajó (`assets_prueba/pixelfantasy_caves/ORIGEN.txt`);
+  - `Final.zip` (Anokolisa): su nota pide no dar crédito si se cambia el arte; anotarlo en un `ORIGEN.txt` cuando se use.
+- **Arte:**
+  - escala del diablillo, que a escala 1 se ve más grande que el Player;
+  - enemigos y decorados de Gothicvania (`Legacy Collection/Assets/Gothicvania/`);
+  - un tileset propio por tema. Pasos en `mapas_texto/LEYENDA.md`, sección 8.
+- **Jefes:** jugar a mano los jefes nuevos y ajustar su dificultad.
+- **Ramas:** fusionar esta rama en `main` cuando el equipo lo apruebe, y decidir qué hacer con la rama `v5`.

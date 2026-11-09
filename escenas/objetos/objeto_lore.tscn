@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/environment/lore_object.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PNG/supplies_objects.png" id="2_tex"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bolsa"]
+atlas = ExtResource("2_tex")
+region = Rect2(0, 256, 16, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lore"]
+animations = [{
+"frames": [{"duration": 1.0, "texture": SubResource("AtlasTexture_bolsa")}],
+"loop": false,
+"name": &"idle",
+"speed": 1.0
+}]
+
+[node name="ObjetoLore" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_lore")
+animation = &"idle"
+script = ExtResource("1_script")
+dialogue_path = "res://dialogues/lore_acta_prisionero.json"
+interaction_radius = 32.0
+prompt_text = "E  Leer"
+face_player = false
+lore_id = "acta_prisionero"

@@ -86,6 +86,14 @@ toggle_mode = true
 button_group = SubResource("ButtonGroup_Pestanas")
 text = "Mejoras"
 
+[node name="TabEquipo" type="Button" parent="Interfaz/PanelJugador/Contenido/Pestanas"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"BotonPestana"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_Pestanas")
+text = "Equipo"
+
 [node name="PaginaEstadisticas" type="VBoxContainer" parent="Interfaz/PanelJugador/Contenido"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -215,6 +223,18 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_Pagina")
 horizontal_scroll_mode = 0
 
 [node name="ListaMejoras" type="VBoxContainer" parent="Interfaz/PanelJugador/Contenido/PaginaMejoras/MejorasScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+
+[node name="PaginaEquipo" type="ScrollContainer" parent="Interfaz/PanelJugador/Contenido"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_Pagina")
+horizontal_scroll_mode = 0
+
+[node name="ListaEquipo" type="VBoxContainer" parent="Interfaz/PanelJugador/Contenido/PaginaEquipo"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 3

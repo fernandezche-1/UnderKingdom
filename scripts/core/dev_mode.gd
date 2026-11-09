@@ -31,6 +31,7 @@ const OPTIONS: Array[Dictionary] = [
     {"text": "Dar llaves de jefe", "action": "_grant_boss_keys"},
     {"text": "Desbloquear habilidades", "action": "_unlock_all_abilities"},
     {"text": "Dar espada", "action": "_grant_sword"},
+    {"text": "Siguiente atuendo", "action": "_grant_next_outfit"},
 ]
 
 var available: bool = false
@@ -130,6 +131,19 @@ func _grant_boss_keys() -> void:
 ## recoger el equipo de la armería del castillo.
 func _grant_sword() -> void:
     GameManager.recover_castle_equipment(_player())
+
+
+## Da el siguiente atuendo por nivel (harapos, soldado... Fire Knight).
+func _grant_next_outfit() -> void:
+    var wanted := ""
+    var wanted_level := 99
+    for outfit_id: String in GameManager.OUTFIT_DEFINITIONS:
+        var level := int(GameManager.OUTFIT_DEFINITIONS[outfit_id].level)
+        if level > 0 and level < wanted_level and not GameManager.has_outfit(outfit_id):
+            wanted = outfit_id
+            wanted_level = level
+    if not wanted.is_empty():
+        GameManager.grant_outfit(wanted, _player())
 
 
 func _unlock_all_abilities() -> void:

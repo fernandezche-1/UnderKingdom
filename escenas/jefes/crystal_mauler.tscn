@@ -1,0 +1,448 @@
+[gd_scene load_steps=89 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/boss_health_bar.gd" id="bar_script"]
+[ext_resource type="PackedScene" path="res://escenas/ui/boss_health_bar.tscn" id="bar_scene"]
+[ext_resource type="Script" path="res://scripts/bosses/simple_boss.gd" id="script"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_1.png" id="f1"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_2.png" id="f2"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_3.png" id="f3"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_4.png" id="f4"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_5.png" id="f5"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_6.png" id="f6"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_7.png" id="f7"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_8.png" id="f8"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_1.png" id="f9"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_2.png" id="f10"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_3.png" id="f11"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_4.png" id="f12"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_5.png" id="f13"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_6.png" id="f14"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_7.png" id="f15"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_8.png" id="f16"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_1.png" id="f17"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_2.png" id="f18"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_3.png" id="f19"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_4.png" id="f20"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_5.png" id="f21"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_6.png" id="f22"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_7.png" id="f23"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_1.png" id="f24"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_2.png" id="f25"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_3.png" id="f26"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_4.png" id="f27"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_5.png" id="f28"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_6.png" id="f29"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_7.png" id="f30"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_1.png" id="f31"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_2.png" id="f32"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_3.png" id="f33"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_4.png" id="f34"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_5.png" id="f35"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_6.png" id="f36"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_7.png" id="f37"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_8.png" id="f38"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_9.png" id="f39"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_10.png" id="f40"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_11.png" id="f41"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_12.png" id="f42"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_13.png" id="f43"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_14.png" id="f44"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_15.png" id="f45"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_16.png" id="f46"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_17.png" id="f47"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_1.png" id="f48"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_2.png" id="f49"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_3.png" id="f50"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_4.png" id="f51"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_5.png" id="f52"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_6.png" id="f53"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_7.png" id="f54"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_8.png" id="f55"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_9.png" id="f56"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_10.png" id="f57"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_11.png" id="f58"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_12.png" id="f59"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_13.png" id="f60"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_14.png" id="f61"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_15.png" id="f62"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_1.png" id="f63"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_2.png" id="f64"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_3.png" id="f65"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_4.png" id="f66"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_5.png" id="f67"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_6.png" id="f68"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_1.png" id="f69"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_2.png" id="f70"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_3.png" id="f71"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_4.png" id="f72"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_5.png" id="f73"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_6.png" id="f74"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_7.png" id="f75"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_8.png" id="f76"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_9.png" id="f77"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_10.png" id="f78"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_11.png" id="f79"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_12.png" id="f80"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_13.png" id="f81"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_14.png" id="f82"]
+[ext_resource type="Texture2D" path="res://Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_15.png" id="f83"]
+
+[sub_resource type="SpriteFrames" id="Frames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("f1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f8")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 11.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("f9")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f12")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f13")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f14")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f15")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f16")
+}],
+"loop": true,
+"name": &"run",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("f17")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f18")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f19")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f20")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f22")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f23")
+}],
+"loop": false,
+"name": &"1_atk",
+"speed": 13.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("f24")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f25")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f26")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f27")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f28")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f29")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f30")
+}],
+"loop": false,
+"name": &"2_atk",
+"speed": 13.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("f31")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f32")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f33")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f34")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f35")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f36")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f37")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f38")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f39")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f40")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f41")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f42")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f43")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f44")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f45")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f46")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f47")
+}],
+"loop": false,
+"name": &"3_atk",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("f48")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f49")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f50")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f51")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f52")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f53")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f54")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f55")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f56")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f57")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f58")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f59")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f60")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f61")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f62")
+}],
+"loop": false,
+"name": &"sp_atk",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("f63")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f64")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f65")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f66")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f67")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f68")
+}],
+"loop": false,
+"name": &"take hit",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("f69")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f70")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f71")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f72")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f73")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f74")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f75")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f76")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f77")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f78")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f79")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f80")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f81")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f82")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f83")
+}],
+"loop": false,
+"name": &"death",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="Body"]
+size = Vector2(20, 35)
+
+[node name="CrystalMauler" type="CharacterBody2D"]
+collision_layer = 5
+script = ExtResource("script")
+contact_damage = 0.5
+attack_profiles = {
+"1_atk": {
+"damage": 0.5,
+"frames": Vector2i(3, 5),
+"offset": Vector2(24, 38),
+"size": Vector2(52, 48)
+},
+"2_atk": {
+"damage": 0.5,
+"frames": Vector2i(3, 5),
+"offset": Vector2(22, 36),
+"size": Vector2(48, 52)
+},
+"3_atk": {
+"damage": 0.5,
+"frames": Vector2i(8, 14),
+"offset": Vector2(66, 26),
+"size": Vector2(132, 76)
+},
+"sp_atk": {
+"damage": 1.0,
+"frames": Vector2i(8, 13),
+"min_phase": 2,
+"offset": Vector2(72, 21),
+"size": Vector2(140, 84)
+}
+}
+max_health = 16.0
+knockback_horizontal = 0.0
+knockback_vertical = 0.0
+patrol_enabled = false
+chase_speed = 52.0
+detection_range = 520.0
+detection_vertical_range = 220.0
+lose_aggro_range = 700.0
+lose_aggro_vertical_range = 280.0
+attack_range = 52.0
+attack_stop_margin = 4.0
+minimum_player_distance = 30.0
+separation_speed = 40.0
+return_to_origin = false
+attack_animation = &"1_atk"
+attack_damage = 0.5
+attack_cooldown = 1.4
+mirror_sprite_on_flip = true
+show_health_bar = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("Frames")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(6, 45.5)
+shape = SubResource("Body")
+
+[node name="BossHealthBar" type="CanvasLayer" parent="." instance=ExtResource("bar_scene")]
+layer = 10
+script = ExtResource("bar_script")
+boss_name = "CRYSTAL MAULER"

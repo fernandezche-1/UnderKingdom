@@ -419,6 +419,7 @@ size = Vector2(60, 98)
 [node name="DemonSlimeJefe" type="CharacterBody2D" unique_id=1600620573]
 collision_layer = 5
 script = ExtResource("script")
+contact_damage = 0.5
 attack_profiles = {
 "attack": {
 "blast_frame": 11,

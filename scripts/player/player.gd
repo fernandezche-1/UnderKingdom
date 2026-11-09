@@ -19,15 +19,14 @@ enum PlayerAction {
     DEFEND,
     ULTIMATE,
     HURT,
-    CAST
+    CAST,
+    AIR_DASH
 }
 
-## Cómo se juega cada animación de ataque. Las del combo son acumulativas:
-## "attack 2" empieza repitiendo el tajo de "attack" (cuadros 0-7) y
-## "attack 3" repite todo "attack 2" (0-16) antes de su remate, así que cada
-## etapa arranca en el cuadro donde empieza lo suyo. Cada golpe es una ventana
-## de cuadros [desde, hasta]: un enemigo recibe un impacto por ventana.
-## area: "front" delante, "wide" delante y más grande, "blast" explosión más
+## Cómo se juega cada animación de ataque. "attack" y "attack 2" son los dos
+## tajos de la espada, que se alternan sin fin en cada pulsación. Cada golpe es
+## una ventana de cuadros [desde, hasta]: un enemigo recibe un impacto por ventana.
+## area: "sword" al alcance de la espada, "front" delante, "wide" delante y más grande, "blast" explosión más
 ## lejos, "around" alrededor del Player (la ráfaga golpea delante y detrás).
 ## knockback: false = daño sin empuje ni aturdir, para que los golpes
 ## seguidos de una ráfaga conecten todos; el último de cada ataque empuja.
@@ -36,25 +35,14 @@ const ATTACK_PROFILES := {
     &"puch": {"start": 0, "end": 5, "hits": [
         {"frames": Vector2i(3, 4), "ratio": 1.0, "area": "front", "knockback": true},
     ]},
-    &"attack": {"start": 0, "end": 10, "lunge": true, "hits": [
-        {"frames": Vector2i(4, 6), "ratio": 1.0, "area": "front", "knockback": true},
+    &"attack": {"start": 0, "end": 2, "lunge": true, "hits": [
+        {"frames": Vector2i(1, 1), "ratio": 1.0, "area": "sword", "knockback": true},
     ]},
-    &"attack 2": {"start": 8, "end": 18, "hits": [
-        {"frames": Vector2i(9, 9), "ratio": 0.125, "area": "around", "knockback": false},
-        {"frames": Vector2i(10, 10), "ratio": 0.125, "area": "around", "knockback": false},
-        {"frames": Vector2i(11, 11), "ratio": 0.125, "area": "around", "knockback": false},
-        {"frames": Vector2i(12, 12), "ratio": 0.125, "area": "around", "knockback": false},
-        {"frames": Vector2i(13, 13), "ratio": 0.125, "area": "around", "knockback": false},
-        {"frames": Vector2i(14, 14), "ratio": 0.125, "area": "around", "knockback": false},
-        {"frames": Vector2i(15, 15), "ratio": 0.125, "area": "around", "knockback": false},
-        {"frames": Vector2i(16, 16), "ratio": 0.125, "area": "around", "knockback": true},
+    &"attack 2": {"start": 0, "end": 2, "hits": [
+        {"frames": Vector2i(1, 1), "ratio": 1.0, "area": "sword", "knockback": true},
     ]},
-    &"attack 3": {"start": 17, "end": 27, "lunge": true, "hits": [
-        {"frames": Vector2i(22, 22), "ratio": 0.4, "area": "wide", "knockback": false},
-        {"frames": Vector2i(23, 25), "ratio": 0.6, "area": "blast", "knockback": true},
-    ]},
-    &"air attack": {"start": 0, "end": 7, "hits": [
-        {"frames": Vector2i(3, 5), "ratio": 1.0, "area": "front", "knockback": true},
+    &"air attack": {"start": 0, "end": 4, "hits": [
+        {"frames": Vector2i(1, 2), "ratio": 1.0, "area": "sword", "knockback": true},
     ]},
     &"attack ultimate": {"start": 0, "end": 17, "hits": [
         {"frames": Vector2i(10, 10), "ratio": 0.15, "area": "wide", "knockback": false},
@@ -66,10 +54,14 @@ const ATTACK_PROFILES := {
 }
 
 @export_category("Movimiento")
-@export_range(20.0, 800.0, 5.0) var move_speed: float = 230.0
+## Con espada. -470 son unas 4,6 piezas (74 px) de salto.
+@export_range(20.0, 800.0, 5.0) var move_speed: float = 170.0
 @export_range(100.0, 5000.0, 50.0) var acceleration: float = 1800.0
 @export_range(100.0, 5000.0, 50.0) var deceleration: float = 2200.0
-@export_range(-1200.0, -100.0, 10.0) var jump_velocity: float = -560.0
+@export_range(-1200.0, -100.0, 10.0) var jump_velocity: float = -470.0
+## Con la habilidad Agilidad ("agility"). -560 son unas 6,5 piezas (104 px).
+@export_range(20.0, 800.0, 5.0) var agility_move_speed: float = 230.0
+@export_range(-1200.0, -100.0, 10.0) var agility_jump_velocity: float = -560.0
 @export_range(100.0, 5000.0, 50.0) var gravity: float = 1500.0
 @export_range(100.0, 3000.0, 50.0) var max_fall_speed: float = 1000.0
 
@@ -111,33 +103,32 @@ const ATTACK_PROFILES := {
 @export_category("Combate")
 @export_range(0.1, 10.0, 0.05) var attack_1_damage: float = 0.50
 @export_range(0.05, 0.5, 0.05) var unarmed_attack_damage: float = 0.25
-@export_range(0.1, 10.0, 0.05) var attack_2_damage: float = 0.75
+## Sin espada: se corre y se salta menos, y cada golpe quita esto de más.
+@export_range(20.0, 800.0, 5.0) var unarmed_move_speed: float = 130.0
+@export_range(-1200.0, -100.0, 10.0) var unarmed_jump_velocity: float = -380.0
+@export_range(0.0, 2.0, 0.25) var unarmed_extra_damage_taken: float = 0.25
+## Tajo ascendente ("attack 2"); con el Golpe final hace attack_3_damage.
+@export_range(0.1, 10.0, 0.05) var attack_2_damage: float = 0.50
 @export_range(0.1, 10.0, 0.05) var attack_3_damage: float = 1.00
 @export_range(0.1, 10.0, 0.05) var air_attack_damage: float = 0.75
 @export_range(0.1, 20.0, 0.05) var ultimate_damage: float = 2.00
 @export_range(0.0, 1.0, 0.01) var attack_active_start_ratio: float = 0.28
 @export_range(0.0, 1.0, 0.01) var attack_active_end_ratio: float = 0.72
 @export_range(10.0, 300.0, 1.0) var attack_hitbox_offset_x: float = 52.0
+## Área "sword": la hoja llega a unos 24 px del centro, y la caja llega un poco más.
+@export_range(0.0, 100.0, 1.0) var sword_hitbox_offset_x: float = 20.0
+@export_range(0.1, 2.0, 0.05) var sword_hitbox_scale_x: float = 0.60
 @export_range(-100.0, 200.0, 1.0) var attack_hitbox_offset_y: float = 34.0
 @export_range(0.05, 2.0, 0.05) var combo_queue_window: float = 0.45
 @export_range(1.0, 2.0, 0.05) var combo_base_speed_multiplier: float = 1.35
-## Velocidad propia del primer tajo, que sustituye a combo_base_speed_multiplier:
-## es el golpe que más se usa y el único al empezar una partida.
+## Velocidad propia del tajo descendente, que sustituye a combo_base_speed_multiplier.
 @export_range(1.0, 2.0, 0.05) var attack_1_speed_multiplier: float = 1.35
-## Velocidad propia del ataque aéreo (la animación del pack va a 9 fps).
+## Velocidad de los dos tajos con la Ráfaga, sobre la propia de cada uno.
+@export_range(1.0, 2.0, 0.05) var rafaga_speed_multiplier: float = 1.20
+## Velocidad propia del ataque aéreo (la animación va a 8 fps).
 @export_range(1.0, 3.0, 0.05) var air_attack_speed_multiplier: float = 1.80
 ## Velocidad del puñetazo sin espada (la animación va a 5 fps: 2.4 la deja en 12).
 @export_range(1.0, 4.0, 0.05) var unarmed_attack_speed_multiplier: float = 2.40
-@export_range(0, 30, 1) var attack_1_chain_frame: int = 7
-## Sin la Ráfaga, el primer tajo se encadena consigo mismo desde
-## attack_1_chain_frame y vuelve a empezar en este cuadro, saltándose la
-## preparación agachada (cuadros 0-1, la misma pose que el final).
-@export_range(0, 10, 1) var attack_1_repeat_frame: int = 2
-## Sin la Ráfaga, cuadro desde el que el tajo se encadena consigo mismo. Va
-## después de attack_1_chain_frame para que machacar el botón haga menos daño
-## por segundo que el combo.
-@export_range(0, 10, 1) var attack_1_repeat_chain_frame: int = 9
-@export_range(0, 40, 1) var attack_2_chain_frame: int = 17
 ## Si está activado, moverse, saltar o rodar corta los ataques. Desactivado por defecto.
 @export var movement_cancels_attacks: bool = false
 ## Distancia total del roll. Arranca rápido y frena hasta detenerse al
@@ -145,6 +136,11 @@ const ATTACK_PROFILES := {
 ## actual (el más ancho mide 42 px) si se rueda desde cerca.
 @export_range(16.0, 400.0, 4.0) var roll_distance: float = 96.0
 @export_range(0.1, 10.0, 0.1) var ultimate_cooldown: float = 6.0
+## Dash en el aire (habilidad "air_dash", P66): el botón de rodar pulsado en el
+## aire. Recorre air_dash_distance en air_dash_time, sin gravedad y sin
+## invulnerabilidad, una vez por salto: se recarga al tocar el suelo o una escalera.
+@export_range(16.0, 300.0, 4.0) var air_dash_distance: float = 112.0
+@export_range(0.05, 0.6, 0.01) var air_dash_time: float = 0.18
 
 @export_category("Impacto")
 ## Paso hacia delante de los ataques con "lunge" en ATTACK_PROFILES.
@@ -249,6 +245,8 @@ var _combo_queued: bool = false
 var _combo_queue_left: float = 0.0
 var _combo_buffered_inputs: int = 0
 var _roll_direction: float = 1.0
+var _air_dash_direction: float = 1.0
+var _air_dash_used: bool = false
 var _ultimate_cooldown_left: float = 0.0
 var _fireball_cooldown_left: float = 0.0
 var _fireball_released: bool = false
@@ -277,11 +275,32 @@ var _armed_sprite_offset: Vector2 = Vector2.ZERO
 var _base_sprite_offset: Vector2 = Vector2.ZERO
 var _uses_normalized_prisoner_frames: bool = false
 var _armed_sprite_scale: Vector2 = Vector2.ONE
+## Aspecto con espada por atuendo (P68). _harapos_sprite_frames es el de
+## player.tscn (E1); _armed_sprite_frames, el del atuendo que se lleva, con las
+## animaciones que le falten tomadas del anterior. Escala de dibujo por animación.
+var _harapos_sprite_frames: SpriteFrames
+var _armed_animation_scales: Dictionary = ARMED_ANIMATION_SCALES
+var _outfit_look_id: String = ""
+var _outfit_looks: Dictionary = {}
 @export var debug_slide_collisions: bool = true
 var _last_blocked_contact_signature: String = ""
 var _armory_stuck_frames: int = 0
 var _armory_block_reported: bool = false
 const ARMORY_STUCK_FRAMES_TO_REPORT: int = 5
+## Animaciones con espada en hojas de alta resolución (864x384 por cuadro): se
+## dibujan más pequeñas para dar el mismo detalle en pantalla que el prisionero.
+const ARMED_ANIMATION_SCALES: Dictionary = {
+    &"air attack": 1.0 / 3.0,
+    &"attack": 1.0 / 3.0,
+    &"attack 2": 1.0 / 3.0,
+    &"idle": 1.0 / 3.0,
+    &"run": 1.0 / 3.0,
+    &"take hit": 1.0 / 3.0,
+    &"death": 1.0 / 3.0,
+    &"escaleras": 1.0 / 3.0,
+    &"jump up": 1.0 / 3.0,
+    &"jump down": 1.0 / 3.0,
+}
 const UNARMED_IDLE_SHEET: Texture2D = preload("res://Elementals_fire_knight_FREE_v1.1/idle_8_frames_288x128.png")
 const UNARMED_PUNCH_SHEET: Texture2D = preload("res://Elementals_fire_knight_FREE_v1.1/Right_Punch_6_frames_1728x128_alineado.png")
 const UNARMED_RUN_SHEET: Texture2D = preload("res://Elementals_fire_knight_FREE_v1.1/run_unarmed_8_frames_2304x128.png")
@@ -306,6 +325,10 @@ func _ready() -> void:
         _unarmed_sprite_frames = sprite.sprite_frames
         _load_armed_sprite_frames()
     _add_fireball_animation(_armed_sprite_frames)
+    _harapos_sprite_frames = _armed_sprite_frames
+    _select_outfit_look()
+    sprite.animation_changed.connect(_on_sprite_animation_changed)
+    GameManager.outfit_changed.connect(_on_outfit_changed)
     set_sword_equipped(GameManager.has_sword)
     floor_max_angle = deg_to_rad(max_stair_slope_degrees)
     floor_snap_length = floor_snap_distance
@@ -339,11 +362,13 @@ func set_sword_equipped(equipped: bool) -> void:
         return
     if _armed_sprite_frames == null:
         _armed_sprite_frames = sprite.sprite_frames
+    if _harapos_sprite_frames != null:
+        _select_outfit_look()
     if equipped:
         sprite.sprite_frames = _armed_sprite_frames
         sprite.position = _armed_sprite_position
         sprite.offset = _armed_sprite_offset
-        sprite.scale = _armed_sprite_scale
+        sprite.scale = _current_armed_scale()
     else:
         if _unarmed_sprite_frames == null:
             _unarmed_sprite_frames = _build_unarmed_sprite_frames()
@@ -378,7 +403,7 @@ func set_sword_equipped(equipped: bool) -> void:
     _active_climb_zone = null
     _drop_through_left = 0.0
     sprite.speed_scale = 1.0
-    sprite.scale = _armed_sprite_scale if equipped else _base_sprite_scale
+    sprite.scale = _current_armed_scale() if equipped else _base_sprite_scale
     sprite.stop()
     sprite.play(&"idle")
     sprite.frame = 0
@@ -401,7 +426,119 @@ func _load_armed_sprite_frames() -> void:
         _armed_sprite_offset = armed_sprite.offset
         _armed_sprite_position = armed_sprite.position
         _armed_sprite_scale = armed_sprite.scale
+        # Los cuadros con espada se ajustan a la caja de player.tscn: se llevan
+        # a la de esta escena para que los pies pisen donde está el cuerpo.
+        var reference_body := visual_reference.get_node_or_null("CollisionShape2D") as CollisionShape2D
+        var own_body := get_node_or_null("CollisionShape2D") as CollisionShape2D
+        if reference_body != null and own_body != null:
+            _armed_sprite_position += _body_feet(own_body) - _body_feet(reference_body)
     visual_reference.free()
+
+
+func _current_armed_scale() -> Vector2:
+    return _armed_sprite_scale * float(_armed_animation_scales.get(sprite.animation, 1.0))
+
+
+## Atuendo cuyo aspecto se usa con espada: el que se lleva, o los harapos si
+## todavía es el desnudo (la espada se acaba de dar o se pide sin atuendo).
+func _armed_outfit_id() -> String:
+    var outfit_id := GameManager.get_outfit_id()
+    var info := GameManager.get_outfit_info(outfit_id)
+    if info.is_empty() or not bool(info.get("sword", false)):
+        return "harapos"
+    return outfit_id
+
+
+## Elige el SpriteFrames con espada del atuendo actual. Devuelve si cambió.
+func _select_outfit_look() -> bool:
+    var outfit_id := _armed_outfit_id()
+    if outfit_id == _outfit_look_id:
+        return false
+    if not _outfit_looks.has(outfit_id):
+        _outfit_looks[outfit_id] = _build_outfit_look(outfit_id)
+    var look: Dictionary = _outfit_looks[outfit_id]
+    var changed: bool = look.frames != _armed_sprite_frames
+    _outfit_look_id = outfit_id
+    _armed_sprite_frames = look.frames
+    _armed_animation_scales = look.scales
+    return changed
+
+
+## Superpone, por nivel, los SpriteFrames de los atuendos con espada hasta el
+## pedido: cada animación sale del último que la tiene (P46, sección 10: si
+## falta una, la del atuendo anterior). Sin ninguno propio, son los harapos.
+func _build_outfit_look(outfit_id: String) -> Dictionary:
+    var target_level := int(GameManager.get_outfit_info(outfit_id).get("level", 1))
+    var layers: Array[SpriteFrames] = []
+    var levels: Array[int] = []
+    for candidate_id: String in GameManager.OUTFIT_DEFINITIONS:
+        var info: Dictionary = GameManager.OUTFIT_DEFINITIONS[candidate_id]
+        var level := int(info.get("level", 0))
+        var path := String(info.get("sprite_frames", ""))
+        if level < 2 or level > target_level or path.is_empty():
+            continue
+        var layer := load(path) as SpriteFrames
+        if layer == null:
+            push_warning("Player: no se pudo cargar el aspecto '%s' del atuendo '%s'." % [path, candidate_id])
+            continue
+        var insert_at := levels.bsearch(level)
+        levels.insert(insert_at, level)
+        layers.insert(insert_at, layer)
+    if layers.is_empty():
+        return {"frames": _harapos_sprite_frames, "scales": ARMED_ANIMATION_SCALES}
+    var frames := SpriteFrames.new()
+    frames.remove_animation(&"default")
+    var scales: Dictionary = {}
+    for animation: StringName in _harapos_sprite_frames.get_animation_names():
+        _copy_sprite_animation(_harapos_sprite_frames, frames, animation)
+        scales[animation] = float(ARMED_ANIMATION_SCALES.get(animation, 1.0))
+    for layer: SpriteFrames in layers:
+        var layer_scales: Dictionary = layer.get_meta(&"animation_scales", {})
+        for animation: StringName in layer.get_animation_names():
+            _copy_sprite_animation(layer, frames, animation)
+            scales[animation] = float(layer_scales.get(animation, 1.0))
+    return {"frames": frames, "scales": scales}
+
+
+static func _copy_sprite_animation(source: SpriteFrames, target: SpriteFrames, animation: StringName) -> void:
+    if target.has_animation(animation):
+        target.remove_animation(animation)
+    target.add_animation(animation)
+    target.set_animation_speed(animation, source.get_animation_speed(animation))
+    target.set_animation_loop(animation, source.get_animation_loop(animation))
+    for index in source.get_frame_count(animation):
+        target.add_frame(animation, source.get_frame_texture(animation, index), source.get_frame_duration(animation, index))
+
+
+## Al encontrar un atuendo cambia el aspecto sin cortar la acción en curso.
+func _on_outfit_changed(_outfit_id: String) -> void:
+    var previous := _armed_sprite_frames
+    if not _select_outfit_look() or sprite.sprite_frames != previous:
+        return
+    var animation := sprite.animation
+    var frame := sprite.frame
+    var progress := sprite.frame_progress
+    var playing := sprite.is_playing()
+    sprite.sprite_frames = _armed_sprite_frames
+    if not _armed_sprite_frames.has_animation(animation):
+        sprite.play(&"idle")
+    else:
+        sprite.animation = animation
+        sprite.frame = mini(frame, _armed_sprite_frames.get_frame_count(animation) - 1)
+        sprite.frame_progress = progress
+        if playing:
+            sprite.play(animation)
+    sprite.scale = _current_armed_scale()
+
+
+## Las acciones cambian de animación sin pasar por _update_animation.
+func _on_sprite_animation_changed() -> void:
+    if sprite.sprite_frames == _armed_sprite_frames:
+        sprite.scale = _current_armed_scale()
+
+
+func _body_feet(body: CollisionShape2D) -> Vector2:
+    return body.position + Vector2(0.0, (body.shape as RectangleShape2D).size.y * 0.5)
 
 
 ## La bola de fuego no está en el SpriteFrames de player.tscn: se añade al
@@ -509,8 +646,13 @@ func _physics_process(delta: float) -> void:
     _update_defense_state()
     _try_cancel_attack_by_movement()
 
+    if is_on_floor() or _climbing:
+        _air_dash_used = false
+
     if _action == PlayerAction.ROLL:
         _process_roll(delta)
+    elif _action == PlayerAction.AIR_DASH:
+        _process_air_dash()
     elif _action == PlayerAction.ATTACK:
         _process_attack_movement(delta)
     elif _action == PlayerAction.AIR_ATTACK:
@@ -539,7 +681,9 @@ func _physics_process(delta: float) -> void:
         requested_horizontal_direction = signf(velocity_before_slide.x)
     move_and_slide()
     var movement_function := "_process_normal_movement"
-    if _action == PlayerAction.ROLL:
+    if _action == PlayerAction.AIR_DASH:
+        movement_function = "_process_air_dash"
+    elif _action == PlayerAction.ROLL:
         movement_function = "_process_roll"
     elif _action in [PlayerAction.ATTACK, PlayerAction.ULTIMATE, PlayerAction.CAST]:
         movement_function = "_process_attack_movement"
@@ -610,7 +754,7 @@ func _process_cinematic_movement(delta: float) -> void:
 
 
 func _update_cinematic_animation() -> void:
-    sprite.scale = _armed_sprite_scale if GameManager.has_sword else _base_sprite_scale
+    sprite.scale = _current_armed_scale() if GameManager.has_sword else _base_sprite_scale
     sprite.speed_scale = 1.0
     if not GameManager.has_sword:
         if sprite.animation != &"idle" or not sprite.is_playing():
@@ -638,17 +782,13 @@ func request_attack() -> void:
         return
 
     if _action == PlayerAction.ATTACK:
-        var remaining_steps := _remaining_combo_inputs()
-        if remaining_steps > 0:
-            # Guardamos pulsaciones reales, no solo un booleano. Asi, si el
-            # jugador pulsa dos veces durante attack 1, quedan preparados
-            # attack 2 Y attack 3 en vez de perderse la tercera pulsacion.
-            _combo_buffered_inputs = mini(_combo_buffered_inputs + 1, remaining_steps)
-            _combo_queued = _combo_buffered_inputs > 0
-            _combo_queue_left = maxf(
-                _combo_queue_left,
-                _action_time_left + combo_queue_window + 0.25
-            )
+        # Basta con recordar una pulsación: los tajos se alternan sin fin.
+        _combo_buffered_inputs = 1
+        _combo_queued = true
+        _combo_queue_left = maxf(
+            _combo_queue_left,
+            _action_time_left + combo_queue_window + 0.25
+        )
         return
 
     if _action not in [PlayerAction.NORMAL, PlayerAction.DEFEND]:
@@ -669,7 +809,12 @@ func request_attack() -> void:
 
 
 func request_roll() -> void:
-    if dead or not GameManager.has_sword or _climbing or not is_on_floor() or not GameManager.has_ability("roll"):
+    if dead or controls_locked or not GameManager.has_sword or _climbing:
+        return
+    if not is_on_floor():
+        _request_air_dash()
+        return
+    if not GameManager.has_ability("roll"):
         return
     if _action == PlayerAction.ATTACK and movement_cancels_attacks:
         _finish_action()
@@ -691,6 +836,42 @@ func request_roll() -> void:
     _invulnerability_left = maxf(_invulnerability_left, _action_total_time * 0.82)
     _enable_roll_enemy_passthrough()
     sprite.play(&"roll")
+
+
+## Rodar pulsado en el aire. Solo con la habilidad, sin acción en curso y una
+## vez por salto.
+func _request_air_dash() -> void:
+    if _air_dash_used or _action != PlayerAction.NORMAL:
+        return
+    if not GameManager.has_ability("air_dash"):
+        return
+    var input_dir := _get_horizontal_input()
+    if not is_zero_approx(input_dir):
+        _air_dash_direction = signf(input_dir)
+    else:
+        _air_dash_direction = -1.0 if sprite.flip_h else 1.0
+    sprite.flip_h = _air_dash_direction < 0.0
+    _air_dash_used = true
+    _action = PlayerAction.AIR_DASH
+    _action_total_time = air_dash_time
+    _action_time_left = air_dash_time
+    # Arte provisional (R5): la animación de rodar, apretada al tiempo del dash.
+    sprite.play(&"roll")
+    sprite.speed_scale = maxf(_animation_duration(&"roll") / air_dash_time, 1.0)
+
+
+func _process_air_dash() -> void:
+    velocity.x = _air_dash_direction * air_dash_distance / maxf(air_dash_time, 0.01)
+    velocity.y = 0.0
+    _jump_requested = false
+
+
+func has_air_dashed() -> bool:
+    return _air_dash_used
+
+
+func is_air_dashing() -> bool:
+    return _action == PlayerAction.AIR_DASH
 
 
 func _try_context_interaction() -> bool:
@@ -828,7 +1009,7 @@ func _log_blocked_horizontal_collisions(
         get_path(),
         global_position,
         horizontal_input,
-        horizontal_input * move_speed,
+        horizontal_input * get_move_speed(),
         velocity_before.x,
         velocity.x,
         displacement,
@@ -939,18 +1120,16 @@ func _update_fireball_release() -> void:
     )
 
 
-## start_frame >= 0 arranca la animación en ese cuadro en vez del "start" de su
-## perfil (el primer tajo repetido se salta la preparación).
-func _start_attack(
-    animation_name: StringName,
-    damage: float,
-    action_type: PlayerAction,
-    start_frame: int = -1
-) -> void:
+func _start_attack(animation_name: StringName, damage: float, action_type: PlayerAction) -> void:
     if not GameManager.has_sword and animation_name != &"puch":
         return
+    # Mejoras encontradas (empuñadura): solo los tajos con espada, el aéreo
+    # incluido; ni los puñetazos ni la Ultimate.
+    if animation_name in [&"attack", &"attack 2", &"air attack"]:
+        damage += GameManager.get_found_upgrade_bonus("slash_damage")
+        damage += GameManager.get_outfit_slash_bonus()
     var profile := _attack_profile(animation_name)
-    var first_frame := int(profile.start) if start_frame < 0 else start_frame
+    var first_frame := int(profile.start)
     _attack_sequence_id += 1
     _action = action_type
     _current_attack_damage = damage
@@ -973,26 +1152,6 @@ func _start_attack(
     sprite.frame = first_frame
     sprite.frame_progress = 0.0
     attack_started.emit(animation_name, damage)
-
-
-func _start_combo_step(step: int) -> void:
-    _combo_step = step
-    _combo_queued = _combo_buffered_inputs > 0
-    _combo_queue_left = 0.0
-
-    match step:
-        2:
-            _start_attack(&"attack 2", attack_2_damage, PlayerAction.ATTACK)
-        3:
-            _start_attack(&"attack 3", attack_3_damage, PlayerAction.ATTACK)
-        _:
-            _finish_action()
-            return
-
-    # Si el jugador ya habia pulsado el siguiente ataque, conservamos ese
-    # input durante esta nueva etapa para que el combo no se corte.
-    if _combo_buffered_inputs > 0:
-        _combo_queue_left = _action_time_left + combo_queue_window + 0.25
 
 
 func _update_combat_timers(delta: float) -> void:
@@ -1024,6 +1183,7 @@ func _update_combat_timers(delta: float) -> void:
         PlayerAction.ATTACK,
         PlayerAction.AIR_ATTACK,
         PlayerAction.ROLL,
+        PlayerAction.AIR_DASH,
         PlayerAction.ULTIMATE,
         PlayerAction.HURT,
         PlayerAction.CAST
@@ -1037,48 +1197,23 @@ func _update_action_state() -> void:
         _finish_action()
         return
 
-    # Cancelamos solo los frames de recuperacion de attack 1 y attack 2.
-    # El siguiente golpe puede arrancar antes de que termine toda la animacion,
-    # siempre que el jugador ya lo haya dejado en el buffer.
-    if (
-        _action == PlayerAction.ATTACK
-        and _remaining_combo_inputs() > 0
-        and _combo_buffered_inputs > 0
-        and _can_chain_combo_early()
-    ):
-        _consume_combo_buffer_and_start_next()
-        return
-
     if _action_time_left > 0.0:
         return
 
     if _action == PlayerAction.ATTACK:
-        if _combo_buffered_inputs > 0 and _remaining_combo_inputs() > 0:
-            _consume_combo_buffer_and_start_next()
+        if _combo_buffered_inputs > 0:
+            _start_next_slash()
         else:
             _finish_action()
     elif _action in [
         PlayerAction.AIR_ATTACK,
         PlayerAction.ROLL,
+        PlayerAction.AIR_DASH,
         PlayerAction.ULTIMATE,
         PlayerAction.HURT,
         PlayerAction.CAST
     ]:
         _finish_action()
-
-
-func _can_chain_combo_early() -> bool:
-    if sprite.animation != _current_attack_animation:
-        return false
-
-    match _current_attack_animation:
-        &"attack":
-            var chain_frame := attack_1_repeat_chain_frame if _repeats_first_attack() else attack_1_chain_frame
-            return sprite.frame >= maxi(chain_frame, _last_hit_frame() + 1)
-        &"attack 2":
-            return sprite.frame >= maxi(attack_2_chain_frame, _last_hit_frame() + 1)
-        _:
-            return false
 
 
 func _try_cancel_attack_by_movement() -> void:
@@ -1116,40 +1251,23 @@ func _last_hit_frame() -> int:
     return last
 
 
-func _consume_combo_buffer_and_start_next() -> void:
-    if _combo_buffered_inputs <= 0 or _remaining_combo_inputs() <= 0:
+## Alterna los dos tajos. El descendente repetido no empuja, para que machacar
+## el botón no deje al enemigo aturdido todo el rato.
+func _start_next_slash() -> void:
+    _combo_buffered_inputs = 0
+    _combo_queued = false
+    _combo_queue_left = 0.0
+    if _combo_step == 1:
+        _combo_step = 2
+        _start_attack(&"attack 2", rising_slash_damage(), PlayerAction.ATTACK)
         return
-
-    _combo_buffered_inputs -= 1
-    _combo_queued = _combo_buffered_inputs > 0
-    if _repeats_first_attack():
-        _start_attack(&"attack", attack_1_damage, PlayerAction.ATTACK, attack_1_repeat_frame)
-        _attack_is_repeat = true
-        return
-    _start_combo_step(_combo_step + 1)
+    _combo_step = 1
+    _start_attack(&"attack", attack_1_damage, PlayerAction.ATTACK)
+    _attack_is_repeat = true
 
 
-## Pulsaciones que se pueden guardar ahora para seguir atacando.
-func _remaining_combo_inputs() -> int:
-    if _repeats_first_attack():
-        return 1
-    return maxi(_max_combo_step() - _combo_step, 0)
-
-
-## Sin la Ráfaga, el primer tajo se encadena consigo mismo: machacar el botón
-## da tajos seguidos en vez de perder las pulsaciones.
-func _repeats_first_attack() -> bool:
-    return _max_combo_step() == 1 and _combo_step == 1
-
-
-## Etapas del combo en suelo que el Player ya tiene (GameManager: combo_2,
-## combo_3). Sin la Ráfaga, el Golpe final tampoco se encadena.
-func _max_combo_step() -> int:
-    if not GameManager.has_sword:
-        return 1
-    if not GameManager.has_ability("combo_2"):
-        return 1
-    return 3 if GameManager.has_ability("combo_3") else 2
+func rising_slash_damage() -> float:
+    return attack_3_damage if GameManager.has_ability("combo_3") else attack_2_damage
 
 
 func _finish_action() -> void:
@@ -1157,6 +1275,9 @@ func _finish_action() -> void:
     if previous_action == PlayerAction.ROLL:
         _disable_roll_enemy_passthrough()
 
+    if previous_action == PlayerAction.AIR_DASH:
+        # Al acabar conserva algo de impulso, pero sin la velocidad del dash.
+        velocity.x = _air_dash_direction * get_move_speed()
     _action = PlayerAction.NORMAL
     _action_time_left = 0.0
     _action_total_time = 0.0
@@ -1210,7 +1331,7 @@ func _process_normal_movement(delta: float) -> void:
     _try_start_drop_through()
 
     var direction := _get_horizontal_input()
-    var target_speed := direction * move_speed
+    var target_speed := direction * get_move_speed()
     var change_rate := acceleration if direction != 0.0 else deceleration
     velocity.x = move_toward(velocity.x, target_speed, change_rate * delta)
 
@@ -1218,7 +1339,7 @@ func _process_normal_movement(delta: float) -> void:
         velocity.y = minf(velocity.y + gravity * delta, max_fall_speed)
 
     if _jump_requested and is_on_floor():
-        velocity.y = jump_velocity
+        velocity.y = get_jump_velocity()
     _jump_requested = false
 
 
@@ -1327,6 +1448,13 @@ func _process_climbing() -> void:
         vertical -= 1.0
     if Input.is_action_pressed("move_down"):
         vertical += 1.0
+
+    # Escalera que nace bajo una plataforma de una vía (galería de la zona de
+    # pruebas, P71): al bajar se atraviesa la plataforma, como con S fuera de
+    # la escalera. Sobre suelo macizo no cambia nada.
+    if vertical > 0.0 and is_on_floor() and _drop_through_left <= 0.0:
+        set_collision_mask_value(one_way_collision_layer, false)
+        _drop_through_left = drop_through_time
 
     var axis := Vector2.DOWN
     var allow_horizontal := true
@@ -1481,7 +1609,7 @@ func _update_animation(direction: float) -> void:
         return
 
     sprite.speed_scale = 1.0
-    sprite.scale = _armed_sprite_scale if GameManager.has_sword else _base_sprite_scale
+    sprite.scale = _current_armed_scale() if GameManager.has_sword else _base_sprite_scale
 
     if direction < 0.0:
         sprite.flip_h = true
@@ -1518,8 +1646,7 @@ func _update_animation(direction: float) -> void:
             sprite.play(unarmed_animation)
         return
 
-    # En escaleras, la animación propia (de espaldas). Ya viene angosta, así
-    # que se dibuja a la escala normal; quieto en la escalera se congela.
+    # En escaleras, la animación propia (de espaldas); quieto en la escalera se congela.
     if _climbing:
         if sprite.animation != &"escaleras":
             sprite.play(&"escaleras")
@@ -1536,8 +1663,13 @@ func _update_animation(direction: float) -> void:
     elif absf(velocity.x) > 8.0:
         wanted = &"run"
 
-    if sprite.animation != wanted or not sprite.is_playing():
+    # El salto no va en bucle: se queda en su último cuadro hasta cambiar.
+    if sprite.animation != wanted or (not sprite.is_playing() and sprite.sprite_frames.get_animation_loop(wanted)):
+        var after_air_attack := sprite.animation == &"air attack"
         sprite.play(wanted)
+        # Tras un ataque en plena subida no se vuelve a la pose agachada del despegue.
+        if after_air_attack and wanted == &"jump up":
+            sprite.frame = sprite.sprite_frames.get_frame_count(wanted) - 1
 
 
 func _update_attack_hitbox_position() -> void:
@@ -1588,6 +1720,8 @@ func _update_attack_damage_window() -> void:
         "around":
             attack_hitbox.position = Vector2(0.0, attack_hitbox_offset_y)
             attack_hitbox.scale = Vector2(1.90, 1.35)
+        "sword":
+            _place_sword_hitbox()
         "wide":
             _update_attack_hitbox_position()
             attack_hitbox.scale = Vector2(1.45, 1.20)
@@ -1605,7 +1739,8 @@ func _update_attack_damage_window() -> void:
     )
     if connected:
         # El tajo repetido no aturde, pero se siente igual que el primero.
-        _play_hit_impact(bool(hit.knockback), area == "blast")
+        var heavy := area == "blast" or (_current_attack_animation == &"attack 2" and GameManager.has_ability("combo_3"))
+        _play_hit_impact(bool(hit.knockback), heavy)
 
 
 ## Hitstop y temblor al conectar con un enemigo: el peso de la espada se nota
@@ -1623,6 +1758,16 @@ func _reset_attack_hitbox() -> void:
     attack_hitbox.scale = Vector2.ONE
     _attack_subwindow_index = -1
     _update_attack_hitbox_position()
+    # La física ve la caja un tick después de moverla: en los tajos ya debe
+    # estar en su sitio antes de que llegue el cuadro del golpe.
+    if _current_attack_animation in [&"attack", &"attack 2", &"air attack"]:
+        _place_sword_hitbox()
+
+
+func _place_sword_hitbox() -> void:
+    var facing := -1.0 if sprite.flip_h else 1.0
+    attack_hitbox.position = Vector2(sword_hitbox_offset_x * facing, attack_hitbox_offset_y)
+    attack_hitbox.scale = Vector2(sword_hitbox_scale_x * GameManager.get_outfit_sword_reach(), 1.0)
 
 
 func _attack_profile(animation_name: StringName) -> Dictionary:
@@ -1804,12 +1949,15 @@ func _attack_speed_multiplier_for(animation_name: StringName) -> float:
     # aéreo se aceleran un poco incluso con vida normal.
     if animation_name == &"attack":
         multiplier *= maxf(attack_1_speed_multiplier, 1.0)
-    elif animation_name in [&"attack 2", &"attack 3"]:
+    elif animation_name == &"attack 2":
         multiplier *= maxf(combo_base_speed_multiplier, 1.0)
     elif animation_name == &"air attack":
         multiplier *= maxf(air_attack_speed_multiplier, 1.0)
     elif animation_name == &"puch":
         multiplier *= maxf(unarmed_attack_speed_multiplier, 1.0)
+
+    if animation_name in [&"attack", &"attack 2"] and GameManager.has_ability("combo_2"):
+        multiplier *= maxf(rafaga_speed_multiplier, 1.0)
 
     if is_adrenaline_active():
         if animation_name != &"attack ultimate" or adrenaline_affects_ultimate:
@@ -1825,6 +1973,19 @@ func is_adrenaline_active() -> bool:
         and max_health > 0.0
         and current_health <= max_health * adrenaline_health_ratio
     )
+
+
+## Sin espada, con espada o con Agilidad. La usa también el menú de pausa.
+func get_move_speed() -> float:
+    if not GameManager.has_sword:
+        return unarmed_move_speed
+    return agility_move_speed if GameManager.has_ability("agility") else move_speed
+
+
+func get_jump_velocity() -> float:
+    if not GameManager.has_sword:
+        return unarmed_jump_velocity
+    return agility_jump_velocity if GameManager.has_ability("agility") else jump_velocity
 
 
 func is_lifesteal_active() -> bool:
@@ -1882,16 +2043,6 @@ func _frames_duration(animation_name: StringName, from_frame: int, to_frame: int
     return maxf(duration, 0.08)
 
 
-func _is_flurry_active() -> bool:
-    # La ráfaga de attack 2 (cuadros 8-16) no se interrumpe al recibir daño.
-    return (
-        _action == PlayerAction.ATTACK
-        and _current_attack_animation == &"attack 2"
-        and sprite.animation == &"attack 2"
-        and sprite.frame <= 16
-    )
-
-
 func _hurt_animation_name() -> StringName:
     var wanted: StringName = &"take hit" if GameManager.has_sword else &"takehit"
     return wanted if sprite.sprite_frames.has_animation(wanted) else &"idle"
@@ -1928,6 +2079,10 @@ func take_damage(
                 _block_push_left = 0.25
         return true
 
+    if not GameManager.has_sword:
+        amount += unarmed_extra_damage_taken
+    amount = GameManager.reduce_damage_for_outfit(amount)
+
     # Modo dev: el golpe se recibe (animación, empuje, invulnerabilidad) pero
     # no quita vida.
     if not DevMode.infinite_health:
@@ -1937,17 +2092,6 @@ func take_damage(
 
     if current_health <= 0.0:
         die()
-        return true
-
-    # Durante la ráfaga de attack 2 el Player NO es invulnerable: pierde vida
-    # normalmente, pero el golpe no interrumpe la ráfaga ni cambia la animación
-    # a take hit. Conservamos la invulnerabilidad breve posterior para evitar
-    # que una sola Hitbox enemiga vacíe toda la vida en un frame.
-    if _is_flurry_active():
-        _invulnerability_left = invulnerability_time
-        _blink_accumulator = 0.0
-        _blink_visible = true
-        _update_hud("DAÑO -%.2f (RÁFAGA)" % amount)
         return true
 
     _invulnerability_left = invulnerability_time
@@ -1976,6 +2120,15 @@ func take_damage_from(source_global_position: Vector2, amount: float) -> bool:
     return take_damage(amount, source_global_position, true)
 
 
+## Tocar a un enemigo. No es un golpe: cubrirse lo evita sin gastar guardia ni
+## hacer parry, rodar lo atraviesa de principio a fin y atacar no se corta, o el
+## paso adelante del tajo acabaría en daño antes de conectar.
+func take_contact_damage_from(source_global_position: Vector2, amount: float) -> bool:
+    if _action in [PlayerAction.DEFEND, PlayerAction.ROLL, PlayerAction.ATTACK]:
+        return false
+    return take_damage_from(source_global_position, amount)
+
+
 func _apply_knockback(source_global_position: Vector2) -> void:
     var horizontal_direction := signf(global_position.x - source_global_position.x)
 
@@ -1994,6 +2147,12 @@ func is_invulnerable() -> bool:
 ## quieto en el aire (no saltando) y vale la pena ir a buscarlo.
 func is_climbing() -> bool:
     return _climbing
+
+
+## Mientras dura la rodada. La reja baja (roll_gate.gd) la deja pasar solo
+## entonces.
+func is_rolling() -> bool:
+    return _action == PlayerAction.ROLL
 
 
 func _update_damage_timers(delta: float) -> void:
@@ -2110,13 +2269,19 @@ func heal(amount: float) -> void:
     _update_hud("CURACIÓN")
 
 
+## Lo que cura una poción: la base más las mejoras encontradas (amuleto de la
+## guardia, P58). Siempre múltiplo de 0.25.
+func get_potion_heal_amount() -> float:
+    return potion_heal_amount + GameManager.get_found_upgrade_bonus("potion_heal")
+
+
 ## Toma una poción del inventario. No se gasta con la vida llena.
 func drink_potion() -> bool:
     if dead or current_health >= max_health:
         return false
     if not DevMode.infinite_potions and not GameManager.use_potion():
         return false
-    heal(potion_heal_amount)
+    heal(get_potion_heal_amount())
     UnderkingdomCombatFX.heal(self, sprite)
     return true
 
@@ -2214,6 +2379,8 @@ func _action_name() -> String:
             return "ATAQUE AÉREO"
         PlayerAction.ROLL:
             return "ROLL"
+        PlayerAction.AIR_DASH:
+            return "DASH AÉREO"
         PlayerAction.DEFEND:
             return "DEFENSA"
         PlayerAction.ULTIMATE:

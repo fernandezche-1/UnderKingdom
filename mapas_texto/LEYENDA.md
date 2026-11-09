@@ -54,7 +54,7 @@ cofre_pociones: 1
 | `siguiente` / `anterior` | Mapa al que llevan las salidas azules / moradas. Por defecto se llega a su spawn `DesdeAnterior` / `DesdeSiguiente`, que el constructor crea solo. Para llegar a otro spawn: `res://escenas/mapas/mundo_2.tscn#SpawnInicio`. |
 | `cofre_monedas`, `cofre_pociones` | Botín de cada cofre del nivel (por defecto 3 y 1). |
 | `jugador` | Escena del Player que se pone en la `P`. Por defecto `res://escenas/player.tscn`; el calabozo usa `res://escenas/prisn.tscn`, el protagonista sin espada. |
-| `depuracion` | `si` activa las teclas de prueba del Player (R reaparecer, H/J daño, K morir) y su panel de depuración. Solo para mapas de prueba como `arena_enemigos`; por defecto `no`. Para probar los niveles de la ruta está el Modo dev (tecla º). |
+| `depuracion` | `si` activa las teclas de prueba del Player (R reaparecer, H/J daño, K morir) y su panel de depuración. Solo para mapas de prueba como `zona_pruebas`; por defecto `no`. Para probar los niveles de la ruta está el Modo dev (tecla º). |
 
 ## 4. Generar el nivel
 Desde la carpeta del proyecto:
@@ -122,6 +122,9 @@ El mapa original no se toca. El PNG es un punto de partida: faltan las salidas, 
 | `e` | #d0d0b0 | 208, 208, 176 | esqueleto (camina y embiste) |
 | `u` | #706050 | 112, 96, 80 | esqueleto de tumba (enterrado hasta que el Player se acerca) |
 | `G` | #b0b0d0 | 176, 176, 208 | Guardia del castillo (se cubre con el escudo) |
+| `R` | #b07050 | 176, 112, 80 | rata (calabozo, profundidad 0) |
+| `L` | #40c0a0 | 64, 192, 160 | slime (calabozo, profundidad 0; escupe) |
+| `B` | #a040a0 | 160, 64, 160 | murciélago grande (calabozo, profundidad 0; embiste; se dibuja donde flota) |
 | `t` | #ffc090 | 255, 192, 144 | antorcha |
 | `f` | #c03000 | 192, 48, 0 | fogata (decorado) |
 | `b` | #a08060 | 160, 128, 96 | barril |
@@ -142,3 +145,25 @@ Una foto de papel cuadriculado o una captura de un juego de referencia también 
 - **Historia:** si hay una escena con diálogo, su guion.
 
 Con eso se pasa a PNG, se genera el nivel y se revisa jugando.
+
+## 8. Integrar un paquete de arte
+1. El ZIP se descomprime en una carpeta aparte, nunca encima del proyecto.
+2. **Revisar la licencia** y anotarla en un `ORIGEN.txt`, como en `assets_prueba/dungeon_platformer/ORIGEN.txt`.
+3. **Medir el tamaño de tile.** Si es de 16 px, entra directo. Si es de otro tamaño, el nivel usa esa cuadrícula sin escalar a medias; el constructor toma el tamaño del archivo del tileset.
+4. **Crear `herramientas/constructor_mapas/tilesets/<nombre>.gd`** copiando `mazmorra.gd`, y ubicar en el PNG:
+   - el juego de bloques de 4x4 (esquinas, bordes e interior en 3x3, columna a la derecha y plataformas abajo) y las rampas;
+   - los decorados y las piezas animadas;
+   - los líquidos y la escalera;
+   - la pieza del checkpoint y el fondo.
+
+   Si el paquete no trae ese juego de 4x4, se arma un atlas nuevo copiando sus piezas, sin dibujar arte nuevo.
+5. **Probarlo** con un mapa de muestra.
+6. **Letras y colores nuevos:** si trae decorados o enemigos sin letra, se agregan a `COLORS` / `ENEMIES` del constructor. Después se regenera la paleta (`-- --paleta`) y se actualiza la tabla de la sección 5.
+7. **Enemigos:** escena con `enemy_base.gd` y sus valores (cuadros de golpe, hitbox, `collision_layer = 5`), siguiendo el patrón de `kolbo` y `mino`. Se prueban en la zona de pruebas (`zona_pruebas_combate.tscn`).
+
+## 9. Límites del constructor
+- **Pinchos:** son estáticos (un recorte de `spike Trap5.png`) y matan al tocarlos. No hay versión animada ni de daño parcial.
+- **Salidas:** si un mapa tiene varias salidas en la misma dirección, todas comparten el mismo spawn de llegada.
+- **Enemigos:** siempre a la escala de su escena.
+- **Parallax:** se vio en capturas a 480 x 270, pero falta verlo en movimiento.
+- **Arte:** no se dibuja pixel art nuevo; los niveles se arman con piezas de los paquetes.

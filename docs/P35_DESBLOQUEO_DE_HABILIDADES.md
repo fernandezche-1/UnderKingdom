@@ -9,8 +9,8 @@
 
 ## 1. Datos en `GameManager`
 
-- `ABILITY_DEFINITIONS`: por cada id, su `name` y su `hint` (tecla o forma de usarla). Los ids son `roll`, `combo_2`, `combo_3`, `air_attack`, `parry`, `ultimate`, `lifesteal` y `adrenaline`.
-- `STARTING_ABILITIES`: las que se tienen al empezar. Por ahora están aquí las que todavía no tienen dónde conseguirse: `air_attack`, `parry`, `lifesteal` y `adrenaline`. Cuando se coloque su fuente, se quitan de esta lista.
+- `ABILITY_DEFINITIONS`: por cada id, su `name` y su `hint` (tecla o forma de usarla). Los ids son `roll`, `combo_2`, `combo_3`, `air_attack`, `parry`, `ultimate`, `lifesteal`, `adrenaline` y `agility` (P45).
+- `STARTING_ABILITIES`: las que se tienen al empezar. Por ahora están aquí las que todavía no tienen dónde conseguirse: `air_attack`, `parry` y `lifesteal` (la `adrenaline` salió en P63: la da el Crystal Mauler). Cuando se coloque su fuente, se quitan de esta lista.
 - `abilities_locked` y `unlocked_abilities`. Se reinician en `reset_abilities_for_new_game()`, que llama `reset_for_new_game()`.
 - Funciones:
   - `has_ability(id)`: si el Player puede usarla ahora; siempre `true` fuera de una partida;
@@ -23,12 +23,13 @@
 | Id | Efecto sin la habilidad |
 |---|---|
 | `roll` | `request_roll()` no hace nada. |
-| `combo_2`, `combo_3` | `_max_combo_step()` sustituye el `3` fijo del buffer del combo: sin `combo_2`, solo sale el primer tajo; con `combo_2`, hasta la ráfaga; con las dos, el combo completo. |
+| `combo_2`, `combo_3` | Ya no bloquean etapas: los dos tajos se alternan desde que se tiene la espada. `combo_2` multiplica su velocidad por `rafaga_speed_multiplier` y `combo_3` sube el tajo ascendente de `attack_2_damage` a `attack_3_damage` (ver `P42_CALABOZO_INICIAL.md`). |
 | `air_attack` | Atacar en el aire no hace nada. |
 | `parry` | La guardia bloquea, pero nunca hace parry. |
 | `ultimate` | `request_ultimate()` no hace nada; el HUD oculta la barra y la pestaña de estadísticas dice "Sin conseguir". |
 | `lifesteal` | `is_lifesteal_active()` (nueva) combina el `@export lifesteal_enabled` con la habilidad. |
 | `adrenaline` | `is_adrenaline_active()` exige además la habilidad. |
+| `agility` | Con espada, `get_move_speed()` y `get_jump_velocity()` dan los valores normales en vez de los de Agilidad (P45). |
 
 ## 3. Reliquia
 
@@ -52,7 +53,8 @@
 | Ráfaga (`combo_2`) | Capitán (`tiles_cementerio_combate.tscn`) |
 | Golpe final (`combo_3`) | Caballero de la Reina (`tiles_mineria_combate.tscn`) |
 | Ultimate | La Reina (`tiles_mazmorra_combate.tscn`) |
-| Tajo aéreo, parry, robo de vida, adrenalina | Desde el inicio, de forma provisional |
+| Tajo aéreo, parry, robo de vida | Desde el inicio, de forma provisional |
+| Adrenalina | Crystal Mauler (`ability_reward`, P63) |
 
 ## 6. Pendiente
 

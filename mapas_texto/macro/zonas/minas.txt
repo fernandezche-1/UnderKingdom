@@ -1,0 +1,329 @@
+; MINAS (macro mapa, docs/P46_MACRO_MAPA.md): ASCII de la zona. Primera pasada
+; (estructura, P, checkpoints, aperturas y sitio de cada pieza) y segunda
+; pasada (enemigos, objetos y decorados) hechas.
+; NO GENERAR TODAVÍA: la escena de abajo es la de las minas que se juegan hoy
+; (mapas_texto/tiles_mineria.txt) y el constructor la reemplazaría. Al
+; aprobarlo, este archivo pasa a mapas_texto/tiles_mineria.txt (sección 9).
+;
+; Coordenadas (columna, fila), desde 0. 150 x 90 piezas; en el mundo en
+; (150, 133), justo debajo del cementerio (su borde de abajo es la fila 133 del
+; mundo). Así [S3] cae en la columna 256 del mundo y :C: en la 170, bajo el
+; sótano del castillo; el pozo del ascensor recorre 53 piezas entre las dos
+; zonas (filas 80-132 del mundo) sin cruzar otra.
+; Llega con la Ráfaga y Rodar (y la Agilidad si se encontró E3). Se consigue el
+; Golpe final y la llave del Caballero; la salida [L4] pide esa llave (P46,
+; sección 10).
+; Ningún escalón obligatorio pide más de 3 piezas de salto (con E1 se saltan
+; unas 4,6) ni huecos de más de 3. Solo el secreto pide la Agilidad, y el
+; secreto del dash de la galería de los mineros, el dash.
+; Camino obligatorio: [S3] -> bocamina -> pozo principal (o galería alta y su
+; caída) -> galería de las vagonetas -> veta ardiente -> galería honda ->
+; antecámara -> Caballero (llave) -> escalera 48 hasta la repisa -> túnel de
+; [L4] -> puerta con llave -> mazmorra.
+; Bucles: alto (bocamina, galería alta, caída x 36-38, vagonetas, pozo
+; principal), de la veta (caída x 57-59, veta, escalera 118) y hondo (caída x
+; 126-128, galería honda, escalera 62). Atajo interno: escalera 48.
+;
+; ARRIBA:
+; - Llegada [S3]: pozo del sello, x 106-108, filas 0-9, abierto en el borde de
+;   arriba. Escalera en la columna 107 (filas 0-19) para volver: arriba, la
+;   transición de la _combate lleva al spawn DesdeMinas del pozo del sello del
+;   cementerio. Spawn DesdeCementerio al pie, hacia (104, 19).
+; - BOCAMINA (campamento minero): x 84-128, filas 10-19 (suelo 20). P en
+;   (100, 19); checkpoint de la bocamina en (114, 19). Andamio en la fila 17
+;   (x 95-99).
+; - SECRETO DE LA AGILIDAD: x 129-141, filas 9-14 (suelo 15), abierto a la
+;   bocamina por la columna 129, filas 11-14. Su suelo está 5 piezas por
+;   encima del de la bocamina y no hay nada cerca a lo que subirse: con E1
+;   (unas 4,6) no se llega; con la Agilidad (6,5) sí. Es el mismo escalón que
+;   pedía la poción de (29, 6) de las minas de hoy (P45). Sitio de un cofre en
+;   (140, 14).
+; - Galería alta (las vigas): x 33-83, filas 14-19 (suelo 20), al oeste de la
+;   bocamina. Suelo más alto en x 58-64 (fila 19) y vigas en x 50-51 y 66-67.
+;   Al fondo oeste, la caída de x 36-38 (filas 20-33) a la galería de las
+;   vagonetas y, al otro lado, la repisa x 33-35 (suelo 17), sitio de un cofre
+;   en (34, 16).
+; - Pozo principal: escalera en la columna 92 (filas 20-40), de la bocamina a
+;   la galería de las vagonetas.
+;
+; ASCENSOR :C: (desde el castillo):
+; - Pozo del ascensor: x 20-22, filas 0-29, abierto en el borde de arriba
+;   (columnas 20-22), sobre la estación.
+; - Estación del ascensor: x 8-32, filas 30-40 (suelo 41), al oeste de la
+;   galería de las vagonetas. La cabina descansa en el suelo, bajo el pozo
+;   (x 20-22, fila 40); en el ASCII el pozo queda abierto y la cabina va en la
+;   _combate.
+; - MECANISMO: palanca en (12, 40), en el suelo de la estación. Hasta tirar de
+;   ella la cabina no sube y la trampilla del sótano del castillo sigue
+;   cerrada; al tirar, se abren las dos y se recuerda en completed_encounters.
+;   Spawn DesdeCastillo en la cabina, hacia (21, 40).
+; - Galería de los mineros (sin salida): x 6-34, filas 50-56 (suelo 57), por la
+;   escalera de la columna 26 (filas 41-56) desde la estación. Plataforma en la
+;   fila 54 (x 10-14). Sitio de un cofre en (7, 56).
+; - SECRETO DEL DASH (tipo: pasillo bajo con foso; punto 4 de las
+;   sugerencias; 2026-11-08): al fondo este de la galería de los mineros,
+;   cavado en la roca. Se abre con el dash en el aire, premio del Guardián de
+;   la ruina: se vuelve a por él por :D: o desde el castillo por :C:. Junto a
+;   :D: no cabía (al este de la galería honda solo quedan 9 columnas).
+;   - PASILLO de 4 de alto, x 35-42, filas 53-56 (suelo 57, el de la
+;     galería). FOSO DE PINCHOS de 6 en x 37-42 (fila 57 vacía, pinchos en la
+;     58), con 2 piezas de pasillo antes. Monedas sobre el foso, en (39, 56) y
+;     (40, 56).
+;   - NICHO x 43-45, filas 50-56 (suelo 57). Cofre en (45, 56) y cristal (r)
+;     en (43, 56). La columna 46 queda de roca, entre el nicho y el pozo de la
+;     escalera 48.
+;   - No se cruza sin el dash: es la regla de la ruina (pasillo de 4 de alto,
+;     foso de 6; P46, sección 6).
+;
+; EN MEDIO:
+; - GALERÍA DE LAS VAGONETAS: x 33-130, filas 34-40 (suelo 41). La vía corre a
+;   lo largo; andén x 100-110 (suelo 39), pilares en x 74-75 y 124-125 y
+;   cochera al fondo este (x 121-130). Bajadas a la veta: caída de x 57-59
+;   (filas 41-47) y escalera de la columna 118 (filas 41-60). Trampilla del
+;   atajo interno en x 47-49, fila 41.
+; - VETA ARDIENTE: x 56-130, filas 48-60 (suelo 61). Fosos de lava en x 72-77
+;   y x 96-101 (fila 61), cada uno con una plataforma en la fila 58 (x 74-75 y
+;   98-99); isla de roca x 84-90 (suelo 58); estalactitas en x 66-67 y
+;   110-111. Repisa x 103-107 (suelo 55) sobre el segundo foso, sitio de un
+;   cofre en (106, 54). Bajadas a la galería honda: escalera de la columna 62
+;   (filas 61-86) y caída de x 126-128 (filas 61-79). Al fondo este, en la
+;   pared de la columna 131, la boca de la gruta de cristal (ver abajo).
+;
+; GRUTA DE CRISTAL (puerta hacia atrás, idea 6 de
+; mapas_texto/macro/sugerencias_exploracion.txt; opcional, pide la Agilidad
+; y E5):
+; - BOCA: columna 131, filas 52-55, en la pared este de la veta. El suelo del
+;   pasillo (fila 56) queda 5 piezas por encima del de la veta (fila 61), el
+;   mismo escalón que el secreto de la Agilidad: con E1 (unas 4,6) no se
+;   llega; con la Agilidad (6,5) sí. Desde la veta se ve el resplandor del
+;   fuego.
+; - PASILLO DEL FUEGO: x 131-143, filas 52-55 (suelo 56; 4 de alto, no se
+;   salta por encima). FUEGO INFERNAL (F) en x 133-141, fila 55: la pieza
+;   nueva del santuario de las profundidades; sin E5 no deja pasar, con E5 no
+;   hace daño. Checkpoint de la gruta en (142, 55), tras el fuego y antes de
+;   la bajada.
+; - BAJADA: x 144-146, filas 52-63, sin escalera (caída de 22 piezas hasta el
+;   suelo de la gruta; no hay daño por caída). TRAMPILLA DE ENTRADA en la
+;   fila 63 (x 144-146), en Puertas de boss_arena: abierta hasta que empieza
+;   el combate. En el ASCII queda abierta.
+; - GRUTA: x 132-147, filas 64-77 (16 x 14, suelo 78). Sala del jefe opcional
+;   CRYSTAL MAULER (escenas/jefes/boss_mina.tscn). Cabe a escala 1: colisión
+;   de 20 x 35 px, cuerpo de unas 3 x 2,5 piezas y su ataque más largo
+;   (sp_atk) de unas 12,5 x 6 piezas (3,7 hacia atrás y 8,8 hacia delante).
+;   Es la sala de jefe más pequeña: contra el sp_atk hay que ponerse detrás o
+;   rodar a través de él. Activador hacia (145, 77), donde se cae; PuntosJefe
+;   hacia (134, 77). Al vencerlo da la Adrenalina (ability_reward adrenaline,
+;   que sale de STARTING_ABILITIES) y se recuerda en completed_encounters.
+;   Sin PuntoLlave. Cristales (r) en (133, 77), (142, 77) y (147, 77).
+;   Hoy boss_mina.tscn es solo sprite y colisión, sin script: falta darle IA
+;   (Fase 2 de TASK.md).
+; - SALIDA POR EL SUELO: hueco x 138-140, filas 78-79, con escalera en la
+;   columna 139 (filas 78-86) hasta la galería honda. TRAMPILLA en la fila 78
+;   (x 138-140), en Atajos de boss_arena: cerrada hasta vencer al Mauler.
+;   Desde la galería honda se ve la escalera y la trampilla cerrada. En el
+;   ASCII queda abierta.
+; - Vuelta: desde las profundidades (E5) por :E: y :D:, la escalera 133, la
+;   galería honda y la escalera 62 hasta la veta.
+; - Supone que la Agilidad (habilidad agility, P45) se conserva al llevar E5.
+;
+; ABAJO:
+; - Galería honda: x 53-140, filas 80-86 (suelo 87). Suelo más alto en
+;   x 84-92 (fila 85) y pilares en x 70-71 y 104-105.
+; - Pozo de :D: (hacia la ruina): hueco de x 132-134 en el suelo de la galería
+;   honda (filas 87-89), abierto en el borde de abajo. Escalera en la columna
+;   133 para subir desde la ruina. Cerrado desde las minas (reja con
+;   arena_barrier en la _combate); se abre desde la ruina. En el ASCII queda
+;   abierto. Spawn DesdeRuina hacia (131, 86).
+; - Escalera de la gruta de cristal: columna 139 (filas 78-86), al este del
+;   pozo de :D:. Sube a la trampilla del suelo de la gruta, cerrada hasta
+;   vencer al Mauler.
+; - Antecámara: x 36-52, filas 64-86 (suelo 87), al oeste de la galería honda.
+;   Checkpoint antes del Caballero en (40, 86).
+; - Atajo interno: escalera de la columna 48 (filas 41-86), de la antecámara a
+;   la trampilla de la galería de las vagonetas (x 47-49, fila 41), cerrada
+;   desde arriba y que se abre desde abajo. En el ASCII queda abierta. La
+;   escalera pasa junto a la repisa del túnel de [L4] (x 36-45, suelo 69).
+; - SALA DEL CABALLERO DE LA REINA (jefe): x 4-34, filas 74-86 (31 x 13, suelo
+;   87: la medida de la sala de hoy, x 6-36, filas 48-60), con las plataformas
+;   de hoy: fila 79 (x 16-20) y fila 83 (x 7-11 y x 27-31). Puerta
+;   (boss_arena, PuertaEntrada) en la columna 35, filas 82-86. Activador hacia
+;   (19, 81), PuntosJefe hacia (7, 82) y (31, 82) y PuntoLlave hacia (19, 85):
+;   los de hoy, corridos 2 columnas a la izquierda y 26 filas abajo. Al
+;   vencerlo cae la llave del Caballero (minas_caballero) y da el Golpe final
+;   (ability_reward combo_3), como hoy. Sin Atajos: el atajo interno ya no sale
+;   de la sala, sino de la antecámara.
+; - TÚNEL DE [L4]: x 1-35, filas 66-68 (suelo 69), encima de la sala del
+;   Caballero. Salida ">" en el borde izquierdo, filas 66-68 (fila 199 del
+;   mundo), hacia la mazmorra. PUERTA CON LLAVE (locked_door.gd, key_id
+;   minas_caballero) en la columna 28, filas 66-68.
+;
+; Comprobado con una simulación de saltos de 3 piezas, con la trampilla del
+; atajo, la reja de :D: y la puerta de [L4] cerradas: desde la P se llega a
+; todo menos al secreto, que tampoco se alcanza con saltos de 4 y sí con 6.
+; Desde todo se vuelve a la bocamina, con la trampilla abierta o cerrada. Desde
+; la cabina de :C:, la llegada de [L4] y la de :D: se llega a la bocamina y a
+; la antecámara. Con la llave se sale por [L4]. Tras la segunda pasada, con
+; saltos de 3 (y de 4) se alcanzan todos los cofres, monedas y pociones menos
+; los del secreto, que solo se alcanzan con la Agilidad.
+; Gruta de cristal (2026-11-06), simulación comparando el ASCII de antes y el
+; de después con las mismas reglas (cuerpo de 3 y de 2, saltos de 3 y de 4,
+; huecos de 3): no se pierde ninguna posición; lo único nuevo es la escalera
+; 139 bajo la trampilla cerrada; no se llega al pasillo ni a la gruta, tampoco
+; con E5. Con la Agilidad (saltos de 6, y también de 7) se llega a la boca,
+; pero sin E5 el fuego no deja pasar. Con la Agilidad y E5 se llega al
+; checkpoint y a la gruta, y con la trampilla del suelo cerrada no se sale.
+; Vencido el Mauler, desde toda la gruta se vuelve a la P con saltos de 3 y
+; sin E5, y desde el checkpoint con E5.
+; Secreto del dash (2026-11-08), comparando el ASCII de antes y el de después
+; (cuerpo de 3 y de 2, saltos de 3 y de 4, huecos de 3, con la trampilla del
+; atajo, la reja de :D:, la puerta de [L4] y las trampillas y el fuego de la
+; gruta cerrados; simulación con dash de 7 piezas, una vez por salto):
+; - sin dash no se pierde ninguna posición y lo único nuevo es la boca del
+;   pasillo (x 35-36): el camino obligatorio no cambia;
+; - sin dash no se llega al nicho ni con saltos de 6 y 7 y huecos de 6;
+; - con el dash se llega al nicho y al cofre con saltos de 3, y desde ahí se
+;   vuelve a la P;
+; - lo único más que abre el dash es la plataforma alta de la sala del
+;   Caballero (x 16-20, fila 79), desde las de los lados: está dentro de la
+;   sala, que ya se alcanza, y con E1 se llega igual (salto horizontal de
+;   unas 6,7 piezas).
+; Probado generando una escena temporal con el constructor, sin errores.
+;
+; Segunda pasada (profundidad 2, P33: k, j, q, m):
+; - Enemigos: 6 kolbo, 6 kolbo2, 4 kolbo3 y 10 murciélagos. Arriba, sobre todo
+;   kolbo; los kolbo2 en las vagonetas y la veta; los kolbo3, más duros, en la
+;   galería de los mineros (guarda el cofre), en la isla de la veta (88, 57),
+;   entre los dos fosos, y en la galería honda. Los murciélagos estorban sobre
+;   los fosos de lava, en las galerías y junto al pozo de :D:. Ninguno en la
+;   estación del ascensor, la antecámara, el túnel de [L4], la sala del
+;   Caballero, el secreto ni junto a la P o los checkpoints.
+; - Trampas de fuego (F) en el suelo de la veta: (69, 60), (81, 60), (92, 60)
+;   y (113, 60).
+; - Cofres (c): repisa de la galería alta (34, 16), galería de los mineros
+;   (7, 56), repisa de la veta (106, 54), secreto de la Agilidad (140, 14) y
+;   secreto del dash (45, 56).
+; - Monedas ($) en el andamio de la bocamina, el secreto, el suelo alto de la
+;   galería alta, la plataforma de los mineros, sobre el andén, sobre la
+;   plataforma del primer foso, en la repisa de la veta, sobre el suelo alto
+;   de la galería honda y sobre el foso del secreto del dash (39, 56) y
+;   (40, 56), que se cogen en el dash. Pociones (!) en la galería de los mineros (12, 53), al
+;   fondo este de la veta (130, 60) y en la antecámara (51, 86), antes del
+;   Caballero.
+; - Decorados del tileset mazmorra: tienda de campaña (C, 3x2) y fogata (f)
+;   en el campamento de la bocamina; vagonetas hechas de cajas (x) y barriles
+;   (b) en la vía de la galería de las vagonetas y en la estación; cristales (r)
+;   en la veta, el secreto, la gruta de cristal y la sala del Caballero (como
+;   la de hoy); hongos (h) en la galería de los mineros y la honda; antorchas
+;   (t) en todas las salas.
+;   La caja de (139, 86) pasa a (135, 86) y el murciélago de (138, 82) a
+;   (136, 82), fuera de la escalera 139 y de sus columnas vecinas.
+;   Ninguno pisa una escalera (ni sus columnas vecinas ni las tres filas de
+;   encima), la palanca, la cabina, un spawn, la puerta de [L4] ni otro
+;   decorado, y los que no cuelgan de la pared se apoyan en el suelo.
+; - Las vagonetas de verdad (un decorado propio o una vagoneta que se empuja)
+;   quedan para la _combate o para más adelante; hoy las marcan x y b.
+;
+; Viven en tiles_mineria_combate.tscn: transición y spawn de [S3], cabina y
+; palanca de :C:, trampilla del atajo, reja de :D:, sala del Caballero
+; (puertas, activador, puntos del jefe y de la llave), puerta con llave de
+; [L4] y la gruta de cristal (fuego infernal, Crystal Mauler con su
+; boss_arena: trampilla de entrada en Puertas, trampilla del suelo en Atajos,
+; activador, PuntosJefe y ability_reward adrenaline). No hay "anterior": [S3] llega por arriba, no por una salida "<".
+
+escena: res://escenas/mapas/tiles_mineria.tscn
+tileset: mazmorra
+bloques: madera
+fondo: ninguno
+parallax: assets_prueba/pixelfantasy_caves/fondo1.png 0; assets_prueba/pixelfantasy_caves/fondo2.png 0.1; assets_prueba/pixelfantasy_caves/fondo3.png 0.2; assets_prueba/pixelfantasy_caves/fondo4a.png 0.3
+siguiente: res://escenas/mapas/tiles_mazmorra_combate.tscn
+---
+####################...###################################################################################.H.#########################################
+####################...###################################################################################.H.#########################################
+####################...###################################################################################.H.#########################################
+####################...###################################################################################.H.#########################################
+####################...###################################################################################.H.#########################################
+####################...###################################################################################.H.#########################################
+####################...###################################################################################.H.#########################################
+####################...###################################################################################.H.#########################################
+####################...###################################################################################.H.#########################################
+####################...###################################################################################.H.#######################..........########
+####################...#############################################################.......................H.....................###..........########
+####################...#############################################################.......................H..................................########
+####################...#############################################################.......................H..................................########
+####################...#############################################################.......................H..........................$.$.....########
+####################...##########.................##..............##.......................................H........................r.....r.c.########
+####################...##########...........t.....##........m.....##...................................t...H.............t.......#####################
+####################...##########.c..........................$.$...........t....................$.$........H.....................#####################
+####################...#############...........................................................=====.......H.....................#####################
+####################...#############.......................................................................H.....................#####################
+####################...#############.....k....k........x..#######.......j......b......C...f....bx...P......H......S........k.....#####################
+####################...#############...####################################################.H.########################################################
+####################...#############...####################################################.H.########################################################
+####################...#############...####################################################.H.########################################################
+####################...#############...####################################################.H.########################################################
+####################...#############...####################################################.H.########################################################
+####################...#############...####################################################.H.########################################################
+####################...#############...####################################################.H.########################################################
+####################...#############...####################################################.H.########################################################
+####################...#############...####################################################.H.########################################################
+####################...#############...####################################################.H.########################################################
+##############...............#######...####################################################.H.########################################################
+##############...............#######...####################################################.H.########################################################
+########.....................#######...####################################################.H.########################################################
+########.........................###...####################################################.H.########################################################
+########.......t..........................................................##................H...............................##.....###################
+########....................t...............t.............................##................H...............................##.....###################
+########..............................................................m.....................H..t.......$...$....m..t...............###################
+########....................................................................................H......................................###################
+########....................................................................................H............k.........................###################
+########....................................................................................H.......###########....................###################
+########.bx.....x....................................xx...........k...............j.....b...H....xx.###########..........bx....j...###################
+#########################.H.###################.H.#######...#########################################################.H.##############################
+#########################.H.###################.H.#######...#########################################################.H.##############################
+#########################.H.###################.H.#######...#########################################################.H.##############################
+#########################.H.###################.H.#######...#########################################################.H.##############################
+#########################.H.###################.H.#######...#########################################################.H.##############################
+#########################.H.###################.H.#######...#########################################################.H.##############################
+#########################.H.###################.H.#######...#########################################################.H.##############################
+#########################.H.###################.H.######..........##..........................................##......H............###################
+#########################.H.###################.H.######..........##..........................................##......H............###################
+######....................H...#############...#.H.######..........##..........................................##...t..H............###################
+######............t.......H...#############...#.H.######..........##...............................m..........##......H............###################
+######...............m....H........########...#.H.######....t.........................................................H.m..........................###
+######....$.!.$...........H...................#.H.######...................m............................$.............H............................###
+######....=====...........H...................#.H.######...............................................r..c...........H............................###
+######....................H...................#.H.######..................$$...........................#####..........H..............FFFFFFFFFS....###
+######.c....h...q.........H...h..x.....$$..r.c#.H.######..............................................................H............#############...###
+#####################################......####.H.######.............................r..q.............................H............#############...###
+#####################################^^^^^^####.H.######..................==........#######.......==..................H............#############...###
+###############################################.H.######............................#######...........................H............#############...###
+###############################################.H.######........r....F...........F.r#######.F...............j....F....H...j..r....!#############...###
+###############################################.H.###########.H.########~~~~~~##################~~~~~~########################...###############...###
+###############################################.H.###########.H.##############################################################...###############...###
+###############################################.H.###########.H.##############################################################...###############...###
+####################################............H....########.H.##############################################################...###................##
+####################################............H....########.H.##############################################################...###................##
+>...........t....................t..............H....########.H.##############################################################...###................##
+>...............................................H....########.H.##############################################################...###................##
+>...................x...........................H....########.H.##############################################################...###................##
+##############################################..H....########.H.##############################################################...###................##
+####################################............H....########.H.##############################################################...###................##
+####################################............H....########.H.##############################################################...###................##
+####################################............H..t.########.H.##############################################################...###................##
+####################################............H....########.H.##############################################################...###................##
+####...............................#............H....########.H.##############################################################...###................##
+####...............................#............H....########.H.##############################################################...###................##
+####...............................#............H....########.H.##############################################################...###................##
+####...............................#............H....########.H.##############################################################...###.r........r....r##
+####...............................#..t.........H....########.H.##############################################################...#########.H.#########
+####............=====..............#............H....########.H.##############################################################...#########.H.#########
+####...............................#............H.............H.......##................................##.................................H.#########
+####...............................#............H.............H.......##................................##.................................H.#########
+####............................................H.............H...t.............m..............t..............m...........t.............m..H.#########
+####...=====...............=====................H.............H........................$.$.................................................H.#########
+####............................................H.............H.........................k..................................................H.#########
+####............................................H.............H.....................#########..............................................H.#########
+####..t.......r..........r......t.......S..b....H..!....h.....H...........h...q.....#########....j..r..............q....b..............x...H.#########
+####################################################################################################################################.H.###############
+####################################################################################################################################.H.###############
+####################################################################################################################################.H.###############

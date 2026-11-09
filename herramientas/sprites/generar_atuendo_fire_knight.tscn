@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://herramientas/sprites/generar_atuendo_fire_knight.gd" id="1_gen"]
+
+[node name="GenerarAtuendoFireKnight" type="Node"]
+script = ExtResource("1_gen")

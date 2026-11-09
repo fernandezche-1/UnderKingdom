@@ -1,0 +1,192 @@
+; CASTILLO (macro mapa, docs/P46_MACRO_MAPA.md): ASCII de la zona. Primera
+; pasada (estructura, P, checkpoints y aperturas) y segunda pasada (enemigos,
+; objetos y decorados) hechas. Puertas hacia atrás 2 y 3 (2026-11-06).
+; NO GENERAR TODAVÍA: la escena de abajo es la del castillo que se juega hoy y
+; el constructor la reemplazaría. Al aprobarlo, este archivo pasa a
+; mapas_texto/tiles_castillo.txt (sección 9 de P46).
+;
+; Coordenadas (columna, fila), desde 0. 110 x 80 piezas. Ningún escalón pide
+; más de 3 piezas de salto (con E1 se saltan unas 4,6).
+; Camino obligatorio: galería -> gran salón -> biblioteca -> almenas -> armería
+; -> caída por el hueco x 88-90 -> antecámara -> vestíbulo -> trono ->
+; trampilla -> paso bajo el trono -> reja (rodando) -> [H2].
+; - Entrada [L1] desde el calabozo: borde izquierdo, filas 44-46 ("<").
+;   P en (3, 46) y checkpoint de la entrada en (6, 46).
+; - Galería de las celdas: x 1-57, filas 40-46 (suelo 47). Escaleras al gran
+;   salón en las columnas 12 y 40, y al sótano en la 30. No se comunica con la
+;   antecámara.
+; - Gran salón (el centro de la zona): x 8-66, filas 24-35 (suelo 36).
+;   Checkpoint en (32, 35). Balcones macizos en la fila 30 (x 8-15 y x 59-66),
+;   estantes en la fila 33 y candelabros en las filas 30 y 27. Escalera a la
+;   biblioteca en la columna 24.
+;   Puerta a la antecámara en x 67-68, filas 33-35: se abre solo desde la
+;   antecámara (cerrojo o palanca de ese lado, en la _combate), como atajo.
+;   En el ASCII queda abierta.
+; - Biblioteca: x 2-34, filas 8-21 (suelo 22). Escalera a las almenas en la
+;   columna 16, separada de los estantes por la pared de la columna 14 (filas
+;   7-18; se pasa por debajo, filas 19-21). Estantes en las filas 19, 16, 13 y
+;   10 hasta el rincón alto de (2-7, 9), sitio de un cofre.
+; - Almenas (camino de ronda): x 12-90, filas 2-5 (suelo 6). Tramos altos de 2
+;   piezas en x 28-38 y x 70-77, y un tramo derrumbado de 3 de hondo en
+;   x 62-66 (suelo en la fila 9). Unen la biblioteca, la capilla (escalera 52)
+;   y la armería (escalera 82).
+; - Capilla, fuera del camino: x 44-60, filas 8-18 (suelo 19). Cofre.
+; - Aposentos de la Reina (puerta hacia atrás, idea 2 del punto 1 de
+;   mapas_texto/macro/sugerencias_exploracion.txt), fuera del camino: x 62-74,
+;   filas 11-18 (suelo 19), al este de la capilla. Puerta en la pared este de
+;   la capilla, columna 61, filas 16-18, con el arco C en (60, 18) (ocupa
+;   x 60-61). PUERTA CON LLAVE en la _combate (locked_door.gd, key_id
+;   minas_caballero: la llave del Caballero de la Reina, de las minas, la
+;   misma de [L4]; las llaves no se gastan). La columna 75 queda de pared (la
+;   armería no entra) y el techo es la fila 10 (2 piezas bajo el tramo
+;   derrumbado de las almenas). Repisa en x 70-73, fila 16.
+;   Premio, en la _combate: la página I del diario de la Reina (objeto de
+;   lore con texto provisional, marcador de P46 sección 6) en (66, 18) y el
+;   fragmento de vida 1/4 sobre la repisa, en (71, 15). Sin enemigos ni
+;   monedas. Vuelta desde abajo por :C:: sótano -> galería -> gran salón ->
+;   biblioteca -> almenas -> escalera 52 -> capilla.
+; - Armería: x 76-107, filas 8-19 (suelo 20). E2, el atuendo del soldado, en el
+;   nicho alto de (101-107, 8-10), subiendo por los estantes de las filas 17 y
+;   14. Se sale cayendo por el hueco de x 88-90 a la antecámara (sin vuelta).
+; - Antecámara: x 69-107, filas 22-40 (suelo 41). Checkpoint antes del Rey en
+;   (100, 40). Escalera al vestíbulo en la columna 105.
+; - Sala del trono (jefe, el Rey Caído): x 62-101, filas 49-62 (40 x 14, suelo
+;   63). Estrado del trono en x 62-64, filas 61-62; el Rey empieza en (68, 62).
+;   Puerta (boss_arena, se cierra al entrar) en la columna 102, filas 60-62,
+;   desde el vestíbulo x 103-107. Al vencerlo, ability_reward "roll": la
+;   reliquia de Rodar, y se abre la trampilla de x 70-72, filas 63-65.
+; - Bajo el trono: x 45-108, filas 66-69 (suelo 70). Reja baja de [H2] en la
+;   columna 104, filas 66-69: solo se pasa rodando. Salida [H2] al cementerio
+;   en el borde derecho, filas 67-69 (">"). Se llega también desde el sótano
+;   antes de vencer al Rey (a propósito: se ve la reja antes de poder rodar).
+; - Sótano (bodegas): x 20-44, filas 54-75 (suelo 76). Une la galería (escalera
+;   30) con el paso bajo el trono: bucle de vuelta tras el Rey. Pared en la
+;   columna 28 (filas 53-72; se pasa por debajo, filas 73-75) entre la escalera
+;   y los estantes de las filas 73, 70, 67, 64, 61 y 58, que suben al rincón
+;   alto de (20-23, 56-57), sitio de un cofre.
+; - Atajo :C: hueco de x 34-36 en el suelo del sótano, abierto en el borde de
+;   abajo, hacia el ascensor de las minas. Cerrado desde el castillo (trampilla
+;   en la _combate); se abre desde las minas.
+; Segunda pasada (profundidad 0, P33: G, v, m):
+; - Enemigos: 7 Guardias, 5 Vanguardias y 11 murciélagos. Ninguno en la sala
+;   del trono ni junto a la P o los checkpoints. Más duros en la antecámara y la
+;   armería; los murciélagos estorban en los estantes de la biblioteca y del
+;   sótano, en el tramo hondo de las almenas y en el paso bajo el trono.
+; - Cofres (c): balcón izquierdo del gran salón (9, 29), rincón de la
+;   biblioteca (3, 9), capilla (58, 18) y rincón del sótano (21, 57).
+; - Monedas ($) en balcones, candelabros, estantes y el tramo hondo de las
+;   almenas; pociones (!) en un candelabro del salón (52, 26), el estante de la
+;   capilla (46, 14) y la antecámara (86, 36), antes del Rey.
+; - Decorados del tileset castillo: f celdas de la galería, E estanterías de la
+;   biblioteca y los aposentos, T armaduras, h estandartes y g cadenas
+;   (cuelgan del techo), r ventanas, C arcos tras el trono y en la puerta de
+;   los aposentos, t antorchas, b barriles y x cajas. Ninguno
+;   pisa una escalera, un checkpoint ni otro decorado (comparten capa).
+; El castillo sin hechizo (puerta hacia atrás, idea 3; no cambia el trazado):
+; - Lo abre la muerte de la Reina (completed_encounters de su sala, en la
+;   mazmorra). Vuelta por :C:; a la sala del trono se llega por la antecámara
+;   y el vestíbulo (la trampilla del trono no tiene escalera).
+; - Los 7 Guardias desaparecen y en su sitio quedan soldados de rodillas
+;   (NPC) que cuentan la noche del ritual: (88, 5) almenas, (84, 19) armería,
+;   (22, 21) biblioteca, (20, 35) y (45, 35) gran salón, (78, 40) antecámara y
+;   (26, 46) galería. Las G siguen en el ASCII; en la _combate se ocultan los
+;   Guardias y se muestran los NPC según ese encuentro (story_hidden_actor.gd
+;   generalizado para mirar un encounter_id). Vanguardias y murciélagos se
+;   quedan.
+; - El Capitán, vencido pero vivo, espera al pie del estrado del trono, en
+;   (68, 62), el sitio donde empieza el Rey (el estrado, x 62-64, filas 61-62,
+;   es macizo). Su frase, marcador ("nuestros propios soldados se volvieron
+;   contra nosotros"), señala la estatua de la Reina del cementerio (idea 4).
+; Viven en tiles_castillo_combate.tscn: el cerrojo de la puerta del gran salón,
+; la reja de [H2], la puerta y la trampilla del trono, el Rey, la reliquia y la
+; trampilla de :C:; y, de las puertas hacia atrás, la puerta con llave de los
+; aposentos, la página I del diario, el fragmento de vida, los soldados NPC y
+; el Capitán.
+
+escena: res://escenas/mapas/tiles_castillo.tscn
+tileset: castillo
+bloques: castillo
+fondo: castillo
+anterior: res://escenas/mapas/tiles_calabozo_combate.tscn
+siguiente: res://escenas/mapas/tiles_cementerio_combate.tscn
+---
+##############################################################################################################
+##############################################################################################################
+############...............................................................................###################
+############.....................t.........................................................###################
+############................###########.........................m.....########.............###################
+############................###########......v........................########..........G..###################
+###############.H.#################################.H.########.....##############.H.##########################
+###############.H.#################################.H.########.....##############.H.##########################
+##............#.H..................#########........H........#.$.$.#########......H.........................##
+##.c..........#.H..................#########....h...H...h....###############......H....h...........h........##
+##======......#.H..................#########........H........###############......H...................t.....##
+##............#.H..................#########........H........#.............#......H..................#########
+##............#.H..................#########........H..r.....#..h.......h..#......H..................#########
+##.....======.#.H..................#########........H........#.............#......H.............$$...#########
+##............#.H..................#########..!.....H...m....#.....r.......#......H...........======.#########
+##........m...#.H............$$.E..#########======..H........#.............#......H..................#########
+##.======.....#.H...........======.#########........H.................====.#......H..................#########
+##............#.H..................#########........H......................#......H..======..........#########
+##............#.H..................#########.t......H.....ctC..E....t......#......H..................#########
+##......=====...H..........=======.#########################################.T....H.Gbx........v...T.#########
+##..............H..................#####################################################...###################
+##.E..t..E......H..E..G.....E..E...#####################################################...###################
+#######################.H.###########################################.......................................##
+#######################.H.###########################################......h.......h...........h......h.....##
+########................H..........................................##.......................................##
+########..........h.....H....h..............h............h.........##.......................................##
+########................H..........$$...............!...m..........##.......................................##
+########................H.....m..======...........=====............##.......................................##
+########................H..........................................##.............................r.........##
+########.c..............H....................................$.$...##.......................................##
+################........H...r.............=====............##########.........r......m......................##
+########................H...........................r..............##.......................................##
+########................H..........................................##.........................$.$...........##
+########.........=====..H.....................==========....................................=======.........##
+########................H...................................................................................##
+########........T...G...H.......S............G............v...T.............................................##
+###########.H.#########################.H.###########################.................!.....................##
+###########.H.#########################.H.###########################======.........=======.................##
+###########.H.#########################.H.##########......###########.......................................##
+###########.H.#########################.H.##########...m..###########.......................................##
+#...........H...........................H.................###########.........G...........v.....T...S.T.....##
+#....g......H........g..................H.....g...........##############################################.H.###
+#...........H...........................H.................##############################################.H.###
+#...........H...........................H.................##############################################.H.###
+<...........H...........................H.................#############################################..H..##
+<...........H...........................H.................#############################################..H..##
+<..P..S..t..H..f...f...f..Gt......f..t..H...f...f.vt......#############################################..H..##
+#############################.H.#######################################################################..H..##
+#############################.H.#######################################################################..H..##
+#############################.H.##############################........................................#..H..##
+#############################.H.##############################........h.........h.........h.......h...#..H..##
+#############################.H.##############################........................................#..H..##
+#############################.H.##############################........................................#..H..##
+#############################.H.##############################........................................#..H..##
+####################........#.H..............#################.............r...................r......#..H..##
+####################........#.H..............#################........................................#..H..##
+####################........#.H..............#################........................................#..H..##
+####################.c......#.H..............#################........................................#..H..##
+####################====....#.H..............#################............=======.....=======.........#..H..##
+####################........#.H..............#################........................................#..H..##
+####################........#.H..............#################C..........................................H..##
+####################..=====.#.H..............####################........................................H..##
+####################........#.H.....m........####################.T.................................t..t.H.t##
+####################........#.H..............#########################...#####################################
+####################=====...#.H..............#########################...#####################################
+####################........#.H..............#########################...#####################################
+####################....m...#.H..............................................................................#
+####################..=====.#.H........................g.........m..............g.......m......g.............>
+####################........#.H..............................................................................>
+####################........#.H.............................t.............................t.........bx.......>
+####################=====...#.H..............#################################################################
+####################........#.H..............#################################################################
+####################........#.H...........t..#################################################################
+####################..=====...H.......=======#################################################################
+####################..........H..............#################################################################
+####################.x...b....H.b......xb..x.#################################################################
+##################################...#########################################################################
+##################################...#########################################################################
+##################################...#########################################################################
+##################################...#########################################################################

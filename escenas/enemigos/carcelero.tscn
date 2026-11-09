@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=3]
 
 [ext_resource type="PackedScene" path="res://escenas/enemigos/esqueleto_lanza.tscn" id="1_esqueleto"]
-[ext_resource type="Script" path="res://scripts/combat/jailer_sword_drop.gd" id="2_script"]
+[ext_resource type="Script" path="res://scripts/combat/jailer_key_drop.gd" id="2_script"]
 
 [node name="Carcelero" instance=ExtResource("1_esqueleto")]
 script = ExtResource("2_script")
+max_health = 4.0

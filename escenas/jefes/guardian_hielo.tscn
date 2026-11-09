@@ -356,6 +356,7 @@ size = Vector2(44, 76)
 [node name="GuardianHielo" type="CharacterBody2D" unique_id=141968385]
 collision_layer = 5
 script = ExtResource("script")
+contact_damage = 0.5
 attack_profiles = {
 "attack": {
 "blast_frame": 7,

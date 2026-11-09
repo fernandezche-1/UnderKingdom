@@ -35,6 +35,8 @@ func _ready() -> void:
     _on_coins_changed(GameManager.coins)
     _on_potions_changed(GameManager.potions)
     GameManager.ability_unlocked.connect(_on_ability_unlocked)
+    GameManager.found_upgrade_collected.connect(_on_found_upgrade_collected)
+    GameManager.life_fragment_collected.connect(_on_life_fragment_collected)
     GameManager.sword_mission_changed.connect(_on_sword_mission_changed)
     _build_ability_notice()
     _build_mission_panel()
@@ -76,6 +78,16 @@ func _on_ability_unlocked(ability_id: String) -> void:
     if _ability_notice_tween != null:
         _ability_notice_tween.kill()
     show_story_notice("NUEVA HABILIDAD: %s" % GameManager.get_ability_name(ability_id).to_upper(), GameManager.get_ability_hint(ability_id))
+
+
+func _on_found_upgrade_collected(upgrade_id: String) -> void:
+    var definition: Dictionary = GameManager.FOUND_UPGRADE_DEFINITIONS.get(upgrade_id, {})
+    show_story_notice("MEJORA: %s" % String(definition.get("name", upgrade_id)).to_upper(), String(definition.get("hint", "")))
+
+
+func _on_life_fragment_collected(_fragment_id: String, count: int, completed: bool) -> void:
+    var body: String = "+1 CORAZÓN DE VIDA MÁXIMA" if completed else ""
+    show_story_notice("FRAGMENTO DE VIDA %d/%d" % [count, GameManager.LIFE_FRAGMENTS_PER_HEART], body)
 
 
 func show_story_notice(title: String, body: String) -> void:

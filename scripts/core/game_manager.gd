@@ -14,6 +14,9 @@ signal cinematic_seen(cinematic_id: String)
 signal encounter_completed(encounter_id: String)
 signal key_changed(key_id: String, has_key: bool)
 signal upgrades_changed
+signal found_upgrade_collected(upgrade_id: String)
+signal life_fragment_collected(fragment_id: String, count: int, completed: bool)
+signal outfit_changed(outfit_id: String)
 signal ability_unlocked(ability_id: String)
 signal player_name_changed(player_name: String)
 signal save_slots_changed
@@ -36,12 +39,15 @@ var sword_mission_completed: bool = false
 var sword_guard_defeated: bool = false
 var castle_equipment_recovered: bool = false
 const SWORD_MISSION_TITLE := "Recuperar la espada"
-const SWORD_MISSION_DESCRIPTION := "Encuentra la llave de la armería y recupera tu armadura y espada."
+const SWORD_MISSION_DESCRIPTION := "Busca un arma: a puños no llegarás lejos."
 
 const SAVE_DIRECTORY := "user://saves"
 ## 2: las habilidades se guardan como "abilities" (ABILITY_DEFINITIONS) en vez
 ## de los "skills" del alma fragmentada de la 0.04.049.
-const SAVE_FORMAT_VERSION := 2
+## 3: se suman las mejoras encontradas ("found_upgrades", P51).
+## 4: se suman los fragmentos de vida ("life_fragments", P54).
+## 5: se suman los atuendos encontrados ("outfits", P59).
+const SAVE_FORMAT_VERSION := 5
 const SAVE_SLOT_COUNT := 3
 const PRISON_SCENE_PATH := "res://escenas/mapas/prologo_prision/camara_sellado_alma.tscn"
 const CASTLE_SCENE_PATH := "res://escenas/mapas/tiles_castillo_combate.tscn"
@@ -69,8 +75,8 @@ var upgrade_levels: Dictionary = {
 
 const UPGRADE_DEFINITIONS := {
 	"max_health": {
-		"name": "Vida máxima", "max_level": 2,
-		"costs": [5, 10], "base": 4.0, "step": 1.0, "unit": "corazones",
+		"name": "Vida máxima", "max_level": 1,
+		"costs": [10], "base": 4.0, "step": 1.0, "unit": "corazones",
 	},
 	## La curación sigue siendo de un cuarto de corazón: la mejora baja el daño
 	## que hay que hacer para ganarlo (Player.lifesteal_damage_required).
@@ -84,23 +90,91 @@ const UPGRADE_DEFINITIONS := {
 	},
 }
 
+## Mejoras que se encuentran en el mapa (la empuñadura del alcaide, el amuleto
+## de la guardia): no se compran ni suben de nivel. "stat" es lo que mejoran y
+## "bonus" lo que suman; se consulta con get_found_upgrade_bonus.
+const FOUND_UPGRADE_DEFINITIONS := {
+	"empunadura_alcaide": {
+		"name": "Empuñadura del alcaide", "stat": "slash_damage", "bonus": 0.25,
+		"hint": "+0.25 de daño en tus tajos",
+	},
+	"amuleto_guardia": {
+		"name": "Amuleto de la guardia", "stat": "potion_heal", "bonus": 0.25,
+		"hint": "Tus pociones curan 0.25 más",
+	},
+}
+## Mejoras encontradas, por id de FOUND_UPGRADE_DEFINITIONS.
+var found_upgrades: Dictionary = {}
+
+## Fragmentos de vida: con LIFE_FRAGMENTS_PER_HEART recogidos la vida máxima sube
+## un corazón, sin pasar de MAX_HEARTS_CAP (P46, P54). Se guardan los ids de los
+## recogidos, no solo cuántos hay, para que uno no cuente dos veces.
+const LIFE_FRAGMENTS_PER_HEART := 4
+const MAX_HEARTS_CAP := 6.0
+var life_fragments: Dictionary = {}
+
+## Atuendos (P46, sección 10; P59). "level" ordena: se lleva siempre el de más
+## nivel que se tenga. Rasgos: "sword_reach" (multiplica sword_hitbox_scale_x),
+## "slash_damage" (suma a los tajos), "damage_reduction" (resta a los golpes de
+## 0.75 o más, con mínimo 0.25), "resist" (tipos de daño que no hacen efecto:
+## "cold", "infernal_fire") y "ability" (se desbloquea al encontrarlo).
+## "sprite_frames" es el aspecto con espada (P68): un SpriteFrames aparte que
+## solo trae las animaciones propias; las que le falten, y los atuendos con el
+## campo vacío, usan las del anterior. Los harapos son el de player.tscn, y el
+## desnudo, el de prisn.tscn. Los rasgos son provisionales (A1).
+const NAKED_OUTFIT_ID := "desnudo"
+const OUTFIT_DEFINITIONS := {
+	"desnudo": {
+		"name": "Desnudo", "level": 0, "sword": false, "sprite_frames": "",
+		"hint": "Puñetazos; movimiento corto",
+	},
+	"harapos": {
+		"name": "Harapos y espada oxidada", "level": 1, "sword": true, "sprite_frames": "",
+		"hint": "Espada y tajos",
+	},
+	"soldado": {
+		"name": "Soldado del castillo", "level": 2, "sword": true, "sprite_frames": "",
+		"sword_reach": 1.25, "hint": "Un 25 % más de alcance en el tajo",
+	},
+	"caballero_cripta": {
+		"name": "Caballero de la cripta", "level": 3, "sword": true, "sprite_frames": "",
+		"ability": "agility", "damage_reduction": 0.25,
+		"hint": "Agilidad y 0.25 menos en los golpes fuertes",
+	},
+	"abrigo": {
+		"name": "Abrigo de la ruina", "level": 4, "sword": true, "sprite_frames": "",
+		"resist": ["cold"], "hint": "El frío no te hace daño",
+	},
+	"fire_knight": {
+		"name": "Fire Knight", "level": 5, "sword": true,
+		"sprite_frames": "res://escenas/atuendos/fire_knight.tres",
+		"slash_damage": 0.25, "sword_reach": 1.25, "resist": ["infernal_fire"],
+		"hint": "+0.25 de daño, más alcance y resiste el fuego infernal",
+	},
+}
+## Atuendos encontrados, por id de OUTFIT_DEFINITIONS (el desnudo no cuenta).
+var outfits_found: Dictionary = {}
+
 ## Habilidades del Player que se ganan jugando: reliquias del mapa
 ## (UnderkingdomAbilityPickup), jefes (BossArena.ability_reward) o la tienda.
 ## "hint" es la tecla o la forma de usarla; sale en el aviso al conseguirla.
 const ABILITY_DEFINITIONS := {
 	"roll": {"name": "Rodar", "hint": "Shift: esquiva y atraviesa enemigos"},
-	"combo_2": {"name": "Ráfaga", "hint": "Ataca otra vez durante el primer golpe"},
-	"combo_3": {"name": "Golpe final", "hint": "Tercer ataque seguido del combo"},
+	"combo_2": {"name": "Ráfaga", "hint": "Tus tajos son más rápidos"},
+	"combo_3": {"name": "Golpe final", "hint": "El tajo ascendente golpea más fuerte"},
 	"air_attack": {"name": "Tajo aéreo", "hint": "Ataca en el aire"},
 	"parry": {"name": "Parry", "hint": "Cúbrete [Q] justo antes del golpe"},
 	"ultimate": {"name": "Ultimate", "hint": "E"},
 	"lifesteal": {"name": "Robo de vida", "hint": "Golpear te cura"},
 	"adrenaline": {"name": "Adrenalina", "hint": "Con media vida o menos atacas más rápido"},
+	"agility": {"name": "Agilidad", "hint": "Corres más rápido y saltas más alto"},
+	"air_dash": {"name": "Dash en el aire", "hint": "Shift en el aire: impulso horizontal, una vez por salto"},
 }
 ## Con las que empieza una partida nueva. Las que todavía no tienen dónde
-## conseguirse (minijefe del tajo aéreo, reliquia de la adrenalina, tienda de
-## parry y robo de vida) siguen aquí hasta que se coloque su fuente.
-const STARTING_ABILITIES: Array[String] = ["air_attack", "parry", "lifesteal", "adrenaline"]
+## conseguirse (minijefe del tajo aéreo, tienda de parry y robo de vida)
+## siguen aquí hasta que se coloque su fuente. La adrenalina ya salió: la da
+## el Crystal Mauler (BossArena.ability_reward, P63).
+const STARTING_ABILITIES: Array[String] = ["air_attack", "parry", "lifesteal"]
 
 ## Solo una partida empezada desde "Nueva partida" exige desbloquear. Al abrir
 ## un mapa directo desde el editor (o el Mundo 1 viejo) el Player tiene todo.
@@ -342,6 +416,23 @@ func _restore_game_state(state: Dictionary) -> void:
 	var saved_upgrades: Dictionary = state.get("upgrades", {})
 	for upgrade_id in UPGRADE_DEFINITIONS:
 		upgrade_levels[upgrade_id] = clampi(int(saved_upgrades.get(upgrade_id, 0)), 0, int(UPGRADE_DEFINITIONS[upgrade_id].max_level))
+	found_upgrades.clear()
+	var saved_found: Dictionary = state.get("found_upgrades", {})
+	for found_id: String in FOUND_UPGRADE_DEFINITIONS:
+		if bool(saved_found.get(found_id, false)):
+			found_upgrades[found_id] = true
+	outfits_found.clear()
+	var saved_outfits: Variant = state.get("outfits", [])
+	if saved_outfits is Array:
+		for saved_outfit: Variant in saved_outfits:
+			if saved_outfit is String and OUTFIT_DEFINITIONS.has(saved_outfit) and saved_outfit != NAKED_OUTFIT_ID:
+				outfits_found[String(saved_outfit)] = true
+	life_fragments.clear()
+	var saved_fragments: Variant = state.get("life_fragments", [])
+	if saved_fragments is Array:
+		for fragment_id: Variant in saved_fragments:
+			if fragment_id is String and not String(fragment_id).is_empty():
+				life_fragments[String(fragment_id)] = true
 	cinematics_seen = state.get("cinematics_seen", {}).duplicate(true)
 	completed_encounters = state.get("completed_encounters", {}).duplicate(true)
 	collected_keys = state.get("collected_keys", {}).duplicate(true)
@@ -356,10 +447,10 @@ func _restore_game_state(state: Dictionary) -> void:
 	sword_guard_defeated = bool(state.get("sword_guard_defeated", false))
 	castle_equipment_recovered = bool(state.get("castle_equipment_recovered", false))
 	# Se restaura el estado armado si el guardado registra un arma recogida: la
-	# espada oxidada del carcelero del calabozo o el equipo de la armería.
+	# espada oxidada del conducto del calabozo o el equipo de la armería.
 	has_sword = bool(state.get("has_sword", false)) and (
 		castle_equipment_recovered
-		or (sword_guard_defeated and bool(state.get("sword_mission_completed", false)))
+		or bool(state.get("sword_mission_completed", false))
 	)
 	sword_mission_started = bool(state.get("sword_mission_started", false)) and not has_sword
 	sword_mission_completed = bool(state.get("sword_mission_completed", false)) and has_sword
@@ -393,8 +484,9 @@ func restore_saved_player(player: Node, state: Dictionary, restore_position: boo
 		var location: Variant = state.get("position")
 		if location is Array and location.size() == 2:
 			(player as Node2D).global_position = Vector2(float(location[0]), float(location[1]))
-	if player.get("max_health") != null:
-		player.set("max_health", float(state.get("max_health", player.get("max_health"))))
+	## La vida máxima no se lee del guardado: sale de las mejoras, que ya puso
+	## apply_upgrades_to_player. Así una partida de cuando la tienda vendía dos
+	## niveles queda en el tope de hoy (P47).
 	if player.get("current_health") != null:
 		player.set("current_health", clampf(
 			float(state.get("health", player.get("current_health"))),
@@ -516,7 +608,7 @@ func _make_save_data(slot_id: int, location: Dictionary, player: Node) -> Dictio
 		elif is_instance_valid(player) and player is Node2D:
 			var player_position := (player as Node2D).global_position
 			saved_position = [player_position.x, player_position.y]
-	var max_health := float(get_upgrade_info("max_health").value)
+	var max_health := get_max_health_value()
 	var health := max_health
 	if is_instance_valid(player):
 		max_health = float(player.get("max_health"))
@@ -527,6 +619,9 @@ func _make_save_data(slot_id: int, location: Dictionary, player: Node) -> Dictio
 	var upgrades: Dictionary = {}
 	for upgrade_id in UPGRADE_DEFINITIONS:
 		upgrades[String(upgrade_id)] = int(upgrade_levels.get(upgrade_id, 0))
+	var found: Dictionary = {}
+	for found_id: String in FOUND_UPGRADE_DEFINITIONS:
+		found[found_id] = has_found_upgrade(found_id)
 	var respawn_position_data: Array = [respawn_position.x, respawn_position.y]
 	var respawn_scene := respawn_scene_path
 	if respawn_scene.is_empty():
@@ -551,6 +646,9 @@ func _make_save_data(slot_id: int, location: Dictionary, player: Node) -> Dictio
 			"abilities_locked": abilities_locked,
 			"abilities": abilities,
 			"upgrades": upgrades,
+			"found_upgrades": found,
+			"life_fragments": life_fragments.keys(),
+			"outfits": outfits_found.keys(),
 			"cinematics_seen": _string_key_dictionary(cinematics_seen),
 			"completed_encounters": _string_key_dictionary(completed_encounters),
 			"collected_keys": _string_key_dictionary(collected_keys),
@@ -909,11 +1007,166 @@ func purchase_upgrade(upgrade_id: String) -> bool:
 	return true
 
 
+func has_found_upgrade(upgrade_id: String) -> bool:
+	return bool(found_upgrades.get(upgrade_id, false))
+
+
+## Suma de los bonos de las mejoras encontradas que mejoran "stat".
+func get_found_upgrade_bonus(stat: String) -> float:
+	var total: float = 0.0
+	for upgrade_id: String in found_upgrades:
+		if not has_found_upgrade(upgrade_id) or not FOUND_UPGRADE_DEFINITIONS.has(upgrade_id):
+			continue
+		var definition: Dictionary = FOUND_UPGRADE_DEFINITIONS[upgrade_id]
+		if String(definition.stat) == stat:
+			total += float(definition.bonus)
+	return total
+
+
+## Atuendo que se lleva: el de más nivel de los encontrados. Quien tiene espada
+## sin haber recogido nada (armería, modo dev) lleva los harapos; sin espada, el
+## desnudo.
+func get_outfit_id() -> String:
+	var best_id := "harapos" if has_sword else NAKED_OUTFIT_ID
+	var best_level := int(OUTFIT_DEFINITIONS[best_id].level)
+	for outfit_id: String in outfits_found:
+		if not OUTFIT_DEFINITIONS.has(outfit_id):
+			continue
+		var level := int(OUTFIT_DEFINITIONS[outfit_id].level)
+		if level > best_level:
+			best_id = outfit_id
+			best_level = level
+	return best_id
+
+
+func has_outfit(outfit_id: String) -> bool:
+	return bool(outfits_found.get(outfit_id, false))
+
+
+func get_outfit_info(outfit_id: String) -> Dictionary:
+	return OUTFIT_DEFINITIONS.get(outfit_id, {})
+
+
+## Rasgos de los atuendos encontrados (no solo del que se lleva, para que un
+## abrigo opcional no quite el alcance del soldado): el mayor alcance y la mayor
+## reducción de daño, la suma del daño de tajo y la unión de las resistencias.
+func get_outfit_sword_reach() -> float:
+	var reach: float = 1.0
+	for outfit_id: String in outfits_found:
+		reach = maxf(reach, float(OUTFIT_DEFINITIONS.get(outfit_id, {}).get("sword_reach", 1.0)))
+	return reach
+
+
+func get_outfit_slash_bonus() -> float:
+	var total: float = 0.0
+	for outfit_id: String in outfits_found:
+		total += float(OUTFIT_DEFINITIONS.get(outfit_id, {}).get("slash_damage", 0.0))
+	return total
+
+
+func get_outfit_damage_reduction() -> float:
+	var reduction: float = 0.0
+	for outfit_id: String in outfits_found:
+		reduction = maxf(reduction, float(OUTFIT_DEFINITIONS.get(outfit_id, {}).get("damage_reduction", 0.0)))
+	return reduction
+
+
+func has_outfit_resistance(damage_kind: String) -> bool:
+	for outfit_id: String in outfits_found:
+		var resist: Array = OUTFIT_DEFINITIONS.get(outfit_id, {}).get("resist", [])
+		if damage_kind in resist:
+			return true
+	return false
+
+
+## Daño que llega al Player tras la reducción del atuendo: solo los golpes de
+## 0.75 o más, y nunca por debajo de 0.25.
+func reduce_damage_for_outfit(amount: float) -> float:
+	var reduction := get_outfit_damage_reduction()
+	if reduction <= 0.0 or amount < 0.75:
+		return amount
+	return maxf(amount - reduction, 0.25)
+
+
+## Encuentra un atuendo. Devuelve false si ya estaba o no existe. Da su
+## habilidad y, si trae espada y no se tenía, la espada.
+func grant_outfit(outfit_id: String, player: Node = null) -> bool:
+	if outfit_id == NAKED_OUTFIT_ID or not OUTFIT_DEFINITIONS.has(outfit_id):
+		push_warning("GameManager: atuendo desconocido '%s'." % outfit_id)
+		return false
+	if has_outfit(outfit_id):
+		return false
+	var definition: Dictionary = OUTFIT_DEFINITIONS[outfit_id]
+	outfits_found[outfit_id] = true
+	if bool(definition.get("sword", false)) and not has_sword:
+		has_sword = true
+		sword_mission_started = true
+		sword_mission_completed = true
+		if is_instance_valid(player) and player.has_method("set_sword_equipped"):
+			player.call("set_sword_equipped", true)
+		sword_equipment_changed.emit(true)
+		sword_mission_changed.emit(true, true)
+	if definition.has("ability"):
+		unlock_ability(String(definition.ability))
+	outfit_changed.emit(get_outfit_id())
+	request_autosave()
+	return true
+
+
+func grant_found_upgrade(upgrade_id: String) -> void:
+	if not FOUND_UPGRADE_DEFINITIONS.has(upgrade_id):
+		push_warning("GameManager: mejora encontrada desconocida '%s'." % upgrade_id)
+		return
+	if has_found_upgrade(upgrade_id):
+		return
+	found_upgrades[upgrade_id] = true
+	found_upgrade_collected.emit(upgrade_id)
+	upgrades_changed.emit()
+	request_autosave()
+
+
+## Fragmentos de vida recogidos, de 0 a LIFE_FRAGMENTS_PER_HEART (los que sobran no cuentan).
+func get_life_fragment_count() -> int:
+	return mini(life_fragments.size(), LIFE_FRAGMENTS_PER_HEART)
+
+
+func has_life_fragment(fragment_id: String) -> bool:
+	return bool(life_fragments.get(fragment_id, false))
+
+
+## Vida máxima: la de la tienda más un corazón con todos los fragmentos, con tope.
+func get_max_health_value() -> float:
+	var value := float(get_upgrade_info("max_health").value)
+	if get_life_fragment_count() >= LIFE_FRAGMENTS_PER_HEART:
+		value += 1.0
+	return minf(value, MAX_HEARTS_CAP)
+
+
+## Recoge un fragmento. Con el último sube la vida máxima y se llena la vida.
+## Devuelve false si ese id ya estaba recogido.
+func grant_life_fragment(fragment_id: String) -> bool:
+	if fragment_id.is_empty() or has_life_fragment(fragment_id):
+		return false
+	life_fragments[fragment_id] = true
+	var count := get_life_fragment_count()
+	var completed := count == LIFE_FRAGMENTS_PER_HEART
+	var player := get_tree().get_first_node_in_group("player") as UnderkingdomPlayer
+	if is_instance_valid(player):
+		apply_upgrades_to_player(player, true)
+		if completed:
+			player.current_health = player.max_health
+			player.health_changed.emit(player.current_health, player.max_health)
+	life_fragment_collected.emit(fragment_id, count, completed)
+	upgrades_changed.emit()
+	request_autosave()
+	return true
+
+
 func apply_upgrades_to_player(player: UnderkingdomPlayer, heal_max_health_increase: bool = false) -> void:
 	if not is_instance_valid(player):
 		return
 	var old_max: float = player.max_health
-	var new_max: float = float(get_upgrade_info("max_health").value)
+	var new_max: float = get_max_health_value()
 	var old_cooldown: float = player.ultimate_cooldown
 	var ready_ratio: float = player.get_ultimate_ready_ratio()
 
@@ -1015,6 +1268,26 @@ func is_encounter_completed(encounter_id: String) -> bool:
 	return bool(completed_encounters.get(encounter_id, false))
 
 
+## Sellos (contador de sellos, P55). Cada sello activado se guarda en
+## completed_encounters como "sello:<grupo>:<id>"; al llegar al total, el sello
+## que lo completa marca "sellos:<grupo>", que es lo que escuchan las barreras.
+func seal_key(group: String, seal_id: String) -> String:
+	return "sello:%s:%s" % [group, seal_id]
+
+
+func seal_group_encounter(group: String) -> String:
+	return "sellos:%s" % group
+
+
+func get_seal_count(group: String) -> int:
+	var prefix := "sello:%s:" % group
+	var count := 0
+	for key in completed_encounters:
+		if String(key).begins_with(prefix) and bool(completed_encounters[key]):
+			count += 1
+	return count
+
+
 func grant_key(key_id: String) -> void:
 	if key_id.is_empty() or has_key(key_id):
 		return
@@ -1095,6 +1368,9 @@ func reset_for_new_game() -> void:
 	reset_cinematics_for_new_game()
 	reset_abilities_for_new_game()
 	reset_upgrades_for_new_game()
+	found_upgrades.clear()
+	life_fragments.clear()
+	outfits_found.clear()
 	last_checkpoint_id = ""
 	has_sword = false
 	sword_mission_started = false
@@ -1122,8 +1398,8 @@ func start_sword_mission() -> void:
 	request_autosave()
 
 
-func recover_sword(player: Node = null) -> bool:
-	if has_sword or not sword_guard_defeated:
+func recover_sword(player: Node = null, requires_guard: bool = true) -> bool:
+	if has_sword or (requires_guard and not sword_guard_defeated):
 		return false
 	has_sword = true
 	sword_mission_started = true

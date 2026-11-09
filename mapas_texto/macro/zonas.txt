@@ -1,0 +1,21 @@
+; ZONAS DEL MACRO MAPA (docs/P46_MACRO_MAPA.md, sección 9).
+; Una línea por zona:
+;   zona   escena _combate (en escenas/mapas/)   fuente del ASCII   x   y
+; - fuente: archivo con el mapa de letras (cabecera del constructor, línea ---
+;   y el mapa; un carácter = una pieza de 16 px). Mientras se dibuja va en
+;   mapas_texto/macro/zonas/<zona>.txt; al generar el nivel pasa a
+;   mapas_texto/tiles_<zona>.txt y aquí se cambia la ruta, para que haya una
+;   sola fuente. "-" = la zona no es de tiles y no se verifica.
+; - x, y: esquina de arriba a la izquierda de la zona en la cuadrícula del
+;   mundo, en piezas. "?" mientras no se haya colocado.
+; Verificar: python3 herramientas/macro_mapa/verificar_mundo.py
+
+prision        prologo_prision/camara_sellado_alma.tscn  -                                      -  -
+calabozo       tiles_calabozo_combate.tscn               mapas_texto/macro/zonas/calabozo.txt   36  36
+castillo       tiles_castillo_combate.tscn               mapas_texto/macro/zonas/castillo.txt   136  0
+cementerio     tiles_cementerio_combate.tscn             mapas_texto/macro/zonas/cementerio.txt 246  43
+minas          tiles_mineria_combate.tscn                mapas_texto/macro/zonas/minas.txt      150  133
+mazmorra       tiles_mazmorra_combate.tscn               mapas_texto/macro/zonas/mazmorra.txt   30  133
+ruina          tiles_ruina_combate.tscn                  mapas_texto/macro/zonas/ruina.txt      136  223
+profundidades  tiles_profundidades_combate.tscn          mapas_texto/macro/zonas/profundidades.txt  100  303
+infierno       tiles_jefe_combate.tscn                   mapas_texto/macro/zonas/infierno.txt   160  388

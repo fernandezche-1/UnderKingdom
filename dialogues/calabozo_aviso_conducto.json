@@ -1,0 +1,14 @@
+[
+  {
+    "speaker_id": "player",
+    "name": "GUERRERO (PENSAMIENTO)",
+    "text": "Son demasiados... a puños no podré con todos.",
+    "expression": "fear"
+  },
+  {
+    "speaker_id": "player",
+    "name": "GUERRERO (PENSAMIENTO)",
+    "text": "Ese hueco en el suelo... quizá abajo haya algo útil.",
+    "expression": "neutral"
+  }
+]

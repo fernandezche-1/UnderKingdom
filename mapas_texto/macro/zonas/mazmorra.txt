@@ -1,0 +1,328 @@
+; MAZMORRA (macro mapa, docs/P46_MACRO_MAPA.md): ASCII de la zona. Primera pasada
+; (estructura, P, checkpoints, aperturas, sala de la Reina, derrumbe y huida, y
+; sitio de cada pieza) y segunda pasada (enemigos, objetos y decorados) hechas.
+; Pozo de :F: (puerta hacia atrás, idea 7) dibujado el 2026-11-06.
+; NO GENERAR TODAVÍA: la escena de abajo es la de la mazmorra que se juega hoy
+; (mapas_texto/tiles_mazmorra.txt) y el constructor la reemplazaría. Al
+; aprobarlo, este archivo pasa a mapas_texto/tiles_mazmorra.txt (sección 9).
+;
+; Coordenadas (columna, fila), desde 0. 120 x 90 piezas; en el mundo en
+; (30, 133), a la izquierda de las minas y a su misma profundidad: su borde
+; derecho es la columna 149 del mundo (las minas empiezan en la 150) y su borde
+; de abajo, la fila 222, como el de las minas. Así [L4] queda en la fila 66 de
+; las dos zonas (fila 199 del mundo), sin túnel entre ellas.
+; Llega con la Ráfaga, Rodar y el Golpe final (la Agilidad solo si se encontró
+; E3). Se consigue el Ultimate con la Reina y, en la torre, la llave del
+; alcaide, que abre el depósito del alcaide del calabozo (puerta hacia atrás,
+; idea 1); la salida [!5] se abre con el derrumbe que sigue a su muerte (P46,
+; sección 10).
+; Ningún escalón obligatorio pide más de 3 piezas de salto (con E1 se saltan
+; unas 4,6) ni huecos de más de 3. Solo el secreto pide el dash (de la ruina:
+; se vuelve a por él por [!5]).
+; Camino obligatorio: [L4] -> llegada -> cuerpo de guardia -> escalera 90 ->
+; celdas bajas -> escalera 114 -> celdas altas -> balcón -> gran sala de
+; guardia -> escalera 31 -> antesala -> sala de la Reina -> derrumbe -> huida
+; -> [!5] -> ruina.
+; Bucle: celdas altas, escalera 78, torre del alcaide, repisa alta, plataformas
+; de la gran sala y balcón. Atajo interno: la compuerta de los desagües, entre
+; la antesala y el cuerpo de guardia. Vuelta desde la huida: la escalera del
+; colector. Atajos a otras zonas: :B: (calabozo) y :F: (profundidades).
+;
+; ARRIBA:
+; - GRAN SALA DE GUARDIA: x 28-70, filas 12-46 (suelo 47), 43 x 35. Se sube por
+;   plataformas cada 3 filas: fila 44 (x 50-55), 41 (x 56-60), el BALCÓN
+;   (x 62-70, suelo 38, la salida de las celdas altas), 35 (x 55-60), 32
+;   (x 48-53), 29 (x 55-60), 26 (x 48-53), 23 (x 55-60) y la REPISA ALTA
+;   (x 62-70, suelo 22, la entrada de la torre). Repisas del lado oeste en la
+;   fila 43 (x 34-39) y 40 (x 40-44). Al fondo oeste, la escalera de la
+;   columna 31 (filas 47-56) baja a la antesala.
+; - Sala de tortura (sin salida): x 6-27, filas 40-46 (suelo 47), al oeste de
+;   la gran sala. Sitio de un cofre en (7, 46).
+; - TORRE DEL ALCAIDE: x 71-108, filas 12-21 (suelo 22), unida a lo alto de la
+;   gran sala por la repisa alta. Escalera de la columna 78 (filas 22-37) a las
+;   celdas altas. LLAVE DEL ALCAIDE en (73, 21), en la _combate, donde antes
+;   iba un cofre (quitado el 2026-11-08, al cerrar la Fase 1).
+; - SECRETO DEL DASH (tipo: pasillo bajo con foso; punto 4 de las
+;   sugerencias; 2026-11-08, antes era el escalón de 5 de la Agilidad, en
+;   x 109-117, filas 12-16, que pasó a roca): al fondo este de la torre. Se
+;   abre con el dash en el aire, premio del Guardián de la ruina: es un sitio
+;   para volver desde abajo, por la escalera 116 de [!5], la huida y el
+;   colector.
+;   - PASILLO de 4 de alto, filas 18-21 (suelo 22, el de la torre), que sale
+;     de la torre por la columna 109. FOSO DE PINCHOS de 6 en x 109-114 (fila
+;     22 vacía, pinchos en la 23), empezando en la boca del pasillo: del muro
+;     al borde de la zona solo hay 9 columnas. Monedas sobre el foso, en
+;     (111, 21) y (112, 21).
+;   - NICHO x 115-117, filas 14-21 (suelo 22). Cofre en (117, 21) y cristal
+;     (r) en (115, 21).
+;   - No se cruza sin el dash: es la regla de la ruina (pasillo de 4 de alto,
+;     foso de 6; P46, sección 6). El kolbo3 de (104, 21) patrulla a 5 piezas
+;     del foso.
+; - CELDAS ALTAS: x 71-117, filas 32-37 (suelo 38), abiertas a la gran sala
+;   por el balcón. Dinteles de las celdas en la fila 32 (x 84, 89, 94, 99, 104
+;   y 109).
+; - CELDAS BAJAS: x 73-117, filas 44-48 (suelo 49), sin paso a la gran sala.
+;   Dinteles en la fila 44 (x 78, 83, 96, 101 y 106). Escalera de la columna
+;   114 (filas 38-48) a las celdas altas. Sitio de un cofre en (117, 48).
+;
+; EN MEDIO:
+; - LLEGADA [L4]: x 96-118, filas 63-68 (suelo 69). Salida "<" en el borde
+;   derecho, filas 66-68 (fila 199 del mundo), hacia las minas; la puerta con
+;   llave está del lado de las minas (columna 28). P en (110, 68); checkpoint
+;   tras [L4] en (102, 68).
+; - CUERPO DE GUARDIA: x 72-95, filas 50-68 (suelo 69). Plataformas en la fila
+;   66 (x 76-81) y 63 (x 79-84), a 3 piezas una de otra. Escalera de la columna 90 (filas 49-68) a las
+;   celdas bajas. Al oeste, los desagües; en el suelo, la trampilla del
+;   colector.
+; - DESAGÜES: cuatro tramos de 6 de alto que bajan de oeste a este hasta el
+;   cuerpo de guardia: x 36-45 (suelo 57), x 46-53 (suelo 60), x 54-61 (suelo
+;   63) y x 62-71 (suelo 66), 3 piezas por escalón.
+; - ATAJO INTERNO: COMPUERTA de los desagües en la columna 37, filas 51-56
+;   (reja con arena_barrier en la _combate), cerrada desde el cuerpo de guardia;
+;   se abre con una palanca del lado de la antesala, en (34, 56), y se
+;   recuerda en completed_encounters. En el ASCII queda abierta.
+; - ANTESALA: x 4-35, filas 51-56 (suelo 57), sobre la sala de la Reina.
+;   Checkpoint antes de la Reina en (24, 56).
+;
+; ABAJO:
+; - SALA DE LA REINA (jefa): x 4-26, filas 58-74 (23 x 17, suelo 75: la medida
+;   de la sala de hoy, x 54-76, filas 53-69), en la parte más honda y más lejos
+;   de [L4]. Única entrada por arriba, x 14-16 en la fila 57, con la escalera de
+;   la columna 15 (filas 57-74); ahí va la trampilla que se cierra
+;   (TrampillaEntrada, boss_arena). Plataformas en la fila 72 (x 6-9 y x 21-24).
+;   Activador: el suelo de la sala (filas 69-74). PuntosJefe hacia (6, 74) y
+;   (24, 74): la Reina sale en el extremo más lejano al Player, como hoy. Al
+;   vencerla da el Ultimate (ability_reward ultimate) y ya no suelta llave.
+; - SUELO QUE SE HUNDE (pieza nueva, sin hacer): x 8-22, fila 75, 15 piezas del
+;   suelo de la sala. En el ASCII es bloque, para que la sala quede entera
+;   mientras dura el combate; al morir la Reina la pieza quita esas celdas y el
+;   Player cae a la fosa. La trampilla de la entrada no se vuelve a abrir: la
+;   tapan los escombros del derrumbe.
+; - HUIDA (solo tras el derrumbe), de oeste a este, bajo los desagües y el
+;   cuerpo de guardia:
+;   - fosa del derrumbe: x 4-26, filas 76-86 (suelo 87);
+;   - sube 3: x 27-36 (suelo 84); foso de pinchos x 37-39 (fila 88); x 40-50
+;     (suelo 84);
+;   - sube 3: x 51-58 (suelo 81); foso x 59-61; x 62-70 (suelo 81);
+;   - baja 3: x 71-80 (suelo 84); foso x 81-83; x 84-92 (suelo 84), al pie de
+;     la escalera del colector;
+;   - baja 1: x 93-104 (suelo 85); foso x 105-107; baja 3: x 108-118 (suelo
+;     88), hasta [!5].
+;   Cada foso tiene 3 de ancho con pinchos al fondo, y cada escalón, 3 como
+;   mucho: se pasa con E1, sin la Agilidad. Escombros que caen y el temblor van
+;   en la _combate (secuencia de derrumbe, pieza nueva).
+; - ESCALERA DEL COLECTOR: columna 86 (filas 69-83), de la huida al suelo del
+;   cuerpo de guardia. TRAMPILLA en x 85-87, fila 69, cerrada desde arriba
+;   (antes de la Reina no se baja a la huida) y que se abre desde abajo. En el
+;   ASCII queda abierta.
+; - SALIDA [!5] (hacia la ruina): hueco de x 115-117 en el borde de abajo
+;   (filas 88-89; columnas 145-147 del mundo), 3 piezas. Escalera en la columna
+;   116 para subir desde la ruina. Spawn DesdeRuina hacia (113, 87).
+;
+; - POZO DE :B: (atajo al calabozo, el desagüe entre las dos prisiones):
+;   hueco de x 70-72 en el borde de arriba, filas 0-11 (columnas 100-102 del
+;   mundo, las mismas del pozo del calabozo, x 64-66), en la esquina noreste de
+;   la gran sala, donde se junta la repisa alta con la torre. Escalera en la
+;   columna 71 (filas 0-21) hasta el suelo de la fila 22, que sigue la de la
+;   columna 65 del calabozo. Desde el calabozo está cerrado (trampilla del
+;   suelo de la cámara del preso, x 64-66, fila 46). PALANCA que la abre en
+;   (67, 21), en la repisa alta; se recuerda en completed_encounters
+;   (mazmorra_atajo_b_abierto). Spawn DesdeCalabozo hacia (69, 21). La llave
+;   del alcaide (en lugar del cofre de (73, 21)) queda a dos piezas: con ella
+;   se sube a abrir el depósito del alcaide del calabozo (puerta hacia atrás,
+;   idea 1). Entre las dos zonas el pozo recorre 45 piezas (el verificador lo
+;   avisa como túnel). El pozo no se cierra por este lado: si se sube sin la
+;   palanca, se llega bajo la trampilla cerrada y se vuelve a bajar.
+; - POZO DE :F: (atajo a las profundidades, el pozo de los condenados; puerta
+;   hacia atrás, idea 7, 2026-11-06): hueco de x 88-90 en el suelo de la huida
+;   (fila 84), junto al pie de la escalera del colector, hasta el borde de
+;   abajo (filas 84-89; columnas 118-120 del mundo). Escalera en la columna 89
+;   (filas 84-89), que sigue la de la columna 19 de las profundidades.
+;   TRAMPILLA en x 88-90, fila 84, cerrada desde la mazmorra: desde aquí se ve
+;   en el suelo de la huida y no se abre. La abre una palanca de la galería de
+;   los condenados de las profundidades, en su (23, 25); se recuerda en
+;   completed_encounters (mazmorra_atajo_f_abierto). En el ASCII queda
+;   abierta. Spawn DesdeProfundidades hacia (92, 83). Entre las dos zonas el
+;   pozo recorre 80 piezas (filas 223-302 del mundo), al oeste de la ruina,
+;   que empieza en la columna 136: el verificador lo avisa como túnel. Abierta,
+;   deja un hueco de 3 en el suelo de la huida (se salta; quien cae baja a las
+;   profundidades). Es la vuelta más rápida desde el abismo hacia :B: y [L4]:
+;   se sube a la huida y, por el colector, al cuerpo de guardia. El premio
+;   (lore de los condenados y página II del diario) está abajo, al pie del
+;   pozo (ver las profundidades).
+;
+; Comprobado con una simulación de saltos de 3 piezas y huecos de 3, con la
+; compuerta y la trampilla del colector cerradas: desde la P se llega a todo
+; menos al secreto (hoy, el del dash), que tampoco se alcanzaba con saltos de 4
+; y sí con 6, y desde
+; todo se vuelve a la P. La huida no se alcanza antes de la Reina. Tras hundir
+; el suelo, desde la sala se llega a [!5]; desde la llegada de [!5] se vuelve
+; al cuerpo de guardia por el colector. Tras la segunda pasada, con saltos de 3
+; (y de 4) se alcanzan todos los cofres, monedas y pociones menos los del
+; secreto, que solo se alcanzaban con la Agilidad (hoy, con el dash).
+; Secreto del dash (2026-11-08), comparando el ASCII de antes y el de después
+; (cuerpo de 3 y de 2, saltos de 3 y de 4, huecos de 3, con la compuerta, la
+; trampilla del colector y la de :F: cerradas; simulación con dash de 7
+; piezas, una vez por salto):
+; - sin dash no se pierde ninguna posición fuera del viejo secreto ni aparece
+;   ninguna nueva: el camino obligatorio no cambia;
+; - sin dash no se llega al nicho ni con saltos de 6 y 7 y huecos de 6 (el
+;   viejo secreto sí se alcanzaba con saltos de 6);
+; - con el dash se llega al nicho y al cofre con saltos de 3, y desde ahí se
+;   vuelve a la P;
+; - con todo cerrado, el dash no abre nada más: lo único nuevo es el nicho, y
+;   la huida sigue sin alcanzarse antes de la Reina.
+; Probado generando una escena temporal con el constructor, sin errores.
+; :B: (2026-11-06), simulado sobre el mundo unido con el calabozo: desde la P
+; se llega a la palanca y, por el pozo, a la cámara del preso, al depósito y
+; al inicio del calabozo, y desde ahí se vuelve a la P. Con la trampilla del
+; calabozo cerrada, desde el calabozo no se baja, y quien sube sin la palanca
+; vuelve a bajar.
+; :F: (2026-11-06), comparando el ASCII de antes y el de después con las
+; mismas reglas (cuerpo de 2 y de 3, saltos de 3 y de 4, huecos de 3): con la
+; trampilla de :F: cerrada, el alcance desde la P es idéntico al de antes,
+; también tras la Reina (suelo hundido, entrada tapada, colector abierto), y
+; desde la huida no se baja por el pozo. Abierta, desde el pie del pozo se
+; sube a la huida y se llega a la P (por el colector) y a [!5], y desde la P
+; se llega al pozo; lo único nuevo es el pozo. El camino obligatorio no
+; cambia.
+;
+; Segunda pasada (profundidad 3, P33: a, M, q, e):
+; - Enemigos: 5 Aprendis, 2 mino, 7 kolbo3 y 6 esqueletos.
+;   - El mino mide 5 piezas de alto: solo va donde cabe, en el suelo de la gran
+;     sala (66, 46) y en la torre (92, 21).
+;   - Los Aprendis flotan: en el aire de la gran sala (40, 28) y (64, 30), del
+;     cuerpo de guardia (83, 56), de las celdas altas (86, 35) y de la torre
+;     (95, 15).
+;   - Kolbo3 en el cuerpo de guardia (84, 68), la repisa alta (62, 21), las
+;     celdas bajas (100, 48), las altas (92, 37), la torre (104, 21), la sala de
+;     tortura (16, 46), que guarda el cofre, y los desagües (66, 65).
+;   - Esqueletos en la gran sala (48, 46), las celdas bajas (80, 48) y (109, 48),
+;     las altas (106, 37), la sala de tortura (22, 46) y los desagües (50, 59).
+;   - Ninguno en la llegada, la antesala, la sala de la Reina, la huida ni el
+;     secreto, ni junto a la P o los checkpoints. El kolbo3 de la repisa alta
+;     pasó de (66, 21) a (62, 21) para dejar libre el pie del pozo de :B:.
+; - Cofres (c): sala de tortura (7, 46), fondo de las celdas bajas (117, 48)
+;   y secreto del dash (117, 21). El de la torre (73, 21) se quitó: ahí
+;   va la llave del alcaide, en la _combate.
+; - Monedas ($) en las plataformas de la gran sala y sus repisas del oeste, en la
+;   plataforma alta del cuerpo de guardia, en la sala de tortura, los desagües,
+;   la torre, el fondo de las celdas altas y sobre el foso del secreto del dash
+;   (111, 21) y (112, 21), que se cogen en el dash. Pociones (!) en la
+;   antesala (8, 56), antes de la Reina, en la sala de tortura (25, 45) y en las
+;   celdas bajas (75, 48).
+; - Decorados del tileset mazmorra:
+;   - antorchas (t) en todas las salas, también en la de la Reina;
+;   - estanterías (E, 3x3) en la torre del alcaide (84, 21) y (98, 21) y en la
+;     gran sala (34, 46), con cajas (x) y barriles (b) al lado;
+;   - fogata (f), cajas y barril de la guardia en el cuerpo de guardia;
+;   - agua (%) y hongos (h) en los desagües, y cristales (r) en el secreto.
+;   Ninguno pisa una escalera (ni sus columnas vecinas ni las tres filas de
+;   encima), la palanca, un spawn ni otro decorado, y los que no cuelgan de la
+;   pared se apoyan en el suelo. La huida queda sin decorados: los escombros que
+;   caen van en la _combate.
+;
+; Viven en tiles_mazmorra_combate.tscn: sala de la Reina (trampilla,
+; activador, puntos del jefe, ability_reward), suelo que se hunde y secuencia
+; de derrumbe, compuerta y palanca del atajo, trampilla del colector,
+; transición y spawn de [!5], palanca, transición y spawn de :B:, la llave
+; del alcaide (73, 21), y trampilla, transición y spawn de :F:. No hay "siguiente": [!5] sale por
+; abajo, no por una salida ">".
+
+escena: res://escenas/mapas/tiles_mazmorra.tscn
+tileset: mazmorra
+bloques: oliva
+fondo: ninguno
+parallax: assets_prueba/gothicvania/castillo_viejo/fondo.png 0.2
+anterior: res://escenas/mapas/tiles_mineria_combate.tscn
+---
+######################################################################.H.###############################################
+######################################################################.H.###############################################
+######################################################################.H.###############################################
+######################################################################.H.###############################################
+######################################################################.H.###############################################
+######################################################################.H.###############################################
+######################################################################.H.###############################################
+######################################################################.H.###############################################
+######################################################################.H.###############################################
+######################################################################.H.###############################################
+######################################################################.H.###############################################
+######################################################################.H.###############################################
+############################...........................................H.....................................###########
+############################...........................................H.....................................###########
+############################...........................................H.....................................######...##
+############################...........................................H.t..............t......a........t....######...##
+############################...........................................H.....................................######...##
+############################...........................................H.....................................######...##
+############################...........................................H..............................................##
+############################...........................................H................$.................$...........##
+############################.t.........................................H..............................................##
+############################..................................q........H............E.......M.....E.....q......$$..r.c##
+############################.............................$....###############.H.#############################......#####
+############################...........................======..........######.H.#############################^^^^^^#####
+############################...........................................######.H.########################################
+############################...........................................######.H.########################################
+############################....................======.................######.H.########################################
+############################...........................................######.H.########################################
+############################............a..............................######.H.########################################
+############################...........................======..........######.H.########################################
+############################....................................a......######.H.########################################
+############################......................$.$..................######.H.########################################
+############################....................======........................H.....#....#....#....#....#....#........##
+############################..................................................H.......................................##
+############################.t............................................t...H..................t.............t......##
+############################...........................======.................H.......a...............................##
+############################..................................................H.....................................$.##
+############################..................................................H.............q.............e...........##
+############################..................................###################################################.H.####
+############################............$..............................##########################################.H.####
+######..................................=====..........................##########################################.H.####
+######..................................................=====..........##########################################.H.####
+######..............................$..................................##########################################.H.####
+######....t.........t.............======...............................##########################################.H.####
+######............................................======...............##.....#....#............#....#....#.......H...##
+######......$............!.............................................##.........................................H...##
+######.c...x....q.....e...........E..xb.........e.................M....##...t......................t........t.....H...##
+##############################.H.########################################.........................................H...##
+##############################.H.########################################..!....e...................q........e....H..c##
+##############################.H.########################################################.H.############################
+##############################.H.#######################################..................H.....########################
+####...........................H..............##########################..................H.....########################
+####...........................H..............##########################..................H.....########################
+####..t.....................t..H........t.....##########################..................H.....########################
+####...........................H......................##################..................H..t..########################
+####...........................H......................##################..t...............H.....########################
+####....!...............S......H.......%%%%%%.........##################...........a......H.....########################
+##############.H.#############################................##########..................H.....########################
+####...........H...........###################..$.............##########..................H.....########################
+####...........H...........###################h...e.......t...##########..................H.....########################
+####...........H...........###########################....................................H.....########################
+####...........H...........###########################....................................H.....########################
+####.t.........H.........t.###########################.%%%%.h....................$.$......H.....########################
+####...........H...........###################################.................======.....H............................#
+####...........H...........###################################............................H.........................t..#
+####...........H...........###################################....q.%%%...................H.......t....................#
+####...........H...........#############################################....======........H............................<
+####...........H...........#############################################..................H............................<
+####...........H...........#############################################..f.........q.....H..xb.......S.......P........<
+####...........H...........##########################################################.H.################################
+####...........H...........##########################################################.H.################################
+####...........H...........##########################################################.H.################################
+####..====.....H.....====..##########################################################.H.################################
+####...........H...........##########################################################.H.################################
+####...........H...........##########################################################.H.################################
+#####################################################################################.H.################################
+####.......................########################....................##############.H.################################
+####.......................########################....................##############.H.################################
+####..................................................................................H......###########################
+####..................................................................................H.....................############
+####..................................................................................H................................#
+####...............................................########...#########...............H................................#
+####...............................................########...#########...............H................................#
+####...............................................########...#########...............H................................#
+####.......................##########...###################...###################...####.H.##..........................#
+####.......................##########...###################...###################...####.H.##############..............#
+####.......................##########...###################...###################...####.H.##############..............#
+#####################################...###################...###################...####.H.##############..............#
+#####################################^^^###################^^^###################^^^####.H.##############^^^#######.H.##
+########################################################################################.H.########################.H.##

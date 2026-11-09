@@ -1,0 +1,33 @@
+; CONEXIONES ENTRE ZONAS: la fuente de verdad (docs/P46_MACRO_MAPA.md, sección 9).
+; Antes de dibujar o cambiar el ASCII de una zona, leer esta tabla. Toda
+; apertura del borde de una zona tiene que estar aquí, y las dos zonas de cada
+; conexión la dibujan en el mismo sitio.
+;
+; Una línea por conexión:
+;   id  tipo  zona_a  lado_a  pos_a  zona_b  lado_b  pos_b  ancho  coloca
+; - zona_a es la de arriba en la ruta (o la de arriba del atajo); zona_b, la que sigue.
+; - lado: arriba | abajo | izq | der (borde de la zona por el que sale).
+; - pos: primera pieza de la apertura sobre ese borde, contando desde 0:
+;   columna si el lado es arriba/abajo, fila si es izq/der. "?" sin dibujar;
+;   "-" si en esa zona no es una apertura del borde (se llega a un spawn).
+; - ancho: piezas de la apertura (las dos zonas iguales). "?" sin dibujar.
+; - coloca: constructor = salida > (en zona_a) y < (en zona_b) del mapa de
+;   letras, solo en los bordes izq/der; combate = transición puesta en la
+;   escena _combate, con spawn Desde<Zona> en cada lado.
+; - tipo: llave, habilidad, sellos, puzle, derrumbe, libre o atajo (se abre
+;   desde zona_b, la de abajo).
+
+P0   libre      prision       abajo  -  calabozo       arriba  -  -  combate
+; P0: la prisión no es de tiles; su cinemática carga el calabozo en su spawn de inicio.
+L1   llave      calabozo      der    8  castillo       izq    44  3  constructor
+H2   habilidad  castillo      der   67  cementerio     izq    24  3  constructor
+S3   sellos     cementerio    abajo 10  minas          arriba 106 3  combate
+L4   llave      minas         izq   66  mazmorra       der    66  3  constructor
+!5   derrumbe   mazmorra      abajo 115 ruina          arriba  9  3  combate
+P6   puzle      ruina         abajo 145 profundidades  arriba 181 3  combate
+S7   sellos     profundidades abajo 114 infierno       arriba 54  3  combate
+:B:  atajo      calabozo      abajo  64 mazmorra       arriba 70  3  combate
+:C:  atajo      castillo      abajo 34  minas          arriba 20  3  combate
+:D:  atajo      minas         abajo 132 ruina          arriba 146 3  combate
+:E:  atajo      ruina         abajo 90  profundidades  arriba 126 3  combate
+:F:  atajo      mazmorra      abajo 88  profundidades  arriba 18  3  combate

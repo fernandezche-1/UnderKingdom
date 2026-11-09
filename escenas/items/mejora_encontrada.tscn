@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Texture2D" path="res://otra vez/fourSeasonsPlatformer_ [tileset, version 2.0]/objects_/items_.png" id="1_items"]
+[ext_resource type="Script" path="res://scripts/items/found_upgrade_pickup.gd" id="2_script"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_orbe"]
+atlas = ExtResource("1_items")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mejora"]
+size = Vector2(16, 20)
+
+[node name="MejoraEncontrada" type="Area2D" groups=["collectible", "found_upgrade"]]
+collision_layer = 0
+collision_mask = 1
+monitorable = false
+script = ExtResource("2_script")
+upgrade_id = "empunadura_alcaide"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(1, 0.75, 0.4, 1)
+z_index = 10
+texture_filter = 1
+texture = SubResource("AtlasTexture_orbe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_mejora")

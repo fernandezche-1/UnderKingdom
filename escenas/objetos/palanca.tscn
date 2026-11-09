@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Texture2D" path="res://assets_prueba/dungeon_platformer/dungeontilesetfull.png" id="1_tex"]
+[ext_resource type="Script" path="res://scripts/environment/lever.gd" id="2_script"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_arriba"]
+atlas = ExtResource("1_tex")
+region = Rect2(448, 128, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tirada"]
+atlas = ExtResource("1_tex")
+region = Rect2(432, 128, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_palanca"]
+animations = [{
+"frames": [{"duration": 1.0, "texture": SubResource("AtlasTexture_arriba")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_tirada")}],
+"loop": false,
+"name": &"states",
+"speed": 1.0
+}]
+
+[node name="Palanca" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_palanca")
+animation = &"states"
+centered = false
+script = ExtResource("2_script")
