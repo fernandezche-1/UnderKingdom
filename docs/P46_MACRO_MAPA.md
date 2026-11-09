@@ -141,6 +141,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 - El fragmento de vida (`escenas/items/fragmento_vida.tscn`, `life_fragment_pickup.gd`; `fragment_id` único por partida, `<zona>_<n>`; `GameManager.grant_life_fragment`, guardado como `life_fragments`; P54): 4 dan +1 corazón de vida máxima, con tope 6, y llenan la vida; el recuento sale en la pestaña de estadísticas. Arte provisional.
 - El sello (`escenas/objetos/sello.tscn`, `seal.gd`; P55): hereda de la palanca. Se activa con E o solo, cuando se marca su `listen_encounter` (arena de la fosa, Capitán). Guarda `sello:<grupo>:<id>` en `completed_encounters`; al llegar a `seal_total` marca `sellos:<grupo>` y se abren las barreras con `open_on_seal_group`. Arte provisional.
 - El rompible selectivo (`escenas/objetos/rompible_selectivo.tscn`, `selective_breakable.gd`; P56): hereda de `breakable_object.gd` y solo cede a un tipo de golpe, `accepted_hit` = Golpe final (tajo ascendente con `combo_3`, losa de la cripta) o Ultimate (estatua de la Reina). Los demás golpes sacan chispa y "RESISTE EL GOLPE". Arte provisional.
+- El ascensor minero (`escenas/objetos/ascensor.tscn`, `mine_elevator.gd`; P60): una cabina por escena, E para viajar al spawn de la gemela con fundido; `requires_encounter` la deja sin corriente hasta tirar de la palanca. Arte provisional.
 - Los atuendos (`OUTFIT_DEFINITIONS`, `outfits_found`, `grant_outfit` en `GameManager`; P59): `get_outfit_id()` da el de más nivel; sus rasgos (alcance, daño de tajo, reducción de daño, resistencias `cold` / `infernal_fire`) se consultan con `get_outfit_*` y `has_outfit_resistance`, y el Player los aplica. Modo dev: "Siguiente atuendo". Sin objeto, aspecto ni menú todavía.
 
 ### Piezas que faltan
@@ -151,7 +152,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 - `locked_door.gd` con otro dibujo (velas, hielo de `[P6]`, hielo negro): hecho (P57). `require_interact` (E delante), `open_effect` (`FADE`, `CANDLES`, `MELT`) y `piece_tint`. Falta su arte.
 - La secuencia de huida o derrumbe tras la Reina (`[!5]`).
 - La reja baja que solo se pasa rodando (`[H2]`): hecha, `scripts/environment/roll_gate.gd` (P52).
-- El ascensor minero (`:C:`).
+- El ascensor minero (`:C:`): hecho, `escenas/objetos/ascensor.tscn` (P60). Cabina en cada escena, E para viajar con fundido; con `requires_encounter` (la palanca de las minas) dice "NO HAY CORRIENTE" hasta entonces. Falta su arte.
 - Las arenas con oleadas del infierno (coliseo de los condenados y salón de los verdugos): `arena_barrier.gd` más algo que saque una oleada tras otra.
 - El fuego infernal del altar este de las profundidades (`[S7]`): fuego que sin E5 no deja pasar (quema hasta matar o empuja hacia atrás) y con E5 no hace daño. En el ASCII son trampas de fuego `F`.
 - El dash en el aire (`air_dash`, habilidad nueva en `ABILITY_DEFINITIONS`), premio del Guardián de hielo: unas 7 piezas (112 px) en horizontal, sin gravedad, una vez por salto (se recarga al tocar el suelo). Sus sitios son pasillos de 4 de alto con un foso de pinchos de 6 (sección 6).

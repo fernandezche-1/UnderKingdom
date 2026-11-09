@@ -154,7 +154,7 @@ seguir. Responde en español.
 - [x] Mejora de +0.25 en pociones (el amuleto de la guardia): fila `amuleto_guardia` de `FOUND_UPGRADE_DEFINITIONS` y `get_potion_heal_amount()` del Player, con `mejora_encontrada.tscn` (P58). No cambia el guardado. Falta su arte.
 
 **4. Minas:**
-- [ ] Ascensor minero (`:C:`).
+- [x] Ascensor minero (`:C:`): `escenas/objetos/ascensor.tscn` (P60). Una cabina por escena; sin guardado nuevo. Falta su arte.
 - [ ] Fuego infernal que solo se pasa con E5 (gruta de cristal, santuario de las profundidades, infierno).
 - [ ] IA del Crystal Mauler: hoy `escenas/jefes/boss_mina.tscn` es solo sprite y colisión, sin script (¿`simple_boss.gd`?). Su sala, la gruta de cristal, mide 16 x 14.
 - [ ] La Adrenalina sale de `STARTING_ABILITIES` y la da el Mauler (`ability_reward adrenaline`). Va con su IA: antes nadie la daría.

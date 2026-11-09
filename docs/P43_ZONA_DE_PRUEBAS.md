@@ -14,6 +14,7 @@
   3. Foso de pinchos (x 36-38), que prueba la muerte, y fuego en x 42, que prueba la quemadura.
   4. Plataformas de una vía (x 45-63), de dos en dos filas, hasta la galería alta.
   5. Escalera que atraviesa el piso (x 69, filas 11-19), con checkpoint en x 64. Una trampilla tapa su hueco en el suelo de la galería y la abre la palanca de x 67, abajo (en la `_combate`; P49).
+  Dos cabinas de ascensor (P60) en la `_combate`: abajo en x 33-35 (sin corriente hasta tirar de la palanca de x 67) y sobre la galería en x 72-74; ambas viajan entre sí.
   6. Escalera de la galería a la cornisa (x 83, filas 5-10), con cofre y poción, y un kolbo en la galería. Entre el cofre y la poción, la pared agrietada (columna 89, filas 2-4, en la `_combate`; P48).
   7. Corrales de enemigos en el piso de abajo, separados por columnas de 2 piezas (x 73-143).
 - Los corrales llevan, en orden: rata, slime, esqueleto, esqueleto de lanza, Guardia, Aprendis, y mino con diablillo.

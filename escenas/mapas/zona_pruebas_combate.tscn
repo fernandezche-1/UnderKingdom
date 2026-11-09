@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3]
+[gd_scene load_steps=25 format=3]
 
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas.tscn" id="1_base"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/rata.tscn" id="2_rata"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" path="res://escenas/items/fragmento_vida.tscn" id="15_fragmento"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/sello.tscn" id="16_sello"]
 [ext_resource type="Script" path="res://scripts/environment/locked_door.gd" id="18_puerta"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/ascensor.tscn" id="20_ascensor"]
 [ext_resource type="PackedScene" path="res://escenas/items/llave_jefe_m1.tscn" id="19_llave"]
 [ext_resource type="Texture2D" path="res://assets_prueba/raou_castillo/tileset_castillo.png" id="8_tileset"]
 
@@ -214,3 +215,18 @@ piece_tint = Color(0.6, 0.85, 1, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Objetos/HieloLlama"]
 shape = SubResource("RectangleShape2D_puerta")
+
+[node name="AscensorAbajo" parent="Objetos" instance=ExtResource("20_ascensor")]
+position = Vector2(552, 320)
+target_scene_path = "res://escenas/mapas/zona_pruebas_combate.tscn"
+target_spawn_id = &"AscensorArriba"
+arrival_spawn_id = &"AscensorAbajo"
+requires_encounter = "pruebas_palanca_trampilla"
+prompt_text = "E  Subir"
+
+[node name="AscensorArriba" parent="Objetos" instance=ExtResource("20_ascensor")]
+position = Vector2(1160, 176)
+target_scene_path = "res://escenas/mapas/zona_pruebas_combate.tscn"
+target_spawn_id = &"AscensorAbajo"
+arrival_spawn_id = &"AscensorArriba"
+prompt_text = "E  Bajar"
