@@ -1449,6 +1449,13 @@ func _process_climbing() -> void:
     if Input.is_action_pressed("move_down"):
         vertical += 1.0
 
+    # Escalera que nace bajo una plataforma de una vía (galería de la zona de
+    # pruebas, P71): al bajar se atraviesa la plataforma, como con S fuera de
+    # la escalera. Sobre suelo macizo no cambia nada.
+    if vertical > 0.0 and is_on_floor() and _drop_through_left <= 0.0:
+        set_collision_mask_value(one_way_collision_layer, false)
+        _drop_through_left = drop_through_time
+
     var axis := Vector2.DOWN
     var allow_horizontal := true
     if _active_climb_zone != null:

@@ -6,22 +6,19 @@
 
 ## 1. El mapa
 
-- `mapas_texto/zona_pruebas.txt` (mapa de letras, 146 x 24 piezas, tileset `castillo`) genera `escenas/mapas/zona_pruebas.tscn`.
-- `zona_pruebas_combate.tscn` hereda de esa escena y agrega los enemigos sin letra. Regenerar la base no los borra.
+- `mapas_texto/zona_pruebas.txt` (mapa de letras, 146 x 82 piezas, tileset `castillo`) genera `escenas/mapas/zona_pruebas.tscn`. Las filas 0-23 son el mapa de abajo; las 24-81, la galería de piezas (P71).
+- `zona_pruebas_combate.tscn` hereda de esa escena y agrega los enemigos sin letra y la galería de piezas (`zona_pruebas_galeria.tscn`, en `Objetos`). Regenerar la base no los borra.
 - Tramos, de izquierda a derecha:
-  1. Inicio (x 2-22): pasillo plano para idle y correr, checkpoint, cofre y poción. En x 16, un objeto de lore para leer con E (en la `_combate`; P50) y, en x 20, la mejora encontrada de +0.25 de daño (P51). Entre ellos, en x 15 y x 18, la espada oxidada (E1) y el atuendo del soldado (E2) para tomar con E (P69); con ellos se ve la pestaña "Equipo" del menú de pausa (P70).
+  1. Inicio (x 2-22): pasillo plano para idle y correr, checkpoint, cofre y poción. En x 3, la escalera que baja a la galería de piezas (P71).
   2. Colina con rampas (x 24-32).
   3. Foso de pinchos (x 36-38), que prueba la muerte, y fuego en x 42, que prueba la quemadura.
   4. Plataformas de una vía (x 45-63), de dos en dos filas, hasta la galería alta.
-  5. Escalera que atraviesa el piso (x 69, filas 11-19), con checkpoint en x 64. Una trampilla tapa su hueco en el suelo de la galería y la abre la palanca de x 67, abajo (en la `_combate`; P49).
-  Dos cabinas de ascensor (P60) en la `_combate`: abajo en x 33-35 (sin corriente hasta tirar de la palanca de x 67) y sobre la galería en x 72-74; ambas viajan entre sí.
-  6. Escalera de la galería a la cornisa (x 83, filas 5-10), con cofre y poción, y un kolbo en la galería. Entre el cofre y la poción, la pared agrietada (columna 89, filas 2-4, en la `_combate`; P48).
+  5. Escalera que atraviesa el piso (x 69, filas 11-19), con checkpoint en x 64.
+  6. Escalera de la galería a la cornisa (x 83, filas 5-10), con cofre y poción, y un kolbo en la galería.
   7. Corrales de enemigos en el piso de abajo, separados por columnas de 2 piezas (x 73-143).
 - Los corrales llevan, en orden: rata, slime, esqueleto, esqueleto de lanza, Guardia, Aprendis, y mino con diablillo.
   - Rata, slime y esqueleto de lanza no tienen letra: viven en la escena `_combate`.
-
-  0. Arena con oleadas (P67), sobre el inicio: escalera en x 3 (filas 11-19) hasta un suelo propio en la fila 11, x 5-22; reja de entrada en x 6, activador en x 9 y reja de salida en x 21. Dos oleadas (rata y slime; esqueleto de lanza). Todo en la `_combate`, con rectángulos de color.
-  8. Derrumbe (P64): palanca en x 96, reja en x 98 y suelo que se hunde en x 99-113 de la galería, con escombros abajo y la zona de salida en x 113-120 (todo en la `_combate`).
+- Galería de piezas (filas 24-81): un cuarto cerrado por cada pieza de la Fase 2, en el orden de la ruta, con un cartel que dice qué es, a qué zona va y cómo se prueba. La genera `herramientas/zona_pruebas/galeria.py`; detalle en `docs/P71_GALERIA_DE_PIEZAS.md`.
 
 ## 2. Medidas
 
@@ -37,6 +34,7 @@
 - **Sprite nuevo del Player:** se ve al jugar el mapa; no hace falta tocar nada.
 - **Enemigo nuevo con letra:** se pone en el `.txt` y se regenera.
 - **Enemigo nuevo sin letra o sprite suelto:** se añade a `zona_pruebas_combate.tscn`, en `Enemigos` u `Objetos`.
+- **Pieza nueva de un mapa (puerta, palanca, objeto):** se le da un cuarto en la galería, editando `herramientas/zona_pruebas/galeria.py` (P71).
 
 ## 4. Comprobado
 

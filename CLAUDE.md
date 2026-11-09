@@ -46,6 +46,7 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
 - **Zona de pruebas (`escenas/mapas/zona_pruebas_combate.tscn`):** aquí se prueba siempre todo sprite, animación o enemigo nuevo antes de llevarlo a un mapa de la ruta.
   - Abrir esa escena y pulsar F6. Hereda de `zona_pruebas.tscn`, generada desde `mapas_texto/zona_pruebas.txt`.
   - Lo que se añada para probar (un enemigo sin letra, un sprite suelto) va en la `_combate`, en `Enemigos` u `Objetos`; un enemigo con letra va en el `.txt`.
+  - Galería de piezas (P71): debajo del mapa, bajando por la escalera junto al spawn, un cuarto cerrado por cada pieza de la Fase 2, en el orden de la ruta, con un cartel que dice qué es, a qué zona va y cómo se prueba. Es `zona_pruebas_galeria.tscn` (instanciada en `Objetos` de la `_combate`) más las filas 24-81 del `.txt`, y las genera `herramientas/zona_pruebas/galeria.py`: una pieza nueva se añade en ese script, no a mano. Las bocas de sus escaleras van tapadas con "===" y se bajan con S.
   - El Player es `prisn.tscn` y sale sin espada. Con espada: Modo dev (tecla º), "Dar espada". Para volver a sin espada, reiniciar con F6. Teclas de prueba: R reaparecer, H daño de ¼, J daño de 1, K morir.
   - No forma parte de la ruta y nada lleva a ella: no tiene salidas. La regla de enemigos por profundidad no aplica aquí.
   - Detalle en `docs/P43_ZONA_DE_PRUEBAS.md`.
