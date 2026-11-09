@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3]
+[gd_scene load_steps=41 format=3]
 
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas.tscn" id="1_base"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/rata.tscn" id="2_rata"]
@@ -28,6 +28,8 @@
 [ext_resource type="PackedScene" path="res://escenas/items/reliquia_habilidad.tscn" id="27_reliquia"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/kill_zone.tscn" id="28_kill"]
 [ext_resource type="Texture2D" path="res://assets_prueba/raou_castillo/tileset_castillo.png" id="8_tileset"]
+[ext_resource type="Script" path="res://scripts/combat/wave_arena.gd" id="29_oleadas"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/climb_zone.tscn" id="30_escalera"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_losa_izq"]
 atlas = ExtResource("8_tileset")
@@ -82,6 +84,15 @@ size = Vector2(16, 112)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dash_pinchos"]
 size = Vector2(96, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_arena_reja"]
+size = Vector2(16, 144)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_arena_suelo"]
+size = Vector2(288, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_arena_escalera"]
+size = Vector2(24, 160)
 
 [node name="ZonaPruebasCombate" instance=ExtResource("1_base")]
 
@@ -457,3 +468,99 @@ position = Vector2(1952, 212)
 
 [node name="CollisionShape2D" parent="Objetos/PinchosFoso" index="0"]
 shape = SubResource("RectangleShape2D_dash_pinchos")
+
+[node name="EscaleraArena" parent="Objetos" instance=ExtResource("30_escalera")]
+position = Vector2(56, 240)
+
+[node name="CollisionShape2D" parent="Objetos/EscaleraArena" index="0"]
+shape = SubResource("RectangleShape2D_arena_escalera")
+
+[node name="DibujoEscaleraArena" type="ColorRect" parent="Objetos"]
+offset_left = 52.0
+offset_top = 176.0
+offset_right = 60.0
+offset_bottom = 320.0
+color = Color(0.55, 0.4, 0.25, 1)
+
+[node name="SueloArena" type="StaticBody2D" parent="Objetos"]
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objetos/SueloArena"]
+position = Vector2(224, 184)
+shape = SubResource("RectangleShape2D_arena_suelo")
+
+[node name="Dibujo" type="ColorRect" parent="Objetos/SueloArena"]
+offset_left = 80.0
+offset_top = 176.0
+offset_right = 368.0
+offset_bottom = 192.0
+color = Color(0.36, 0.28, 0.46, 1)
+
+[node name="ArenaOleadas" type="Node2D" parent="Objetos"]
+script = ExtResource("29_oleadas")
+encounter_id = "pruebas_arena_oleadas"
+
+[node name="Activador" type="Area2D" parent="Objetos/ArenaOleadas"]
+position = Vector2(152, 104)
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objetos/ArenaOleadas/Activador"]
+shape = SubResource("RectangleShape2D_arena_reja")
+
+[node name="Puertas" type="Node2D" parent="Objetos/ArenaOleadas"]
+
+[node name="PuertaEntrada" type="StaticBody2D" parent="Objetos/ArenaOleadas/Puertas"]
+position = Vector2(104, 104)
+script = ExtResource("7_barrera")
+piece_start = SubResource("AtlasTexture_reja_tope")
+piece_middle = SubResource("AtlasTexture_reja_medio")
+piece_end = SubResource("AtlasTexture_reja_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objetos/ArenaOleadas/Puertas/PuertaEntrada"]
+shape = SubResource("RectangleShape2D_arena_reja")
+disabled = true
+
+[node name="Atajos" type="Node2D" parent="Objetos/ArenaOleadas"]
+
+[node name="PuertaSalida" type="StaticBody2D" parent="Objetos/ArenaOleadas/Atajos"]
+position = Vector2(344, 104)
+script = ExtResource("7_barrera")
+piece_start = SubResource("AtlasTexture_reja_tope")
+piece_middle = SubResource("AtlasTexture_reja_medio")
+piece_end = SubResource("AtlasTexture_reja_base")
+start_closed = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objetos/ArenaOleadas/Atajos/PuertaSalida"]
+shape = SubResource("RectangleShape2D_arena_reja")
+
+[node name="Oleadas" type="Node2D" parent="Objetos/ArenaOleadas"]
+
+[node name="Oleada1" type="Node2D" parent="Objetos/ArenaOleadas/Oleadas"]
+
+[node name="Rata" parent="Objetos/ArenaOleadas/Oleadas/Oleada1" instance=ExtResource("2_rata")]
+position = Vector2(232, 156)
+
+[node name="Slime" parent="Objetos/ArenaOleadas/Oleadas/Oleada1" instance=ExtResource("3_slime")]
+position = Vector2(296, 156)
+
+[node name="Oleada2" type="Node2D" parent="Objetos/ArenaOleadas/Oleadas"]
+
+[node name="EsqueletoLanza" parent="Objetos/ArenaOleadas/Oleadas/Oleada2" instance=ExtResource("4_esqueleto_lanza")]
+position = Vector2(280, 156)
+
+[node name="UI" type="CanvasLayer" parent="Objetos/ArenaOleadas"]
+layer = 9
+
+[node name="Aviso" type="Label" parent="Objetos/ArenaOleadas/UI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 60.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+vertical_alignment = 1

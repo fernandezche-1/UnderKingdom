@@ -20,6 +20,7 @@
 - Los corrales llevan, en orden: rata, slime, esqueleto, esqueleto de lanza, Guardia, Aprendis, y mino con diablillo.
   - Rata, slime y esqueleto de lanza no tienen letra: viven en la escena `_combate`.
 
+  0. Arena con oleadas (P67), sobre el inicio: escalera en x 3 (filas 11-19) hasta un suelo propio en la fila 11, x 5-22; reja de entrada en x 6, activador en x 9 y reja de salida en x 21. Dos oleadas (rata y slime; esqueleto de lanza). Todo en la `_combate`, con rectángulos de color.
   8. Derrumbe (P64): palanca en x 96, reja en x 98 y suelo que se hunde en x 99-113 de la galería, con escombros abajo y la zona de salida en x 113-120 (todo en la `_combate`).
 
 ## 2. Medidas
