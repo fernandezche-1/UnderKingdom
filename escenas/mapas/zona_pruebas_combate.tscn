@@ -28,6 +28,7 @@
 [ext_resource type="PackedScene" path="res://escenas/items/reliquia_habilidad.tscn" id="27_reliquia"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/kill_zone.tscn" id="28_kill"]
 [ext_resource type="Texture2D" path="res://assets_prueba/raou_castillo/tileset_castillo.png" id="8_tileset"]
+[ext_resource type="SpriteFrames" path="res://escenas/atuendos/fire_knight.tres" id="31_fire_knight"]
 [ext_resource type="Script" path="res://scripts/combat/wave_arena.gd" id="29_oleadas"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/climb_zone.tscn" id="30_escalera"]
 
@@ -564,3 +565,10 @@ theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 16
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ManiquiFireKnight" type="AnimatedSprite2D" parent="Objetos"]
+z_index = -1
+position = Vector2(92, 257)
+sprite_frames = ExtResource("31_fire_knight")
+animation = &"idle"
+autoplay = "idle"

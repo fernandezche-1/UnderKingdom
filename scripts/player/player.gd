@@ -275,6 +275,13 @@ var _armed_sprite_offset: Vector2 = Vector2.ZERO
 var _base_sprite_offset: Vector2 = Vector2.ZERO
 var _uses_normalized_prisoner_frames: bool = false
 var _armed_sprite_scale: Vector2 = Vector2.ONE
+## Aspecto con espada por atuendo (P68). _harapos_sprite_frames es el de
+## player.tscn (E1); _armed_sprite_frames, el del atuendo que se lleva, con las
+## animaciones que le falten tomadas del anterior. Escala de dibujo por animación.
+var _harapos_sprite_frames: SpriteFrames
+var _armed_animation_scales: Dictionary = ARMED_ANIMATION_SCALES
+var _outfit_look_id: String = ""
+var _outfit_looks: Dictionary = {}
 @export var debug_slide_collisions: bool = true
 var _last_blocked_contact_signature: String = ""
 var _armory_stuck_frames: int = 0
@@ -318,7 +325,10 @@ func _ready() -> void:
         _unarmed_sprite_frames = sprite.sprite_frames
         _load_armed_sprite_frames()
     _add_fireball_animation(_armed_sprite_frames)
+    _harapos_sprite_frames = _armed_sprite_frames
+    _select_outfit_look()
     sprite.animation_changed.connect(_on_sprite_animation_changed)
+    GameManager.outfit_changed.connect(_on_outfit_changed)
     set_sword_equipped(GameManager.has_sword)
     floor_max_angle = deg_to_rad(max_stair_slope_degrees)
     floor_snap_length = floor_snap_distance
@@ -352,6 +362,8 @@ func set_sword_equipped(equipped: bool) -> void:
         return
     if _armed_sprite_frames == null:
         _armed_sprite_frames = sprite.sprite_frames
+    if _harapos_sprite_frames != null:
+        _select_outfit_look()
     if equipped:
         sprite.sprite_frames = _armed_sprite_frames
         sprite.position = _armed_sprite_position
@@ -424,7 +436,99 @@ func _load_armed_sprite_frames() -> void:
 
 
 func _current_armed_scale() -> Vector2:
-    return _armed_sprite_scale * float(ARMED_ANIMATION_SCALES.get(sprite.animation, 1.0))
+    return _armed_sprite_scale * float(_armed_animation_scales.get(sprite.animation, 1.0))
+
+
+## Atuendo cuyo aspecto se usa con espada: el que se lleva, o los harapos si
+## todavía es el desnudo (la espada se acaba de dar o se pide sin atuendo).
+func _armed_outfit_id() -> String:
+    var outfit_id := GameManager.get_outfit_id()
+    var info := GameManager.get_outfit_info(outfit_id)
+    if info.is_empty() or not bool(info.get("sword", false)):
+        return "harapos"
+    return outfit_id
+
+
+## Elige el SpriteFrames con espada del atuendo actual. Devuelve si cambió.
+func _select_outfit_look() -> bool:
+    var outfit_id := _armed_outfit_id()
+    if outfit_id == _outfit_look_id:
+        return false
+    if not _outfit_looks.has(outfit_id):
+        _outfit_looks[outfit_id] = _build_outfit_look(outfit_id)
+    var look: Dictionary = _outfit_looks[outfit_id]
+    var changed: bool = look.frames != _armed_sprite_frames
+    _outfit_look_id = outfit_id
+    _armed_sprite_frames = look.frames
+    _armed_animation_scales = look.scales
+    return changed
+
+
+## Superpone, por nivel, los SpriteFrames de los atuendos con espada hasta el
+## pedido: cada animación sale del último que la tiene (P46, sección 10: si
+## falta una, la del atuendo anterior). Sin ninguno propio, son los harapos.
+func _build_outfit_look(outfit_id: String) -> Dictionary:
+    var target_level := int(GameManager.get_outfit_info(outfit_id).get("level", 1))
+    var layers: Array[SpriteFrames] = []
+    var levels: Array[int] = []
+    for candidate_id: String in GameManager.OUTFIT_DEFINITIONS:
+        var info: Dictionary = GameManager.OUTFIT_DEFINITIONS[candidate_id]
+        var level := int(info.get("level", 0))
+        var path := String(info.get("sprite_frames", ""))
+        if level < 2 or level > target_level or path.is_empty():
+            continue
+        var layer := load(path) as SpriteFrames
+        if layer == null:
+            push_warning("Player: no se pudo cargar el aspecto '%s' del atuendo '%s'." % [path, candidate_id])
+            continue
+        var insert_at := levels.bsearch(level)
+        levels.insert(insert_at, level)
+        layers.insert(insert_at, layer)
+    if layers.is_empty():
+        return {"frames": _harapos_sprite_frames, "scales": ARMED_ANIMATION_SCALES}
+    var frames := SpriteFrames.new()
+    frames.remove_animation(&"default")
+    var scales: Dictionary = {}
+    for animation: StringName in _harapos_sprite_frames.get_animation_names():
+        _copy_sprite_animation(_harapos_sprite_frames, frames, animation)
+        scales[animation] = float(ARMED_ANIMATION_SCALES.get(animation, 1.0))
+    for layer: SpriteFrames in layers:
+        var layer_scales: Dictionary = layer.get_meta(&"animation_scales", {})
+        for animation: StringName in layer.get_animation_names():
+            _copy_sprite_animation(layer, frames, animation)
+            scales[animation] = float(layer_scales.get(animation, 1.0))
+    return {"frames": frames, "scales": scales}
+
+
+static func _copy_sprite_animation(source: SpriteFrames, target: SpriteFrames, animation: StringName) -> void:
+    if target.has_animation(animation):
+        target.remove_animation(animation)
+    target.add_animation(animation)
+    target.set_animation_speed(animation, source.get_animation_speed(animation))
+    target.set_animation_loop(animation, source.get_animation_loop(animation))
+    for index in source.get_frame_count(animation):
+        target.add_frame(animation, source.get_frame_texture(animation, index), source.get_frame_duration(animation, index))
+
+
+## Al encontrar un atuendo cambia el aspecto sin cortar la acción en curso.
+func _on_outfit_changed(_outfit_id: String) -> void:
+    var previous := _armed_sprite_frames
+    if not _select_outfit_look() or sprite.sprite_frames != previous:
+        return
+    var animation := sprite.animation
+    var frame := sprite.frame
+    var progress := sprite.frame_progress
+    var playing := sprite.is_playing()
+    sprite.sprite_frames = _armed_sprite_frames
+    if not _armed_sprite_frames.has_animation(animation):
+        sprite.play(&"idle")
+    else:
+        sprite.animation = animation
+        sprite.frame = mini(frame, _armed_sprite_frames.get_frame_count(animation) - 1)
+        sprite.frame_progress = progress
+        if playing:
+            sprite.play(animation)
+    sprite.scale = _current_armed_scale()
 
 
 ## Las acciones cambian de animación sin pasar por _update_animation.

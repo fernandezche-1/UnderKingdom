@@ -118,8 +118,10 @@ var life_fragments: Dictionary = {}
 ## "slash_damage" (suma a los tajos), "damage_reduction" (resta a los golpes de
 ## 0.75 o más, con mínimo 0.25), "resist" (tipos de daño que no hacen efecto:
 ## "cold", "infernal_fire") y "ability" (se desbloquea al encontrarlo).
-## "sprite_frames" queda vacío hasta que cada atuendo tenga el suyo: mientras
-## tanto se usa el del anterior. Los valores son provisionales (A1).
+## "sprite_frames" es el aspecto con espada (P68): un SpriteFrames aparte que
+## solo trae las animaciones propias; las que le falten, y los atuendos con el
+## campo vacío, usan las del anterior. Los harapos son el de player.tscn, y el
+## desnudo, el de prisn.tscn. Los rasgos son provisionales (A1).
 const NAKED_OUTFIT_ID := "desnudo"
 const OUTFIT_DEFINITIONS := {
 	"desnudo": {
@@ -144,7 +146,8 @@ const OUTFIT_DEFINITIONS := {
 		"resist": ["cold"], "hint": "El frío no te hace daño",
 	},
 	"fire_knight": {
-		"name": "Fire Knight", "level": 5, "sword": true, "sprite_frames": "",
+		"name": "Fire Knight", "level": 5, "sword": true,
+		"sprite_frames": "res://escenas/atuendos/fire_knight.tres",
 		"slash_damage": 0.25, "sword_reach": 1.25, "resist": ["infernal_fire"],
 		"hint": "+0.25 de daño, más alcance y resiste el fuego infernal",
 	},

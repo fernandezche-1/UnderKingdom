@@ -87,7 +87,7 @@ Cada pieza se prueba en la zona de pruebas (`escenas/mapas/zona_pruebas_combate.
 - se probó sin ventana con una escena temporal que simula entradas e imprime el resultado, y esa escena se borró;
 - arrancan sin errores el juego (`godot --headless --quit-after 120`) y la zona de pruebas, y también `mundo_1` si se tocó el Player, un enemigo, el `GameManager` o el Capitán;
 - si guarda estado, se reinicia en `reset_for_new_game`, se guarda en `_make_save_data` / `_restore_game_state` y se sube `SAVE_FORMAT_VERSION`;
-- hay una etapa nueva en `docs/` (la siguiente libre es P68), con el formato de las demás, y está al día lo que la nombra: P46 (secciones 5 y 10), CLAUDE.md si cambia una regla o una pieza a reutilizar, y esta lista;
+- hay una etapa nueva en `docs/` (la siguiente libre es P69), con el formato de las demás, y está al día lo que la nombra: P46 (secciones 5 y 10), CLAUDE.md si cambia una regla o una pieza a reutilizar, y esta lista;
 - hay un commit, sin push.
 
 **Plantilla de prompt** (cambiar `<pieza>`, `<zona>` y lo que se quiera añadir en `<notas>`):
@@ -173,7 +173,7 @@ Las profundidades no piden piezas nuevas: reutilizan el contador de sellos, el f
 
 **En paralelo: atuendos** (P46, sección 10). Dependen sobre todo del arte, así que no frenan el orden de arriba:
 - [x] Atuendo actual y `OUTFIT_DEFINITIONS` en `GameManager` (guardado, reinicio, `SAVE_FORMAT_VERSION`): `outfits_found`, `grant_outfit` y rasgos en el Player (P59). `SAVE_FORMAT_VERSION` pasa a 5. Opción "Siguiente atuendo" en el modo dev; faltan su objeto, su aspecto y su menú.
-- [ ] Un `SpriteFrames` por atuendo; separar el Fire Knight (E5) de los harapos (E1).
+- [x] Un `SpriteFrames` por atuendo; separar el Fire Knight (E5) de los harapos (E1): `escenas/atuendos/fire_knight.tres` (generado con `herramientas/sprites/generar_atuendo_fire_knight.tscn`) y `ManiquiFireKnight` en la zona de pruebas (P68). Sin guardado nuevo. Faltan el arte de E2-E4 y las tiras propias de E1.
 - [ ] Escena de atuendo para recoger, generalizando `espada_oxidada.tscn`.
 - [ ] Sección "Equipo" en el menú de pausa.
 - [ ] Arte con IA de E2 (soldado), E3 (caballero de la cripta) y E4 (abrigo); terminar las tiras que faltan de E1.

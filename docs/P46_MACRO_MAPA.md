@@ -143,7 +143,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 - El rompible selectivo (`escenas/objetos/rompible_selectivo.tscn`, `selective_breakable.gd`; P56): hereda de `breakable_object.gd` y solo cede a un tipo de golpe, `accepted_hit` = Golpe final (tajo ascendente con `combo_3`, losa de la cripta) o Ultimate (estatua de la Reina). Los demás golpes sacan chispa y "RESISTE EL GOLPE". Arte provisional.
 - El ascensor minero (`escenas/objetos/ascensor.tscn`, `mine_elevator.gd`; P60): una cabina por escena, E para viajar al spawn de la gemela con fundido; `requires_encounter` la deja sin corriente hasta tirar de la palanca. Arte provisional.
 - La arena con oleadas (`scripts/combat/wave_arena.gd`, P67): como `boss_arena.gd`, con `Activador`, `Puertas`, `Atajos` y `UI/Aviso`, y un nodo por oleada en `Oleadas` con sus enemigos colocados. Marca su `encounter_id` al vencer la última oleada; al morir se reinicia entera. Sin arte propio (usa las barreras del nivel).
-- Los atuendos (`OUTFIT_DEFINITIONS`, `outfits_found`, `grant_outfit` en `GameManager`; P59): `get_outfit_id()` da el de más nivel; sus rasgos (alcance, daño de tajo, reducción de daño, resistencias `cold` / `infernal_fire`) se consultan con `get_outfit_*` y `has_outfit_resistance`, y el Player los aplica. Modo dev: "Siguiente atuendo". Sin objeto, aspecto ni menú todavía.
+- Los atuendos (`OUTFIT_DEFINITIONS`, `outfits_found`, `grant_outfit` en `GameManager`; P59): `get_outfit_id()` da el de más nivel; sus rasgos (alcance, daño de tajo, reducción de daño, resistencias `cold` / `infernal_fire`) se consultan con `get_outfit_*` y `has_outfit_resistance`, y el Player los aplica. Modo dev: "Siguiente atuendo". Aspecto: un `SpriteFrames` aparte por atuendo en `OUTFIT_DEFINITIONS.sprite_frames`, con lo que falte tomado del anterior; el Fire Knight ya tiene el suyo (`escenas/atuendos/fire_knight.tres`, P68). Sin objeto ni menú todavía.
 
 ### Piezas que faltan
 - Suelo que se hunde para el derrumbe de `[!5]`: hecho, `scripts/environment/collapse_sequence.gd` (P64). Temblor de 1,5 s, suelo que cae del centro hacia fuera, trampilla de entrada sellada y huida con escombros de 0,5. Falta su arte.
@@ -446,7 +446,7 @@ Cada atuendo cambia el aspecto del Player (su `SpriteFrames`) y su arma, y da al
 | E2 | Soldado del castillo (cota y espada de guardia) | castillo, en la armería | más alcance del tajo (1.25) | plan; opcional; rasgos en `GameManager` (P59) |
 | E3 | Caballero de la cripta (armadura de un caballero enterrado) | cementerio, en una tumba real de la cripta | la **Agilidad** (P45) y más resistencia | plan; opcional |
 | E4 | Abrigo de la ruina | ruina helada, en un secreto | el frío de la ruina no hace daño | plan; opcional |
-| E5 | Fire Knight (espada grande) | profundidades | el más fuerte; resiste el fuego | arte existente; falta separarlo de E1 |
+| E5 | Fire Knight (espada grande) | profundidades | el más fuerte; resiste el fuego | arte existente, separado de E1 (`escenas/atuendos/fire_knight.tres`, P68) |
 
 - **Más daño o alcance:** se ajusta con `sword_hitbox_offset_x` y `sword_hitbox_scale_x`, para que un arma más larga alcance más.
 - **Resistencias:** en múltiplos de 0.25, o "no hace daño".
@@ -487,7 +487,7 @@ Como los harapos (P42, "Sprites nuevos con espada"), el arte se genera con IA y 
   - un atuendo actual (`outfit_id` o nivel) y una tabla `OUTFIT_DEFINITIONS`, como `UPGRADE_DEFINITIONS`, con nombre, `SpriteFrames`, ajustes del arma, habilidad que da y resistencias;
   - `has_sword` se mantiene como "E1 o más";
   - se reinicia en `reset_for_new_game`, se guarda en la partida y se sube `SAVE_FORMAT_VERSION`.
-- **Player:** un `SpriteFrames` por atuendo, como recurso aparte. Si falta una animación, se usa la del atuendo anterior. Hay que separar el Fire Knight de las tiras de E1, que hoy comparten `SpriteFrames` en `player.tscn`.
+- **Player: hecho (P68).** Un `SpriteFrames` por atuendo, como recurso aparte (`OUTFIT_DEFINITIONS.sprite_frames`, escala por animación en el metadato `animation_scales`). Si falta una animación, se usa la del atuendo anterior. El Fire Knight está separado de E1 en `escenas/atuendos/fire_knight.tres`; los harapos siguen en `player.tscn`, con `roll`, defensa y Ultimate prestadas del Fire Knight hasta tener sus tiras.
 - **Objeto para recoger:** generalizar `escenas/objetos/espada_oxidada.tscn` en una escena de atuendo con `outfit_id` exportado.
 - **Menú de pausa:** sección "Equipo".
 - **E5 y el fuego infernal:** la resistencia `infernal_fire` ya la lee `fuego_infernal.tscn` (P61).
