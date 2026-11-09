@@ -19,7 +19,8 @@ enum PlayerAction {
     DEFEND,
     ULTIMATE,
     HURT,
-    CAST
+    CAST,
+    AIR_DASH
 }
 
 ## Cómo se juega cada animación de ataque. "attack" y "attack 2" son los dos
@@ -135,6 +136,11 @@ const ATTACK_PROFILES := {
 ## actual (el más ancho mide 42 px) si se rueda desde cerca.
 @export_range(16.0, 400.0, 4.0) var roll_distance: float = 96.0
 @export_range(0.1, 10.0, 0.1) var ultimate_cooldown: float = 6.0
+## Dash en el aire (habilidad "air_dash", P66): el botón de rodar pulsado en el
+## aire. Recorre air_dash_distance en air_dash_time, sin gravedad y sin
+## invulnerabilidad, una vez por salto: se recarga al tocar el suelo o una escalera.
+@export_range(16.0, 300.0, 4.0) var air_dash_distance: float = 112.0
+@export_range(0.05, 0.6, 0.01) var air_dash_time: float = 0.18
 
 @export_category("Impacto")
 ## Paso hacia delante de los ataques con "lunge" en ATTACK_PROFILES.
@@ -239,6 +245,8 @@ var _combo_queued: bool = false
 var _combo_queue_left: float = 0.0
 var _combo_buffered_inputs: int = 0
 var _roll_direction: float = 1.0
+var _air_dash_direction: float = 1.0
+var _air_dash_used: bool = false
 var _ultimate_cooldown_left: float = 0.0
 var _fireball_cooldown_left: float = 0.0
 var _fireball_released: bool = false
@@ -534,8 +542,13 @@ func _physics_process(delta: float) -> void:
     _update_defense_state()
     _try_cancel_attack_by_movement()
 
+    if is_on_floor() or _climbing:
+        _air_dash_used = false
+
     if _action == PlayerAction.ROLL:
         _process_roll(delta)
+    elif _action == PlayerAction.AIR_DASH:
+        _process_air_dash()
     elif _action == PlayerAction.ATTACK:
         _process_attack_movement(delta)
     elif _action == PlayerAction.AIR_ATTACK:
@@ -564,7 +577,9 @@ func _physics_process(delta: float) -> void:
         requested_horizontal_direction = signf(velocity_before_slide.x)
     move_and_slide()
     var movement_function := "_process_normal_movement"
-    if _action == PlayerAction.ROLL:
+    if _action == PlayerAction.AIR_DASH:
+        movement_function = "_process_air_dash"
+    elif _action == PlayerAction.ROLL:
         movement_function = "_process_roll"
     elif _action in [PlayerAction.ATTACK, PlayerAction.ULTIMATE, PlayerAction.CAST]:
         movement_function = "_process_attack_movement"
@@ -690,7 +705,12 @@ func request_attack() -> void:
 
 
 func request_roll() -> void:
-    if dead or not GameManager.has_sword or _climbing or not is_on_floor() or not GameManager.has_ability("roll"):
+    if dead or controls_locked or not GameManager.has_sword or _climbing:
+        return
+    if not is_on_floor():
+        _request_air_dash()
+        return
+    if not GameManager.has_ability("roll"):
         return
     if _action == PlayerAction.ATTACK and movement_cancels_attacks:
         _finish_action()
@@ -712,6 +732,42 @@ func request_roll() -> void:
     _invulnerability_left = maxf(_invulnerability_left, _action_total_time * 0.82)
     _enable_roll_enemy_passthrough()
     sprite.play(&"roll")
+
+
+## Rodar pulsado en el aire. Solo con la habilidad, sin acción en curso y una
+## vez por salto.
+func _request_air_dash() -> void:
+    if _air_dash_used or _action != PlayerAction.NORMAL:
+        return
+    if not GameManager.has_ability("air_dash"):
+        return
+    var input_dir := _get_horizontal_input()
+    if not is_zero_approx(input_dir):
+        _air_dash_direction = signf(input_dir)
+    else:
+        _air_dash_direction = -1.0 if sprite.flip_h else 1.0
+    sprite.flip_h = _air_dash_direction < 0.0
+    _air_dash_used = true
+    _action = PlayerAction.AIR_DASH
+    _action_total_time = air_dash_time
+    _action_time_left = air_dash_time
+    # Arte provisional (R5): la animación de rodar, apretada al tiempo del dash.
+    sprite.play(&"roll")
+    sprite.speed_scale = maxf(_animation_duration(&"roll") / air_dash_time, 1.0)
+
+
+func _process_air_dash() -> void:
+    velocity.x = _air_dash_direction * air_dash_distance / maxf(air_dash_time, 0.01)
+    velocity.y = 0.0
+    _jump_requested = false
+
+
+func has_air_dashed() -> bool:
+    return _air_dash_used
+
+
+func is_air_dashing() -> bool:
+    return _action == PlayerAction.AIR_DASH
 
 
 func _try_context_interaction() -> bool:
@@ -1023,6 +1079,7 @@ func _update_combat_timers(delta: float) -> void:
         PlayerAction.ATTACK,
         PlayerAction.AIR_ATTACK,
         PlayerAction.ROLL,
+        PlayerAction.AIR_DASH,
         PlayerAction.ULTIMATE,
         PlayerAction.HURT,
         PlayerAction.CAST
@@ -1047,6 +1104,7 @@ func _update_action_state() -> void:
     elif _action in [
         PlayerAction.AIR_ATTACK,
         PlayerAction.ROLL,
+        PlayerAction.AIR_DASH,
         PlayerAction.ULTIMATE,
         PlayerAction.HURT,
         PlayerAction.CAST
@@ -1113,6 +1171,9 @@ func _finish_action() -> void:
     if previous_action == PlayerAction.ROLL:
         _disable_roll_enemy_passthrough()
 
+    if previous_action == PlayerAction.AIR_DASH:
+        # Al acabar conserva algo de impulso, pero sin la velocidad del dash.
+        velocity.x = _air_dash_direction * get_move_speed()
     _action = PlayerAction.NORMAL
     _action_time_left = 0.0
     _action_total_time = 0.0
@@ -2207,6 +2268,8 @@ func _action_name() -> String:
             return "ATAQUE AÉREO"
         PlayerAction.ROLL:
             return "ROLL"
+        PlayerAction.AIR_DASH:
+            return "DASH AÉREO"
         PlayerAction.DEFEND:
             return "DEFENSA"
         PlayerAction.ULTIMATE:

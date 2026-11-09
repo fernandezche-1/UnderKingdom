@@ -165,6 +165,7 @@ const ABILITY_DEFINITIONS := {
 	"lifesteal": {"name": "Robo de vida", "hint": "Golpear te cura"},
 	"adrenaline": {"name": "Adrenalina", "hint": "Con media vida o menos atacas más rápido"},
 	"agility": {"name": "Agilidad", "hint": "Corres más rápido y saltas más alto"},
+	"air_dash": {"name": "Dash en el aire", "hint": "Shift en el aire: impulso horizontal, una vez por salto"},
 }
 ## Con las que empieza una partida nueva. Las que todavía no tienen dónde
 ## conseguirse (minijefe del tajo aéreo, tienda de parry y robo de vida)

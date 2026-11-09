@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3]
+[gd_scene load_steps=35 format=3]
 
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas.tscn" id="1_base"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/rata.tscn" id="2_rata"]
@@ -25,6 +25,8 @@
 [ext_resource type="Script" path="res://scripts/environment/collapse_sequence.gd" id="24_derrumbe"]
 [ext_resource type="PackedScene" path="res://escenas/items/llama_eterna.tscn" id="25_llama"]
 [ext_resource type="Script" path="res://scripts/environment/dark_zone.gd" id="26_oscuridad"]
+[ext_resource type="PackedScene" path="res://escenas/items/reliquia_habilidad.tscn" id="27_reliquia"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/kill_zone.tscn" id="28_kill"]
 [ext_resource type="Texture2D" path="res://assets_prueba/raou_castillo/tileset_castillo.png" id="8_tileset"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_losa_izq"]
@@ -65,6 +67,21 @@ size = Vector2(16, 48)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_salida_huida"]
 size = Vector2(128, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dash_entrada"]
+size = Vector2(80, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dash_fondo"]
+size = Vector2(144, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dash_techo"]
+size = Vector2(320, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dash_pared"]
+size = Vector2(16, 112)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dash_pinchos"]
+size = Vector2(96, 24)
 
 [node name="ZonaPruebasCombate" instance=ExtResource("1_base")]
 
@@ -382,3 +399,61 @@ piece_tint = Color(0.6, 0.85, 1, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Objetos/HieloAntorcha"]
 shape = SubResource("RectangleShape2D_puerta")
+
+[node name="ReliquiaDash" parent="Objetos" instance=ExtResource("27_reliquia")]
+position = Vector2(1844, 160)
+ability_id = "air_dash"
+
+[node name="PasilloDash" type="StaticBody2D" parent="Objetos"]
+collision_layer = 1
+collision_mask = 0
+
+[node name="Entrada" type="CollisionShape2D" parent="Objetos/PasilloDash"]
+position = Vector2(1864, 192)
+shape = SubResource("RectangleShape2D_dash_entrada")
+
+[node name="DibujoEntrada" type="ColorRect" parent="Objetos/PasilloDash"]
+offset_left = 1824.0
+offset_top = 176.0
+offset_right = 1904.0
+offset_bottom = 208.0
+color = Color(0.36, 0.28, 0.46, 1)
+
+[node name="Fondo" type="CollisionShape2D" parent="Objetos/PasilloDash"]
+position = Vector2(2072, 192)
+shape = SubResource("RectangleShape2D_dash_fondo")
+
+[node name="DibujoFondo" type="ColorRect" parent="Objetos/PasilloDash"]
+offset_left = 2000.0
+offset_top = 176.0
+offset_right = 2144.0
+offset_bottom = 208.0
+color = Color(0.36, 0.28, 0.46, 1)
+
+[node name="Techo" type="CollisionShape2D" parent="Objetos/PasilloDash"]
+position = Vector2(1984, 104)
+shape = SubResource("RectangleShape2D_dash_techo")
+
+[node name="DibujoTecho" type="ColorRect" parent="Objetos/PasilloDash"]
+offset_left = 1824.0
+offset_top = 96.0
+offset_right = 2144.0
+offset_bottom = 112.0
+color = Color(0.36, 0.28, 0.46, 1)
+
+[node name="Pared" type="CollisionShape2D" parent="Objetos/PasilloDash"]
+position = Vector2(2152, 152)
+shape = SubResource("RectangleShape2D_dash_pared")
+
+[node name="DibujoPared" type="ColorRect" parent="Objetos/PasilloDash"]
+offset_left = 2144.0
+offset_top = 96.0
+offset_right = 2160.0
+offset_bottom = 208.0
+color = Color(0.36, 0.28, 0.46, 1)
+
+[node name="PinchosFoso" parent="Objetos" groups=["kill_zone"] instance=ExtResource("28_kill")]
+position = Vector2(1952, 212)
+
+[node name="CollisionShape2D" parent="Objetos/PinchosFoso" index="0"]
+shape = SubResource("RectangleShape2D_dash_pinchos")
