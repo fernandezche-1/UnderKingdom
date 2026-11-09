@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3]
+[gd_scene load_steps=43 format=3]
 
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas.tscn" id="1_base"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/rata.tscn" id="2_rata"]
@@ -29,6 +29,8 @@
 [ext_resource type="PackedScene" path="res://escenas/sistemas/kill_zone.tscn" id="28_kill"]
 [ext_resource type="Texture2D" path="res://assets_prueba/raou_castillo/tileset_castillo.png" id="8_tileset"]
 [ext_resource type="SpriteFrames" path="res://escenas/atuendos/fire_knight.tres" id="31_fire_knight"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/atuendo.tscn" id="32_atuendo"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/espada_oxidada.tscn" id="33_espada_oxidada"]
 [ext_resource type="Script" path="res://scripts/combat/wave_arena.gd" id="29_oleadas"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/climb_zone.tscn" id="30_escalera"]
 
@@ -572,3 +574,10 @@ position = Vector2(92, 257)
 sprite_frames = ExtResource("31_fire_knight")
 animation = &"idle"
 autoplay = "idle"
+
+[node name="EspadaOxidada" parent="Objetos" instance=ExtResource("33_espada_oxidada")]
+position = Vector2(240, 286)
+requires_sword_mission = false
+
+[node name="AtuendoSoldado" parent="Objetos" instance=ExtResource("32_atuendo")]
+position = Vector2(296, 310)

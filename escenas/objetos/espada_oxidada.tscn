@@ -1,20 +1,25 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
-[ext_resource type="PackedScene" path="res://escenas/objetos/espada_recuperable.tscn" id="1_base"]
-[ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/atuendo_preso.png" id="2_atuendo"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/atuendo.tscn" id="1_base"]
+[ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/espada_recuperable.png" id="2_sword"]
+[ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/atuendo_preso.png" id="3_atuendo"]
 
 [node name="EspadaOxidada" instance=ExtResource("1_base")]
 notice_title = "Espada oxidada y atuendo"
 notice_text = "No es gran cosa... pero corta."
-requires_guard_defeated = false
+outfit_id = "harapos"
+requires_sword_mission = true
 
 [node name="Sprite2D" parent="."]
 self_modulate = Color(0.72, 0.5, 0.36, 1)
+texture = ExtResource("2_sword")
 
 [node name="Atuendo" type="Sprite2D" parent="Sprite2D"]
 position = Vector2(12, 12.5)
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_atuendo")
+texture = ExtResource("3_atuendo")
 
 [node name="Prompt" parent="."]
+offset_top = -44.0
+offset_bottom = -30.0
 text = "E - TOMAR ESPADA Y ROPA"

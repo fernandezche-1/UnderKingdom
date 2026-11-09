@@ -119,7 +119,7 @@ Se pusieron a mano en `tiles_calabozo_combate.tscn` para ver cómo reaccionan; n
 
 ## 4. La espada oxidada
 
-- `escenas/objetos/espada_oxidada.tscn` hereda de `espada_recuperable.tscn`: la misma espada, teñida de óxido, con "E - TOMAR ESPADA OXIDADA".
+- `escenas/objetos/espada_oxidada.tscn` hereda de `espada_recuperable.tscn`: la misma espada, teñida de óxido, con "E - TOMAR ESPADA OXIDADA". Desde P69 hereda de `escenas/objetos/atuendo.tscn` (`outfit_id` `harapos`), con el mismo dibujo y textos.
 - `sword_recovery.gd` exporta el aviso del HUD (`notice_title`, `notice_text`); aquí dice "Espada oxidada / No es gran cosa... pero corta.".
 - Está colocada a mano en la cámara del preso, clavada junto a `PresoMuerto`, el último cuadro de la muerte del Skeleton como cadáver provisional.
 - **Atuendo:** `Elementals_fire_knight_FREE_v1.1/atuendo_preso.png`, una túnica doblada de 22x10 px hecha a mano con la paleta del sprite armado. Es hijo del `Sprite2D` de la espada: se desvanece con ella y desaparece al recogerla. Por eso el tinte de óxido pasó a `self_modulate`. Se recoge todo con una pulsación, y es lo que explica que el Player cambie de aspecto.
