@@ -54,7 +54,7 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
   - Jefe, puertas y llave van en una escena que hereda de la base. Así se puede regenerar sin perderlos.
   - Piezas a reutilizar:
     - `scripts/combat/boss_arena.gd`: sala de jefe, con `Puertas`, `Atajos`, `PuntosJefe` y `PuntoLlave`;
-    - `scripts/environment/locked_door.gd`: puerta con llave;
+    - `scripts/environment/locked_door.gd`: puerta con llave; con `require_interact` se abre con E, y `open_effect` (`CANDLES`, `MELT`) y `piece_tint` cambian su dibujo (velas, hielo; P57);
     - `scripts/environment/arena_barrier.gd`: puertas y trampillas; con `open_on_encounter`, se abre cuando `GameManager` marca ese encuentro, o empieza abierta si ya estaba marcado (P49);
     - `scripts/environment/roll_gate.gd`: reja baja que solo se pasa rodando (hereda de `arena_barrier.gd`; se pone en la escena `_combate` con la colisión y las piezas; P52);
     - `scripts/environment/encounter_visibility.gd`: componente hijo que muestra u oculta su nodo según `show_when_encounter` / `hide_when_encounter` (sin colisión ni proceso mientras está oculto; P53);

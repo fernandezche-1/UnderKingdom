@@ -150,7 +150,7 @@ seguir. Responde en español.
 **3. Cementerio:**
 - [x] Contador de sellos que abre una puerta (`[S3]`, `[S7]`): `escenas/objetos/sello.tscn` y `open_on_seal_group` de `arena_barrier.gd` (P55). No cambia el formato de guardado. Falta su arte.
 - [x] Rompible que solo acepta un tipo de golpe: el ascendente con Golpe final (losa de la cripta) o la Ultimate (estatua de la Reina): `escenas/objetos/rompible_selectivo.tscn` (P56). No cambia el guardado. Falta su arte.
-- [ ] `locked_door` con otro dibujo: velas, y después hielo negro y el hielo de `[P6]`.
+- [x] `locked_door` con otro dibujo: velas, y después hielo negro y el hielo de `[P6]`: `locked_door.gd` con `require_interact`, `open_effect` y `piece_tint` (P57). No cambia el guardado. Falta su arte.
 - [ ] Mejora de +0.25 en pociones (el amuleto de la guardia).
 
 **4. Minas:**

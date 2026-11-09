@@ -16,6 +16,8 @@
 [ext_resource type="Script" path="res://scripts/environment/encounter_visibility.gd" id="14_visibilidad"]
 [ext_resource type="PackedScene" path="res://escenas/items/fragmento_vida.tscn" id="15_fragmento"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/sello.tscn" id="16_sello"]
+[ext_resource type="Script" path="res://scripts/environment/locked_door.gd" id="18_puerta"]
+[ext_resource type="PackedScene" path="res://escenas/items/llave_jefe_m1.tscn" id="19_llave"]
 [ext_resource type="Texture2D" path="res://assets_prueba/raou_castillo/tileset_castillo.png" id="8_tileset"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_losa_izq"]
@@ -47,6 +49,9 @@ size = Vector2(16, 96)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trampilla"]
 size = Vector2(48, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_puerta"]
+size = Vector2(16, 48)
 
 [node name="ZonaPruebasCombate" instance=ExtResource("1_base")]
 
@@ -164,3 +169,44 @@ coin_drop_count = 2
 position = Vector2(320, 272)
 accepted_hit = 1
 coin_drop_count = 2
+
+[node name="LlaveVelas" parent="Objetos" instance=ExtResource("19_llave")]
+position = Vector2(760, 296)
+key_id = "pruebas_velas"
+
+[node name="LlaveLlama" parent="Objetos" instance=ExtResource("19_llave")]
+position = Vector2(800, 296)
+key_id = "pruebas_llama"
+
+[node name="PuertaVelas" type="StaticBody2D" parent="Objetos"]
+position = Vector2(872, 296)
+script = ExtResource("18_puerta")
+piece_start = SubResource("AtlasTexture_reja_tope")
+piece_middle = SubResource("AtlasTexture_reja_medio")
+piece_end = SubResource("AtlasTexture_reja_base")
+key_id = "pruebas_velas"
+locked_message = "FALTA LA LLAMA DE LAS VELAS"
+opened_message = "LAS VELAS SE ENCIENDEN"
+require_interact = true
+open_effect = 1
+piece_tint = Color(0.85, 0.7, 0.55, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objetos/PuertaVelas"]
+shape = SubResource("RectangleShape2D_puerta")
+
+[node name="HieloLlama" type="StaticBody2D" parent="Objetos"]
+position = Vector2(936, 296)
+script = ExtResource("18_puerta")
+piece_start = SubResource("AtlasTexture_reja_tope")
+piece_middle = SubResource("AtlasTexture_reja_medio")
+piece_end = SubResource("AtlasTexture_reja_base")
+key_id = "pruebas_llama"
+locked_message = "LA LLAMA NO BASTA"
+opened_message = "EL HIELO SE DERRITE"
+prompt_text = "E  Derretir"
+require_interact = true
+open_effect = 2
+piece_tint = Color(0.6, 0.85, 1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objetos/HieloLlama"]
+shape = SubResource("RectangleShape2D_puerta")

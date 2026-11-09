@@ -147,6 +147,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 - Hielo que se derrite con la llama eterna (`[P6]`): puerta con llave genérica (`grant_key("antorcha")`, `locked_door.gd`) con otro dibujo y efecto de derretirse, más la luz de la antorcha en la parte oscura.
 - El contador de sellos que abre una puerta al activarlos todos (`[S3]`, `[S7]`): hecho, `escenas/objetos/sello.tscn` (P55).
 - El rompible que solo acepta un tipo de golpe (losa de la cripta y estatua de la Reina): hecho, `escenas/objetos/rompible_selectivo.tscn` (P56).
+- `locked_door.gd` con otro dibujo (velas, hielo de `[P6]`, hielo negro): hecho (P57). `require_interact` (E delante), `open_effect` (`FADE`, `CANDLES`, `MELT`) y `piece_tint`. Falta su arte.
 - La secuencia de huida o derrumbe tras la Reina (`[!5]`).
 - La reja baja que solo se pasa rodando (`[H2]`): hecha, `scripts/environment/roll_gate.gd` (P52).
 - El ascensor minero (`:C:`).
