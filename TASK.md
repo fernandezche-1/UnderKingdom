@@ -155,7 +155,7 @@ seguir. Responde en español.
 
 **4. Minas:**
 - [x] Ascensor minero (`:C:`): `escenas/objetos/ascensor.tscn` (P60). Una cabina por escena; sin guardado nuevo. Falta su arte.
-- [ ] Fuego infernal que solo se pasa con E5 (gruta de cristal, santuario de las profundidades, infierno).
+- [x] Fuego infernal que solo se pasa con E5 (gruta de cristal, santuario de las profundidades, infierno): `escenas/sistemas/fuego_infernal.tscn` (P61). Sin guardado nuevo. Falta su arte.
 - [ ] IA del Crystal Mauler: hoy `escenas/jefes/boss_mina.tscn` es solo sprite y colisión, sin script (¿`simple_boss.gd`?). Su sala, la gruta de cristal, mide 16 x 14.
 - [ ] La Adrenalina sale de `STARTING_ABILITIES` y la da el Mauler (`ability_reward adrenaline`). Va con su IA: antes nadie la daría.
 

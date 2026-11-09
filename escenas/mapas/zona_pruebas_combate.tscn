@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3]
+[gd_scene load_steps=26 format=3]
 
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas.tscn" id="1_base"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/rata.tscn" id="2_rata"]
@@ -19,6 +19,7 @@
 [ext_resource type="Script" path="res://scripts/environment/locked_door.gd" id="18_puerta"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/ascensor.tscn" id="20_ascensor"]
 [ext_resource type="PackedScene" path="res://escenas/items/llave_jefe_m1.tscn" id="19_llave"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/fuego_infernal.tscn" id="21_fuego_infernal"]
 [ext_resource type="Texture2D" path="res://assets_prueba/raou_castillo/tileset_castillo.png" id="8_tileset"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_losa_izq"]
@@ -230,3 +231,7 @@ target_scene_path = "res://escenas/mapas/zona_pruebas_combate.tscn"
 target_spawn_id = &"AscensorAbajo"
 arrival_spawn_id = &"AscensorArriba"
 prompt_text = "E  Bajar"
+
+[node name="FuegoInfernal" parent="Objetos" instance=ExtResource("21_fuego_infernal")]
+position = Vector2(688, 304)
+width_tiles = 2

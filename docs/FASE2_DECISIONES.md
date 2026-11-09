@@ -142,6 +142,8 @@ Hecha antes de este archivo: la pared agrietada (P48, commit `5c2c0b3`).
 - **Atuendo actual (P59), prueba a mano.** Decisión: opción "Siguiente atuendo" en el modo dev, porque el objeto de recoger es otra pieza. Alternativa: poner una escena provisional en la zona de pruebas. Por qué: evita una escena que habría que rehacer.
 - **Ascensor minero (P60), cómo se mueve la cabina.** Decisión: la cabina no se desplaza; traquetea ±1 px y la cámara se sacude durante 1 s antes del fundido. Alternativa: mover cabina y Player por el pozo. Por qué: sin colisión propia el Player caería de la cabina que sube, y a escala entera un desplazamiento falso no aporta; el cambio de escena ya esconde el recorrido.
 - **Ascensor minero (P60), spawn y fundido.** Decisión: la cabina crea su propio spawn y el fundido lo hace una capa colgada de la raíz, que sobrevive al cambio de escena. Alternativa: `SpawnPoint` suelto en cada mapa y fundido en `GameManager`. Por qué: no toca el autoload ni los mapas de la ruta, y un solo objeto lleva todo.
+- **Fuego infernal (P61), forma y empuje.** Decisión: franja `Area2D` de piezas (origen arriba a la izquierda) que golpea con `take_damage` cada vez que acaba la invulnerabilidad, con el origen del golpe del lado contrario al de entrada. Alternativa: heredar de `burn_zone.gd` con tics. Por qué: M3 pide daño más empuje, y así no entra en el grupo `burn_zone`, que E5 no resiste.
+- **Fuego infernal (P61), constructor.** Decisión: no se cambia el constructor; las `F` de los ASCII seguirán saliendo como trampas normales hasta la Fase 3, que las sustituye en la `_combate`. Alternativa: letra nueva en el constructor. Por qué: no tocar herramientas ni mapas ahora.
 
 ## Piezas bloqueadas
 

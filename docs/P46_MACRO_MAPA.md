@@ -154,7 +154,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 - La reja baja que solo se pasa rodando (`[H2]`): hecha, `scripts/environment/roll_gate.gd` (P52).
 - El ascensor minero (`:C:`): hecho, `escenas/objetos/ascensor.tscn` (P60). Cabina en cada escena, E para viajar con fundido; con `requires_encounter` (la palanca de las minas) dice "NO HAY CORRIENTE" hasta entonces. Falta su arte.
 - Las arenas con oleadas del infierno (coliseo de los condenados y salón de los verdugos): `arena_barrier.gd` más algo que saque una oleada tras otra.
-- El fuego infernal del altar este de las profundidades (`[S7]`): fuego que sin E5 no deja pasar (quema hasta matar o empuja hacia atrás) y con E5 no hace daño. En el ASCII son trampas de fuego `F`.
+- El fuego infernal del altar este de las profundidades (`[S7]`): fuego que sin E5 no deja pasar (quema hasta matar o empuja hacia atrás) y con E5 no hace daño. En el ASCII son trampas de fuego `F`. Pieza hecha: `escenas/sistemas/fuego_infernal.tscn` (P61); sin E5 quita 0.5 y empuja hacia atrás, con E5 no hace nada.
 - El dash en el aire (`air_dash`, habilidad nueva en `ABILITY_DEFINITIONS`), premio del Guardián de hielo: unas 7 piezas (112 px) en horizontal, sin gravedad, una vez por salto (se recarga al tocar el suelo). Sus sitios son pasillos de 4 de alto con un foso de pinchos de 6 (sección 6).
 
 ## 6. Diferencias con lo que hay hoy y decisiones
@@ -489,6 +489,7 @@ Como los harapos (P42, "Sprites nuevos con espada"), el arte se genera con IA y 
 - **Player:** un `SpriteFrames` por atuendo, como recurso aparte. Si falta una animación, se usa la del atuendo anterior. Hay que separar el Fire Knight de las tiras de E1, que hoy comparten `SpriteFrames` en `player.tscn`.
 - **Objeto para recoger:** generalizar `escenas/objetos/espada_oxidada.tscn` en una escena de atuendo con `outfit_id` exportado.
 - **Menú de pausa:** sección "Equipo".
+- **E5 y el fuego infernal:** la resistencia `infernal_fire` ya la lee `fuego_infernal.tscn` (P61).
 - **Probar** cada atuendo en la zona de pruebas antes de llevarlo a un mapa.
 
 ### Pendientes

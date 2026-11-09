@@ -1,0 +1,9 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/environment/infernal_fire.gd" id="1_fuego"]
+
+[node name="FuegoInfernal" type="Area2D" groups=["infernal_fire"]]
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1_fuego")
+metadata/_edit_group_ = true
