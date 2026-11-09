@@ -8,6 +8,7 @@ const KEY_NAMES := {
 	"castillo_rey": "Rey Caído",
 	"cementerio_capitan": "Capitán del Cementerio",
 	"minas_caballero": "Caballero de Minas",
+	"antorcha": "Llama eterna",
 }
 ## Filas de la pestaña Datos: id y nombre que se muestra.
 const STAT_ROWS: Array[Array] = [

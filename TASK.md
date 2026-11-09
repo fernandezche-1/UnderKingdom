@@ -163,7 +163,7 @@ seguir. Responde en español.
 - [x] Suelo que se hunde y secuencia de derrumbe y huida (`[!5]`): `scripts/environment/collapse_sequence.gd` y `falling_rubble.gd` (P64). Sin guardado nuevo. Falta su arte.
 
 **6. Ruina:**
-- [ ] Hielo que se derrite con la llama eterna, y la luz de la antorcha (`[P6]`), sobre la `locked_door` con otro dibujo del paso 3.
+- [x] Hielo que se derrite con la llama eterna, y la luz de la antorcha (`[P6]`), sobre la `locked_door` con otro dibujo del paso 3: `escenas/items/llama_eterna.tscn` y `scripts/environment/dark_zone.gd` (P65). Sin guardado nuevo. Falta su arte.
 - [ ] Dash en el aire (`air_dash`, premio del Guardián con `ability_reward`): unas 7 piezas en horizontal, sin gravedad, una vez por salto. Probar en la zona de pruebas que el pasillo de 4 de alto con foso de 6 no se cruza sin él, ni con la Agilidad.
 
 **7. Infierno:**

@@ -23,6 +23,8 @@
 [ext_resource type="PackedScene" path="res://escenas/jefes/crystal_mauler.tscn" id="22_mauler"]
 [ext_resource type="Script" path="res://scripts/combat/boss_arena.gd" id="23_sala"]
 [ext_resource type="Script" path="res://scripts/environment/collapse_sequence.gd" id="24_derrumbe"]
+[ext_resource type="PackedScene" path="res://escenas/items/llama_eterna.tscn" id="25_llama"]
+[ext_resource type="Script" path="res://scripts/environment/dark_zone.gd" id="26_oscuridad"]
 [ext_resource type="Texture2D" path="res://assets_prueba/raou_castillo/tileset_castillo.png" id="8_tileset"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_losa_izq"]
@@ -354,3 +356,29 @@ monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Objetos/Derrumbe/Salida"]
 shape = SubResource("RectangleShape2D_salida_huida")
+
+[node name="LlamaEterna" parent="Objetos" instance=ExtResource("25_llama")]
+position = Vector2(1216, 160)
+
+[node name="ZonaOscura" type="Node2D" parent="Objetos"]
+position = Vector2(1248, 80)
+script = ExtResource("26_oscuridad")
+width_tiles = 8
+height_tiles = 6
+
+[node name="HieloAntorcha" type="StaticBody2D" parent="Objetos"]
+position = Vector2(1392, 152)
+script = ExtResource("18_puerta")
+piece_start = SubResource("AtlasTexture_reja_tope")
+piece_middle = SubResource("AtlasTexture_reja_medio")
+piece_end = SubResource("AtlasTexture_reja_base")
+key_id = "antorcha"
+locked_message = "NECESITAS LA LLAMA ETERNA"
+opened_message = "EL HIELO SE DERRITE"
+prompt_text = "E  Derretir"
+require_interact = true
+open_effect = 2
+piece_tint = Color(0.6, 0.85, 1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objetos/HieloAntorcha"]
+shape = SubResource("RectangleShape2D_puerta")
