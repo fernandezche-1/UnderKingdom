@@ -65,6 +65,7 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
     - `escenas/items/fragmento_vida.tscn`: fragmento de vida (`fragment_id` único por partida); 4 dan +1 corazón de vida máxima (tope 6) y llenan la vida. `GameManager.grant_life_fragment`, se guarda como `life_fragments` (`life_fragment_pickup.gd`; P54);
     - `escenas/objetos/rompible_selectivo.tscn`: rompible que solo acepta un tipo de golpe (`accepted_hit`: tajo ascendente con Golpe final, o Ultimate); los demás sacan chispa y "RESISTE EL GOLPE" (`selective_breakable.gd`, hereda de `breakable_object.gd`; P56);
     - `escenas/objetos/pared_agrietada.tscn`: pared falsa que se rompe a golpes y se recuerda (`breakable_object.gd`; raíz `AnimatableBody2D`, porque la AttackHitbox no detecta `StaticBody2D`; P48);
+    - atuendos en `GameManager` (`OUTFIT_DEFINITIONS`, `outfits_found`, `grant_outfit`, `get_outfit_id()`; rasgos con `get_outfit_*` y `has_outfit_resistance`; P59): el de más nivel es el que se lleva y los rasgos se combinan entre todos los encontrados;
     - en `GameManager`, las llaves genéricas (`grant_key` / `has_key`) y `completed_encounters`.
   - Los jefes se reutilizan por su `.tscn`. El Capitán va con `counts_as_world1_boss = false`. Si un jefe necesita otros valores o su `BossHealthBar`, se le hace una escena heredada en `escenas/jefes/`, como `caballero_reina.tscn`.
   - Las salidas se cambian en el `.txt` del mapa y, para no regenerar, solo en la línea `target_scene_path` del `.tscn`. Apuntan a la escena `_combate` cuando el mapa la tiene.

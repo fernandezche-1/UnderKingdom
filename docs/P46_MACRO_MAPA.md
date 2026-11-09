@@ -141,6 +141,7 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 - El fragmento de vida (`escenas/items/fragmento_vida.tscn`, `life_fragment_pickup.gd`; `fragment_id` único por partida, `<zona>_<n>`; `GameManager.grant_life_fragment`, guardado como `life_fragments`; P54): 4 dan +1 corazón de vida máxima, con tope 6, y llenan la vida; el recuento sale en la pestaña de estadísticas. Arte provisional.
 - El sello (`escenas/objetos/sello.tscn`, `seal.gd`; P55): hereda de la palanca. Se activa con E o solo, cuando se marca su `listen_encounter` (arena de la fosa, Capitán). Guarda `sello:<grupo>:<id>` en `completed_encounters`; al llegar a `seal_total` marca `sellos:<grupo>` y se abren las barreras con `open_on_seal_group`. Arte provisional.
 - El rompible selectivo (`escenas/objetos/rompible_selectivo.tscn`, `selective_breakable.gd`; P56): hereda de `breakable_object.gd` y solo cede a un tipo de golpe, `accepted_hit` = Golpe final (tajo ascendente con `combo_3`, losa de la cripta) o Ultimate (estatua de la Reina). Los demás golpes sacan chispa y "RESISTE EL GOLPE". Arte provisional.
+- Los atuendos (`OUTFIT_DEFINITIONS`, `outfits_found`, `grant_outfit` en `GameManager`; P59): `get_outfit_id()` da el de más nivel; sus rasgos (alcance, daño de tajo, reducción de daño, resistencias `cold` / `infernal_fire`) se consultan con `get_outfit_*` y `has_outfit_resistance`, y el Player los aplica. Modo dev: "Siguiente atuendo". Sin objeto, aspecto ni menú todavía.
 
 ### Piezas que faltan
 - Suelo que se hunde para el derrumbe de `[!5]`.
@@ -440,7 +441,7 @@ Cada atuendo cambia el aspecto del Player (su `SpriteFrames`) y su arma, y da al
 |---|---|---|---|---|
 | E0 | Desnudo | prisión (inicio) | puñetazos; movimiento corto | hecho (`prisn.tscn`) |
 | E1 | Harapos + espada oxidada | calabozo, cadáver del preso | espada y tajos | hecho (P42); faltan algunas tiras propias |
-| E2 | Soldado del castillo (cota y espada de guardia) | castillo, en la armería | más daño o alcance del tajo | plan; opcional |
+| E2 | Soldado del castillo (cota y espada de guardia) | castillo, en la armería | más alcance del tajo (1.25) | plan; opcional; rasgos en `GameManager` (P59) |
 | E3 | Caballero de la cripta (armadura de un caballero enterrado) | cementerio, en una tumba real de la cripta | la **Agilidad** (P45) y más resistencia | plan; opcional |
 | E4 | Abrigo de la ruina | ruina helada, en un secreto | el frío de la ruina no hace daño | plan; opcional |
 | E5 | Fire Knight (espada grande) | profundidades | el más fuerte; resiste el fuego | arte existente; falta separarlo de E1 |
@@ -479,8 +480,8 @@ Como los harapos (P42, "Sprites nuevos con espada"), el arte se genera con IA y 
 5. **Todas las animaciones de una vez:** `idle`, `run`, salto, `attack` / `attack 2`, `air attack`, `take hit`, `death`, `escaleras`, rodar y defensa, seguidas y con el mismo prompt base.
 6. **Una carpeta por atuendo:** cada hoja con su `original_ia.png` al lado y un archivo con los prompts exactos usados, para poder regenerar.
 
-### Implementación (pendiente)
-- **`GameManager`:**
+### Implementación (en curso)
+- **`GameManager`: hecho (P59).** `OUTFIT_DEFINITIONS`, `outfits_found`, `get_outfit_id()` (el de más nivel; con espada y sin atuendo, los harapos), `grant_outfit` y los rasgos (alcance, daño de tajo, reducción de daño, resistencias), combinados entre todos los encontrados; el Player los lee. `SAVE_FORMAT_VERSION` 5. Falta lo de abajo. Lo que seguía previsto:
   - un atuendo actual (`outfit_id` o nivel) y una tabla `OUTFIT_DEFINITIONS`, como `UPGRADE_DEFINITIONS`, con nombre, `SpriteFrames`, ajustes del arma, habilidad que da y resistencias;
   - `has_sword` se mantiene como "E1 o más";
   - se reinicia en `reset_for_new_game`, se guarda en la partida y se sube `SAVE_FORMAT_VERSION`.

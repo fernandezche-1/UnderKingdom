@@ -16,6 +16,7 @@ signal key_changed(key_id: String, has_key: bool)
 signal upgrades_changed
 signal found_upgrade_collected(upgrade_id: String)
 signal life_fragment_collected(fragment_id: String, count: int, completed: bool)
+signal outfit_changed(outfit_id: String)
 signal ability_unlocked(ability_id: String)
 signal player_name_changed(player_name: String)
 signal save_slots_changed
@@ -45,7 +46,8 @@ const SAVE_DIRECTORY := "user://saves"
 ## de los "skills" del alma fragmentada de la 0.04.049.
 ## 3: se suman las mejoras encontradas ("found_upgrades", P51).
 ## 4: se suman los fragmentos de vida ("life_fragments", P54).
-const SAVE_FORMAT_VERSION := 4
+## 5: se suman los atuendos encontrados ("outfits", P59).
+const SAVE_FORMAT_VERSION := 5
 const SAVE_SLOT_COUNT := 3
 const PRISON_SCENE_PATH := "res://escenas/mapas/prologo_prision/camara_sellado_alma.tscn"
 const CASTLE_SCENE_PATH := "res://escenas/mapas/tiles_castillo_combate.tscn"
@@ -110,6 +112,45 @@ var found_upgrades: Dictionary = {}
 const LIFE_FRAGMENTS_PER_HEART := 4
 const MAX_HEARTS_CAP := 6.0
 var life_fragments: Dictionary = {}
+
+## Atuendos (P46, sección 10; P59). "level" ordena: se lleva siempre el de más
+## nivel que se tenga. Rasgos: "sword_reach" (multiplica sword_hitbox_scale_x),
+## "slash_damage" (suma a los tajos), "damage_reduction" (resta a los golpes de
+## 0.75 o más, con mínimo 0.25), "resist" (tipos de daño que no hacen efecto:
+## "cold", "infernal_fire") y "ability" (se desbloquea al encontrarlo).
+## "sprite_frames" queda vacío hasta que cada atuendo tenga el suyo: mientras
+## tanto se usa el del anterior. Los valores son provisionales (A1).
+const NAKED_OUTFIT_ID := "desnudo"
+const OUTFIT_DEFINITIONS := {
+	"desnudo": {
+		"name": "Desnudo", "level": 0, "sword": false, "sprite_frames": "",
+		"hint": "Puñetazos; movimiento corto",
+	},
+	"harapos": {
+		"name": "Harapos y espada oxidada", "level": 1, "sword": true, "sprite_frames": "",
+		"hint": "Espada y tajos",
+	},
+	"soldado": {
+		"name": "Soldado del castillo", "level": 2, "sword": true, "sprite_frames": "",
+		"sword_reach": 1.25, "hint": "Un 25 % más de alcance en el tajo",
+	},
+	"caballero_cripta": {
+		"name": "Caballero de la cripta", "level": 3, "sword": true, "sprite_frames": "",
+		"ability": "agility", "damage_reduction": 0.25,
+		"hint": "Agilidad y 0.25 menos en los golpes fuertes",
+	},
+	"abrigo": {
+		"name": "Abrigo de la ruina", "level": 4, "sword": true, "sprite_frames": "",
+		"resist": ["cold"], "hint": "El frío no te hace daño",
+	},
+	"fire_knight": {
+		"name": "Fire Knight", "level": 5, "sword": true, "sprite_frames": "",
+		"slash_damage": 0.25, "sword_reach": 1.25, "resist": ["infernal_fire"],
+		"hint": "+0.25 de daño, más alcance y resiste el fuego infernal",
+	},
+}
+## Atuendos encontrados, por id de OUTFIT_DEFINITIONS (el desnudo no cuenta).
+var outfits_found: Dictionary = {}
 
 ## Habilidades del Player que se ganan jugando: reliquias del mapa
 ## (UnderkingdomAbilityPickup), jefes (BossArena.ability_reward) o la tienda.
@@ -375,6 +416,12 @@ func _restore_game_state(state: Dictionary) -> void:
 	for found_id: String in FOUND_UPGRADE_DEFINITIONS:
 		if bool(saved_found.get(found_id, false)):
 			found_upgrades[found_id] = true
+	outfits_found.clear()
+	var saved_outfits: Variant = state.get("outfits", [])
+	if saved_outfits is Array:
+		for saved_outfit: Variant in saved_outfits:
+			if saved_outfit is String and OUTFIT_DEFINITIONS.has(saved_outfit) and saved_outfit != NAKED_OUTFIT_ID:
+				outfits_found[String(saved_outfit)] = true
 	life_fragments.clear()
 	var saved_fragments: Variant = state.get("life_fragments", [])
 	if saved_fragments is Array:
@@ -596,6 +643,7 @@ func _make_save_data(slot_id: int, location: Dictionary, player: Node) -> Dictio
 			"upgrades": upgrades,
 			"found_upgrades": found,
 			"life_fragments": life_fragments.keys(),
+			"outfits": outfits_found.keys(),
 			"cinematics_seen": _string_key_dictionary(cinematics_seen),
 			"completed_encounters": _string_key_dictionary(completed_encounters),
 			"collected_keys": _string_key_dictionary(collected_keys),
@@ -970,6 +1018,96 @@ func get_found_upgrade_bonus(stat: String) -> float:
 	return total
 
 
+## Atuendo que se lleva: el de más nivel de los encontrados. Quien tiene espada
+## sin haber recogido nada (armería, modo dev) lleva los harapos; sin espada, el
+## desnudo.
+func get_outfit_id() -> String:
+	var best_id := "harapos" if has_sword else NAKED_OUTFIT_ID
+	var best_level := int(OUTFIT_DEFINITIONS[best_id].level)
+	for outfit_id: String in outfits_found:
+		if not OUTFIT_DEFINITIONS.has(outfit_id):
+			continue
+		var level := int(OUTFIT_DEFINITIONS[outfit_id].level)
+		if level > best_level:
+			best_id = outfit_id
+			best_level = level
+	return best_id
+
+
+func has_outfit(outfit_id: String) -> bool:
+	return bool(outfits_found.get(outfit_id, false))
+
+
+func get_outfit_info(outfit_id: String) -> Dictionary:
+	return OUTFIT_DEFINITIONS.get(outfit_id, {})
+
+
+## Rasgos de los atuendos encontrados (no solo del que se lleva, para que un
+## abrigo opcional no quite el alcance del soldado): el mayor alcance y la mayor
+## reducción de daño, la suma del daño de tajo y la unión de las resistencias.
+func get_outfit_sword_reach() -> float:
+	var reach: float = 1.0
+	for outfit_id: String in outfits_found:
+		reach = maxf(reach, float(OUTFIT_DEFINITIONS.get(outfit_id, {}).get("sword_reach", 1.0)))
+	return reach
+
+
+func get_outfit_slash_bonus() -> float:
+	var total: float = 0.0
+	for outfit_id: String in outfits_found:
+		total += float(OUTFIT_DEFINITIONS.get(outfit_id, {}).get("slash_damage", 0.0))
+	return total
+
+
+func get_outfit_damage_reduction() -> float:
+	var reduction: float = 0.0
+	for outfit_id: String in outfits_found:
+		reduction = maxf(reduction, float(OUTFIT_DEFINITIONS.get(outfit_id, {}).get("damage_reduction", 0.0)))
+	return reduction
+
+
+func has_outfit_resistance(damage_kind: String) -> bool:
+	for outfit_id: String in outfits_found:
+		var resist: Array = OUTFIT_DEFINITIONS.get(outfit_id, {}).get("resist", [])
+		if damage_kind in resist:
+			return true
+	return false
+
+
+## Daño que llega al Player tras la reducción del atuendo: solo los golpes de
+## 0.75 o más, y nunca por debajo de 0.25.
+func reduce_damage_for_outfit(amount: float) -> float:
+	var reduction := get_outfit_damage_reduction()
+	if reduction <= 0.0 or amount < 0.75:
+		return amount
+	return maxf(amount - reduction, 0.25)
+
+
+## Encuentra un atuendo. Devuelve false si ya estaba o no existe. Da su
+## habilidad y, si trae espada y no se tenía, la espada.
+func grant_outfit(outfit_id: String, player: Node = null) -> bool:
+	if outfit_id == NAKED_OUTFIT_ID or not OUTFIT_DEFINITIONS.has(outfit_id):
+		push_warning("GameManager: atuendo desconocido '%s'." % outfit_id)
+		return false
+	if has_outfit(outfit_id):
+		return false
+	var definition: Dictionary = OUTFIT_DEFINITIONS[outfit_id]
+	outfits_found[outfit_id] = true
+	if bool(definition.get("sword", false)) and not has_sword:
+		has_sword = true
+		sword_mission_started = true
+		sword_mission_completed = true
+		if is_instance_valid(player) and player.has_method("set_sword_equipped"):
+			player.call("set_sword_equipped", true)
+		sword_equipment_changed.emit(true)
+		sword_mission_changed.emit(true, true)
+	if definition.has("ability"):
+		unlock_ability(String(definition.ability))
+	outfit_changed.emit(get_outfit_id())
+	request_autosave()
+	return true
+
+
 func grant_found_upgrade(upgrade_id: String) -> void:
 	if not FOUND_UPGRADE_DEFINITIONS.has(upgrade_id):
 		push_warning("GameManager: mejora encontrada desconocida '%s'." % upgrade_id)
@@ -1227,6 +1365,7 @@ func reset_for_new_game() -> void:
 	reset_upgrades_for_new_game()
 	found_upgrades.clear()
 	life_fragments.clear()
+	outfits_found.clear()
 	last_checkpoint_id = ""
 	has_sword = false
 	sword_mission_started = false

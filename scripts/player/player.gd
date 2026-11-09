@@ -967,6 +967,7 @@ func _start_attack(animation_name: StringName, damage: float, action_type: Playe
     # incluido; ni los puñetazos ni la Ultimate.
     if animation_name in [&"attack", &"attack 2", &"air attack"]:
         damage += GameManager.get_found_upgrade_bonus("slash_damage")
+        damage += GameManager.get_outfit_slash_bonus()
     var profile := _attack_profile(animation_name)
     var first_frame := int(profile.start)
     _attack_sequence_id += 1
@@ -1594,7 +1595,7 @@ func _reset_attack_hitbox() -> void:
 func _place_sword_hitbox() -> void:
     var facing := -1.0 if sprite.flip_h else 1.0
     attack_hitbox.position = Vector2(sword_hitbox_offset_x * facing, attack_hitbox_offset_y)
-    attack_hitbox.scale = Vector2(sword_hitbox_scale_x, 1.0)
+    attack_hitbox.scale = Vector2(sword_hitbox_scale_x * GameManager.get_outfit_sword_reach(), 1.0)
 
 
 func _attack_profile(animation_name: StringName) -> Dictionary:
@@ -1908,6 +1909,7 @@ func take_damage(
 
     if not GameManager.has_sword:
         amount += unarmed_extra_damage_taken
+    amount = GameManager.reduce_damage_for_outfit(amount)
 
     # Modo dev: el golpe se recibe (animación, empuje, invulnerabilidad) pero
     # no quita vida.
