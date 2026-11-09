@@ -30,9 +30,12 @@ const UPGRADE_TEXTS := {
 @onready var tab_stats: Button = $Interfaz/PanelJugador/Contenido/Pestanas/TabEstadisticas
 @onready var tab_keys: Button = $Interfaz/PanelJugador/Contenido/Pestanas/TabLlaves
 @onready var tab_upgrades: Button = $Interfaz/PanelJugador/Contenido/Pestanas/TabMejoras
+@onready var tab_equipment: Button = $Interfaz/PanelJugador/Contenido/Pestanas/TabEquipo
 @onready var stats_page: Control = $Interfaz/PanelJugador/Contenido/PaginaEstadisticas
 @onready var keys_page: Control = $Interfaz/PanelJugador/Contenido/PaginaLlaves
 @onready var upgrades_page: Control = $Interfaz/PanelJugador/Contenido/PaginaMejoras
+@onready var equipment_page: Control = $Interfaz/PanelJugador/Contenido/PaginaEquipo
+@onready var equipment_list: VBoxContainer = $Interfaz/PanelJugador/Contenido/PaginaEquipo/ListaEquipo
 @onready var health_bar: ProgressBar = $Interfaz/PanelJugador/Contenido/PaginaEstadisticas/Cabecera/Resumen/FilaVida/BarraVida
 @onready var health_value: Label = $Interfaz/PanelJugador/Contenido/PaginaEstadisticas/Cabecera/Resumen/FilaVida/ValorVida
 @onready var ultimate_value: Label = $Interfaz/PanelJugador/Contenido/PaginaEstadisticas/Cabecera/Resumen/EstadoUltimate
@@ -61,6 +64,8 @@ var _keys_signature: String = ""
 ## Mejoras encontradas (sin precio), debajo de las de la tienda.
 var _found_box: VBoxContainer
 var _found_signature: String = ""
+## Atuendos y rasgos de la última vez que se dibujó la pestaña Equipo.
+var _equipment_signature: String = ""
 
 
 func _ready() -> void:
@@ -95,6 +100,7 @@ func _process(delta: float) -> void:
 	_update_player_info()
 	_refresh_keys()
 	_refresh_upgrades()
+	_refresh_equipment()
 
 
 ## El botón B del mando vuelve atrás; Esc lo gestiona PauseMenu con la acción "pause".
@@ -223,10 +229,12 @@ func _connect_controls() -> void:
 	tab_stats.pressed.connect(_show_tab.bind("stats"))
 	tab_keys.pressed.connect(_show_tab.bind("keys"))
 	tab_upgrades.pressed.connect(_show_tab.bind("upgrades"))
+	tab_equipment.pressed.connect(_show_tab.bind("equipment"))
 	# Moverse por las pestañas con teclado o mando ya cambia de página.
 	tab_stats.focus_entered.connect(_show_tab.bind("stats"))
 	tab_keys.focus_entered.connect(_show_tab.bind("keys"))
 	tab_upgrades.focus_entered.connect(_show_tab.bind("upgrades"))
+	tab_equipment.focus_entered.connect(_show_tab.bind("equipment"))
 	$Interfaz/PanelMenu/Margen/BotonesPausa/Reanudar.pressed.connect(Callable(pause_manager, "resume_game"))
 	$Interfaz/PanelMenu/Margen/BotonesPausa/Opciones.pressed.connect(show_options)
 	save_button.pressed.connect(_save_from_pause)
@@ -385,6 +393,103 @@ func _refresh_found_upgrades() -> void:
 		_found_box.add_child(row)
 
 
+## Pestaña Equipo (P70, A2): los atuendos encontrados, en orden de nivel, con lo
+## que da cada uno; el que se lleva sale marcado como "Puesto". No se cambia a
+## mano (P46, sección 10). Los harapos cuentan como encontrados con la espada,
+## y el desnudo solo sale si es el que se lleva.
+func get_equipment_entries() -> Array[Dictionary]:
+	var worn_id: String = GameManager.get_outfit_id()
+	var entries: Array[Dictionary] = []
+	for outfit_id: String in GameManager.OUTFIT_DEFINITIONS:
+		var owned: bool = GameManager.has_outfit(outfit_id)
+		if outfit_id == "harapos" and GameManager.has_sword:
+			owned = true
+		if outfit_id == worn_id:
+			owned = true
+		if not owned:
+			continue
+		var definition: Dictionary = GameManager.OUTFIT_DEFINITIONS[outfit_id]
+		entries.append({
+			"id": outfit_id,
+			"name": String(definition.name),
+			"hint": String(definition.get("hint", "")),
+			"level": int(definition.level),
+			"worn": outfit_id == worn_id,
+		})
+	entries.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return int(a.level) < int(b.level))
+	return entries
+
+
+## Rasgos que se suman entre todos los atuendos (P59); vacío si no hay ninguno.
+func get_equipment_traits_text() -> String:
+	var parts: Array[String] = []
+	var reach: float = GameManager.get_outfit_sword_reach()
+	if reach > 1.0:
+		parts.append("alcance x%.2f" % reach)
+	var slash: float = GameManager.get_outfit_slash_bonus()
+	if slash > 0.0:
+		parts.append("tajo +%.2f" % slash)
+	var reduction: float = GameManager.get_outfit_damage_reduction()
+	if reduction > 0.0:
+		parts.append("golpes fuertes -%.2f" % reduction)
+	if GameManager.has_outfit_resistance("cold"):
+		parts.append("resiste el frío")
+	if GameManager.has_outfit_resistance("infernal_fire"):
+		parts.append("resiste el fuego infernal")
+	return " · ".join(parts)
+
+
+func _refresh_equipment() -> void:
+	var entries: Array[Dictionary] = get_equipment_entries()
+	var traits: String = get_equipment_traits_text()
+	var signature: String = str(entries) + traits
+	if signature == _equipment_signature:
+		return
+	_equipment_signature = signature
+	for child: Node in equipment_list.get_children():
+		child.queue_free()
+	for entry: Dictionary in entries:
+		equipment_list.add_child(_make_equipment_row(entry))
+	if traits.is_empty():
+		return
+	var title := Label.new()
+	title.theme_type_variation = &"TextoTenue"
+	title.text = "En total"
+	equipment_list.add_child(title)
+	var summary := Label.new()
+	summary.text = traits
+	summary.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	equipment_list.add_child(summary)
+
+
+func _make_equipment_row(entry: Dictionary) -> Control:
+	var row := PanelContainer.new()
+	row.theme_type_variation = &"PanelFila"
+	var columns := HBoxContainer.new()
+	columns.add_theme_constant_override("separation", 6)
+	row.add_child(columns)
+	var info := VBoxContainer.new()
+	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	info.add_theme_constant_override("separation", 2)
+	columns.add_child(info)
+	var title := Label.new()
+	title.theme_type_variation = &"TextoFuerte"
+	title.text = "E%d  %s" % [int(entry.level), String(entry.name)]
+	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	info.add_child(title)
+	var detail := Label.new()
+	detail.text = String(entry.hint)
+	detail.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	info.add_child(detail)
+	var status := Label.new()
+	var worn: bool = bool(entry.worn)
+	status.text = "Puesto" if worn else "Encontrado"
+	status.theme_type_variation = &"TextoAcento" if worn else &"TextoTenue"
+	status.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	columns.add_child(status)
+	return row
+
+
 func _refresh_upgrades() -> void:
 	_refresh_found_upgrades()
 	for upgrade_id: String in _upgrade_rows:
@@ -447,13 +552,17 @@ func _show_tab(tab: String) -> void:
 	stats_page.visible = tab == "stats"
 	keys_page.visible = tab == "keys"
 	upgrades_page.visible = tab == "upgrades"
+	equipment_page.visible = tab == "equipment"
 	tab_stats.set_pressed_no_signal(tab == "stats")
 	tab_keys.set_pressed_no_signal(tab == "keys")
 	tab_upgrades.set_pressed_no_signal(tab == "upgrades")
+	tab_equipment.set_pressed_no_signal(tab == "equipment")
 	if tab == "keys":
 		_refresh_keys()
 	elif tab == "upgrades":
 		_refresh_upgrades()
+	elif tab == "equipment":
+		_refresh_equipment()
 
 
 func show_options() -> void:
