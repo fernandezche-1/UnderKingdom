@@ -20,6 +20,8 @@
 - Los corrales llevan, en orden: rata, slime, esqueleto, esqueleto de lanza, Guardia, Aprendis, y mino con diablillo.
   - Rata, slime y esqueleto de lanza no tienen letra: viven en la escena `_combate`.
 
+  8. Derrumbe (P64): palanca en x 96, reja en x 98 y suelo que se hunde en x 99-113 de la galería, con escombros abajo y la zona de salida en x 113-120 (todo en la `_combate`).
+
 ## 2. Medidas
 
 - Todo se cruza también sin espada, que es lo más limitado: el salto sube 3 piezas y cruza unas 4.

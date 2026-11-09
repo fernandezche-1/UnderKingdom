@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" path="res://escenas/sistemas/fuego_infernal.tscn" id="21_fuego_infernal"]
 [ext_resource type="PackedScene" path="res://escenas/jefes/crystal_mauler.tscn" id="22_mauler"]
 [ext_resource type="Script" path="res://scripts/combat/boss_arena.gd" id="23_sala"]
+[ext_resource type="Script" path="res://scripts/environment/collapse_sequence.gd" id="24_derrumbe"]
 [ext_resource type="Texture2D" path="res://assets_prueba/raou_castillo/tileset_castillo.png" id="8_tileset"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_losa_izq"]
@@ -59,6 +60,9 @@ size = Vector2(16, 96)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_puerta"]
 size = Vector2(16, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_salida_huida"]
+size = Vector2(128, 96)
 
 [node name="ZonaPruebasCombate" instance=ExtResource("1_base")]
 
@@ -307,3 +311,46 @@ theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 16
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="PalancaDerrumbe" parent="Objetos" instance=ExtResource("6_palanca")]
+position = Vector2(1536, 144)
+encounter_id = "pruebas_derrumbe_palanca"
+
+[node name="SelloDerrumbe" type="StaticBody2D" parent="Objetos"]
+position = Vector2(1576, 152)
+script = ExtResource("7_barrera")
+piece_start = SubResource("AtlasTexture_reja_tope")
+piece_middle = SubResource("AtlasTexture_reja_medio")
+piece_end = SubResource("AtlasTexture_reja_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objetos/SelloDerrumbe"]
+shape = SubResource("RectangleShape2D_puerta")
+disabled = true
+
+[node name="Derrumbe" type="Node2D" parent="Objetos"]
+position = Vector2(1584, 176)
+script = ExtResource("24_derrumbe")
+trigger_encounter = "pruebas_derrumbe_palanca"
+collapse_id = "pruebas_derrumbe"
+sealed_barriers = Array[NodePath]([NodePath("../SelloDerrumbe")])
+exit_area_path = NodePath("Salida")
+piece_texture = SubResource("AtlasTexture_losa_medio")
+
+[node name="Escombros" type="Node2D" parent="Objetos/Derrumbe"]
+
+[node name="Punto1" type="Marker2D" parent="Objetos/Derrumbe/Escombros"]
+position = Vector2(48, 144)
+
+[node name="Punto2" type="Marker2D" parent="Objetos/Derrumbe/Escombros"]
+position = Vector2(96, 144)
+
+[node name="Punto3" type="Marker2D" parent="Objetos/Derrumbe/Escombros"]
+position = Vector2(160, 144)
+
+[node name="Salida" type="Area2D" parent="Objetos/Derrumbe"]
+position = Vector2(288, 96)
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objetos/Derrumbe/Salida"]
+shape = SubResource("RectangleShape2D_salida_huida")

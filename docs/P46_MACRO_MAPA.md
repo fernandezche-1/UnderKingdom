@@ -145,12 +145,12 @@ Están cerrados y se abren desde el lado de abajo, cuando el jugador ya llegó p
 - Los atuendos (`OUTFIT_DEFINITIONS`, `outfits_found`, `grant_outfit` en `GameManager`; P59): `get_outfit_id()` da el de más nivel; sus rasgos (alcance, daño de tajo, reducción de daño, resistencias `cold` / `infernal_fire`) se consultan con `get_outfit_*` y `has_outfit_resistance`, y el Player los aplica. Modo dev: "Siguiente atuendo". Sin objeto, aspecto ni menú todavía.
 
 ### Piezas que faltan
-- Suelo que se hunde para el derrumbe de `[!5]`.
+- Suelo que se hunde para el derrumbe de `[!5]`: hecho, `scripts/environment/collapse_sequence.gd` (P64). Temblor de 1,5 s, suelo que cae del centro hacia fuera, trampilla de entrada sellada y huida con escombros de 0,5. Falta su arte.
 - Hielo que se derrite con la llama eterna (`[P6]`): puerta con llave genérica (`grant_key("antorcha")`, `locked_door.gd`) con otro dibujo y efecto de derretirse, más la luz de la antorcha en la parte oscura.
 - El contador de sellos que abre una puerta al activarlos todos (`[S3]`, `[S7]`): hecho, `escenas/objetos/sello.tscn` (P55).
 - El rompible que solo acepta un tipo de golpe (losa de la cripta y estatua de la Reina): hecho, `escenas/objetos/rompible_selectivo.tscn` (P56).
 - `locked_door.gd` con otro dibujo (velas, hielo de `[P6]`, hielo negro): hecho (P57). `require_interact` (E delante), `open_effect` (`FADE`, `CANDLES`, `MELT`) y `piece_tint`. Falta su arte.
-- La secuencia de huida o derrumbe tras la Reina (`[!5]`).
+- La secuencia de huida o derrumbe tras la Reina (`[!5]`): hecha, la misma pieza (P64). Los `Marker2D` de `Escombros` y la zona de salida se colocan en la Fase 3.
 - La reja baja que solo se pasa rodando (`[H2]`): hecha, `scripts/environment/roll_gate.gd` (P52).
 - El ascensor minero (`:C:`): hecho, `escenas/objetos/ascensor.tscn` (P60). Cabina en cada escena, E para viajar con fundido; con `requires_encounter` (la palanca de las minas) dice "NO HAY CORRIENTE" hasta entonces. Falta su arte.
 - Las arenas con oleadas del infierno (coliseo de los condenados y salón de los verdugos): `arena_barrier.gd` más algo que saque una oleada tras otra.
