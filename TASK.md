@@ -87,7 +87,7 @@ Cada pieza se prueba en la zona de pruebas (`escenas/mapas/zona_pruebas_combate.
 - se probó sin ventana con una escena temporal que simula entradas e imprime el resultado, y esa escena se borró;
 - arrancan sin errores el juego (`godot --headless --quit-after 120`) y la zona de pruebas, y también `mundo_1` si se tocó el Player, un enemigo, el `GameManager` o el Capitán;
 - si guarda estado, se reinicia en `reset_for_new_game`, se guarda en `_make_save_data` / `_restore_game_state` y se sube `SAVE_FORMAT_VERSION`;
-- hay una etapa nueva en `docs/` (la siguiente libre es P57), con el formato de las demás, y está al día lo que la nombra: P46 (secciones 5 y 10), CLAUDE.md si cambia una regla o una pieza a reutilizar, y esta lista;
+- hay una etapa nueva en `docs/` (la siguiente libre es P59), con el formato de las demás, y está al día lo que la nombra: P46 (secciones 5 y 10), CLAUDE.md si cambia una regla o una pieza a reutilizar, y esta lista;
 - hay un commit, sin push.
 
 **Plantilla de prompt** (cambiar `<pieza>`, `<zona>` y lo que se quiera añadir en `<notas>`):
@@ -151,7 +151,7 @@ seguir. Responde en español.
 - [x] Contador de sellos que abre una puerta (`[S3]`, `[S7]`): `escenas/objetos/sello.tscn` y `open_on_seal_group` de `arena_barrier.gd` (P55). No cambia el formato de guardado. Falta su arte.
 - [x] Rompible que solo acepta un tipo de golpe: el ascendente con Golpe final (losa de la cripta) o la Ultimate (estatua de la Reina): `escenas/objetos/rompible_selectivo.tscn` (P56). No cambia el guardado. Falta su arte.
 - [x] `locked_door` con otro dibujo: velas, y después hielo negro y el hielo de `[P6]`: `locked_door.gd` con `require_interact`, `open_effect` y `piece_tint` (P57). No cambia el guardado. Falta su arte.
-- [ ] Mejora de +0.25 en pociones (el amuleto de la guardia).
+- [x] Mejora de +0.25 en pociones (el amuleto de la guardia): fila `amuleto_guardia` de `FOUND_UPGRADE_DEFINITIONS` y `get_potion_heal_amount()` del Player, con `mejora_encontrada.tscn` (P58). No cambia el guardado. Falta su arte.
 
 **4. Minas:**
 - [ ] Ascensor minero (`:C:`).

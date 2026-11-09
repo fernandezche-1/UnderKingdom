@@ -91,6 +91,10 @@ position = Vector2(264, 310)
 [node name="MejoraEncontrada" parent="Objetos" instance=ExtResource("10_mejora")]
 position = Vector2(328, 304)
 
+[node name="MejoraAmuleto" parent="Objetos" instance=ExtResource("10_mejora")]
+position = Vector2(360, 304)
+upgrade_id = "amuleto_guardia"
+
 [node name="FragmentoVida1" parent="Objetos" instance=ExtResource("15_fragmento")]
 position = Vector2(120, 304)
 fragment_id = "prueba_1"

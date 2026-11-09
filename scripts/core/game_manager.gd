@@ -96,6 +96,10 @@ const FOUND_UPGRADE_DEFINITIONS := {
 		"name": "Empuñadura del alcaide", "stat": "slash_damage", "bonus": 0.25,
 		"hint": "+0.25 de daño en tus tajos",
 	},
+	"amuleto_guardia": {
+		"name": "Amuleto de la guardia", "stat": "potion_heal", "bonus": 0.25,
+		"hint": "Tus pociones curan 0.25 más",
+	},
 }
 ## Mejoras encontradas, por id de FOUND_UPGRADE_DEFINITIONS.
 var found_upgrades: Dictionary = {}

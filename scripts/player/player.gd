@@ -2095,13 +2095,19 @@ func heal(amount: float) -> void:
     _update_hud("CURACIÓN")
 
 
+## Lo que cura una poción: la base más las mejoras encontradas (amuleto de la
+## guardia, P58). Siempre múltiplo de 0.25.
+func get_potion_heal_amount() -> float:
+    return potion_heal_amount + GameManager.get_found_upgrade_bonus("potion_heal")
+
+
 ## Toma una poción del inventario. No se gasta con la vida llena.
 func drink_potion() -> bool:
     if dead or current_health >= max_health:
         return false
     if not DevMode.infinite_potions and not GameManager.use_potion():
         return false
-    heal(potion_heal_amount)
+    heal(get_potion_heal_amount())
     UnderkingdomCombatFX.heal(self, sprite)
     return true
 
