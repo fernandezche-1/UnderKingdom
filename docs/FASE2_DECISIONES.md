@@ -146,6 +146,7 @@ Hecha antes de este archivo: la pared agrietada (P48, commit `5c2c0b3`).
 - **Fuego infernal (P61), constructor.** Decisión: no se cambia el constructor; las `F` de los ASCII seguirán saliendo como trampas normales hasta la Fase 3, que las sustituye en la `_combate`. Alternativa: letra nueva en el constructor. Por qué: no tocar herramientas ni mapas ahora.
 - **IA del Mauler (P62), escena.** Decisión: escena nueva `crystal_mauler.tscn` y `boss_mina.tscn` intacto. Alternativa: heredar de `boss_mina.tscn` o editarlo. Por qué: lo usa `mundo_2` (mapa viejo que no se modifica) y no tiene las tiras sueltas de ataque (`1_atk`, `2_atk`, `3_atk`, `sp_atk`).
 - **IA del Mauler (P62), alcances.** Decisión: hitbox de cada ataque sacada de la caja opaca de los cuadros de golpe; el `3_atk` (132 px) y el `sp_atk` (140 px) son largos porque el dibujo lo es. Alternativa: acortarlos. Por qué: M6 no da números y P46 ya cuenta con 8,8 piezas hacia delante.
+- **Adrenalina (P63), dónde se prueba.** Decisión: una `SalaMauler` (`boss_arena.gd`) nueva en la zona de pruebas, en el suelo x 45-60 (16 de ancho, como la gruta), con puerta de entrada, puerta de salida en `Atajos` y sin llave; el `CrystalMauler` suelto de P62 se queda para probar ataques. Alternativa: convertir ese Mauler en el jefe de la sala. Por qué: la sala cierra y abre y el suelto sirve para ver los golpes sin cerrarse dentro.
 
 ## Piezas bloqueadas
 

@@ -167,9 +167,10 @@ const ABILITY_DEFINITIONS := {
 	"agility": {"name": "Agilidad", "hint": "Corres más rápido y saltas más alto"},
 }
 ## Con las que empieza una partida nueva. Las que todavía no tienen dónde
-## conseguirse (minijefe del tajo aéreo, reliquia de la adrenalina, tienda de
-## parry y robo de vida) siguen aquí hasta que se coloque su fuente.
-const STARTING_ABILITIES: Array[String] = ["air_attack", "parry", "lifesteal", "adrenaline"]
+## conseguirse (minijefe del tajo aéreo, tienda de parry y robo de vida)
+## siguen aquí hasta que se coloque su fuente. La adrenalina ya salió: la da
+## el Crystal Mauler (BossArena.ability_reward, P63).
+const STARTING_ABILITIES: Array[String] = ["air_attack", "parry", "lifesteal"]
 
 ## Solo una partida empezada desde "Nueva partida" exige desbloquear. Al abrir
 ## un mapa directo desde el editor (o el Mundo 1 viejo) el Player tiene todo.

@@ -157,7 +157,7 @@ seguir. Responde en español.
 - [x] Ascensor minero (`:C:`): `escenas/objetos/ascensor.tscn` (P60). Una cabina por escena; sin guardado nuevo. Falta su arte.
 - [x] Fuego infernal que solo se pasa con E5 (gruta de cristal, santuario de las profundidades, infierno): `escenas/sistemas/fuego_infernal.tscn` (P61). Sin guardado nuevo. Falta su arte.
 - [x] IA del Crystal Mauler: `escenas/jefes/crystal_mauler.tscn`, con `simple_boss.gd` (P62). `boss_mina.tscn` no se toca (lo usa `mundo_2`). Su sala, la gruta de cristal, mide 16 x 14. Sin guardado nuevo.
-- [ ] La Adrenalina sale de `STARTING_ABILITIES` y la da el Mauler (`ability_reward adrenaline`). Va con su IA: antes nadie la daría.
+- [x] La Adrenalina sale de `STARTING_ABILITIES` y la da el Mauler (`ability_reward adrenaline`): `SalaMauler` en la zona de pruebas (P63). `SAVE_FORMAT_VERSION` sigue en 5. Falta el arte de la reliquia (la de siempre).
 
 **5. Mazmorra:**
 - [ ] Suelo que se hunde y secuencia de derrumbe y huida (`[!5]`).

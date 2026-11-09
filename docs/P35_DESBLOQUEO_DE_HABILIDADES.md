@@ -10,7 +10,7 @@
 ## 1. Datos en `GameManager`
 
 - `ABILITY_DEFINITIONS`: por cada id, su `name` y su `hint` (tecla o forma de usarla). Los ids son `roll`, `combo_2`, `combo_3`, `air_attack`, `parry`, `ultimate`, `lifesteal`, `adrenaline` y `agility` (P45).
-- `STARTING_ABILITIES`: las que se tienen al empezar. Por ahora están aquí las que todavía no tienen dónde conseguirse: `air_attack`, `parry`, `lifesteal` y `adrenaline`. Cuando se coloque su fuente, se quitan de esta lista.
+- `STARTING_ABILITIES`: las que se tienen al empezar. Por ahora están aquí las que todavía no tienen dónde conseguirse: `air_attack`, `parry` y `lifesteal` (la `adrenaline` salió en P63: la da el Crystal Mauler). Cuando se coloque su fuente, se quitan de esta lista.
 - `abilities_locked` y `unlocked_abilities`. Se reinician en `reset_abilities_for_new_game()`, que llama `reset_for_new_game()`.
 - Funciones:
   - `has_ability(id)`: si el Player puede usarla ahora; siempre `true` fuera de una partida;
@@ -53,7 +53,8 @@
 | Ráfaga (`combo_2`) | Capitán (`tiles_cementerio_combate.tscn`) |
 | Golpe final (`combo_3`) | Caballero de la Reina (`tiles_mineria_combate.tscn`) |
 | Ultimate | La Reina (`tiles_mazmorra_combate.tscn`) |
-| Tajo aéreo, parry, robo de vida, adrenalina | Desde el inicio, de forma provisional |
+| Tajo aéreo, parry, robo de vida | Desde el inicio, de forma provisional |
+| Adrenalina | Crystal Mauler (`ability_reward`, P63) |
 
 ## 6. Pendiente
 
