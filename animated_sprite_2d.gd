@@ -2,7 +2,7 @@
 extends AnimatedSprite2D
 
 const HOJA = preload(
-    "res://prueba/dungeon_sidescroller-Raou/spr_torch.png"
+    "res://assets/terceros/dungeon_sidescroller-Raou/spr_torch.png"
 )
 
 func _ready() -> void:

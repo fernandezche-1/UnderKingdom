@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cto8fkkxfy58x" path="res://escenas/enemigos/mino.tscn" id="2_0qeeg"]
 [ext_resource type="PackedScene" uid="uid://bum81cytf4ina" path="res://escenas/enemigos/kolbo2.tscn" id="3_n3spp"]
-[ext_resource type="Texture2D" uid="uid://b3poje2vhbmbv" path="res://tile/Dungeon Tile Set.png" id="4_2wql3"]
+[ext_resource type="Texture2D" uid="uid://b3poje2vhbmbv" path="res://assets/terceros/dungeon_tile_set/Dungeon Tile Set.png" id="4_2wql3"]
 [ext_resource type="Texture2D" uid="uid://dmt8tkg8x6mb5" path="res://sprites/Potion 1.png" id="5_wdnhd"]
 [ext_resource type="PackedScene" uid="uid://blu3m50miaf7s" path="res://escenas/enemigos/reina.tscn" id="6_wdnhd"]
 [ext_resource type="Texture2D" uid="uid://dkycm8ad4ddvf" path="res://fondos/mazmorra.png" id="18_eox21"]

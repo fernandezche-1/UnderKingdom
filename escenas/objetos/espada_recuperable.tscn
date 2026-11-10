@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/items/sword_recovery.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/espada_recuperable.png" id="2_sword"]
+[ext_resource type="Texture2D" path="res://assets/personajes/espada_recuperable.png" id="2_sword"]
 
 [node name="EspadaRecuperable" type="Node2D"]
 z_index = 2

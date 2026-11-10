@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://cfmyfv58wbjna"]
 
-[ext_resource type="Texture2D" uid="uid://cquyx5bssro0o" path="res://assets_prueba/gothicvania/castillo_viejo/fondo.png" id="1_tw7uj"]
-[ext_resource type="Texture2D" uid="uid://carrjvpw80884" path="res://assets_prueba/dungeon_platformer/dungeontilesetfull.png" id="2_4udwi"]
+[ext_resource type="Texture2D" uid="uid://cquyx5bssro0o" path="res://assets/terceros/gothicvania/castillo_viejo/fondo.png" id="1_tw7uj"]
+[ext_resource type="Texture2D" uid="uid://carrjvpw80884" path="res://assets/terceros/dungeon_platformer/dungeontilesetfull.png" id="2_4udwi"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/climb_zone.tscn" id="3_cpmd5"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/checkpoint.tscn" id="5_qy3cs"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/map_transition.tscn" id="7_064qy"]
@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://2hxvdw0c4cgk" path="res://scripts/transitions/map_spawn_controller.gd" id="12_wmqpn"]
 [ext_resource type="PackedScene" uid="uid://s2u0fyebyg8q" path="res://escenas/enemigos/diablillo.tscn" id="13_2pwt6"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/cofre.tscn" id="15_qbiy7"]
-[ext_resource type="Texture2D" uid="uid://b3poje2vhbmbv" path="res://tile/Dungeon Tile Set.png" id="16_0hna0"]
+[ext_resource type="Texture2D" uid="uid://b3poje2vhbmbv" path="res://assets/terceros/dungeon_tile_set/Dungeon Tile Set.png" id="16_0hna0"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/potion_pickup.tscn" id="18_kik5c"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/coin_pickup.tscn" id="20_2n2l8"]
 [ext_resource type="PackedScene" uid="uid://crgen4tbgq8y1" path="res://escenas/player.tscn" id="21_624iu"]

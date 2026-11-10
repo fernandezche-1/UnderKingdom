@@ -1,7 +1,7 @@
 [gd_scene format=4]
 
-[ext_resource type="Texture2D" path="res://assets_prueba/gothicvania/castillo_viejo/fondo.png" id="1_hvxwy"]
-[ext_resource type="Texture2D" path="res://assets_prueba/dungeon_platformer/dungeontilesetfull.png" id="2_o24tl"]
+[ext_resource type="Texture2D" path="res://assets/terceros/gothicvania/castillo_viejo/fondo.png" id="1_hvxwy"]
+[ext_resource type="Texture2D" path="res://assets/terceros/dungeon_platformer/dungeontilesetfull.png" id="2_o24tl"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/climb_zone.tscn" id="3_4v8ub"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/kill_zone.tscn" id="3_ntycl"]
 [ext_resource type="Script" path="res://scripts/environment/kill_zone.gd" id="4_fsjgx"]
@@ -19,7 +19,7 @@
 [ext_resource type="PackedScene" path="res://escenas/enemigos/mino.tscn" id="15_wsiys"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/cofre.tscn" id="16_lmlit"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/kolbo3.tscn" id="16_ntycl"]
-[ext_resource type="Texture2D" path="res://tile/Dungeon Tile Set.png" id="17_7m12a"]
+[ext_resource type="Texture2D" path="res://assets/terceros/dungeon_tile_set/Dungeon Tile Set.png" id="17_7m12a"]
 [ext_resource type="Script" path="res://scripts/environment/chest_interactable.gd" id="18_30b48"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/aprendis.tscn" id="18_fsjgx"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/coin_pickup.tscn" id="19_kxv1t"]

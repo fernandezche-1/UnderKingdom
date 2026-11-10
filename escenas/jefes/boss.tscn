@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dcl32hsyy7sop"]
 
-[ext_resource type="Texture2D" uid="uid://brslojv55p4pb" path="res://free_cthulu_v1/free_cthulu/animations/cthulu_192x112_SpriteSheet.png" id="1_6t1lu"]
+[ext_resource type="Texture2D" uid="uid://brslojv55p4pb" path="res://assets/terceros/free_cthulu_v1/animations/cthulu_192x112_SpriteSheet.png" id="1_6t1lu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6t1lu"]
 atlas = ExtResource("1_6t1lu")

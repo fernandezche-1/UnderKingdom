@@ -1,6 +1,6 @@
 [gd_scene format=4]
 
-[ext_resource type="Texture2D" path="res://assets_prueba/dungeon_platformer/dungeontilesetfull.png" id="1_gw0ej"]
+[ext_resource type="Texture2D" path="res://assets/terceros/dungeon_platformer/dungeontilesetfull.png" id="1_gw0ej"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/kill_zone.tscn" id="2_n7n62"]
 [ext_resource type="Script" path="res://scripts/environment/kill_zone.gd" id="3_0kbqi"]
 [ext_resource type="Texture2D" path="res://sprites/trampas/pinchos.png" id="4_s7uay"]
@@ -22,7 +22,7 @@
 [ext_resource type="Script" path="res://scripts/items/collectible_pickup.gd" id="20_nwugv"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/potion_pickup.tscn" id="21_sfr6x"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/cofre.tscn" id="22_uci66"]
-[ext_resource type="Texture2D" path="res://tile/Dungeon Tile Set.png" id="23_rou8n"]
+[ext_resource type="Texture2D" path="res://assets/terceros/dungeon_tile_set/Dungeon Tile Set.png" id="23_rou8n"]
 [ext_resource type="Script" path="res://scripts/environment/chest_interactable.gd" id="24_yfqfb"]
 [ext_resource type="PackedScene" path="res://escenas/player.tscn" id="25_y3y5j"]
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="26_1ffj0"]

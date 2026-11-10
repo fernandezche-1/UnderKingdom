@@ -1,0 +1,11 @@
+free_cthulu_v1
+
+Antes en: free_cthulu_v1/ (raíz del repo), movido en P72 (docs/P72_ORGANIZACION_REPO.md).
+Licencia: el pack no trae archivo de licencia. Procedencia y licencia por confirmar (TASK.md, "Otros pendientes").
+
+Aquí solo está lo que usa el juego:
+- archivo/mapas_viejos/escenas/jefes/boss.tscn
+- escenas/jefes/cthulhu_jefe.tscn
+
+El resto del pack se apartó sin borrar nada:
+- archivo/sin_uso/assets/free_cthulu_v1/

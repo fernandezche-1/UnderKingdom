@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/pause_menu_overlay.gd" id="1_pause"]
-[ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/fire_knight.png" id="2_portrait"]
+[ext_resource type="Texture2D" path="res://assets/terceros/Elementals_fire_knight_FREE_v1.1/fire_knight.png" id="2_portrait"]
 [ext_resource type="Texture2D" path="res://sprites/Coin Sheet.png" id="3_coins"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_Pestanas"]

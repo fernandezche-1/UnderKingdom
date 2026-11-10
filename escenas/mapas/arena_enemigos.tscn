@@ -1,6 +1,6 @@
 [gd_scene format=4]
 
-[ext_resource type="Texture2D" path="res://assets_prueba/dungeon_platformer/dungeontilesetfull.png" id="1_cplog"]
+[ext_resource type="Texture2D" path="res://assets/terceros/dungeon_platformer/dungeontilesetfull.png" id="1_cplog"]
 [ext_resource type="Script" path="res://scripts/camera/map_bounds.gd" id="2_8yved"]
 [ext_resource type="Script" path="res://scripts/transitions/map_spawn_controller.gd" id="3_k8jts"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/spawn_point.tscn" id="4_y3dst"]

@@ -92,4 +92,4 @@
 - El prólogo no sigue la regla de mapas con tiles (`CLAUDE.md`). Hablar con Armando si se rehace con el constructor.
 - El campo de nombre (`LineEdit`) no tiene estilo en el tema global.
 - Cada guardado sobre una ranura ocupada deja un `.bak` que no se limpia hasta borrar la ranura.
-- Archivos sueltos de v4 en la raíz que habría que mover o quitar: `111.png`, `prsision.png`, `dark_castle_tileset.png`, `animated_sprite_2d.gd`, `escenas/mapas/antorhca.tscn`.
+- Archivos sueltos de v4 en la raíz que habría que mover o quitar: `assets/prision/111.png`, `prsision.png`, `dark_castle_tileset.png`, `animated_sprite_2d.gd`, `escenas/mapas/antorhca.tscn`.

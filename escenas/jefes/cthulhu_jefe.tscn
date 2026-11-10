@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/ui/boss_health_bar.gd" id="4_w1dlw"]
 [ext_resource type="PackedScene" path="res://escenas/ui/boss_health_bar.tscn" id="extra_0"]
 [ext_resource type="Script" path="res://scripts/bosses/simple_boss.gd" id="script"]
-[ext_resource type="Texture2D" path="res://free_cthulu_v1/free_cthulu/animations/cthulu_192x112_SpriteSheet.png" id="tex_0"]
+[ext_resource type="Texture2D" path="res://assets/terceros/free_cthulu_v1/animations/cthulu_192x112_SpriteSheet.png" id="tex_0"]
 
 [sub_resource type="AtlasTexture" id="Atlas_34"]
 atlas = ExtResource("tex_0")

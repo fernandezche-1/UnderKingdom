@@ -8,7 +8,7 @@ extends RefCounted
 ## en arco), E (estantería) y f (rejas de celda, en vez de la fogata). Coordenadas en piezas, no en píxeles.
 
 const DATA := {
-    "textura": "res://assets_prueba/raou_castillo/tileset_castillo.png",
+    "textura": "res://assets/terceros/raou_castillo/tileset_castillo.png",
     "tile": 16,
 
     # Origen del juego de 4x4 piezas de cada estilo y de su rombo de rampas.

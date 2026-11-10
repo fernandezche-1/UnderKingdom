@@ -1,0 +1,10 @@
+Knight 2D Pixel Art
+
+Antes en: otra vez/Knight 2D Pixel Art/ (raíz del repo), movido en P72 (docs/P72_ORGANIZACION_REPO.md).
+Licencia: ver License.txt
+
+Aquí solo está lo que usa el juego:
+- escenas/enemigos/guardia.tscn
+
+El resto del pack se apartó sin borrar nada:
+- archivo/sin_uso/assets/Knight 2D Pixel Art/

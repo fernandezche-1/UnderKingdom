@@ -1,0 +1,14 @@
+Flying Demon 2D Pixel Art
+
+Antes en: otra vez/Flying Demon 2D Pixel Art/ (raíz del repo), movido en P72 (docs/P72_ORGANIZACION_REPO.md).
+Licencia: ver License.txt
+
+Aquí solo está lo que usa el juego:
+- archivo/mapas_viejos/escenas/mundo_1.tscn
+- archivo/mapas_viejos/escenas/mundo_2.tscn
+- archivo/mapas_viejos/escenas/primer_boss_mundo_1.tscn
+- escenas/enemigos/diablillo.tscn
+- escenas/proyectiles/fuego_diablillo.tscn
+
+El resto del pack se apartó sin borrar nada:
+- archivo/sin_uso/assets/Flying Demon 2D Pixel Art/

@@ -220,7 +220,7 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
 ## Otros pendientes del proyecto
 
 - **Licencias:**
-  - Pixel Fantasy Caves: el ZIP no trae licencia; confirmar de dónde se bajó (`assets_prueba/pixelfantasy_caves/ORIGEN.txt`);
+  - Pixel Fantasy Caves: el ZIP no trae licencia; confirmar de dónde se bajó (`assets/terceros/pixelfantasy_caves/ORIGEN.txt`);
   - `Final.zip` (Anokolisa): su nota pide no dar crédito si se cambia el arte; anotarlo en un `ORIGEN.txt` cuando se use.
 - **Arte:**
   - escala del diablillo, que a escala 1 se ve más grande que el Player;

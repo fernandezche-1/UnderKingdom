@@ -1,11 +1,11 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/combat/enemy_base.gd" id="script"]
-[ext_resource type="Texture2D" path="res://assets_prueba/monster_creatures_2/rat/idle.png" id="tex_0"]
-[ext_resource type="Texture2D" path="res://assets_prueba/monster_creatures_2/rat/run.png" id="tex_1"]
-[ext_resource type="Texture2D" path="res://assets_prueba/monster_creatures_2/rat/attack_bite.png" id="tex_2"]
-[ext_resource type="Texture2D" path="res://assets_prueba/monster_creatures_2/rat/hurt.png" id="tex_3"]
-[ext_resource type="Texture2D" path="res://assets_prueba/monster_creatures_2/rat/rat-death.png" id="tex_4"]
+[ext_resource type="Texture2D" path="res://assets/terceros/monster_creatures_2/rat/idle.png" id="tex_0"]
+[ext_resource type="Texture2D" path="res://assets/terceros/monster_creatures_2/rat/run.png" id="tex_1"]
+[ext_resource type="Texture2D" path="res://assets/terceros/monster_creatures_2/rat/attack_bite.png" id="tex_2"]
+[ext_resource type="Texture2D" path="res://assets/terceros/monster_creatures_2/rat/hurt.png" id="tex_3"]
+[ext_resource type="Texture2D" path="res://assets/terceros/monster_creatures_2/rat/rat-death.png" id="tex_4"]
 
 [sub_resource type="AtlasTexture" id="Atlas_1"]
 atlas = ExtResource("tex_0")

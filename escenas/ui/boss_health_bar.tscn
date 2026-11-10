@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
-[ext_resource type="Texture2D" path="res://mino_v1.1_free/mino_v1.1_free/bonus_mino_healthbar_UI/mino_health_under.png" id="1_fondo"]
-[ext_resource type="Texture2D" path="res://mino_v1.1_free/mino_v1.1_free/bonus_mino_healthbar_UI/mino_health_progress.png" id="2_relleno"]
+[ext_resource type="Texture2D" path="res://assets/terceros/mino_v1.1_free/bonus_mino_healthbar_UI/mino_health_under.png" id="1_fondo"]
+[ext_resource type="Texture2D" path="res://assets/terceros/mino_v1.1_free/bonus_mino_healthbar_UI/mino_health_progress.png" id="2_relleno"]
 [ext_resource type="Script" path="res://scripts/ui/boss_health_bar.gd" id="3_script"]
 
 [node name="BossHealthBar" type="CanvasLayer"]

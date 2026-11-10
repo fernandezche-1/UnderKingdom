@@ -1,0 +1,12 @@
+FREE_Kobold Warrior 2D Pixel Art
+
+Antes en: otra vez/FREE_Kobold Warrior 2D Pixel Art/ (raíz del repo), movido en P72 (docs/P72_ORGANIZACION_REPO.md).
+Licencia: ver License.txt
+
+Aquí solo está lo que usa el juego:
+- escenas/enemigos/kolbo.tscn
+- escenas/enemigos/kolbo2.tscn
+- escenas/enemigos/kolbo3.tscn
+
+El resto del pack se apartó sin borrar nada:
+- archivo/sin_uso/assets/FREE_Kobold Warrior 2D Pixel Art/

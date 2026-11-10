@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bbo6agc05u1hf" path="res://sprites/spike Trap3.png" id="4_w266m"]
 [ext_resource type="Texture2D" uid="uid://t46ybxti1nqk" path="res://sprites/spike Trap4.png" id="5_ubtsy"]
 [ext_resource type="Texture2D" uid="uid://3gjr42dtu67s" path="res://sprites/spike Trap5.png" id="6_55nhp"]
-[ext_resource type="Texture2D" uid="uid://b3poje2vhbmbv" path="res://tile/Dungeon Tile Set.png" id="7_cwjk6"]
+[ext_resource type="Texture2D" uid="uid://b3poje2vhbmbv" path="res://assets/terceros/dungeon_tile_set/Dungeon Tile Set.png" id="7_cwjk6"]
 [ext_resource type="PackedScene" uid="uid://y87jmv0hwgiu" path="res://escenas/enemigos/kolbo.tscn" id="8_55nhp"]
 [ext_resource type="PackedScene" uid="uid://bum81cytf4ina" path="res://escenas/enemigos/kolbo2.tscn" id="9_hdfiu"]
 [ext_resource type="PackedScene" uid="uid://cto8fkkxfy58x" path="res://escenas/enemigos/mino.tscn" id="10_gij1f"]

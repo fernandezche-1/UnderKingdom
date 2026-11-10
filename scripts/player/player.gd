@@ -301,10 +301,10 @@ const ARMED_ANIMATION_SCALES: Dictionary = {
     &"jump up": 1.0 / 3.0,
     &"jump down": 1.0 / 3.0,
 }
-const UNARMED_IDLE_SHEET: Texture2D = preload("res://Elementals_fire_knight_FREE_v1.1/idle_8_frames_288x128.png")
-const UNARMED_PUNCH_SHEET: Texture2D = preload("res://Elementals_fire_knight_FREE_v1.1/Right_Punch_6_frames_1728x128_alineado.png")
-const UNARMED_RUN_SHEET: Texture2D = preload("res://Elementals_fire_knight_FREE_v1.1/run_unarmed_8_frames_2304x128.png")
-const FIREBALL_SHEET: Texture2D = preload("res://Elementals_fire_knight_FREE_v1.1/bola_fuego/bola_fuego_6_frames_1728x128.png")
+const UNARMED_IDLE_SHEET: Texture2D = preload("res://assets/personajes/idle_8_frames_288x128.png")
+const UNARMED_PUNCH_SHEET: Texture2D = preload("res://assets/personajes/Right_Punch_6_frames_1728x128_alineado.png")
+const UNARMED_RUN_SHEET: Texture2D = preload("res://assets/personajes/run_unarmed_8_frames_2304x128.png")
+const FIREBALL_SHEET: Texture2D = preload("res://assets/personajes/bola_fuego/bola_fuego_6_frames_1728x128.png")
 const FIREBALL_FRAME_COUNT: int = 6
 const FIREBALL_SCENE: PackedScene = preload("res://escenas/proyectiles/bola_fuego_player.tscn")
 

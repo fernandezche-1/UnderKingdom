@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3]
 
-[ext_resource type="Texture2D" path="res://imagem vidas/imagem vidas/tipo3/3 tipo barra de vida .png" id="1_barras"]
-[ext_resource type="Texture2D" path="res://otra vez/fourSeasonsPlatformer_ [tileset, version 2.0]/objects_/items_.png" id="2_items"]
+[ext_resource type="Texture2D" path="res://assets/terceros/imagem vidas/tipo3/3 tipo barra de vida .png" id="1_barras"]
+[ext_resource type="Texture2D" path="res://assets/terceros/fourSeasonsPlatformer_ [tileset, version 2.0]/objects_/items_.png" id="2_items"]
 [ext_resource type="Script" path="res://scripts/ui/player_hud.gd" id="3_script"]
 [ext_resource type="Texture2D" path="res://sprites/Coin Sheet.png" id="4_coins"]
 [ext_resource type="Texture2D" path="res://sprites/Potion 1.png" id="5_potions"]

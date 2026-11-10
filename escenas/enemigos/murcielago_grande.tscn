@@ -1,10 +1,10 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/combat/lunge_enemy.gd" id="script"]
-[ext_resource type="Texture2D" path="res://assets_prueba/monster_creatures_2/bat/fly.png" id="tex_0"]
-[ext_resource type="Texture2D" path="res://assets_prueba/monster_creatures_2/bat/attack.png" id="tex_1"]
-[ext_resource type="Texture2D" path="res://assets_prueba/monster_creatures_2/bat/hurt.png" id="tex_2"]
-[ext_resource type="Texture2D" path="res://assets_prueba/monster_creatures_2/bat/death.png" id="tex_3"]
+[ext_resource type="Texture2D" path="res://assets/terceros/monster_creatures_2/bat/fly.png" id="tex_0"]
+[ext_resource type="Texture2D" path="res://assets/terceros/monster_creatures_2/bat/attack.png" id="tex_1"]
+[ext_resource type="Texture2D" path="res://assets/terceros/monster_creatures_2/bat/hurt.png" id="tex_2"]
+[ext_resource type="Texture2D" path="res://assets/terceros/monster_creatures_2/bat/death.png" id="tex_3"]
 
 [sub_resource type="AtlasTexture" id="Atlas_1"]
 atlas = ExtResource("tex_0")

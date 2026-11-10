@@ -1,6 +1,6 @@
 [gd_scene format=4]
 
-[ext_resource type="Texture2D" path="res://assets_prueba/raou_castillo/tileset_castillo.png" id="1_bqo42"]
+[ext_resource type="Texture2D" path="res://assets/terceros/raou_castillo/tileset_castillo.png" id="1_bqo42"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/checkpoint.tscn" id="2_awa4x"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/climb_zone.tscn" id="2_gixfd"]
 [ext_resource type="Script" path="res://scripts/environment/checkpoint.gd" id="3_2jy6s"]
@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" path="res://escenas/prisn.tscn" id="10_qwta1"]
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="11_ndrap"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/cofre.tscn" id="12_633dh"]
-[ext_resource type="Texture2D" path="res://tile/Dungeon Tile Set.png" id="13_xe2ka"]
+[ext_resource type="Texture2D" path="res://assets/terceros/dungeon_tile_set/Dungeon Tile Set.png" id="13_xe2ka"]
 [ext_resource type="Script" path="res://scripts/environment/chest_interactable.gd" id="14_qwta1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gixfd"]

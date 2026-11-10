@@ -1,0 +1,19 @@
+dungeon_tile_set
+
+Antes en: prueba/Dungeon Tile Set.png, prueba/Dungeon Tile Set.png.import, tile/ (raíz del repo), movido en P72 (docs/P72_ORGANIZACION_REPO.md).
+Licencia: el pack no trae archivo de licencia. Procedencia y licencia por confirmar (TASK.md, "Otros pendientes").
+
+Aquí solo está lo que usa el juego:
+- archivo/mapas_viejos/escenas/antorhca.tscn
+- archivo/mapas_viejos/escenas/ejemplo_nivel.tscn
+- archivo/mapas_viejos/escenas/mundo_1.tscn
+- archivo/mapas_viejos/escenas/mundo_3.tscn
+- archivo/mapas_viejos/escenas/ruina.tscn
+- archivo/mapas_viejos/escenas/tiles_casa.tscn
+- archivo/tiles_v1/escenas/tiles_calabozo.tscn
+- archivo/tiles_v1/escenas/tiles_castillo.tscn
+- archivo/tiles_v1/escenas/tiles_cementerio.tscn
+- archivo/tiles_v1/escenas/tiles_jefe.tscn
+- archivo/tiles_v1/escenas/tiles_mazmorra.tscn
+- archivo/tiles_v1/escenas/tiles_mineria.tscn
+- y 6 más

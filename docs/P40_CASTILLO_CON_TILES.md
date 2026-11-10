@@ -11,11 +11,11 @@
 
 ## 1. Tileset `castillo`
 
-- **Atlas:** `assets_prueba/raou_castillo/tileset_castillo.png`, 512x384.
+- **Atlas:** `assets/terceros/raou_castillo/tileset_castillo.png`, 512x384.
   - **Filas 0-15:** copia sin cambios del de mazmorra, por la antorcha, la escalera, la fogata (checkpoint), el barril, la caja y las rampas.
   - **Filas 16-19:** piezas nuevas. Detalle pieza por pieza en `ORIGEN.txt`.
 - **Bloque `castillo`:**
-  - es el muro de ladrillo morado de Raou (`prueba/dungeon_sidescroller-Raou/Tilesetv3.png`), con losas claras arriba e interior negro;
+  - es el muro de ladrillo morado de Raou (`assets/terceros/dungeon_sidescroller-Raou/Tilesetv3.png`), con losas claras arriba e interior negro;
   - todas sus piezas son macizas;
   - la fila de plataformas y tiras de una pieza repite la de arriba, como en mazmorra.
 - **Rampas:** las de Raou no tienen 3 esquinas opacas y el constructor no les daría colisión, así que el bloque usa las de `violeta`. El mapa no tiene rampas.

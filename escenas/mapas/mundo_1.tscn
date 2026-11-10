@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://duop58kvqwgnc"]
 
 [ext_resource type="Texture2D" uid="uid://dd51r2yuk5tcm" path="res://otra vez/Final/Salt.png" id="6_4cqem"]
-[ext_resource type="Texture2D" uid="uid://b3poje2vhbmbv" path="res://tile/Dungeon Tile Set.png" id="51_pvrwi"]
+[ext_resource type="Texture2D" uid="uid://b3poje2vhbmbv" path="res://assets/terceros/dungeon_tile_set/Dungeon Tile Set.png" id="51_pvrwi"]
 [ext_resource type="Texture2D" uid="uid://dpi7o2dk2xdlt" path="res://fondos/cementerio.png" id="57_p7gi5"]
 [ext_resource type="Texture2D" uid="uid://kgocy3je3sda" path="res://Lively_NPCs_v3.1/Lively_NPCs_v3.1/sprite sheets/medieval/beggar.png" id="58_i50df"]
 [ext_resource type="Texture2D" uid="uid://dcqo5iiobisd0" path="res://Lively_NPCs_v3.1/Lively_NPCs_v3.1/sprite sheets/medieval/captain.png" id="59_5uu6v"]
@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://h3lpw578kh2u" path="res://escenas/enemigos/aprendis.tscn" id="61_x8mx5"]
 [ext_resource type="PackedScene" uid="uid://crgen4tbgq8y1" path="res://escenas/player.tscn" id="62_wn5mh"]
 [ext_resource type="PackedScene" uid="uid://ext3mp88wk5u" path="res://escenas/enemigos/vanguardia.tscn" id="63_5uu6v"]
-[ext_resource type="Texture2D" uid="uid://c4i876ra5uc57" path="res://otra vez/Flying Demon 2D Pixel Art/Sprites/without_outline/IDLE.png" id="64_x8mx5"]
+[ext_resource type="Texture2D" uid="uid://c4i876ra5uc57" path="res://assets/terceros/Flying Demon 2D Pixel Art/Sprites/without_outline/IDLE.png" id="64_x8mx5"]
 [ext_resource type="Texture2D" uid="uid://dii8k508pmyns" path="res://otra vez/Red Fire Trap/Red Fire Trap Sprite Sheet.png" id="65_wn5mh"]
 [ext_resource type="Texture2D" uid="uid://bhbhq3jpiumfp" path="res://sprites/spike Trap1.png" id="66_ctw23"]
 [ext_resource type="Texture2D" uid="uid://cbgw8n3bxra0h" path="res://sprites/spike Trap2.png" id="67_gmtv0"]

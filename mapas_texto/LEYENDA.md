@@ -148,7 +148,7 @@ Con eso se pasa a PNG, se genera el nivel y se revisa jugando.
 
 ## 8. Integrar un paquete de arte
 1. El ZIP se descomprime en una carpeta aparte, nunca encima del proyecto.
-2. **Revisar la licencia** y anotarla en un `ORIGEN.txt`, como en `assets_prueba/dungeon_platformer/ORIGEN.txt`.
+2. **Revisar la licencia** y anotarla en un `ORIGEN.txt`, como en `assets/terceros/dungeon_platformer/ORIGEN.txt`.
 3. **Medir el tamaño de tile.** Si es de 16 px, entra directo. Si es de otro tamaño, el nivel usa esa cuadrícula sin escalar a medias; el constructor toma el tamaño del archivo del tileset.
 4. **Crear `herramientas/constructor_mapas/tilesets/<nombre>.gd`** copiando `mazmorra.gd`, y ubicar en el PNG:
    - el juego de bloques de 4x4 (esquinas, bordes e interior en 3x3, columna a la derecha y plataformas abajo) y las rampas;

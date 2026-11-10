@@ -1,0 +1,10 @@
+Evil Wizard
+
+Antes en: otra vez/Evil Wizard/ (raíz del repo), movido en P72 (docs/P72_ORGANIZACION_REPO.md).
+Licencia: ver License.txt
+
+Aquí solo está lo que usa el juego:
+- escenas/enemigos/aprendis.tscn
+
+El resto del pack se apartó sin borrar nada:
+- archivo/sin_uso/assets/Evil Wizard/

@@ -1,0 +1,12 @@
+Elementals_Leaf_ranger_Free_v1.0
+
+Antes en: Elementals_Leaf_ranger_Free_v1.0/ (raíz del repo), movido en P72 (docs/P72_ORGANIZACION_REPO.md).
+Licencia: el pack no trae archivo de licencia. Procedencia y licencia por confirmar (TASK.md, "Otros pendientes").
+
+Aquí solo está lo que usa el juego:
+- escenas/enemigos/enemis.tscn
+- escenas/proyectiles/flecha_enemiga.tscn
+
+El resto del pack se apartó sin borrar nada:
+- archivo/mapas_viejos/assets/Elementals_Leaf_ranger_Free_v1.0/
+- archivo/sin_uso/assets/Elementals_Leaf_ranger_Free_v1.0/

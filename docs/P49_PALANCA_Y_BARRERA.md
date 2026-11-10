@@ -50,7 +50,7 @@
 
 ## 4. Arte provisional
 
-- Palanca: dos piezas del tileset CC0 de la mazmorra, `assets_prueba/dungeon_platformer/dungeontilesetfull.png`, de 16 x 32 cada una:
+- Palanca: dos piezas del tileset CC0 de la mazmorra, `assets/terceros/dungeon_platformer/dungeontilesetfull.png`, de 16 x 32 cada una:
   - sin tirar: la lanza clavada en un barril, columna 28, filas 8-9 (región `(448, 128, 16, 32)`);
   - tirada: la espada inclinada en un barril, columna 27, filas 8-9 (región `(432, 128, 16, 32)`).
 - **Pendiente:**

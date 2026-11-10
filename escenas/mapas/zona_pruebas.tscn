@@ -1,6 +1,6 @@
 [gd_scene format=4]
 
-[ext_resource type="Texture2D" path="res://assets_prueba/raou_castillo/tileset_castillo.png" id="1_5t1jk"]
+[ext_resource type="Texture2D" path="res://assets/terceros/raou_castillo/tileset_castillo.png" id="1_5t1jk"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/kill_zone.tscn" id="2_ia7k4"]
 [ext_resource type="Script" path="res://scripts/environment/kill_zone.gd" id="3_ak72i"]
 [ext_resource type="Texture2D" path="res://sprites/trampas/pinchos.png" id="4_sw43i"]
@@ -24,7 +24,7 @@
 [ext_resource type="PackedScene" path="res://escenas/enemigos/aprendis.tscn" id="22_o6pbm"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/mino.tscn" id="23_ktkn1"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/cofre.tscn" id="24_e4d3t"]
-[ext_resource type="Texture2D" path="res://tile/Dungeon Tile Set.png" id="25_5isg0"]
+[ext_resource type="Texture2D" path="res://assets/terceros/dungeon_tile_set/Dungeon Tile Set.png" id="25_5isg0"]
 [ext_resource type="Script" path="res://scripts/environment/chest_interactable.gd" id="26_p7mu5"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/potion_pickup.tscn" id="27_jw8gs"]
 [ext_resource type="Script" path="res://scripts/items/collectible_pickup.gd" id="28_xybo5"]

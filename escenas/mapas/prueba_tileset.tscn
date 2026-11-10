@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://m3055omp1cnk"]
 
-[ext_resource type="Texture2D" uid="uid://carrjvpw80884" path="res://assets_prueba/dungeon_platformer/dungeontilesetfull.png" id="1_nyd0m"]
+[ext_resource type="Texture2D" uid="uid://carrjvpw80884" path="res://assets/terceros/dungeon_platformer/dungeontilesetfull.png" id="1_nyd0m"]
 [ext_resource type="Script" uid="uid://bkvqx03fc60f2" path="res://scripts/camera/map_bounds.gd" id="2_s6n3i"]
 [ext_resource type="PackedScene" uid="uid://crgen4tbgq8y1" path="res://escenas/player.tscn" id="3_xgean"]
 [ext_resource type="PackedScene" uid="uid://ext3mp88wk5u" path="res://escenas/enemigos/vanguardia.tscn" id="5_vgcf3"]

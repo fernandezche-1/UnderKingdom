@@ -1,6 +1,6 @@
 [gd_scene format=4]
 
-[ext_resource type="Texture2D" path="res://assets_prueba/dungeon_platformer/dungeontilesetfull.png" id="1_ooeqf"]
+[ext_resource type="Texture2D" path="res://assets/terceros/dungeon_platformer/dungeontilesetfull.png" id="1_ooeqf"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/kill_zone.tscn" id="2_fno4l"]
 [ext_resource type="Script" path="res://scripts/environment/kill_zone.gd" id="3_nflko"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/climb_zone.tscn" id="4_s2u4w"]

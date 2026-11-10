@@ -1,0 +1,11 @@
+Lively_NPCs_v3.1
+
+Antes en: Lively_NPCs_v3.1/ (raíz del repo), movido en P72 (docs/P72_ORGANIZACION_REPO.md).
+Licencia: el pack no trae archivo de licencia. Procedencia y licencia por confirmar (TASK.md, "Otros pendientes").
+
+Aquí solo está lo que usa el juego:
+- escenas/npc/anciano.tscn
+
+El resto del pack se apartó sin borrar nada:
+- archivo/mapas_viejos/assets/Lively_NPCs_v3.1/
+- archivo/sin_uso/assets/Lively_NPCs_v3.1/

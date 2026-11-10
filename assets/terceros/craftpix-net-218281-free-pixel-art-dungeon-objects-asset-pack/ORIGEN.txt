@@ -1,0 +1,11 @@
+craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack
+
+Antes en: craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/ (raíz del repo), movido en P72 (docs/P72_ORGANIZACION_REPO.md).
+Licencia: ver License.txt, readme.txt
+
+Aquí solo está lo que usa el juego:
+- archivo/tiles_v1/escenas/tiles_castillo.tscn
+- escenas/objetos/objeto_lore.tscn
+
+El resto del pack se apartó sin borrar nada:
+- archivo/sin_uso/assets/craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/

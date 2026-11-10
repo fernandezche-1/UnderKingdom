@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dkuv1x5ys7dne"]
 
-[ext_resource type="Texture2D" uid="uid://cn0u8byeaiw62" path="res://Elementals_fire_knight_FREE_v1.1/desnudo/Prisionero encadenado rompiendo sus cadenas.png" id="1_uga8i"]
+[ext_resource type="Texture2D" uid="uid://cn0u8byeaiw62" path="res://assets/personajes/desnudo/Prisionero encadenado rompiendo sus cadenas.png" id="1_uga8i"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mude6"]
 atlas = ExtResource("1_uga8i")

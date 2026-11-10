@@ -6,7 +6,7 @@ extends RefCounted
 ## "tileset: <nombre del archivo>". Coordenadas en piezas, no en píxeles.
 
 const DATA := {
-    "textura": "res://assets_prueba/dungeon_platformer/dungeontilesetfull.png",
+    "textura": "res://assets/terceros/dungeon_platformer/dungeontilesetfull.png",
     "tile": 16,
 
     # Origen del juego de 4x4 piezas de cada estilo y de su rombo de rampas.

@@ -1,0 +1,15 @@
+fourSeasonsPlatformer_ [tileset, version 2.0]
+
+Antes en: otra vez/fourSeasonsPlatformer_ [tileset, version 2.0]/ (raíz del repo), movido en P72 (docs/P72_ORGANIZACION_REPO.md).
+Licencia: ver - READ ME -.txt
+
+Aquí solo está lo que usa el juego:
+- escenas/items/fragmento_vida.tscn
+- escenas/items/llave_jefe_m1.tscn
+- escenas/items/mejora_encontrada.tscn
+- escenas/items/reliquia_habilidad.tscn
+- escenas/ui/player_hud.tscn
+- scripts/ui/pause_menu_overlay.gd
+
+El resto del pack se apartó sin borrar nada:
+- archivo/sin_uso/assets/fourSeasonsPlatformer_ [tileset, version 2.0]/

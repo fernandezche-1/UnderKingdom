@@ -4,7 +4,7 @@ extends Node2D
 ## jugable es la instancia prision inicio de prisn.tscn.
 
 const DIALOGUE_SCENE := preload("res://escenas/ui/dialogue_ui.tscn")
-const QUEEN_PORTRAIT := preload("res://Elementals_water_priestess_FREE_v1.1/Elementals_water_priestess_FREE_v1.1/water_priestess.png")
+const QUEEN_PORTRAIT := preload("res://assets/terceros/Elementals_water_priestess_FREE_v1.1/water_priestess.png")
 const ONCE_KEY := "underkingdom_camara_sellado_alma_completada"
 
 @onready var prisoner_marker: Marker2D = $MarcadoresCinematica/ProtagonistaEncadenado

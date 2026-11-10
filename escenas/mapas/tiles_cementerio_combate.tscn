@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" path="res://escenas/items/llave_jefe_m1.tscn" id="4_llave"]
 [ext_resource type="Script" uid="uid://b1wbjge6trnxt" path="res://scripts/environment/arena_barrier.gd" id="5_barrera"]
 [ext_resource type="Script" uid="uid://c5vs20q6x5qa5" path="res://scripts/environment/locked_door.gd" id="6_puerta_llave"]
-[ext_resource type="Texture2D" uid="uid://carrjvpw80884" path="res://assets_prueba/dungeon_platformer/dungeontilesetfull.png" id="7_tileset"]
+[ext_resource type="Texture2D" uid="uid://carrjvpw80884" path="res://assets/terceros/dungeon_platformer/dungeontilesetfull.png" id="7_tileset"]
 [ext_resource type="Script" uid="uid://dsy5vbjhmxc2" path="res://scripts/cinematics/cinematic_controller.gd" id="8_cinematica"]
 [ext_resource type="Script" path="res://scripts/environment/map_ambience.gd" id="9_ambiente"]
 [ext_resource type="PackedScene" path="res://escenas/npc/anciano.tscn" id="npc_0"]

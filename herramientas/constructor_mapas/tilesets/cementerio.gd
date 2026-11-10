@@ -7,7 +7,7 @@ extends RefCounted
 ## r (zarzas). Coordenadas en piezas, no en píxeles.
 
 const DATA := {
-    "textura": "res://assets_prueba/gothicvania_cementerio/tileset_cementerio.png",
+    "textura": "res://assets/terceros/gothicvania_cementerio/tileset_cementerio.png",
     "tile": 16,
 
     # Origen del juego de 4x4 piezas de cada estilo y de su rombo de rampas.

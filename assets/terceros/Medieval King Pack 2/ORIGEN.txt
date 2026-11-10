@@ -1,0 +1,10 @@
+Medieval King Pack 2
+
+Antes en: prueba/Medieval King Pack 2/ (raíz del repo), movido en P72 (docs/P72_ORGANIZACION_REPO.md).
+Licencia: ver License.txt
+
+Aquí solo está lo que usa el juego:
+- escenas/jefes/rey_caido.tscn
+
+El resto del pack se apartó sin borrar nada:
+- archivo/sin_uso/assets/Medieval King Pack 2/
