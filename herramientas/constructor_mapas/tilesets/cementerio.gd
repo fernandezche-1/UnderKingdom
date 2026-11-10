@@ -2,7 +2,7 @@ extends RefCounted
 
 ## Tileset del cementerio: el atlas de mazmorra (filas 0-15, sin cambios) más
 ## piezas de Gothicvania Cemetery (CC0) en las filas 16-19, ver
-## assets_prueba/gothicvania_cementerio/ORIGEN.txt. Mismas letras que mazmorra;
+## assets/terceros/gothicvania_cementerio/ORIGEN.txt. Mismas letras que mazmorra;
 ## cambian los bloques "cementerio" y los decorados T (lápida), g (pasto) y
 ## r (zarzas). Coordenadas en piezas, no en píxeles.
 

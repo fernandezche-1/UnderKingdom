@@ -2,7 +2,7 @@ extends RefCounted
 
 ## Tileset del castillo: el atlas de mazmorra (filas 0-15, sin cambios) más
 ## piezas del muro de ladrillo de Raou y decorados de castillo en las filas
-## 16-19, ver assets_prueba/raou_castillo/ORIGEN.txt. Mismas letras que
+## 16-19, ver assets/terceros/raou_castillo/ORIGEN.txt. Mismas letras que
 ## mazmorra; cambian el bloque "castillo", la pared de fondo "castillo" y los
 ## decorados T (armadura), h (estandarte), g (cadena), r (ventana), C (puerta
 ## en arco), E (estantería) y f (rejas de celda, en vez de la fogata). Coordenadas en piezas, no en píxeles.

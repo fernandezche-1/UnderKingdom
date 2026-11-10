@@ -165,7 +165,7 @@ escena: res://escenas/mapas/tiles_cementerio.tscn
 tileset: cementerio
 bloques: cementerio
 fondo: ninguno
-parallax: assets_prueba/gothicvania_cementerio/fondo/cielo.png 0 x2; assets_prueba/gothicvania_cementerio/fondo/montes.png 0.1 x2; assets_prueba/gothicvania_cementerio/fondo/cementerio.png 0.25 x2
+parallax: assets/terceros/gothicvania_cementerio/fondo/cielo.png 0 x2; assets/terceros/gothicvania_cementerio/fondo/montes.png 0.1 x2; assets/terceros/gothicvania_cementerio/fondo/cementerio.png 0.25 x2
 anterior: res://escenas/mapas/tiles_castillo_combate.tscn
 ---
 ########################################################################################################################
