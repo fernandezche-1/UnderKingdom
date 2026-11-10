@@ -224,6 +224,81 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
   - Cthulhu en el trono, con la reja en `Puertas`, el activador, `PuntosJefe` y el aviso del final;
   - la transición y el spawn de `[S7]`, y la marca `infierno_animas_liberadas` del coliseo.
 
+**Plantillas de prompt de la estructura.** La estructura de cada zona se hace en dos sesiones, cada una con su commit:
+- parte 1, generar la base: modo normal;
+- parte 2, montar la `_combate`: modo plan.
+
+Después, la zona se juega a mano antes de vestirla. En cada plantilla, cambiar `<zona>`.
+
+Parte 1, generar la base:
+
+```
+Tarea: Fase 3 de TASK.md, estructura de <zona>, parte 1: generar la escena base.
+
+Antes de nada, lee:
+- CLAUDE.md (mapas en uso, cómo se monta un mundo, validar cambios);
+- en TASK.md, la Fase 3: el bloque "Al generar cada zona, además" y la
+  línea de <zona>;
+- docs/P46_MACRO_MAPA.md, secciones 9 y 10 (la fila de <zona> en
+  "Desbloqueos por zona");
+- mapas_texto/macro/conexiones.txt, zonas.txt y el ASCII
+  mapas_texto/macro/zonas/<zona>.txt, sobre todo su cabecera;
+- mapas_texto/LEYENDA.md (cómo se usa el constructor).
+
+Qué hacer:
+- Mueve el ASCII a mapas_texto/tiles_<zona>.txt y cambia su ruta en zonas.txt.
+- Genera escenas/mapas/tiles_<zona>.tscn con el constructor. Todavía no
+  hagas la _combate.
+- Cambia a la escena nueva las salidas que llegan a <zona> desde zonas aún
+  viejas (archivo/tiles_v1/ o la prisión) y, si es el castillo o el
+  cementerio, CASTLE_SCENE_PATH / CEMETERY_SCENE_PATH y
+  debug_slide_collisions de player.gd. Antes de tocar las salidas, dime
+  cuáles vas a cambiar.
+
+Al terminar:
+- verificar_mundo.py con 0 errores, y arranque sin errores de la escena
+  nueva y del juego;
+- regenera el Atlas (datos_atlas.py) y publícalo de nuevo;
+- dime qué .tscn cambiaste, para recargarlos, y haz un commit sin push.
+Si algo no cuadra con los archivos, dímelo antes de seguir. Responde en español.
+```
+
+Parte 2, montar la `_combate`:
+
+```
+Tarea: Fase 3 de TASK.md, estructura de <zona>, parte 2: montar
+escenas/mapas/tiles_<zona>_combate.tscn, que hereda de tiles_<zona>.tscn.
+
+Antes de nada, lee:
+- CLAUDE.md, sobre todo "Cómo se monta un mundo" y las piezas a reutilizar;
+- en TASK.md, la lista de <zona> en la Fase 3: es lo que hay que montar;
+- la cabecera de mapas_texto/tiles_<zona>.txt (sitios, coordenadas,
+  encuentros, llaves);
+- docs/P46_MACRO_MAPA.md, sección 10 (con qué llega el jugador y qué
+  consigue aquí);
+- las etapas de las piezas que usa (P48-P70) y
+  docs/P33_ENEMIGOS_POR_PROFUNDIDAD.md.
+
+Cómo trabajar:
+- Antes de montar nada, pásame una lista: cada nodo, su escena o script, su
+  posición en piezas y sus valores (encounter_id, key_id, ability_reward...).
+  Espera a que la apruebe.
+- Reutiliza las piezas de la Fase 2. No crees piezas nuevas: si falta algo,
+  dímelo.
+- No regeneres la base ni toques su .txt. Si hace falta, dímelo.
+- Static typing; daño y curación en múltiplos de 0.25.
+
+Al terminar:
+- una prueba sin ventana (escena temporal, que se borra al acabar) de la
+  secuencia principal: jefe, llave o puerta, salida;
+- arranque sin errores de la _combate, del juego y de mundo_1 si tocaste
+  scripts compartidos;
+- cambia las salidas para que apunten a la _combate;
+- marca la casilla de <zona> en TASK.md, dime qué .tscn cambiaste y haz un
+  commit sin push.
+Si algo no cuadra, dímelo antes de seguir. Responde en español.
+```
+
 ### Vestir cada zona: arte y enemigos nuevos (P73)
 
 Hay tres pasos por zona; cada uno es una sesión con su commit:
@@ -232,6 +307,8 @@ Hay tres pasos por zona; cada uno es una sesión con su commit:
 3. **Vestir:** se cambian la cabecera y las letras del `.txt`, se regenera la base y se comprueba que las colisiones no cambian.
 
 El criterio de "hecho" de cada paso está en P73, sección 2. La ficha se puede armar antes de que exista la estructura, pero para vestir hay que tenerla.
+
+Modo de cada paso: la ficha y vestir, en modo normal; las piezas, en modo plan si llevan un script o una escena nueva.
 
 - [ ] Calabozo: [ ] ficha, [ ] piezas, [ ] vestida.
 - [ ] Castillo: [ ] ficha, [ ] piezas, [ ] vestida.
