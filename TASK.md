@@ -80,12 +80,12 @@ Responde en español.
 
 ## Fase 2: piezas en Godot
 
-Cada pieza se prueba en la zona de pruebas (`escenas/mapas/zona_pruebas_combate.tscn`) y se documenta en una etapa nueva de `docs/`. Si toca el Player o el `GameManager`, se comprueba también `mundo_1`.
+Cada pieza se prueba en la zona de pruebas (`escenas/mapas/zona_pruebas_combate.tscn`) y se documenta en una etapa nueva de `docs/`. Si toca el Player o el `GameManager`, se comprueban también las zonas ya generadas en la Fase 3.
 
 **Una pieza está hecha cuando:**
 - funciona en la zona de pruebas, montada en `zona_pruebas_combate.tscn` (o en el `.txt` si lleva letra), con un caso que muestre que cierra y otro que muestre que abre;
 - se probó sin ventana con una escena temporal que simula entradas e imprime el resultado, y esa escena se borró;
-- arrancan sin errores el juego (`godot --headless --quit-after 120`) y la zona de pruebas, y también `mundo_1` si se tocó el Player, un enemigo, el `GameManager` o el Capitán;
+- arrancan sin errores el juego (`godot --headless --quit-after 120`) y la zona de pruebas, y también las zonas ya generadas en la Fase 3 si se tocó el Player, un enemigo, el `GameManager` o un jefe;
 - si guarda estado, se reinicia en `reset_for_new_game`, se guarda en `_make_save_data` / `_restore_game_state` y se sube `SAVE_FORMAT_VERSION`;
 - hay una etapa nueva en `docs/` (la siguiente libre es P74), con el formato de las demás, y está al día lo que la nombra: P46 (secciones 5 y 10), CLAUDE.md si cambia una regla o una pieza a reutilizar, y esta lista;
 - hay un commit, sin push.
@@ -291,8 +291,8 @@ Cómo trabajar:
 Al terminar:
 - una prueba sin ventana (escena temporal, que se borra al acabar) de la
   secuencia principal: jefe, llave o puerta, salida;
-- arranque sin errores de la _combate, del juego y de mundo_1 si tocaste
-  scripts compartidos;
+- arranque sin errores de la _combate y del juego y, si tocaste scripts
+  compartidos, de la zona de pruebas y de las zonas ya generadas;
 - cambia las salidas para que apunten a la _combate;
 - marca la casilla de <zona> en TASK.md, dime qué .tscn cambiaste y haz un
   commit sin push.

@@ -81,7 +81,7 @@ Cada pieza se prueba en la zona de pruebas antes de ir a un mapa de la ruta.
 **Una pieza de C está hecha cuando:**
 - funciona en la galería;
 - pasó la prueba sin ventana;
-- arrancan sin errores el juego y la zona de pruebas (y `mundo_1` si se tocó `enemy_base.gd`);
+- arrancan sin errores el juego y la zona de pruebas (y las zonas ya generadas si se tocó `enemy_base.gd`);
 - su ficha y las tablas que la nombran están al día;
 - hay un commit.
 
