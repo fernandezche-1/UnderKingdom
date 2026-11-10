@@ -193,7 +193,10 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
 **Estructura primero, vestir después** (P73): cada zona se genera y se juega con el arte y los enemigos de hoy (lista de abajo), y después se viste con arte y enemigos nuevos (lista "Vestir cada zona"). Lo que se pone en la `_combate` no se pierde al regenerar la base.
 
 **Estructura de cada zona:**
-- [ ] **Calabozo:** cinco rejas, las dos cinemáticas y sus puntos, enemigos y carcelero, espada y preso, pared agrietada, depósito del alcaide con el acta y la empuñadura, trampilla, transición y spawn de `:B:`. Base generada (2026-11-10); la salida de la prisión apunta a la base (`tiles_calabozo.tscn`) hasta que exista la `_combate`: al montarla, cambiarla a `tiles_calabozo_combate.tscn`.
+- [x] **Calabozo:** cinco rejas, las dos cinemáticas y sus puntos, enemigos y carcelero, espada y preso, pared agrietada, depósito del alcaide con el acta y la empuñadura, trampilla, transición y spawn de `:B:`. Base generada y `_combate` montada (2026-11-10, `escenas/mapas/tiles_calabozo_combate.tscn`); la salida de la prisión ya apunta a la `_combate`.
+  - La reja del depósito pide la llave `mazmorra_alcaide`: la mazmorra la da con ese id y añade su nombre a `KEY_NAMES` (`pause_menu_overlay.gd`).
+  - Sin pieza de arcón: el acta y la empuñadura están sueltas en el suelo, en (14, 26) y (15, 26). Las marcas del secreto usan `dialogues/lore_marcas_preso.json` (texto provisional).
+  - `SalidaAtajoB` apunta a `tiles_mazmorra_combate.tscn#DesdeCalabozo`, aún sin generar, y `[L1]` a `tiles_castillo_combate.tscn`, que tampoco existe todavía. Las dos escenas se crean al montar sus zonas.
 - [ ] **Castillo:**
   - el Rey con `ability_reward` de Rodar, la reja de `[H2]`, las trampillas y la trampilla de `:C:`;
   - los aposentos de la Reina y el castillo sin hechizo (soldados NPC y el Capitán).
@@ -205,7 +208,7 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
   - la gruta de cristal: fuego infernal, checkpoint y el Mauler con su `boss_arena` (trampilla de entrada en `Puertas`, la del suelo en `Atajos`, `ability_reward adrenaline`).
 - [ ] **Mazmorra:**
   - la Reina con `ability_reward` del Ultimate y sin llave, el suelo que se hunde y el derrumbe, la compuerta y la palanca del atajo, la trampilla del colector y la transición de `[!5]`;
-  - la palanca, la transición y el spawn de `:B:`, y la llave del alcaide;
+  - la palanca, la transición y el spawn de `:B:` (el calabozo sale a `#DesdeCalabozo` y espera llegar a `#DesdeMazmorra`), y la llave del alcaide (`mazmorra_alcaide`);
   - la trampilla, la transición y el spawn del pozo de los condenados (`:F:`).
 - [ ] **Ruina:**
   - el Guardián, la reja de salida en `Atajos`, el hielo de `[P6]` y la llama eterna, la luz de la parte oscura;

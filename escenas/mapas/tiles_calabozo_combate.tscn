@@ -1,0 +1,199 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://escenas/mapas/tiles_calabozo.tscn" id="1_base"]
+[ext_resource type="PackedScene" path="res://escenas/enemigos/carcelero.tscn" id="2_carcelero"]
+[ext_resource type="Script" path="res://scripts/environment/locked_door.gd" id="3_puerta"]
+[ext_resource type="Texture2D" path="res://assets/terceros/raou_castillo/tileset_castillo.png" id="4_tileset"]
+[ext_resource type="Script" path="res://scripts/environment/map_ambience.gd" id="5_ambiente"]
+[ext_resource type="Script" path="res://scripts/environment/arena_barrier.gd" id="6_barrera"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/map_transition.tscn" id="7_transicion"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/spawn_point.tscn" id="8_spawn"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/espada_oxidada.tscn" id="9_espada"]
+[ext_resource type="Texture2D" path="res://assets/terceros/esqueleto_lanza/esqueleto_lanza.png" id="10_esqueleto"]
+[ext_resource type="Script" path="res://scripts/cinematics/cinematic_controller.gd" id="11_cinematica"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/pared_agrietada.tscn" id="12_pared"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/objeto_lore.tscn" id="13_lore"]
+[ext_resource type="PackedScene" path="res://escenas/items/mejora_encontrada.tscn" id="14_mejora"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_reja_tope"]
+atlas = ExtResource("4_tileset")
+region = Rect2(48, 256, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_reja_medio"]
+atlas = ExtResource("4_tileset")
+region = Rect2(48, 272, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_reja_base"]
+atlas = ExtResource("4_tileset")
+region = Rect2(48, 288, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_losa"]
+atlas = ExtResource("4_tileset")
+region = Rect2(16, 304, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_preso_muerto"]
+atlas = ExtResource("10_esqueleto")
+region = Rect2(1120, 160, 80, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_reja"]
+size = Vector2(16, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trampilla"]
+size = Vector2(48, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_salida_pozo"]
+size = Vector2(48, 32)
+
+[node name="TilesCalabozoCombate" instance=ExtResource("1_base")]
+
+[node name="Rejas" type="Node2D" parent="SistemasMapa"]
+
+[node name="RejaCelda" type="StaticBody2D" parent="SistemasMapa/Rejas"]
+position = Vector2(136, 152)
+script = ExtResource("3_puerta")
+requires_sword = true
+locked_message = "NECESITAS UN ARMA PARA FORZARLA"
+opened_message = "FUERZAS LA REJA"
+piece_start = SubResource("AtlasTexture_reja_tope")
+piece_middle = SubResource("AtlasTexture_reja_medio")
+piece_end = SubResource("AtlasTexture_reja_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/Rejas/RejaCelda"]
+shape = SubResource("RectangleShape2D_reja")
+
+[node name="RejaInterior" type="StaticBody2D" parent="SistemasMapa/Rejas"]
+position = Vector2(1240, 152)
+script = ExtResource("3_puerta")
+requires_sword = true
+locked_message = "NECESITAS UN ARMA PARA FORZARLA"
+opened_message = "FUERZAS LA REJA"
+piece_start = SubResource("AtlasTexture_reja_tope")
+piece_middle = SubResource("AtlasTexture_reja_medio")
+piece_end = SubResource("AtlasTexture_reja_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/Rejas/RejaInterior"]
+shape = SubResource("RectangleShape2D_reja")
+
+[node name="RejaConducto" type="StaticBody2D" parent="SistemasMapa/Rejas"]
+position = Vector2(1208, 704)
+script = ExtResource("3_puerta")
+requires_sword = true
+locked_message = "NECESITAS UN ARMA PARA FORZARLA"
+opened_message = "FUERZAS LA REJA"
+piece_start = SubResource("AtlasTexture_reja_tope")
+piece_middle = SubResource("AtlasTexture_reja_medio")
+piece_end = SubResource("AtlasTexture_reja_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/Rejas/RejaConducto"]
+shape = SubResource("RectangleShape2D_reja")
+
+[node name="RejaSalida" type="StaticBody2D" parent="SistemasMapa/Rejas"]
+position = Vector2(1528, 152)
+script = ExtResource("3_puerta")
+key_id = "calabozo_salida"
+locked_message = "NECESITAS LA LLAVE DEL CARCELERO"
+piece_start = SubResource("AtlasTexture_reja_tope")
+piece_middle = SubResource("AtlasTexture_reja_medio")
+piece_end = SubResource("AtlasTexture_reja_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/Rejas/RejaSalida"]
+shape = SubResource("RectangleShape2D_reja")
+
+[node name="RejaDeposito" type="StaticBody2D" parent="SistemasMapa/Rejas"]
+position = Vector2(312, 400)
+script = ExtResource("3_puerta")
+key_id = "mazmorra_alcaide"
+locked_message = "NECESITAS LA LLAVE DEL ALCAIDE"
+piece_start = SubResource("AtlasTexture_reja_tope")
+piece_middle = SubResource("AtlasTexture_reja_medio")
+piece_end = SubResource("AtlasTexture_reja_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/Rejas/RejaDeposito"]
+shape = SubResource("RectangleShape2D_reja")
+
+[node name="TrampillaAtajoB" type="StaticBody2D" parent="SistemasMapa"]
+position = Vector2(1048, 744)
+script = ExtResource("6_barrera")
+piece_middle = SubResource("AtlasTexture_losa")
+start_closed = true
+open_on_encounter = "mazmorra_atajo_b_abierto"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/TrampillaAtajoB"]
+shape = SubResource("RectangleShape2D_trampilla")
+
+[node name="SalidaAtajoB" parent="SistemasMapa/Transiciones" instance=ExtResource("7_transicion")]
+position = Vector2(1048, 816)
+target_scene_path = "res://escenas/mapas/tiles_mazmorra_combate.tscn"
+target_spawn_id = &"DesdeCalabozo"
+
+[node name="CollisionShape2D" parent="SistemasMapa/Transiciones/SalidaAtajoB" index="0"]
+shape = SubResource("RectangleShape2D_salida_pozo")
+
+[node name="DesdeMazmorra" parent="SistemasMapa" instance=ExtResource("8_spawn")]
+position = Vector2(1000, 674)
+spawn_id = &"DesdeMazmorra"
+
+[node name="PuntoConducto" type="Marker2D" parent="SistemasMapa"]
+position = Vector2(936, 152)
+
+[node name="Visible" type="VisibleOnScreenNotifier2D" parent="SistemasMapa/PuntoConducto"]
+
+[node name="PuntoPreso" type="Marker2D" parent="SistemasMapa"]
+position = Vector2(1144, 712)
+
+[node name="Visible" type="VisibleOnScreenNotifier2D" parent="SistemasMapa/PuntoPreso"]
+
+[node name="Cinematicas" type="Node2D" parent="SistemasMapa"]
+
+[node name="AvisoConducto" type="Node2D" parent="SistemasMapa/Cinematicas"]
+script = ExtResource("11_cinematica")
+cinematic_id = "calabozo_aviso_conducto"
+activation = 1
+player_path = NodePath("../../../player")
+focus_actor_path = NodePath("../../PuntoConducto")
+visible_notifier_path = NodePath("../../PuntoConducto/Visible")
+dialogue_path = "res://dialogues/calabozo_aviso_conducto.json"
+visible_max_distance_x = 45.0
+
+[node name="HallazgoPreso" type="Node2D" parent="SistemasMapa/Cinematicas"]
+script = ExtResource("11_cinematica")
+cinematic_id = "calabozo_hallazgo_preso"
+activation = 1
+player_path = NodePath("../../../player")
+focus_actor_path = NodePath("../../PuntoPreso")
+visible_notifier_path = NodePath("../../PuntoPreso/Visible")
+dialogue_path = "res://dialogues/calabozo_preso_atuendo.json"
+visible_max_distance_x = 135.0
+
+[node name="Carcelero" parent="Enemigos" instance=ExtResource("2_carcelero")]
+position = Vector2(1432, 156)
+
+[node name="PresoMuerto" type="Sprite2D" parent="Objetos"]
+position = Vector2(1144, 716)
+texture = SubResource("AtlasTexture_preso_muerto")
+
+[node name="EspadaOxidada" parent="Objetos" instance=ExtResource("9_espada")]
+position = Vector2(1160, 702)
+
+[node name="ParedAgrietada" parent="Objetos" instance=ExtResource("12_pared")]
+position = Vector2(1008, 384)
+
+[node name="MarcasPreso" parent="Objetos" instance=ExtResource("13_lore")]
+position = Vector2(1048, 422)
+dialogue_path = "res://dialogues/lore_marcas_preso.json"
+lore_id = "marcas_preso"
+
+[node name="ActaPrisionero" parent="Objetos" instance=ExtResource("13_lore")]
+position = Vector2(232, 422)
+dialogue_path = "res://dialogues/lore_acta_prisionero.json"
+lore_id = "acta_prisionero"
+
+[node name="MejoraEmpunadura" parent="Objetos" instance=ExtResource("14_mejora")]
+position = Vector2(248, 416)
+upgrade_id = "empunadura_alcaide"
+
+[node name="Ambientacion" type="Node2D" parent="."]
+script = ExtResource("5_ambiente")
+ambient_color = Color(0.44, 0.38, 0.56, 1)
+player_light_color = Color(0.9, 0.85, 1, 1)
+vignette_strength = 0.6
