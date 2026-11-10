@@ -87,7 +87,7 @@ Cada pieza se prueba en la zona de pruebas (`escenas/mapas/zona_pruebas_combate.
 - se probó sin ventana con una escena temporal que simula entradas e imprime el resultado, y esa escena se borró;
 - arrancan sin errores el juego (`godot --headless --quit-after 120`) y la zona de pruebas, y también `mundo_1` si se tocó el Player, un enemigo, el `GameManager` o el Capitán;
 - si guarda estado, se reinicia en `reset_for_new_game`, se guarda en `_make_save_data` / `_restore_game_state` y se sube `SAVE_FORMAT_VERSION`;
-- hay una etapa nueva en `docs/` (la siguiente libre es P71), con el formato de las demás, y está al día lo que la nombra: P46 (secciones 5 y 10), CLAUDE.md si cambia una regla o una pieza a reutilizar, y esta lista;
+- hay una etapa nueva en `docs/` (la siguiente libre es P74), con el formato de las demás, y está al día lo que la nombra: P46 (secciones 5 y 10), CLAUDE.md si cambia una regla o una pieza a reutilizar, y esta lista;
 - hay un commit, sin push.
 
 **Plantilla de prompt** (cambiar `<pieza>`, `<zona>` y lo que se quiera añadir en `<notas>`):
@@ -190,6 +190,9 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
 - castillo y cementerio: `GameManager.CASTLE_SCENE_PATH` / `CEMETERY_SCENE_PATH` (autoguardado) y la lista de `player.gd` (`debug_slide_collisions`) vuelven a `escenas/mapas/`;
 - la versión vieja de la zona se queda en `archivo/tiles_v1/`: no se borra ni se toma como referencia.
 
+**Estructura primero, vestir después** (P73): cada zona se genera y se juega con el arte y los enemigos de hoy (lista de abajo), y después se viste con arte y enemigos nuevos (lista "Vestir cada zona"). Lo que se pone en la `_combate` no se pierde al regenerar la base.
+
+**Estructura de cada zona:**
 - [ ] **Calabozo:** cinco rejas, las dos cinemáticas y sus puntos, enemigos y carcelero, espada y preso, pared agrietada, depósito del alcaide con el acta y la empuñadura, trampilla, transición y spawn de `:B:`.
 - [ ] **Castillo:**
   - el Rey con `ability_reward` de Rodar, la reja de `[H2]`, las trampillas y la trampilla de `:C:`;
@@ -220,6 +223,58 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
   - las arenas con oleadas del coliseo y del salón, las rejas bajas del pasillo y el fuego infernal;
   - Cthulhu en el trono, con la reja en `Puertas`, el activador, `PuntosJefe` y el aviso del final;
   - la transición y el spawn de `[S7]`, y la marca `infierno_animas_liberadas` del coliseo.
+
+### Vestir cada zona: arte y enemigos nuevos (P73)
+
+Hay tres pasos por zona; cada uno es una sesión con su commit:
+1. **Ficha:** la propone Claude y se aprueba. Va en P73, sección 3.
+2. **Piezas:** el tileset y los enemigos nuevos, probados en la galería de la zona de pruebas.
+3. **Vestir:** se cambian la cabecera y las letras del `.txt`, se regenera la base y se comprueba que las colisiones no cambian.
+
+El criterio de "hecho" de cada paso está en P73, sección 2. La ficha se puede armar antes de que exista la estructura, pero para vestir hay que tenerla.
+
+- [ ] Calabozo: [ ] ficha, [ ] piezas, [ ] vestida.
+- [ ] Castillo: [ ] ficha, [ ] piezas, [ ] vestida.
+- [ ] Cementerio: [ ] ficha, [ ] piezas, [ ] vestida.
+- [ ] Minas: [ ] ficha, [ ] piezas, [ ] vestida.
+- [ ] Mazmorra: [ ] ficha, [ ] piezas, [ ] vestida.
+- [ ] Ruina: [ ] ficha, [ ] piezas, [ ] vestida.
+- [ ] Profundidades: [ ] ficha, [ ] piezas, [ ] vestida.
+- [ ] Infierno: [ ] ficha, [ ] piezas, [ ] vestida.
+
+**Plantilla de prompt** (cambiar `<zona>` y `<paso>` (ficha, piezas o vestir), y poner en `<notas>` lo que se quiera añadir):
+
+```
+Tarea: vestir <zona>, paso "<paso>" (TASK.md, Fase 3, "Vestir cada zona";
+método en docs/P73_VESTIR_ZONAS.md).
+
+Antes de nada, lee:
+- docs/P73_VESTIR_ZONAS.md entero, sobre todo la ficha de <zona>;
+- la cabecera del ASCII o del .txt de la zona (tileset, fondo, enemigos,
+  decorados);
+- docs/P33_ENEMIGOS_POR_PROFUNDIDAD.md y la fila de <zona> en "Desbloqueos
+  por zona" de docs/P46_MACRO_MAPA.md, sección 10;
+- mapas_texto/LEYENDA.md, secciones 5, 8 y 9, y docs/P34_ENEMIGOS_DE_LOS_PAQUETES.md
+  (cómo se integra un pack y un enemigo).
+
+Cómo trabajar:
+- Ficha: proponme la ambientación, los enemigos (profundidad, script base,
+  vida, daño, letra, sitio) y de dónde sale el arte (pack de assets/terceros/,
+  pack nuevo o receta para la IA). Espera a que la apruebe.
+- Piezas: antes de programar, dime qué escenas, scripts y letras nuevas hay.
+  Prueba en la galería (herramientas/zona_pruebas/galeria.py). Solo piezas
+  macizas en los bloques de un tileset nuevo. Si una decisión no está en la
+  ficha, pregúntamela.
+- Vestir: cambia solo el .txt de la zona y regenera. Compara las celdas
+  sólidas antes y después; si cambian, para y pregúntame.
+- Static typing, daño en múltiplos de 0.25 y pixel art a escala entera.
+  Si editas un .tscn, dime cuál.
+<notas>
+
+Al terminar, cumple el criterio de "hecho" del paso (P73, sección 2),
+marca la casilla en TASK.md y haz un commit sin push. Si algo no cuadra con
+lo que encuentres en los archivos, dímelo antes de seguir. Responde en español.
+```
 
 ---
 
