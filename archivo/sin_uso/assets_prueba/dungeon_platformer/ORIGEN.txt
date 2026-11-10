@@ -1,0 +1,7 @@
+2D Dungeon Platformer Tileset [16x16] - RottingPixels
+
+Descargado de itch.io el 2026-10-14 para probar mapas hechos con tiles.
+Página: https://rottingpixels.itch.io/platformer-dungeon-tileset
+OpenGameArt lo lista como CC0: https://opengameart.org/node/159300
+La página de itch.io permite uso en proyectos gratuitos y comerciales y
+modificarlo; el crédito es opcional.

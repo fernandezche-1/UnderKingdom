@@ -1,0 +1,7 @@
+Monsters Creatures Fantasy 2 (carpeta de Documentos/RecursosUnderKingdom).
+El paquete no trae archivo de licencia: confirmarla antes de publicar.
+
+Se copiaron sin cambios Bat, Rat y Slime. Mimic y el resto no se usan.
+- rat/    enemigos/rata.tscn (cuadros de 70x70)
+- slime/  enemigos/slime.tscn (cuadros de 156x156)
+- bat/    enemigos/murcielago_grande.tscn (cuadros de 87x87; fall y fly-to-fall sin usar)
