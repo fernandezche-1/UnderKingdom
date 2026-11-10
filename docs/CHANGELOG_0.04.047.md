@@ -161,7 +161,7 @@ Siete niveles nuevos con tiles, uno por cada fondo pintado, con la misma forma q
 ## Cementerio con tiles: primer mundo estilo Hollow Knight
 `tiles_cementerio` pasa a ser un mundo para explorar. Hay un hub con caminos, una cripta opcional, catacumbas, una sala del jefe que se cierra al entrar, una llave y una puerta que la pide para llegar a la salida. Reemplaza al primer intento con oleadas, que se descartó.
 
-**Trazado** (`mapas_texto/tiles_cementerio.png`, 120 x 78 piezas; coordenadas en piezas). Siguiendo el lore, el mundo se recorre bajando: se empieza en la superficie y la puerta al siguiente mundo está en el fondo del mapa.
+**Trazado** (`archivo/tiles_v1/mapas_texto/tiles_cementerio.png`, 120 x 78 piezas; coordenadas en piezas). Siguiendo el lore, el mundo se recorre bajando: se empieza en la superficie y la puerta al siguiente mundo está en el fondo del mapa.
 ```
  fila 7-14                 [CRIPTA: cofre, poción, Aprendis]
                             ↑ plataformas one-way desde el mausoleo
@@ -194,7 +194,7 @@ Siete niveles nuevos con tiles, uno por cada fondo pintado, con la misma forma q
   - con la sala cerrada no se sale de ella.
   El script de diseño y el verificador están fuera del repo, igual que los anteriores (ver TASK.md).
 
-**Escena:** `escenas/mapas/tiles_cementerio_combate.tscn` hereda de la generada y añade:
+**Escena:** `archivo/tiles_v1/escenas/tiles_cementerio_combate.tscn` hereda de la generada y añade:
 - `SistemasMapa/SalaJefe`, con `scripts/combat/boss_arena.gd` (`UnderkingdomBossArena`):
   - `Activador`;
   - `Puertas/PuertaEntrada`: se cierra durante el combate;
@@ -244,7 +244,7 @@ Las puertas y la trampilla (`scripts/environment/arena_barrier.gd`) se dibujan c
 ## Minas con tiles: segundo mundo
 `tiles_mineria` deja de ser un calco y pasa a ser el segundo mundo, con la misma estructura que el cementerio: bocamina, galerías, sala del jefe que se cierra al entrar, llave y puerta en el fondo del mapa. La salida del abismo del cementerio lleva ahora aquí, así que la ruta sigue bajando. `tiles_casa` queda fuera de la ruta por ahora: es una casa y no encaja bajo tierra. El archivo se conserva.
 
-**Trazado** (`mapas_texto/tiles_mineria.png`, 104 x 90 piezas; coordenadas en piezas):
+**Trazado** (`archivo/tiles_v1/mapas_texto/tiles_mineria.png`, 104 x 90 piezas; coordenadas en piezas):
 ```
  fila 3-11  < BOCAMINA: campamento minero, S ─────────────┐
                                                           │ pozo principal (x 49)
@@ -275,7 +275,7 @@ Las puertas y la trampilla (`scripts/environment/arena_barrier.gd`) se dibujan c
   - con la trampilla abierta se sube de la sala del jefe a la galería 1;
   - desde la llegada del mapa siguiente se vuelve a la bocamina.
 
-**Escena:** `escenas/mapas/tiles_mineria_combate.tscn` hereda de la generada y tiene las mismas piezas que la del cementerio:
+**Escena:** `archivo/tiles_v1/escenas/tiles_mineria_combate.tscn` hereda de la generada y tiene las mismas piezas que la del cementerio:
 - `SistemasMapa/SalaJefe` (`encounter_id` y `key_id` `minas_caballero`);
 - `SistemasMapa/PuertaLlave`, que pide esa llave y muestra "NECESITAS LA LLAVE DEL CABALLERO".
 

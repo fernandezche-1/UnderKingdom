@@ -1,7 +1,7 @@
 @tool
 extends SceneTree
 
-const SCENE_PATH := "res://escenas/mapas/tiles_castillo_combate.tscn"
+const SCENE_PATH := "res://archivo/tiles_v1/escenas/tiles_castillo_combate.tscn"
 
 func _initialize() -> void:
 	call_deferred("_run")

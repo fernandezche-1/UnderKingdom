@@ -84,7 +84,7 @@
 
 ## 4. La Reina, jefa de la mazmorra
 
-- **Escena del mundo:** `escenas/mapas/tiles_mazmorra_combate.tscn` hereda de la generada `tiles_mazmorra.tscn`, como la del cementerio y la de las minas.
+- **Escena del mundo:** `archivo/tiles_v1/escenas/tiles_mazmorra_combate.tscn` hereda de la generada `tiles_mazmorra.tscn`, como la del cementerio y la de las minas.
   - Las minas llevan ahora a esta escena: línea `siguiente` del `.txt` y `target_scene_path` del `.tscn`, sin regenerar.
   - La salida izquierda de la ruina vuelve a ella de la misma forma.
 - **Sala:** la cámara del fondo a la derecha, x 54-76, filas 53-69.

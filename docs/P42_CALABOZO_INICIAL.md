@@ -13,7 +13,7 @@
 
 ## 1. El mapa
 
-- `mapas_texto/tiles_calabozo.txt` (mapa de letras, 136 x 46 piezas, tileset `castillo`) genera `escenas/mapas/tiles_calabozo.tscn`. Se juega desde `tiles_calabozo_combate.tscn`.
+- `archivo/tiles_v1/mapas_texto/tiles_calabozo.txt` (mapa de letras, 136 x 46 piezas, tileset `castillo`) genera `archivo/tiles_v1/escenas/tiles_calabozo.tscn`. Se juega desde `tiles_calabozo_combate.tscn`.
 - Tramos:
   1. Tramo lineal (x 2-40), con el inicio en (4, 9), dos ratas y checkpoint en (38, 9).
   2. Paso bajo (x 41-42), de 3 piezas de alto, que separa las dos zonas.

@@ -10,6 +10,6 @@ tileset: mazmorra
 bloques: violeta
 fondo: ninguno
 parallax: assets_prueba/gothicvania/castillo_viejo/fondo.png 0.2
-siguiente: res://escenas/mapas/tiles_mineria.tscn
+siguiente: res://archivo/tiles_v1/escenas/tiles_mineria.tscn
 ; La salida izquierda lleva a la versión jugable del cementerio (con su encuentro).
-anterior: res://escenas/mapas/tiles_cementerio_combate.tscn
+anterior: res://archivo/tiles_v1/escenas/tiles_cementerio_combate.tscn

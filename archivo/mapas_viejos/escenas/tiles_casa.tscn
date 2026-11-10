@@ -3478,7 +3478,7 @@ position = Vector2(856, 849)
 
 [node name="SalidaSiguiente1" parent="SistemasMapa/Transiciones" unique_id=403198651 instance=ExtResource("7_064qy")]
 position = Vector2(1656, 864)
-target_scene_path = "res://escenas/mapas/tiles_mineria.tscn"
+target_scene_path = "res://archivo/tiles_v1/escenas/tiles_mineria.tscn"
 target_spawn_id = &"DesdeAnterior"
 
 [node name="CollisionShape2D" parent="SistemasMapa/Transiciones/SalidaSiguiente1" index="0"]
@@ -3486,7 +3486,7 @@ shape = SubResource("RectangleShape2D_wb0r6")
 
 [node name="SalidaAnterior1" parent="SistemasMapa/Transiciones" unique_id=629014364 instance=ExtResource("7_064qy")]
 position = Vector2(8, 608)
-target_scene_path = "res://escenas/mapas/tiles_cementerio_combate.tscn"
+target_scene_path = "res://archivo/tiles_v1/escenas/tiles_cementerio_combate.tscn"
 target_spawn_id = &"DesdeSiguiente"
 
 [node name="CollisionShape2D" parent="SistemasMapa/Transiciones/SalidaAnterior1" index="0"]

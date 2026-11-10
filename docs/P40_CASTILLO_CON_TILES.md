@@ -64,7 +64,7 @@
 
 ## 4. Trazado
 
-- **Mapa:** `mapas_texto/tiles_castillo.png`, de 100x80 piezas (1600x1280 px).
+- **Mapa:** `archivo/tiles_v1/mapas_texto/tiles_castillo.png`, de 100x80 piezas (1600x1280 px).
   - Fondo y bloques `castillo`, sin parallax porque es un interior.
   - Se recorre bajando.
 - **Zonas** (coordenadas en piezas, x y fila):

@@ -911,8 +911,8 @@ func _log_blocked_horizontal_collisions(
 
     var scene := get_tree().current_scene
     if scene == null or scene.scene_file_path not in [
-        "res://escenas/mapas/tiles_castillo.tscn",
-        "res://escenas/mapas/tiles_castillo_combate.tscn",
+        "res://archivo/tiles_v1/escenas/tiles_castillo.tscn",
+        "res://archivo/tiles_v1/escenas/tiles_castillo_combate.tscn",
     ]:
         _last_blocked_contact_signature = ""
         _armory_stuck_frames = 0
