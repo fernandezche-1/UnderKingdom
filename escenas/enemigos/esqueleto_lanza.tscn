@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/combat/enemy_base.gd" id="script"]
-[ext_resource type="Texture2D" path="res://assets_prueba/esqueleto_lanza/esqueleto_lanza.png" id="tex_0"]
+[ext_resource type="Texture2D" path="res://assets/terceros/esqueleto_lanza/esqueleto_lanza.png" id="tex_0"]
 
 [sub_resource type="AtlasTexture" id="Atlas_1"]
 atlas = ExtResource("tex_0")

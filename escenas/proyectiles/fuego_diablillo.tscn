@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/projectiles/enemy_projectile.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://otra vez/Flying Demon 2D Pixel Art/Sprites/projectile.png" id="2_fire"]
+[ext_resource type="Texture2D" path="res://assets/terceros/Flying Demon 2D Pixel Art/Sprites/projectile.png" id="2_fire"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fire"]
 radius = 7.0

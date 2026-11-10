@@ -1,7 +1,7 @@
 # P56 - Rompible que solo acepta un tipo de golpe
 
 - Segunda pieza del paso del cementerio en la Fase 2 de `TASK.md`: la losa de la cripta de la primera reina (tajo ascendente con el Golpe final) y la estatua de la Reina (Ultimate).
-- Decisiones de `docs/FASE2_DECISIONES.md` que aplica: S4, S5, S6, G3 y G4.
+- Decisiones de `docs/historial/FASE2_DECISIONES.md` que aplica: S4, S5, S6, G3 y G4.
 - Piezas:
   - `scripts/environment/selective_breakable.gd` (`UnderkingdomSelectiveBreakable`), que hereda de `breakable_object.gd`: mismos cuadros, escombros, botín, polvo, sacudida y recuerdo de "ya roto";
   - `escenas/objetos/rompible_selectivo.tscn`: raíz `AnimatableBody2D` (la AttackHitbox no detecta `StaticBody2D`, P48), 1 x 3 piezas, origen arriba a la izquierda, `max_health` 1.

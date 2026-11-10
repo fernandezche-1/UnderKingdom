@@ -1,7 +1,7 @@
 # P54 - Fragmento de vida: cuatro dan un corazón
 
 - Tercera pieza del paso del castillo en la Fase 2 de `TASK.md`: los cuatro fragmentos de vida de las puertas hacia atrás (aposentos de la Reina, cripta de la primera reina, hielo negro y jaula del rey encadenado) que suben el sexto corazón.
-- Decisiones de `docs/FASE2_DECISIONES.md` que aplica: K4, K5, K6, G1, G3 y G4.
+- Decisiones de `docs/historial/FASE2_DECISIONES.md` que aplica: K4, K5, K6, G1, G3 y G4.
 - Piezas:
   - `GameManager`: `life_fragments`, `LIFE_FRAGMENTS_PER_HEART` (4), `MAX_HEARTS_CAP` (6.0) y la API de abajo;
   - `escenas/items/fragmento_vida.tscn`, con `scripts/items/life_fragment_pickup.gd` (`UnderkingdomLifeFragmentPickup`), que hereda de `ability_pickup.gd` como la mejora encontrada (P51).

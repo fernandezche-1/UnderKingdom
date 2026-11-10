@@ -16,7 +16,7 @@
 
 ## 1. Murciélago (`m`)
 
-- **Arte:** Bat de Super Grotto Escape, 5 cuadros de 48x48, en `assets_prueba/super_grotto/murcielago.png`. Se ve de frente, así que no hace falta girarlo.
+- **Arte:** Bat de Super Grotto Escape, 5 cuadros de 48x48, en `assets/terceros/super_grotto/murcielago.png`. Se ve de frente, así que no hace falta girarlo.
 - **Escena:** `escenas/enemigos/murcielago.tscn`.
 - **Script nuevo:** `scripts/combat/lunge_enemy.gd` (`UnderkingdomLungeEnemy`), que extiende `enemy_base.gd`. Es para criaturas sin animación de golpe:
   - el ataque se queda quieto un momento como aviso (`lunge_windup`);
@@ -40,7 +40,7 @@
 ## 2. Esqueletos (`e` y `u`)
 
 - **Arte:** el esqueleto de Gothicvania Cemetery, de 44x52 por cuadro, con su animación de salir de la tierra y la nube de muerte del mismo paquete.
-  - Los cuadros sueltos se juntaron sin cambiar el arte en `assets_prueba/gothicvania_cementerio/esqueleto.png`, una fila por animación (ver su `ORIGEN.txt`).
+  - Los cuadros sueltos se juntaron sin cambiar el arte en `assets/terceros/gothicvania_cementerio/esqueleto.png`, una fila por animación (ver su `ORIGEN.txt`).
   - Se descartó el esqueleto de Super Grotto Escape que proponía el plan: es cabezón y de estilo tierno, y no pega con el resto. Además tampoco trae animación de golpe.
 - **Las dos escenas usan la embestida del murciélago** (`lunge_enemy.gd`), porque el arte no trae golpe: avisan 0,35 s, se lanzan 57 px y solo dañan durante el impulso.
   - Valores comunes: 3 de vida, ½ corazón de daño cada 1,6 s, patrulla lenta.
@@ -76,7 +76,7 @@
 - **Impacto** (`impacto`, Hit de la Legacy, 3 cuadros de 31x32): una chispa en el centro del enemigo cada vez que un golpe del Player hace daño. Sale de `hit_flash`, que ya se llamaba desde `player.gd`, así que no hubo que tocar al Player.
 - **Muerte** (`muerte`, EnemyDeath de la Legacy, 8 cuadros de 48x48): fogonazo y humo. Sustituye a la nube de partículas de `death_puff`, que solo usan los enemigos sin animación de muerte (hoy el murciélago). Los que tienen la suya la siguen usando.
 - **Recoger** (`recoger`, pick-feedback-2 de Super Grotto, 5 cuadros de 16x16): destello al recoger una moneda o una poción, desde `collectible_pickup.gd`.
-- Los archivos están en `assets_prueba/gothicvania/efectos/` y `assets_prueba/super_grotto/recoger.png`, anotados en sus `ORIGEN.txt`.
+- Los archivos están en `assets_prueba/gothicvania/efectos/` y `assets/terceros/super_grotto/recoger.png`, anotados en sus `ORIGEN.txt`.
 - La explosión en el suelo de la Legacy (Ground Explosion) queda para los golpes fuertes de los jefes (paso 6).
 - **Comprobado sin ventana:**
   - la chispa, el fogonazo del murciélago y el destello de la moneda aparecen y a los 2,5 s ya no queda ninguno;
@@ -84,7 +84,7 @@
 
 ## 4. La Reina, jefa de la mazmorra
 
-- **Escena del mundo:** `escenas/mapas/tiles_mazmorra_combate.tscn` hereda de la generada `tiles_mazmorra.tscn`, como la del cementerio y la de las minas.
+- **Escena del mundo:** `archivo/tiles_v1/escenas/tiles_mazmorra_combate.tscn` hereda de la generada `tiles_mazmorra.tscn`, como la del cementerio y la de las minas.
   - Las minas llevan ahora a esta escena: línea `siguiente` del `.txt` y `target_scene_path` del `.tscn`, sin regenerar.
   - La salida izquierda de la ruina vuelve a ella de la misma forma.
 - **Sala:** la cámara del fondo a la derecha, x 54-76, filas 53-69.
@@ -124,7 +124,7 @@
 
 ## 5. Tileset y fondo del cementerio
 
-- **Tileset nuevo `cementerio`** (`herramientas/constructor_mapas/tilesets/cementerio.gd`), con atlas `assets_prueba/gothicvania_cementerio/tileset_cementerio.png`:
+- **Tileset nuevo `cementerio`** (`herramientas/constructor_mapas/tilesets/cementerio.gd`), con atlas `assets/terceros/gothicvania_cementerio/tileset_cementerio.png`:
   - filas 0-15: el atlas de mazmorra sin cambios, por las antorchas, la lava, la escalera y la fogata del checkpoint;
   - filas 16-19: piezas del tileset de Gothicvania Cemetery copiadas en el orden del juego de 4x4:
     - pasto arriba;
@@ -158,7 +158,7 @@
   - persigue más rápido;
   - espera menos entre ataques;
   - puede pasar a volar (`phase_2_flies`).
-- **Explosión en el suelo:** el efecto Ground Explosion de la Legacy (`assets_prueba/gothicvania/efectos/explosion_suelo.png`) aparece delante del jefe y hace daño en un área. No sale mientras vuela.
+- **Explosión en el suelo:** el efecto Ground Explosion de la Legacy (`assets/terceros/gothicvania/efectos/explosion_suelo.png`) aparece delante del jefe y hace daño en un área. No sale mientras vuela.
 - **Armadura durante el ataque:** un golpe del Player le quita vida pero no le corta el ataque ni lo empuja. Fuera del ataque recibe el golpe normal. Sin esto se le podía interrumpir cada golpe.
 - No usan la animación de daño, para que no se les pueda aturdir sin fin; el golpe se ve con el destello y la chispa.
 - Las escenas se generaron desde las hojas de sprites que ya estaban en el repo, sin tocar el arte.

@@ -1,7 +1,7 @@
 # P63 - La Adrenalina la da el Crystal Mauler
 
 - Última pieza del paso 4 (Minas) de la Fase 2 de `TASK.md`. Sirve a la gruta de cristal (idea 6).
-- Decisiones de `docs/FASE2_DECISIONES.md` que aplica: sección "Adrenalina" (sin decisiones nuevas de diseño), G4 y la nota de P46 sección 6.
+- Decisiones de `docs/historial/FASE2_DECISIONES.md` que aplica: sección "Adrenalina" (sin decisiones nuevas de diseño), G4 y la nota de P46 sección 6.
 - Sin script ni escena nuevos: `boss_arena.gd` ya suelta la reliquia de `ability_reward` (P35). Sin guardado nuevo: `SAVE_FORMAT_VERSION` sigue en 5.
 
 ## 1. Qué cambia

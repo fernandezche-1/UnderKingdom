@@ -18,7 +18,7 @@ extends Node
 ##   eran del Fire Knight en player.tscn: se copian tal cual.
 ## - "escaleras" no existe en el paquete: el Player la toma de los harapos.
 
-const FK_DIR := "res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/"
+const FK_DIR := "res://assets/terceros/Elementals_fire_knight_FREE_v1.1/png/fire_knight/"
 const OUTPUT_PATH := "res://escenas/atuendos/fire_knight.tres"
 const PLAYER_SCENE := "res://escenas/player.tscn"
 const COPIED_ANIMATIONS: Array[StringName] = [

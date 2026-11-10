@@ -1,0 +1,15 @@
+Elementals_fire_knight_FREE_v1.1
+
+Antes en: Elementals_fire_knight_FREE_v1.1/ (raíz del repo), movido en P72 (docs/P72_ORGANIZACION_REPO.md).
+Licencia: el pack no trae archivo de licencia. Procedencia y licencia por confirmar (TASK.md, "Otros pendientes").
+
+Aquí solo está lo que usa el juego:
+- escenas/atuendos/fire_knight.tres
+- escenas/menu/menu_pausa.tscn
+- escenas/player.tscn
+- herramientas/sprites/generar_atuendo_fire_knight.gd
+- scripts/dialogue/dialogue_ui.gd
+
+El resto del pack se apartó sin borrar nada:
+- archivo/mapas_viejos/assets/Elementals_fire_knight_FREE_v1.1/
+- archivo/sin_uso/assets/Elementals_fire_knight_FREE_v1.1/

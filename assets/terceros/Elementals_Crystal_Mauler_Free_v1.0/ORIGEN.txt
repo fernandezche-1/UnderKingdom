@@ -1,0 +1,11 @@
+Elementals_Crystal_Mauler_Free_v1.0
+
+Antes en: Elementals_Crystal_Mauler_Free_v1.0/ (raíz del repo), movido en P72 (docs/P72_ORGANIZACION_REPO.md).
+Licencia: el pack no trae archivo de licencia. Procedencia y licencia por confirmar (TASK.md, "Otros pendientes").
+
+Aquí solo está lo que usa el juego:
+- archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+- escenas/jefes/crystal_mauler.tscn
+
+El resto del pack se apartó sin borrar nada:
+- archivo/sin_uso/assets/Elementals_Crystal_Mauler_Free_v1.0/

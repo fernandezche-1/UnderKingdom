@@ -1,0 +1,10 @@
+FREE_Samurai 2D Pixel Art v1.2
+
+Antes en: otra vez/FREE_Samurai 2D Pixel Art v1.2/ (raíz del repo), movido en P72 (docs/P72_ORGANIZACION_REPO.md).
+Licencia: ver License.txt
+
+Aquí solo está lo que usa el juego:
+- escenas/enemigos/vanguardia.tscn
+
+El resto del pack se apartó sin borrar nada:
+- archivo/sin_uso/assets/FREE_Samurai 2D Pixel Art v1.2/

@@ -14,10 +14,10 @@ const PARRY_COLOR := Color(0.6, 0.95, 1.0)
 ## Efectos con sprites de los paquetes: hoja horizontal, ancho y alto de cada
 ## cuadro y cuadros por segundo. Se reproducen una vez y se borran solos.
 const SPRITE_FX := {
-    &"impacto": ["res://assets_prueba/gothicvania/efectos/impacto.png", 31, 32, 18.0],
-    &"muerte": ["res://assets_prueba/gothicvania/efectos/muerte_enemigo.png", 48, 48, 14.0],
-    &"recoger": ["res://assets_prueba/super_grotto/recoger.png", 16, 16, 16.0],
-    &"explosion_suelo": ["res://assets_prueba/gothicvania/efectos/explosion_suelo.png", 112, 128, 14.0],
+    &"impacto": ["res://assets/terceros/gothicvania/efectos/impacto.png", 31, 32, 18.0],
+    &"muerte": ["res://assets/terceros/gothicvania/efectos/muerte_enemigo.png", 48, 48, 14.0],
+    &"recoger": ["res://assets/terceros/super_grotto/recoger.png", 16, 16, 16.0],
+    &"explosion_suelo": ["res://assets/terceros/gothicvania/efectos/explosion_suelo.png", 112, 128, 14.0],
 }
 
 static var _sprite_frames_cache: Dictionary = {}

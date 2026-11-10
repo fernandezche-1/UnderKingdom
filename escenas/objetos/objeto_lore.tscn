@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/environment/lore_object.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PNG/supplies_objects.png" id="2_tex"]
+[ext_resource type="Texture2D" path="res://assets/terceros/craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PNG/supplies_objects.png" id="2_tex"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bolsa"]
 atlas = ExtResource("2_tex")

@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://scripts/bosses/w2_archer_boss.gd" id="p41_enemy_base"]
 
-[ext_resource type="Texture2D" uid="uid://bsaks1r7515p0" path="res://Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/spritesheets/Elementals_leaf_ranger_288x128_SpriteSheet.png" id="1_3vesq"]
-[ext_resource type="Texture2D" uid="uid://xdf7wehavbjt" path="res://Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/spritesheets/projectiles_and_effects_256x128_SpriteSheet.png" id="2_cmnew"]
+[ext_resource type="Texture2D" uid="uid://bsaks1r7515p0" path="res://assets/terceros/Elementals_Leaf_ranger_Free_v1.0/animations/spritesheets/Elementals_leaf_ranger_288x128_SpriteSheet.png" id="1_3vesq"]
+[ext_resource type="Texture2D" uid="uid://xdf7wehavbjt" path="res://assets/terceros/Elementals_Leaf_ranger_Free_v1.0/animations/spritesheets/projectiles_and_effects_256x128_SpriteSheet.png" id="2_cmnew"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3vesq"]
 atlas = ExtResource("1_3vesq")

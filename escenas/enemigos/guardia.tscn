@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://bx6pulegd0nm8"]
 
-[ext_resource type="Texture2D" uid="uid://dkakp8tycpa1j" path="res://otra vez/Knight 2D Pixel Art/Sprites/without_outline/ATTACK 2.png" id="3_u8mh6"]
-[ext_resource type="Texture2D" uid="uid://b4m6m26e1f1um" path="res://otra vez/Knight 2D Pixel Art/Sprites/without_outline/ATTACK 3.png" id="4_r516a"]
+[ext_resource type="Texture2D" uid="uid://dkakp8tycpa1j" path="res://assets/terceros/Knight 2D Pixel Art/Sprites/without_outline/ATTACK 2.png" id="3_u8mh6"]
+[ext_resource type="Texture2D" uid="uid://b4m6m26e1f1um" path="res://assets/terceros/Knight 2D Pixel Art/Sprites/without_outline/ATTACK 3.png" id="4_r516a"]
 [ext_resource type="Script" uid="uid://dwdw653ktv06r" path="res://scripts/combat/enemy_base.gd" id="enemy_base"]
-[ext_resource type="Texture2D" uid="uid://cbfdukpqqifwp" path="res://otra vez/Knight 2D Pixel Art/Sprites/without_outline/IDLE.png" id="tex_0"]
-[ext_resource type="Texture2D" uid="uid://bfqc1gsydn4op" path="res://otra vez/Knight 2D Pixel Art/Sprites/without_outline/RUN.png" id="tex_1"]
-[ext_resource type="Texture2D" uid="uid://cs5ooquulytj1" path="res://otra vez/Knight 2D Pixel Art/Sprites/without_outline/ATTACK 1.png" id="tex_2"]
-[ext_resource type="Texture2D" uid="uid://wiy2kqu56yl0" path="res://otra vez/Knight 2D Pixel Art/Sprites/without_outline/DEFEND.png" id="tex_3"]
-[ext_resource type="Texture2D" uid="uid://cv0jb84qtoysp" path="res://otra vez/Knight 2D Pixel Art/Sprites/without_outline/HURT.png" id="tex_4"]
-[ext_resource type="Texture2D" uid="uid://swyn1ioa88yj" path="res://otra vez/Knight 2D Pixel Art/Sprites/without_outline/DEATH.png" id="tex_5"]
+[ext_resource type="Texture2D" uid="uid://cbfdukpqqifwp" path="res://assets/terceros/Knight 2D Pixel Art/Sprites/without_outline/IDLE.png" id="tex_0"]
+[ext_resource type="Texture2D" uid="uid://bfqc1gsydn4op" path="res://assets/terceros/Knight 2D Pixel Art/Sprites/without_outline/RUN.png" id="tex_1"]
+[ext_resource type="Texture2D" uid="uid://cs5ooquulytj1" path="res://assets/terceros/Knight 2D Pixel Art/Sprites/without_outline/ATTACK 1.png" id="tex_2"]
+[ext_resource type="Texture2D" uid="uid://wiy2kqu56yl0" path="res://assets/terceros/Knight 2D Pixel Art/Sprites/without_outline/DEFEND.png" id="tex_3"]
+[ext_resource type="Texture2D" uid="uid://cv0jb84qtoysp" path="res://assets/terceros/Knight 2D Pixel Art/Sprites/without_outline/HURT.png" id="tex_4"]
+[ext_resource type="Texture2D" uid="uid://swyn1ioa88yj" path="res://assets/terceros/Knight 2D Pixel Art/Sprites/without_outline/DEATH.png" id="tex_5"]
 
 [sub_resource type="AtlasTexture" id="Atlas_c2ysu"]
 atlas = ExtResource("tex_2")

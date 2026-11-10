@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/npc/npc.gd" id="script"]
-[ext_resource type="Texture2D" path="res://Lively_NPCs_v3.1/Lively_NPCs_v3.1/sprite sheets/medieval/elder.png" id="tex_0"]
+[ext_resource type="Texture2D" path="res://assets/terceros/Lively_NPCs_v3.1/sprite sheets/medieval/elder.png" id="tex_0"]
 
 [sub_resource type="AtlasTexture" id="Atlas_1"]
 atlas = ExtResource("tex_0")

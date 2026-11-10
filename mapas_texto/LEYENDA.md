@@ -2,9 +2,9 @@
 
 Un nivel se dibuja como una imagen pequeña en la que **cada píxel es una pieza de 16 x 16 px** del juego, y cada color significa una cosa (suelo, plataforma, enemigo, cofre...). El constructor convierte esa imagen en una escena de Godot con tiles, colisiones, enemigos y sistemas listos para jugar.
 
-También se puede escribir el nivel con letras en un `.txt`, como `ejemplo_cueva.txt`: cada letra es una pieza. Las letras y los colores significan lo mismo.
+También se puede escribir el nivel con letras en un `.txt`, como `zona_pruebas.txt` o los ASCII de `macro/zonas/`: cada letra es una pieza. Las letras y los colores significan lo mismo.
 
-Ejemplo completo: `ejemplo_nivel.txt` + `ejemplo_nivel.png`.
+Ejemplo completo con PNG: `archivo/mapas_viejos/mapas_texto/ejemplo_nivel.txt` + `ejemplo_nivel.png` (apartado en P72 con `ejemplo_cueva.txt`; su `escena:` ya no está en `escenas/mapas/`, así que el constructor no lo regenera en su sitio).
 
 ## 1. Dibujar el nivel
 1. Crear una imagen nueva en Aseprite, Piskel, GIMP, Krita o Paint.
@@ -51,7 +51,7 @@ cofre_pociones: 1
 | `bloques` | Estilo de los bloques. En mazmorra: `verde`, `verde_claro`, `ladrillo`, `violeta`, `oro`, `oliva` o `madera`. En cementerio, además, `cementerio`, y en castillo, `castillo`. |
 | `fondo` | Pared detrás de todo: `cueva`, `castillo` (ladrillo oscuro, solo con el tileset castillo) o `ninguno`. |
 | `parallax` | Imágenes de fondo que se mueven más lento, de la más lejana a la más cercana: `fondos/cielo.png 0.05; fondos/nubes.png 0.2`. El número es la velocidad horizontal (0 = quieta, 1 = como el mapa). Si la imagen es más baja que la pantalla (270 px), se agrega `x2` para dibujarla al doble: `fondos/cielo.png 0.05 x2`. En vertical cada imagen recorre el mapa: se ve su borde de arriba con la cámara arriba del todo y el de abajo con la cámara abajo. Necesita `fondo: ninguno`. |
-| `siguiente` / `anterior` | Mapa al que llevan las salidas azules / moradas. Por defecto se llega a su spawn `DesdeAnterior` / `DesdeSiguiente`, que el constructor crea solo. Para llegar a otro spawn: `res://escenas/mapas/mundo_2.tscn#SpawnInicio`. |
+| `siguiente` / `anterior` | Mapa al que llevan las salidas azules / moradas. Por defecto se llega a su spawn `DesdeAnterior` / `DesdeSiguiente`, que el constructor crea solo. Para llegar a otro spawn: `res://escenas/mapas/tiles_castillo_combate.tscn#SpawnInicio`. |
 | `cofre_monedas`, `cofre_pociones` | Botín de cada cofre del nivel (por defecto 3 y 1). |
 | `jugador` | Escena del Player que se pone en la `P`. Por defecto `res://escenas/player.tscn`; el calabozo usa `res://escenas/prisn.tscn`, el protagonista sin espada. |
 | `depuracion` | `si` activa las teclas de prueba del Player (R reaparecer, H/J daño, K morir) y su panel de depuración. Solo para mapas de prueba como `zona_pruebas`; por defecto `no`. Para probar los niveles de la ruta está el Modo dev (tecla º). |
@@ -72,13 +72,13 @@ Para ajustar el nivel hay dos caminos:
 Otras órdenes:
 - `-- --paleta` vuelve a escribir `paleta_niveles.gpl` y `paleta_niveles.png`.
 - `-- --a-png mapas_texto/mapa.txt` convierte un mapa de letras en PNG para seguir dibujándolo.
-- `-- --desde-mapa res://escenas/mapas/ruina.tscn mapas_texto/mi_nivel.png` calca un mapa hecho a mano (ver sección 7).
+- `-- --desde-mapa res://archivo/mapas_viejos/escenas/ruina.tscn mapas_texto/mi_nivel.png` calca un mapa hecho a mano (ver sección 7).
 
 ## 7. Rehacer con tiles un mapa hecho a mano
 Los mapas de `fondos/` (casa, cementerio, ruina...) ya tienen sus colisiones probadas jugando. El constructor puede calcarlas como dibujo de piezas para empezar un nivel con tiles con la misma forma:
 
 ```
-~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- --desde-mapa res://escenas/mapas/primer_boss_mundo_1.tscn mapas_texto/mi_nivel.png
+~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- --desde-mapa res://archivo/mapas_viejos/escenas/primer_boss_mundo_1.tscn mapas_texto/mi_nivel.png
 ```
 
 - Cada pieza de 16 x 16 que las colisiones sólidas cubren a la mitad o más pasa a bloque. Las orillas en diagonal pasan a rampas.
@@ -148,7 +148,7 @@ Con eso se pasa a PNG, se genera el nivel y se revisa jugando.
 
 ## 8. Integrar un paquete de arte
 1. El ZIP se descomprime en una carpeta aparte, nunca encima del proyecto.
-2. **Revisar la licencia** y anotarla en un `ORIGEN.txt`, como en `assets_prueba/dungeon_platformer/ORIGEN.txt`.
+2. **Revisar la licencia** y anotarla en un `ORIGEN.txt`, como en `assets/terceros/dungeon_platformer/ORIGEN.txt`. El paquete va a `assets/terceros/<paquete>/`, con solo lo que se use; el resto, a `archivo/sin_uso/assets/<paquete>/` (P72).
 3. **Medir el tamaño de tile.** Si es de 16 px, entra directo. Si es de otro tamaño, el nivel usa esa cuadrícula sin escalar a medias; el constructor toma el tamaño del archivo del tileset.
 4. **Crear `herramientas/constructor_mapas/tilesets/<nombre>.gd`** copiando `mazmorra.gd`, y ubicar en el PNG:
    - el juego de bloques de 4x4 (esquinas, bordes e interior en 3x3, columna a la derecha y plataformas abajo) y las rampas;

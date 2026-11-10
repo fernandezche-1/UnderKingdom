@@ -294,7 +294,7 @@ escena: res://escenas/mapas/tiles_profundidades.tscn
 tileset: mazmorra
 bloques: oro
 fondo: ninguno
-parallax: assets_prueba/gothicvania/lava/fondo.png 0.05 x2; assets_prueba/gothicvania/lava/rocas.png 0.2 x2
+parallax: assets/terceros/gothicvania/lava/fondo.png 0.05 x2; assets/terceros/gothicvania/lava/rocas.png 0.2 x2
 ---
 ##################.H.#########################################################################################################.H.####################################################.H.###############################################
 ##################.H.#########################################################################################################.H.####################################################.H.###############################################

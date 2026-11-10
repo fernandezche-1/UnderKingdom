@@ -2,7 +2,7 @@
 
 - Cuarta pieza de la Fase 2 de `TASK.md` (paso del calabozo): una mejora que se recoge en el mapa y suma a una estadística del Player, sin precio y sin niveles.
 - Sirve a la empuñadura del depósito del alcaide y, después, al amuleto de la guardia (+0.25 en pociones): los dos usan la misma tabla.
-- Decisiones de `docs/FASE2_DECISIONES.md` que aplica: C7, C8, G3 y G4.
+- Decisiones de `docs/historial/FASE2_DECISIONES.md` que aplica: C7, C8, G3 y G4.
 - Piezas:
   - `GameManager.FOUND_UPGRADE_DEFINITIONS` y `found_upgrades`, aparte de las mejoras de la tienda (`UPGRADE_DEFINITIONS`);
   - `escenas/items/mejora_encontrada.tscn`, con `scripts/items/found_upgrade_pickup.gd` (`UnderkingdomFoundUpgradePickup`), que hereda de `ability_pickup.gd`.

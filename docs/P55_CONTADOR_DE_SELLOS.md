@@ -1,7 +1,7 @@
 # P55 - Contador de sellos que abre una puerta
 
 - Primera pieza del paso del cementerio en la Fase 2 de `TASK.md`: las tres tumbas sello de `[S3]` (cementerio) y los tres altares de `[S7]` (profundidades).
-- Decisiones de `docs/FASE2_DECISIONES.md` que aplica: S1, S2, S3, G3, G4 y G5.
+- Decisiones de `docs/historial/FASE2_DECISIONES.md` que aplica: S1, S2, S3, G3, G4 y G5.
 - Piezas:
   - `scripts/environment/seal.gd` (`UnderkingdomSeal`), que hereda de `lever.gd` (P49): mismo aviso, cuadro y tecla E;
   - `escenas/objetos/sello.tscn`, que hereda de `palanca.tscn`;

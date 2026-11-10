@@ -1,6 +1,6 @@
 # P59 - Atuendo actual y `OUTFIT_DEFINITIONS`
 
-- Primera pieza de atuendos de la Fase 2 de `TASK.md`, adelantada al paso de las minas (G2 de `docs/FASE2_DECISIONES.md`): el fuego infernal necesita saber si el jugador lleva E5.
+- Primera pieza de atuendos de la Fase 2 de `TASK.md`, adelantada al paso de las minas (G2 de `docs/historial/FASE2_DECISIONES.md`): el fuego infernal necesita saber si el jugador lleva E5.
 - Decisiones que aplica: A1, A2 (solo la base, el menú es otra pieza), G1, G3 y G4.
 - No hay escena nueva: la pieza es la tabla y el estado en `GameManager`, tres puntos de lectura en el Player y una opción del modo dev.
 

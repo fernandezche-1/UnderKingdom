@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://y87jmv0hwgiu"]
 
-[ext_resource type="Texture2D" uid="uid://bothddpsfpvea" path="res://otra vez/FREE_Kobold Warrior 2D Pixel Art/Sprites/with_outline/ATTACK 1.png" id="1_oadxw"]
-[ext_resource type="Texture2D" uid="uid://dvscnrskt2hd4" path="res://otra vez/FREE_Kobold Warrior 2D Pixel Art/Sprites/with_outline/IDLE.png" id="2_bbcg6"]
-[ext_resource type="Texture2D" uid="uid://dnbheyjg0lqji" path="res://otra vez/FREE_Kobold Warrior 2D Pixel Art/Sprites/with_outline/RUN.png" id="3_wf00b"]
+[ext_resource type="Texture2D" uid="uid://bothddpsfpvea" path="res://assets/terceros/FREE_Kobold Warrior 2D Pixel Art/Sprites/with_outline/ATTACK 1.png" id="1_oadxw"]
+[ext_resource type="Texture2D" uid="uid://dvscnrskt2hd4" path="res://assets/terceros/FREE_Kobold Warrior 2D Pixel Art/Sprites/with_outline/IDLE.png" id="2_bbcg6"]
+[ext_resource type="Texture2D" uid="uid://dnbheyjg0lqji" path="res://assets/terceros/FREE_Kobold Warrior 2D Pixel Art/Sprites/with_outline/RUN.png" id="3_wf00b"]
 
 [ext_resource type="Script" path="res://scripts/combat/enemy_base.gd" id="p33_enemy_base"]
 

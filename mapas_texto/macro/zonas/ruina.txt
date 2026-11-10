@@ -271,7 +271,7 @@ escena: res://escenas/mapas/tiles_ruina.tscn
 tileset: mazmorra
 bloques: ladrillo
 fondo: ninguno
-parallax: assets_prueba/gothicvania/cavernas/fondo.png 0.05; assets_prueba/gothicvania/cavernas/paredes.png 0.2
+parallax: assets/terceros/gothicvania/cavernas/fondo.png 0.05; assets/terceros/gothicvania/cavernas/paredes.png 0.2
 ---
 #########.H.######################################################################################################################################.H.#######
 #########.H.######################################################################################################################################.H.#######

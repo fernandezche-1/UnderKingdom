@@ -1,15 +1,15 @@
 [gd_scene format=4 uid="uid://wokeplqykhv3"]
 
-[ext_resource type="Texture2D" uid="uid://b3poje2vhbmbv" path="res://tile/Dungeon Tile Set.png" id="1_atlas"]
-[ext_resource type="Texture2D" uid="uid://ds7ncq5is2hhy" path="res://prueba/Dungeon Tile Set.png" id="2_b3x2g"]
+[ext_resource type="Texture2D" uid="uid://b3poje2vhbmbv" path="res://assets/terceros/dungeon_tile_set/Dungeon Tile Set.png" id="1_atlas"]
+[ext_resource type="Texture2D" uid="uid://ds7ncq5is2hhy" path="res://assets/terceros/dungeon_tile_set/copia_prueba/Dungeon Tile Set.png" id="2_b3x2g"]
 [ext_resource type="TileSet" uid="uid://0pf1qhp6x7nq" path="res://escenas/mapas/prologo_prision/tileset_prision.tres" id="2_tileset"]
 [ext_resource type="PackedScene" uid="uid://dkuv1x5ys7dne" path="res://escenas/prision.tscn" id="3_kf52d"]
-[ext_resource type="Texture2D" uid="uid://broyod3l3wymd" path="res://prueba/dungeon_sidescroller-Raou/spr_torch.png" id="3_wk5cq"]
-[ext_resource type="Texture2D" uid="uid://c07ov8a036g6h" path="res://prueba/dungeon_sidescroller-Raou/Tilesetv3.png" id="4_2ng17"]
+[ext_resource type="Texture2D" uid="uid://broyod3l3wymd" path="res://assets/terceros/dungeon_sidescroller-Raou/spr_torch.png" id="3_wk5cq"]
+[ext_resource type="Texture2D" uid="uid://c07ov8a036g6h" path="res://assets/terceros/dungeon_sidescroller-Raou/Tilesetv3.png" id="4_2ng17"]
 [ext_resource type="PackedScene" uid="uid://blu3m50miaf7s" path="res://escenas/enemigos/reina.tscn" id="4_hwm6g"]
 [ext_resource type="Script" uid="uid://b08k5445s8jqv" path="res://escenas/mapas/prologo_prision/cinematica_prision.gd" id="5_cinematic"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/map_transition.tscn" id="6_exit"]
-[ext_resource type="Texture2D" uid="uid://wwbhrvybsgy8" path="res://111.png" id="11_2ng17"]
+[ext_resource type="Texture2D" uid="uid://wwbhrvybsgy8" path="res://assets/prision/111.png" id="11_2ng17"]
 [ext_resource type="PackedScene" uid="uid://bhstew457ls34" path="res://escenas/prisn.tscn" id="12_je6g5"]
 [ext_resource type="Script" uid="uid://c52pvlfyaeya8" path="res://scripts/items/prison_guard_mission.gd" id="13_guard_mission"]
 
@@ -1154,7 +1154,7 @@ end_cap_mode = 2
 
 [node name="SalidaPrision" parent="." unique_id=1902965593 instance=ExtResource("6_exit")]
 position = Vector2(996, 320)
-target_scene_path = "res://escenas/mapas/tiles_calabozo_combate.tscn"
+target_scene_path = "res://archivo/tiles_v1/escenas/tiles_calabozo_combate.tscn"
 enabled = false
 require_interaction = true
 prompt_text = "E - ESCAPAR"

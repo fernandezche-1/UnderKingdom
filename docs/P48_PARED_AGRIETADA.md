@@ -42,7 +42,7 @@ Tres exportaciones nuevas. Su valor por defecto deja la caja y la estatua como e
 
 ## 4. Arte provisional
 
-- La columna de ladrillo morado del tileset `castillo`: piezas (3, 16-18) de `assets_prueba/raou_castillo/tileset_castillo.png`, región `(48, 256, 16, 48)`, igual en los cuatro estados (intacta, dañada, crítica y rota).
+- La columna de ladrillo morado del tileset `castillo`: piezas (3, 16-18) de `assets/terceros/raou_castillo/tileset_castillo.png`, región `(48, 256, 16, 48)`, igual en los cuatro estados (intacta, dañada, crítica y rota).
 - **Pendiente:**
   - arte propio de ladrillo con grietas, en tres grados de daño más los escombros. Con los escombros, `hide_sprite_when_destroyed` pasa a `false`;
   - para las profundidades (tileset `mazmorra`, bloques `oro`), una escena heredada `pared_agrietada_profundidades.tscn` que solo cambie el `SpriteFrames` (decidido el 2026-11-08). Se hace al montar esa zona en la Fase 3.

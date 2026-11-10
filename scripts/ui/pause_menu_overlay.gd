@@ -1,7 +1,7 @@
 extends CanvasLayer
 class_name UnderkingdomPauseOverlay
 
-const KEY_ICON_ATLAS := preload("res://otra vez/fourSeasonsPlatformer_ [tileset, version 2.0]/objects_/items_.png")
+const KEY_ICON_ATLAS := preload("res://assets/terceros/fourSeasonsPlatformer_ [tileset, version 2.0]/objects_/items_.png")
 const KEY_ICON_REGION := Rect2(48, 32, 16, 16)
 const KEY_NAMES := {
 	"calabozo_salida": "Salida del calabozo",

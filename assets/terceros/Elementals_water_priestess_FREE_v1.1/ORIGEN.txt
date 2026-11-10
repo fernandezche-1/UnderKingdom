@@ -1,0 +1,11 @@
+Elementals_water_priestess_FREE_v1.1
+
+Antes en: Elementals_water_priestess_FREE_v1.1/ (raíz del repo), movido en P72 (docs/P72_ORGANIZACION_REPO.md).
+Licencia: el pack no trae archivo de licencia. Procedencia y licencia por confirmar (TASK.md, "Otros pendientes").
+
+Aquí solo está lo que usa el juego:
+- escenas/enemigos/reina.tscn
+- escenas/mapas/prologo_prision/cinematica_prision.gd
+
+El resto del pack se apartó sin borrar nada:
+- archivo/sin_uso/assets/Elementals_water_priestess_FREE_v1.1/

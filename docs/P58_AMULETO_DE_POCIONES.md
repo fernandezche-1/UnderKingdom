@@ -1,7 +1,7 @@
 # P58 - Amuleto de la guardia: las pociones curan 0.25 más
 
 - Cuarta y última pieza del paso del cementerio en la Fase 2 de `TASK.md`: el amuleto que se encuentra en la cueva de la estatua de la Reina.
-- Decisiones de `docs/FASE2_DECISIONES.md` que aplica: S9, C8, G3 y G4.
+- Decisiones de `docs/historial/FASE2_DECISIONES.md` que aplica: S9, C8, G3 y G4.
 - No hay escena nueva: es una segunda fila de `FOUND_UPGRADE_DEFINITIONS` (P51) y un punto de lectura en el Player. `mejora_encontrada.tscn` se reutiliza con `upgrade_id` `amuleto_guardia`.
 
 ## 1. La tabla

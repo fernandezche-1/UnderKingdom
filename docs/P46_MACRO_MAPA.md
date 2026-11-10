@@ -217,7 +217,7 @@ El macro mapa (sección 1) solo dice qué zona va al lado de cuál; no está a e
 
 ### El ASCII de una zona
 - **Un carácter = una pieza de 16 px**, con las letras del constructor (`mapas_texto/LEYENDA.md`, sección 5): `#` bloque, `.` vacío, `=` plataforma, `H` escalera, `>`/`<` salidas…
-- Tiene el formato de un mapa de letras del constructor: cabecera de opciones, línea `---` y el mapa, como `mapas_texto/tiles_calabozo.txt`. Así el ASCII ya es la fuente del nivel, sin traducirlo.
+- Tiene el formato de un mapa de letras del constructor: cabecera de opciones, línea `---` y el mapa, como `mapas_texto/zona_pruebas.txt` o el calabozo viejo (`archivo/tiles_v1/mapas_texto/tiles_calabozo.txt`). Así el ASCII ya es la fuente del nivel, sin traducirlo.
 - Primero solo la estructura: salas, pasillos y aperturas. Enemigos, objetos y checkpoints se añaden después, sobre el mismo archivo.
 - **Al generar el nivel**, el archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambia su ruta en `zonas.txt`. Así hay una sola fuente en todo momento.
 
@@ -262,7 +262,7 @@ python3 herramientas/macro_mapa/verificar_mundo.py --unir /ruta/mundo.txt
 Una zona no se da por hecha mientras el verificador dé errores.
 
 ### Estado
-- **Calabozo (ASCII rehecho, 2026-11-06):** `mapas_texto/macro/zonas/calabozo.txt`, 100 x 52, en el mundo en (36, 36). Sustituye como diseño al tramo lineal de P42 (`mapas_texto/tiles_calabozo.txt`, 136 x 46, en (0, 34)), que sigue siendo el nivel que se juega hasta generar el nuevo; su `:B:` de x 100-102, dibujado el mismo día y sin generar, queda obsoleto.
+- **Calabozo (ASCII rehecho, 2026-11-06):** `mapas_texto/macro/zonas/calabozo.txt`, 100 x 52, en el mundo en (36, 36). Sustituye como diseño al tramo lineal de P42 (`archivo/tiles_v1/mapas_texto/tiles_calabozo.txt` desde P72, 136 x 46, en (0, 34)), que sigue siendo el nivel que se juega hasta generar el nuevo; su `:B:` de x 100-102, dibujado el mismo día y sin generar, queda obsoleto.
   - Es la primera zona y hace de tutorial: la más pequeña, lineal y sin bucles. Tres pisos en zigzag: se baja a por la espada y se vuelve a subir con ella al carcelero. Enseña por orden a caminar y saltar (pasillo de las celdas), pelear a puño (cuerpo de guardia), bajar escaleras (conducto y bajada), esquivar (sala larga), volver con algo nuevo (celda cerrada que se abre con la espada) y la primera pelea con espada (carcelero).
   - `[L1]` sale por el borde derecho, filas 8-10 (44-46 del mundo), con la salida `>` del constructor, pegado al castillo (columna 135). `:B:` sale por el borde de abajo, columnas 64-66 (100-102 del mundo, las del pozo de la mazmorra), desde el suelo de la cámara del preso, con trampilla cerrada desde el calabozo. El pozo recorre 45 piezas hasta la mazmorra (aviso de túnel).
   - Mantiene la historia de P42: aviso del prisionero y conducto, reja interior que obliga a bajar, cámara del preso tranquila con la espada oxidada y el atuendo (E1), y carcelero con la llave. Enemigos de la profundidad 0 con letras nuevas del constructor, `R` rata, `L` slime y `B` murciélago grande (6 ratas, 1 slime y 3 murciélagos grandes), y el carcelero a mano en la `_combate`.

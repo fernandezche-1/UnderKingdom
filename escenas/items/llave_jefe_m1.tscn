@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Texture2D" path="res://otra vez/fourSeasonsPlatformer_ [tileset, version 2.0]/objects_/items_.png" id="1_items"]
+[ext_resource type="Texture2D" path="res://assets/terceros/fourSeasonsPlatformer_ [tileset, version 2.0]/objects_/items_.png" id="1_items"]
 [ext_resource type="Script" path="res://scripts/items/boss_key_pickup.gd" id="2_script"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_key"]

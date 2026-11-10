@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b0u6og171twbp"]
 
-[ext_resource type="Texture2D" uid="uid://ccgfclox8tb5a" path="res://elementals_wind_hashashin_FREE_v1.1/elementals_wind_hashashin_FREE_v1.1/wind_SpriteSheet_288x128.png" id="1_ocwlu"]
+[ext_resource type="Texture2D" uid="uid://ccgfclox8tb5a" path="res://assets/terceros/elementals_wind_hashashin_FREE_v1.1/wind_SpriteSheet_288x128.png" id="1_ocwlu"]
 [ext_resource type="Script" path="res://scripts/bosses/captain_boss.gd" id="2_boss_script"]
 [ext_resource type="PackedScene" path="res://escenas/ui/boss_health_bar.tscn" id="p32_boss_bar"]
 

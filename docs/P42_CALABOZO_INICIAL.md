@@ -13,7 +13,7 @@
 
 ## 1. El mapa
 
-- `mapas_texto/tiles_calabozo.txt` (mapa de letras, 136 x 46 piezas, tileset `castillo`) genera `escenas/mapas/tiles_calabozo.tscn`. Se juega desde `tiles_calabozo_combate.tscn`.
+- `archivo/tiles_v1/mapas_texto/tiles_calabozo.txt` (mapa de letras, 136 x 46 piezas, tileset `castillo`) genera `archivo/tiles_v1/escenas/tiles_calabozo.tscn`. Se juega desde `tiles_calabozo_combate.tscn`.
 - Tramos:
   1. Tramo lineal (x 2-40), con el inicio en (4, 9), dos ratas y checkpoint en (38, 9).
   2. Paso bajo (x 41-42), de 3 piezas de alto, que separa las dos zonas.
@@ -122,7 +122,7 @@ Se pusieron a mano en `tiles_calabozo_combate.tscn` para ver cómo reaccionan; n
 - `escenas/objetos/espada_oxidada.tscn` hereda de `espada_recuperable.tscn`: la misma espada, teñida de óxido, con "E - TOMAR ESPADA OXIDADA". Desde P69 hereda de `escenas/objetos/atuendo.tscn` (`outfit_id` `harapos`), con el mismo dibujo y textos.
 - `sword_recovery.gd` exporta el aviso del HUD (`notice_title`, `notice_text`); aquí dice "Espada oxidada / No es gran cosa... pero corta.".
 - Está colocada a mano en la cámara del preso, clavada junto a `PresoMuerto`, el último cuadro de la muerte del Skeleton como cadáver provisional.
-- **Atuendo:** `Elementals_fire_knight_FREE_v1.1/atuendo_preso.png`, una túnica doblada de 22x10 px hecha a mano con la paleta del sprite armado. Es hijo del `Sprite2D` de la espada: se desvanece con ella y desaparece al recogerla. Por eso el tinte de óxido pasó a `self_modulate`. Se recoge todo con una pulsación, y es lo que explica que el Player cambie de aspecto.
+- **Atuendo:** `assets/personajes/atuendo_preso.png`, una túnica doblada de 22x10 px hecha a mano con la paleta del sprite armado. Es hijo del `Sprite2D` de la espada: se desvanece con ella y desaparece al recogerla. Por eso el tinte de óxido pasó a `self_modulate`. Se recoge todo con una pulsación, y es lo que explica que el Player cambie de aspecto.
 - **Distancia a la reja:** `locked_door.gd` abre al entrar en su detector, a 20 px de cada lado. La espada queda a 100 px de la reja: si se recogiera dentro del detector, no abriría hasta salir y volver.
 - `requires_guard_defeated = false`: `sword_recovery.gd` lo pasa a `GameManager.recover_sword(player, requires_guard)`, porque aquí no hay que vencer a nadie. Por defecto sigue pidiendo el guardia.
 - `has_sword = true` y el Player pasa a tener espada.

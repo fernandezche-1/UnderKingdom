@@ -5,7 +5,7 @@
 - Piezas:
   - `escenas/objetos/palanca.tscn`, con `scripts/environment/lever.gd` (`UnderkingdomLever`);
   - una exportación nueva en `scripts/environment/arena_barrier.gd`: `open_on_encounter`.
-- Decisiones de `docs/FASE2_DECISIONES.md` que aplica: C1 a C4, G3, G4 y G5.
+- Decisiones de `docs/historial/FASE2_DECISIONES.md` que aplica: C1 a C4, G3, G4 y G5.
 
 ## 1. La palanca
 
@@ -50,7 +50,7 @@
 
 ## 4. Arte provisional
 
-- Palanca: dos piezas del tileset CC0 de la mazmorra, `assets_prueba/dungeon_platformer/dungeontilesetfull.png`, de 16 x 32 cada una:
+- Palanca: dos piezas del tileset CC0 de la mazmorra, `assets/terceros/dungeon_platformer/dungeontilesetfull.png`, de 16 x 32 cada una:
   - sin tirar: la lanza clavada en un barril, columna 28, filas 8-9 (región `(448, 128, 16, 32)`);
   - tirada: la espada inclinada en un barril, columna 27, filas 8-9 (región `(432, 128, 16, 32)`).
 - **Pendiente:**

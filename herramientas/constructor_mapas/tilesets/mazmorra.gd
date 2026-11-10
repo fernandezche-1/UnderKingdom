@@ -1,12 +1,12 @@
 extends RefCounted
 
-## Tileset "2D Dungeon Platformer Tileset" (CC0, assets_prueba/dungeon_platformer/).
+## Tileset "2D Dungeon Platformer Tileset" (CC0, assets/terceros/dungeon_platformer/).
 ## Para agregar otro tileset: copiar este archivo con otro nombre, cambiar la
 ## textura y las coordenadas de las piezas, y elegirlo en el mapa con
 ## "tileset: <nombre del archivo>". Coordenadas en piezas, no en píxeles.
 
 const DATA := {
-    "textura": "res://assets_prueba/dungeon_platformer/dungeontilesetfull.png",
+    "textura": "res://assets/terceros/dungeon_platformer/dungeontilesetfull.png",
     "tile": 16,
 
     # Origen del juego de 4x4 piezas de cada estilo y de su rombo de rampas.

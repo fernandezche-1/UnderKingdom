@@ -12,8 +12,8 @@ signal line_shown(line: Dictionary)
 @onready var continue_label: Label = $Panel/ContinueHint
 
 # Retratos originales suministrados con el proyecto, NO cuadros enteros del actor.
-const PLAYER_FACE: Texture2D = preload("res://Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/fire_knight.png")
-const CAPTAIN_FACE: Texture2D = preload("res://elementals_wind_hashashin_FREE_v1.1/elementals_wind_hashashin_FREE_v1.1/wind_hashashin.png")
+const PLAYER_FACE: Texture2D = preload("res://assets/terceros/Elementals_fire_knight_FREE_v1.1/fire_knight.png")
+const CAPTAIN_FACE: Texture2D = preload("res://assets/terceros/elementals_wind_hashashin_FREE_v1.1/wind_hashashin.png")
 
 var _lines: Array = []
 var _index: int = -1

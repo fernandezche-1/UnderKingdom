@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/items/outfit_pickup.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://Elementals_fire_knight_FREE_v1.1/atuendo_preso.png" id="2_atuendo"]
+[ext_resource type="Texture2D" path="res://assets/personajes/atuendo_preso.png" id="2_atuendo"]
 
 [node name="Atuendo" type="Node2D"]
 z_index = 2

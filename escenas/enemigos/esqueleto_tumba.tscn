@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/combat/rising_enemy.gd" id="script"]
-[ext_resource type="Texture2D" path="res://assets_prueba/gothicvania_cementerio/esqueleto.png" id="tex_0"]
+[ext_resource type="Texture2D" path="res://assets/terceros/gothicvania_cementerio/esqueleto.png" id="tex_0"]
 
 [sub_resource type="AtlasTexture" id="Atlas_1"]
 atlas = ExtResource("tex_0")

@@ -1,7 +1,7 @@
 # P66 - Dash en el aire (`air_dash`)
 
 - Segunda pieza del paso 6 (Ruina) de la Fase 2 de `TASK.md`. Es el premio del Guardián de hielo (`ability_reward air_dash`, P46 sección 6) y la llave de los secretos con pasillo de 4 de alto y foso de 6 (ruina, minas, mazmorra).
-- Decisiones de `docs/FASE2_DECISIONES.md` que aplica: R3, R4, R5 y G3 a G5; las nuevas están al final de ese archivo.
+- Decisiones de `docs/historial/FASE2_DECISIONES.md` que aplica: R3, R4, R5 y G3 a G5; las nuevas están al final de ese archivo.
 - No hay escena ni script nuevos: es una acción más del Player (`PlayerAction.AIR_DASH`, al final del enum) y una fila de `ABILITY_DEFINITIONS`.
 - Sin guardado nuevo: las habilidades ya se guardan por `ABILITY_DEFINITIONS`. `SAVE_FORMAT_VERSION` sigue en 5.
 

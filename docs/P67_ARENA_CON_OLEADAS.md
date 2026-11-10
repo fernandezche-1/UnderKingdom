@@ -1,7 +1,7 @@
 # P67 - Arena con oleadas (`wave_arena.gd`)
 
 - Pieza del paso 7 (Infierno) de la Fase 2 de `TASK.md`: las arenas cerradas del coliseo de los condenados y del salón de los verdugos (P46, sección 9, infierno). Sirve también al coliseo de ceniza de las profundidades (altar oeste, "oleadas de diablillos y el demonslime"): su sello escucha el `encounter_id` de la arena (`listen_encounter`, P55).
-- Decisiones de `docs/FASE2_DECISIONES.md` que aplica: I1, I2, I3 y G3; las nuevas están al final de ese archivo.
+- Decisiones de `docs/historial/FASE2_DECISIONES.md` que aplica: I1, I2, I3 y G3; las nuevas están al final de ese archivo.
 - Script nuevo: `scripts/combat/wave_arena.gd` (`UnderkingdomWaveArena`). Sin escena propia, como `boss_arena.gd`: se monta en la `_combate` sobre un `Node2D`.
 - Sin guardado nuevo: solo marca su `encounter_id` en `completed_encounters`. `SAVE_FORMAT_VERSION` sigue en 5.
 

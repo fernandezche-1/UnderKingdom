@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/ui/boss_health_bar.gd" id="4_ujblj"]
 [ext_resource type="PackedScene" path="res://escenas/ui/boss_health_bar.tscn" id="extra_0"]
 [ext_resource type="Script" path="res://scripts/bosses/simple_boss.gd" id="script"]
-[ext_resource type="Texture2D" path="res://Frost_Guardian_FREE_v1.0/frost_guardian_free_192x128_SpriteSheet.png" id="tex_0"]
+[ext_resource type="Texture2D" path="res://assets/terceros/Frost_Guardian_FREE_v1.0/frost_guardian_free_192x128_SpriteSheet.png" id="tex_0"]
 
 [sub_resource type="AtlasTexture" id="Atlas_17"]
 atlas = ExtResource("tex_0")

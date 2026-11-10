@@ -1,7 +1,7 @@
 # P70 - Pestaña "Equipo" del menú de pausa
 
 - Cuarta pieza de "En paralelo: atuendos" de la Fase 2 de `TASK.md` (P46, sección 10, "Implementación": "Menú de pausa").
-- Decisiones de `docs/FASE2_DECISIONES.md` que aplica: A2 (lista los encontrados, lo que da cada uno y marca el puesto; no se cambia a mano) y G4; las nuevas están al final de ese archivo.
+- Decisiones de `docs/historial/FASE2_DECISIONES.md` que aplica: A2 (lista los encontrados, lo que da cada uno y marca el puesto; no se cambia a mano) y G4; las nuevas están al final de ese archivo.
 - Cambian: `escenas/menu/menu_pausa.tscn` (pestaña `TabEquipo` y página `PaginaEquipo` con `ListaEquipo`) y `scripts/ui/pause_menu_overlay.gd`.
 - Sin guardado nuevo: lee `outfits_found`, `has_sword` y `get_outfit_id()` (P59). `SAVE_FORMAT_VERSION` sigue en 5.
 

@@ -5,7 +5,7 @@
 - Piezas:
   - `escenas/objetos/objeto_lore.tscn`, con `scripts/environment/lore_object.gd` (`UnderkingdomLoreObject`), que hereda de `UnderkingdomNPC` (`npc.gd`);
   - un diálogo de ejemplo, `dialogues/lore_acta_prisionero.json`.
-- Decisiones de `docs/FASE2_DECISIONES.md` que aplica: C5, C6, G3, G4 y G5.
+- Decisiones de `docs/historial/FASE2_DECISIONES.md` que aplica: C5, C6, G3, G4 y G5.
 
 ## 1. El objeto
 
@@ -30,7 +30,7 @@
 
 ## 3. Arte y textos provisionales
 
-- Sprite: una bolsa de tela de `craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PNG/supplies_objects.png` (región `(0, 256, 16, 20)`), 16 x 20, escala 1. El origen está en el centro: un objeto sobre el suelo se coloca 10 px por encima de la fila del suelo.
+- Sprite: una bolsa de tela de `assets/terceros/craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PNG/supplies_objects.png` (región `(0, 256, 16, 20)`), 16 x 20, escala 1. El origen está en el centro: un objeto sobre el suelo se coloca 10 px por encima de la fila del suelo.
 - **Pendiente:** arte propio de papel, libro y restos; Armando escribe los textos definitivos (el JSON del acta está marcado "TEXTO PROVISIONAL").
 
 ## 4. Zona de pruebas

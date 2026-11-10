@@ -2,7 +2,7 @@
 
 - Segunda pieza del paso del castillo en la Fase 2 de `TASK.md`: el castillo sin hechizo (soldados NPC y el Capitán) y el rey encadenado de las profundidades.
 - Pieza: `scripts/environment/encounter_visibility.gd` (`UnderkingdomEncounterVisibility`), un `Node` que se pone como hijo del nodo a controlar. No lleva escena propia.
-- Decisión de `docs/FASE2_DECISIONES.md` que aplica: K3. No toca `GameManager` ni guarda estado: lee `completed_encounters`, que ya se guarda.
+- Decisión de `docs/historial/FASE2_DECISIONES.md` que aplica: K3. No toca `GameManager` ni guarda estado: lee `completed_encounters`, que ya se guarda.
 
 ## 1. Comportamiento
 
