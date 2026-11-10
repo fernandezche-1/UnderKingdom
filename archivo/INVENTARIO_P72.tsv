@@ -2,145 +2,145 @@ ruta_original	grupo	destino	referenciado_por
 .editorconfig	VIVO	(se queda)	
 .gitattributes	VIVO	(se queda)	
 .gitignore	VIVO	(se queda)	
-111.png	VIVO	assets/prision/111.png	escenas/mapas/prologo_prision/camara_sellado_alma.tscn, escenas/mapas/tiles_castillo.tscn
+111.png	VIVO	assets/prision/111.png	escenas/mapas/prologo_prision/camara_sellado_alma.tscn, archivo/tiles_v1/escenas/tiles_castillo.tscn
 CAMBIOS_0.04.045.txt	VIEJO	docs/historial/CAMBIOS_0.04.045.txt	
 CAMBIOS_0.04.047.txt	VIEJO	docs/historial/CAMBIOS_0.04.047.txt	
 CLAUDE.md	VIVO	(se queda)	
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_1.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_1.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_2.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_2.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_3.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_3.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_4.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_4.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_5.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_5.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_6.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_6.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_7.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_7.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_1.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_1.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_2.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_2.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_3.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_3.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_4.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_4.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_5.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_5.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_6.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_6.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_7.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_7.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_1.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_1.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_10.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_10.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_11.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_11.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_12.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_12.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_13.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_13.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_14.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_14.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_15.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_15.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_16.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_16.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_17.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_17.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_2.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_2.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_3.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_3.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_4.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_4.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_5.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_5.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_6.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_6.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_7.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_7.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_8.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_8.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_9.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_9.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_1.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_1.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_2.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_2.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_3.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_3.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_4.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_4.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_5.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_5.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_6.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_6.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_7.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_7.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_8.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_8.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_1.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_1.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_10.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_10.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_11.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_11.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_12.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_12.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_13.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_13.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_14.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_14.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_15.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_15.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_2.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_2.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_3.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_3.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_4.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_4.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_5.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_5.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_6.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_6.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_7.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_7.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_8.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_8.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_9.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_9.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_1.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_1.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_2.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_2.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_3.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_3.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_4.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_4.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_5.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_5.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_6.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_6.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_7.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_7.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_8.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_8.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_9.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_9.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_1.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_1.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_2.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_2.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_3.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_3.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_4.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_4.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_5.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_5.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_6.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_6.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_7.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_7.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_8.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_8.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_1.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_1.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_2.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_2.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_3.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_3.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_4.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_4.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_5.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_5.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_6.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_6.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_7.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/1_atk/1_atk_7.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_1.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_1.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_2.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_2.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_3.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_3.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_4.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_4.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_5.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_5.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_6.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_6.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_7.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/2_atk/2_atk_7.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_1.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_1.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_10.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_10.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_11.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_11.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_12.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_12.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_13.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_13.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_14.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_14.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_15.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_15.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_16.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_16.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_17.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_17.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_2.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_2.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_3.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_3.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_4.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_4.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_5.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_5.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_6.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_6.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_7.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_7.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_8.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_8.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_9.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/3_atk/3_atk_9.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_1.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_1.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_2.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_2.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_3.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_3.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_4.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_4.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_5.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_5.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_6.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_6.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_7.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_7.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_8.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/air_atk/air_atk_8.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_1.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_1.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_10.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_10.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_11.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_11.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_12.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_12.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_13.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_13.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_14.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_14.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_15.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_15.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_2.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_2.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_3.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_3.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_4.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_4.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_5.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_5.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_6.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_6.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_7.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_7.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_8.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_8.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_9.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/death/death_9.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_1.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_1.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_2.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_2.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_3.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_3.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_4.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_4.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_5.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_5.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_6.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_6.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_7.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_7.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_8.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_8.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_9.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/defend/defend_9.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_1.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_1.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_2.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_2.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_3.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_3.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_4.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_4.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_5.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_5.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_6.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_6.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_7.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_7.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_8.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/idle/idle_8.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
 Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/j_down/j_down_1.png	SIN USO	archivo/sin_uso/assets/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/j_down/j_down_1.png	
 Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/j_down/j_down_2.png	SIN USO	archivo/sin_uso/assets/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/j_down/j_down_2.png	
 Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/j_down/j_down_3.png	SIN USO	archivo/sin_uso/assets/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/j_down/j_down_3.png	
 Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/j_up/j_up_1.png	SIN USO	archivo/sin_uso/assets/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/j_up/j_up_1.png	
 Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/j_up/j_up_2.png	SIN USO	archivo/sin_uso/assets/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/j_up/j_up_2.png	
 Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/j_up/j_up_3.png	SIN USO	archivo/sin_uso/assets/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/j_up/j_up_3.png	
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_1.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_1.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_10.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_10.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_11.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_11.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_12.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_12.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_13.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_13.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_14.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_14.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_15.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_15.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_16.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_16.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_17.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_17.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_18.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_18.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_19.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_19.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_2.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_2.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_20.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_20.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_21.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_21.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_3.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_3.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_4.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_4.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_5.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_5.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_6.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_6.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_7.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_7.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_8.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_8.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_9.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_9.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_1.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_1.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_2.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_2.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_3.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_3.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_4.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_4.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_5.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_5.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_6.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_6.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_7.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_7.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_8.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_8.png	escenas/jefes/boss_mina.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_1.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_1.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_2.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_2.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_3.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_3.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_4.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_4.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_5.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_5.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_6.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_6.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_7.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_7.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_8.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_8.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_1.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_1.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_10.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_10.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_11.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_11.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_12.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_12.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_13.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_13.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_14.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_14.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_15.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_15.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_2.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_2.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_3.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_3.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_4.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_4.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_5.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_5.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_6.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_6.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_7.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_7.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_8.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_8.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_9.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_9.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_1.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_1.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_2.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_2.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_3.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_3.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_4.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_4.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_5.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_5.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
-Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_6.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_6.png	escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_1.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_1.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_10.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_10.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_11.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_11.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_12.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_12.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_13.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_13.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_14.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_14.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_15.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_15.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_16.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_16.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_17.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_17.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_18.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_18.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_19.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_19.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_2.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_2.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_20.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_20.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_21.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_21.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_3.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_3.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_4.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_4.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_5.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_5.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_6.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_6.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_7.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_7.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_8.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_8.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_9.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/jump_full/jump_full_9.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_1.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_1.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_2.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_2.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_3.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_3.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_4.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_4.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_5.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_5.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_6.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_6.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_7.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_7.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_8.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/roll/roll_8.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_1.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_1.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_2.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_2.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_3.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_3.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_4.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_4.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_5.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_5.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_6.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_6.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_7.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_7.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_8.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/run/run_8.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_1.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_1.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_10.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_10.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_11.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_11.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_12.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_12.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_13.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_13.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_14.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_14.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_15.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_15.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_2.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_2.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_3.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_3.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_4.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_4.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_5.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_5.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_6.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_6.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_7.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_7.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_8.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_8.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_9.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/sp_atk/sp_atk_9.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_1.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_1.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_2.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_2.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_3.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_3.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_4.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_4.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_5.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_5.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
+Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_6.png	VIVO	assets/terceros/Elementals_Crystal_Mauler_Free_v1.0/animations/PNG/take_hit/take_hit_6.png	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn, escenas/jefes/crystal_mauler.tscn
 Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/animations/spritesheet/crystal_mauler_free_288x128_SpriteSheet.png	SIN USO	archivo/sin_uso/assets/Elementals_Crystal_Mauler_Free_v1.0/animations/spritesheet/crystal_mauler_free_288x128_SpriteSheet.png	
 Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/aseprite/crystal_mauler_free_v1.0.aseprite	SIN USO	archivo/sin_uso/assets/Elementals_Crystal_Mauler_Free_v1.0/aseprite/crystal_mauler_free_v1.0.aseprite	
 Elementals_Crystal_Mauler_Free_v1.0/Elementals_Crystal_Mauler_Free_v1.0/crystal_mauler.png	SIN USO	archivo/sin_uso/assets/Elementals_Crystal_Mauler_Free_v1.0/crystal_mauler.png	
@@ -211,7 +211,7 @@ Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/PNG
 Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/death/death_10.png	SIN USO	archivo/sin_uso/assets/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/death/death_10.png	
 Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/death/death_11.png	SIN USO	archivo/sin_uso/assets/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/death/death_11.png	
 Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/death/death_12.png	SIN USO	archivo/sin_uso/assets/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/death/death_12.png	
-Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/death/death_13.png	VIEJO	archivo/mapas_viejos/assets/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/death/death_13.png	escenas/mapas/mundo_1.tscn
+Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/death/death_13.png	VIEJO	archivo/mapas_viejos/assets/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/death/death_13.png	archivo/mapas_viejos/escenas/mundo_1.tscn
 Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/death/death_14.png	SIN USO	archivo/sin_uso/assets/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/death/death_14.png	
 Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/death/death_15.png	SIN USO	archivo/sin_uso/assets/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/death/death_15.png	
 Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/death/death_16.png	SIN USO	archivo/sin_uso/assets/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/death/death_16.png	
@@ -609,7 +609,7 @@ Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knigh
 Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/air_atk/air_atk_6.png	VIVO	assets/terceros/Elementals_fire_knight_FREE_v1.1/png/fire_knight/air_atk/air_atk_6.png	herramientas/sprites/generar_atuendo_fire_knight.gd
 Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/air_atk/air_atk_7.png	VIVO	assets/terceros/Elementals_fire_knight_FREE_v1.1/png/fire_knight/air_atk/air_atk_7.png	escenas/atuendos/fire_knight.tres, herramientas/sprites/generar_atuendo_fire_knight.gd
 Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/png/fire_knight/air_atk/air_atk_8.png	VIVO	assets/terceros/Elementals_fire_knight_FREE_v1.1/png/fire_knight/air_atk/air_atk_8.png	escenas/atuendos/fire_knight.tres, herramientas/sprites/generar_atuendo_fire_knight.gd
-Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/spritesheets/fire_FREE_SpriteSheet_288x128.png	VIEJO	archivo/mapas_viejos/assets/Elementals_fire_knight_FREE_v1.1/spritesheets/fire_FREE_SpriteSheet_288x128.png	escenas/mapas/mundo_1.tscn
+Elementals_fire_knight_FREE_v1.1/Elementals_fire_knight_FREE_v1.1/spritesheets/fire_FREE_SpriteSheet_288x128.png	VIEJO	archivo/mapas_viejos/assets/Elementals_fire_knight_FREE_v1.1/spritesheets/fire_FREE_SpriteSheet_288x128.png	archivo/mapas_viejos/escenas/mundo_1.tscn
 Elementals_fire_knight_FREE_v1.1/Right_Punch_6_frames_1728x128.png	VIVO	assets/personajes/Right_Punch_6_frames_1728x128.png	
 Elementals_fire_knight_FREE_v1.1/Right_Punch_6_frames_1728x128_alineado.png	VIVO	assets/personajes/Right_Punch_6_frames_1728x128_alineado.png	scripts/player/player.gd
 Elementals_fire_knight_FREE_v1.1/atuendo_preso.png	VIVO	assets/personajes/atuendo_preso.png	escenas/objetos/atuendo.tscn, escenas/objetos/espada_oxidada.tscn
@@ -666,7 +666,7 @@ Elementals_fire_knight_FREE_v1.1/espada/run_ia/original_ia.png	VIVO	assets/perso
 Elementals_fire_knight_FREE_v1.1/espada/run_ia/run_ia_8_frames_6912x384.png	VIVO	assets/personajes/espada/run_ia/run_ia_8_frames_6912x384.png	escenas/player.tscn
 Elementals_fire_knight_FREE_v1.1/espada/take_hit_ia/original_ia.png	VIVO	assets/personajes/espada/take_hit_ia/original_ia.png	
 Elementals_fire_knight_FREE_v1.1/espada/take_hit_ia/take_hit_ia_4_frames_3456x384.png	VIVO	assets/personajes/espada/take_hit_ia/take_hit_ia_4_frames_3456x384.png	escenas/player.tscn
-Elementals_fire_knight_FREE_v1.1/espada_recuperable.png	VIVO	assets/personajes/espada_recuperable.png	escenas/objetos/espada_oxidada.tscn, escenas/objetos/espada_recuperable.tscn
+Elementals_fire_knight_FREE_v1.1/espada_recuperable.png	VIVO	assets/personajes/espada_recuperable.png	escenas/objetos/espada_oxidada.tscn, archivo/mapas_viejos/escenas/objetos/espada_recuperable.tscn
 Elementals_fire_knight_FREE_v1.1/idle_8_frames_288x128.png	VIVO	assets/personajes/idle_8_frames_288x128.png	scripts/player/player.gd
 Elementals_fire_knight_FREE_v1.1/run_unarmed_8_frames_2304x128.png	VIVO	assets/personajes/run_unarmed_8_frames_2304x128.png	scripts/player/player.gd
 Elementals_metal_bladekeeper_FREE_v1.1/Elementals_metal_bladekeeper_FREE_v1.1/PNG animations/01_idle/01_idle_1.png	SIN USO	archivo/sin_uso/assets/Elementals_metal_bladekeeper_FREE_v1.1/PNG animations/01_idle/01_idle_1.png	
@@ -805,7 +805,7 @@ Elementals_metal_bladekeeper_FREE_v1.1/Elementals_metal_bladekeeper_FREE_v1.1/PN
 Elementals_metal_bladekeeper_FREE_v1.1/Elementals_metal_bladekeeper_FREE_v1.1/PNG animations/13_death/13_death_4.png	SIN USO	archivo/sin_uso/assets/Elementals_metal_bladekeeper_FREE_v1.1/PNG animations/13_death/13_death_4.png	
 Elementals_metal_bladekeeper_FREE_v1.1/Elementals_metal_bladekeeper_FREE_v1.1/PNG animations/13_death/13_death_5.png	SIN USO	archivo/sin_uso/assets/Elementals_metal_bladekeeper_FREE_v1.1/PNG animations/13_death/13_death_5.png	
 Elementals_metal_bladekeeper_FREE_v1.1/Elementals_metal_bladekeeper_FREE_v1.1/PNG animations/13_death/13_death_6.png	SIN USO	archivo/sin_uso/assets/Elementals_metal_bladekeeper_FREE_v1.1/PNG animations/13_death/13_death_6.png	
-Elementals_metal_bladekeeper_FREE_v1.1/Elementals_metal_bladekeeper_FREE_v1.1/PNG animations/13_death/13_death_7.png	VIEJO	archivo/mapas_viejos/assets/Elementals_metal_bladekeeper_FREE_v1.1/PNG animations/13_death/13_death_7.png	escenas/mapas/mundo_1.tscn
+Elementals_metal_bladekeeper_FREE_v1.1/Elementals_metal_bladekeeper_FREE_v1.1/PNG animations/13_death/13_death_7.png	VIEJO	archivo/mapas_viejos/assets/Elementals_metal_bladekeeper_FREE_v1.1/PNG animations/13_death/13_death_7.png	archivo/mapas_viejos/escenas/mundo_1.tscn
 Elementals_metal_bladekeeper_FREE_v1.1/Elementals_metal_bladekeeper_FREE_v1.1/PNG animations/13_death/13_death_8.png	SIN USO	archivo/sin_uso/assets/Elementals_metal_bladekeeper_FREE_v1.1/PNG animations/13_death/13_death_8.png	
 Elementals_metal_bladekeeper_FREE_v1.1/Elementals_metal_bladekeeper_FREE_v1.1/PNG animations/13_death/13_death_9.png	SIN USO	archivo/sin_uso/assets/Elementals_metal_bladekeeper_FREE_v1.1/PNG animations/13_death/13_death_9.png	
 Elementals_metal_bladekeeper_FREE_v1.1/Elementals_metal_bladekeeper_FREE_v1.1/PNG animations/air_atk/air_atk1.png	SIN USO	archivo/sin_uso/assets/Elementals_metal_bladekeeper_FREE_v1.1/PNG animations/air_atk/air_atk1.png	
@@ -1346,10 +1346,10 @@ Lively_NPCs_v3.1/Lively_NPCs_v3.1/sprite sheets/medieval/adventurer_04.png	SIN U
 Lively_NPCs_v3.1/Lively_NPCs_v3.1/sprite sheets/medieval/adventurer_05.png	SIN USO	archivo/sin_uso/assets/Lively_NPCs_v3.1/sprite sheets/medieval/adventurer_05.png	
 Lively_NPCs_v3.1/Lively_NPCs_v3.1/sprite sheets/medieval/barkeep.png	SIN USO	archivo/sin_uso/assets/Lively_NPCs_v3.1/sprite sheets/medieval/barkeep.png	
 Lively_NPCs_v3.1/Lively_NPCs_v3.1/sprite sheets/medieval/barmaid.png	SIN USO	archivo/sin_uso/assets/Lively_NPCs_v3.1/sprite sheets/medieval/barmaid.png	
-Lively_NPCs_v3.1/Lively_NPCs_v3.1/sprite sheets/medieval/beggar.png	VIEJO	archivo/mapas_viejos/assets/Lively_NPCs_v3.1/sprite sheets/medieval/beggar.png	escenas/mapas/mundo_1.tscn
+Lively_NPCs_v3.1/Lively_NPCs_v3.1/sprite sheets/medieval/beggar.png	VIEJO	archivo/mapas_viejos/assets/Lively_NPCs_v3.1/sprite sheets/medieval/beggar.png	archivo/mapas_viejos/escenas/mundo_1.tscn
 Lively_NPCs_v3.1/Lively_NPCs_v3.1/sprite sheets/medieval/blacksmith.png	SIN USO	archivo/sin_uso/assets/Lively_NPCs_v3.1/sprite sheets/medieval/blacksmith.png	
-Lively_NPCs_v3.1/Lively_NPCs_v3.1/sprite sheets/medieval/captain.png	VIEJO	archivo/mapas_viejos/assets/Lively_NPCs_v3.1/sprite sheets/medieval/captain.png	escenas/mapas/mundo_1.tscn
-Lively_NPCs_v3.1/Lively_NPCs_v3.1/sprite sheets/medieval/dog.png	VIEJO	archivo/mapas_viejos/assets/Lively_NPCs_v3.1/sprite sheets/medieval/dog.png	escenas/mapas/mundo_1.tscn
+Lively_NPCs_v3.1/Lively_NPCs_v3.1/sprite sheets/medieval/captain.png	VIEJO	archivo/mapas_viejos/assets/Lively_NPCs_v3.1/sprite sheets/medieval/captain.png	archivo/mapas_viejos/escenas/mundo_1.tscn
+Lively_NPCs_v3.1/Lively_NPCs_v3.1/sprite sheets/medieval/dog.png	VIEJO	archivo/mapas_viejos/assets/Lively_NPCs_v3.1/sprite sheets/medieval/dog.png	archivo/mapas_viejos/escenas/mundo_1.tscn
 Lively_NPCs_v3.1/Lively_NPCs_v3.1/sprite sheets/medieval/dwarf.png	SIN USO	archivo/sin_uso/assets/Lively_NPCs_v3.1/sprite sheets/medieval/dwarf.png	
 Lively_NPCs_v3.1/Lively_NPCs_v3.1/sprite sheets/medieval/elder.png	VIVO	assets/terceros/Lively_NPCs_v3.1/sprite sheets/medieval/elder.png	escenas/npc/anciano.tscn
 Lively_NPCs_v3.1/Lively_NPCs_v3.1/sprite sheets/medieval/fairy.png	SIN USO	archivo/sin_uso/assets/Lively_NPCs_v3.1/sprite sheets/medieval/fairy.png	
@@ -1384,7 +1384,7 @@ Lively_NPCs_v3.1/Lively_NPCs_v3.1/sprite sheets/steampunk/trader.png	SIN USO	arc
 Lively_NPCs_v3.1/Lively_NPCs_v3.1/v3_x300.gif	SIN USO	archivo/sin_uso/assets/Lively_NPCs_v3.1/v3_x300.gif	
 README.md	VIVO	(se queda)	
 TASK.md	VIVO	(se queda)	
-animated_sprite_2d.gd	VIEJO	archivo/mapas_viejos/raiz/animated_sprite_2d.gd	escenas/mapas/antorhca.tscn
+animated_sprite_2d.gd	VIEJO	archivo/mapas_viejos/raiz/animated_sprite_2d.gd	archivo/mapas_viejos/escenas/antorhca.tscn
 armandito.png	SIN USO	archivo/sin_uso/raiz/armandito.png	
 assets/cinematica/01_castillo_en_paz.png	VIVO	(se queda)	escenas/cinematica/cinematica_inicial.gd
 assets/cinematica/02_rey_y_primera_reina.png	VIVO	(se queda)	escenas/cinematica/cinematica_inicial.gd
@@ -1405,19 +1405,19 @@ assets/cinematica/16_despertar_en_la_mazmorra.png	VIVO	(se queda)	escenas/cinema
 assets/cinematica/narracion_reina.mp3	VIVO	(se queda)	escenas/cinematica/cinematica_inicial.tscn
 assets_prueba/dungeon_platformer/ORIGEN.txt	VIVO	assets/terceros/dungeon_platformer/ORIGEN.txt	
 assets_prueba/dungeon_platformer/dungeontileset.png	SIN USO	archivo/sin_uso/assets_prueba/dungeon_platformer/dungeontileset.png	
-assets_prueba/dungeon_platformer/dungeontilesetfull.png	VIVO	assets/terceros/dungeon_platformer/dungeontilesetfull.png	escenas/mapas/arena_enemigos.tscn, escenas/mapas/ejemplo_cueva.tscn, escenas/mapas/ejemplo_nivel.tscn +15
+assets_prueba/dungeon_platformer/dungeontilesetfull.png	VIVO	assets/terceros/dungeon_platformer/dungeontilesetfull.png	archivo/mapas_viejos/escenas/arena_enemigos.tscn, archivo/mapas_viejos/escenas/ejemplo_cueva.tscn, archivo/mapas_viejos/escenas/ejemplo_nivel.tscn +15
 assets_prueba/dungeon_platformer/screenshot2.png	SIN USO	archivo/sin_uso/assets_prueba/dungeon_platformer/screenshot2.png	
 assets_prueba/esqueleto_lanza/ORIGEN.txt	VIVO	assets/terceros/esqueleto_lanza/ORIGEN.txt	
-assets_prueba/esqueleto_lanza/esqueleto_lanza.png	VIVO	assets/terceros/esqueleto_lanza/esqueleto_lanza.png	escenas/enemigos/esqueleto_lanza.tscn, escenas/mapas/tiles_calabozo_combate.tscn
+assets_prueba/esqueleto_lanza/esqueleto_lanza.png	VIVO	assets/terceros/esqueleto_lanza/esqueleto_lanza.png	escenas/enemigos/esqueleto_lanza.tscn, archivo/tiles_v1/escenas/tiles_calabozo_combate.tscn
 assets_prueba/gothicvania/ORIGEN.txt	VIVO	assets/terceros/gothicvania/ORIGEN.txt	
-assets_prueba/gothicvania/castillo_viejo/fondo.png	VIVO	assets/terceros/gothicvania/castillo_viejo/fondo.png	escenas/mapas/fondos/castillo_recuerdo.tscn, escenas/mapas/tiles_casa.tscn, escenas/mapas/tiles_mazmorra.tscn
-assets_prueba/gothicvania/cavernas/fondo.png	VIVO	assets/terceros/gothicvania/cavernas/fondo.png	escenas/mapas/tiles_ruina.tscn
-assets_prueba/gothicvania/cavernas/paredes.png	VIVO	assets/terceros/gothicvania/cavernas/paredes.png	escenas/mapas/tiles_ruina.tscn
+assets_prueba/gothicvania/castillo_viejo/fondo.png	VIVO	assets/terceros/gothicvania/castillo_viejo/fondo.png	escenas/mapas/fondos/castillo_recuerdo.tscn, archivo/mapas_viejos/escenas/tiles_casa.tscn, archivo/tiles_v1/escenas/tiles_mazmorra.tscn
+assets_prueba/gothicvania/cavernas/fondo.png	VIVO	assets/terceros/gothicvania/cavernas/fondo.png	archivo/tiles_v1/escenas/tiles_ruina.tscn
+assets_prueba/gothicvania/cavernas/paredes.png	VIVO	assets/terceros/gothicvania/cavernas/paredes.png	archivo/tiles_v1/escenas/tiles_ruina.tscn
 assets_prueba/gothicvania/efectos/explosion_suelo.png	VIVO	assets/terceros/gothicvania/efectos/explosion_suelo.png	scripts/fx/combat_fx.gd
 assets_prueba/gothicvania/efectos/impacto.png	VIVO	assets/terceros/gothicvania/efectos/impacto.png	scripts/fx/combat_fx.gd
 assets_prueba/gothicvania/efectos/muerte_enemigo.png	VIVO	assets/terceros/gothicvania/efectos/muerte_enemigo.png	scripts/fx/combat_fx.gd
-assets_prueba/gothicvania/lava/fondo.png	VIVO	assets/terceros/gothicvania/lava/fondo.png	escenas/mapas/tiles_jefe.tscn, escenas/mapas/tiles_profundidades.tscn
-assets_prueba/gothicvania/lava/rocas.png	VIVO	assets/terceros/gothicvania/lava/rocas.png	escenas/mapas/tiles_jefe.tscn, escenas/mapas/tiles_profundidades.tscn
+assets_prueba/gothicvania/lava/fondo.png	VIVO	assets/terceros/gothicvania/lava/fondo.png	archivo/tiles_v1/escenas/tiles_jefe.tscn, archivo/tiles_v1/escenas/tiles_profundidades.tscn
+assets_prueba/gothicvania/lava/rocas.png	VIVO	assets/terceros/gothicvania/lava/rocas.png	archivo/tiles_v1/escenas/tiles_jefe.tscn, archivo/tiles_v1/escenas/tiles_profundidades.tscn
 assets_prueba/gothicvania/personajes/barquero_lampara.png	VIVO	assets/terceros/gothicvania/personajes/barquero_lampara.png	escenas/npc/barquero.tscn
 assets_prueba/gothicvania/personajes/barquero_sale.png	VIVO	assets/terceros/gothicvania/personajes/barquero_sale.png	escenas/npc/barquero.tscn
 assets_prueba/gothicvania/pueblo_noche/cielo.png	VIVO	assets/terceros/gothicvania/pueblo_noche/cielo.png	escenas/mapas/fondos/castillo_recuerdo.tscn
@@ -1426,10 +1426,10 @@ assets_prueba/gothicvania/pueblo_noche/nubes.png	VIVO	assets/terceros/gothicvani
 assets_prueba/gothicvania/pueblo_noche/pueblo.png	VIVO	assets/terceros/gothicvania/pueblo_noche/pueblo.png	escenas/mapas/fondos/castillo_recuerdo.tscn
 assets_prueba/gothicvania_cementerio/ORIGEN.txt	VIVO	assets/terceros/gothicvania_cementerio/ORIGEN.txt	
 assets_prueba/gothicvania_cementerio/esqueleto.png	VIVO	assets/terceros/gothicvania_cementerio/esqueleto.png	escenas/enemigos/esqueleto.tscn, escenas/enemigos/esqueleto_tumba.tscn
-assets_prueba/gothicvania_cementerio/fondo/cementerio.png	VIVO	assets/terceros/gothicvania_cementerio/fondo/cementerio.png	escenas/mapas/tiles_cementerio.tscn
-assets_prueba/gothicvania_cementerio/fondo/cielo.png	VIVO	assets/terceros/gothicvania_cementerio/fondo/cielo.png	escenas/mapas/tiles_cementerio.tscn
-assets_prueba/gothicvania_cementerio/fondo/montes.png	VIVO	assets/terceros/gothicvania_cementerio/fondo/montes.png	escenas/mapas/tiles_cementerio.tscn
-assets_prueba/gothicvania_cementerio/tileset_cementerio.png	VIVO	assets/terceros/gothicvania_cementerio/tileset_cementerio.png	escenas/mapas/tiles_cementerio.tscn, herramientas/constructor_mapas/tilesets/cementerio.gd
+assets_prueba/gothicvania_cementerio/fondo/cementerio.png	VIVO	assets/terceros/gothicvania_cementerio/fondo/cementerio.png	archivo/tiles_v1/escenas/tiles_cementerio.tscn
+assets_prueba/gothicvania_cementerio/fondo/cielo.png	VIVO	assets/terceros/gothicvania_cementerio/fondo/cielo.png	archivo/tiles_v1/escenas/tiles_cementerio.tscn
+assets_prueba/gothicvania_cementerio/fondo/montes.png	VIVO	assets/terceros/gothicvania_cementerio/fondo/montes.png	archivo/tiles_v1/escenas/tiles_cementerio.tscn
+assets_prueba/gothicvania_cementerio/tileset_cementerio.png	VIVO	assets/terceros/gothicvania_cementerio/tileset_cementerio.png	archivo/tiles_v1/escenas/tiles_cementerio.tscn, herramientas/constructor_mapas/tilesets/cementerio.gd
 assets_prueba/monster_creatures_2/ORIGEN.txt	VIVO	assets/terceros/monster_creatures_2/ORIGEN.txt	
 assets_prueba/monster_creatures_2/bat/attack.png	VIVO	assets/terceros/monster_creatures_2/bat/attack.png	escenas/enemigos/murcielago_grande.tscn
 assets_prueba/monster_creatures_2/bat/death.png	VIVO	assets/terceros/monster_creatures_2/bat/death.png	escenas/enemigos/murcielago_grande.tscn
@@ -1448,12 +1448,12 @@ assets_prueba/monster_creatures_2/slime/hurt.png	VIVO	assets/terceros/monster_cr
 assets_prueba/monster_creatures_2/slime/idle.png	VIVO	assets/terceros/monster_creatures_2/slime/idle.png	escenas/enemigos/slime.tscn
 assets_prueba/monster_creatures_2/slime/walk.png	VIVO	assets/terceros/monster_creatures_2/slime/walk.png	escenas/enemigos/slime.tscn
 assets_prueba/pixelfantasy_caves/ORIGEN.txt	VIVO	assets/terceros/pixelfantasy_caves/ORIGEN.txt	
-assets_prueba/pixelfantasy_caves/fondo1.png	VIVO	assets/terceros/pixelfantasy_caves/fondo1.png	escenas/mapas/tiles_mineria.tscn
-assets_prueba/pixelfantasy_caves/fondo2.png	VIVO	assets/terceros/pixelfantasy_caves/fondo2.png	escenas/mapas/tiles_mineria.tscn
-assets_prueba/pixelfantasy_caves/fondo3.png	VIVO	assets/terceros/pixelfantasy_caves/fondo3.png	escenas/mapas/tiles_mineria.tscn
-assets_prueba/pixelfantasy_caves/fondo4a.png	VIVO	assets/terceros/pixelfantasy_caves/fondo4a.png	escenas/mapas/tiles_mineria.tscn
+assets_prueba/pixelfantasy_caves/fondo1.png	VIVO	assets/terceros/pixelfantasy_caves/fondo1.png	archivo/tiles_v1/escenas/tiles_mineria.tscn
+assets_prueba/pixelfantasy_caves/fondo2.png	VIVO	assets/terceros/pixelfantasy_caves/fondo2.png	archivo/tiles_v1/escenas/tiles_mineria.tscn
+assets_prueba/pixelfantasy_caves/fondo3.png	VIVO	assets/terceros/pixelfantasy_caves/fondo3.png	archivo/tiles_v1/escenas/tiles_mineria.tscn
+assets_prueba/pixelfantasy_caves/fondo4a.png	VIVO	assets/terceros/pixelfantasy_caves/fondo4a.png	archivo/tiles_v1/escenas/tiles_mineria.tscn
 assets_prueba/raou_castillo/ORIGEN.txt	VIVO	assets/terceros/raou_castillo/ORIGEN.txt	
-assets_prueba/raou_castillo/tileset_castillo.png	VIVO	assets/terceros/raou_castillo/tileset_castillo.png	escenas/mapas/fondos/castillo_recuerdo.tscn, escenas/mapas/tiles_calabozo.tscn, escenas/mapas/tiles_calabozo_combate.tscn +8
+assets_prueba/raou_castillo/tileset_castillo.png	VIVO	assets/terceros/raou_castillo/tileset_castillo.png	escenas/mapas/fondos/castillo_recuerdo.tscn, archivo/tiles_v1/escenas/tiles_calabozo.tscn, archivo/tiles_v1/escenas/tiles_calabozo_combate.tscn +8
 assets_prueba/super_grotto/ORIGEN.txt	VIVO	assets/terceros/super_grotto/ORIGEN.txt	
 assets_prueba/super_grotto/murcielago.png	VIVO	assets/terceros/super_grotto/murcielago.png	escenas/enemigos/murcielago.tscn
 assets_prueba/super_grotto/recoger.png	VIVO	assets/terceros/super_grotto/recoger.png	scripts/fx/combat_fx.gd
@@ -1530,11 +1530,11 @@ craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/COUPON.pdf	SIN USO
 craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/COUPON.png	SIN USO	archivo/sin_uso/assets/craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/COUPON.png	
 craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/Free Assets Craftpix!.url	SIN USO	archivo/sin_uso/assets/craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/Free Assets Craftpix!.url	
 craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/License.txt	VIVO	assets/terceros/craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/License.txt	
-craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PNG/Other_objects.png	VIVO	assets/terceros/craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PNG/Other_objects.png	escenas/mapas/tiles_castillo.tscn
+craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PNG/Other_objects.png	VIVO	assets/terceros/craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PNG/Other_objects.png	archivo/tiles_v1/escenas/tiles_castillo.tscn
 craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PNG/fire_trap.png	SIN USO	archivo/sin_uso/assets/craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PNG/fire_trap.png	
 craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PNG/full.png	SIN USO	archivo/sin_uso/assets/craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PNG/full.png	
 craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PNG/pedestals.png	SIN USO	archivo/sin_uso/assets/craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PNG/pedestals.png	
-craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PNG/supplies_objects.png	VIVO	assets/terceros/craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PNG/supplies_objects.png	escenas/mapas/tiles_castillo.tscn, escenas/objetos/objeto_lore.tscn
+craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PNG/supplies_objects.png	VIVO	assets/terceros/craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PNG/supplies_objects.png	archivo/tiles_v1/escenas/tiles_castillo.tscn, escenas/objetos/objeto_lore.tscn
 craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PNG/trap_plate.png	SIN USO	archivo/sin_uso/assets/craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PNG/trap_plate.png	
 craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PNG/trap_saw.png	SIN USO	archivo/sin_uso/assets/craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PNG/trap_saw.png	
 craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PSD/COUPON.png	SIN USO	archivo/sin_uso/assets/craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PSD/COUPON.png	
@@ -1552,16 +1552,16 @@ craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/Tiled_files/suppli
 craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/Tiled_files/trap_plate.png	SIN USO	archivo/sin_uso/assets/craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/Tiled_files/trap_plate.png	
 craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/Tiled_files/trap_saw.png	SIN USO	archivo/sin_uso/assets/craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/Tiled_files/trap_saw.png	
 craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/readme.txt	VIVO	assets/terceros/craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/readme.txt	
-dark_castle_tileset.png	VIEJO	archivo/mapas_viejos/raiz/dark_castle_tileset.png	escenas/mapas/antorhca.tscn, scripts/environment/dark_castle_map.gd
+dark_castle_tileset.png	VIEJO	archivo/mapas_viejos/raiz/dark_castle_tileset.png	archivo/mapas_viejos/escenas/antorhca.tscn, archivo/mapas_viejos/scripts/environment/dark_castle_map.gd
 dialogues/barquero_otra_vez.json	VIVO	(se queda)	escenas/npc/barquero.tscn
 dialogues/barquero_presentacion.json	VIVO	(se queda)	escenas/npc/barquero.tscn
-dialogues/calabozo_aviso_conducto.json	VIVO	(se queda)	escenas/mapas/tiles_calabozo_combate.tscn
-dialogues/calabozo_preso_atuendo.json	VIVO	(se queda)	escenas/mapas/tiles_calabozo_combate.tscn
+dialogues/calabozo_aviso_conducto.json	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_calabozo_combate.tscn
+dialogues/calabozo_preso_atuendo.json	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_calabozo_combate.tscn
 dialogues/lore_acta_prisionero.json	VIVO	(se queda)	escenas/objetos/objeto_lore.tscn
 dialogues/npc_anciano_cementerio.json	VIVO	(se queda)	escenas/npc/anciano.tscn
 dialogues/w1_intro_cementerio.json	SIN USO	archivo/sin_uso/dialogues/w1_intro_cementerio.json	
-dialogues/w1_intro_recuerdo.json	VIVO	(se queda)	escenas/mapas/mundo_1.tscn, escenas/mapas/tiles_castillo.tscn
-dialogues/w1_reencuentro_capitan.json	VIVO	(se queda)	escenas/mapas/mundo_1.tscn, escenas/mapas/tiles_cementerio_combate.tscn
+dialogues/w1_intro_recuerdo.json	VIVO	(se queda)	archivo/mapas_viejos/escenas/mundo_1.tscn, archivo/tiles_v1/escenas/tiles_castillo.tscn
+dialogues/w1_reencuentro_capitan.json	VIVO	(se queda)	archivo/mapas_viejos/escenas/mundo_1.tscn, archivo/tiles_v1/escenas/tiles_cementerio_combate.tscn
 docs/CHANGELOG_0.04.037.md	VIEJO	docs/historial/CHANGELOG_0.04.037.md	
 docs/CHANGELOG_0.04.038.md	VIEJO	docs/historial/CHANGELOG_0.04.038.md	
 docs/CHANGELOG_0.04.040.md	VIEJO	docs/historial/CHANGELOG_0.04.040.md	
@@ -1702,7 +1702,7 @@ elementals_wind_hashashin_FREE_v1.1/elementals_wind_hashashin_FREE_v1.1/PNG/deat
 elementals_wind_hashashin_FREE_v1.1/elementals_wind_hashashin_FREE_v1.1/PNG/death/death_6.png	SIN USO	archivo/sin_uso/assets/elementals_wind_hashashin_FREE_v1.1/PNG/death/death_6.png	
 elementals_wind_hashashin_FREE_v1.1/elementals_wind_hashashin_FREE_v1.1/PNG/death/death_7.png	SIN USO	archivo/sin_uso/assets/elementals_wind_hashashin_FREE_v1.1/PNG/death/death_7.png	
 elementals_wind_hashashin_FREE_v1.1/elementals_wind_hashashin_FREE_v1.1/PNG/death/death_8.png	SIN USO	archivo/sin_uso/assets/elementals_wind_hashashin_FREE_v1.1/PNG/death/death_8.png	
-elementals_wind_hashashin_FREE_v1.1/elementals_wind_hashashin_FREE_v1.1/PNG/death/death_9.png	VIEJO	archivo/mapas_viejos/assets/elementals_wind_hashashin_FREE_v1.1/PNG/death/death_9.png	escenas/mapas/mundo_1.tscn
+elementals_wind_hashashin_FREE_v1.1/elementals_wind_hashashin_FREE_v1.1/PNG/death/death_9.png	VIEJO	archivo/mapas_viejos/assets/elementals_wind_hashashin_FREE_v1.1/PNG/death/death_9.png	archivo/mapas_viejos/escenas/mundo_1.tscn
 elementals_wind_hashashin_FREE_v1.1/elementals_wind_hashashin_FREE_v1.1/PNG/defend/defend_1.png	SIN USO	archivo/sin_uso/assets/elementals_wind_hashashin_FREE_v1.1/PNG/defend/defend_1.png	
 elementals_wind_hashashin_FREE_v1.1/elementals_wind_hashashin_FREE_v1.1/PNG/defend/defend_2.png	SIN USO	archivo/sin_uso/assets/elementals_wind_hashashin_FREE_v1.1/PNG/defend/defend_2.png	
 elementals_wind_hashashin_FREE_v1.1/elementals_wind_hashashin_FREE_v1.1/PNG/defend/defend_3.png	SIN USO	archivo/sin_uso/assets/elementals_wind_hashashin_FREE_v1.1/PNG/defend/defend_3.png	
@@ -1797,112 +1797,112 @@ escaleras_12_frames_288x128.png	SIN USO	archivo/sin_uso/raiz/escaleras_12_frames
 escenas/atuendos/fire_knight.tres	VIVO	(se queda)	escenas/mapas/zona_pruebas_galeria.tscn, herramientas/sprites/generar_atuendo_fire_knight.gd, herramientas/zona_pruebas/galeria.py +1
 escenas/cinematica/cinematica_inicial.gd	VIVO	(se queda)	escenas/cinematica/cinematica_inicial.tscn
 escenas/cinematica/cinematica_inicial.tscn	VIVO	(se queda)	escenas/menu/menu_principal.gd
-escenas/enemigos/aprendis.tscn	VIVO	(se queda)	escenas/mapas/ejemplo_cueva.tscn, escenas/mapas/mundo_1.tscn, escenas/mapas/tiles_mazmorra.tscn +3
-escenas/enemigos/carcelero.tscn	VIVO	(se queda)	escenas/mapas/tiles_calabozo_combate.tscn
-escenas/enemigos/demonslime.tscn	VIVO	(se queda)	escenas/mapas/profundidades.tscn
-escenas/enemigos/diablillo.tscn	VIVO	(se queda)	escenas/mapas/arena_enemigos.tscn, escenas/mapas/ejemplo_nivel.tscn, escenas/mapas/mundo_2.tscn +7
-escenas/enemigos/enemis.tscn	VIVO	(se queda)	escenas/jefes/caballero_reina.tscn, escenas/mapas/primer_boss_mundo_1.tscn
-escenas/enemigos/esqueleto.tscn	VIVO	(se queda)	escenas/mapas/tiles_mazmorra.tscn, escenas/mapas/tiles_ruina.tscn, escenas/mapas/zona_pruebas.tscn +1
+escenas/enemigos/aprendis.tscn	VIVO	(se queda)	archivo/mapas_viejos/escenas/ejemplo_cueva.tscn, archivo/mapas_viejos/escenas/mundo_1.tscn, archivo/tiles_v1/escenas/tiles_mazmorra.tscn +3
+escenas/enemigos/carcelero.tscn	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_calabozo_combate.tscn
+escenas/enemigos/demonslime.tscn	VIVO	(se queda)	archivo/mapas_viejos/escenas/profundidades.tscn
+escenas/enemigos/diablillo.tscn	VIVO	(se queda)	archivo/mapas_viejos/escenas/arena_enemigos.tscn, archivo/mapas_viejos/escenas/ejemplo_nivel.tscn, archivo/mapas_viejos/escenas/mundo_2.tscn +7
+escenas/enemigos/enemis.tscn	VIVO	(se queda)	escenas/jefes/caballero_reina.tscn, archivo/mapas_viejos/escenas/primer_boss_mundo_1.tscn
+escenas/enemigos/esqueleto.tscn	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_mazmorra.tscn, archivo/tiles_v1/escenas/tiles_ruina.tscn, escenas/mapas/zona_pruebas.tscn +1
 escenas/enemigos/esqueleto_lanza.tscn	VIVO	(se queda)	escenas/enemigos/carcelero.tscn, escenas/mapas/zona_pruebas_combate.tscn, escenas/mapas/zona_pruebas_galeria.tscn +1
-escenas/enemigos/esqueleto_tumba.tscn	VIVO	(se queda)	escenas/mapas/tiles_cementerio.tscn, herramientas/constructor_mapas/construir_mapa.gd
-escenas/enemigos/guardia.tscn	VIVO	(se queda)	escenas/mapas/tiles_castillo.tscn, escenas/mapas/zona_pruebas.tscn, herramientas/constructor_mapas/construir_mapa.gd
-escenas/enemigos/kolbo.tscn	VIVO	(se queda)	escenas/mapas/arena_enemigos.tscn, escenas/mapas/ejemplo_nivel.tscn, escenas/mapas/ruina.tscn +3
-escenas/enemigos/kolbo2.tscn	VIVO	(se queda)	escenas/mapas/arena_enemigos.tscn, escenas/mapas/mundo_2.tscn, escenas/mapas/mundo_3.tscn +3
-escenas/enemigos/kolbo3.tscn	VIVO	(se queda)	escenas/mapas/arena_enemigos.tscn, escenas/mapas/ruina.tscn, escenas/mapas/tiles_mazmorra.tscn +3
-escenas/enemigos/mino.tscn	VIVO	(se queda)	escenas/mapas/arena_enemigos.tscn, escenas/mapas/mundo_3.tscn, escenas/mapas/ruina.tscn +4
-escenas/enemigos/murcielago.tscn	VIVO	(se queda)	escenas/mapas/tiles_castillo.tscn, escenas/mapas/tiles_cementerio.tscn, escenas/mapas/tiles_mineria.tscn +1
-escenas/enemigos/murcielago_grande.tscn	VIVO	(se queda)	escenas/mapas/tiles_calabozo_combate.tscn, herramientas/constructor_mapas/construir_mapa.gd
-escenas/enemigos/rata.tscn	VIVO	(se queda)	escenas/mapas/tiles_calabozo_combate.tscn, escenas/mapas/zona_pruebas_combate.tscn, escenas/mapas/zona_pruebas_galeria.tscn +2
-escenas/enemigos/reina.tscn	VIVO	(se queda)	escenas/jefes/reina_jefe.tscn, escenas/mapas/mundo_3.tscn, escenas/mapas/primer_boss_mundo_1.tscn +1
-escenas/enemigos/slime.tscn	VIVO	(se queda)	escenas/mapas/tiles_calabozo_combate.tscn, escenas/mapas/zona_pruebas_combate.tscn, escenas/mapas/zona_pruebas_galeria.tscn +2
-escenas/enemigos/vanguardia.tscn	VIVO	(se queda)	escenas/mapas/ejemplo_cueva.tscn, escenas/mapas/mundo_1.tscn, escenas/mapas/prueba_tileset.tscn +3
+escenas/enemigos/esqueleto_tumba.tscn	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_cementerio.tscn, herramientas/constructor_mapas/construir_mapa.gd
+escenas/enemigos/guardia.tscn	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_castillo.tscn, escenas/mapas/zona_pruebas.tscn, herramientas/constructor_mapas/construir_mapa.gd
+escenas/enemigos/kolbo.tscn	VIVO	(se queda)	archivo/mapas_viejos/escenas/arena_enemigos.tscn, archivo/mapas_viejos/escenas/ejemplo_nivel.tscn, archivo/mapas_viejos/escenas/ruina.tscn +3
+escenas/enemigos/kolbo2.tscn	VIVO	(se queda)	archivo/mapas_viejos/escenas/arena_enemigos.tscn, archivo/mapas_viejos/escenas/mundo_2.tscn, archivo/mapas_viejos/escenas/mundo_3.tscn +3
+escenas/enemigos/kolbo3.tscn	VIVO	(se queda)	archivo/mapas_viejos/escenas/arena_enemigos.tscn, archivo/mapas_viejos/escenas/ruina.tscn, archivo/tiles_v1/escenas/tiles_mazmorra.tscn +3
+escenas/enemigos/mino.tscn	VIVO	(se queda)	archivo/mapas_viejos/escenas/arena_enemigos.tscn, archivo/mapas_viejos/escenas/mundo_3.tscn, archivo/mapas_viejos/escenas/ruina.tscn +4
+escenas/enemigos/murcielago.tscn	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_castillo.tscn, archivo/tiles_v1/escenas/tiles_cementerio.tscn, archivo/tiles_v1/escenas/tiles_mineria.tscn +1
+escenas/enemigos/murcielago_grande.tscn	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_calabozo_combate.tscn, herramientas/constructor_mapas/construir_mapa.gd
+escenas/enemigos/rata.tscn	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_calabozo_combate.tscn, escenas/mapas/zona_pruebas_combate.tscn, escenas/mapas/zona_pruebas_galeria.tscn +2
+escenas/enemigos/reina.tscn	VIVO	(se queda)	escenas/jefes/reina_jefe.tscn, archivo/mapas_viejos/escenas/mundo_3.tscn, archivo/mapas_viejos/escenas/primer_boss_mundo_1.tscn +1
+escenas/enemigos/slime.tscn	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_calabozo_combate.tscn, escenas/mapas/zona_pruebas_combate.tscn, escenas/mapas/zona_pruebas_galeria.tscn +2
+escenas/enemigos/vanguardia.tscn	VIVO	(se queda)	archivo/mapas_viejos/escenas/ejemplo_cueva.tscn, archivo/mapas_viejos/escenas/mundo_1.tscn, archivo/mapas_viejos/escenas/prueba_tileset.tscn +3
 escenas/items/fragmento_vida.tscn	VIVO	(se queda)	escenas/mapas/zona_pruebas_galeria.tscn, herramientas/zona_pruebas/galeria.py
 escenas/items/llama_eterna.tscn	VIVO	(se queda)	escenas/mapas/zona_pruebas_galeria.tscn, herramientas/zona_pruebas/galeria.py
-escenas/items/llave_armeria_castillo.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/items/llave_armeria_castillo.tscn	scripts/combat/castle_key_guard.gd
-escenas/items/llave_jefe_m1.tscn	VIVO	(se queda)	escenas/items/llave_armeria_castillo.tscn, escenas/mapas/mundo_1.tscn, escenas/mapas/tiles_castillo_combate.tscn +10
+escenas/items/llave_armeria_castillo.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/items/llave_armeria_castillo.tscn	archivo/tiles_v1/scripts/combat/castle_key_guard.gd
+escenas/items/llave_jefe_m1.tscn	VIVO	(se queda)	archivo/tiles_v1/escenas/items/llave_armeria_castillo.tscn, archivo/mapas_viejos/escenas/mundo_1.tscn, archivo/tiles_v1/escenas/tiles_castillo_combate.tscn +10
 escenas/items/mejora_encontrada.tscn	VIVO	(se queda)	escenas/mapas/zona_pruebas_galeria.tscn, herramientas/zona_pruebas/galeria.py
-escenas/items/reliquia_habilidad.tscn	VIVO	(se queda)	escenas/mapas/tiles_castillo_combate.tscn, escenas/mapas/zona_pruebas_galeria.tscn, herramientas/zona_pruebas/galeria.py +1
-escenas/jefes/boss.tscn	VIEJO	archivo/mapas_viejos/escenas/jefes/boss.tscn	escenas/mapas/jefe_final.tscn, escenas/mapas/primer_boss_mundo_1.tscn
-escenas/jefes/boss_mina.tscn	VIEJO	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn	escenas/mapas/mundo_2.tscn
-escenas/jefes/caballero_reina.tscn	VIVO	(se queda)	escenas/mapas/tiles_mineria_combate.tscn
-escenas/jefes/capitan.tscn	VIVO	(se queda)	escenas/mapas/mundo_1.tscn, escenas/mapas/tiles_cementerio_combate.tscn
+escenas/items/reliquia_habilidad.tscn	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_castillo_combate.tscn, escenas/mapas/zona_pruebas_galeria.tscn, herramientas/zona_pruebas/galeria.py +1
+escenas/jefes/boss.tscn	VIEJO	archivo/mapas_viejos/escenas/jefes/boss.tscn	archivo/mapas_viejos/escenas/jefe_final.tscn, archivo/mapas_viejos/escenas/primer_boss_mundo_1.tscn
+escenas/jefes/boss_mina.tscn	VIEJO	archivo/mapas_viejos/escenas/jefes/boss_mina.tscn	archivo/mapas_viejos/escenas/mundo_2.tscn
+escenas/jefes/caballero_reina.tscn	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_mineria_combate.tscn
+escenas/jefes/capitan.tscn	VIVO	(se queda)	archivo/mapas_viejos/escenas/mundo_1.tscn, archivo/tiles_v1/escenas/tiles_cementerio_combate.tscn
 escenas/jefes/crystal_mauler.tscn	VIVO	(se queda)	escenas/mapas/zona_pruebas_galeria.tscn, herramientas/zona_pruebas/galeria.py
-escenas/jefes/cthulhu_jefe.tscn	VIVO	(se queda)	escenas/mapas/tiles_jefe_combate.tscn
-escenas/jefes/demon_slime_jefe.tscn	VIVO	(se queda)	escenas/mapas/tiles_profundidades_combate.tscn
-escenas/jefes/guardian_hielo.tscn	VIVO	(se queda)	escenas/mapas/tiles_ruina_combate.tscn
-escenas/jefes/reina_jefe.tscn	VIVO	(se queda)	escenas/mapas/tiles_mazmorra_combate.tscn
-escenas/jefes/rey_caido.tscn	VIVO	(se queda)	escenas/mapas/tiles_castillo_combate.tscn
+escenas/jefes/cthulhu_jefe.tscn	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_jefe_combate.tscn
+escenas/jefes/demon_slime_jefe.tscn	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_profundidades_combate.tscn
+escenas/jefes/guardian_hielo.tscn	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_ruina_combate.tscn
+escenas/jefes/reina_jefe.tscn	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_mazmorra_combate.tscn
+escenas/jefes/rey_caido.tscn	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_castillo_combate.tscn
 escenas/mapas/antorhca.tscn	VIEJO	archivo/mapas_viejos/escenas/antorhca.tscn	
-escenas/mapas/arena_enemigos.tscn	VIEJO	archivo/mapas_viejos/escenas/arena_enemigos.tscn	mapas_texto/arena_enemigos.txt
-escenas/mapas/ejemplo_cueva.tscn	VIEJO	archivo/mapas_viejos/escenas/ejemplo_cueva.tscn	mapas_texto/ejemplo_cueva.txt
-escenas/mapas/ejemplo_nivel.tscn	VIEJO	archivo/mapas_viejos/escenas/ejemplo_nivel.tscn	escenas/mapas/ejemplo_nivel.tscn, mapas_texto/ejemplo_nivel.txt
-escenas/mapas/fondos/castillo_recuerdo.tscn	VIVO	(se queda)	escenas/mapas/tiles_castillo.tscn
-escenas/mapas/jefe_final.tscn	VIEJO	archivo/mapas_viejos/escenas/jefe_final.tscn	escenas/mapas/profundidades.tscn
-escenas/mapas/mundo_1.tscn	VIEJO	archivo/mapas_viejos/escenas/mundo_1.tscn	escenas/mapas/primer_boss_mundo_1.tscn
-escenas/mapas/mundo_2.tscn	VIEJO	archivo/mapas_viejos/escenas/mundo_2.tscn	escenas/mapas/mundo_3.tscn, escenas/mapas/primer_boss_mundo_1.tscn
-escenas/mapas/mundo_3.tscn	VIEJO	archivo/mapas_viejos/escenas/mundo_3.tscn	escenas/mapas/mundo_2.tscn, escenas/mapas/ruina.tscn
-escenas/mapas/primer_boss_mundo_1.tscn	VIEJO	archivo/mapas_viejos/escenas/primer_boss_mundo_1.tscn	escenas/mapas/mundo_1.tscn, escenas/mapas/mundo_2.tscn
-escenas/mapas/profundidades.tscn	VIEJO	archivo/mapas_viejos/escenas/profundidades.tscn	escenas/mapas/jefe_final.tscn, escenas/mapas/ruina.tscn
+escenas/mapas/arena_enemigos.tscn	VIEJO	archivo/mapas_viejos/escenas/arena_enemigos.tscn	archivo/mapas_viejos/mapas_texto/arena_enemigos.txt
+escenas/mapas/ejemplo_cueva.tscn	VIEJO	archivo/mapas_viejos/escenas/ejemplo_cueva.tscn	archivo/mapas_viejos/mapas_texto/ejemplo_cueva.txt
+escenas/mapas/ejemplo_nivel.tscn	VIEJO	archivo/mapas_viejos/escenas/ejemplo_nivel.tscn	archivo/mapas_viejos/escenas/ejemplo_nivel.tscn, archivo/mapas_viejos/mapas_texto/ejemplo_nivel.txt
+escenas/mapas/fondos/castillo_recuerdo.tscn	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_castillo.tscn
+escenas/mapas/jefe_final.tscn	VIEJO	archivo/mapas_viejos/escenas/jefe_final.tscn	archivo/mapas_viejos/escenas/profundidades.tscn
+escenas/mapas/mundo_1.tscn	VIEJO	archivo/mapas_viejos/escenas/mundo_1.tscn	archivo/mapas_viejos/escenas/primer_boss_mundo_1.tscn
+escenas/mapas/mundo_2.tscn	VIEJO	archivo/mapas_viejos/escenas/mundo_2.tscn	archivo/mapas_viejos/escenas/mundo_3.tscn, archivo/mapas_viejos/escenas/primer_boss_mundo_1.tscn
+escenas/mapas/mundo_3.tscn	VIEJO	archivo/mapas_viejos/escenas/mundo_3.tscn	archivo/mapas_viejos/escenas/mundo_2.tscn, archivo/mapas_viejos/escenas/ruina.tscn
+escenas/mapas/primer_boss_mundo_1.tscn	VIEJO	archivo/mapas_viejos/escenas/primer_boss_mundo_1.tscn	archivo/mapas_viejos/escenas/mundo_1.tscn, archivo/mapas_viejos/escenas/mundo_2.tscn
+escenas/mapas/profundidades.tscn	VIEJO	archivo/mapas_viejos/escenas/profundidades.tscn	archivo/mapas_viejos/escenas/jefe_final.tscn, archivo/mapas_viejos/escenas/ruina.tscn
 escenas/mapas/prologo_prision/README.md	VIVO	(se queda)	
 escenas/mapas/prologo_prision/camara_sellado_alma.tscn	VIVO	(se queda)	escenas/cinematica/cinematica_inicial.gd, escenas/menu/menu_principal.gd, scripts/core/game_manager.gd
 escenas/mapas/prologo_prision/cinematica_prision.gd	VIVO	(se queda)	escenas/mapas/prologo_prision/camara_sellado_alma.tscn
 escenas/mapas/prologo_prision/tileset_prision.tres	VIVO	(se queda)	escenas/mapas/prologo_prision/camara_sellado_alma.tscn
 escenas/mapas/prueba_tileset.tscn	VIEJO	archivo/mapas_viejos/escenas/prueba_tileset.tscn	
-escenas/mapas/ruina.tscn	VIEJO	archivo/mapas_viejos/escenas/ruina.tscn	escenas/mapas/mundo_3.tscn, escenas/mapas/profundidades.tscn
-escenas/mapas/tiles_calabozo.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_calabozo.tscn	escenas/mapas/tiles_calabozo_combate.tscn, mapas_texto/macro/zonas/calabozo.txt, mapas_texto/tiles_calabozo.txt
+escenas/mapas/ruina.tscn	VIEJO	archivo/mapas_viejos/escenas/ruina.tscn	archivo/mapas_viejos/escenas/mundo_3.tscn, archivo/mapas_viejos/escenas/profundidades.tscn
+escenas/mapas/tiles_calabozo.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_calabozo.tscn	archivo/tiles_v1/escenas/tiles_calabozo_combate.tscn, mapas_texto/macro/zonas/calabozo.txt, archivo/tiles_v1/mapas_texto/tiles_calabozo.txt
 escenas/mapas/tiles_calabozo_combate.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_calabozo_combate.tscn	escenas/mapas/prologo_prision/camara_sellado_alma.tscn, mapas_texto/macro/zonas/castillo.txt
-escenas/mapas/tiles_casa.tscn	VIEJO	archivo/mapas_viejos/escenas/tiles_casa.tscn	mapas_texto/tiles_casa.txt
-escenas/mapas/tiles_castillo.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_castillo.tscn	escenas/mapas/tiles_castillo_combate.tscn, mapas_texto/macro/zonas/castillo.txt, mapas_texto/tiles_castillo.txt +3
-escenas/mapas/tiles_castillo_combate.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_castillo_combate.tscn	escenas/mapas/tiles_calabozo.tscn, herramientas/diagnostico_colisiones_armeria.gd, mapas_texto/macro/zonas/calabozo.txt +4
-escenas/mapas/tiles_cementerio.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_cementerio.tscn	escenas/mapas/tiles_cementerio_combate.tscn, mapas_texto/macro/zonas/cementerio.txt, mapas_texto/tiles_cementerio.txt
-escenas/mapas/tiles_cementerio_combate.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_cementerio_combate.tscn	escenas/mapas/tiles_casa.tscn, escenas/mapas/tiles_castillo.tscn, escenas/mapas/tiles_mineria.tscn +5
-escenas/mapas/tiles_jefe.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_jefe.tscn	escenas/mapas/tiles_jefe_combate.tscn, mapas_texto/macro/zonas/infierno.txt, mapas_texto/tiles_jefe.txt
-escenas/mapas/tiles_jefe_combate.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_jefe_combate.tscn	escenas/mapas/tiles_profundidades.tscn, mapas_texto/tiles_profundidades.txt
-escenas/mapas/tiles_mazmorra.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_mazmorra.tscn	escenas/mapas/tiles_mazmorra_combate.tscn, mapas_texto/macro/zonas/mazmorra.txt, mapas_texto/tiles_mazmorra.txt
-escenas/mapas/tiles_mazmorra_combate.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_mazmorra_combate.tscn	escenas/mapas/tiles_mineria.tscn, escenas/mapas/tiles_ruina.tscn, mapas_texto/macro/zonas/minas.txt +2
-escenas/mapas/tiles_mineria.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_mineria.tscn	escenas/mapas/tiles_casa.tscn, escenas/mapas/tiles_mineria_combate.tscn, mapas_texto/macro/zonas/minas.txt +2
-escenas/mapas/tiles_mineria_combate.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_mineria_combate.tscn	escenas/mapas/tiles_cementerio.tscn, escenas/mapas/tiles_mazmorra.tscn, mapas_texto/macro/zonas/mazmorra.txt +2
-escenas/mapas/tiles_profundidades.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_profundidades.tscn	escenas/mapas/tiles_profundidades_combate.tscn, mapas_texto/macro/zonas/profundidades.txt, mapas_texto/tiles_profundidades.txt
-escenas/mapas/tiles_profundidades_combate.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_profundidades_combate.tscn	escenas/mapas/tiles_jefe.tscn, escenas/mapas/tiles_ruina.tscn, mapas_texto/tiles_jefe.txt +1
-escenas/mapas/tiles_ruina.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_ruina.tscn	escenas/mapas/tiles_ruina_combate.tscn, mapas_texto/macro/zonas/ruina.txt, mapas_texto/tiles_ruina.txt
-escenas/mapas/tiles_ruina_combate.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_ruina_combate.tscn	escenas/mapas/tiles_mazmorra.tscn, escenas/mapas/tiles_profundidades.tscn, mapas_texto/tiles_mazmorra.txt +1
+escenas/mapas/tiles_casa.tscn	VIEJO	archivo/mapas_viejos/escenas/tiles_casa.tscn	archivo/mapas_viejos/mapas_texto/tiles_casa.txt
+escenas/mapas/tiles_castillo.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_castillo.tscn	archivo/tiles_v1/escenas/tiles_castillo_combate.tscn, mapas_texto/macro/zonas/castillo.txt, archivo/tiles_v1/mapas_texto/tiles_castillo.txt +3
+escenas/mapas/tiles_castillo_combate.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_castillo_combate.tscn	archivo/tiles_v1/escenas/tiles_calabozo.tscn, archivo/sin_uso/herramientas/diagnostico_colisiones_armeria.gd, mapas_texto/macro/zonas/calabozo.txt +4
+escenas/mapas/tiles_cementerio.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_cementerio.tscn	archivo/tiles_v1/escenas/tiles_cementerio_combate.tscn, mapas_texto/macro/zonas/cementerio.txt, archivo/tiles_v1/mapas_texto/tiles_cementerio.txt
+escenas/mapas/tiles_cementerio_combate.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_cementerio_combate.tscn	archivo/mapas_viejos/escenas/tiles_casa.tscn, archivo/tiles_v1/escenas/tiles_castillo.tscn, archivo/tiles_v1/escenas/tiles_mineria.tscn +5
+escenas/mapas/tiles_jefe.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_jefe.tscn	archivo/tiles_v1/escenas/tiles_jefe_combate.tscn, mapas_texto/macro/zonas/infierno.txt, archivo/tiles_v1/mapas_texto/tiles_jefe.txt
+escenas/mapas/tiles_jefe_combate.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_jefe_combate.tscn	archivo/tiles_v1/escenas/tiles_profundidades.tscn, archivo/tiles_v1/mapas_texto/tiles_profundidades.txt
+escenas/mapas/tiles_mazmorra.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_mazmorra.tscn	archivo/tiles_v1/escenas/tiles_mazmorra_combate.tscn, mapas_texto/macro/zonas/mazmorra.txt, archivo/tiles_v1/mapas_texto/tiles_mazmorra.txt
+escenas/mapas/tiles_mazmorra_combate.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_mazmorra_combate.tscn	archivo/tiles_v1/escenas/tiles_mineria.tscn, archivo/tiles_v1/escenas/tiles_ruina.tscn, mapas_texto/macro/zonas/minas.txt +2
+escenas/mapas/tiles_mineria.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_mineria.tscn	archivo/mapas_viejos/escenas/tiles_casa.tscn, archivo/tiles_v1/escenas/tiles_mineria_combate.tscn, mapas_texto/macro/zonas/minas.txt +2
+escenas/mapas/tiles_mineria_combate.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_mineria_combate.tscn	archivo/tiles_v1/escenas/tiles_cementerio.tscn, archivo/tiles_v1/escenas/tiles_mazmorra.tscn, mapas_texto/macro/zonas/mazmorra.txt +2
+escenas/mapas/tiles_profundidades.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_profundidades.tscn	archivo/tiles_v1/escenas/tiles_profundidades_combate.tscn, mapas_texto/macro/zonas/profundidades.txt, archivo/tiles_v1/mapas_texto/tiles_profundidades.txt
+escenas/mapas/tiles_profundidades_combate.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_profundidades_combate.tscn	archivo/tiles_v1/escenas/tiles_jefe.tscn, archivo/tiles_v1/escenas/tiles_ruina.tscn, archivo/tiles_v1/mapas_texto/tiles_jefe.txt +1
+escenas/mapas/tiles_ruina.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_ruina.tscn	archivo/tiles_v1/escenas/tiles_ruina_combate.tscn, mapas_texto/macro/zonas/ruina.txt, archivo/tiles_v1/mapas_texto/tiles_ruina.txt
+escenas/mapas/tiles_ruina_combate.tscn	VIEJO (tiles_v1)	archivo/tiles_v1/escenas/tiles_ruina_combate.tscn	archivo/tiles_v1/escenas/tiles_mazmorra.tscn, archivo/tiles_v1/escenas/tiles_profundidades.tscn, archivo/tiles_v1/mapas_texto/tiles_mazmorra.txt +1
 escenas/mapas/zona_pruebas.tscn	VIVO	(se queda)	escenas/mapas/zona_pruebas_combate.tscn, mapas_texto/zona_pruebas.txt
 escenas/mapas/zona_pruebas_combate.tscn	VIVO	(se queda)	escenas/mapas/zona_pruebas_galeria.tscn, herramientas/zona_pruebas/galeria.py
 escenas/mapas/zona_pruebas_galeria.tscn	VIVO	(se queda)	escenas/mapas/zona_pruebas_combate.tscn
 escenas/menu/menu_pausa.tscn	VIVO	(se queda)	scripts/ui/pause_menu_manager.gd
 escenas/menu/menu_principal.gd	VIVO	(se queda)	escenas/menu/menu_principal.tscn
 escenas/menu/menu_principal.tscn	VIVO	(se queda)	project.godot, scripts/ui/pause_menu_manager.gd
-escenas/npc/anciano.tscn	VIVO	(se queda)	escenas/mapas/tiles_cementerio_combate.tscn, escenas/mapas/zona_pruebas_galeria.tscn, herramientas/zona_pruebas/galeria.py
-escenas/npc/barquero.tscn	VIVO	(se queda)	escenas/mapas/tiles_cementerio_combate.tscn, escenas/mapas/tiles_mazmorra_combate.tscn, escenas/mapas/tiles_mineria_combate.tscn +4
+escenas/npc/anciano.tscn	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_cementerio_combate.tscn, escenas/mapas/zona_pruebas_galeria.tscn, herramientas/zona_pruebas/galeria.py
+escenas/npc/barquero.tscn	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_cementerio_combate.tscn, archivo/tiles_v1/escenas/tiles_mazmorra_combate.tscn, archivo/tiles_v1/escenas/tiles_mineria_combate.tscn +4
 escenas/objetos/ascensor.tscn	VIVO	(se queda)	escenas/mapas/zona_pruebas_galeria.tscn, herramientas/zona_pruebas/galeria.py
 escenas/objetos/atuendo.tscn	VIVO	(se queda)	escenas/mapas/zona_pruebas_galeria.tscn, escenas/objetos/espada_oxidada.tscn, herramientas/zona_pruebas/galeria.py
-escenas/objetos/caja_rompible.tscn	VIEJO	archivo/mapas_viejos/escenas/objetos/caja_rompible.tscn	escenas/mapas/mundo_1.tscn
-escenas/objetos/cofre.tscn	VIVO	(se queda)	escenas/mapas/ejemplo_nivel.tscn, escenas/mapas/tiles_calabozo.tscn, escenas/mapas/tiles_casa.tscn +9
-escenas/objetos/coin_pickup.tscn	VIVO	(se queda)	escenas/mapas/ejemplo_nivel.tscn, escenas/mapas/tiles_casa.tscn, escenas/mapas/tiles_castillo.tscn +11
-escenas/objetos/espada_oxidada.tscn	VIVO	(se queda)	escenas/mapas/tiles_calabozo_combate.tscn, escenas/mapas/zona_pruebas_galeria.tscn, herramientas/zona_pruebas/galeria.py
+escenas/objetos/caja_rompible.tscn	VIEJO	archivo/mapas_viejos/escenas/objetos/caja_rompible.tscn	archivo/mapas_viejos/escenas/mundo_1.tscn
+escenas/objetos/cofre.tscn	VIVO	(se queda)	archivo/mapas_viejos/escenas/ejemplo_nivel.tscn, archivo/tiles_v1/escenas/tiles_calabozo.tscn, archivo/mapas_viejos/escenas/tiles_casa.tscn +9
+escenas/objetos/coin_pickup.tscn	VIVO	(se queda)	archivo/mapas_viejos/escenas/ejemplo_nivel.tscn, archivo/mapas_viejos/escenas/tiles_casa.tscn, archivo/tiles_v1/escenas/tiles_castillo.tscn +11
+escenas/objetos/espada_oxidada.tscn	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_calabozo_combate.tscn, escenas/mapas/zona_pruebas_galeria.tscn, herramientas/zona_pruebas/galeria.py
 escenas/objetos/espada_recuperable.tscn	VIEJO	archivo/mapas_viejos/escenas/objetos/espada_recuperable.tscn	
-escenas/objetos/estatua_rompible.tscn	VIEJO	archivo/mapas_viejos/escenas/objetos/estatua_rompible.tscn	escenas/mapas/mundo_1.tscn
+escenas/objetos/estatua_rompible.tscn	VIEJO	archivo/mapas_viejos/escenas/objetos/estatua_rompible.tscn	archivo/mapas_viejos/escenas/mundo_1.tscn
 escenas/objetos/objeto_lore.tscn	VIVO	(se queda)	escenas/mapas/zona_pruebas_galeria.tscn, herramientas/zona_pruebas/galeria.py
 escenas/objetos/palanca.tscn	VIVO	(se queda)	escenas/mapas/zona_pruebas_galeria.tscn, escenas/objetos/sello.tscn, herramientas/zona_pruebas/galeria.py
 escenas/objetos/pared_agrietada.tscn	VIVO	(se queda)	escenas/mapas/zona_pruebas_galeria.tscn, herramientas/zona_pruebas/galeria.py
-escenas/objetos/potion_pickup.tscn	VIVO	(se queda)	escenas/mapas/ejemplo_nivel.tscn, escenas/mapas/tiles_casa.tscn, escenas/mapas/tiles_castillo.tscn +10
+escenas/objetos/potion_pickup.tscn	VIVO	(se queda)	archivo/mapas_viejos/escenas/ejemplo_nivel.tscn, archivo/mapas_viejos/escenas/tiles_casa.tscn, archivo/tiles_v1/escenas/tiles_castillo.tscn +10
 escenas/objetos/rompible_selectivo.tscn	VIVO	(se queda)	escenas/mapas/zona_pruebas_galeria.tscn, herramientas/zona_pruebas/galeria.py
 escenas/objetos/sello.tscn	VIVO	(se queda)	escenas/mapas/zona_pruebas_galeria.tscn, herramientas/zona_pruebas/galeria.py
-escenas/player.tscn	VIVO	(se queda)	escenas/mapas/arena_enemigos.tscn, escenas/mapas/ejemplo_cueva.tscn, escenas/mapas/ejemplo_nivel.tscn +13
+escenas/player.tscn	VIVO	(se queda)	archivo/mapas_viejos/escenas/arena_enemigos.tscn, archivo/mapas_viejos/escenas/ejemplo_cueva.tscn, archivo/mapas_viejos/escenas/ejemplo_nivel.tscn +13
 escenas/prision.tscn	VIVO	(se queda)	escenas/mapas/prologo_prision/camara_sellado_alma.tscn
-escenas/prisn.tscn	VIVO	(se queda)	escenas/mapas/prologo_prision/camara_sellado_alma.tscn, escenas/mapas/tiles_calabozo.tscn, escenas/mapas/tiles_castillo.tscn +4
+escenas/prisn.tscn	VIVO	(se queda)	escenas/mapas/prologo_prision/camara_sellado_alma.tscn, archivo/tiles_v1/escenas/tiles_calabozo.tscn, archivo/tiles_v1/escenas/tiles_castillo.tscn +4
 escenas/proyectiles/bola_fuego_player.tscn	VIVO	(se queda)	scripts/player/player.gd
 escenas/proyectiles/flecha_enemiga.tscn	VIVO	(se queda)	scripts/bosses/w2_archer_boss.gd
 escenas/proyectiles/fuego_diablillo.tscn	VIVO	(se queda)	scripts/combat/ranged_demon.gd
 escenas/sistemas/burn_zone.tscn	VIVO	(se queda)	
-escenas/sistemas/checkpoint.tscn	VIVO	(se queda)	escenas/mapas/ejemplo_nivel.tscn, escenas/mapas/tiles_calabozo.tscn, escenas/mapas/tiles_casa.tscn +9
-escenas/sistemas/climb_zone.tscn	VIVO	(se queda)	escenas/mapas/ejemplo_cueva.tscn, escenas/mapas/tiles_calabozo.tscn, escenas/mapas/tiles_casa.tscn +9
+escenas/sistemas/checkpoint.tscn	VIVO	(se queda)	archivo/mapas_viejos/escenas/ejemplo_nivel.tscn, archivo/tiles_v1/escenas/tiles_calabozo.tscn, archivo/mapas_viejos/escenas/tiles_casa.tscn +9
+escenas/sistemas/climb_zone.tscn	VIVO	(se queda)	archivo/mapas_viejos/escenas/ejemplo_cueva.tscn, archivo/tiles_v1/escenas/tiles_calabozo.tscn, archivo/mapas_viejos/escenas/tiles_casa.tscn +9
 escenas/sistemas/fuego_infernal.tscn	VIVO	(se queda)	escenas/mapas/zona_pruebas_galeria.tscn, herramientas/zona_pruebas/galeria.py
-escenas/sistemas/kill_zone.tscn	VIVO	(se queda)	escenas/mapas/ejemplo_cueva.tscn, escenas/mapas/ejemplo_nivel.tscn, escenas/mapas/tiles_castillo.tscn +8
-escenas/sistemas/map_transition.tscn	VIVO	(se queda)	escenas/mapas/ejemplo_nivel.tscn, escenas/mapas/prologo_prision/camara_sellado_alma.tscn, escenas/mapas/tiles_calabozo.tscn +9
+escenas/sistemas/kill_zone.tscn	VIVO	(se queda)	archivo/mapas_viejos/escenas/ejemplo_cueva.tscn, archivo/mapas_viejos/escenas/ejemplo_nivel.tscn, archivo/tiles_v1/escenas/tiles_castillo.tscn +8
+escenas/sistemas/map_transition.tscn	VIVO	(se queda)	archivo/mapas_viejos/escenas/ejemplo_nivel.tscn, escenas/mapas/prologo_prision/camara_sellado_alma.tscn, archivo/tiles_v1/escenas/tiles_calabozo.tscn +9
 escenas/sistemas/one_way_platform.tscn	VIVO	(se queda)	
-escenas/sistemas/spawn_point.tscn	VIVO	(se queda)	escenas/mapas/arena_enemigos.tscn, escenas/mapas/ejemplo_cueva.tscn, escenas/mapas/ejemplo_nivel.tscn +11
-escenas/sistemas/trampa_fuego.tscn	VIVO	(se queda)	escenas/mapas/ejemplo_nivel.tscn, escenas/mapas/tiles_jefe.tscn, escenas/mapas/tiles_mineria.tscn +3
+escenas/sistemas/spawn_point.tscn	VIVO	(se queda)	archivo/mapas_viejos/escenas/arena_enemigos.tscn, archivo/mapas_viejos/escenas/ejemplo_cueva.tscn, archivo/mapas_viejos/escenas/ejemplo_nivel.tscn +11
+escenas/sistemas/trampa_fuego.tscn	VIVO	(se queda)	archivo/mapas_viejos/escenas/ejemplo_nivel.tscn, archivo/tiles_v1/escenas/tiles_jefe.tscn, archivo/tiles_v1/escenas/tiles_mineria.tscn +3
 escenas/ui/boss_health_bar.tscn	VIVO	(se queda)	escenas/jefes/caballero_reina.tscn, escenas/jefes/capitan.tscn, escenas/jefes/crystal_mauler.tscn +6
 escenas/ui/dialogue_ui.tscn	VIVO	(se queda)	escenas/mapas/prologo_prision/cinematica_prision.gd, scripts/cinematics/cinematic_controller.gd, scripts/npc/npc.gd
 escenas/ui/player_hud.tscn	VIVO	(se queda)	escenas/player.tscn, escenas/prisn.tscn
@@ -1917,14 +1917,14 @@ escenas/ui/texturas/marco_ranura.png	VIVO	(se queda)	escenas/ui/tema_underkingdo
 escenas/ui/texturas/selector.png	VIVO	(se queda)	scripts/ui/menu_selector.gd
 escenas/ui/texturas/tirador.png	VIVO	(se queda)	escenas/ui/tema_underkingdom.tres
 escenas/ui/texturas/tirador_foco.png	VIVO	(se queda)	escenas/ui/tema_underkingdom.tres
-fondos/casa.png	VIEJO	archivo/mapas_viejos/fondos/casa.png	escenas/mapas/primer_boss_mundo_1.tscn
-fondos/cementerio.png	VIEJO	archivo/mapas_viejos/fondos/cementerio.png	escenas/mapas/mundo_1.tscn
-fondos/jefe.png	VIEJO	archivo/mapas_viejos/fondos/jefe.png	escenas/mapas/jefe_final.tscn
-fondos/mazmorra.png	VIEJO	archivo/mapas_viejos/fondos/mazmorra.png	escenas/mapas/mundo_3.tscn
-fondos/mineria.png	VIEJO	archivo/mapas_viejos/fondos/mineria.png	escenas/mapas/mundo_2.tscn
-fondos/mundo_2_variante.png	VIEJO	archivo/mapas_viejos/fondos/mundo_2_variante.png	escenas/mapas/mundo_2.tscn
-fondos/profundidades.png	VIEJO	archivo/mapas_viejos/fondos/profundidades.png	escenas/mapas/profundidades.tscn
-fondos/ruina.png	VIEJO	archivo/mapas_viejos/fondos/ruina.png	escenas/mapas/ruina.tscn
+fondos/casa.png	VIEJO	archivo/mapas_viejos/fondos/casa.png	archivo/mapas_viejos/escenas/primer_boss_mundo_1.tscn
+fondos/cementerio.png	VIEJO	archivo/mapas_viejos/fondos/cementerio.png	archivo/mapas_viejos/escenas/mundo_1.tscn
+fondos/jefe.png	VIEJO	archivo/mapas_viejos/fondos/jefe.png	archivo/mapas_viejos/escenas/jefe_final.tscn
+fondos/mazmorra.png	VIEJO	archivo/mapas_viejos/fondos/mazmorra.png	archivo/mapas_viejos/escenas/mundo_3.tscn
+fondos/mineria.png	VIEJO	archivo/mapas_viejos/fondos/mineria.png	archivo/mapas_viejos/escenas/mundo_2.tscn
+fondos/mundo_2_variante.png	VIEJO	archivo/mapas_viejos/fondos/mundo_2_variante.png	archivo/mapas_viejos/escenas/mundo_2.tscn
+fondos/profundidades.png	VIEJO	archivo/mapas_viejos/fondos/profundidades.png	archivo/mapas_viejos/escenas/profundidades.tscn
+fondos/ruina.png	VIEJO	archivo/mapas_viejos/fondos/ruina.png	archivo/mapas_viejos/escenas/ruina.tscn
 fondos/ruina_bajo.png	SIN USO	archivo/sin_uso/fondos/ruina_bajo.png	
 free_cthulu_v1/chutulu.png	SIN USO	archivo/sin_uso/assets/free_cthulu_v1/chutulu.png	
 free_cthulu_v1/free_cthulu/animations/PNG/1atk/1atk_1.png	SIN USO	archivo/sin_uso/assets/free_cthulu_v1/animations/PNG/1atk/1atk_1.png	
@@ -1992,7 +1992,7 @@ free_cthulu_v1/free_cthulu/animations/PNG/walk/walk_6.png	SIN USO	archivo/sin_us
 free_cthulu_v1/free_cthulu/animations/PNG/walk/walk_7.png	SIN USO	archivo/sin_uso/assets/free_cthulu_v1/animations/PNG/walk/walk_7.png	
 free_cthulu_v1/free_cthulu/animations/PNG/walk/walk_8.png	SIN USO	archivo/sin_uso/assets/free_cthulu_v1/animations/PNG/walk/walk_8.png	
 free_cthulu_v1/free_cthulu/animations/PNG/walk/walk_9.png	SIN USO	archivo/sin_uso/assets/free_cthulu_v1/animations/PNG/walk/walk_9.png	
-free_cthulu_v1/free_cthulu/animations/cthulu_192x112_SpriteSheet.png	VIVO	assets/terceros/free_cthulu_v1/animations/cthulu_192x112_SpriteSheet.png	escenas/jefes/boss.tscn, escenas/jefes/cthulhu_jefe.tscn
+free_cthulu_v1/free_cthulu/animations/cthulu_192x112_SpriteSheet.png	VIVO	assets/terceros/free_cthulu_v1/animations/cthulu_192x112_SpriteSheet.png	archivo/mapas_viejos/escenas/jefes/boss.tscn, escenas/jefes/cthulhu_jefe.tscn
 free_cthulu_v1/free_cthulu/animations/gif_samples/1atk.gif	SIN USO	archivo/sin_uso/assets/free_cthulu_v1/animations/gif_samples/1atk.gif	
 free_cthulu_v1/free_cthulu/animations/gif_samples/2atk.gif	SIN USO	archivo/sin_uso/assets/free_cthulu_v1/animations/gif_samples/2atk.gif	
 free_cthulu_v1/free_cthulu/animations/gif_samples/_all_animations.gif	SIN USO	archivo/sin_uso/assets/free_cthulu_v1/animations/gif_samples/_all_animations.gif	
@@ -2008,7 +2008,7 @@ fuentes/OFL_Jacquard12.txt	VIVO	(se queda)
 fuentes/PixelOperator8-Bold.ttf	VIVO	(se queda)	escenas/ui/tema_underkingdom.tres
 fuentes/PixelOperator8.ttf	VIVO	(se queda)	escenas/ui/tema_underkingdom.tres
 herramientas/constructor_mapas/construir_mapa.gd	VIVO	(se queda)	herramientas/constructor_mapas/construir_mapa.tscn
-herramientas/constructor_mapas/construir_mapa.tscn	VIVO	(se queda)	herramientas/constructor_mapas/construir_mapa.gd, herramientas/zona_pruebas/galeria.py, mapas_texto/ejemplo_cueva.txt +11
+herramientas/constructor_mapas/construir_mapa.tscn	VIVO	(se queda)	herramientas/constructor_mapas/construir_mapa.gd, herramientas/zona_pruebas/galeria.py, archivo/mapas_viejos/mapas_texto/ejemplo_cueva.txt +11
 herramientas/constructor_mapas/tilesets/castillo.gd	VIVO	(se queda)	herramientas/constructor_mapas/construir_mapa.gd
 herramientas/constructor_mapas/tilesets/cementerio.gd	VIVO	(se queda)	herramientas/constructor_mapas/construir_mapa.gd
 herramientas/constructor_mapas/tilesets/mazmorra.gd	VIVO	(se queda)	herramientas/constructor_mapas/construir_mapa.gd
@@ -2153,7 +2153,7 @@ otra vez/Final/Background_0.png	SIN USO	archivo/sin_uso/assets/Final/Background_
 otra vez/Final/Background_1.png	SIN USO	archivo/sin_uso/assets/Final/Background_1.png	
 otra vez/Final/Grass_background_1.png	SIN USO	archivo/sin_uso/assets/Final/Grass_background_1.png	
 otra vez/Final/Grass_background_2.png	SIN USO	archivo/sin_uso/assets/Final/Grass_background_2.png	
-otra vez/Final/Salt.png	VIEJO	archivo/mapas_viejos/assets/Final/Salt.png	escenas/mapas/mundo_1.tscn
+otra vez/Final/Salt.png	VIEJO	archivo/mapas_viejos/assets/Final/Salt.png	archivo/mapas_viejos/escenas/mundo_1.tscn
 otra vez/Final/Social/Autor_note.txt	SIN USO	archivo/sin_uso/assets/Final/Social/Autor_note.txt	
 otra vez/Final/Social/moon.png	SIN USO	archivo/sin_uso/assets/Final/Social/moon.png	
 otra vez/Final/Social/test_1.png	SIN USO	archivo/sin_uso/assets/Final/Social/test_1.png	
@@ -2167,11 +2167,11 @@ otra vez/Flying Demon 2D Pixel Art/Sprites/with_outline/DEATH.png	SIN USO	archiv
 otra vez/Flying Demon 2D Pixel Art/Sprites/with_outline/FLYING.png	SIN USO	archivo/sin_uso/assets/Flying Demon 2D Pixel Art/Sprites/with_outline/FLYING.png	
 otra vez/Flying Demon 2D Pixel Art/Sprites/with_outline/HURT.png	SIN USO	archivo/sin_uso/assets/Flying Demon 2D Pixel Art/Sprites/with_outline/HURT.png	
 otra vez/Flying Demon 2D Pixel Art/Sprites/with_outline/IDLE.png	SIN USO	archivo/sin_uso/assets/Flying Demon 2D Pixel Art/Sprites/with_outline/IDLE.png	
-otra vez/Flying Demon 2D Pixel Art/Sprites/without_outline/ATTACK.png	VIVO	assets/terceros/Flying Demon 2D Pixel Art/Sprites/without_outline/ATTACK.png	escenas/enemigos/diablillo.tscn, escenas/mapas/mundo_2.tscn, escenas/mapas/primer_boss_mundo_1.tscn
-otra vez/Flying Demon 2D Pixel Art/Sprites/without_outline/DEATH.png	VIVO	assets/terceros/Flying Demon 2D Pixel Art/Sprites/without_outline/DEATH.png	escenas/enemigos/diablillo.tscn, escenas/mapas/mundo_2.tscn, escenas/mapas/primer_boss_mundo_1.tscn
+otra vez/Flying Demon 2D Pixel Art/Sprites/without_outline/ATTACK.png	VIVO	assets/terceros/Flying Demon 2D Pixel Art/Sprites/without_outline/ATTACK.png	escenas/enemigos/diablillo.tscn, archivo/mapas_viejos/escenas/mundo_2.tscn, archivo/mapas_viejos/escenas/primer_boss_mundo_1.tscn
+otra vez/Flying Demon 2D Pixel Art/Sprites/without_outline/DEATH.png	VIVO	assets/terceros/Flying Demon 2D Pixel Art/Sprites/without_outline/DEATH.png	escenas/enemigos/diablillo.tscn, archivo/mapas_viejos/escenas/mundo_2.tscn, archivo/mapas_viejos/escenas/primer_boss_mundo_1.tscn
 otra vez/Flying Demon 2D Pixel Art/Sprites/without_outline/FLYING.png	SIN USO	archivo/sin_uso/assets/Flying Demon 2D Pixel Art/Sprites/without_outline/FLYING.png	
-otra vez/Flying Demon 2D Pixel Art/Sprites/without_outline/HURT.png	VIVO	assets/terceros/Flying Demon 2D Pixel Art/Sprites/without_outline/HURT.png	escenas/enemigos/diablillo.tscn, escenas/mapas/mundo_2.tscn, escenas/mapas/primer_boss_mundo_1.tscn
-otra vez/Flying Demon 2D Pixel Art/Sprites/without_outline/IDLE.png	VIVO	assets/terceros/Flying Demon 2D Pixel Art/Sprites/without_outline/IDLE.png	escenas/enemigos/diablillo.tscn, escenas/mapas/mundo_1.tscn, escenas/mapas/mundo_2.tscn +1
+otra vez/Flying Demon 2D Pixel Art/Sprites/without_outline/HURT.png	VIVO	assets/terceros/Flying Demon 2D Pixel Art/Sprites/without_outline/HURT.png	escenas/enemigos/diablillo.tscn, archivo/mapas_viejos/escenas/mundo_2.tscn, archivo/mapas_viejos/escenas/primer_boss_mundo_1.tscn
+otra vez/Flying Demon 2D Pixel Art/Sprites/without_outline/IDLE.png	VIVO	assets/terceros/Flying Demon 2D Pixel Art/Sprites/without_outline/IDLE.png	escenas/enemigos/diablillo.tscn, archivo/mapas_viejos/escenas/mundo_1.tscn, archivo/mapas_viejos/escenas/mundo_2.tscn +1
 otra vez/Knight 2D Pixel Art/License.txt	VIVO	assets/terceros/Knight 2D Pixel Art/License.txt	
 otra vez/Knight 2D Pixel Art/Sprites/with_outline/ATTACK 1.png	SIN USO	archivo/sin_uso/assets/Knight 2D Pixel Art/Sprites/with_outline/ATTACK 1.png	
 otra vez/Knight 2D Pixel Art/Sprites/with_outline/ATTACK 2.png	SIN USO	archivo/sin_uso/assets/Knight 2D Pixel Art/Sprites/with_outline/ATTACK 2.png	
@@ -2202,7 +2202,7 @@ otra vez/Red Fire Trap/Frames/frame_04.png	SIN USO	archivo/sin_uso/assets/Red Fi
 otra vez/Red Fire Trap/Frames/frame_05.png	SIN USO	archivo/sin_uso/assets/Red Fire Trap/Frames/frame_05.png	
 otra vez/Red Fire Trap/Frames/frame_06.png	SIN USO	archivo/sin_uso/assets/Red Fire Trap/Frames/frame_06.png	
 otra vez/Red Fire Trap/Frames/frame_07.png	SIN USO	archivo/sin_uso/assets/Red Fire Trap/Frames/frame_07.png	
-otra vez/Red Fire Trap/Red Fire Trap Sprite Sheet.png	VIEJO	archivo/mapas_viejos/assets/Red Fire Trap/Red Fire Trap Sprite Sheet.png	escenas/mapas/mundo_1.tscn
+otra vez/Red Fire Trap/Red Fire Trap Sprite Sheet.png	VIEJO	archivo/mapas_viejos/assets/Red Fire Trap/Red Fire Trap Sprite Sheet.png	archivo/mapas_viejos/escenas/mundo_1.tscn
 otra vez/Red Fire Trap/Red Fire Trap.gif	SIN USO	archivo/sin_uso/assets/Red Fire Trap/Red Fire Trap.gif	
 otra vez/SimpleWorld/Background.png	SIN USO	archivo/sin_uso/assets/SimpleWorld/Background.png	
 otra vez/SimpleWorld/Coin And Gems/blueGem-Sheet.png	SIN USO	archivo/sin_uso/assets/SimpleWorld/Coin And Gems/blueGem-Sheet.png	
@@ -3507,7 +3507,7 @@ otra vez/warm_canvas_20.png	SIN USO	archivo/sin_uso/otra vez/warm_canvas_20.png
 prision/cadenas.png	SIN USO	archivo/sin_uso/prision/cadenas.png	
 project.godot	VIVO	(se queda)	
 prsision.png	SIN USO	archivo/sin_uso/raiz/prsision.png	
-prueba/Dungeon Tile Set.png	VIVO	assets/terceros/dungeon_tile_set/copia_prueba/Dungeon Tile Set.png	escenas/mapas/antorhca.tscn, escenas/mapas/prologo_prision/camara_sellado_alma.tscn, escenas/mapas/tiles_castillo.tscn
+prueba/Dungeon Tile Set.png	VIVO	assets/terceros/dungeon_tile_set/copia_prueba/Dungeon Tile Set.png	archivo/mapas_viejos/escenas/antorhca.tscn, escenas/mapas/prologo_prision/camara_sellado_alma.tscn, archivo/tiles_v1/escenas/tiles_castillo.tscn
 prueba/Dungeon Tile Set.rar	SIN USO	archivo/sin_uso/prueba/Dungeon Tile Set.rar	
 prueba/FantasyUIfree/FantasyUIfree/DragonHpBar2.png	SIN USO	archivo/sin_uso/assets/FantasyUIfree/DragonHpBar2.png	
 prueba/FantasyUIfree/FantasyUIfree/DragonHpBar3.png	SIN USO	archivo/sin_uso/assets/FantasyUIfree/DragonHpBar3.png	
@@ -3793,91 +3793,91 @@ prueba/Pocket inventory series #2 Pixel Map/Pocket inventory series #2 Pixel Map
 prueba/Pocket inventory series #2 Pixel Map/Pocket inventory series #2 Pixel Map v1.1/Sprites/Sprites/icons/6.png	SIN USO	archivo/sin_uso/assets/Pocket inventory series #2 Pixel Map/Pocket inventory series #2 Pixel Map v1.1/Sprites/Sprites/icons/6.png	
 prueba/Pocket inventory series #2 Pixel Map/Pocket inventory series #2 Pixel Map v1.1/Sprites/Sprites/icons/7.png	SIN USO	archivo/sin_uso/assets/Pocket inventory series #2 Pixel Map/Pocket inventory series #2 Pixel Map v1.1/Sprites/Sprites/icons/7.png	
 prueba/Pocket inventory series #2 Pixel Map/Pocket inventory series #2 Pixel Map v1.1/Sprites/Sprites/icons/8.png	SIN USO	archivo/sin_uso/assets/Pocket inventory series #2 Pixel Map/Pocket inventory series #2 Pixel Map v1.1/Sprites/Sprites/icons/8.png	
-prueba/dungeon_sidescroller-Raou/Tilesetv3.png	VIVO	assets/terceros/dungeon_sidescroller-Raou/Tilesetv3.png	escenas/mapas/antorhca.tscn, escenas/mapas/prologo_prision/camara_sellado_alma.tscn
-prueba/dungeon_sidescroller-Raou/spr_torch.png	VIVO	assets/terceros/dungeon_sidescroller-Raou/spr_torch.png	animated_sprite_2d.gd, escenas/mapas/antorhca.tscn, escenas/mapas/prologo_prision/camara_sellado_alma.tscn
+prueba/dungeon_sidescroller-Raou/Tilesetv3.png	VIVO	assets/terceros/dungeon_sidescroller-Raou/Tilesetv3.png	archivo/mapas_viejos/escenas/antorhca.tscn, escenas/mapas/prologo_prision/camara_sellado_alma.tscn
+prueba/dungeon_sidescroller-Raou/spr_torch.png	VIVO	assets/terceros/dungeon_sidescroller-Raou/spr_torch.png	archivo/mapas_viejos/raiz/animated_sprite_2d.gd, archivo/mapas_viejos/escenas/antorhca.tscn, escenas/mapas/prologo_prision/camara_sellado_alma.tscn
 scripts/bosses/captain_boss.gd	VIVO	(se queda)	escenas/jefes/capitan.tscn, scripts/bosses/queen_boss.gd
 scripts/bosses/queen_boss.gd	VIVO	(se queda)	escenas/jefes/reina_jefe.tscn
 scripts/bosses/simple_boss.gd	VIVO	(se queda)	escenas/jefes/crystal_mauler.tscn, escenas/jefes/cthulhu_jefe.tscn, escenas/jefes/demon_slime_jefe.tscn +2
 scripts/bosses/w2_archer_boss.gd	VIVO	(se queda)	escenas/enemigos/enemis.tscn
-scripts/bosses/w2_queen_knight_progress.gd	VIEJO	archivo/mapas_viejos/scripts/bosses/w2_queen_knight_progress.gd	escenas/mapas/primer_boss_mundo_1.tscn
+scripts/bosses/w2_queen_knight_progress.gd	VIEJO	archivo/mapas_viejos/scripts/bosses/w2_queen_knight_progress.gd	archivo/mapas_viejos/escenas/primer_boss_mundo_1.tscn
 scripts/camera/bounded_camera.gd	VIVO	(se queda)	escenas/player.tscn, escenas/prisn.tscn, scripts/player/player.gd
-scripts/camera/map_bounds.gd	VIVO	(se queda)	escenas/mapas/arena_enemigos.tscn, escenas/mapas/ejemplo_cueva.tscn, escenas/mapas/ejemplo_nivel.tscn +19
-scripts/cinematics/cinematic_controller.gd	VIVO	(se queda)	escenas/mapas/mundo_1.tscn, escenas/mapas/tiles_calabozo_combate.tscn, escenas/mapas/tiles_castillo.tscn +1
-scripts/combat/boss_arena.gd	VIVO	(se queda)	escenas/mapas/tiles_castillo_combate.tscn, escenas/mapas/tiles_cementerio_combate.tscn, escenas/mapas/tiles_jefe_combate.tscn +7
-scripts/combat/castle_key_guard.gd	VIEJO (tiles_v1)	archivo/tiles_v1/scripts/combat/castle_key_guard.gd	escenas/mapas/tiles_castillo.tscn
+scripts/camera/map_bounds.gd	VIVO	(se queda)	archivo/mapas_viejos/escenas/arena_enemigos.tscn, archivo/mapas_viejos/escenas/ejemplo_cueva.tscn, archivo/mapas_viejos/escenas/ejemplo_nivel.tscn +19
+scripts/cinematics/cinematic_controller.gd	VIVO	(se queda)	archivo/mapas_viejos/escenas/mundo_1.tscn, archivo/tiles_v1/escenas/tiles_calabozo_combate.tscn, archivo/tiles_v1/escenas/tiles_castillo.tscn +1
+scripts/combat/boss_arena.gd	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_castillo_combate.tscn, archivo/tiles_v1/escenas/tiles_cementerio_combate.tscn, archivo/tiles_v1/escenas/tiles_jefe_combate.tscn +7
+scripts/combat/castle_key_guard.gd	VIEJO (tiles_v1)	archivo/tiles_v1/scripts/combat/castle_key_guard.gd	archivo/tiles_v1/escenas/tiles_castillo.tscn
 scripts/combat/enemy_base.gd	VIVO	(se queda)	escenas/enemigos/aprendis.tscn, escenas/enemigos/demonslime.tscn, escenas/enemigos/esqueleto_lanza.tscn +25
 scripts/combat/jailer_key_drop.gd	VIVO	(se queda)	escenas/enemigos/carcelero.tscn
 scripts/combat/lunge_enemy.gd	VIVO	(se queda)	escenas/enemigos/esqueleto.tscn, escenas/enemigos/murcielago.tscn, escenas/enemigos/murcielago_grande.tscn +6
-scripts/combat/ranged_demon.gd	VIVO	(se queda)	escenas/enemigos/diablillo.tscn, escenas/mapas/ejemplo_nivel.tscn, escenas/mapas/tiles_jefe.tscn +2
-scripts/combat/rising_enemy.gd	VIVO	(se queda)	escenas/enemigos/esqueleto_tumba.tscn, escenas/mapas/tiles_cementerio.tscn
+scripts/combat/ranged_demon.gd	VIVO	(se queda)	escenas/enemigos/diablillo.tscn, archivo/mapas_viejos/escenas/ejemplo_nivel.tscn, archivo/tiles_v1/escenas/tiles_jefe.tscn +2
+scripts/combat/rising_enemy.gd	VIVO	(se queda)	escenas/enemigos/esqueleto_tumba.tscn, archivo/tiles_v1/escenas/tiles_cementerio.tscn
 scripts/combat/wave_arena.gd	VIVO	(se queda)	escenas/mapas/zona_pruebas_galeria.tscn, herramientas/zona_pruebas/galeria.py
 scripts/core/dev_mode.gd	VIVO	(se queda)	project.godot
 scripts/core/display_settings.gd	VIVO	(se queda)	project.godot
 scripts/core/game_manager.gd	VIVO	(se queda)	project.godot
 scripts/core/input_config.gd	VIVO	(se queda)	project.godot
 scripts/dialogue/dialogue_ui.gd	VIVO	(se queda)	escenas/mapas/prologo_prision/cinematica_prision.gd, escenas/ui/dialogue_ui.tscn, scripts/cinematics/cinematic_controller.gd +1
-scripts/environment/arena_barrier.gd	VIVO	(se queda)	escenas/mapas/tiles_castillo_combate.tscn, escenas/mapas/tiles_cementerio_combate.tscn, escenas/mapas/tiles_jefe_combate.tscn +11
-scripts/environment/breakable_object.gd	VIVO	(se queda)	escenas/objetos/caja_rompible.tscn, escenas/objetos/estatua_rompible.tscn, escenas/objetos/pared_agrietada.tscn +1
-scripts/environment/burn_zone.gd	VIVO	(se queda)	escenas/mapas/ejemplo_nivel.tscn, escenas/mapas/tiles_jefe.tscn, escenas/mapas/tiles_mineria.tscn +4
-scripts/environment/castle_armory_equipment.gd	VIEJO (tiles_v1)	archivo/tiles_v1/scripts/environment/castle_armory_equipment.gd	escenas/mapas/tiles_castillo.tscn
-scripts/environment/castle_key_door.gd	VIEJO (tiles_v1)	archivo/tiles_v1/scripts/environment/castle_key_door.gd	escenas/mapas/tiles_castillo.tscn
-scripts/environment/checkpoint.gd	VIVO	(se queda)	escenas/mapas/ejemplo_nivel.tscn, escenas/mapas/tiles_calabozo.tscn, escenas/mapas/tiles_cementerio.tscn +7
-scripts/environment/checkpoint_boss.gd	VIEJO	archivo/mapas_viejos/scripts/environment/checkpoint_boss.gd	escenas/mapas/mundo_1.tscn
-scripts/environment/chest_interactable.gd	VIVO	(se queda)	escenas/mapas/ejemplo_nivel.tscn, escenas/mapas/mundo_1.tscn, escenas/mapas/mundo_3.tscn +9
-scripts/environment/climb_zone.gd	VIVO	(se queda)	escenas/mapas/ejemplo_cueva.tscn, escenas/mapas/primer_boss_mundo_1.tscn, escenas/mapas/tiles_calabozo.tscn +8
+scripts/environment/arena_barrier.gd	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_castillo_combate.tscn, archivo/tiles_v1/escenas/tiles_cementerio_combate.tscn, archivo/tiles_v1/escenas/tiles_jefe_combate.tscn +11
+scripts/environment/breakable_object.gd	VIVO	(se queda)	archivo/mapas_viejos/escenas/objetos/caja_rompible.tscn, archivo/mapas_viejos/escenas/objetos/estatua_rompible.tscn, escenas/objetos/pared_agrietada.tscn +1
+scripts/environment/burn_zone.gd	VIVO	(se queda)	archivo/mapas_viejos/escenas/ejemplo_nivel.tscn, archivo/tiles_v1/escenas/tiles_jefe.tscn, archivo/tiles_v1/escenas/tiles_mineria.tscn +4
+scripts/environment/castle_armory_equipment.gd	VIEJO (tiles_v1)	archivo/tiles_v1/scripts/environment/castle_armory_equipment.gd	archivo/tiles_v1/escenas/tiles_castillo.tscn
+scripts/environment/castle_key_door.gd	VIEJO (tiles_v1)	archivo/tiles_v1/scripts/environment/castle_key_door.gd	archivo/tiles_v1/escenas/tiles_castillo.tscn
+scripts/environment/checkpoint.gd	VIVO	(se queda)	archivo/mapas_viejos/escenas/ejemplo_nivel.tscn, archivo/tiles_v1/escenas/tiles_calabozo.tscn, archivo/tiles_v1/escenas/tiles_cementerio.tscn +7
+scripts/environment/checkpoint_boss.gd	VIEJO	archivo/mapas_viejos/scripts/environment/checkpoint_boss.gd	archivo/mapas_viejos/escenas/mundo_1.tscn
+scripts/environment/chest_interactable.gd	VIVO	(se queda)	archivo/mapas_viejos/escenas/ejemplo_nivel.tscn, archivo/mapas_viejos/escenas/mundo_1.tscn, archivo/mapas_viejos/escenas/mundo_3.tscn +9
+scripts/environment/climb_zone.gd	VIVO	(se queda)	archivo/mapas_viejos/escenas/ejemplo_cueva.tscn, archivo/mapas_viejos/escenas/primer_boss_mundo_1.tscn, archivo/tiles_v1/escenas/tiles_calabozo.tscn +8
 scripts/environment/collapse_sequence.gd	VIVO	(se queda)	escenas/mapas/zona_pruebas_galeria.tscn, herramientas/zona_pruebas/galeria.py, scripts/environment/falling_rubble.gd
 scripts/environment/dark_castle_map.gd	VIEJO	archivo/mapas_viejos/scripts/environment/dark_castle_map.gd	
 scripts/environment/dark_zone.gd	VIVO	(se queda)	escenas/mapas/zona_pruebas_galeria.tscn, herramientas/zona_pruebas/galeria.py
 scripts/environment/encounter_visibility.gd	VIVO	(se queda)	escenas/mapas/zona_pruebas_galeria.tscn, herramientas/zona_pruebas/galeria.py
 scripts/environment/falling_rubble.gd	VIVO	(se queda)	scripts/environment/collapse_sequence.gd
 scripts/environment/infernal_fire.gd	VIVO	(se queda)	escenas/sistemas/fuego_infernal.tscn
-scripts/environment/kill_zone.gd	VIVO	(se queda)	escenas/mapas/ejemplo_cueva.tscn, escenas/mapas/ejemplo_nivel.tscn, escenas/mapas/mundo_1.tscn +7
-scripts/environment/ledge_transition_zone.gd	VIEJO	archivo/mapas_viejos/scripts/environment/ledge_transition_zone.gd	escenas/mapas/mundo_1.tscn
+scripts/environment/kill_zone.gd	VIVO	(se queda)	archivo/mapas_viejos/escenas/ejemplo_cueva.tscn, archivo/mapas_viejos/escenas/ejemplo_nivel.tscn, archivo/mapas_viejos/escenas/mundo_1.tscn +7
+scripts/environment/ledge_transition_zone.gd	VIEJO	archivo/mapas_viejos/scripts/environment/ledge_transition_zone.gd	archivo/mapas_viejos/escenas/mundo_1.tscn
 scripts/environment/lever.gd	VIVO	(se queda)	escenas/objetos/palanca.tscn, scripts/environment/seal.gd
-scripts/environment/locked_door.gd	VIVO	(se queda)	escenas/mapas/tiles_calabozo_combate.tscn, escenas/mapas/tiles_castillo_combate.tscn, escenas/mapas/tiles_cementerio_combate.tscn +7
+scripts/environment/locked_door.gd	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_calabozo_combate.tscn, archivo/tiles_v1/escenas/tiles_castillo_combate.tscn, archivo/tiles_v1/escenas/tiles_cementerio_combate.tscn +7
 scripts/environment/lore_object.gd	VIVO	(se queda)	escenas/objetos/objeto_lore.tscn
-scripts/environment/map_ambience.gd	VIVO	(se queda)	escenas/mapas/tiles_calabozo_combate.tscn, escenas/mapas/tiles_castillo_combate.tscn, escenas/mapas/tiles_cementerio_combate.tscn +1
+scripts/environment/map_ambience.gd	VIVO	(se queda)	archivo/tiles_v1/escenas/tiles_calabozo_combate.tscn, archivo/tiles_v1/escenas/tiles_castillo_combate.tscn, archivo/tiles_v1/escenas/tiles_cementerio_combate.tscn +1
 scripts/environment/mine_elevator.gd	VIVO	(se queda)	escenas/objetos/ascensor.tscn
 scripts/environment/roll_gate.gd	VIVO	(se queda)	escenas/mapas/zona_pruebas_galeria.tscn, herramientas/zona_pruebas/galeria.py
 scripts/environment/seal.gd	VIVO	(se queda)	escenas/objetos/sello.tscn
 scripts/environment/selective_breakable.gd	VIVO	(se queda)	escenas/objetos/rompible_selectivo.tscn
-scripts/environment/story_hidden_actor.gd	VIEJO	archivo/mapas_viejos/scripts/environment/story_hidden_actor.gd	escenas/mapas/primer_boss_mundo_1.tscn
-scripts/environment/world1_boss_gate_blocker.gd	VIEJO	archivo/mapas_viejos/scripts/environment/world1_boss_gate_blocker.gd	escenas/mapas/mundo_1.tscn
+scripts/environment/story_hidden_actor.gd	VIEJO	archivo/mapas_viejos/scripts/environment/story_hidden_actor.gd	archivo/mapas_viejos/escenas/primer_boss_mundo_1.tscn
+scripts/environment/world1_boss_gate_blocker.gd	VIEJO	archivo/mapas_viejos/scripts/environment/world1_boss_gate_blocker.gd	archivo/mapas_viejos/escenas/mundo_1.tscn
 scripts/fx/combat_fx.gd	VIVO	(se queda)	scripts/bosses/queen_boss.gd, scripts/bosses/simple_boss.gd, scripts/combat/boss_arena.gd +9
 scripts/items/ability_pickup.gd	VIVO	(se queda)	escenas/items/reliquia_habilidad.tscn, scripts/core/game_manager.gd, scripts/items/eternal_flame_pickup.gd +2
-scripts/items/boss_key_pickup.gd	VIVO	(se queda)	escenas/items/llave_jefe_m1.tscn, scripts/combat/boss_arena.gd, scripts/combat/castle_key_guard.gd +2
-scripts/items/castle_key_pickup.gd	VIEJO (tiles_v1)	archivo/tiles_v1/scripts/items/castle_key_pickup.gd	escenas/items/llave_armeria_castillo.tscn
-scripts/items/collectible_pickup.gd	VIVO	(se queda)	escenas/mapas/ejemplo_nivel.tscn, escenas/mapas/tiles_cementerio.tscn, escenas/mapas/tiles_jefe.tscn +7
+scripts/items/boss_key_pickup.gd	VIVO	(se queda)	escenas/items/llave_jefe_m1.tscn, scripts/combat/boss_arena.gd, archivo/tiles_v1/scripts/combat/castle_key_guard.gd +2
+scripts/items/castle_key_pickup.gd	VIEJO (tiles_v1)	archivo/tiles_v1/scripts/items/castle_key_pickup.gd	archivo/tiles_v1/escenas/items/llave_armeria_castillo.tscn
+scripts/items/collectible_pickup.gd	VIVO	(se queda)	archivo/mapas_viejos/escenas/ejemplo_nivel.tscn, archivo/tiles_v1/escenas/tiles_cementerio.tscn, archivo/tiles_v1/escenas/tiles_jefe.tscn +7
 scripts/items/eternal_flame_pickup.gd	VIVO	(se queda)	escenas/items/llama_eterna.tscn
 scripts/items/found_upgrade_pickup.gd	VIVO	(se queda)	escenas/items/mejora_encontrada.tscn
 scripts/items/life_fragment_pickup.gd	VIVO	(se queda)	escenas/items/fragmento_vida.tscn
 scripts/items/outfit_pickup.gd	VIVO	(se queda)	escenas/objetos/atuendo.tscn
-scripts/items/prison_guard_mission.gd	VIVO	(se queda)	escenas/mapas/prologo_prision/camara_sellado_alma.tscn, escenas/mapas/tiles_castillo.tscn
-scripts/items/sword_recovery.gd	VIVO	(se queda)	escenas/objetos/espada_recuperable.tscn, scripts/items/outfit_pickup.gd
+scripts/items/prison_guard_mission.gd	VIVO	(se queda)	escenas/mapas/prologo_prision/camara_sellado_alma.tscn, archivo/tiles_v1/escenas/tiles_castillo.tscn
+scripts/items/sword_recovery.gd	VIVO	(se queda)	archivo/mapas_viejos/escenas/objetos/espada_recuperable.tscn, scripts/items/outfit_pickup.gd
 scripts/npc/merchant_npc.gd	VIVO	(se queda)	escenas/npc/barquero.tscn
 scripts/npc/npc.gd	VIVO	(se queda)	escenas/npc/anciano.tscn, scripts/environment/lore_object.gd, scripts/npc/merchant_npc.gd
-scripts/player/player.gd	VIVO	(se queda)	escenas/mapas/arena_enemigos.tscn, escenas/mapas/ejemplo_cueva.tscn, escenas/mapas/ejemplo_nivel.tscn +18
+scripts/player/player.gd	VIVO	(se queda)	archivo/mapas_viejos/escenas/arena_enemigos.tscn, archivo/mapas_viejos/escenas/ejemplo_cueva.tscn, archivo/mapas_viejos/escenas/ejemplo_nivel.tscn +18
 scripts/projectiles/enemy_projectile.gd	VIVO	(se queda)	escenas/proyectiles/flecha_enemiga.tscn, escenas/proyectiles/fuego_diablillo.tscn
 scripts/projectiles/player_projectile.gd	VIVO	(se queda)	escenas/proyectiles/bola_fuego_player.tscn, scripts/player/player.gd
-scripts/transitions/map_spawn_controller.gd	VIVO	(se queda)	escenas/mapas/arena_enemigos.tscn, escenas/mapas/ejemplo_cueva.tscn, escenas/mapas/ejemplo_nivel.tscn +18
-scripts/transitions/map_transition.gd	VIVO	(se queda)	escenas/mapas/ejemplo_nivel.tscn, escenas/mapas/prologo_prision/cinematica_prision.gd, escenas/mapas/tiles_calabozo.tscn +8
-scripts/transitions/spawn_point.gd	VIVO	(se queda)	escenas/mapas/arena_enemigos.tscn, escenas/mapas/ejemplo_cueva.tscn, escenas/mapas/ejemplo_nivel.tscn +18
-scripts/transitions/world_test_route.gd	VIEJO	archivo/mapas_viejos/scripts/transitions/world_test_route.gd	escenas/mapas/jefe_final.tscn, escenas/mapas/mundo_1.tscn, escenas/mapas/mundo_2.tscn +4
+scripts/transitions/map_spawn_controller.gd	VIVO	(se queda)	archivo/mapas_viejos/escenas/arena_enemigos.tscn, archivo/mapas_viejos/escenas/ejemplo_cueva.tscn, archivo/mapas_viejos/escenas/ejemplo_nivel.tscn +18
+scripts/transitions/map_transition.gd	VIVO	(se queda)	archivo/mapas_viejos/escenas/ejemplo_nivel.tscn, escenas/mapas/prologo_prision/cinematica_prision.gd, archivo/tiles_v1/escenas/tiles_calabozo.tscn +8
+scripts/transitions/spawn_point.gd	VIVO	(se queda)	archivo/mapas_viejos/escenas/arena_enemigos.tscn, archivo/mapas_viejos/escenas/ejemplo_cueva.tscn, archivo/mapas_viejos/escenas/ejemplo_nivel.tscn +18
+scripts/transitions/world_test_route.gd	VIEJO	archivo/mapas_viejos/scripts/transitions/world_test_route.gd	archivo/mapas_viejos/escenas/jefe_final.tscn, archivo/mapas_viejos/escenas/mundo_1.tscn, archivo/mapas_viejos/escenas/mundo_2.tscn +4
 scripts/ui/boss_health_bar.gd	VIVO	(se queda)	escenas/jefes/crystal_mauler.tscn, escenas/jefes/cthulhu_jefe.tscn, escenas/jefes/demon_slime_jefe.tscn +4
 scripts/ui/enemy_health_bar.gd	VIVO	(se queda)	scripts/combat/enemy_base.gd
 scripts/ui/menu_selector.gd	VIVO	(se queda)	escenas/menu/menu_principal.gd, scripts/ui/pause_menu_overlay.gd
 scripts/ui/pause_menu_manager.gd	VIVO	(se queda)	project.godot
 scripts/ui/pause_menu_overlay.gd	VIVO	(se queda)	escenas/menu/menu_pausa.tscn, scripts/ui/pause_menu_manager.gd
 scripts/ui/player_hud.gd	VIVO	(se queda)	escenas/ui/player_hud.tscn
-sprites/Coin Sheet.png	VIVO	(se queda)	escenas/mapas/mundo_1.tscn, escenas/mapas/ruina.tscn, escenas/menu/menu_pausa.tscn +2
-sprites/Potion 1.png	VIVO	(se queda)	escenas/mapas/mundo_1.tscn, escenas/mapas/mundo_3.tscn, escenas/mapas/ruina.tscn +2
-sprites/environment/caja.png	VIEJO	archivo/mapas_viejos/sprites/environment/caja.png	escenas/objetos/caja_rompible.tscn
-sprites/environment/estatuta.png	VIEJO	archivo/mapas_viejos/sprites/environment/estatuta.png	escenas/objetos/estatua_rompible.tscn
-sprites/spike Trap1.png	VIEJO	archivo/mapas_viejos/sprites/spike Trap1.png	escenas/mapas/mundo_1.tscn, escenas/mapas/ruina.tscn
-sprites/spike Trap2.png	VIEJO	archivo/mapas_viejos/sprites/spike Trap2.png	escenas/mapas/mundo_1.tscn, escenas/mapas/ruina.tscn
-sprites/spike Trap3.png	VIEJO	archivo/mapas_viejos/sprites/spike Trap3.png	escenas/mapas/mundo_1.tscn, escenas/mapas/ruina.tscn
-sprites/spike Trap4.png	VIEJO	archivo/mapas_viejos/sprites/spike Trap4.png	escenas/mapas/mundo_1.tscn, escenas/mapas/ruina.tscn
-sprites/spike Trap5.png	VIEJO	archivo/mapas_viejos/sprites/spike Trap5.png	escenas/mapas/mundo_1.tscn, escenas/mapas/ruina.tscn
+sprites/Coin Sheet.png	VIVO	(se queda)	archivo/mapas_viejos/escenas/mundo_1.tscn, archivo/mapas_viejos/escenas/ruina.tscn, escenas/menu/menu_pausa.tscn +2
+sprites/Potion 1.png	VIVO	(se queda)	archivo/mapas_viejos/escenas/mundo_1.tscn, archivo/mapas_viejos/escenas/mundo_3.tscn, archivo/mapas_viejos/escenas/ruina.tscn +2
+sprites/environment/caja.png	VIEJO	archivo/mapas_viejos/sprites/environment/caja.png	archivo/mapas_viejos/escenas/objetos/caja_rompible.tscn
+sprites/environment/estatuta.png	VIEJO	archivo/mapas_viejos/sprites/environment/estatuta.png	archivo/mapas_viejos/escenas/objetos/estatua_rompible.tscn
+sprites/spike Trap1.png	VIEJO	archivo/mapas_viejos/sprites/spike Trap1.png	archivo/mapas_viejos/escenas/mundo_1.tscn, archivo/mapas_viejos/escenas/ruina.tscn
+sprites/spike Trap2.png	VIEJO	archivo/mapas_viejos/sprites/spike Trap2.png	archivo/mapas_viejos/escenas/mundo_1.tscn, archivo/mapas_viejos/escenas/ruina.tscn
+sprites/spike Trap3.png	VIEJO	archivo/mapas_viejos/sprites/spike Trap3.png	archivo/mapas_viejos/escenas/mundo_1.tscn, archivo/mapas_viejos/escenas/ruina.tscn
+sprites/spike Trap4.png	VIEJO	archivo/mapas_viejos/sprites/spike Trap4.png	archivo/mapas_viejos/escenas/mundo_1.tscn, archivo/mapas_viejos/escenas/ruina.tscn
+sprites/spike Trap5.png	VIEJO	archivo/mapas_viejos/sprites/spike Trap5.png	archivo/mapas_viejos/escenas/mundo_1.tscn, archivo/mapas_viejos/escenas/ruina.tscn
 sprites/trampas/fuego_rojo.png	VIVO	(se queda)	escenas/sistemas/trampa_fuego.tscn, scripts/environment/infernal_fire.gd, scripts/items/eternal_flame_pickup.gd
-sprites/trampas/pinchos.png	VIVO	(se queda)	escenas/mapas/ejemplo_nivel.tscn, escenas/mapas/tiles_castillo.tscn, escenas/mapas/tiles_jefe.tscn +3
-tile/Dungeon Tile Set.png	VIVO	assets/terceros/dungeon_tile_set/Dungeon Tile Set.png	escenas/mapas/ejemplo_nivel.tscn, escenas/mapas/mundo_1.tscn, escenas/mapas/mundo_3.tscn +14
+sprites/trampas/pinchos.png	VIVO	(se queda)	archivo/mapas_viejos/escenas/ejemplo_nivel.tscn, archivo/tiles_v1/escenas/tiles_castillo.tscn, archivo/tiles_v1/escenas/tiles_jefe.tscn +3
+tile/Dungeon Tile Set.png	VIVO	assets/terceros/dungeon_tile_set/Dungeon Tile Set.png	archivo/mapas_viejos/escenas/ejemplo_nivel.tscn, archivo/mapas_viejos/escenas/mundo_1.tscn, archivo/mapas_viejos/escenas/mundo_3.tscn +14

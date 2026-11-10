@@ -2,7 +2,7 @@
 
 - **Plan:** `docs/P46_MACRO_MAPA.md` (dibujo, ruta, atajos, decisiones y desbloqueos por zona). La forma de trabajo está en su sección 9.
 - **Puertas hacia atrás:** el punto 1 de `mapas_texto/macro/sugerencias_exploracion.txt`, ideas 1 a 9, con sitio, llave, premio, vuelta y coste de cada una.
-- **Lo que hay hoy en Godot no cuenta:** los niveles `tiles_*` y sus escenas `_combate` se descartan mientras dure la fase ASCII. No se usan como referencia ni se arreglan; cada zona se genera de nuevo desde su ASCII en la Fase 3.
+- **Lo que hay hoy en Godot no cuenta:** los niveles `tiles_*` y sus escenas `_combate` se descartan mientras dure la fase ASCII. No se usan como referencia ni se arreglan; cada zona se genera de nuevo desde su ASCII en la Fase 3. Desde P72 están apartados en `archivo/tiles_v1/` (la ruta aún corre por ahí) y `escenas/mapas/` queda libre para la Fase 3.
 
 Las tres fases:
 1. **Fase 1, los ASCII:** cada zona dibujada a escala real, con sus puertas hacia atrás. Hecha (2026-11-08): las puertas y, tras el cierre, el dash y los secretos variados (pasos 8 a 11).
@@ -184,6 +184,12 @@ Las profundidades no piden piezas nuevas: reutilizan el contador de sellos, el f
 
 Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambia su ruta en `zonas.txt` (P46, sección 9). Después hay que jugarla.
 
+**Al generar cada zona, además** (P72):
+- la escena nueva va a `escenas/mapas/tiles_<zona>.tscn` y `_combate`, el nombre que ya llevan las salidas de los ASCII y `zonas.txt`;
+- las salidas que llegan a ella desde zonas todavía viejas apuntan hoy a `archivo/tiles_v1/escenas/`. Hay que cambiarlas a la nueva: la de la prisión (`camara_sellado_alma.tscn`) para el calabozo, y las de los `_combate` de `archivo/tiles_v1/` vecinos;
+- castillo y cementerio: `GameManager.CASTLE_SCENE_PATH` / `CEMETERY_SCENE_PATH` (autoguardado) y la lista de `player.gd` (`debug_slide_collisions`) vuelven a `escenas/mapas/`;
+- la versión vieja de la zona se queda en `archivo/tiles_v1/`: no se borra ni se toma como referencia.
+
 - [ ] **Calabozo:** cinco rejas, las dos cinemáticas y sus puntos, enemigos y carcelero, espada y preso, pared agrietada, depósito del alcaide con el acta y la empuñadura, trampilla, transición y spawn de `:B:`.
 - [ ] **Castillo:**
   - el Rey con `ability_reward` de Rodar, la reja de `[H2]`, las trampillas y la trampilla de `:C:`;
@@ -222,6 +228,8 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
 - **Licencias:**
   - Pixel Fantasy Caves: el ZIP no trae licencia; confirmar de dónde se bajó (`assets/terceros/pixelfantasy_caves/ORIGEN.txt`);
   - `Final.zip` (Anokolisa): su nota pide no dar crédito si se cambia el arte; anotarlo en un `ORIGEN.txt` cuando se use.
+  - los packs de `assets/terceros/` cuyo `ORIGEN.txt` dice "por confirmar" (los Elementals, Demon Slime, Cthulhu, Frost Guardian, mino, Lively NPCs, Raou, el Dungeon Tile Set y las barras de vida): procedencia y licencia (P72).
+- **Duplicado:** `assets/terceros/dungeon_tile_set/Dungeon Tile Set.png` y `copia_prueba/Dungeon Tile Set.png` son el mismo PNG con dos uids. Unificarlos pide cambiar uids en escenas, no solo rutas (P72).
 - **Arte:**
   - escala del diablillo, que a escala 1 se ve más grande que el Player;
   - enemigos y decorados de Gothicvania (`Legacy Collection/Assets/Gothicvania/`);
