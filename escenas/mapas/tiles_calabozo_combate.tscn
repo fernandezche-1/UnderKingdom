@@ -104,6 +104,7 @@ position = Vector2(312, 400)
 script = ExtResource("3_puerta")
 key_id = "mazmorra_alcaide"
 locked_message = "NECESITAS LA LLAVE DEL ALCAIDE"
+locked_dialogue_path = "res://dialogues/calabozo_reja_deposito.json"
 piece_start = SubResource("AtlasTexture_reja_tope")
 piece_middle = SubResource("AtlasTexture_reja_medio")
 piece_end = SubResource("AtlasTexture_reja_base")
