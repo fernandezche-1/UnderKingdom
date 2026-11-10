@@ -2,10 +2,12 @@
 ; el método del macro mapa (2026-11-06). Primera pasada (estructura, P,
 ; checkpoints, aperturas y sitio de cada pieza) y segunda pasada (enemigos,
 ; objetos y decorados) hechas.
-; NO GENERAR TODAVÍA: la escena de abajo es la del calabozo que se juega hoy
-; (mapas_texto/tiles_calabozo.txt, P42, con colisiones validadas jugando) y el
-; constructor la reemplazaría. Al aprobarlo, este archivo pasa a
-; mapas_texto/tiles_calabozo.txt (sección 9) y la _combate se rehace entera.
+; Generado en la Fase 3 (2026-11-10): este archivo pasó de
+; mapas_texto/macro/zonas/ a mapas_texto/tiles_calabozo.txt (P46, sección 9) y
+; es la fuente de escenas/mapas/tiles_calabozo.tscn. Generar:
+;   godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/tiles_calabozo.txt
+; El calabozo de P42 queda en archivo/tiles_v1/ y no se toma como referencia;
+; la _combate se hace de nuevo (lista al final de esta cabecera).
 ;
 ; Coordenadas (columna, fila), desde 0. 100 x 52 piezas, la zona más pequeña:
 ; es la primera y hace de tutorial. En el mundo en (36, 36): su borde derecho
