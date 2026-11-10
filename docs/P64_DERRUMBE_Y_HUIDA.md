@@ -1,7 +1,7 @@
 # P64 - Suelo que se hunde y huida del derrumbe (`[!5]`)
 
 - Primera pieza del paso 5 (Mazmorra) de la Fase 2 de `TASK.md`. Sirve a la sala de la Reina y a la huida hacia la ruina.
-- Decisiones de `docs/FASE2_DECISIONES.md` que aplica: Z1, Z2 (escombros, no frente de derrumbe), Z3, G3 y G4.
+- Decisiones de `docs/historial/FASE2_DECISIONES.md` que aplica: Z1, Z2 (escombros, no frente de derrumbe), Z3, G3 y G4.
 - Script `scripts/environment/collapse_sequence.gd` (`UnderkingdomCollapse`, `Node2D`) y `scripts/environment/falling_rubble.gd` (el escombro, que se crea por código). Sin escena propia. Sin guardado nuevo: usa `completed_encounters`, así que `SAVE_FORMAT_VERSION` sigue en 5.
 
 ## 1. Qué hace

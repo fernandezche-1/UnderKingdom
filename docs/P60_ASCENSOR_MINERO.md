@@ -1,7 +1,7 @@
 # P60 - Ascensor minero (`:C:`)
 
 - Primera pieza del paso de las minas de la Fase 2 de `TASK.md` (la de atuendos que G2 adelantaba ya estaba hecha, P59).
-- Decisiones de `docs/FASE2_DECISIONES.md` que aplica: M1, M2, G3, G4 y G5.
+- Decisiones de `docs/historial/FASE2_DECISIONES.md` que aplica: M1, M2, G3, G4 y G5.
 - Piezas: `escenas/objetos/ascensor.tscn` con `scripts/environment/mine_elevator.gd` (`UnderkingdomMineElevator`).
 
 ## 1. Qué es

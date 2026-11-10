@@ -5,7 +5,7 @@
 - Piezas:
   - `escenas/objetos/objeto_lore.tscn`, con `scripts/environment/lore_object.gd` (`UnderkingdomLoreObject`), que hereda de `UnderkingdomNPC` (`npc.gd`);
   - un diálogo de ejemplo, `dialogues/lore_acta_prisionero.json`.
-- Decisiones de `docs/FASE2_DECISIONES.md` que aplica: C5, C6, G3, G4 y G5.
+- Decisiones de `docs/historial/FASE2_DECISIONES.md` que aplica: C5, C6, G3, G4 y G5.
 
 ## 1. El objeto
 

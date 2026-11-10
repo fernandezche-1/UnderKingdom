@@ -1,7 +1,7 @@
 # P62 - IA del Crystal Mauler
 
 - Pieza del paso 4 (Minas) de la Fase 2 de `TASK.md`. Sirve a la gruta de cristal de las minas (idea 6, jefe opcional).
-- Decisiones de `docs/FASE2_DECISIONES.md` que aplica: M6, M7, M8 y G4.
+- Decisiones de `docs/historial/FASE2_DECISIONES.md` que aplica: M6, M7, M8 y G4.
 - Escena nueva `escenas/jefes/crystal_mauler.tscn`, con `scripts/bosses/simple_boss.gd` (sin script nuevo). `boss_mina.tscn` no se toca: lo usa `mundo_2` (mapa viejo, sin uso). Sin guardado nuevo: `SAVE_FORMAT_VERSION` sigue en 5.
 
 ## 1. Qué hace

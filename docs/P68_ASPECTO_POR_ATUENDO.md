@@ -1,7 +1,7 @@
 # P68 - Un `SpriteFrames` por atuendo (el Fire Knight separado de los harapos)
 
 - Segunda pieza de "En paralelo: atuendos" de la Fase 2 de `TASK.md` (P46, sección 10, "Implementación").
-- Decisiones de `docs/FASE2_DECISIONES.md` que aplica: A3 (cada atuendo sin arte usa el `SpriteFrames` del anterior) y G4; las nuevas están al final de ese archivo.
+- Decisiones de `docs/historial/FASE2_DECISIONES.md` que aplica: A3 (cada atuendo sin arte usa el `SpriteFrames` del anterior) y G4; las nuevas están al final de ese archivo.
 - Archivos nuevos: `escenas/atuendos/fire_knight.tres` (el aspecto de E5) y su generador, `herramientas/sprites/generar_atuendo_fire_knight.gd` (+ `.tscn`).
 - Cambian: `player.gd` (elige y compone el aspecto con espada del atuendo actual) y `OUTFIT_DEFINITIONS` (el Fire Knight apunta a su recurso).
 - Sin guardado nuevo: el aspecto se deduce de `get_outfit_id()`. `SAVE_FORMAT_VERSION` sigue en 5.

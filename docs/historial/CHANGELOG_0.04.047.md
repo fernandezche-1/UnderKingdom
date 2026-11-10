@@ -3,7 +3,7 @@
 Esta etapa junta en una sola versión dos líneas de trabajo que salieron de la 0.04.030:
 
 - El trabajo de Edwin en el repo, rama `edwin/hud-jefe-y-reorganizacion`, ya fusionada en `main`.
-- La 0.04.047 de un compañero, que llegó en ZIP. Sus notas están en `CAMBIOS_0.04.045.txt` y `CAMBIOS_0.04.047.txt`, en la raíz del proyecto.
+- La 0.04.047 de un compañero, que llegó en ZIP. Sus notas están en `docs/historial/CAMBIOS_0.04.045.txt` y `docs/historial/CAMBIOS_0.04.047.txt`, en la raíz del proyecto.
 
 ## HUD y jefes
 - HUD del Player: vida en cuartos de corazón, carga de la Ultimate y llave.

@@ -1,7 +1,7 @@
 # P69 - Atuendo para recoger (generaliza la espada oxidada)
 
 - Tercera pieza de "En paralelo: atuendos" de la Fase 2 de `TASK.md` (P46, sección 10, "Implementación": "Objeto para recoger").
-- Decisiones de `docs/FASE2_DECISIONES.md` que aplica: G3 (textos en mayúsculas y exportados), G4 (arte provisional), G5 (con E) y A3; las nuevas están al final de ese archivo.
+- Decisiones de `docs/historial/FASE2_DECISIONES.md` que aplica: G3 (textos en mayúsculas y exportados), G4 (arte provisional), G5 (con E) y A3; las nuevas están al final de ese archivo.
 - Archivos nuevos: `escenas/objetos/atuendo.tscn` y `scripts/items/outfit_pickup.gd` (`UnderkingdomOutfitPickup`).
 - Cambian: `scripts/items/sword_recovery.gd` (tres métodos que se pueden cambiar) y `escenas/objetos/espada_oxidada.tscn`, que ahora hereda de `atuendo.tscn` con `outfit_id` `harapos`.
 - Sin guardado nuevo: lo recogido va a `outfits_found` (P59) y el objeto a `consumed_objects`. `SAVE_FORMAT_VERSION` sigue en 5.

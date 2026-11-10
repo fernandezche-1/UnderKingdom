@@ -1,7 +1,7 @@
 # P57 - `locked_door` con otro dibujo y apertura con E
 
 - Tercera pieza del paso del cementerio en la Fase 2 de `TASK.md`: las velas de la cripta, el hielo de `[P6]` (ruina) y el hielo negro (profundidades/ruina).
-- Decisiones de `docs/FASE2_DECISIONES.md` que aplica: S7, S8, G3, G4 y G5.
+- Decisiones de `docs/historial/FASE2_DECISIONES.md` que aplica: S7, S8, G3, G4 y G5.
 - No hay escena nueva: se amplía `scripts/environment/locked_door.gd` (`UnderkingdomLockedDoor`). Con los valores por defecto las puertas de siempre no cambian.
 
 ## 1. Exportaciones nuevas

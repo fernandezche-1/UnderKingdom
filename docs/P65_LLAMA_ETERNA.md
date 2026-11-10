@@ -1,7 +1,7 @@
 # P65 - Llama eterna, hielo de `[P6]` y luz de la antorcha
 
 - Primera pieza del paso 6 (Ruina) de la Fase 2 de `TASK.md`. Sirve a la capilla de la ruina (la llama), a las criptas oscuras (la luz) y al hielo de `[P6]`.
-- Decisiones de `docs/FASE2_DECISIONES.md` que aplica: R1, R2, S7, S8, G3, G4 y G5; las nuevas están al final de ese archivo.
+- Decisiones de `docs/historial/FASE2_DECISIONES.md` que aplica: R1, R2, S7, S8, G3, G4 y G5; las nuevas están al final de ese archivo.
 - Piezas nuevas: `escenas/items/llama_eterna.tscn` (`scripts/items/eternal_flame_pickup.gd`, `UnderkingdomEternalFlamePickup`, hereda de `ability_pickup.gd`) y `scripts/environment/dark_zone.gd` (`UnderkingdomDarkZone`, `Node2D`). El hielo no necesita script nuevo: es la `locked_door.gd` de P57.
 - Sin guardado nuevo: la llama es la llave genérica `antorcha` (`collected_keys`) y el hielo derretido es un objeto consumido. `SAVE_FORMAT_VERSION` sigue en 5.
 

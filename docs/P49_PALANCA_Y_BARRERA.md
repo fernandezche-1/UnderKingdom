@@ -5,7 +5,7 @@
 - Piezas:
   - `escenas/objetos/palanca.tscn`, con `scripts/environment/lever.gd` (`UnderkingdomLever`);
   - una exportación nueva en `scripts/environment/arena_barrier.gd`: `open_on_encounter`.
-- Decisiones de `docs/FASE2_DECISIONES.md` que aplica: C1 a C4, G3, G4 y G5.
+- Decisiones de `docs/historial/FASE2_DECISIONES.md` que aplica: C1 a C4, G3, G4 y G5.
 
 ## 1. La palanca
 

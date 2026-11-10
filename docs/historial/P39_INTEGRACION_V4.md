@@ -1,7 +1,7 @@
 # P39 - Integración de la rama v4 (0.04.048 y 0.04.049)
 
 - Armando subió a `origin/v4` seis commits (19 a 22 de octubre) sobre `e151dc5`, el mismo punto del que salen nuestros 23 commits desde la 0.04.047.
-- Se fusionaron en la rama `edwin/integrar-v4`. Lo que trae v4 está en `docs/CHANGELOG_0.04.048.md`, `docs/CHANGELOG_0.04.049.md` y los README de `escenas/mapas/prologo*/`.
+- Se fusionaron en la rama `edwin/integrar-v4`. Lo que trae v4 está en `docs/historial/CHANGELOG_0.04.048.md`, `docs/historial/CHANGELOG_0.04.049.md` y los README de `escenas/mapas/prologo*/`.
 
 ## 1. Qué entra de v4
 

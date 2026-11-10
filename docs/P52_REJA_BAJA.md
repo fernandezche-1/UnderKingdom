@@ -2,7 +2,7 @@
 
 - Primera pieza del paso del castillo en la Fase 2 de `TASK.md`: la reja de `[H2]` (columna 104, filas 66-69 del castillo, bajo el trono) y las tres del pasillo del filo del infierno.
 - Pieza: `scripts/environment/roll_gate.gd` (`UnderkingdomRollGate`), que hereda de `arena_barrier.gd`. No tiene escena propia: se coloca como las demás barreras, un `StaticBody2D` con el script, su `CollisionShape2D` (16 de ancho, alto múltiplo de 16) y las piezas del tileset del nivel.
-- Decisiones de `docs/FASE2_DECISIONES.md` que aplica: K1, K2 y G4.
+- Decisiones de `docs/historial/FASE2_DECISIONES.md` que aplica: K1, K2 y G4.
 - Toca el Player en una sola función: `is_rolling()`, que dice si la acción actual es la rodada.
 
 ## 1. Comportamiento (K1)
