@@ -6,7 +6,7 @@
 ; mapas_texto/tiles_castillo.txt (sección 9 de P46).
 ;
 ; Coordenadas (columna, fila), desde 0. 110 x 80 piezas. Ningún escalón pide
-; más de 3 piezas de salto (con E1 se saltan unas 4,6).
+; más de 3 piezas de salto (con E1 se saltan unas 4,3).
 ; Camino obligatorio: galería -> gran salón -> biblioteca -> almenas -> armería
 ; -> caída por el hueco x 88-90 -> antecámara -> vestíbulo -> trono ->
 ; trampilla -> paso bajo el trono -> reja (rodando) -> [H2].

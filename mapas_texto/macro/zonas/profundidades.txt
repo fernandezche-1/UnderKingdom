@@ -23,7 +23,7 @@
 ; el Fire Knight, que resiste el fuego. La salida [S7] pide los tres altares y
 ; el Demon Slime (P46, sección 10).
 ; Ningún escalón obligatorio pide más de 4 piezas de salto (con E1 se saltan
-; unas 4,6) ni huecos de más de 3; el camino obligatorio sale incluso con 3.
+; unas 4,3) ni huecos de más de 3; el camino obligatorio sale incluso con 3.
 ; Nada pide la Agilidad ni el dash. El único reto que pide E5 es el
 ; altar del fuego, y E5 está antes, en la forja, a saltos de 4.
 ; Camino obligatorio: [P6] -> llegada -> puente de ceniza -> pie de :E: ->

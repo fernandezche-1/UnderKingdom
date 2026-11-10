@@ -17,7 +17,7 @@
 ; idea 1); la salida [!5] se abre con el derrumbe que sigue a su muerte (P46,
 ; sección 10).
 ; Ningún escalón obligatorio pide más de 3 piezas de salto (con E1 se saltan
-; unas 4,6) ni huecos de más de 3. Solo el secreto pide el dash (de la ruina:
+; unas 4,3) ni huecos de más de 3. Solo el secreto pide el dash (de la ruina:
 ; se vuelve a por él por [!5]).
 ; Camino obligatorio: [L4] -> llegada -> cuerpo de guardia -> escalera 90 ->
 ; celdas bajas -> escalera 114 -> celdas altas -> balcón -> gran sala de

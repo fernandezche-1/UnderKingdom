@@ -9,7 +9,7 @@
 ; Coordenadas (columna, fila), desde 0. 120 x 90 piezas; en el mundo en
 ; (246, 43), así [H2] cae en las filas 67-69 del mundo, las del castillo.
 ; Ningún escalón obligatorio pide más de 3 piezas de salto (con E1 se saltan
-; unas 4,6); nada pide la Agilidad.
+; unas 4,3); nada pide la Agilidad.
 ; Camino obligatorio: túnel de [H2] -> exterior (las dos tumbas sello, en
 ; cualquier orden) -> hueco o escalera de la casa -> osario -> catacumba alta ->
 ; caída x 34-36 -> catacumba baja -> antesala -> Capitán -> puerta oeste ->

@@ -22,7 +22,7 @@
 
 ## 2. Alto de la reja
 
-- En los mapas reales la reja ocupa todo el pasillo (4 piezas: filas 66-69, o las del pasillo del filo) y el techo impide saltarla. El salto del Player llega a unas 4,6 piezas, así que una reja de 4 en campo abierto se saltaría.
+- En los mapas reales la reja ocupa todo el pasillo (4 piezas: filas 66-69, o las del pasillo del filo) y el techo impide saltarla. El salto del Player llega a unas 4,3 piezas (P45, sección 4), así que una reja de 4 en campo abierto se saltaría.
 - En la zona de pruebas no hay techo: la reja mide 6 piezas.
 
 ## 3. Arte provisional
