@@ -66,7 +66,7 @@
 
 ## 5. Fondo del menú principal
 
-- El fondo era `fondos/cementerio.png`, el mapa viejo, encogido a escala no entera. Ahora es la Cámara del Sellado, donde empieza la partida.
+- El fondo era `archivo/mapas_viejos/fondos/cementerio.png`, el mapa viejo, encogido a escala no entera. Ahora es la Cámara del Sellado, donde empieza la partida.
 - `menu_principal.gd` instancia la escena de la prisión:
   - le quita el script (sin cinemática ni guardado);
   - borra la cámara, el Player, la Reina y la salida;
@@ -92,4 +92,4 @@
 - El prólogo no sigue la regla de mapas con tiles (`CLAUDE.md`). Hablar con Armando si se rehace con el constructor.
 - El campo de nombre (`LineEdit`) no tiene estilo en el tema global.
 - Cada guardado sobre una ranura ocupada deja un `.bak` que no se limpia hasta borrar la ranura.
-- Archivos sueltos de v4 en la raíz que habría que mover o quitar: `assets/prision/111.png`, `prsision.png`, `dark_castle_tileset.png`, `animated_sprite_2d.gd`, `escenas/mapas/antorhca.tscn`.
+- Archivos sueltos de v4 en la raíz que habría que mover o quitar: `assets/prision/111.png`, `prsision.png`, `archivo/mapas_viejos/raiz/dark_castle_tileset.png`, `archivo/mapas_viejos/raiz/animated_sprite_2d.gd`, `archivo/mapas_viejos/escenas/antorhca.tscn`.

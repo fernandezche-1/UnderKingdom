@@ -32,7 +32,7 @@
   | `E` | estantería | 2x2 |
   | `f` | rejas de celda | 2x2 |
 
-  - El estandarte y la cadena salen del `dark_castle_tileset.png` de Armando; lo demás, de Raou.
+  - El estandarte y la cadena salen del `archivo/mapas_viejos/raiz/dark_castle_tileset.png` de Armando; lo demás, de Raou.
   - Los decorados de los dos paquetes no estaban alineados a 16 px: se recortaron por su borde y se centraron en su hueco.
 - **Licencias:**
   - Raou permite el uso comercial y modificarlo, pero no redistribuir el tileset (comentario del autor en https://raou.itch.io/dark-dun).
@@ -119,5 +119,5 @@
   - dureza de los Guardias con escudo para un Player que solo tiene el primer tajo;
   - escala y ritmo del Rey;
   - que se vean las cadenas y los estandartes con la ambientación.
-- Confirmar con Armando el uso del tileset de Raou y del `dark_castle_tileset.png`.
+- Confirmar con Armando el uso del tileset de Raou y del `archivo/mapas_viejos/raiz/dark_castle_tileset.png`.
 - Diálogo o cinemática del encuentro con el Rey, como la del Capitán.

@@ -37,7 +37,7 @@ Esta etapa junta en una sola versión dos líneas de trabajo que salieron de la 
 
 ## Herramientas
 - Constructor de mapas desde texto: `herramientas/constructor_mapas/` y `mapas_texto/`, con el tileset CC0 de `assets_prueba/dungeon_platformer/`.
-- Arena de enemigos: `escenas/mapas/arena_enemigos.tscn`.
+- Arena de enemigos: `archivo/mapas_viejos/escenas/arena_enemigos.tscn`.
 - `CLAUDE.md` con las reglas del proyecto, la estructura y cómo validar cambios.
 
 ## Lo que trae la 0.04.047 del compañero
@@ -111,7 +111,7 @@ Los niveles nuevos se hacen con tiles en vez de fondos pintados. Los mapas actua
   - Las zonas que genera el constructor (lava, escaleras) quedaban con el tamaño por defecto de su escena. Ahora tienen el de su tramo; se regeneró `ejemplo_cueva`.
   - `map_transition.gd` cambia de escena en diferido; antes daba error al cruzar una salida automática.
   - Las monedas y pociones colocadas en un mapa no reaparecen al morir.
-- **Muestra:** `mapas_texto/ejemplo_nivel.txt` + `.png`. Se probó sin ventana con todos los elementos: recoger, abrir el cofre, el checkpoint, quemarse, morir en los pinchos y reaparecer con lo recogido conservado, y cruzar la salida.
+- **Muestra:** `archivo/mapas_viejos/mapas_texto/ejemplo_nivel.txt` + `.png`. Se probó sin ventana con todos los elementos: recoger, abrir el cofre, el checkpoint, quemarse, morir en los pinchos y reaparecer con lo recogido conservado, y cruzar la salida.
 
 ## Niveles con tiles calcados de los fondos
 Siete niveles nuevos con tiles, uno por cada fondo pintado, con la misma forma que su mapa hecho a mano. Los mapas originales no se tocaron.
@@ -335,7 +335,7 @@ No hizo falta código nuevo.
 ## Pendientes, en orden de prioridad
 1. ~~Probar jugando: la intro, el reencuentro con el Capitán, el combate y la muerte con reaparición en el checkpoint.~~ Hecho: se jugó (marcado el 2026-10-20).
 2. Pausa, menú principal y guardado persistente. Hoy todo se pierde al cerrar el juego.
-3. Jefe de Mundo 2 (`escenas/jefes/boss_mina.tscn`) y jefe final (Cthulhu, `escenas/jefes/boss.tscn`): los dos son sprites sin script. Nadie llama a `GameManager.reveal_cthulhu()`.
+3. Jefe de Mundo 2 (`archivo/mapas_viejos/escenas/jefes/boss_mina.tscn`) y jefe final (Cthulhu, `archivo/mapas_viejos/escenas/jefes/boss.tscn`): los dos son sprites sin script. Nadie llama a `GameManager.reveal_cthulhu()`.
 4. Transiciones definitivas para reemplazar los portales de `world_test_route.gd`, y zonas Kill, Burn y One Way en los mapas. `pinchos` y `trampa de fuego` de Mundo 1 no hacen daño. Las marcas las coloca una persona en el editor o las pasa como coordenadas.
 5. Audio: no hay ningún sonido ni música.
 6. Arte a escala entera:

@@ -117,7 +117,7 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
 - El castillo: `godot --headless res://escenas/mapas/tiles_castillo_combate.tscn --quit-after 120`.
 - El cementerio: `godot --headless res://escenas/mapas/tiles_cementerio_combate.tscn --quit-after 120`.
 - La zona de pruebas: `godot --headless res://escenas/mapas/zona_pruebas_combate.tscn --quit-after 120`. Es donde se prueban los sprites y enemigos nuevos; con ventana, F6 en esa escena.
-- Mundo 1, el mapa viejo: `godot --headless res://escenas/mapas/mundo_1.tscn --quit-after 120`. Comprobarlo cuando se toquen scripts compartidos (Player, enemigos, GameManager, Capitán).
+- Mundo 1, el mapa viejo: `godot --headless res://archivo/mapas_viejos/escenas/mundo_1.tscn --quit-after 120`. Comprobarlo cuando se toquen scripts compartidos (Player, enemigos, GameManager, Capitán).
 - Un mapa concreto: `godot --headless res://escenas/mapas/<mapa>.tscn --quit-after 60`.
 - Tras crear un script con `class_name` nuevo, correr `godot --headless --import` para actualizar la caché de clases.
 - `godot --check-only --script <archivo>` da un falso "Identifier not found: GameManager" en scripts que usan el autoload; no usarlo como prueba.

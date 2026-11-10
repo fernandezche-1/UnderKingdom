@@ -51,7 +51,7 @@ cofre_pociones: 1
 | `bloques` | Estilo de los bloques. En mazmorra: `verde`, `verde_claro`, `ladrillo`, `violeta`, `oro`, `oliva` o `madera`. En cementerio, además, `cementerio`, y en castillo, `castillo`. |
 | `fondo` | Pared detrás de todo: `cueva`, `castillo` (ladrillo oscuro, solo con el tileset castillo) o `ninguno`. |
 | `parallax` | Imágenes de fondo que se mueven más lento, de la más lejana a la más cercana: `fondos/cielo.png 0.05; fondos/nubes.png 0.2`. El número es la velocidad horizontal (0 = quieta, 1 = como el mapa). Si la imagen es más baja que la pantalla (270 px), se agrega `x2` para dibujarla al doble: `fondos/cielo.png 0.05 x2`. En vertical cada imagen recorre el mapa: se ve su borde de arriba con la cámara arriba del todo y el de abajo con la cámara abajo. Necesita `fondo: ninguno`. |
-| `siguiente` / `anterior` | Mapa al que llevan las salidas azules / moradas. Por defecto se llega a su spawn `DesdeAnterior` / `DesdeSiguiente`, que el constructor crea solo. Para llegar a otro spawn: `res://escenas/mapas/mundo_2.tscn#SpawnInicio`. |
+| `siguiente` / `anterior` | Mapa al que llevan las salidas azules / moradas. Por defecto se llega a su spawn `DesdeAnterior` / `DesdeSiguiente`, que el constructor crea solo. Para llegar a otro spawn: `res://archivo/mapas_viejos/escenas/mundo_2.tscn#SpawnInicio`. |
 | `cofre_monedas`, `cofre_pociones` | Botín de cada cofre del nivel (por defecto 3 y 1). |
 | `jugador` | Escena del Player que se pone en la `P`. Por defecto `res://escenas/player.tscn`; el calabozo usa `res://escenas/prisn.tscn`, el protagonista sin espada. |
 | `depuracion` | `si` activa las teclas de prueba del Player (R reaparecer, H/J daño, K morir) y su panel de depuración. Solo para mapas de prueba como `zona_pruebas`; por defecto `no`. Para probar los niveles de la ruta está el Modo dev (tecla º). |
@@ -72,13 +72,13 @@ Para ajustar el nivel hay dos caminos:
 Otras órdenes:
 - `-- --paleta` vuelve a escribir `paleta_niveles.gpl` y `paleta_niveles.png`.
 - `-- --a-png mapas_texto/mapa.txt` convierte un mapa de letras en PNG para seguir dibujándolo.
-- `-- --desde-mapa res://escenas/mapas/ruina.tscn mapas_texto/mi_nivel.png` calca un mapa hecho a mano (ver sección 7).
+- `-- --desde-mapa res://archivo/mapas_viejos/escenas/ruina.tscn mapas_texto/mi_nivel.png` calca un mapa hecho a mano (ver sección 7).
 
 ## 7. Rehacer con tiles un mapa hecho a mano
 Los mapas de `fondos/` (casa, cementerio, ruina...) ya tienen sus colisiones probadas jugando. El constructor puede calcarlas como dibujo de piezas para empezar un nivel con tiles con la misma forma:
 
 ```
-~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- --desde-mapa res://escenas/mapas/primer_boss_mundo_1.tscn mapas_texto/mi_nivel.png
+~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- --desde-mapa res://archivo/mapas_viejos/escenas/primer_boss_mundo_1.tscn mapas_texto/mi_nivel.png
 ```
 
 - Cada pieza de 16 x 16 que las colisiones sólidas cubren a la mitad o más pasa a bloque. Las orillas en diagonal pasan a rampas.
