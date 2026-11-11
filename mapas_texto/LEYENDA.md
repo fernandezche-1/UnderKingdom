@@ -47,14 +47,15 @@ cofre_pociones: 1
 |---|---|
 | `escena` | Dónde se guarda el nivel; siempre en `res://escenas/mapas/`. **Nunca sobrescribe** un mapa hecho a mano. |
 | `imagen` | El PNG del nivel. Si en vez de imagen se escribe el mapa con letras después de una línea `---`, se omite. |
-| `tileset` | Qué juego de piezas usar: `mazmorra`, `cementerio` (el de mazmorra más piezas de Gothicvania Cemetery; en él `T` es una lápida, `g` puntas de pasto y `r` zarzas) o `castillo` (el de mazmorra más el muro de ladrillo morado de Raou; en él `T` es una armadura 2x2, `h` un estandarte 1x2, `g` una cadena 1x2, `r` una ventana en arco 2x2, `C` una puerta en arco 2x3, `E` una estantería 2x2 y `f` unas rejas de celda 2x2; el estandarte y la cadena cuelgan del techo: su letra va dos piezas debajo de él). Cada tileset es un archivo en `herramientas/constructor_mapas/tilesets/`. |
-| `bloques` | Estilo de los bloques. En mazmorra: `verde`, `verde_claro`, `ladrillo`, `violeta`, `oro`, `oliva` o `madera`. En cementerio, además, `cementerio`, y en castillo, `castillo`. |
-| `fondo` | Pared detrás de todo: `cueva`, `castillo` (ladrillo oscuro, solo con el tileset castillo) o `ninguno`. |
+| `tileset` | Qué juego de piezas usar: `mazmorra`, `cementerio` (el de mazmorra más piezas de Gothicvania Cemetery; en él `T` es una lápida, `g` puntas de pasto y `r` zarzas) o `castillo` (el de mazmorra más el muro de ladrillo morado de Raou; en él `T` es una armadura 2x2, `h` un estandarte 1x2, `g` una cadena 1x2, `r` una ventana en arco 2x2, `C` una puerta en arco 2x3, `E` una estantería 2x2 y `f` unas rejas de celda 2x2; el estandarte y la cadena cuelgan del techo: su letra va dos piezas debajo de él) o `calabozo` (el de castillo más el Dungeon Tile Set de la prisión, P73; en él `t` es la antorcha de Raou, `g` una cadena 1x2, `h` una jaula 2x2, `b` y `x` barril y caja del pack, `r` la rejilla redonda del desagüe 2x2 y `C` una telaraña 4x1; la cadena, la jaula y la telaraña cuelgan del techo; `f`, `E` y `T` son las del castillo; las plataformas `=` son una viga de madera). Cada tileset es un archivo en `herramientas/constructor_mapas/tilesets/`. |
+| `bloques` | Estilo de los bloques. En mazmorra: `verde`, `verde_claro`, `ladrillo`, `violeta`, `oro`, `oliva` o `madera`. En cementerio, además, `cementerio`; en castillo, `castillo`, y en calabozo, `castillo` y `calabozo`. |
+| `fondo` | Pared detrás de todo: `cueva`, `castillo` (ladrillo oscuro, con los tilesets castillo y calabozo), `calabozo` (pared oscura del Dungeon Tile Set, solo con el tileset calabozo) o `ninguno`. |
 | `parallax` | Imágenes de fondo que se mueven más lento, de la más lejana a la más cercana: `fondos/cielo.png 0.05; fondos/nubes.png 0.2`. El número es la velocidad horizontal (0 = quieta, 1 = como el mapa). Si la imagen es más baja que la pantalla (270 px), se agrega `x2` para dibujarla al doble: `fondos/cielo.png 0.05 x2`. En vertical cada imagen recorre el mapa: se ve su borde de arriba con la cámara arriba del todo y el de abajo con la cámara abajo. Necesita `fondo: ninguno`. |
 | `siguiente` / `anterior` | Mapa al que llevan las salidas azules / moradas. Por defecto se llega a su spawn `DesdeAnterior` / `DesdeSiguiente`, que el constructor crea solo. Para llegar a otro spawn: `res://escenas/mapas/tiles_castillo_combate.tscn#SpawnInicio`. |
 | `cofre_monedas`, `cofre_pociones` | Botín de cada cofre del nivel (por defecto 3 y 1). |
 | `jugador` | Escena del Player que se pone en la `P`. Por defecto `res://escenas/player.tscn`; el calabozo usa `res://escenas/prisn.tscn`, el protagonista sin espada. |
 | `depuracion` | `si` activa las teclas de prueba del Player (R reaparecer, H/J daño, K morir) y su panel de depuración. Solo para mapas de prueba como `zona_pruebas`; por defecto `no`. Para probar los niveles de la ruta está el Modo dev (tecla º). |
+| `muestra` | `si` genera solo las capas de piezas, las escaleras y las zonas de muerte, sin Player, `MapBounds` ni spawns, y no pide la `P`. Es para las muestras de tileset que la galería de la zona de pruebas instancia en su piso D (P73); las escribe `herramientas/zona_pruebas/galeria.py`. Por defecto `no`. |
 
 ## 4. Generar el nivel
 Desde la carpeta del proyecto:
@@ -156,8 +157,10 @@ Con eso se pasa a PNG, se genera el nivel y se revisa jugando.
    - los líquidos y la escalera;
    - la pieza del checkpoint y el fondo.
 
-   Si el paquete no trae ese juego de 4x4, se arma un atlas nuevo copiando sus piezas, sin dibujar arte nuevo.
-5. **Probarlo** con un mapa de muestra.
+   Si el paquete no trae ese juego de 4x4, se arma un atlas nuevo copiando sus piezas, sin dibujar arte nuevo; mejor con un script que lo rehaga, como `herramientas/constructor_mapas/atlas_calabozo.py`.
+
+   Si las plataformas `=` no deben ser la fila de tiras del juego de bloques (una viga fina, por ejemplo), el tileset añade `"plataformas": Vector2i(x, y)`: sus tres piezas en fila (izquierda, medio, derecha) llevan la colisión de una vía aunque sus esquinas no sean opacas.
+5. **Probarlo** en el piso D de la galería de la zona de pruebas: un cuarto en `herramientas/zona_pruebas/galeria.py` con su muestra (`muestra_tileset`), que se genera con la opción `muestra: si`.
 6. **Letras y colores nuevos:** si trae decorados o enemigos sin letra, se agregan a `COLORS` / `ENEMIES` del constructor. Después se regenera la paleta (`-- --paleta`) y se actualiza la tabla de la sección 5.
 7. **Enemigos:** escena con `enemy_base.gd` y sus valores (cuadros de golpe, hitbox, `collision_layer = 5`), siguiendo el patrón de `kolbo` y `mino`. Se prueban en la zona de pruebas (`zona_pruebas_combate.tscn`).
 

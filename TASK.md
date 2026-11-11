@@ -313,7 +313,7 @@ El criterio de "hecho" de cada paso está en P73, sección 2. La ficha se puede 
 
 Modo de cada paso: la ficha y vestir, en modo normal; las piezas, en modo plan si llevan un script o una escena nueva.
 
-- [ ] Calabozo: [x] ficha, [ ] piezas, [ ] vestida.
+- [ ] Calabozo: [x] ficha, [x] piezas, [ ] vestida.
 - [ ] Castillo: [ ] ficha, [ ] piezas, [ ] vestida.
 - [ ] Cementerio: [ ] ficha, [ ] piezas, [ ] vestida.
 - [ ] Minas: [ ] ficha, [ ] piezas, [ ] vestida.

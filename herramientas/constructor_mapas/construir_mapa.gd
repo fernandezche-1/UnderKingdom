@@ -498,7 +498,7 @@ func _build(text_path: String) -> String:
     var options := {
         "tileset": "mazmorra", "bloques": "", "fondo": "cueva", "escena": "", "imagen": "",
         "siguiente": "", "anterior": "", "cofre_monedas": "3", "cofre_pociones": "1", "parallax": "",
-        "depuracion": "no", "jugador": PLAYER_SCENE,
+        "depuracion": "no", "jugador": PLAYER_SCENE, "muestra": "no",
     }
     var error := _read_map_file(text_path, options)
     if error != "":
@@ -607,6 +607,9 @@ func _build(text_path: String) -> String:
 
     var set_base: Vector2i = _ts.bloques[options.bloques][0]
     var slope_base: Vector2i = _ts.bloques[options.bloques][1]
+    # Plataformas (=): la fila de tiras del juego de bloques o, si el tileset
+    # trae "plataformas", sus tres piezas (izquierda, medio, derecha).
+    var platform_base: Vector2i = _ts.get("plataformas", set_base + Vector2i(0, 3))
     var decor: Dictionary = _ts.decorados
     var spawn := Vector2(-1, -1)
     var counts := {}
@@ -634,7 +637,7 @@ func _build(text_path: String) -> String:
                     var left := _at(x - 1, y) == "="
                     var right := _at(x + 1, y) == "="
                     var piece := 1 if left and right else (0 if right else (2 if left else 1))
-                    plataformas.set_cell(cell, 0, set_base + Vector2i(piece, 3))
+                    plataformas.set_cell(cell, 0, platform_base + Vector2i(piece, 0))
                 "~":
                     liquidos.set_cell(cell, 0, _ts.lava[1])
                     if not _is_liquid(x, y - 1):
@@ -712,6 +715,12 @@ func _build(text_path: String) -> String:
             arrival.set("spawn_id", StringName(exit[2]))
             arrival.position = Vector2(rect.get_center().x + inward * 2 * T, rect.end.y - player_feet)
 
+    # Muestra para la galería de la zona de pruebas (P73): solo las capas,
+    # las escaleras y las zonas de muerte, sin Player, límites ni spawns, para
+    # instanciarla dentro de otro mapa.
+    if String(options.muestra) == "si":
+        return _save_scene(root, out_path, counts)
+
     var bounds := _child(sistemas, Node2D.new(), "MapBounds")
     bounds.set_script(load("res://scripts/camera/map_bounds.gd"))
     bounds.set("right", _w * T)
@@ -729,7 +738,10 @@ func _build(text_path: String) -> String:
     if String(options.depuracion) == "si":
         player.set("enable_debug_keys", true)
         player.set("show_debug_hud", true)
+    return _save_scene(root, out_path, counts)
 
+
+func _save_scene(root: Node, out_path: String, counts: Dictionary) -> String:
     var packed := PackedScene.new()
     var err := packed.pack(root)
     if err == OK:
@@ -891,6 +903,15 @@ func _collision_points(img: Image, cell: Vector2i) -> PackedVector2Array:
     return pts if pts.size() >= 3 else PackedVector2Array()
 
 
+## Piezas de "plataformas" del tileset: llevan la colisión de una vía aunque
+## sus esquinas no sean opacas (una viga fina, por ejemplo).
+func _is_platform_piece(cell: Vector2i) -> bool:
+    if not _ts.has("plataformas"):
+        return false
+    var base: Vector2i = _ts.plataformas
+    return cell.y == base.y and cell.x >= base.x and cell.x <= base.x + 2
+
+
 func _tileset(tex: Texture2D, img: Image, mode: String) -> TileSet:
     var ts := TileSet.new()
     ts.tile_size = Vector2i(T, T)
@@ -925,7 +946,7 @@ func _tileset(tex: Texture2D, img: Image, mode: String) -> TileSet:
             if mode == "decorado":
                 continue
             var pts := _collision_points(img, cell)
-            if pts.is_empty():
+            if pts.is_empty() and not (mode == "plataforma" and _is_platform_piece(cell)):
                 continue
             var data := src.get_tile_data(cell, 0)
             data.add_collision_polygon(0)

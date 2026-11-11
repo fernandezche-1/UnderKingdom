@@ -63,7 +63,7 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
 - **Zona de pruebas (`escenas/mapas/zona_pruebas_combate.tscn`):** aquí se prueba todo sprite, animación, enemigo o pieza nueva antes de llevarlo a una zona (P43).
   - Se abre esa escena y se pulsa F6. Hereda de `zona_pruebas.tscn`, generada desde `mapas_texto/zona_pruebas.txt`.
   - Un enemigo con letra va en el `.txt`; lo que no tiene letra va en la `_combate`, en `Enemigos` u `Objetos`.
-  - **Galería (P71):** se llega bajando por la escalera junto al spawn (las bocas van tapadas con "===" y se bajan con S). Tiene un cuarto por pieza, en el orden de la ruta, con un cartel. Se genera con `herramientas/zona_pruebas/galeria.py`: una pieza nueva se añade en ese script, no a mano.
+  - **Galería (P71):** se llega bajando por la escalera junto al spawn (las bocas van tapadas con "===" y se bajan con S). Tiene un cuarto por pieza, en el orden de la ruta, con un cartel; el piso D, el de abajo, tiene un cuarto por tileset nuevo, con una muestra que el constructor genera con `muestra: si` (P73). Se genera con `herramientas/zona_pruebas/galeria.py`: una pieza nueva se añade en ese script, no a mano.
   - El Player es `prisn.tscn`, sin espada. Para tenerla: Modo dev (tecla º), "Dar espada"; para quitarla, F6. Teclas: R reaparecer, H daño de ¼, J daño de 1, K morir.
   - No tiene salidas ni forma parte de la ruta. La regla de enemigos por profundidad no aplica aquí.
 
@@ -158,7 +158,7 @@ Ordenada en P72 (`docs/P72_ORGANIZACION_REPO.md`).
   - los `tiles_<zona>.txt` ya generados;
   - `LEYENDA.md`: guía, colores y letras del constructor; su sección 8 explica cómo integrar un paquete de arte.
 - `herramientas/`:
-  - `constructor_mapas/`: `construir_mapa.tscn` genera la escena desde el `.txt`. Cada tileset está en `tilesets/<nombre>.gd`: hoy `mazmorra` (CC0), `cementerio` y `castillo`, los dos últimos hechos sobre el atlas de `mazmorra`.
+  - `constructor_mapas/`: `construir_mapa.tscn` genera la escena desde el `.txt`. Cada tileset está en `tilesets/<nombre>.gd`: hoy `mazmorra` (CC0), `cementerio`, `castillo` y `calabozo`, hechos sobre el atlas de `mazmorra` (`calabozo`, sobre el de `castillo`).
     - La colisión de cada pieza se deduce de la opacidad de sus esquinas, así que un tileset nuevo solo usa piezas macizas en los bloques.
   - `macro_mapa/`: `verificar_mundo.py`, `datos_atlas.py` y `macro_mapa.py`;
   - `sprites/`: `tira_ia_a_hoja.py` y el generador del Fire Knight;

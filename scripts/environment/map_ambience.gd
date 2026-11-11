@@ -48,6 +48,7 @@ const VIGNETTE_LAYER := 5
 ## Piezas que dan luz: coordenadas en el atlas del tileset -> [color, radio, energía, parpadea].
 const DECOR_LIGHTS := {
 	Vector2i(0, 10): [Color(1.0, 0.62, 0.3), 56, 0.9, true],     # antorcha
+	Vector2i(15, 20): [Color(1.0, 0.62, 0.3), 56, 0.9, true],    # antorcha de Raou (tileset calabozo)
 	Vector2i(27, 4): [Color(1.0, 0.55, 0.25), 72, 1.0, true],    # fogata / checkpoint
 	Vector2i(0, 15): [Color(0.35, 0.9, 1.0), 32, 0.6, false],    # hongos luminosos
 	Vector2i(22, 9): [Color(0.75, 0.45, 1.0), 32, 0.6, false],   # cristales

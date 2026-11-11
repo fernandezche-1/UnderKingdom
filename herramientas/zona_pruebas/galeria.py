@@ -8,8 +8,14 @@ y no se toca: lo que se ponga a mano allí para probar se conserva.
 Para añadir o cambiar un cuarto, se edita este script (lista de room(...)) y
 se vuelve a correr; no se edita la escena de la galería a mano.
 
+El piso D tiene un cuarto por tileset nuevo (P73, paso de las piezas): cada uno
+instancia una muestra que el constructor genera con ese tileset ("muestra: si",
+sin Player ni límites). galeria.py escribe su texto en
+mapas_texto/zona_pruebas_muestra_<tileset>.txt.
+
 Uso, desde la raíz del proyecto:
   python3 herramientas/zona_pruebas/galeria.py [cabecera.txt]
+  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_calabozo.txt
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas.txt
 """
 import sys
@@ -20,7 +26,7 @@ TXT = ROOT / "mapas_texto/zona_pruebas.txt"
 TSCN = ROOT / "escenas/mapas/zona_pruebas_galeria.tscn"
 T = 16
 COLS = 146
-ROWS = 82
+ROWS = 101
 
 # ---------------------------------------------------------------- mapa viejo
 raw = TXT.read_text(encoding="utf-8")
@@ -40,6 +46,7 @@ PISOS = {
     "A": dict(corr=24, techo=29, suelo=42, dir=1),
     "B": dict(corr=43, techo=48, suelo=61, dir=-1),
     "C": dict(corr=62, techo=67, suelo=80, dir=1),
+    "D": dict(corr=81, techo=86, suelo=99, dir=-1),
 }
 for p in PISOS.values():
     for r in range(p["corr"], p["corr"] + 5):
@@ -65,14 +72,16 @@ ladder(3, 20, 28)
 # Pozo del piso A al B (a la derecha) y del B al C (a la izquierda).
 ladder(139, 29, 47)
 ladder(4, 48, 66)
+ladder(139, 67, 85)
 # Checkpoints de la galería.
 put(28, 6, "S")
 put(47, 141, "S")
 put(66, 6, "S")
+put(85, 141, "S")
 
 # ---------------------------------------------------------------- cuartos
 # Cada cuarto: zona, nombre corto (cartel del pasillo), texto, ancho y piezas.
-ROOMS = {"A": [], "B": [], "C": []}
+ROOMS = {"A": [], "B": [], "C": [], "D": []}
 
 
 def room(piso, zona, nombre, texto, ancho, build, **extra):
@@ -630,6 +639,56 @@ room("C", "Infierno", "ARENA CON OLEADAS",
      24, b_oleadas)
 
 
+# ---- 9. Tilesets de las zonas vestidas (piso D, P73)
+# Muestra de cada tileset: la escribe este script y la genera el constructor.
+# Ocupa el cuarto menos las tres columnas de su escalera (a la derecha en el
+# piso D), del techo al suelo incluido; el cuarto queda hueco en el mapa base y
+# la muestra pone sus bloques, su fondo y sus decorados encima.
+MUESTRAS = []
+
+
+def muestra_tileset(c, tileset, filas, ext_id, label_from):
+    assert c.dir == -1 and len(filas) == c.F - c.techo, (tileset, len(filas))
+    assert all(len(f) == c.W - 3 for f in filas), tileset
+    nombre = f"zona_pruebas_muestra_{tileset}"
+    MUESTRAS.append((tileset, nombre, filas, ext_id))
+    node(f'''
+[node name="Muestra{tileset.capitalize()}" parent="Objetos" instance=ExtResource("{ext_id}")]
+position = Vector2({c.x0 * T}, {(c.techo + 1) * T})''')
+    return {"label_from": c.x0 + label_from}
+
+
+# Calabozo (ficha de P73): techo bajo a la izquierda con la telaraña (C), la
+# cadena (g), la jaula (h) y una columna colgada; viga (=) con antorcha (t)
+# encima y rejilla del desagüe (r); en el suelo rejas (f), barril (b), caja
+# (x), estantería (E), un escalón de una pieza, la escalera (H) a una repisa
+# de una pieza de alto y la armadura (T). A la derecha, aire para el cartel.
+MUESTRA_CALABOZO = [
+    "###########............",
+    "###########............",
+    "###########............",
+    "###########............",
+    "###########............",
+    ".C........#............",
+    "......g.h.#...H####....",
+    "...t..........H........",
+    "..............H.....t..",
+    ".====...r.....H........",
+    "..............H........",
+    "f..bx.E...#...H..T.....",
+    "#######################",
+]
+
+
+def b_tileset_calabozo(c):
+    return muestra_tileset(c, "calabozo", MUESTRA_CALABOZO, "34_muestra_calabozo", 11)
+
+
+room("D", "Calabozo", "TILESET CALABOZO",
+     "TILESET CALABOZO (P73)\nBloques, viga (=), escalera, fondo y decorados del Dungeon Tile Set; "
+     "antorcha de Raou. Las luces no se ven aquí (sin MapAmbience).", 26, b_tileset_calabozo)
+
+
 # ---------------------------------------------------------------- colocar
 def add_label(name, x, y, w, h, text, variation=None, align=0, header=False):
     carteles.append((name, x, y, w, h, text, variation, align, header))
@@ -684,6 +743,13 @@ for r in range(ROWS):
 mapa = "\n".join("".join(row) for row in g)
 header = Path(sys.argv[1]).read_text(encoding="utf-8") if len(sys.argv) > 1 else head + "\n"
 TXT.write_text(header + "---\n" + mapa + "\n", encoding="utf-8")
+for tileset, nombre, filas, _ in MUESTRAS:
+    (ROOT / f"mapas_texto/{nombre}.txt").write_text(
+        f"; Muestra del tileset {tileset} para la galería de la zona de pruebas (P73).\n"
+        "; La escribe herramientas/zona_pruebas/galeria.py: no se edita a mano.\n"
+        f"escena: res://escenas/mapas/{nombre}.tscn\n"
+        f"tileset: {tileset}\nbloques: {tileset}\nfondo: {tileset}\nmuestra: si\n---\n"
+        + "\n".join(filas) + "\n", encoding="utf-8")
 
 # ---------------------------------------------------------------- salida .tscn
 ext = '''[ext_resource type="PackedScene" path="res://escenas/enemigos/rata.tscn" id="2_rata"]
@@ -716,7 +782,9 @@ ext = '''[ext_resource type="PackedScene" path="res://escenas/enemigos/rata.tscn
 [ext_resource type="SpriteFrames" path="res://escenas/atuendos/fire_knight.tres" id="31_fire_knight"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/atuendo.tscn" id="32_atuendo"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/espada_oxidada.tscn" id="33_espada_oxidada"]
-'''
+''' + "".join(
+    f'[ext_resource type="PackedScene" path="res://escenas/mapas/{nombre}.tscn" id="{ext_id}"]\n'
+    for _, nombre, _, ext_id in MUESTRAS)
 sub = '''[sub_resource type="AtlasTexture" id="AtlasTexture_losa_medio"]
 atlas = ExtResource("8_tileset")
 region = Rect2(16, 304, 16, 16)

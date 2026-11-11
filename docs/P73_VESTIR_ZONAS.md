@@ -57,7 +57,10 @@ Cada pieza se prueba en la zona de pruebas antes de ir a un mapa de la ruta.
    - así las letras de decorado siguen valiendo y cada tileset las reinterpreta.
 3. En los bloques, solo piezas macizas: la colisión se deduce de la opacidad de las esquinas de cada pieza.
 4. Si alguna pieza da luz, añadir sus coordenadas a `DECOR_LIGHTS`.
-5. Probarlo en una sala de la galería (`herramientas/zona_pruebas/galeria.py`).
+5. Probarlo en el piso D de la galería (`herramientas/zona_pruebas/galeria.py`), el de los tilesets:
+   - un cuarto con una muestra del tileset que `galeria.py` escribe en `mapas_texto/zona_pruebas_muestra_<tileset>.txt` y el constructor genera con `muestra: si` (solo las capas y las escaleras);
+   - la zona de pruebas no tiene MapAmbience, así que las luces se comprueban en la prueba sin ventana;
+   - la prueba sin ventana comprueba además que todos los bloques son macizos, que las plataformas son de una vía y que el Player se apoya en ellas.
 
 **Enemigo nuevo** (P34, secciones 1 y 2):
 1. Hacer una hoja con una fila por animación, sin cambiar el arte del pack.
@@ -142,6 +145,27 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
 - **Licencias:** el Dungeon Tile Set y `monster_creatures_2` están por confirmar, y Raou solo tiene un permiso informal (`ORIGEN.txt` de cada pack y "Otros pendientes" de `TASK.md`). Aprobado usarlos igualmente; se resuelve antes de publicar.
 
 **Reto obligatorio:** coincide con su fila de P46, sección 10. Llega con E0 (salto de unas 3 piezas) y sale con la llave del carcelero (`[L1]`). Ningún reto obligatorio pide E2 o más ni una mejora de la tienda, y vestir no cambia celdas sólidas (se comprueba en el paso D).
+
+**Piezas (hechas el 2026-11-11).** Decisiones aprobadas al pasar la ficha a piezas:
+- **Atlas** `assets/terceros/dungeon_tile_set/tileset_calabozo.png`, que arma `herramientas/constructor_mapas/atlas_calabozo.py`:
+  - filas 0-19: el atlas del castillo, por `f`, `E`, `T`, la fogata y la pared `castillo`;
+  - filas 20-23: las piezas del pack.
+- **Bloques `calabozo`** en (0,20): el 3x3 del pack. La columna, las tiras de una pieza y la pieza suelta se arman con mitades y cuartos de sus piezas, todas macizas.
+  - El interior (la pieza del centro) es casi negro, como el del castillo. Bajo un escalón de una pieza el suelo se ve oscuro, porque esa celda queda rodeada.
+- **Viga:** el constructor dibujaba `=` con la fila de tiras y solo daba colisión a las piezas con 3 esquinas opacas. Se añadió la clave `plataformas` del tileset: la viga (4,20)-(6,20) lleva la colisión de una vía de siempre.
+- **Escalera:** solo la pieza (5,9) del pack, en (7,20). El constructor pone la misma pieza en cada `H`, la (5,10) es un tramo roto sin peldaños y la (5,11) deja huecos al repetirse.
+- **Fondo `calabozo`:** (6,6)-(12,7) del pack, 7x2, en (8,20). Es el trozo que menos se nota al repetirse; empieza dos columnas antes del rango de la ficha.
+- **Decorados:** las mismas letras.
+  - `t`: la antorcha de Raou, 4 cuadros de 7x16 a 8 fps, en (15,20). Va en `DECOR_LIGHTS` con la luz de la otra antorcha.
+  - `g`: la cadena larga, 1x2.
+  - `h`: la jaula, **2x2**, porque mide 19 px de ancho. En sus dos sitios de hoy, (43,5) y (89,5), la columna de la derecha está libre y tiene techo.
+  - `C`: la telaraña, **4x1** (64x15).
+  - `r`: la rejilla, 2x2, con su cuadro de pared.
+  - `b` y `x`: barril y caja, 1x1.
+  - Los que cuelgan van pegados arriba de su hueco.
+- **Probado** en el piso D de la galería ("TILESET CALABOZO"):
+  - captura con el juego abierto;
+  - prueba sin ventana: 85 bloques macizos, 4 piezas de viga de una vía, el Player se apoya en la viga y en el suelo, y MapAmbience pone luz a las 2 antorchas.
 
 ### Castillo
 - Parte de: tileset `castillo`, `fondo: castillo`. Guardia, Vanguardia, murciélago; el Rey Caído.
