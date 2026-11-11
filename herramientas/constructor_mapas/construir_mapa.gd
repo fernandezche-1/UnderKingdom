@@ -597,7 +597,9 @@ func _build(text_path: String) -> String:
     var liquidos := _layer(root, "Liquidos", _tileset(tex, img, "decorado"), 2)
     var terreno := _layer(root, "Terreno", _tileset(tex, img, "solido"), 0)
     var plataformas := _layer(root, "Plataformas", _tileset(tex, img, "plataforma"), 0)
-    var decorado := _layer(root, "Decorado", _tileset(tex, img, "decorado"), 1)
+    # Decorados, escaleras y checkpoints, detrás del Player, los enemigos y los
+    # objetos (z 0) y delante de la pared de fondo.
+    var decorado := _layer(root, "Decorado", _tileset(tex, img, "decorado"), -1)
 
     var sistemas := _child(root, Node2D.new(), "SistemasMapa")
     var kill_zones := _child(sistemas, Node2D.new(), "KillZones")
