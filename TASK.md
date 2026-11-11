@@ -200,6 +200,7 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
 - [ ] **Castillo:**
   - el Rey con `ability_reward` de Rodar, la reja de `[H2]`, las trampillas y la trampilla de `:C:`;
   - los aposentos de la Reina y el castillo sin hechizo (soldados NPC y el Capitán).
+  - Base generada (2026-11-11). `[L1]` del calabozo apunta a la base (`tiles_castillo.tscn#SpawnInicio`, en `tiles_calabozo.txt` y en la línea `target_scene_path` de `tiles_calabozo.tscn`) hasta que exista la `_combate`: al montarla, cambiarla a `tiles_castillo_combate.tscn`. `CASTLE_SCENE_PATH` y `debug_slide_collisions` ya apuntan a `escenas/mapas/`. `[H2]` apunta al cementerio nuevo, aún sin generar.
 - [ ] **Cementerio:**
   - el Capitán sin llave, las tres tumbas sello y su contador, la losa de `[S3]`, las trampillas del atajo y de la fosa, la casa del sepulturero y E3;
   - la estatua de la Reina, con las notas y el amuleto; la losa, la puerta de velas, la corona con la carta y el fragmento de vida 2/4 de la cripta de la primera reina.

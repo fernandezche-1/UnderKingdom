@@ -182,7 +182,7 @@ bloques: calabozo
 fondo: calabozo
 ; Llega sin espada: el Player es el del prólogo (camina y da puñetazos).
 jugador: res://escenas/prisn.tscn
-siguiente: res://escenas/mapas/tiles_castillo_combate.tscn#SpawnInicio
+siguiente: res://escenas/mapas/tiles_castillo.tscn#SpawnInicio
 ---
 ####################################################################################################
 ####################################################################################################

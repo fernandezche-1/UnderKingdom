@@ -1,9 +1,12 @@
 ; CASTILLO (macro mapa, docs/P46_MACRO_MAPA.md): ASCII de la zona. Primera
 ; pasada (estructura, P, checkpoints y aperturas) y segunda pasada (enemigos,
 ; objetos y decorados) hechas. Puertas hacia atrás 2 y 3 (2026-11-06).
-; NO GENERAR TODAVÍA: la escena de abajo es la del castillo que se juega hoy y
-; el constructor la reemplazaría. Al aprobarlo, este archivo pasa a
-; mapas_texto/tiles_castillo.txt (sección 9 de P46).
+; Generado en la Fase 3 (2026-11-11): este archivo pasó de
+; mapas_texto/macro/zonas/ a mapas_texto/tiles_castillo.txt (P46, sección 9) y
+; es la fuente de escenas/mapas/tiles_castillo.tscn. Generar:
+;   godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/tiles_castillo.txt
+; - La entrada [L1] ("<", "anterior") y la salida [H2] (">", "siguiente") las
+;   pone el constructor; :C: va en la _combate.
 ;
 ; Coordenadas (columna, fila), desde 0. 110 x 80 piezas. Ningún escalón pide
 ; más de 3 piezas de salto (con E1 se saltan unas 4,3).
