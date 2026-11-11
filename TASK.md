@@ -313,7 +313,7 @@ El criterio de "hecho" de cada paso está en P73, sección 2. La ficha se puede 
 
 Modo de cada paso: la ficha y vestir, en modo normal; las piezas, en modo plan si llevan un script o una escena nueva.
 
-- [ ] Calabozo: [x] ficha, [x] piezas, [ ] vestida.
+- [ ] Calabozo: [x] ficha, [x] piezas, [ ] vestida. Vestida el 2026-11-11 (tileset, bloques y fondo `calabozo`, rejillas y telarañas; colisiones iguales, arranca sin errores, verificador con 0 errores, Atlas publicado). Falta jugarla a mano; entonces se marcan las dos casillas.
 - [ ] Castillo: [ ] ficha, [ ] piezas, [ ] vestida.
 - [ ] Cementerio: [ ] ficha, [ ] piezas, [ ] vestida.
 - [ ] Minas: [ ] ficha, [ ] piezas, [ ] vestida.

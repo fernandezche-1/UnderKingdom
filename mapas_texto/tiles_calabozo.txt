@@ -138,13 +138,24 @@
 ; - Cofres (c): cuerpo de guardia (51, 10) y secreto (70, 26). Monedas ($)
 ;   sobre el foso de práctica, en el cuerpo de guardia, sobre las plataformas
 ;   de la sala larga y en el secreto. Poción (!) en la celda cerrada (4, 10).
-; - Decorados del tileset castillo: antorchas (t) en todas las salas menos las
-;   celdas, el vestíbulo, el depósito y el secreto; rejas de celda (f, 2x2) en
-;   el pasillo y la galería; cadenas (g) y estandartes (h), que cuelgan del
-;   techo; una armadura (T) en la sala del carcelero; estantería (E), cajas (x)
-;   y barriles (b) en el depósito, el cuerpo de guardia, el secreto y el pie de
-;   la subida. Ninguno pisa una escalera, sus columnas vecinas ni las tres filas
-;   de encima, un spawn ni otro decorado.
+; - Decorados (tileset calabozo desde el vestido, P73): antorchas de Raou (t)
+;   en todas las salas menos las celdas, el vestíbulo, el depósito y el
+;   secreto; rejas de celda (f, 2x2) en el pasillo y la galería; cadenas (g) y
+;   jaulas (h, 2x2), que cuelgan del techo; una armadura (T) en la sala del
+;   carcelero; estantería (E), cajas (x) y barriles (b) en el depósito, el
+;   cuerpo de guardia, el secreto y el pie de la subida. Ninguno pisa una
+;   escalera, sus columnas vecinas ni las tres filas de encima, un spawn ni
+;   otro decorado.
+;
+; Vestido (P73, 2026-11-11): tileset, bloques y fondo calabozo, el Dungeon
+; Tile Set de la prisión. Las mismas letras, reinterpretadas (LEYENDA,
+; sección 3), y dos decorados nuevos:
+; - rejillas del desagüe (r, 2x2): junto al conducto, en (60, 10), y sobre el
+;   pozo de :B:, en (65, 42);
+; - telarañas (C, 4x1, cuelgan del techo; la letra en su pieza de la
+;   izquierda): celda cerrada (2, 6), celda de inicio (9, 5), depósito
+;   (12, 22) y secreto (64, 22).
+; Las celdas sólidas no cambian (comparadas antes y después de regenerar).
 ;
 ; Viven en tiles_calabozo_combate.tscn (se rehace al generar este mapa):
 ; - Rejas (locked_door): RejaCelda (columna 8) y RejaInterior (77), con
@@ -166,9 +177,9 @@
 ;   prisión es la P.
 
 escena: res://escenas/mapas/tiles_calabozo.tscn
-tileset: castillo
-bloques: castillo
-fondo: castillo
+tileset: calabozo
+bloques: calabozo
+fondo: calabozo
 ; Llega sin espada: el Player es el del prólogo (camina y da puñetazos).
 jugador: res://escenas/prisn.tscn
 siguiente: res://escenas/mapas/tiles_castillo_combate.tscn#SpawnInicio
@@ -178,12 +189,12 @@ siguiente: res://escenas/mapas/tiles_castillo_combate.tscn#SpawnInicio
 ####################################################################################################
 ####################################################################################################
 #################.....................................##.....................#.................#####
-#########.......#..........................h..........##..........g..........#...........h.....#####
-##......#.....g.#.....................................##................B....#.................#####
+#########C......#..........................h..........##..........g..........#...........h.....#####
+##C.....#.....g.#.....................................##................B....#.................#####
 ##......#.......#..t......t..........t........t.......##......t........t.....#......t.......t..#####
 ##........t.................$......................................................................>
 ##.....................##..........................................................................>
-##..!.......P....f..#..##f......S..bx...$.R.....L..c...............R.......R.........T.............>
+##..!.......P....f..#..##f......S..bx...$.R.....L..c........r......R.......R.........T.............>
 ###########################...###########################.H.####################.H.#################
 ###########################...###########################.H.####################.H.#################
 #########################################################.H.####################.H.#################
@@ -195,7 +206,7 @@ siguiente: res://escenas/mapas/tiles_castillo_combate.tscn#SpawnInicio
 #########################################################.H.####################.H.#################
 ####################......................................H....#################.H.#################
 ####################......................................H....#################.H.#################
-############.......#........B.............................H....#.........#######.H.#################
+############C......#........B.............................H....#C........#######.H.#################
 ############.......#..........t.............t..........t..H....#.....g...#######.H.#################
 ############..............................................H..............#######.H.#################
 ############..............................................H..............#######.H.#################
@@ -215,7 +226,7 @@ siguiente: res://escenas/mapas/tiles_castillo_combate.tscn#SpawnInicio
 ##############.........H.....................................##............#.....H...........#######
 ##############.........H...........t..........t..........t...##............#.....H...........#######
 ##############....t....H....t................................##t.........t.#..t..H........t..#######
-##############.........H...............$...........$.........##............#.....H...........#######
+##############.........H...............$...........$.........##..r.........#.....H...........#######
 ##############.........H..............====........====...........................H...........#######
 ##############.........H.........................................................H...........#######
 ##############.........H..................R.............R...........S............H......S..b.#######

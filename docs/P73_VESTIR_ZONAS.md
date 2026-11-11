@@ -167,6 +167,16 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
   - captura con el juego abierto;
   - prueba sin ventana: 85 bloques macizos, 4 piezas de viga de una vía, el Player se apoya en la viga y en el suelo, y MapAmbience pone luz a las 2 antorchas.
 
+**Vestida (2026-11-11):**
+- `mapas_texto/tiles_calabozo.txt` pasa a `tileset: calabozo`, `bloques: calabozo` y `fondo: calabozo`, y se regeneró la base `escenas/mapas/tiles_calabozo.tscn`. La `_combate` no se tocó.
+- Las letras de siempre toman el arte del pack. Las dos jaulas `h` caben a 2x2 en sus sitios de hoy.
+- Decorados nuevos en el ASCII, fuera de las escaleras, sus columnas vecinas, sus tres filas de encima y los spawns:
+  - rejillas `r`: junto al conducto, en (60, 10) (sala del aviso, a la derecha del hueco), y sobre el pozo de `:B:`, en (65, 42);
+  - telarañas `C`, pegadas al techo: celda cerrada (2, 6), celda de inicio (9, 5), depósito (12, 22) y secreto (64, 22).
+- **Colisiones:** las mismas antes y después (3377 piezas sólidas y 8 de una vía, con los mismos polígonos), volcadas de las capas de la base con una escena temporal.
+- **Luz ambiente:** se queda la de la `_combate`, (0.44, 0.38, 0.56). Con la pared nueva, más clara que la del castillo, se lee bien en las capturas.
+- Arranca sin errores, `verificar_mundo.py` da 0 errores y el Atlas se publicó de nuevo (con los nombres de las letras del tileset `calabozo`). Falta jugarla a mano.
+
 ### Castillo
 - Parte de: tileset `castillo`, `fondo: castillo`. Guardia, Vanguardia, murciélago; el Rey Caído.
 - Ficha: por armar.
