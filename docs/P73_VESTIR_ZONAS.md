@@ -176,7 +176,7 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
 - **Colisiones:** las mismas antes y después (3377 piezas sólidas y 8 de una vía, con los mismos polígonos), volcadas de las capas de la base con una escena temporal.
 - **Orden de dibujo:** al jugarla, la escalera de madera y los decorados se veían delante del Player. La capa `Decorado` del constructor (decorados, escaleras y fogatas de checkpoint) tenía `z_index` 1 desde el primer constructor; pasa a -1, detrás del Player, los enemigos y los objetos (z 0) y delante de la pared de fondo (-10). Se regeneraron el calabozo, la zona de pruebas y la muestra del tileset, con las mismas colisiones. Los niveles de `archivo/tiles_v1/` se quedan como están.
 - **Luz ambiente:** se queda la de la `_combate`, (0.44, 0.38, 0.56). Con la pared nueva, más clara que la del castillo, se lee bien en las capturas.
-- Arranca sin errores, `verificar_mundo.py` da 0 errores y el Atlas se publicó de nuevo (con los nombres de las letras del tileset `calabozo`). Falta jugarla a mano.
+- Arranca sin errores, `verificar_mundo.py` da 0 errores y el Atlas se publicó de nuevo (con los nombres de las letras del tileset `calabozo`). Jugada a mano y vestida el 2026-11-11.
 
 ### Castillo
 - Parte de: tileset `castillo`, `fondo: castillo`. Guardia, Vanguardia, murciélago; el Rey Caído.
