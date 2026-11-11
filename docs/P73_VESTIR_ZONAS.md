@@ -106,8 +106,42 @@ Cada pieza se prueba en la zona de pruebas antes de ir a un mapa de la ruta.
 El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas/`) y de la tabla de P33. Lo demás está por armar.
 
 ### Calabozo
-- Parte de: tileset `castillo`, `fondo: castillo`. Enemigos de P33, profundidad 0 (rata, slime, murciélago grande, carcelero).
-- Ficha: por armar.
+- Parte de: tileset `castillo`, `bloques: castillo`, `fondo: castillo`. Enemigos de P33, profundidad 0 (rata, slime, murciélago grande, carcelero). Luz ambiente de la `_combate`: (0.44, 0.38, 0.56).
+- **Ficha aprobada el 2026-11-11.**
+- **Por qué cambia:** el calabozo usaba el mismo tileset y el mismo fondo que el castillo, que está pegado a él en el mundo; al salir por `[L1]` se veía igual. Con su propio tileset se distingue del castillo y sigue a la cinemática de la prisión, que usa el mismo pack.
+
+**Ambientación:**
+- **Tileset nuevo `calabozo`** (`herramientas/constructor_mapas/tilesets/calabozo.gd`): el atlas de mazmorra en las filas 0-15, como `castillo.gd`, y piezas de `assets/terceros/dungeon_tile_set/Dungeon Tile Set.png` debajo (el pack de la prisión, `escenas/mapas/prologo_prision/`).
+  - **Bloques `calabozo`:** el bloque de piedra gris azulada de 3x3 del pack, piezas (1,1)-(3,3), todas con las cuatro esquinas opacas. La columna y las tiras de una pieza se arman con mitades de piezas, como en `castillo`. El calabozo no tiene rampas.
+  - **Fondo `calabozo`:** la pared oscura del pack, piezas (8,1)-(13,7), si tiene un trozo que se repita sin costura. Si no, se queda la pared `castillo`.
+  - **Escalera:** la de madera del pack, (5,9)-(5,11).
+  - **Plataformas `=`:** la viga de madera del pack, (1,9)-(3,9).
+  - **Checkpoint:** la fogata de hoy.
+- **Decorados** (mismas letras, reinterpretadas en `calabozo.gd`):
+
+  | Letra | En `castillo` | En `calabozo` |
+  |---|---|---|
+  | `t` | antorcha de mazmorra | antorcha `spr_torch` de Raou, la de la prisión, si cabe en la pieza; si no, la de hoy |
+  | `g` | cadena | cadenas del pack |
+  | `h` | estandarte | jaula colgante del pack (cuelga del techo) |
+  | `b`, `x` | barril y caja | barril y caja del pack |
+  | `f`, `E`, `T` | rejas de celda, estantería, armadura | se quedan |
+  | `r` | ventana en arco | rejilla redonda del desagüe. Nueva en el ASCII: junto al conducto (columna 58) y sobre el pozo de `:B:` |
+  | `C` | puerta en arco | telarañas que cuelgan del techo. Nuevas en el ASCII: celdas, depósito y secreto |
+
+  Los decorados nuevos siguen la regla de la cabecera del `.txt`: ninguno pisa una escalera, sus columnas vecinas ni las tres filas de encima, un spawn ni otro decorado.
+- **Luces:** si la antorcha cambia de coordenadas en el atlas, se añaden a `DECOR_LIGHTS`. La luz ambiente se ajusta al vestir, solo en la `_combate`.
+
+**Enemigos:**
+- Se quedan los de profundidad 0: rata `R` (6), slime `L` (1), murciélago grande `B` (3) y el carcelero, a mano en la `_combate`.
+- Sin enemigos nuevos: es el tutorial y la profundidad 0 ya está completa en P33.
+- Nota de dificultad (no es de esta ficha): los tres hacen 0.75; sin espada, con `unarmed_extra_damage_taken`, es 1 corazón por golpe, y hasta 7 peleas a puño son obligatorias antes de la espada.
+
+**Origen del arte:**
+- Todo está ya en el repo: Dungeon Tile Set (bloques, fondo, escalera, viga y decorados), Raou (antorcha, rejas, estantería, armadura), atlas de mazmorra (CC0, RottingPixels) y `monster_creatures_2` (enemigos). Sin pack nuevo ni IA.
+- **Licencias:** el Dungeon Tile Set y `monster_creatures_2` están por confirmar, y Raou solo tiene un permiso informal (`ORIGEN.txt` de cada pack y "Otros pendientes" de `TASK.md`). Aprobado usarlos igualmente; se resuelve antes de publicar.
+
+**Reto obligatorio:** coincide con su fila de P46, sección 10. Llega con E0 (salto de unas 3 piezas) y sale con la llave del carcelero (`[L1]`). Ningún reto obligatorio pide E2 o más ni una mejora de la tienda, y vestir no cambia celdas sólidas (se comprueba en el paso D).
 
 ### Castillo
 - Parte de: tileset `castillo`, `fondo: castillo`. Guardia, Vanguardia, murciélago; el Rey Caído.
