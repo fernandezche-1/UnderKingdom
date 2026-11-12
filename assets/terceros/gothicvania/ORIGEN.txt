@@ -28,3 +28,17 @@ Personajes (Legacy Collection/Assets/Gothicvania/Characters/), sin cambiar el ar
 - personajes/barquero_lampara.png  death/Spritesheets/death-lamp-walk.png (6 cuadros de 32x48)
 - personajes/barquero_sale.png     death/Spritesheets/death-lamp-rise.png (11 cuadros de 32x48)
   El Barquero, mercader de mejoras (escenas/npc/barquero.tscn).
+
+Cementerio (P73, ficha del cementerio), sin cambiar el arte:
+- gothic_horror/tiles.png  Environments/Gothic-Horror-Files/PNG/layers/tiles.png
+  tal cual. herramientas/constructor_mapas/atlas_cementerio.py toma de aquí la
+  repisa de piedra (2,1)-(6,1), la fachada de ladrillo con musgo (34,8)-(40,10),
+  las calaveras amontonadas (8,6), el arco con calavera cornuda (14,7), la
+  gárgola (28,2), las calaveras en la pared (2,7) y el nicho con llama (17,6)
+  (piezas de 16 px, de arriba a la izquierda).
+- personajes/cuervo.png    Characters/crow/Spritesheets: crow-front (3) y
+  crow-fly (2), una fila cada una, cuadros de 48x48. El cuervo
+  (escenas/enemigos/cuervo.tscn); crow-idle (posado) no se usa.
+- personajes/anima.png     Characters/Ghost-Files/Spritesheets: ghost-Appear
+  (6), ghost-Idle (7), ghost-Chase (4), ghost-Shriek (4) y ghost-Vanish (7), una
+  fila cada una, cuadros de 64x80. El ánima (escenas/enemigos/anima.tscn).

@@ -33,6 +33,7 @@
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_calabozo.tscn" id="34_muestra_calabozo"]
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_castillo.tscn" id="35_muestra_castillo"]
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_castillo_salas.tscn" id="36_muestra_castillo_salas"]
+[ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_cementerio.tscn" id="37_muestra_cementerio"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_losa_medio"]
 atlas = ExtResource("8_tileset")
@@ -211,11 +212,11 @@ position = Vector2(1336, 960)
 upgrade_id = "amuleto_guardia"
 
 [node name="PalancaCorriente" parent="Objetos" instance=ExtResource("6_palanca")]
-position = Vector2(1176, 944)
+position = Vector2(904, 944)
 encounter_id = "pruebas_ascensor_corriente"
 
 [node name="AscensorAbajo" parent="Objetos" instance=ExtResource("20_ascensor")]
-position = Vector2(1112, 976)
+position = Vector2(840, 976)
 target_scene_path = "res://escenas/mapas/zona_pruebas_combate.tscn"
 target_spawn_id = &"AscensorArriba"
 arrival_spawn_id = &"AscensorAbajo"
@@ -223,14 +224,14 @@ requires_encounter = "pruebas_ascensor_corriente"
 prompt_text = "E  Subir"
 
 [node name="AscensorArriba" parent="Objetos" instance=ExtResource("20_ascensor")]
-position = Vector2(1032, 880)
+position = Vector2(760, 880)
 target_scene_path = "res://escenas/mapas/zona_pruebas_combate.tscn"
 target_spawn_id = &"AscensorAbajo"
 arrival_spawn_id = &"AscensorArriba"
 prompt_text = "E  Bajar"
 
 [node name="FuegoInfernal" parent="Objetos" instance=ExtResource("21_fuego_infernal")]
-position = Vector2(848, 912)
+position = Vector2(576, 912)
 width_tiles = 3
 height_tiles = 4
 
@@ -242,7 +243,7 @@ ability_reward = "adrenaline"
 boss_message = "CRYSTAL MAULER"
 
 [node name="Activador" type="Area2D" parent="Objetos/SalaMauler"]
-position = Vector2(648, 928)
+position = Vector2(376, 928)
 collision_layer = 0
 monitorable = false
 
@@ -252,7 +253,7 @@ shape = SubResource("RectangleShape2D_reja")
 [node name="Puertas" type="Node2D" parent="Objetos/SalaMauler"]
 
 [node name="PuertaEntrada" type="StaticBody2D" parent="Objetos/SalaMauler/Puertas"]
-position = Vector2(680, 928)
+position = Vector2(408, 928)
 script = ExtResource("7_barrera")
 piece_start = SubResource("AtlasTexture_reja_tope")
 piece_middle = SubResource("AtlasTexture_reja_medio")
@@ -265,7 +266,7 @@ disabled = true
 [node name="Atajos" type="Node2D" parent="Objetos/SalaMauler"]
 
 [node name="PuertaSalida" type="StaticBody2D" parent="Objetos/SalaMauler/Atajos"]
-position = Vector2(440, 928)
+position = Vector2(168, 928)
 script = ExtResource("7_barrera")
 piece_start = SubResource("AtlasTexture_reja_tope")
 piece_middle = SubResource("AtlasTexture_reja_medio")
@@ -278,10 +279,10 @@ shape = SubResource("RectangleShape2D_reja")
 [node name="PuntosJefe" type="Node2D" parent="Objetos/SalaMauler"]
 
 [node name="JefeEste" type="Marker2D" parent="Objetos/SalaMauler/PuntosJefe"]
-position = Vector2(488, 897)
+position = Vector2(216, 897)
 
 [node name="PuntoLlave" type="Marker2D" parent="Objetos/SalaMauler"]
-position = Vector2(552, 944)
+position = Vector2(280, 944)
 
 [node name="UI" type="CanvasLayer" parent="Objetos/SalaMauler"]
 layer = 9
@@ -455,6 +456,9 @@ position = Vector2(1248, 1392)
 
 [node name="MuestraCastilloSalas" parent="Objetos" instance=ExtResource("36_muestra_castillo_salas")]
 position = Vector2(656, 1392)
+
+[node name="MuestraCementerio" parent="Objetos" instance=ExtResource("37_muestra_cementerio")]
+position = Vector2(32, 1392)
 
 [node name="Carteles" type="Node2D" parent="."]
 
@@ -795,18 +799,42 @@ Va en: cementerio, estatua de la Reina.
 Recógelo: cada poción cura 0.25 más."
 autowrap_mode = 3
 
-[node name="Zona14" type="Label" parent="Carteles"]
+[node name="Nombre14" type="Label" parent="Carteles"]
 offset_left = 1010.0
+offset_top = 718.0
+offset_right = 1262.0
+offset_bottom = 738.0
+theme_type_variation = &"TextoAcento"
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "CUERVO Y ÁNIMA"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Texto14" type="Label" parent="Carteles"]
+offset_left = 1012.0
+offset_top = 786.0
+offset_right = 1260.0
+offset_bottom = 862.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "CUERVO Y ÁNIMA (P73)
+Van en: cementerio, el cuervo fuera y el ánima en la cripta honda.
+El cuervo se lanza en picado (0.25). El ánima aparece al acercarte y embiste gritando (0.5)."
+autowrap_mode = 3
+
+[node name="Zona15" type="Label" parent="Carteles"]
+offset_left = 738.0
 offset_top = 689.0
-offset_right = 1234.0
+offset_right = 962.0
 offset_bottom = 713.0
 theme_type_variation = &"Encabezado"
 text = "Minas"
 
-[node name="Nombre14" type="Label" parent="Carteles"]
-offset_left = 1010.0
+[node name="Nombre15" type="Label" parent="Carteles"]
+offset_left = 738.0
 offset_top = 718.0
-offset_right = 1230.0
+offset_right = 958.0
 offset_bottom = 738.0
 theme_type_variation = &"TextoAcento"
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -815,10 +843,10 @@ text = "ASCENSOR"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Texto14" type="Label" parent="Carteles"]
-offset_left = 1012.0
+[node name="Texto15" type="Label" parent="Carteles"]
+offset_left = 740.0
 offset_top = 786.0
-offset_right = 1228.0
+offset_right = 956.0
 offset_bottom = 862.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
@@ -827,10 +855,10 @@ Va en: minas, atajo :C:.
 Sin corriente no sube: tira la palanca y sube con E a la cornisa."
 autowrap_mode = 3
 
-[node name="Nombre15" type="Label" parent="Carteles"]
-offset_left = 770.0
+[node name="Nombre16" type="Label" parent="Carteles"]
+offset_left = 498.0
 offset_top = 718.0
-offset_right = 990.0
+offset_right = 718.0
 offset_bottom = 738.0
 theme_type_variation = &"TextoAcento"
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -839,10 +867,10 @@ text = "FUEGO INFERNAL"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Texto15" type="Label" parent="Carteles"]
-offset_left = 772.0
+[node name="Texto16" type="Label" parent="Carteles"]
+offset_left = 500.0
 offset_top = 786.0
-offset_right = 988.0
+offset_right = 716.0
 offset_bottom = 862.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
@@ -851,10 +879,10 @@ Va en: gruta de cristal, santuario de las profundidades e infierno.
 Sin E5 quema 0.5 y empuja; con E5, nada (Modo dev, Siguiente atuendo)."
 autowrap_mode = 3
 
-[node name="Nombre16" type="Label" parent="Carteles"]
-offset_left = 402.0
+[node name="Nombre17" type="Label" parent="Carteles"]
+offset_left = 130.0
 offset_top = 718.0
-offset_right = 750.0
+offset_right = 478.0
 offset_bottom = 738.0
 theme_type_variation = &"TextoAcento"
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -863,10 +891,10 @@ text = "CRYSTAL MAULER"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Texto16" type="Label" parent="Carteles"]
-offset_left = 404.0
+[node name="Texto17" type="Label" parent="Carteles"]
+offset_left = 132.0
 offset_top = 786.0
-offset_right = 748.0
+offset_right = 476.0
 offset_bottom = 862.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
@@ -875,7 +903,7 @@ Va en: minas, gruta de cristal (jefe opcional).
 Al entrar se cierra la reja. Al vencerlo da la Adrenalina y se abre la salida."
 autowrap_mode = 3
 
-[node name="Zona17" type="Label" parent="Carteles"]
+[node name="Zona18" type="Label" parent="Carteles"]
 offset_left = 114.0
 offset_top = 993.0
 offset_right = 498.0
@@ -883,7 +911,7 @@ offset_bottom = 1017.0
 theme_type_variation = &"Encabezado"
 text = "Mazmorra"
 
-[node name="Nombre17" type="Label" parent="Carteles"]
+[node name="Nombre18" type="Label" parent="Carteles"]
 offset_left = 114.0
 offset_top = 1022.0
 offset_right = 494.0
@@ -895,7 +923,7 @@ text = "DERRUMBE"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Texto17" type="Label" parent="Carteles"]
+[node name="Texto18" type="Label" parent="Carteles"]
 offset_left = 212.0
 offset_top = 1090.0
 offset_right = 492.0
@@ -907,7 +935,7 @@ Va en: mazmorra, tras la Reina [!5].
 Tira la palanca: se cierra la reja y el suelo cae. Huye a la derecha, esquiva los escombros (0.5) y sube por la escalera. Para repetir, F6."
 autowrap_mode = 3
 
-[node name="Zona18" type="Label" parent="Carteles"]
+[node name="Zona19" type="Label" parent="Carteles"]
 offset_left = 546.0
 offset_top = 993.0
 offset_right = 834.0
@@ -915,7 +943,7 @@ offset_bottom = 1017.0
 theme_type_variation = &"Encabezado"
 text = "Ruina"
 
-[node name="Nombre18" type="Label" parent="Carteles"]
+[node name="Nombre19" type="Label" parent="Carteles"]
 offset_left = 546.0
 offset_top = 1022.0
 offset_right = 830.0
@@ -927,7 +955,7 @@ text = "LLAMA ETERNA Y HIELO"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Texto18" type="Label" parent="Carteles"]
+[node name="Texto19" type="Label" parent="Carteles"]
 offset_left = 548.0
 offset_top = 1090.0
 offset_right = 828.0
@@ -939,7 +967,7 @@ Va en: ruina [P6]; el hielo negro, en las profundidades.
 Sin la llama la zona oscura apenas se ve y el hielo no cede. Tómala y derrite el hielo con E."
 autowrap_mode = 3
 
-[node name="Nombre19" type="Label" parent="Carteles"]
+[node name="Nombre20" type="Label" parent="Carteles"]
 offset_left = 850.0
 offset_top = 1022.0
 offset_right = 1230.0
@@ -951,7 +979,7 @@ text = "DASH EN EL AIRE"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Texto19" type="Label" parent="Carteles"]
+[node name="Texto20" type="Label" parent="Carteles"]
 offset_left = 852.0
 offset_top = 1090.0
 offset_right = 1228.0
@@ -963,7 +991,7 @@ Va en: ruina, premio del Guardián.
 Toma la reliquia. Con espada, Shift en el aire. El foso de 6 no se cruza sin el dash. Los pinchos matan: R."
 autowrap_mode = 3
 
-[node name="Zona20" type="Label" parent="Carteles"]
+[node name="Zona21" type="Label" parent="Carteles"]
 offset_left = 1282.0
 offset_top = 993.0
 offset_right = 1538.0
@@ -971,7 +999,7 @@ offset_bottom = 1017.0
 theme_type_variation = &"Encabezado"
 text = "Profundidades"
 
-[node name="Nombre20" type="Label" parent="Carteles"]
+[node name="Nombre21" type="Label" parent="Carteles"]
 offset_left = 1282.0
 offset_top = 1022.0
 offset_right = 1534.0
@@ -983,7 +1011,7 @@ text = "ATUENDO FIRE KNIGHT (E5)"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Texto20" type="Label" parent="Carteles"]
+[node name="Texto21" type="Label" parent="Carteles"]
 offset_left = 1284.0
 offset_top = 1090.0
 offset_right = 1532.0
@@ -995,7 +1023,7 @@ No pide piezas nuevas: reutiliza las de arriba.
 Maniquí: el Fire Knight, E5 (P68). Llevarlo: Modo dev, Siguiente atuendo."
 autowrap_mode = 3
 
-[node name="Zona21" type="Label" parent="Carteles"]
+[node name="Zona22" type="Label" parent="Carteles"]
 offset_left = 1586.0
 offset_top = 993.0
 offset_right = 1970.0
@@ -1003,7 +1031,7 @@ offset_bottom = 1017.0
 theme_type_variation = &"Encabezado"
 text = "Infierno"
 
-[node name="Nombre21" type="Label" parent="Carteles"]
+[node name="Nombre22" type="Label" parent="Carteles"]
 offset_left = 1586.0
 offset_top = 1022.0
 offset_right = 1966.0
@@ -1015,7 +1043,7 @@ text = "ARENA CON OLEADAS"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Texto21" type="Label" parent="Carteles"]
+[node name="Texto22" type="Label" parent="Carteles"]
 offset_left = 1588.0
 offset_top = 1090.0
 offset_right = 1964.0
@@ -1027,7 +1055,7 @@ Va en: infierno (coliseo y salón de los verdugos) y coliseo de ceniza.
 Al entrar se cierra. Vence las 2 oleadas y se abre la salida. Si mueres, empieza de nuevo."
 autowrap_mode = 3
 
-[node name="Zona22" type="Label" parent="Carteles"]
+[node name="Zona23" type="Label" parent="Carteles"]
 offset_left = 1778.0
 offset_top = 1297.0
 offset_right = 2194.0
@@ -1035,7 +1063,7 @@ offset_bottom = 1321.0
 theme_type_variation = &"Encabezado"
 text = "Calabozo"
 
-[node name="Nombre22" type="Label" parent="Carteles"]
+[node name="Nombre23" type="Label" parent="Carteles"]
 offset_left = 1778.0
 offset_top = 1326.0
 offset_right = 2190.0
@@ -1047,7 +1075,7 @@ text = "TILESET CALABOZO"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Texto22" type="Label" parent="Carteles"]
+[node name="Texto23" type="Label" parent="Carteles"]
 offset_left = 1956.0
 offset_top = 1394.0
 offset_right = 2188.0
@@ -1058,7 +1086,7 @@ text = "TILESET CALABOZO (P73)
 Bloques, viga (=), escalera, fondo y decorados del Dungeon Tile Set; antorcha de Raou. Las luces no se ven aquí (sin MapAmbience)."
 autowrap_mode = 3
 
-[node name="Zona23" type="Label" parent="Carteles"]
+[node name="Zona24" type="Label" parent="Carteles"]
 offset_left = 1250.0
 offset_top = 1297.0
 offset_right = 1730.0
@@ -1066,7 +1094,7 @@ offset_bottom = 1321.0
 theme_type_variation = &"Encabezado"
 text = "Castillo"
 
-[node name="Nombre23" type="Label" parent="Carteles"]
+[node name="Nombre24" type="Label" parent="Carteles"]
 offset_left = 1250.0
 offset_top = 1326.0
 offset_right = 1726.0
@@ -1078,7 +1106,7 @@ text = "TILESET CASTILLO"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Texto23" type="Label" parent="Carteles"]
+[node name="Texto24" type="Label" parent="Carteles"]
 offset_left = 1460.0
 offset_top = 1394.0
 offset_right = 1724.0
@@ -1089,7 +1117,7 @@ text = "TILESET CASTILLO (P73)
 Pared con pilastras, tablón (=) y estandarte (h) de Raou y craftpix; armero (A), trofeo (D), provisiones (O), cuadro (Q) y el cofre del Mimic (c)."
 autowrap_mode = 3
 
-[node name="Nombre24" type="Label" parent="Carteles"]
+[node name="Nombre25" type="Label" parent="Carteles"]
 offset_left = 658.0
 offset_top = 1326.0
 offset_right = 1230.0
@@ -1101,7 +1129,7 @@ text = "CASTILLO, SALAS"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Texto24" type="Label" parent="Carteles"]
+[node name="Texto25" type="Label" parent="Carteles"]
 offset_left = 980.0
 offset_top = 1394.0
 offset_right = 1228.0
@@ -1110,6 +1138,37 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 text = "CASTILLO, SALAS (P73)
 Una pared por sala (fondo_sala): libros, arcada, piedra clara, madera oscura y columnas; lámpara (y), tapiz (U), celosía (w), columna (K), estantería (l), mesa (n) y mostrador (V)."
+autowrap_mode = 3
+
+[node name="Zona26" type="Label" parent="Carteles"]
+offset_left = 34.0
+offset_top = 1297.0
+offset_right = 610.0
+offset_bottom = 1321.0
+theme_type_variation = &"Encabezado"
+text = "Cementerio"
+
+[node name="Nombre26" type="Label" parent="Carteles"]
+offset_left = 34.0
+offset_top = 1326.0
+offset_right = 606.0
+offset_bottom = 1346.0
+theme_type_variation = &"TextoAcento"
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "TILESET CEMENTERIO"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Texto26" type="Label" parent="Carteles"]
+offset_left = 244.0
+offset_top = 1394.0
+offset_right = 604.0
+offset_bottom = 1470.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "TILESET CEMENTERIO (P73)
+Exterior con pasto; cripta sin pasto (bloques_sala), paredes de tierra y ladrillo, repisa de piedra (=), cruz (K), lápida (Q), árbol (D), arbusto (O), arco (U), gárgola (A), calaveras (E, n) y nicho con llama (V)."
 autowrap_mode = 3
 
 [node name="Inicio" type="Label" parent="Carteles"]

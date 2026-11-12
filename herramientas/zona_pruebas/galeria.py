@@ -18,6 +18,7 @@ Uso, desde la raíz del proyecto:
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_calabozo.txt
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_castillo.txt
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_castillo_salas.txt
+  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_cementerio.txt
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas.txt
 """
 import sys
@@ -390,6 +391,19 @@ arrival_spawn_id = &"AscensorArriba"
 prompt_text = "E  Bajar"''')
 
 
+# Enemigos nuevos del cementerio (ficha de P73): el cuervo vuela desde el
+# principio; el ánima duerme como una brizna hasta que el Player se acerca.
+def b_cuervo_anima(c):
+    c.cell(4, c.F - 4, "o")
+    c.cell(10, c.F - 3, "N")
+
+
+room("B", "Cementerio", "CUERVO Y ÁNIMA",
+     "CUERVO Y ÁNIMA (P73)\nVan en: cementerio, el cuervo fuera y el ánima en la cripta honda.\n"
+     "El cuervo se lanza en picado (0.25). El ánima aparece al acercarte y embiste gritando (0.5).",
+     16, b_cuervo_anima)
+
+
 room("B", "Minas", "ASCENSOR",
      "ASCENSOR MINERO (P60)\nVa en: minas, atajo :C:.\n"
      "Sin corriente no sube: tira la palanca y sube con E a la cornisa.", 14, b_ascensor)
@@ -649,13 +663,14 @@ room("C", "Infierno", "ARENA CON OLEADAS",
 MUESTRAS = []
 
 
-def muestra_tileset(c, tileset, filas, ext_id, label_from, sufijo="", cabecera=""):
+def muestra_tileset(c, tileset, filas, ext_id, label_from, sufijo="", cabecera="", fondo=None):
     """sufijo: para una segunda muestra del mismo tileset; cabecera: líneas
-    más para su .txt (por ejemplo fondo_sala)."""
+    más para su .txt (por ejemplo fondo_sala); fondo: la pared de la muestra,
+    si el tileset no tiene una con su nombre."""
     assert c.dir == -1 and len(filas) == c.F - c.techo, (tileset, len(filas))
     assert all(len(f) == c.W - 3 for f in filas), tileset
     nombre = f"zona_pruebas_muestra_{tileset}{sufijo}"
-    MUESTRAS.append((tileset, nombre, filas, ext_id, cabecera))
+    MUESTRAS.append((tileset, nombre, filas, ext_id, cabecera, fondo or tileset))
     node(f'''
 [node name="Muestra{(tileset + sufijo).title().replace('_', '')}" parent="Objetos" instance=ExtResource("{ext_id}")]
 position = Vector2({c.x0 * T}, {(c.techo + 1) * T})''')
@@ -766,6 +781,47 @@ room("D", "Castillo", "CASTILLO, SALAS",
      36, b_castillo_salas)
 
 
+# Cementerio (ficha de P73): a la izquierda el exterior, sin pared (aquí se ve
+# la de la zona de pruebas; en el mapa, el parallax), con la lápida inclinada
+# (Q), el árbol muerto (D), la cruz (K) y el arbusto (O); a la derecha la
+# cripta (bloques_sala cripta, sin pasto), con pared de tierra y de ladrillo,
+# una columna, una tira y una pieza suelta (macizas), la repisa de piedra (=),
+# el arco con calavera (U), la gárgola (A), las calaveras amontonadas (E), el
+# nicho con llama (V) y las calaveras en la pared (n). Sin parallax: un
+# Parallax2D dentro de la muestra taparía la galería.
+MUESTRA_CEMENTERIO = [
+    ".................................",
+    ".................................",
+    ".................................",
+    ".................................",
+    ".................................",
+    ".................................",
+    "........................###......",
+    "....................#U.......A...",
+    "....................#........===.",
+    "....................#..#.........",
+    "....................#............",
+    "Q.D..........K.O....#E..V..n.....",
+    "#################################",
+]
+CABECERA_CEMENTERIO = (
+    "fondo_sala: ninguno 0 0 19 12\n"
+    "fondo_sala: ladrillo 26 0 32 11\n"
+    "bloques_sala: cripta 20 0 32 12\n"
+)
+
+
+def b_tileset_cementerio(c):
+    return muestra_tileset(c, "cementerio", MUESTRA_CEMENTERIO, "37_muestra_cementerio", 13,
+                           cabecera=CABECERA_CEMENTERIO, fondo="tierra")
+
+
+room("D", "Cementerio", "TILESET CEMENTERIO",
+     "TILESET CEMENTERIO (P73)\nExterior con pasto; cripta sin pasto (bloques_sala), paredes de tierra y "
+     "ladrillo, repisa de piedra (=), cruz (K), lápida (Q), árbol (D), arbusto (O), arco (U), gárgola (A), "
+     "calaveras (E, n) y nicho con llama (V).", 36, b_tileset_cementerio)
+
+
 # ---------------------------------------------------------------- colocar
 def add_label(name, x, y, w, h, text, variation=None, align=0, header=False):
     carteles.append((name, x, y, w, h, text, variation, align, header))
@@ -820,12 +876,12 @@ for r in range(ROWS):
 mapa = "\n".join("".join(row) for row in g)
 header = Path(sys.argv[1]).read_text(encoding="utf-8") if len(sys.argv) > 1 else head + "\n"
 TXT.write_text(header + "---\n" + mapa + "\n", encoding="utf-8")
-for tileset, nombre, filas, _, cabecera in MUESTRAS:
+for tileset, nombre, filas, _, cabecera, fondo in MUESTRAS:
     (ROOT / f"mapas_texto/{nombre}.txt").write_text(
         f"; Muestra del tileset {tileset} para la galería de la zona de pruebas (P73).\n"
         "; La escribe herramientas/zona_pruebas/galeria.py: no se edita a mano.\n"
         f"escena: res://escenas/mapas/{nombre}.tscn\n"
-        f"tileset: {tileset}\nbloques: {tileset}\nfondo: {tileset}\n{cabecera}muestra: si\n---\n"
+        f"tileset: {tileset}\nbloques: {tileset}\nfondo: {fondo}\n{cabecera}muestra: si\n---\n"
         + "\n".join(filas) + "\n", encoding="utf-8")
 
 # ---------------------------------------------------------------- salida .tscn
@@ -861,7 +917,7 @@ ext = '''[ext_resource type="PackedScene" path="res://escenas/enemigos/rata.tscn
 [ext_resource type="PackedScene" path="res://escenas/objetos/espada_oxidada.tscn" id="33_espada_oxidada"]
 ''' + "".join(
     f'[ext_resource type="PackedScene" path="res://escenas/mapas/{nombre}.tscn" id="{ext_id}"]\n'
-    for _, nombre, _, ext_id, _ in MUESTRAS)
+    for _, nombre, _, ext_id, _, _ in MUESTRAS)
 sub = '''[sub_resource type="AtlasTexture" id="AtlasTexture_losa_medio"]
 atlas = ExtResource("8_tileset")
 region = Rect2(16, 304, 16, 16)

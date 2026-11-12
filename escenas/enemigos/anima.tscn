@@ -1,0 +1,286 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/combat/rising_enemy.gd" id="script"]
+[ext_resource type="Texture2D" path="res://assets/terceros/gothicvania/personajes/anima.png" id="tex_0"]
+
+[sub_resource type="AtlasTexture" id="Atlas_appear_1"]
+atlas = ExtResource("tex_0")
+region = Rect2(0, 0, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_appear_2"]
+atlas = ExtResource("tex_0")
+region = Rect2(64, 0, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_appear_3"]
+atlas = ExtResource("tex_0")
+region = Rect2(128, 0, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_appear_4"]
+atlas = ExtResource("tex_0")
+region = Rect2(192, 0, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_appear_5"]
+atlas = ExtResource("tex_0")
+region = Rect2(256, 0, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_appear_6"]
+atlas = ExtResource("tex_0")
+region = Rect2(320, 0, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_idle_1"]
+atlas = ExtResource("tex_0")
+region = Rect2(0, 80, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_idle_2"]
+atlas = ExtResource("tex_0")
+region = Rect2(64, 80, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_idle_3"]
+atlas = ExtResource("tex_0")
+region = Rect2(128, 80, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_idle_4"]
+atlas = ExtResource("tex_0")
+region = Rect2(192, 80, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_idle_5"]
+atlas = ExtResource("tex_0")
+region = Rect2(256, 80, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_idle_6"]
+atlas = ExtResource("tex_0")
+region = Rect2(320, 80, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_idle_7"]
+atlas = ExtResource("tex_0")
+region = Rect2(384, 80, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_chase_1"]
+atlas = ExtResource("tex_0")
+region = Rect2(0, 160, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_chase_2"]
+atlas = ExtResource("tex_0")
+region = Rect2(64, 160, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_chase_3"]
+atlas = ExtResource("tex_0")
+region = Rect2(128, 160, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_chase_4"]
+atlas = ExtResource("tex_0")
+region = Rect2(192, 160, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_shriek_1"]
+atlas = ExtResource("tex_0")
+region = Rect2(0, 240, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_shriek_2"]
+atlas = ExtResource("tex_0")
+region = Rect2(64, 240, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_shriek_3"]
+atlas = ExtResource("tex_0")
+region = Rect2(128, 240, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_shriek_4"]
+atlas = ExtResource("tex_0")
+region = Rect2(192, 240, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_vanish_1"]
+atlas = ExtResource("tex_0")
+region = Rect2(0, 320, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_vanish_2"]
+atlas = ExtResource("tex_0")
+region = Rect2(64, 320, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_vanish_3"]
+atlas = ExtResource("tex_0")
+region = Rect2(128, 320, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_vanish_4"]
+atlas = ExtResource("tex_0")
+region = Rect2(192, 320, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_vanish_5"]
+atlas = ExtResource("tex_0")
+region = Rect2(256, 320, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_vanish_6"]
+atlas = ExtResource("tex_0")
+region = Rect2(320, 320, 64, 80)
+
+[sub_resource type="AtlasTexture" id="Atlas_vanish_7"]
+atlas = ExtResource("tex_0")
+region = Rect2(384, 320, 64, 80)
+
+[sub_resource type="SpriteFrames" id="Frames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_appear_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_appear_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_appear_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_appear_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_appear_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_appear_6")
+}],
+"loop": 0,
+"name": &"appear",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_idle_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_idle_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_idle_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_idle_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_idle_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_idle_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_idle_7")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_chase_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chase_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chase_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chase_4")
+}],
+"loop": 1,
+"name": &"move",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_shriek_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_shriek_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_shriek_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_shriek_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chase_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chase_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chase_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chase_4")
+}],
+"loop": 1,
+"name": &"attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_vanish_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_vanish_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_vanish_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_vanish_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_vanish_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_vanish_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_vanish_7")
+}],
+"loop": 0,
+"name": &"death",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="Body"]
+size = Vector2(18, 32)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+collision_layer = 5
+script = ExtResource("script")
+rise_animation = &"appear"
+dormant_frame = 0
+wake_range = 80.0
+wake_vertical_range = 70.0
+lunge_windup = 0.4
+lunge_duration = 0.3
+lunge_speed = 190.0
+max_health = 2.5
+use_gravity = false
+knockback_horizontal = 120.0
+patrol_distance = 30.0
+patrol_speed = 20.0
+chase_speed = 55.0
+detection_range = 200.0
+detection_vertical_range = 150.0
+lose_aggro_range = 320.0
+lose_aggro_vertical_range = 220.0
+attack_range = 64.0
+attack_stop_margin = 0.0
+minimum_player_distance = 24.0
+separation_speed = 60.0
+attack_damage = 0.5
+attack_cooldown = 1.6
+attack_hitbox_size = Vector2(24, 32)
+attack_hitbox_offset = Vector2(0, 6)
+contact_damage = 0.25
+fly_toward_target = true
+fly_target_offset_y = 34.0
+avoid_ledges = false
+sprite_faces_right = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("Frames")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+shape = SubResource("Body")

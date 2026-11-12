@@ -1,10 +1,16 @@
 extends RefCounted
 
 ## Tileset del cementerio: el atlas de mazmorra (filas 0-15, sin cambios) más
-## piezas de Gothicvania Cemetery (CC0) en las filas 16-19, ver
-## assets/terceros/gothicvania_cementerio/ORIGEN.txt. Mismas letras que mazmorra;
-## cambian los bloques "cementerio" y los decorados T (lápida), g (pasto) y
-## r (zarzas). Coordenadas en piezas, no en píxeles.
+## piezas de Gothicvania Cemetery (CC0) en las filas 16-19 y, desde P73 (ficha
+## del cementerio), las filas 20-31 que arma
+## herramientas/constructor_mapas/atlas_cementerio.py con piezas del Cemetery y
+## de Gothic Horror (Legacy Collection, CC0); ver
+## assets/terceros/gothicvania_cementerio/ORIGEN.txt. Mismas letras que
+## mazmorra; cambian los bloques "cementerio" y los decorados T (lápida), g
+## (pasto), r (zarzas) y E (calaveras). Además: el estilo de bloques "cripta"
+## (sin pasto, con la repisa de piedra en "="), las paredes "tierra" y
+## "ladrillo", y los decorados K, Q, D, O, A, n, U y V, con las letras del
+## castillo. Coordenadas en piezas, no en píxeles.
 
 const DATA := {
     "textura": "res://assets/terceros/gothicvania_cementerio/tileset_cementerio.png",
@@ -24,6 +30,10 @@ const DATA := {
         # Pasto arriba, tierra con calaveras en paredes y techos, interior
         # oscuro. Sin rampas propias: usa las de verde.
         "cementerio": [Vector2i(0, 16), Vector2i(4, 2)],
+        # Lo de bajo tierra (P73): tierra con calaveras sin pasto, rampas de
+        # verde y, como tercer elemento, sus plataformas: la repisa de piedra
+        # de Gothic Horror (izquierda, medio, derecha), con colisión de una vía.
+        "cripta": [Vector2i(0, 20), Vector2i(4, 2), Vector2i(4, 20)],
     },
     "bloques_por_defecto": "cementerio",
 
@@ -37,8 +47,17 @@ const DATA := {
         "g": [Vector2i(6, 18), Vector2i(1, 1)],    # puntas de pasto
         "r": [Vector2i(7, 18), Vector2i(1, 1)],    # zarzas secas
         "T": [Vector2i(4, 18), Vector2i(2, 3)],    # lápida
-        "E": [Vector2i(24, 15), Vector2i(3, 3)],   # estantería
         "C": [Vector2i(24, 5), Vector2i(3, 2)],    # tienda de campaña
+        # Ficha del cementerio (P73), filas 20-31 de atlas_cementerio.py.
+        "E": [Vector2i(22, 22), Vector2i(2, 3)],   # calaveras amontonadas (Gothic Horror)
+        "K": [Vector2i(18, 22), Vector2i(2, 3)],   # cruz de piedra (stone-2)
+        "Q": [Vector2i(20, 22), Vector2i(2, 3)],   # lápida inclinada (stone-3)
+        "D": [Vector2i(0, 31), Vector2i(11, 8)],   # árbol muerto (tree-2)
+        "O": [Vector2i(11, 28), Vector2i(5, 5)],   # arbusto con cruz (bush-large)
+        "A": [Vector2i(26, 22), Vector2i(2, 3)],   # gárgola (Gothic Horror)
+        "n": [Vector2i(28, 21), Vector2i(2, 2)],   # calaveras en la pared (Gothic Horror)
+        "U": [Vector2i(24, 22), Vector2i(2, 3)],   # arco con calavera cornuda (Gothic Horror)
+        "V": [Vector2i(30, 23), Vector2i(2, 4)],   # nicho con llama (Gothic Horror; da luz)
     },
 
     # Piezas animadas: base -> [cuadros, columnas (0 = en fila), fps].
@@ -61,5 +80,9 @@ const DATA := {
     # Fondos de pared: nombre -> [origen del patrón, tamaño del patrón].
     "fondos": {
         "cueva": [Vector2i(24, 0), Vector2i(8, 4)],
+        # P73: tierra con calaveras (lo excavado) y ladrillo con musgo de
+        # Gothic Horror (lo construido), al 60 % de brillo.
+        "tierra": [Vector2i(7, 20), Vector2i(4, 2)],
+        "ladrillo": [Vector2i(11, 20), Vector2i(7, 3)],
     },
 }

@@ -33,6 +33,8 @@ Columns: 8
 176 112  80	rata (R)
  64 192 160	slime (L)
 160  64 160	murciélago grande (B)
+ 72  80  96	cuervo (o)
+160 224 255	ánima (N)
 255 192 144	antorcha (t)
 192  48   0	fogata (f)
 160 128  96	barril (b)

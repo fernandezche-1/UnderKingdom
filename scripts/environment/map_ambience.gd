@@ -46,12 +46,22 @@ const VIGNETTE_LAYER := 5
 @export var vignette_color: Color = Color(0.02, 0.01, 0.04)
 
 ## Piezas que dan luz: coordenadas en el atlas del tileset -> [color, radio, energía, parpadea].
+## Solo las del atlas de mazmorra (filas 0-15), que todos los tilesets copian igual.
 const DECOR_LIGHTS := {
 	Vector2i(0, 10): [Color(1.0, 0.62, 0.3), 56, 0.9, true],     # antorcha
-	Vector2i(15, 20): [Color(1.0, 0.62, 0.3), 56, 0.9, true],    # antorcha de Raou (tileset calabozo)
 	Vector2i(27, 4): [Color(1.0, 0.55, 0.25), 72, 1.0, true],    # fogata / checkpoint
 	Vector2i(0, 15): [Color(0.35, 0.9, 1.0), 32, 0.6, false],    # hongos luminosos
 	Vector2i(22, 9): [Color(0.75, 0.45, 1.0), 32, 0.6, false],   # cristales
+}
+## Piezas que dan luz y son propias de un atlas (filas 16 en adelante): la misma
+## coordenada es otra pieza en otro atlas (P73). Ruta del atlas -> {coordenadas: luz}.
+const ATLAS_DECOR_LIGHTS := {
+	"res://assets/terceros/dungeon_tile_set/tileset_calabozo.png": {
+		Vector2i(15, 20): [Color(1.0, 0.62, 0.3), 56, 0.9, true],   # antorcha de Raou
+	},
+	"res://assets/terceros/gothicvania_cementerio/tileset_cementerio.png": {
+		Vector2i(30, 22): [Color(1.0, 0.62, 0.3), 48, 0.85, true],  # nicho con llama (V)
+	},
 }
 const LAVA_SURFACE := Vector2i(12, 8)
 const LAVA_LIGHT := [Color(1.0, 0.35, 0.1), 48, 0.9, true]
@@ -127,10 +137,23 @@ func _add_decor_lights() -> void:
 	var layer := _map_root.get_node_or_null("Decorado") as TileMapLayer
 	if layer == null:
 		return
+	var own_lights: Dictionary = ATLAS_DECOR_LIGHTS.get(_atlas_path(layer), {})
 	for cell: Vector2i in layer.get_used_cells():
 		var coords := layer.get_cell_atlas_coords(cell)
-		if DECOR_LIGHTS.has(coords):
+		if own_lights.has(coords):
+			_spawn_light(_cell_position(layer, cell), own_lights[coords])
+		elif DECOR_LIGHTS.has(coords):
 			_spawn_light(_cell_position(layer, cell), DECOR_LIGHTS[coords])
+
+
+## Ruta de la textura del atlas de la capa ("" si no tiene).
+func _atlas_path(layer: TileMapLayer) -> String:
+	if layer.tile_set == null or layer.tile_set.get_source_count() == 0:
+		return ""
+	var source := layer.tile_set.get_source(layer.tile_set.get_source_id(0)) as TileSetAtlasSource
+	if source == null or source.texture == null:
+		return ""
+	return source.texture.resource_path
 
 
 func _add_lava_lights() -> void:

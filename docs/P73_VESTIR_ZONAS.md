@@ -456,6 +456,52 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
 - Ningún reto obligatorio pide E3, la Agilidad ni una mejora de la tienda.
 - Antes de dar la zona por vestida falta volver a jugar la fosa agrandada y ajustar sus oleadas (`TASK.md`, estructura del cementerio).
 
+**Piezas (hechas el 2026-11-12).** Decisiones aprobadas al pasar la ficha a piezas:
+- **Arte:** la ficha daba la Legacy por "ya en el repo", pero allí solo estaban los fondos, los efectos y el Barquero. Gothic Horror, `crow`, `Ghost-Files` y los `sliced-objects` del Cemetery se trajeron de los ZIP, solo lo que se usa, y quedan anotados en los `ORIGEN.txt` de `assets/terceros/gothicvania/` y `gothicvania_cementerio/`.
+- **Atlas** `tileset_cementerio.png`, que arma `herramientas/constructor_mapas/atlas_cementerio.py`. Pasa de 512x320 a 512x512 y las filas 0-19 no cambian (comprobado píxel a píxel). En las filas 20-31:
+  - **Estilo `cripta`** en (0,20): la fila de arriba, las tiras y la pieza suelta son la tierra con calaveras sin pasto del pack (`tileset.png`, (4..7,5)); los lados también son de esa tierra; el interior y la fila de abajo son las del juego `cementerio`. Las 16 piezas son macizas.
+  - **Repisa de piedra** en (4,20): de Gothic Horror, (2,1), (3,1) y (6,1), con la colisión de una vía de siempre.
+  - **Pared `tierra`** en (7,20), 4x2: la tierra del pack sobre la fila de techos del juego `cementerio`, al 60 %.
+  - **Pared `ladrillo`** en (11,20), 7x3: la fachada con musgo de Gothic Horror, (34,8)-(40,10), al 60 %. Se repite sin costura de lado y de alto.
+- **Decorados** (tamaños medidos; las piezas de `E`, `n` y `U` se eligieron entre las del pack):
+
+  | Letra | Pieza | Tamaño |
+  |---|---|---|
+  | `E` | calaveras amontonadas | 2x3 |
+  | `K` | cruz de piedra (`stone-2`) | 2x3 |
+  | `Q` | lápida inclinada (`stone-3`) | 2x3 |
+  | `D` | árbol muerto (`tree-2`) | **11x8** |
+  | `O` | arbusto con cruz (`bush-large`) | **5x5** |
+  | `A` | gárgola, sin el trozo de muro de la casa | 2x3 |
+  | `n` | calaveras en la pared | 2x2 |
+  | `U` | arco con calavera cornuda: trae su marco y no deja un parche de ladrillo en las paredes de tierra | 2x3 |
+  | `V` | nicho con llama | **2x4** |
+
+  La cara en el ladrillo y los huesos tirados de Gothic Horror se miraron y se dejan fuera.
+- **Constructor:**
+  - opción `bloques_sala: <estilo> x0 y0 x1 y1`, que se repite como `fondo_sala` (gana la de más abajo) y cambia los bloques, las rampas y las plataformas de ese rectángulo;
+  - un estilo de `bloques` admite un tercer elemento con sus plataformas (la repisa de `cripta`);
+  - sin `bloques_sala` genera lo mismo que antes: las muestras del calabozo y del castillo y la zona de pruebas salen iguales, y el cementerio de hoy da el mismo `Terreno` y las mismas `Plataformas` (solo cambia `Decorado`, por la `E` nueva).
+- **Luces:** `DECOR_LIGHTS` buscaba la luz por la coordenada del atlas sin mirar de qué tileset era, así que los dos estantes `O` del castillo tenían la luz de la antorcha del calabozo (15,20). Ahora `DECOR_LIGHTS` solo lleva las piezas del atlas de mazmorra, y `ATLAS_DECOR_LIGHTS` las de cada atlas: la antorcha del calabozo y el nicho `V` del cementerio, en (30,22).
+- **Enemigos** (sin script propio):
+  - **cuervo** `o` (`escenas/enemigos/cuervo.tscn`, `lunge_enemy.gd`, los valores del murciélago con 1 de vida, 0.25 de daño y 0.25 de contacto): siempre en vuelo. `idle` es el aleteo de frente, `move` el picado, y `attack` aletea durante el aviso (0.25 s) y cae en picado durante la embestida. El cuervo posado no se usa;
+  - **ánima** `N` (`escenas/enemigos/anima.tscn`, `rising_enemy.gd` sin cambios y sin gravedad, 2.5 de vida, 0.5 de daño y 0.25 de contacto): dormida es la brizna (cuadro 0 de `appear`) y despierta con el Player a 80 px de lado y 70 de alto. `move` es `chase`, `attack` grita (`shriek`) durante el aviso (0.4 s) y embiste inclinada (`chase`), y `death` es `vanish`.
+- **Galería:**
+  - piso B: cuarto "CUERVO Y ÁNIMA" tras el del amuleto. Los tres cuartos de las minas se corren 17 columnas a la izquierda y el del Mauler queda en x 8-29, sin tocar el pozo de la columna 4;
+  - piso D: cuarto "TILESET CEMENTERIO" (x 2-37), con la muestra `zona_pruebas_muestra_cementerio`. A la izquierda, el exterior sin pared con `Q`, `D`, `K` y `O`; a la derecha, la cripta (`bloques_sala`) con las dos paredes, una columna, una tira y una pieza suelta, la repisa y `U`, `A`, `E`, `V` y `n`. Sin parallax, porque dentro de la galería taparía todo;
+  - `galeria.py` acepta la pared de la muestra (`fondo`) para los tilesets sin una pared con su nombre.
+- **Probado:**
+  - capturas de los dos cuartos;
+  - prueba sin ventana con 44 comprobaciones bien:
+    - los 42 bloques de la muestra son macizos y los de la cripta usan su juego (columna, tira y pieza suelta incluidas);
+    - las 3 piezas de la repisa son de una vía, y el Player se apoya en la repisa y en el suelo;
+    - los 9 decorados están en su pieza del atlas, y las paredes salen bien (sin pared, tierra y ladrillo);
+    - hay luz en el nicho y en las 21 antorchas del calabozo, y ninguna en los estantes del castillo;
+    - el cuervo y el ánima siguen en su sitio a los 3 s; el ánima duerme como brizna, rechaza golpes dormida y mientras aparece, y despierta al acercarse;
+    - los dos dañan en múltiplos de 0.25, reciben golpes y mueren (el ánima, con `vanish`);
+  - arrancan sin errores el juego, la zona de pruebas y las `_combate` del calabozo, el castillo y el cementerio.
+- **Al vestir, mirar:** en la captura la pared `tierra` al 60 % se distingue poco de los bloques de tierra de la cripta. Si al jugar cuesta leer qué es suelo, se baja su brillo (por ejemplo, al 45 %) en `atlas_cementerio.py`.
+
 ### Minas
 - Parte de: tileset `mazmorra` con `bloques: madera`, parallax de `pixelfantasy_caves`. Kolbos y murciélago; el Caballero y el Crystal Mauler.
 - Ficha: por armar.

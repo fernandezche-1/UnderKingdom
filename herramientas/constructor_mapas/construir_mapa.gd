@@ -57,6 +57,8 @@ const COLORS := {
     "R": ["b07050", "rata"],
     "L": ["40c0a0", "slime"],
     "B": ["a040a0", "murciélago grande"],
+    "o": ["485060", "cuervo"],
+    "N": ["a0e0ff", "ánima"],
     "t": ["ffc090", "antorcha"],
     "f": ["c03000", "fogata"],
     "b": ["a08060", "barril"],
@@ -113,6 +115,8 @@ const ENEMIES := {
     "R": "res://escenas/enemigos/rata.tscn",
     "L": "res://escenas/enemigos/slime.tscn",
     "B": "res://escenas/enemigos/murcielago_grande.tscn",
+    "o": "res://escenas/enemigos/cuervo.tscn",
+    "N": "res://escenas/enemigos/anima.tscn",
 }
 
 var _grid: Array[String] = []
@@ -122,6 +126,8 @@ var _h := 0
 var T := 16
 ## Datos del tileset elegido (ver tilesets/mazmorra.gd).
 var _ts: Dictionary = {}
+## Rectángulos de bloques_sala: [estilo, Rect2i en piezas].
+var _block_rooms: Array = []
 
 
 func _ready() -> void:
@@ -168,9 +174,9 @@ func _read_map_file(text_path: String, options: Dictionary) -> String:
             elif clean != "" and not clean.begins_with(";") and ":" in clean:
                 var parts := clean.split(":", true, 1)
                 var key := parts[0].strip_edges()
-                if key == "fondo_sala":
-                    # Se puede repetir: una línea por sala.
-                    (options.fondo_sala as Array).append(parts[1].strip_edges())
+                if key == "fondo_sala" or key == "bloques_sala":
+                    # Se pueden repetir: una línea por sala.
+                    (options[key] as Array).append(parts[1].strip_edges())
                 else:
                     options[key] = parts[1].strip_edges()
         elif line.strip_edges() != "":
@@ -515,6 +521,7 @@ func _build(text_path: String) -> String:
         "tileset": "mazmorra", "bloques": "", "fondo": "cueva", "escena": "", "imagen": "",
         "siguiente": "", "anterior": "", "cofre_monedas": "3", "cofre_pociones": "1", "parallax": "",
         "depuracion": "no", "jugador": PLAYER_SCENE, "muestra": "no", "fondo_sala": [],
+        "bloques_sala": [],
     }
     var error := _read_map_file(text_path, options)
     if error != "":
@@ -543,15 +550,22 @@ func _build(text_path: String) -> String:
     # "ninguno" deja esas celdas sin pared, para ver el parallax.
     var rooms: Array = []
     for spec: String in options.fondo_sala:
-        var words := spec.split(" ", false)
-        var numbers_ok := words.size() == 5
-        for i in range(1, words.size()):
-            numbers_ok = numbers_ok and words[i].is_valid_int()
-        if not numbers_ok:
+        var room := _room_spec(spec)
+        if room.is_empty():
             return "fondo_sala: se escribe \"<fondo> <x0> <y0> <x1> <y1>\", no '%s'." % spec
-        if words[0] != "ninguno" and not _ts.fondos.has(words[0]):
-            return "fondo_sala: '%s' no existe. Opciones: ninguno, %s" % [words[0], ", ".join(_ts.fondos.keys())]
-        rooms.append([words[0], Rect2i(Vector2i(int(words[1]), int(words[2])), Vector2i(int(words[3]) - int(words[1]) + 1, int(words[4]) - int(words[2]) + 1))])
+        if room[0] != "ninguno" and not _ts.fondos.has(room[0]):
+            return "fondo_sala: '%s' no existe. Opciones: ninguno, %s" % [room[0], ", ".join(_ts.fondos.keys())]
+        rooms.append(room)
+    # bloques_sala: "<estilo> <x0> <y0> <x1> <y1>", igual que fondo_sala: los
+    # bloques, rampas y plataformas de ese rectángulo usan otro estilo.
+    _block_rooms.clear()
+    for spec: String in options.bloques_sala:
+        var room := _room_spec(spec)
+        if room.is_empty():
+            return "bloques_sala: se escribe \"<estilo> <x0> <y0> <x1> <y1>\", no '%s'." % spec
+        if not _ts.bloques.has(room[0]):
+            return "bloques_sala: '%s' no existe. Opciones: %s" % [room[0], ", ".join(_ts.bloques.keys())]
+        _block_rooms.append(room)
     var out_path: String = options.escena
     if not out_path.begins_with("res://escenas/mapas/") or not out_path.ends_with(".tscn"):
         return "escena: debe ser res://escenas/mapas/<nombre>.tscn"
@@ -638,11 +652,6 @@ func _build(text_path: String) -> String:
     var enemies := _child(root, Node2D.new(), "Enemigos")
     var player_feet := _feet_offset(String(options.jugador))
 
-    var set_base: Vector2i = _ts.bloques[options.bloques][0]
-    var slope_base: Vector2i = _ts.bloques[options.bloques][1]
-    # Plataformas (=): la fila de tiras del juego de bloques o, si el tileset
-    # trae "plataformas", sus tres piezas (izquierda, medio, derecha).
-    var platform_base: Vector2i = _ts.get("plataformas", set_base + Vector2i(0, 3))
     var decor: Dictionary = _ts.decorados
     var spawn := Vector2(-1, -1)
     var counts := {}
@@ -669,16 +678,16 @@ func _build(text_path: String) -> String:
             counts[ch] = counts.get(ch, 0) + 1
             match ch:
                 "#":
-                    terreno.set_cell(cell, 0, set_base + _block_piece(x, y))
+                    terreno.set_cell(cell, 0, _block_style(options.bloques, cell)[0] + _block_piece(x, y))
                 "/":
-                    terreno.set_cell(cell, 0, slope_base + Vector2i(1, 1))
+                    terreno.set_cell(cell, 0, _block_style(options.bloques, cell)[1] + Vector2i(1, 1))
                 "\\":
-                    terreno.set_cell(cell, 0, slope_base + Vector2i(0, 1))
+                    terreno.set_cell(cell, 0, _block_style(options.bloques, cell)[1] + Vector2i(0, 1))
                 "=":
                     var left := _at(x - 1, y) == "="
                     var right := _at(x + 1, y) == "="
                     var piece := 1 if left and right else (0 if right else (2 if left else 1))
-                    plataformas.set_cell(cell, 0, platform_base + Vector2i(piece, 0))
+                    plataformas.set_cell(cell, 0, _platform_base(_block_style(options.bloques, cell)) + Vector2i(piece, 0))
                 "~":
                     liquidos.set_cell(cell, 0, _ts.lava[1])
                     if not _is_liquid(x, y - 1):
@@ -781,6 +790,36 @@ func _build(text_path: String) -> String:
         player.set("enable_debug_keys", true)
         player.set("show_debug_hud", true)
     return _save_scene(root, out_path, counts)
+
+
+## "<nombre> <x0> <y0> <x1> <y1>" de fondo_sala o bloques_sala: [nombre,
+## rectángulo de piezas con los bordes], o vacío si no se entiende.
+func _room_spec(spec: String) -> Array:
+    var words := spec.split(" ", false)
+    var numbers_ok := words.size() == 5
+    for i in range(1, words.size()):
+        numbers_ok = numbers_ok and words[i].is_valid_int()
+    if not numbers_ok:
+        return []
+    return [words[0], Rect2i(Vector2i(int(words[1]), int(words[2])), Vector2i(int(words[3]) - int(words[1]) + 1, int(words[4]) - int(words[2]) + 1))]
+
+
+## Estilo de bloques de la celda: el de bloques_sala que la contiene (gana el
+## de más abajo) o el de "bloques:". [juego de 4x4, rombo de rampas, ...].
+func _block_style(default_style: String, cell: Vector2i) -> Array:
+    var style := default_style
+    for room: Array in _block_rooms:
+        if (room[1] as Rect2i).has_point(cell):
+            style = room[0]
+    return _ts.bloques[style]
+
+
+## Plataformas (=) de un estilo: su tercer elemento si lo trae; si no, la clave
+## "plataformas" del tileset; si no, la fila de tiras de su juego de bloques.
+func _platform_base(style: Array) -> Vector2i:
+    if style.size() > 2:
+        return style[2]
+    return _ts.get("plataformas", (style[0] as Vector2i) + Vector2i(0, 3))
 
 
 func _save_scene(root: Node, out_path: String, counts: Dictionary) -> String:
@@ -948,10 +987,16 @@ func _collision_points(img: Image, cell: Vector2i) -> PackedVector2Array:
 ## Piezas de "plataformas" del tileset: llevan la colisión de una vía aunque
 ## sus esquinas no sean opacas (una viga fina, por ejemplo).
 func _is_platform_piece(cell: Vector2i) -> bool:
-    if not _ts.has("plataformas"):
-        return false
-    var base: Vector2i = _ts.plataformas
-    return cell.y == base.y and cell.x >= base.x and cell.x <= base.x + 2
+    var bases: Array[Vector2i] = []
+    if _ts.has("plataformas"):
+        bases.append(_ts.plataformas)
+    for style: Array in _ts.bloques.values():
+        if style.size() > 2:
+            bases.append(style[2])
+    for base in bases:
+        if cell.y == base.y and cell.x >= base.x and cell.x <= base.x + 2:
+            return true
+    return false
 
 
 func _tileset(tex: Texture2D, img: Image, mode: String) -> TileSet:

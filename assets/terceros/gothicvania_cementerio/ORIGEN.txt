@@ -26,6 +26,23 @@ Solo se copió lo que usa el juego, sin cambiar el arte:
                   siendo un cuadrado de colisión completo), dos decorados de
                   1x1 (puntas de pasto, zarzas) y la lápida
                   sliced-objects/stone-1.png en un hueco de 2x3 piezas.
+                  Filas 20-31 (P73, ficha del cementerio): las arma
+                  herramientas/constructor_mapas/atlas_cementerio.py, que
+                  agranda el atlas a 512x512 sin tocar las filas 0-19:
+                  juego de bloques "cripta" (tierra con calaveras sin pasto),
+                  repisa de piedra, paredes "tierra" y "ladrillo" (al 60 % de
+                  brillo) y los decorados cruz, lápida inclinada, árbol muerto,
+                  arbusto, calaveras amontonadas, arco con calavera, gárgola,
+                  calaveras en la pared y nicho con llama. Las piezas de
+                  Gothic Horror salen de
+                  assets/terceros/gothicvania/gothic_horror/tiles.png.
+- tileset_original.png
+                  Assets/Environment/tileset.png tal cual: de su fila 5 salen
+                  la tierra con calaveras sin pasto del estilo "cripta" y de
+                  la pared "tierra" (atlas_cementerio.py).
+- objetos/*.png   Assets/Environment/sliced-objects/ tal cual (P73):
+                  stone-2 (cruz, K), stone-3 (lápida inclinada, Q), tree-2
+                  (árbol muerto, D) y bush-large (arbusto con cruz, O).
 - fondo/*.png     capas de parallax del cementerio, de Assets/Environment/:
                   cielo = background.png, montes = mountains.png,
                   cementerio = graveyard.png. Cada una puesta en un lienzo de

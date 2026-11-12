@@ -47,10 +47,11 @@ cofre_pociones: 1
 |---|---|
 | `escena` | Dónde se guarda el nivel; siempre en `res://escenas/mapas/`. **Nunca sobrescribe** un mapa hecho a mano. |
 | `imagen` | El PNG del nivel. Si en vez de imagen se escribe el mapa con letras después de una línea `---`, se omite. |
-| `tileset` | Qué juego de piezas usar: `mazmorra`, `cementerio` (el de mazmorra más piezas de Gothicvania Cemetery; en él `T` es una lápida, `g` puntas de pasto y `r` zarzas) o `castillo` (el de mazmorra más el muro de ladrillo morado de Raou; en él `T` es una armadura 2x2, `h` un estandarte 1x2, `g` una cadena 1x2, `r` una ventana en arco 2x2, `C` una puerta en arco 2x3, `E` una estantería 2x2 y `f` unas rejas de celda 2x2; el estandarte y la cadena cuelgan del techo: su letra va dos piezas debajo de él; además las letras propias `A`, `D`, `O`, `Q`, `w`, `K`, `U`, `l`, `n`, `y` y `V` de la tabla de la sección 5, y las paredes de `fondo_sala`) o `calabozo` (el de castillo más el Dungeon Tile Set de la prisión, P73; en él `t` es la antorcha de Raou, `g` una cadena 1x2, `h` una jaula 2x2, `b` y `x` barril y caja del pack, `r` la rejilla redonda del desagüe 2x2 y `C` una telaraña 4x1; la cadena, la jaula y la telaraña cuelgan del techo; `f`, `E` y `T` son las del castillo; las plataformas `=` son una viga de madera). Cada tileset es un archivo en `herramientas/constructor_mapas/tilesets/`. |
-| `bloques` | Estilo de los bloques. En mazmorra: `verde`, `verde_claro`, `ladrillo`, `violeta`, `oro`, `oliva` o `madera`. En cementerio, además, `cementerio`; en castillo, `castillo`, y en calabozo, `castillo` y `calabozo`. |
+| `tileset` | Qué juego de piezas usar: `mazmorra`, `cementerio` (el de mazmorra más piezas de Gothicvania Cemetery y de Gothic Horror, P73; en él `T` es una lápida, `g` puntas de pasto, `r` zarzas, `E` calaveras amontonadas 2x3, y las letras del castillo son otras piezas: `K` cruz 2x3, `Q` lápida inclinada 2x3, `D` árbol muerto 11x8, `O` arbusto con cruz 5x5, `A` gárgola 2x3, `n` calaveras en la pared 2x2, `U` arco con calavera 2x3 y `V` nicho con llama 2x4, que da luz; además el estilo de bloques `cripta` y las paredes `tierra` y `ladrillo`) o `castillo` (el de mazmorra más el muro de ladrillo morado de Raou; en él `T` es una armadura 2x2, `h` un estandarte 1x2, `g` una cadena 1x2, `r` una ventana en arco 2x2, `C` una puerta en arco 2x3, `E` una estantería 2x2 y `f` unas rejas de celda 2x2; el estandarte y la cadena cuelgan del techo: su letra va dos piezas debajo de él; además las letras propias `A`, `D`, `O`, `Q`, `w`, `K`, `U`, `l`, `n`, `y` y `V` de la tabla de la sección 5, y las paredes de `fondo_sala`) o `calabozo` (el de castillo más el Dungeon Tile Set de la prisión, P73; en él `t` es la antorcha de Raou, `g` una cadena 1x2, `h` una jaula 2x2, `b` y `x` barril y caja del pack, `r` la rejilla redonda del desagüe 2x2 y `C` una telaraña 4x1; la cadena, la jaula y la telaraña cuelgan del techo; `f`, `E` y `T` son las del castillo; las plataformas `=` son una viga de madera). Cada tileset es un archivo en `herramientas/constructor_mapas/tilesets/`. |
+| `bloques` | Estilo de los bloques. En mazmorra: `verde`, `verde_claro`, `ladrillo`, `violeta`, `oro`, `oliva` o `madera`. En cementerio, además, `cementerio` (con pasto, para el exterior) y `cripta` (tierra con calaveras sin pasto; sus plataformas `=` son la repisa de piedra); en castillo, `castillo`, y en calabozo, `castillo` y `calabozo`. |
 | `fondo` | Pared detrás de todo: `cueva`, `castillo` (ladrillo oscuro, con los tilesets castillo y calabozo), `calabozo` (pared oscura del Dungeon Tile Set, solo con el tileset calabozo) o `ninguno`. |
-| `fondo_sala` | Otra pared en un rectángulo de piezas, bordes incluidos: `fondo_sala: libros 1 7 35 22` (pared, x0, y0, x1, y1). Se repite, una línea por sala; si dos se pisan, gana la de más abajo. El patrón cuenta desde la esquina del mapa, así una sala hecha con dos rectángulos casa sin costura. `ninguno` deja esas celdas sin pared, para ver el `parallax` solo ahí (las almenas del castillo). Paredes del tileset castillo (P73): `piedra_oscura`, `piedra`, `piedra_clara`, `madera`, `madera_oscura`, `columnas`, `marco`, `arcada` (6x8), `ladrillo` y `libros` (estanterías). |
+| `fondo_sala` | Otra pared en un rectángulo de piezas, bordes incluidos: `fondo_sala: libros 1 7 35 22` (pared, x0, y0, x1, y1). Se repite, una línea por sala; si dos se pisan, gana la de más abajo. El patrón cuenta desde la esquina del mapa, así una sala hecha con dos rectángulos casa sin costura. `ninguno` deja esas celdas sin pared, para ver el `parallax` solo ahí (las almenas del castillo). Paredes del tileset castillo (P73): `piedra_oscura`, `piedra`, `piedra_clara`, `madera`, `madera_oscura`, `columnas`, `marco`, `arcada` (6x8), `ladrillo` y `libros` (estanterías). Paredes del tileset cementerio (P73): `tierra` (lo excavado) y `ladrillo` (lo construido). |
+| `bloques_sala` | Otro estilo de bloques en un rectángulo de piezas, bordes incluidos: `bloques_sala: cripta 20 29 119 89` (estilo, x0, y0, x1, y1). Se repite como `fondo_sala` y, si dos se pisan, gana la de más abajo. Cambia los bloques, las rampas y las plataformas `=` de ese rectángulo; las colisiones son las mismas, porque todos los juegos de bloques son macizos. Sin esta opción el constructor genera lo mismo que antes (P73). |
 | `parallax` | Imágenes de fondo que se mueven más lento, de la más lejana a la más cercana: `fondos/cielo.png 0.05; fondos/nubes.png 0.2`. El número es la velocidad horizontal (0 = quieta, 1 = como el mapa). Si la imagen es más baja que la pantalla (270 px), se agrega `x2` para dibujarla al doble: `fondos/cielo.png 0.05 x2`. En vertical cada imagen recorre el mapa: se ve su borde de arriba con la cámara arriba del todo y el de abajo con la cámara abajo. Necesita `fondo: ninguno` o un `fondo_sala` con `ninguno`. |
 | `siguiente` / `anterior` | Mapa al que llevan las salidas azules / moradas. Por defecto se llega a su spawn `DesdeAnterior` / `DesdeSiguiente`, que el constructor crea solo. Para llegar a otro spawn: `res://escenas/mapas/tiles_castillo_combate.tscn#SpawnInicio`. |
 | `cofre_monedas`, `cofre_pociones` | Botín de cada cofre del nivel (por defecto 3 y 1). |
@@ -127,6 +128,8 @@ El mapa original no se toca. El PNG es un punto de partida: faltan las salidas, 
 | `R` | #b07050 | 176, 112, 80 | rata (calabozo, profundidad 0) |
 | `L` | #40c0a0 | 64, 192, 160 | slime (calabozo, profundidad 0; escupe) |
 | `B` | #a040a0 | 160, 64, 160 | murciélago grande (calabozo, profundidad 0; embiste; se dibuja donde flota) |
+| `o` | #485060 | 72, 80, 96 | cuervo (cementerio, profundidad 1, exterior; vuela y se lanza en picado; se dibuja donde flota) |
+| `N` | #a0e0ff | 160, 224, 255 | ánima (cementerio, profundidad 1, cripta honda; duerme como una brizna, aparece al acercarse y embiste; se dibuja donde flota) |
 | `t` | #ffc090 | 255, 192, 144 | antorcha |
 | `f` | #c03000 | 192, 48, 0 | fogata (decorado) |
 | `b` | #a08060 | 160, 128, 96 | barril |
@@ -135,19 +138,19 @@ El mapa original no se toca. El PNG es un punto de partida: faltan las salidas, 
 | `g` | #60c060 | 96, 192, 96 | pasto |
 | `r` | #c0c0ff | 192, 192, 255 | cristales |
 | `T` | #206020 | 32, 96, 32 | árbol (2x3 piezas) |
-| `E` | #604080 | 96, 64, 128 | estantería (3x3 piezas) |
+| `E` | #604080 | 96, 64, 128 | estantería (3x3 piezas; en `cementerio`, calaveras amontonadas 2x3) |
 | `C` | #e0e0a0 | 224, 224, 160 | tienda de campaña (3x2 piezas) |
-| `A` | #7090b0 | 112, 144, 176 | armero (solo tileset `castillo`, 2x3 piezas) |
-| `D` | #f0f0f0 | 240, 240, 240 | trofeo de cráneo de dragón (solo `castillo`, 3x3 piezas) |
-| `O` | #90a040 | 144, 160, 64 | estante con provisiones (solo `castillo`, 2x3 piezas) |
-| `Q` | #d0a070 | 208, 160, 112 | cuadro (solo `castillo`, 2x2 piezas) |
+| `A` | #7090b0 | 112, 144, 176 | armero (`castillo`, 2x3 piezas); gárgola (`cementerio`, 2x3) |
+| `D` | #f0f0f0 | 240, 240, 240 | trofeo de cráneo de dragón (`castillo`, 3x3 piezas); árbol muerto (`cementerio`, 11x8) |
+| `O` | #90a040 | 144, 160, 64 | estante con provisiones (`castillo`, 2x3 piezas); arbusto con cruz (`cementerio`, 5x5) |
+| `Q` | #d0a070 | 208, 160, 112 | cuadro (`castillo`, 2x2 piezas); lápida inclinada (`cementerio`, 2x3) |
 | `w` | #a0c0e0 | 160, 192, 224 | ventana de celosía (solo `castillo`, 3x3 piezas) |
-| `K` | #8080a0 | 128, 128, 160 | columna alta (solo `castillo`, 2x7 piezas) |
-| `U` | #b06080 | 176, 96, 128 | tapiz (solo `castillo`, 2x3 piezas) |
+| `K` | #8080a0 | 128, 128, 160 | columna alta (`castillo`, 2x7 piezas); cruz de piedra (`cementerio`, 2x3) |
+| `U` | #b06080 | 176, 96, 128 | tapiz (`castillo`, 2x3 piezas); arco con calavera (`cementerio`, 2x3) |
 | `l` | #805030 | 128, 80, 48 | estantería alta (solo `castillo`, 2x3 piezas) |
-| `n` | #a07040 | 160, 112, 64 | mesa con frascos (solo `castillo`, 2x1 piezas) |
+| `n` | #a07040 | 160, 112, 64 | mesa con frascos (`castillo`, 2x1 piezas); calaveras en la pared (`cementerio`, 2x2) |
 | `y` | #ffe060 | 255, 224, 96 | lámpara colgante (solo `castillo`, 1x1; cuelga: su letra va justo debajo del techo) |
-| `V` | #60a0a0 | 96, 160, 160 | mostrador con frascos (solo `castillo`, 2x2 piezas) |
+| `V` | #60a0a0 | 96, 160, 160 | mostrador con frascos (`castillo`, 2x2 piezas); nicho con llama (`cementerio`, 2x4, da luz) |
 
 ## 6. Si me pasan un boceto en vez del PNG
 Una foto de papel cuadriculado o una captura de un juego de referencia también sirve. Conviene que traiga:
@@ -171,7 +174,7 @@ Con eso se pasa a PNG, se genera el nivel y se revisa jugando.
 
    Si el paquete no trae ese juego de 4x4, se arma un atlas nuevo copiando sus piezas, sin dibujar arte nuevo; mejor con un script que lo rehaga, como `herramientas/constructor_mapas/atlas_calabozo.py`.
 
-   Si las plataformas `=` no deben ser la fila de tiras del juego de bloques (una viga fina, por ejemplo), el tileset añade `"plataformas": Vector2i(x, y)`: sus tres piezas en fila (izquierda, medio, derecha) llevan la colisión de una vía aunque sus esquinas no sean opacas.
+   Si las plataformas `=` no deben ser la fila de tiras del juego de bloques (una viga fina, por ejemplo), el tileset añade `"plataformas": Vector2i(x, y)`: sus tres piezas en fila (izquierda, medio, derecha) llevan la colisión de una vía aunque sus esquinas no sean opacas. Si solo un estilo de bloques tiene otras plataformas, se ponen como tercer elemento de ese estilo: `"cripta": [juego, rampas, plataformas]` (la repisa del cementerio).
 
    Si el tema pide otro cofre, el tileset añade `"cofre": "res://escenas/objetos/<cofre>.tscn"` (una escena con `chest_interactable.gd`, como `cofre_madera.tscn` del castillo); sin esa clave, `c` pone `cofre.tscn`. Las letras de decorado que un tileset no define no dibujan nada.
 5. **Probarlo** en el piso D de la galería de la zona de pruebas: un cuarto en `herramientas/zona_pruebas/galeria.py` con su muestra (`muestra_tileset`), que se genera con la opción `muestra: si`.
