@@ -14,6 +14,13 @@ var _shake_duration: float = 0.0
 var _shake_time_left: float = 0.0
 var _last_process_usec: int = 0
 
+## PRUEBA de zoom (solo en builds de depuración): + y - (también los del
+## teclado numérico) recorren estos niveles; 0 vuelve a 1x. 4/3 da píxeles
+## enteros con la ventana de 1440x810 (cada píxel del juego, 4 de pantalla);
+## 1.25 los da a pantalla completa 1920x1080 (5 de pantalla).
+const TEST_ZOOM_LEVELS: Array[float] = [1.0, 1.125, 1.25, 4.0 / 3.0, 1.5, 2.0]
+var _test_zoom_index: int = 0
+
 func _ready() -> void:
     process_callback = Camera2D.CAMERA2D_PROCESS_PHYSICS
     position_smoothing_enabled = false
@@ -55,6 +62,30 @@ func _process(_delta: float) -> void:
         roundf(randf_range(-amount, amount)),
         roundf(randf_range(-amount, amount))
     )
+
+
+func _unhandled_input(event: InputEvent) -> void:
+    if not OS.is_debug_build() or not enabled:
+        return
+    var key_event := event as InputEventKey
+    if key_event == null or not key_event.pressed or key_event.echo:
+        return
+    var step: int = 0
+    match key_event.keycode:
+        KEY_PLUS, KEY_KP_ADD, KEY_EQUAL:
+            step = 1
+        KEY_MINUS, KEY_KP_SUBTRACT:
+            step = -1
+        KEY_0, KEY_KP_0:
+            step = -_test_zoom_index
+        _:
+            return
+    _test_zoom_index = clampi(_test_zoom_index + step, 0, TEST_ZOOM_LEVELS.size() - 1)
+    var level: float = TEST_ZOOM_LEVELS[_test_zoom_index]
+    zoom = Vector2(level, level)
+    var view: Vector2 = get_viewport_rect().size / zoom
+    print("Zoom de prueba: %.3fx (se ven %d x %d px del mapa)" % [level, roundi(view.x), roundi(view.y)])
+    get_viewport().set_input_as_handled()
 
 
 func _current_shake_amount() -> float:
