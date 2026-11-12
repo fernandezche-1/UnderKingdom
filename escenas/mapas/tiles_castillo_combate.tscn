@@ -17,6 +17,10 @@
 [ext_resource type="Texture2D" path="res://assets/terceros/Knight 2D Pixel Art/Sprites/without_outline/IDLE.png" id="15_soldado"]
 [ext_resource type="Texture2D" path="res://assets/terceros/elementals_wind_hashashin_FREE_v1.1/wind_SpriteSheet_288x128.png" id="16_capitan"]
 [ext_resource type="Script" path="res://scripts/environment/map_ambience.gd" id="17_ambiente"]
+[ext_resource type="Script" path="res://scripts/combat/wave_arena.gd" id="18_oleadas"]
+[ext_resource type="PackedScene" path="res://escenas/enemigos/guardia.tscn" id="19_guardia"]
+[ext_resource type="PackedScene" path="res://escenas/enemigos/vanguardia.tscn" id="20_vanguardia"]
+[ext_resource type="PackedScene" path="res://escenas/enemigos/murcielago.tscn" id="21_murcielago"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_reja_tope"]
 atlas = ExtResource("7_tileset")
@@ -167,6 +171,9 @@ size = Vector2(48, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_activador"]
 size = Vector2(32, 224)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_activador_antecamara"]
+size = Vector2(352, 112)
+
 [node name="TilesCastilloCombate" instance=ExtResource("1_base")]
 
 [node name="SalaRey" type="Node2D" parent="SistemasMapa"]
@@ -220,6 +227,101 @@ position = Vector2(1400, 992)
 layer = 9
 
 [node name="Aviso" type="Label" parent="SistemasMapa/SalaRey/UI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_type_variation = &"Encabezado"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ArenaAntecamara" type="Node2D" parent="SistemasMapa"]
+script = ExtResource("18_oleadas")
+encounter_id = "castillo_antecamara"
+
+[node name="Activador" type="Area2D" parent="SistemasMapa/ArenaAntecamara"]
+position = Vector2(1392, 600)
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/ArenaAntecamara/Activador"]
+shape = SubResource("RectangleShape2D_activador_antecamara")
+
+[node name="Puertas" type="Node2D" parent="SistemasMapa/ArenaAntecamara"]
+
+[node name="PuertaSalon" type="StaticBody2D" parent="SistemasMapa/ArenaAntecamara/Puertas"]
+position = Vector2(1080, 552)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_reja_tope")
+piece_middle = SubResource("AtlasTexture_reja_medio")
+piece_end = SubResource("AtlasTexture_reja_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/ArenaAntecamara/Puertas/PuertaSalon"]
+shape = SubResource("RectangleShape2D_puerta")
+disabled = true
+
+[node name="Atajos" type="Node2D" parent="SistemasMapa/ArenaAntecamara"]
+
+[node name="TrampillaVestibulo" type="StaticBody2D" parent="SistemasMapa/ArenaAntecamara/Atajos"]
+position = Vector2(1688, 664)
+script = ExtResource("4_barrera")
+piece_middle = SubResource("AtlasTexture_losa")
+start_closed = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/ArenaAntecamara/Atajos/TrampillaVestibulo"]
+shape = SubResource("RectangleShape2D_trampilla")
+
+[node name="Oleadas" type="Node2D" parent="SistemasMapa/ArenaAntecamara"]
+
+[node name="Oleada1" type="Node2D" parent="SistemasMapa/ArenaAntecamara/Oleadas"]
+
+[node name="Guardia1" parent="SistemasMapa/ArenaAntecamara/Oleadas/Oleada1" instance=ExtResource("19_guardia")]
+position = Vector2(1192, 637)
+
+[node name="Guardia2" parent="SistemasMapa/ArenaAntecamara/Oleadas/Oleada1" instance=ExtResource("19_guardia")]
+position = Vector2(1592, 637)
+
+[node name="Oleada2" type="Node2D" parent="SistemasMapa/ArenaAntecamara/Oleadas"]
+
+[node name="Vanguardia1" parent="SistemasMapa/ArenaAntecamara/Oleadas/Oleada2" instance=ExtResource("20_vanguardia")]
+position = Vector2(1224, 623)
+
+[node name="Murcielago1" parent="SistemasMapa/ArenaAntecamara/Oleadas/Oleada2" instance=ExtResource("21_murcielago")]
+position = Vector2(1320, 448)
+
+[node name="Murcielago2" parent="SistemasMapa/ArenaAntecamara/Oleadas/Oleada2" instance=ExtResource("21_murcielago")]
+position = Vector2(1544, 448)
+
+[node name="Oleada3" type="Node2D" parent="SistemasMapa/ArenaAntecamara/Oleadas"]
+
+[node name="Guardia1" parent="SistemasMapa/ArenaAntecamara/Oleadas/Oleada3" instance=ExtResource("19_guardia")]
+position = Vector2(1176, 637)
+
+[node name="Guardia2" parent="SistemasMapa/ArenaAntecamara/Oleadas/Oleada3" instance=ExtResource("19_guardia")]
+position = Vector2(1576, 637)
+
+[node name="Murcielago1" parent="SistemasMapa/ArenaAntecamara/Oleadas/Oleada3" instance=ExtResource("21_murcielago")]
+position = Vector2(1416, 432)
+
+[node name="Oleada4" type="Node2D" parent="SistemasMapa/ArenaAntecamara/Oleadas"]
+
+[node name="Guardia1" parent="SistemasMapa/ArenaAntecamara/Oleadas/Oleada4" instance=ExtResource("19_guardia")]
+position = Vector2(1192, 637)
+
+[node name="Vanguardia1" parent="SistemasMapa/ArenaAntecamara/Oleadas/Oleada4" instance=ExtResource("20_vanguardia")]
+position = Vector2(1576, 623)
+
+[node name="Murcielago1" parent="SistemasMapa/ArenaAntecamara/Oleadas/Oleada4" instance=ExtResource("21_murcielago")]
+position = Vector2(1288, 448)
+
+[node name="Murcielago2" parent="SistemasMapa/ArenaAntecamara/Oleadas/Oleada4" instance=ExtResource("21_murcielago")]
+position = Vector2(1544, 448)
+
+[node name="UI" type="CanvasLayer" parent="SistemasMapa/ArenaAntecamara"]
+layer = 9
+
+[node name="Aviso" type="Label" parent="SistemasMapa/ArenaAntecamara/UI"]
 anchors_preset = 10
 anchor_right = 1.0
 offset_top = 40.0
@@ -296,19 +398,15 @@ hide_when_encounter = "mazmorra_reina"
 script = ExtResource("13_visibilidad")
 hide_when_encounter = "mazmorra_reina"
 
+[node name="Visibilidad" type="Node" parent="Enemigos/Guardia11"]
+script = ExtResource("13_visibilidad")
+hide_when_encounter = "mazmorra_reina"
+
 [node name="Visibilidad" type="Node" parent="Enemigos/Guardia12"]
 script = ExtResource("13_visibilidad")
 hide_when_encounter = "mazmorra_reina"
 
-[node name="Visibilidad" type="Node" parent="Enemigos/Guardia13"]
-script = ExtResource("13_visibilidad")
-hide_when_encounter = "mazmorra_reina"
-
-[node name="Visibilidad" type="Node" parent="Enemigos/Guardia16"]
-script = ExtResource("13_visibilidad")
-hide_when_encounter = "mazmorra_reina"
-
-[node name="Visibilidad" type="Node" parent="Enemigos/Guardia18"]
+[node name="Visibilidad" type="Node" parent="Enemigos/Guardia15"]
 script = ExtResource("13_visibilidad")
 hide_when_encounter = "mazmorra_reina"
 

@@ -56,6 +56,12 @@
 ;   14. Se sale cayendo por el hueco de x 88-90 a la antecámara (sin vuelta).
 ; - Antecámara: x 69-107, filas 22-40 (suelo 41). Checkpoint antes del Rey en
 ;   (100, 40). Escalera al vestíbulo en la columna 105.
+;   Arena de oleadas (2026-11-11, wave_arena.gd en la _combate): al caer del
+;   hueco de la armería se cierra la puerta del gran salón (reja en la columna
+;   67) y salen 4 oleadas de Guardias, Vanguardias y murciélagos; la trampilla
+;   sobre la escalera (x 104-106, fila 41) sigue cerrada hasta vencer la
+;   última. Sin enemigos en el ASCII: el Guardia de (78, 40), la Vanguardia de
+;   (90, 40) y el murciélago de (85, 30) pasaron a las oleadas.
 ; - Sala del trono (jefe, el Rey Caído): x 62-101, filas 49-62 (40 x 14, suelo
 ;   63). Estrado del trono en x 62-64, filas 61-62; el Rey empieza en (68, 62).
 ;   Puerta (boss_arena, se cierra al entrar) en la columna 102, filas 60-62,
@@ -74,9 +80,10 @@
 ;   abajo, hacia el ascensor de las minas. Cerrado desde el castillo (trampilla
 ;   en la _combate); se abre desde las minas.
 ; Segunda pasada (profundidad 0, P33: G, v, m):
-; - Enemigos: 7 Guardias, 5 Vanguardias y 11 murciélagos. Ninguno en la sala
-;   del trono ni junto a la P o los checkpoints. Más duros en la antecámara y la
-;   armería; los murciélagos estorban en los estantes de la biblioteca y del
+; - Enemigos: 6 Guardias, 4 Vanguardias y 10 murciélagos (eran 7, 5 y 11; los
+;   de la antecámara pasaron a su arena de oleadas). Ninguno en la sala del
+;   trono ni junto a la P o los checkpoints. Más duros en la antecámara (las
+;   oleadas) y la armería; los murciélagos estorban en los estantes de la biblioteca y del
 ;   sótano, en el tramo hondo de las almenas y en el paso bajo el trono.
 ; - Cofres (c): balcón izquierdo del gran salón (9, 29), rincón de la
 ;   biblioteca (3, 9), capilla (58, 18) y rincón del sótano (21, 57).
@@ -111,10 +118,11 @@
 ; - Lo abre la muerte de la Reina (completed_encounters de su sala, en la
 ;   mazmorra). Vuelta por :C:; a la sala del trono se llega por la antecámara
 ;   y el vestíbulo (la trampilla del trono no tiene escalera).
-; - Los 7 Guardias desaparecen y en su sitio quedan soldados de rodillas
+; - Los Guardias desaparecen y en su sitio quedan soldados de rodillas
 ;   (NPC) que cuentan la noche del ritual: (88, 5) almenas, (84, 19) armería,
 ;   (22, 21) biblioteca, (20, 35) y (45, 35) gran salón, (78, 40) antecámara y
-;   (26, 46) galería. Las G siguen en el ASCII; en la _combate se ocultan los
+;   (26, 46) galería. El de la antecámara ya no reemplaza a una G: la arena
+;   está superada antes de llegar a la Reina. Las G siguen en el ASCII; en la _combate se ocultan los
 ;   Guardias y se muestran los NPC según ese encuentro (story_hidden_actor.gd
 ;   generalizado para mirar un encounter_id). Vanguardias y murciélagos se
 ;   quedan.
@@ -123,7 +131,7 @@
 ;   es macizo). Su frase, marcador ("nuestros propios soldados se volvieron
 ;   contra nosotros"), señala la estatua de la Reina del cementerio (idea 4).
 ; Viven en tiles_castillo_combate.tscn: el cerrojo de la puerta del gran salón,
-; la reja de [H2], la puerta y la trampilla del trono, el Rey, la reliquia y la
+; la arena de oleadas de la antecámara, la reja de [H2], la puerta y la trampilla del trono, el Rey, la reliquia y la
 ; trampilla de :C:; y, de las puertas hacia atrás, la puerta con llave de los
 ; aposentos, la página I del diario, el fragmento de vida, los soldados NPC y
 ; el Capitán.
@@ -184,7 +192,7 @@ siguiente: res://escenas/mapas/tiles_cementerio_combate.tscn
 ########................H.....m..======...........=====............##.......................................##
 ########......U.........H......................w...................##.............................r.........##
 ########.c..............H...............................U....$.$...##.......................................##
-################........H...r.............=====............##########.........r......m......................##
+################........H...r.............=====............##########.........r.............................##
 ########................H...........................r..............##.......................................##
 ########.Q..............H...............Q..........................##.........................$.$...........##
 ########.........=====..H......D..............==========.....Q..............................=======.........##
@@ -194,7 +202,7 @@ siguiente: res://escenas/mapas/tiles_cementerio_combate.tscn
 ###########.H.#########################.H.###########################======.........=======.................##
 ###########.H.#########################.H.##########......###########.......................................##
 ###########.H.#########################.H.##########...m..###########.......................................##
-#...........H...........................H.................###########.........G...........v.....T...S.T.....##
+#...........H...........................H.................###########...........................T...S.T.....##
 #....g......H........g..................H.....g...........##############################################.H.###
 #...........H...........................H.................##############################################.H.###
 #...........H...........................H.................##############################################.H.###
