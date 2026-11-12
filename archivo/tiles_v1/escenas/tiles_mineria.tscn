@@ -3622,7 +3622,7 @@ shape = SubResource("RectangleShape2D_1tnbl")
 position = Vector2(8, 160)
 collision_layer = 0
 script = ExtResource("11_7jyh1")
-target_scene_path = "res://escenas/mapas/tiles_cementerio.tscn"
+target_scene_path = "res://escenas/mapas/tiles_cementerio_combate.tscn"
 target_spawn_id = &"DesdeMinas"
 metadata/_edit_group_ = true
 

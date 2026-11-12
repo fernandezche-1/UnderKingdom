@@ -1,0 +1,325 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://escenas/mapas/tiles_cementerio.tscn" id="1_base"]
+[ext_resource type="PackedScene" path="res://escenas/jefes/capitan.tscn" id="2_capitan"]
+[ext_resource type="Script" path="res://scripts/combat/boss_arena.gd" id="3_sala"]
+[ext_resource type="Script" path="res://scripts/environment/arena_barrier.gd" id="4_barrera"]
+[ext_resource type="Script" path="res://scripts/environment/locked_door.gd" id="5_puerta"]
+[ext_resource type="Texture2D" path="res://assets/terceros/raou_castillo/tileset_castillo.png" id="6_tileset_castillo"]
+[ext_resource type="Texture2D" path="res://assets/terceros/gothicvania_cementerio/tileset_cementerio.png" id="7_tileset_cementerio"]
+[ext_resource type="Script" path="res://scripts/combat/wave_arena.gd" id="8_oleadas"]
+[ext_resource type="PackedScene" path="res://escenas/enemigos/esqueleto_tumba.tscn" id="9_esqueleto"]
+[ext_resource type="PackedScene" path="res://escenas/enemigos/murcielago.tscn" id="10_murcielago"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/map_transition.tscn" id="11_transicion"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/spawn_point.tscn" id="12_spawn"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/sello.tscn" id="13_sello"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/palanca.tscn" id="14_palanca"]
+[ext_resource type="PackedScene" path="res://escenas/npc/barquero.tscn" id="15_barquero"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/atuendo.tscn" id="16_atuendo"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/rompible_selectivo.tscn" id="17_rompible"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/objeto_lore.tscn" id="18_lore"]
+[ext_resource type="PackedScene" path="res://escenas/items/mejora_encontrada.tscn" id="19_mejora"]
+[ext_resource type="PackedScene" path="res://escenas/items/fragmento_vida.tscn" id="20_fragmento"]
+[ext_resource type="Script" path="res://scripts/environment/map_ambience.gd" id="21_ambiente"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_reja_tope"]
+atlas = ExtResource("6_tileset_castillo")
+region = Rect2(48, 256, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_reja_medio"]
+atlas = ExtResource("6_tileset_castillo")
+region = Rect2(48, 272, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_reja_base"]
+atlas = ExtResource("6_tileset_castillo")
+region = Rect2(48, 288, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_losa"]
+atlas = ExtResource("6_tileset_castillo")
+region = Rect2(16, 304, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tapon"]
+atlas = ExtResource("7_tileset_cementerio")
+region = Rect2(192, 192, 48, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tapon"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tapon")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tapon")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tapon")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tapon")
+}],
+"loop": false,
+"name": &"states",
+"speed": 1.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tapon"]
+size = Vector2(48, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_puerta"]
+size = Vector2(16, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trampilla"]
+size = Vector2(48, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tapa_fosa"]
+size = Vector2(240, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_activador_fosa"]
+size = Vector2(144, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_activador_capitan"]
+size = Vector2(32, 176)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_salida_s3"]
+size = Vector2(48, 16)
+
+[node name="TilesCementerioCombate" instance=ExtResource("1_base")]
+
+[node name="ArenaFosa" type="Node2D" parent="SistemasMapa"]
+script = ExtResource("8_oleadas")
+encounter_id = "cementerio_fosa"
+
+[node name="Activador" type="Area2D" parent="SistemasMapa/ArenaFosa"]
+position = Vector2(616, 512)
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/ArenaFosa/Activador"]
+shape = SubResource("RectangleShape2D_activador_fosa")
+
+[node name="Puertas" type="Node2D" parent="SistemasMapa/ArenaFosa"]
+
+[node name="TapaFosa" type="StaticBody2D" parent="SistemasMapa/ArenaFosa/Puertas"]
+position = Vector2(616, 440)
+script = ExtResource("4_barrera")
+piece_middle = SubResource("AtlasTexture_losa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/ArenaFosa/Puertas/TapaFosa"]
+shape = SubResource("RectangleShape2D_tapa_fosa")
+disabled = true
+
+[node name="Oleadas" type="Node2D" parent="SistemasMapa/ArenaFosa"]
+
+[node name="Oleada1" type="Node2D" parent="SistemasMapa/ArenaFosa/Oleadas"]
+
+[node name="Esqueleto1" parent="SistemasMapa/ArenaFosa/Oleadas/Oleada1" instance=ExtResource("9_esqueleto")]
+position = Vector2(536, 502)
+
+[node name="Esqueleto2" parent="SistemasMapa/ArenaFosa/Oleadas/Oleada1" instance=ExtResource("9_esqueleto")]
+position = Vector2(664, 502)
+
+[node name="Esqueleto3" parent="SistemasMapa/ArenaFosa/Oleadas/Oleada1" instance=ExtResource("9_esqueleto")]
+position = Vector2(712, 502)
+
+[node name="Oleada2" type="Node2D" parent="SistemasMapa/ArenaFosa/Oleadas"]
+
+[node name="Esqueleto1" parent="SistemasMapa/ArenaFosa/Oleadas/Oleada2" instance=ExtResource("9_esqueleto")]
+position = Vector2(568, 502)
+
+[node name="Esqueleto2" parent="SistemasMapa/ArenaFosa/Oleadas/Oleada2" instance=ExtResource("9_esqueleto")]
+position = Vector2(680, 502)
+
+[node name="Murcielago1" parent="SistemasMapa/ArenaFosa/Oleadas/Oleada2" instance=ExtResource("10_murcielago")]
+position = Vector2(616, 464)
+
+[node name="UI" type="CanvasLayer" parent="SistemasMapa/ArenaFosa"]
+layer = 9
+
+[node name="Aviso" type="Label" parent="SistemasMapa/ArenaFosa/UI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_type_variation = &"Encabezado"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SalaCapitan" type="Node2D" parent="SistemasMapa"]
+script = ExtResource("3_sala")
+encounter_id = "cementerio_capitan"
+boss_scene = ExtResource("2_capitan")
+boss_overrides = Dictionary[String, Variant]({
+"counts_as_world1_boss": false
+})
+ability_reward = "combo_2"
+boss_message = "EL CAPITÁN"
+
+[node name="Activador" type="Area2D" parent="SistemasMapa/SalaCapitan"]
+position = Vector2(832, 1304)
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaCapitan/Activador"]
+shape = SubResource("RectangleShape2D_activador_capitan")
+
+[node name="Puertas" type="Node2D" parent="SistemasMapa/SalaCapitan"]
+
+[node name="PuertaEntrada" type="StaticBody2D" parent="SistemasMapa/SalaCapitan/Puertas"]
+position = Vector2(888, 1368)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_reja_tope")
+piece_middle = SubResource("AtlasTexture_reja_medio")
+piece_end = SubResource("AtlasTexture_reja_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaCapitan/Puertas/PuertaEntrada"]
+shape = SubResource("RectangleShape2D_puerta")
+disabled = true
+
+[node name="Atajos" type="Node2D" parent="SistemasMapa/SalaCapitan"]
+
+[node name="PuertaOeste" type="StaticBody2D" parent="SistemasMapa/SalaCapitan/Atajos"]
+position = Vector2(376, 1368)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_reja_tope")
+piece_middle = SubResource("AtlasTexture_reja_medio")
+piece_end = SubResource("AtlasTexture_reja_base")
+start_closed = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaCapitan/Atajos/PuertaOeste"]
+shape = SubResource("RectangleShape2D_puerta")
+
+[node name="PuntosJefe" type="Node2D" parent="SistemasMapa/SalaCapitan"]
+
+[node name="JefeOeste" type="Marker2D" parent="SistemasMapa/SalaCapitan/PuntosJefe"]
+position = Vector2(472, 1326)
+
+[node name="PuntoLlave" type="Marker2D" parent="SistemasMapa/SalaCapitan"]
+position = Vector2(744, 1376)
+
+[node name="UI" type="CanvasLayer" parent="SistemasMapa/SalaCapitan"]
+layer = 9
+
+[node name="Aviso" type="Label" parent="SistemasMapa/SalaCapitan/UI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_type_variation = &"Encabezado"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TrampillaAtajo" type="StaticBody2D" parent="SistemasMapa"]
+position = Vector2(352, 440)
+script = ExtResource("4_barrera")
+piece_middle = SubResource("AtlasTexture_losa")
+start_closed = true
+open_on_encounter = "cementerio_atajo_escalera"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/TrampillaAtajo"]
+shape = SubResource("RectangleShape2D_trampilla")
+
+[node name="LosaS3" type="StaticBody2D" parent="SistemasMapa"]
+position = Vector2(184, 1400)
+script = ExtResource("4_barrera")
+piece_middle = SubResource("AtlasTexture_losa")
+start_closed = true
+open_on_seal_group = "cementerio_s3"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/LosaS3"]
+shape = SubResource("RectangleShape2D_trampilla")
+
+[node name="PuertaVelas" type="StaticBody2D" parent="SistemasMapa"]
+position = Vector2(1048, 536)
+script = ExtResource("5_puerta")
+key_id = "antorcha"
+locked_message = "FALTA LA LLAMA DE LAS VELAS"
+opened_message = "LAS VELAS SE ENCIENDEN"
+require_interact = true
+open_effect = 1
+piece_tint = Color(1, 0.78, 0.5, 1)
+piece_start = SubResource("AtlasTexture_reja_tope")
+piece_middle = SubResource("AtlasTexture_reja_medio")
+piece_end = SubResource("AtlasTexture_reja_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/PuertaVelas"]
+shape = SubResource("RectangleShape2D_puerta")
+
+[node name="SalidaS3" parent="SistemasMapa/Transiciones" instance=ExtResource("11_transicion")]
+position = Vector2(184, 1432)
+target_scene_path = "res://archivo/tiles_v1/escenas/tiles_mineria_combate.tscn"
+target_spawn_id = &"DesdeAnterior"
+
+[node name="CollisionShape2D" parent="SistemasMapa/Transiciones/SalidaS3" index="0"]
+shape = SubResource("RectangleShape2D_salida_s3")
+
+[node name="DesdeMinas" parent="SistemasMapa" instance=ExtResource("12_spawn")]
+position = Vector2(136, 1329)
+spawn_id = &"DesdeMinas"
+
+[node name="SelloFosa" parent="Objetos" instance=ExtResource("13_sello")]
+position = Vector2(608, 496)
+seal_group = "cementerio_s3"
+seal_id = "fosa"
+listen_encounter = "cementerio_fosa"
+
+[node name="SelloPanteon" parent="Objetos" instance=ExtResource("13_sello")]
+position = Vector2(1840, 112)
+seal_group = "cementerio_s3"
+seal_id = "panteon"
+
+[node name="SelloTumbaReal" parent="Objetos" instance=ExtResource("13_sello")]
+position = Vector2(624, 1360)
+seal_group = "cementerio_s3"
+seal_id = "tumba_real"
+listen_encounter = "cementerio_capitan"
+
+[node name="PalancaAtajo" parent="Objetos" instance=ExtResource("14_palanca")]
+position = Vector2(320, 944)
+encounter_id = "cementerio_atajo_escalera"
+
+[node name="Barquero" parent="Objetos" instance=ExtResource("15_barquero")]
+position = Vector2(984, 408)
+
+[node name="AtuendoCaballero" parent="Objetos" instance=ExtResource("16_atuendo")]
+position = Vector2(1464, 1334)
+outfit_id = "caballero_cripta"
+
+[node name="EstatuaReina" parent="Objetos" instance=ExtResource("17_rompible")]
+position = Vector2(1776, 240)
+accepted_hit = 1
+
+[node name="NotasSoldados" parent="Objetos" instance=ExtResource("18_lore")]
+position = Vector2(1816, 278)
+dialogue_path = "res://dialogues/lore_notas_soldados.json"
+lore_id = "notas_soldados"
+
+[node name="AmuletoGuardia" parent="Objetos" instance=ExtResource("19_mejora")]
+position = Vector2(1848, 272)
+upgrade_id = "amuleto_guardia"
+
+[node name="LosaCripta" parent="Objetos" instance=ExtResource("17_rompible")]
+position = Vector2(1072, 560)
+
+[node name="AnimatedSprite2D" parent="Objetos/LosaCripta" index="0"]
+sprite_frames = SubResource("SpriteFrames_tapon")
+
+[node name="CollisionShape2D" parent="Objetos/LosaCripta" index="1"]
+position = Vector2(24, 32)
+shape = SubResource("RectangleShape2D_tapon")
+
+[node name="CoronaCarta" parent="Objetos" instance=ExtResource("18_lore")]
+position = Vector2(1016, 534)
+dialogue_path = "res://dialogues/lore_carta_primera_reina.json"
+lore_id = "carta_primera_reina"
+
+[node name="FragmentoVida1" parent="Objetos" instance=ExtResource("20_fragmento")]
+position = Vector2(1032, 544)
+fragment_id = "cementerio_1"
+
+[node name="Ambientacion" type="Node2D" parent="."]
+script = ExtResource("21_ambiente")
+ambient_color = Color(0.42, 0.46, 0.6, 1)
+player_light_color = Color(0.88, 0.92, 1, 1)
+vignette_strength = 0.55

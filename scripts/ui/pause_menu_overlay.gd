@@ -5,7 +5,6 @@ const KEY_ICON_ATLAS := preload("res://assets/terceros/fourSeasonsPlatformer_ [t
 const KEY_ICON_REGION := Rect2(48, 32, 16, 16)
 const KEY_NAMES := {
 	"calabozo_salida": "Salida del calabozo",
-	"cementerio_capitan": "Capitán del Cementerio",
 	"minas_caballero": "Caballero de Minas",
 	"antorcha": "Llama eterna",
 }

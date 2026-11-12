@@ -52,8 +52,8 @@
 ;   la fosa escondida de los soldados leales: x 112-118, filas 12-17 (suelo
 ;   18), bajo la meseta del panteón (techo filas 9-11). Estantería de huesos E
 ;   en (116, 17).
-;   Lo abre la Ultimate (mazmorra): estatua_rompible.tscn en la _combate, que
-;   solo acepta ese golpe (rompible por tipo de golpe, pieza compartida).
+;   Lo abre la Ultimate (mazmorra): rompible_selectivo.tscn en la _combate,
+;   con accepted_hit ULTIMATE (P56).
 ;   Premio, en la _combate: las notas de los soldados (objeto de lore con
 ;   texto provisional, marcador de P46 sección 6) en (113, 17) y el amuleto de
 ;   la guardia (las pociones curan 0.25 más) en (115, 17). Sin enemigos ni
@@ -76,9 +76,10 @@
 ;   al osario no entra) y la 59-61 también (la escalera de la casa no se toca).
 ;   Se entra por el nicho del techo del osario (x 67-69, filas 36-37) y el
 ;   hueco de x 67-69 en el suelo de la cripta (fila 35), con la escalera en la
-;   columna 68. LOSA en x 67-69, fila 35 (en el ASCII, abierta): rompible que
-;   solo acepta el tajo ascendente con el Golpe final (minas). Se golpea desde
-;   lo alto de la escalera o saltando desde la repisa de la fila 42.
+;   columna 68. LOSA en x 67-69, filas 35-38 (en el ASCII, abierta): tapón
+;   rompible que solo acepta el tajo ascendente con el Golpe final (minas).
+;   Baja hasta la fila 38 para golpearlo de lado desde la repisa de la fila 42:
+;   en la escalera no se ataca y en el aire sale el tajo aéreo.
 ;   Dentro, dos partes:
 ;   - antecámara x 66-74, con estantería de huesos E en (72, 34). Al oeste, la
 ;     PUERTA DE VELAS en la columna 65, filas 32-34 (en el ASCII, abierta;
@@ -125,9 +126,10 @@
 ;
 ; Segunda pasada (profundidad 1, P33: v en el exterior, u en el exterior y la
 ; cripta, m en la cripta):
-; - Enemigos: 4 Vanguardias, 16 esqueletos de tumba y 11 murciélagos. Ninguno
+; - Enemigos: 4 Vanguardias, 13 esqueletos de tumba y 11 murciélagos. Ninguno
 ;   en la sala del Capitán, en la antesala ni junto a la P o los checkpoints.
-;   Tres esqueletos en la fosa común (el reto de la tumba sello 1) y uno junto
+;   Los de la fosa común (el reto de la tumba sello 1) no van aquí: salen en
+;   las oleadas de ArenaFosa, en la _combate (2026-11-12). Uno junto
 ;   a la tumba sello 2; dos guardan E3 en el panteón. Los murciélagos estorban
 ;   en el osario, la catacumba alta, la baja, el pozo del sello y el panteón.
 ;   El murciélago del osario de (72, 44) pasó a (76, 44), lejos de la repisa
@@ -203,7 +205,7 @@ anterior: res://escenas/mapas/tiles_castillo_combate.tscn
 #####################.H.#######.$...........$.##########.H.###...#.........#...########^^^##^^^##^^^##^^################
 #####################.H.#######===.........===##########.H.###...#.........#...#########################################
 #####################.H.#######...............##########.H.###...#.........#...#########################################
-#####################.H.#######..u...r.g.u..u.##########.H.###.............#...#########################################
+#####################.H.#######......r.g......##########.H.###.............#...#########################################
 #####################.H.################################.H.###.............#...#########################################
 #####################.H.################################.H.#####........E..#...#########################################
 #####################.H.################################.H.########.H.######...#########################################

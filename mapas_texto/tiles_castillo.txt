@@ -160,7 +160,7 @@ fondo_sala: ninguno 12 1 90 5
 fondo_sala: ninguno 62 6 66 8
 parallax: assets/terceros/gothicvania/pueblo_noche/cielo.png 0.05 x2; assets/terceros/gothicvania/pueblo_noche/nubes.png 0.1 x2; assets/terceros/gothicvania/pueblo_noche/montes.png 0.2 x2
 anterior: res://escenas/mapas/tiles_calabozo_combate.tscn
-siguiente: res://escenas/mapas/tiles_cementerio.tscn
+siguiente: res://escenas/mapas/tiles_cementerio_combate.tscn
 ---
 ##############################################################################################################
 #######################.....................#####################..................###########################
