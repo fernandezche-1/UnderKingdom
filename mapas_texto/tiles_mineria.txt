@@ -1,9 +1,14 @@
 ; MINAS (macro mapa, docs/P46_MACRO_MAPA.md): ASCII de la zona. Primera pasada
 ; (estructura, P, checkpoints, aperturas y sitio de cada pieza) y segunda
 ; pasada (enemigos, objetos y decorados) hechas.
-; NO GENERAR TODAVÍA: la escena de abajo es la de las minas que se juegan hoy
-; (mapas_texto/tiles_mineria.txt) y el constructor la reemplazaría. Al
-; aprobarlo, este archivo pasa a mapas_texto/tiles_mineria.txt (sección 9).
+; Generado en la Fase 3 (2026-11-12): este archivo pasó de
+; mapas_texto/macro/zonas/minas.txt a mapas_texto/tiles_mineria.txt (P46,
+; sección 9) y es la fuente de escenas/mapas/tiles_mineria.tscn. Generar:
+;   godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/tiles_mineria.txt
+; - La salida [L4] (">", "siguiente") la pone el constructor. Hasta generar la
+;   mazmorra nueva va a la de v1 (archivo/tiles_v1/, spawn DesdeAnterior); al
+;   generarla se cambia a tiles_mazmorra_combate.tscn. [S3] y :C: van en la
+;   _combate, con los spawns DesdeCementerio y DesdeCastillo.
 ;
 ; Coordenadas (columna, fila), desde 0. 150 x 90 piezas; en el mundo en
 ; (150, 133), justo debajo del cementerio (su borde de abajo es la fila 133 del
@@ -98,16 +103,18 @@
 ;   llega; con la Agilidad (6,4) sí. Desde la veta se ve el resplandor del
 ;   fuego.
 ; - PASILLO DEL FUEGO: x 131-143, filas 52-55 (suelo 56; 4 de alto, no se
-;   salta por encima). FUEGO INFERNAL (F) en x 133-141, fila 55: la pieza
-;   nueva del santuario de las profundidades; sin E5 no deja pasar, con E5 no
-;   hace daño. Checkpoint de la gruta en (142, 55), tras el fuego y antes de
-;   la bajada.
+;   salta por encima). FUEGO INFERNAL en x 133-141, fila 55: la pieza
+;   nueva del santuario de las profundidades (fuego_infernal.tscn, P61); sin E5
+;   no deja pasar, con E5 no hace daño. Va en la _combate: en el ASCII queda
+;   vacío (2026-11-12), porque la F del constructor es la trampa de fuego
+;   normal, que quema también con E5. Checkpoint de la gruta en (142, 55),
+;   tras el fuego y antes de la bajada.
 ; - BAJADA: x 144-146, filas 52-63, sin escalera (caída de 22 piezas hasta el
 ;   suelo de la gruta; no hay daño por caída). TRAMPILLA DE ENTRADA en la
 ;   fila 63 (x 144-146), en Puertas de boss_arena: abierta hasta que empieza
 ;   el combate. En el ASCII queda abierta.
 ; - GRUTA: x 132-147, filas 64-77 (16 x 14, suelo 78). Sala del jefe opcional
-;   CRYSTAL MAULER (escenas/jefes/boss_mina.tscn). Cabe a escala 1: colisión
+;   CRYSTAL MAULER (escenas/jefes/crystal_mauler.tscn, simple_boss.gd; P62). Cabe a escala 1: colisión
 ;   de 20 x 35 px, cuerpo de unas 3 x 2,5 piezas y su ataque más largo
 ;   (sp_atk) de unas 12,5 x 6 piezas (3,7 hacia atrás y 8,8 hacia delante).
 ;   Es la sala de jefe más pequeña: contra el sp_atk hay que ponerse detrás o
@@ -115,8 +122,6 @@
 ;   hacia (134, 77). Al vencerlo da la Adrenalina (ability_reward adrenaline,
 ;   que sale de STARTING_ABILITIES) y se recuerda en completed_encounters.
 ;   Sin PuntoLlave. Cristales (r) en (133, 77), (142, 77) y (147, 77).
-;   Hoy boss_mina.tscn es solo sprite y colisión, sin script: falta darle IA
-;   (Fase 2 de TASK.md).
 ; - SALIDA POR EL SUELO: hueco x 138-140, filas 78-79, con escalera en la
 ;   columna 139 (filas 78-86) hasta la galería honda. TRAMPILLA en la fila 78
 ;   (x 138-140), en Atajos de boss_arena: cerrada hasta vencer al Mauler.
@@ -235,7 +240,7 @@ tileset: mazmorra
 bloques: madera
 fondo: ninguno
 parallax: assets/terceros/pixelfantasy_caves/fondo1.png 0; assets/terceros/pixelfantasy_caves/fondo2.png 0.1; assets/terceros/pixelfantasy_caves/fondo3.png 0.2; assets/terceros/pixelfantasy_caves/fondo4a.png 0.3
-siguiente: res://escenas/mapas/tiles_mazmorra_combate.tscn
+siguiente: res://archivo/tiles_v1/escenas/tiles_mazmorra_combate.tscn#DesdeAnterior
 ---
 ####################...###################################################################################.H.#########################################
 ####################...###################################################################################.H.#########################################
@@ -292,7 +297,7 @@ siguiente: res://escenas/mapas/tiles_mazmorra_combate.tscn
 ######...............m....H........########...#.H.######....t.........................................................H.m..........................###
 ######....$.!.$...........H...................#.H.######...................m............................$.............H............................###
 ######....=====...........H...................#.H.######...............................................r..c...........H............................###
-######....................H...................#.H.######..................$$...........................#####..........H..............FFFFFFFFFS....###
+######....................H...................#.H.######..................$$...........................#####..........H.......................S....###
 ######.c....h...q.........H...h..x.....$$..r.c#.H.######..............................................................H............#############...###
 #####################################......####.H.######.............................r..q.............................H............#############...###
 #####################################^^^^^^####.H.######..................==........#######.......==..................H............#############...###

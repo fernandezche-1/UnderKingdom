@@ -16,6 +16,7 @@ Aquí solo está lo que usa el juego:
 - archivo/tiles_v1/escenas/tiles_jefe.tscn
 - archivo/tiles_v1/escenas/tiles_mazmorra.tscn
 - archivo/tiles_v1/escenas/tiles_mineria.tscn
+- escenas/mapas/tiles_mineria.tscn (minas de la Fase 3, tileset mazmorra)
 - y 6 más
 
 tileset_calabozo.png (P73, ficha del calabozo): atlas del tileset "calabozo"
