@@ -303,7 +303,7 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
   | Sala | Pared | De `Tilesetv3.png` |
   |---|---|---|
   | Biblioteca | `piedra`, con estanterías altas `l` delante (cambio del 2026-11-11, ver abajo) | (8,20) |
-  | Gran salón | `columnas`, la misma del trono (cambio del 2026-11-11, ver abajo) | (5,17) |
+  | Gran salón | `piedra_oscura`, la misma de la galería de las celdas (cambio del 2026-11-11, ver abajo) | (11,20) |
   | Capilla | `piedra_clara` | (5,20) |
   | Aposentos de la Reina | `madera_oscura`: ladrillo con postes y baranda | (14,17) |
   | Antecámara y vestíbulo | `ladrillo`: ladrillo claro | (5,14) |
@@ -371,7 +371,7 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
 - Arrancan sin errores la `_combate`, el juego, el calabozo y la zona de pruebas, y `verificar_mundo.py` da 0 errores. Capturas de todas las salas, y el Atlas publicado con los nombres de las letras nuevas.
 - **Corrección tras verla (2026-11-11):**
   - la pared de libros de la biblioteca se confundía con la escalera y los estantes: pasa a `piedra`, y las estanterías van delante como decorado; las `E` de (3, 21) y (19, 21) pasan a estanterías altas `l` y se añade otra en (9, 12), sobre el estante;
-  - la arcada del gran salón se veía rara: pasa a `columnas`;
+  - la arcada del gran salón se veía rara: pasa a `columnas` y, al verlo, a `piedra_oscura`, la de la galería de las celdas;
   - se eligió entre cuatro opciones con capturas de cada sala, y la galería de las celdas, con piedra oscura, se queda.
 
   Colisiones iguales otra vez. Arrancan el juego y la `_combate`, y el verificador da 0 errores.

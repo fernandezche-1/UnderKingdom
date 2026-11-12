@@ -134,10 +134,11 @@ bloques: castillo
 fondo: castillo
 ; Una pared por sala (P73, ficha revisada): fondo_sala <pared> x0 y0 x1 y1.
 ; La armería y los pasos sin sala se quedan con la de "fondo". La biblioteca
-; lleva piedra y el gran salón columnas: las estanterías de fondo se confundían
-; con la escalera y los estantes, y la arcada se veía rara (2026-11-11).
+; lleva piedra y el gran salón piedra oscura, como la galería de las celdas:
+; las estanterías de fondo se confundían con la escalera y los estantes, y la
+; arcada se veía rara (2026-11-11).
 fondo_sala: piedra_oscura 0 39 58 47
-fondo_sala: columnas 7 23 67 35
+fondo_sala: piedra_oscura 7 23 67 35
 fondo_sala: piedra 1 7 35 22
 fondo_sala: piedra_clara 43 7 61 19
 fondo_sala: madera_oscura 62 10 75 19
