@@ -3,7 +3,9 @@
 assets/terceros/raou_castillo/tileset_castillo.png, 512x384, piezas de 16:
 - filas 0-19: no se tocan (atlas de mazmorra en 0-15 y piezas de Raou en
   16-19, ver assets/terceros/raou_castillo/ORIGEN.txt); las escenas que ya
-  usan el atlas se ven igual;
+  usan el atlas se ven igual. Solo se borra el estandarte viejo de
+  (10,16)-(10,17), de origen sin anotar, que la letra h ya no usa desde que
+  se vistió el castillo;
 - filas 20-23: se borran y se vuelven a poner con las piezas de LAYOUT,
   recortadas de Tilesetv3.png de Raou y del pack de craftpix sin repintar.
   herramientas/constructor_mapas/tilesets/castillo.gd las usa.
@@ -26,6 +28,8 @@ OTHER = CRAFTPIX / "Other_objects.png"
 SUPPLIES = CRAFTPIX / "supplies_objects.png"
 T = 16
 FIRST_ROW = 20
+# Estandarte viejo de dark_castle_tileset.png (pieza de arriba, tamaño).
+OLD_BANNER = ((10, 16), (1, 2))
 
 # Destino en el atlas (pieza de arriba a la izquierda) y tamaño en piezas.
 LAYOUT = {
@@ -64,6 +68,9 @@ def main():
     assert atlas.size == (512, 384), atlas.size
     # Borra las filas 20-23 para rehacerlas.
     atlas.paste(Image.new("RGBA", (atlas.width, atlas.height - FIRST_ROW * T)), (0, FIRST_ROW * T))
+    # Borra el estandarte viejo (P73, castillo vestido).
+    (bx, by), (bw, bh) = OLD_BANNER
+    atlas.paste(Image.new("RGBA", (bw * T, bh * T)), (bx * T, by * T))
     raou = Image.open(RAOU).convert("RGBA")
     other = Image.open(OTHER).convert("RGBA")
     supplies = Image.open(SUPPLIES).convert("RGBA")

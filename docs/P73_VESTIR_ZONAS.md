@@ -271,6 +271,29 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
   - se aparta la antorcha de (59, 18), que tapa el cofre;
   - el estandarte viejo de (10,16) sale del atlas.
 
+**Vestida (2026-11-11, falta jugarla a mano):**
+- La cabecera de `mapas_texto/tiles_castillo.txt` no cambia. Se regeneró la base `escenas/mapas/tiles_castillo.tscn` y la `_combate` no se tocó.
+  - Con el tileset de hoy salen el tablón en las 159 `=`, la pared con pilastras, los 9 estandartes rojos y los 4 cofres del Mimic.
+- Decorados nuevos en el ASCII. Cumplen la regla de la cabecera, y ninguno pisa un cofre, un enemigo ni un objeto de la `_combate`:
+
+  | Letra | Sala | Sitio (abajo a la izquierda) |
+  |---|---|---|
+  | `A` armero | armería | (79, 19) junto a la armadura y (91, 19) pasado el hueco |
+  | `O` provisiones | armería y bodegas del sótano | (97, 19) y el rincón (20, 75) |
+  | `D` cráneo de dragón | armería, gran salón y sala del trono | (90, 13); (31, 33), sobre la fogata del checkpoint; (62, 57), sobre el arco del trono |
+  | `Q` cuadro | gran salón y aposentos de la Reina | (9, 32), bajo el balcón izquierdo; (40, 32); (61, 33), sobre la armadura; (64, 15), sobre la estantería |
+
+- **Se movieron dos decorados:**
+  - la antorcha de la capilla, de (59, 18) a (55, 18), porque el cofre del Mimic la tapaba (abierto, la tapa cae a la izquierda, así que tampoco cabe en la 57);
+  - la caja del sótano, de (21, 75) a (22, 75), para dejar sitio al estante.
+- **Estandarte viejo:** `atlas_castillo.py` borra (10,16)-(10,17), y `atlas_calabozo.py`, al copiar las filas 0-19, también lo quita de su atlas. Los dos atlas solo cambian en esas piezas.
+  - Además de la base del castillo, lo pintaban `archivo/tiles_v1/escenas/tiles_castillo.tscn` y `tiles_calabozo.tscn`, fuera de la ruta: se quedan sin estandartes (aprobado el 2026-11-11).
+  - Ninguna otra escena usa esa pieza.
+- **Colisiones:** iguales antes y después (4002 piezas sólidas y 159 de una vía, con los mismos polígonos), volcadas de las capas de la base con una escena temporal.
+- Capturas sin ventana de la armería, el gran salón, la sala del trono, la capilla con los aposentos y el sótano.
+- Arrancan sin errores la `_combate`, el juego, el calabozo y la zona de pruebas, y `verificar_mundo.py` da 0 errores. El Atlas se publicó de nuevo, con los nombres de `A`, `D`, `O` y `Q`.
+- La luz ambiente de la `_combate`, (0.5, 0.46, 0.6), se queda hasta jugarla.
+
 ### Cementerio
 - Parte de: tileset `cementerio`, parallax de `gothicvania_cementerio/fondo` (cielo, montes y cementerio). Vanguardia, murciélago, esqueleto de tumba; el Capitán.
   - Pendiente de P34, sección 5: el cielo se ve también dentro de las cuevas, porque cada mapa tiene un solo parallax.

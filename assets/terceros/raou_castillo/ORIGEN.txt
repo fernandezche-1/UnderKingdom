@@ -22,8 +22,9 @@ repite de lado sin costura.
 Decorados (recortados por su borde y centrados en su hueco, sin cambiar el
 arte):
 - (8,16) armadura 2x2: Tilesetv3.png, píxeles (7,417)-(24,448).
-- (10,16) estandarte 1x2 y (11,16) cadena 1x2: dark_castle_tileset.png de la
-  raíz (v4 de Armando), píxeles (210,8)-(222,28) y (245,11)-(252,33).
+- (11,16) cadena 1x2: dark_castle_tileset.png de la raíz (v4 de Armando),
+  píxeles (245,11)-(252,33). En (10,16) estaba el estandarte 1x2 del mismo
+  archivo, píxeles (210,8)-(222,28); se borró al vestir el castillo (P73).
 - (13,16) puerta en arco 2x3: Tilesetv3.png, (2,454)-(31,496).
 - (15,16) estantería 2x2: Tilesetv3.png, (65,593)-(94,624).
 - (17,16) rejas 2x2: Tilesetv3.png, (121,688)-(152,720).
@@ -46,9 +47,12 @@ como están y rehace solo estas. Recortes sin repintar:
 - (15,20) estante con provisiones 2x3 (O): craftpix supplies_objects.png,
   (146,10)-(175,55).
 - (17,20) cuadro 2x2 (Q): Tilesetv3.png, (51,690)-(76,717).
-El estandarte de (10,16), de dark_castle_tileset.png, ya no lo usa la letra
-h del castillo; sigue en el atlas mientras la base generada antes de P73 lo
-pinte (se quita al vestir el castillo).
+El estandarte de (10,16)-(10,17), de dark_castle_tileset.png, lo borra
+atlas_castillo.py desde que se vistió el castillo (P73, 2026-11-11): la letra
+h usa el de craftpix. Solo lo pintaban aún archivo/tiles_v1/escenas/
+tiles_castillo.tscn y tiles_calabozo.tscn, fuera de la ruta, que se quedan sin
+estandartes. atlas_calabozo.py copia las filas 0-19, así que tampoco está en
+tileset_calabozo.png.
 
 Licencias:
 - Tilesetv3.png es "Dark Dungeon - Side-Scroller Tileset" de Raou
@@ -57,6 +61,7 @@ Licencias:
   proyectos comerciales o no y modificar, siempre que el tileset en sí no se
   redistribuya. Antes de publicar el juego conviene pedirle la confirmación
   por escrito y no dejar sus PNG sueltos en un repositorio público.
-- dark_castle_tileset.png: pieza de Armando en la v4, origen sin anotar.
+- dark_castle_tileset.png: pieza de Armando en la v4, origen sin anotar. De ella
+  queda la cadena de (11,16).
 - craftpix dungeon objects: licencia de craftpix, ver
   assets/terceros/craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/.

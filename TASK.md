@@ -322,7 +322,7 @@ El criterio de "hecho" de cada paso está en P73, sección 2. La ficha se puede 
 Modo de cada paso: la ficha y vestir, en modo normal; las piezas, en modo plan si llevan un script o una escena nueva.
 
 - [x] Calabozo: [x] ficha, [x] piezas, [x] vestida (2026-11-11: tileset, bloques y fondo `calabozo`, rejillas y telarañas; colisiones iguales, verificador con 0 errores, Atlas publicado y jugada a mano).
-- [ ] Castillo: [x] ficha (2026-11-11: tablón de madera en `=`, pared con pilastras, estandarte rojo y letras nuevas `A` armero, `D` trofeo, `O` provisiones y `Q` cuadro; los cofres toman el cofre del Mimic, que se deja para más abajo), [x] piezas (2026-11-11: `atlas_castillo.py` arma las filas 20-23 del atlas; `cofre_madera.tscn`; `A` 2x3, `D` 3x3, `O` 2x3 y `Q` 2x2; cuarto "TILESET CASTILLO" en la galería, probado sin ventana y en captura), [ ] vestida.
+- [ ] Castillo: [x] ficha (2026-11-11: tablón de madera en `=`, pared con pilastras, estandarte rojo y letras nuevas `A` armero, `D` trofeo, `O` provisiones y `Q` cuadro; los cofres toman el cofre del Mimic, que se deja para más abajo), [x] piezas (2026-11-11: `atlas_castillo.py` arma las filas 20-23 del atlas; `cofre_madera.tscn`; `A` 2x3, `D` 3x3, `O` 2x3 y `Q` 2x2; cuarto "TILESET CASTILLO" en la galería, probado sin ventana y en captura), [ ] vestida (2026-11-11: decorados `A`, `D`, `O` y `Q` colocados, base regenerada con las mismas colisiones y estandarte viejo fuera del atlas; falta jugarla a mano).
 - [ ] Cementerio: [ ] ficha, [ ] piezas, [ ] vestida.
 - [ ] Minas: [ ] ficha, [ ] piezas, [ ] vestida.
 - [ ] Mazmorra: [ ] ficha, [ ] piezas, [ ] vestida.
