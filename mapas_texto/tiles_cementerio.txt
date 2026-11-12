@@ -2,9 +2,12 @@
 ; pasada (estructura, P, checkpoints, aperturas y sitio de cada pieza) y
 ; segunda pasada (enemigos, objetos y decorados) hechas. Puertas hacia atrás 4
 ; y 5 (2026-11-06).
-; NO GENERAR TODAVÍA: la escena de abajo es la del cementerio que se juega hoy
-; (mapas_texto/tiles_cementerio.txt) y el constructor la reemplazaría. Al
-; aprobarlo, este archivo pasa a mapas_texto/tiles_cementerio.txt (sección 9).
+; Generado en la Fase 3 (2026-11-11): este archivo pasó de
+; mapas_texto/macro/zonas/ a mapas_texto/tiles_cementerio.txt (P46, sección 9)
+; y es la fuente de escenas/mapas/tiles_cementerio.tscn. Generar:
+;   godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/tiles_cementerio.txt
+; - La entrada [H2] ("<", "anterior") la pone el constructor; [S3] va en la
+;   _combate, con el spawn DesdeMinas.
 ;
 ; Coordenadas (columna, fila), desde 0. 120 x 90 piezas; en el mundo en
 ; (246, 43), así [H2] cae en las filas 67-69 del mundo, las del castillo.
@@ -143,7 +146,7 @@
 ;   y x cajas en la casa y el pozo. Ninguno pisa una escalera, un checkpoint ni
 ;   otro decorado (comparten capa), y todos se apoyan en el suelo.
 ;
-; Sellos (el contador todavía no existe): (38, 32), (115, 8) y (39, 86).
+; Sellos (sello.tscn y open_on_seal_group, P55): (38, 32), (115, 8) y (39, 86).
 ; Viven en tiles_cementerio_combate.tscn: la trampilla del atajo, la trampilla
 ; de la fosa, las tres tumbas sello y su contador, la losa de [S3], la sala del
 ; Capitán (puertas, activador, puntos del jefe), la casa (tienda o NPC) y E3;

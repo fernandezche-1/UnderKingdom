@@ -212,6 +212,11 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
 - [ ] **Cementerio:**
   - el Capitán sin llave, las tres tumbas sello y su contador, la losa de `[S3]`, las trampillas del atajo y de la fosa, la casa del sepulturero y E3;
   - la estatua de la Reina, con las notas y el amuleto; la losa, la puerta de velas, la corona con la carta y el fragmento de vida 2/4 de la cripta de la primera reina.
+  - Base generada (2026-11-11, `escenas/mapas/tiles_cementerio.tscn`). Hasta que exista la `_combate`, dos salidas apuntan a la base y, al montarla, se cambian a `tiles_cementerio_combate.tscn`:
+    - `[H2]` del castillo, a `tiles_cementerio.tscn` (`siguiente:` de `tiles_castillo.txt` y la línea `target_scene_path` de `tiles_castillo.tscn`, sin regenerar);
+    - la salida anterior de las minas de v1, a `tiles_cementerio.tscn#DesdeMinas` (`anterior:` de `archivo/tiles_v1/mapas_texto/tiles_mineria.txt` y `SalidaAnterior1` de `archivo/tiles_v1/escenas/tiles_mineria.tscn`). Mientras no exista `DesdeMinas`, se llega al `SpawnInicio`.
+  - `CEMETERY_SCENE_PATH` ya apunta a `escenas/mapas/`. `debug_slide_collisions` no cambia: su lista solo tiene el castillo.
+  - En la `_combate`: `[S3]` apunta a las minas de v1 (`archivo/tiles_v1/escenas/tiles_mineria_combate.tscn`) hasta generar las nuevas, y `cementerio_capitan` sale de `KEY_NAMES` y `BOSS_KEY_IDS`, porque el Capitán ya no da llave (P46, sección 6).
 - [ ] **Minas:**
   - el Caballero en su sala nueva, la puerta con llave de `[L4]`, el ascensor y la palanca de `:C:`, la trampilla del atajo, la reja de `:D:` y las transiciones de `[S3]` y `:C:`;
   - la gruta de cristal: fuego infernal, checkpoint y el Mauler con su `boss_arena` (trampilla de entrada en `Puertas`, la del suelo en `Atajos`, `ability_reward adrenaline`).

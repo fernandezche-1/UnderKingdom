@@ -30,7 +30,7 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
     Los atajos `:B:` a `:F:` se abren desde abajo.
   - **Decidido** (sección 6 de P46):
     - el castillo deja la llave `castillo_rey` y sale solo rodando por `[H2]`;
-    - el Capitán deja su llave y guarda la tercera tumba sello;
+    - el Capitán ya no da llave: guarda la tercera tumba sello y da la Ráfaga;
     - `[P6]` se abre con la llama eterna.
   - **Forma de trabajo** (sección 9 de P46):
     - un ASCII por zona, a escala real (un carácter = una pieza de 16 px), con las letras del constructor;

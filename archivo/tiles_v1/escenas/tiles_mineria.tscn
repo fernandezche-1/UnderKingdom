@@ -3622,8 +3622,8 @@ shape = SubResource("RectangleShape2D_1tnbl")
 position = Vector2(8, 160)
 collision_layer = 0
 script = ExtResource("11_7jyh1")
-target_scene_path = "res://archivo/tiles_v1/escenas/tiles_cementerio_combate.tscn"
-target_spawn_id = &"DesdeSiguiente"
+target_scene_path = "res://escenas/mapas/tiles_cementerio.tscn"
+target_spawn_id = &"DesdeMinas"
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" parent="SistemasMapa/Transiciones/SalidaAnterior1" index="0"]
