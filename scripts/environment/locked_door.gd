@@ -21,6 +21,10 @@ enum OpenEffect { FADE, CANDLES, MELT }
 @export_range(0.0, 64.0, 1.0) var detect_margin: float = 20.0
 @export var locked_message: String = "NECESITAS UNA LLAVE"
 @export var opened_message: String = "PUERTA ABIERTA"
+## Si no está vacío, sin la llave se abre este diálogo (un JSON de dialogues/,
+## normalmente un pensamiento del Player) en vez de `locked_message`. Vuelve a
+## salir cada vez que el Player se acerca de nuevo a la puerta.
+@export_file("*.json") var locked_dialogue_path: String = ""
 
 @export_category("Interaccion")
 ## Con true, la puerta no se abre al acercarse: hace falta pulsar E delante
@@ -41,6 +45,9 @@ var _message: Label = null
 var _message_tween: Tween = null
 var _prompt: Label = null
 var _effect_tween: Tween = null
+var _dialogue_open: bool = false
+
+const DIALOGUE_SCENE := preload("res://escenas/ui/dialogue_ui.tscn")
 
 
 func _ready() -> void:
@@ -112,11 +119,45 @@ func _try_open(side: float) -> void:
     # puerta está junto al borde del mapa.
     var unlocked := GameManager.has_sword if requires_sword else GameManager.has_key(key_id)
     if not unlocked:
-        _show_message(locked_message, side)
+        if locked_dialogue_path.is_empty():
+            _show_message(locked_message, side)
+        else:
+            _play_locked_dialogue()
         return
     GameManager.mark_object_consumed(self)
     open()
     _show_message(opened_message, side)
+
+
+func _play_locked_dialogue() -> void:
+    # Igual que la charla de npc.gd: el Player queda quieto hasta cerrar el diálogo.
+    if _dialogue_open:
+        return
+    var player := get_tree().get_first_node_in_group(player_group)
+    var lines := _load_locked_lines()
+    if player == null or lines.is_empty():
+        _show_message(locked_message)
+        return
+    _dialogue_open = true
+    player.call("set_controls_locked", true)
+    player.set("cinematic_invulnerable", true)
+    var dialogue := DIALOGUE_SCENE.instantiate() as UnderkingdomDialogueUI
+    get_tree().current_scene.add_child(dialogue)
+    dialogue.start_dialogue(lines, {"friend": null})
+    await dialogue.dialogue_finished
+    dialogue.queue_free()
+    if is_instance_valid(player):
+        player.set("cinematic_invulnerable", false)
+        player.call("set_controls_locked", false)
+    _dialogue_open = false
+
+
+func _load_locked_lines() -> Array:
+    if not FileAccess.file_exists(locked_dialogue_path):
+        push_warning("Puerta %s: falta el diálogo %s" % [name, locked_dialogue_path])
+        return []
+    var result: Variant = JSON.parse_string(FileAccess.get_file_as_string(locked_dialogue_path))
+    return result if result is Array else []
 
 
 func _show_message(text: String, side: float = 0.0) -> void:

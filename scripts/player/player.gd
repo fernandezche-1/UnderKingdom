@@ -54,14 +54,19 @@ const ATTACK_PROFILES := {
 }
 
 @export_category("Movimiento")
-## Con espada. -470 son unas 4,6 piezas (74 px) de salto.
+## Con espada.
 @export_range(20.0, 800.0, 5.0) var move_speed: float = 170.0
 @export_range(100.0, 5000.0, 50.0) var acceleration: float = 1800.0
 @export_range(100.0, 5000.0, 50.0) var deceleration: float = 2200.0
-@export_range(-1200.0, -100.0, 10.0) var jump_velocity: float = -470.0
-## Con la habilidad Agilidad ("agility"). -560 son unas 6,5 piezas (104 px).
+## Con espada. -440 sube 68 px (4,3 piezas), medido en el juego: el mínimo,
+## porque el infierno y algunos tramos de la ruina y las profundidades se
+## comprobaron con saltos de 4 piezas (64 px). Con -430 queda 1 px de margen.
+@export_range(-1200.0, -100.0, 10.0) var jump_velocity: float = -440.0
+## Con la habilidad Agilidad ("agility"). -540 sube 102 px (6,4 piezas): el
+## mínimo, porque los secretos de la Agilidad (minas, profundidades) piden
+## saltos de 6 (96 px). Con -530 quedan 2 px de margen.
 @export_range(20.0, 800.0, 5.0) var agility_move_speed: float = 230.0
-@export_range(-1200.0, -100.0, 10.0) var agility_jump_velocity: float = -560.0
+@export_range(-1200.0, -100.0, 10.0) var agility_jump_velocity: float = -540.0
 @export_range(100.0, 5000.0, 50.0) var gravity: float = 1500.0
 @export_range(100.0, 3000.0, 50.0) var max_fall_speed: float = 1000.0
 
@@ -911,8 +916,8 @@ func _log_blocked_horizontal_collisions(
 
     var scene := get_tree().current_scene
     if scene == null or scene.scene_file_path not in [
-        "res://archivo/tiles_v1/escenas/tiles_castillo.tscn",
-        "res://archivo/tiles_v1/escenas/tiles_castillo_combate.tscn",
+        "res://escenas/mapas/tiles_castillo.tscn",
+        "res://escenas/mapas/tiles_castillo_combate.tscn",
     ]:
         _last_blocked_contact_signature = ""
         _armory_stuck_frames = 0

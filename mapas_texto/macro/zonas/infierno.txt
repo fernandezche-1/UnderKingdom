@@ -14,7 +14,7 @@
 ; abajo, donde no hay nada. Su centro, la columna 55, es la 215 del mundo, y
 ; [S7] cae en las columnas 54-56 (214-216 del mundo), sin túnel.
 ; Es la última zona: sin salida ni más aperturas que [S7].
-; Llega con E5 (salto de unas 4,6 piezas), Rodar, la Ráfaga, el Golpe final,
+; Llega con E5 (salto de unas 4,3 piezas), Rodar, la Ráfaga, el Golpe final,
 ; la Ultimate, el tajo aéreo y el parry. No se consigue nada. Ninguna prueba
 ; obligatoria pide la Agilidad (E3) ni el Abrigo (E4): escalones de 4 piezas
 ; como mucho y huecos de 3.

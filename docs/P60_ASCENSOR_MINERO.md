@@ -35,8 +35,8 @@
 
 ## 4. Cómo se monta en la Fase 3
 
-- Minas: cabina en la estación (x 20-22, suelo en la fila 41), `requires_encounter` = el `encounter_id` de la palanca de (12, 40); destino `tiles_castillo_combate.tscn`.
-- Castillo: cabina en el sótano, bajo la trampilla de `:C:` (x 34-36), que escucha el mismo id con `open_on_encounter`; destino `tiles_mineria_combate.tscn`.
+- Minas: cabina en la estación (x 20-22, suelo en la fila 41), `requires_encounter` = el `encounter_id` de la palanca de (12, 40), `minas_atajo_c_abierto`; destino `tiles_castillo_combate.tscn#DesdeMinas`, `arrival_spawn_id` `DesdeCastillo`.
+- Castillo (montado, 2026-11-11): `AscensorC` en el pozo del sótano, x 34-36, filas 76-78, bajo la trampilla de `:C:` (fila 76), que escucha `minas_atajo_c_abierto` con `open_on_encounter`. El pozo llega al borde de abajo y la cabina no tiene colisión, así que una barrera fija en la fila 79 (`SueloPozoC`) hace de suelo; de la cabina se sale con un salto de 3. Destino `tiles_mineria_combate.tscn#DesdeCastillo`, `arrival_spawn_id` `DesdeMinas`, con el mismo `requires_encounter`.
 - Ids de spawn y de encuentro: se fijan al montar cada zona.
 
 ## 5. Arte provisional

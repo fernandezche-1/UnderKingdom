@@ -1,0 +1,440 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://escenas/mapas/tiles_castillo.tscn" id="1_base"]
+[ext_resource type="PackedScene" path="res://escenas/jefes/rey_caido.tscn" id="2_rey"]
+[ext_resource type="Script" path="res://scripts/combat/boss_arena.gd" id="3_sala"]
+[ext_resource type="Script" path="res://scripts/environment/arena_barrier.gd" id="4_barrera"]
+[ext_resource type="Script" path="res://scripts/environment/roll_gate.gd" id="5_reja_baja"]
+[ext_resource type="Script" path="res://scripts/environment/locked_door.gd" id="6_puerta"]
+[ext_resource type="Texture2D" path="res://assets/terceros/raou_castillo/tileset_castillo.png" id="7_tileset"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/palanca.tscn" id="8_palanca"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/ascensor.tscn" id="9_ascensor"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/objeto_lore.tscn" id="10_lore"]
+[ext_resource type="PackedScene" path="res://escenas/items/fragmento_vida.tscn" id="11_fragmento"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/atuendo.tscn" id="12_atuendo"]
+[ext_resource type="Script" path="res://scripts/environment/encounter_visibility.gd" id="13_visibilidad"]
+[ext_resource type="Script" path="res://scripts/npc/npc.gd" id="14_npc"]
+[ext_resource type="Texture2D" path="res://assets/terceros/Knight 2D Pixel Art/Sprites/without_outline/IDLE.png" id="15_soldado"]
+[ext_resource type="Texture2D" path="res://assets/terceros/elementals_wind_hashashin_FREE_v1.1/wind_SpriteSheet_288x128.png" id="16_capitan"]
+[ext_resource type="Script" path="res://scripts/environment/map_ambience.gd" id="17_ambiente"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_reja_tope"]
+atlas = ExtResource("7_tileset")
+region = Rect2(48, 256, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_reja_medio"]
+atlas = ExtResource("7_tileset")
+region = Rect2(48, 272, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_reja_base"]
+atlas = ExtResource("7_tileset")
+region = Rect2(48, 288, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_losa"]
+atlas = ExtResource("7_tileset")
+region = Rect2(16, 304, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_soldado_0"]
+atlas = ExtResource("15_soldado")
+region = Rect2(0, 0, 96, 84)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_soldado_1"]
+atlas = ExtResource("15_soldado")
+region = Rect2(96, 0, 96, 84)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_soldado_2"]
+atlas = ExtResource("15_soldado")
+region = Rect2(192, 0, 96, 84)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_soldado_3"]
+atlas = ExtResource("15_soldado")
+region = Rect2(288, 0, 96, 84)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_soldado_4"]
+atlas = ExtResource("15_soldado")
+region = Rect2(384, 0, 96, 84)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_soldado_5"]
+atlas = ExtResource("15_soldado")
+region = Rect2(480, 0, 96, 84)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_soldado_6"]
+atlas = ExtResource("15_soldado")
+region = Rect2(576, 0, 96, 84)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_capitan_0"]
+atlas = ExtResource("16_capitan")
+region = Rect2(0, 0, 288, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_capitan_1"]
+atlas = ExtResource("16_capitan")
+region = Rect2(288, 0, 288, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_capitan_2"]
+atlas = ExtResource("16_capitan")
+region = Rect2(576, 0, 288, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_capitan_3"]
+atlas = ExtResource("16_capitan")
+region = Rect2(864, 0, 288, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_capitan_4"]
+atlas = ExtResource("16_capitan")
+region = Rect2(1152, 0, 288, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_capitan_5"]
+atlas = ExtResource("16_capitan")
+region = Rect2(1440, 0, 288, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_capitan_6"]
+atlas = ExtResource("16_capitan")
+region = Rect2(1728, 0, 288, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_capitan_7"]
+atlas = ExtResource("16_capitan")
+region = Rect2(2016, 0, 288, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_soldado"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_soldado_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_soldado_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_soldado_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_soldado_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_soldado_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_soldado_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_soldado_6")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_capitan"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_capitan_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_capitan_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_capitan_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_capitan_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_capitan_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_capitan_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_capitan_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_capitan_7")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 9.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_puerta"]
+size = Vector2(16, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_reja_baja"]
+size = Vector2(16, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trampilla"]
+size = Vector2(48, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_activador"]
+size = Vector2(32, 224)
+
+[node name="TilesCastilloCombate" instance=ExtResource("1_base")]
+
+[node name="SalaRey" type="Node2D" parent="SistemasMapa"]
+script = ExtResource("3_sala")
+encounter_id = "castillo_rey"
+boss_scene = ExtResource("2_rey")
+ability_reward = "roll"
+boss_message = "EL REY CAÍDO"
+
+[node name="Activador" type="Area2D" parent="SistemasMapa/SalaRey"]
+position = Vector2(1600, 896)
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaRey/Activador"]
+shape = SubResource("RectangleShape2D_activador")
+
+[node name="Puertas" type="Node2D" parent="SistemasMapa/SalaRey"]
+
+[node name="PuertaTrono" type="StaticBody2D" parent="SistemasMapa/SalaRey/Puertas"]
+position = Vector2(1640, 976)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_reja_tope")
+piece_middle = SubResource("AtlasTexture_reja_medio")
+piece_end = SubResource("AtlasTexture_reja_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaRey/Puertas/PuertaTrono"]
+shape = SubResource("RectangleShape2D_puerta")
+disabled = true
+
+[node name="Atajos" type="Node2D" parent="SistemasMapa/SalaRey"]
+
+[node name="TrampillaTrono" type="StaticBody2D" parent="SistemasMapa/SalaRey/Atajos"]
+position = Vector2(1144, 1016)
+script = ExtResource("4_barrera")
+piece_middle = SubResource("AtlasTexture_losa")
+start_closed = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaRey/Atajos/TrampillaTrono"]
+shape = SubResource("RectangleShape2D_trampilla")
+
+[node name="PuntosJefe" type="Node2D" parent="SistemasMapa/SalaRey"]
+
+[node name="JefeTrono" type="Marker2D" parent="SistemasMapa/SalaRey/PuntosJefe"]
+position = Vector2(1096, 958)
+
+[node name="PuntoLlave" type="Marker2D" parent="SistemasMapa/SalaRey"]
+position = Vector2(1400, 992)
+
+[node name="UI" type="CanvasLayer" parent="SistemasMapa/SalaRey"]
+layer = 9
+
+[node name="Aviso" type="Label" parent="SistemasMapa/SalaRey/UI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_type_variation = &"Encabezado"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Rejas" type="Node2D" parent="SistemasMapa"]
+
+[node name="RejaH2" type="StaticBody2D" parent="SistemasMapa/Rejas"]
+position = Vector2(1672, 1088)
+script = ExtResource("5_reja_baja")
+piece_start = SubResource("AtlasTexture_reja_tope")
+piece_middle = SubResource("AtlasTexture_reja_medio")
+piece_end = SubResource("AtlasTexture_reja_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/Rejas/RejaH2"]
+shape = SubResource("RectangleShape2D_reja_baja")
+
+[node name="CerrojoSalon" type="StaticBody2D" parent="SistemasMapa/Rejas"]
+position = Vector2(1096, 552)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_reja_tope")
+piece_middle = SubResource("AtlasTexture_reja_medio")
+piece_end = SubResource("AtlasTexture_reja_base")
+start_closed = true
+open_on_encounter = "castillo_cerrojo_salon"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/Rejas/CerrojoSalon"]
+shape = SubResource("RectangleShape2D_puerta")
+
+[node name="PuertaAposentos" type="StaticBody2D" parent="SistemasMapa/Rejas"]
+position = Vector2(984, 280)
+script = ExtResource("6_puerta")
+key_id = "minas_caballero"
+locked_message = "NECESITAS LA LLAVE DEL CABALLERO"
+piece_start = SubResource("AtlasTexture_reja_tope")
+piece_middle = SubResource("AtlasTexture_reja_medio")
+piece_end = SubResource("AtlasTexture_reja_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/Rejas/PuertaAposentos"]
+shape = SubResource("RectangleShape2D_puerta")
+
+[node name="TrampillaAtajoC" type="StaticBody2D" parent="SistemasMapa"]
+position = Vector2(568, 1224)
+script = ExtResource("4_barrera")
+piece_middle = SubResource("AtlasTexture_losa")
+start_closed = true
+open_on_encounter = "minas_atajo_c_abierto"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/TrampillaAtajoC"]
+shape = SubResource("RectangleShape2D_trampilla")
+
+[node name="SueloPozoC" type="StaticBody2D" parent="SistemasMapa"]
+position = Vector2(568, 1272)
+script = ExtResource("4_barrera")
+piece_middle = SubResource("AtlasTexture_losa")
+start_closed = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SueloPozoC"]
+shape = SubResource("RectangleShape2D_trampilla")
+
+[node name="Visibilidad" type="Node" parent="Enemigos/Guardia3"]
+script = ExtResource("13_visibilidad")
+hide_when_encounter = "mazmorra_reina"
+
+[node name="Visibilidad" type="Node" parent="Enemigos/Guardia6"]
+script = ExtResource("13_visibilidad")
+hide_when_encounter = "mazmorra_reina"
+
+[node name="Visibilidad" type="Node" parent="Enemigos/Guardia8"]
+script = ExtResource("13_visibilidad")
+hide_when_encounter = "mazmorra_reina"
+
+[node name="Visibilidad" type="Node" parent="Enemigos/Guardia12"]
+script = ExtResource("13_visibilidad")
+hide_when_encounter = "mazmorra_reina"
+
+[node name="Visibilidad" type="Node" parent="Enemigos/Guardia13"]
+script = ExtResource("13_visibilidad")
+hide_when_encounter = "mazmorra_reina"
+
+[node name="Visibilidad" type="Node" parent="Enemigos/Guardia16"]
+script = ExtResource("13_visibilidad")
+hide_when_encounter = "mazmorra_reina"
+
+[node name="Visibilidad" type="Node" parent="Enemigos/Guardia18"]
+script = ExtResource("13_visibilidad")
+hide_when_encounter = "mazmorra_reina"
+
+[node name="PalancaCerrojo" parent="Objetos" instance=ExtResource("8_palanca")]
+position = Vector2(1120, 560)
+encounter_id = "castillo_cerrojo_salon"
+
+[node name="AscensorC" parent="Objetos" instance=ExtResource("9_ascensor")]
+position = Vector2(568, 1264)
+target_scene_path = "res://escenas/mapas/tiles_mineria_combate.tscn"
+target_spawn_id = &"DesdeCastillo"
+arrival_spawn_id = &"DesdeMinas"
+requires_encounter = "minas_atajo_c_abierto"
+prompt_text = "E  Bajar"
+
+[node name="DiarioReina1" parent="Objetos" instance=ExtResource("10_lore")]
+position = Vector2(1064, 294)
+dialogue_path = "res://dialogues/lore_diario_reina_1.json"
+lore_id = "diario_reina_1"
+
+[node name="FragmentoVida1" parent="Objetos" instance=ExtResource("11_fragmento")]
+position = Vector2(1144, 240)
+fragment_id = "castillo_1"
+
+[node name="AtuendoSoldado" parent="Objetos" instance=ExtResource("12_atuendo")]
+position = Vector2(1688, 166)
+outfit_id = "soldado"
+
+[node name="Soldado1" type="AnimatedSprite2D" parent="Objetos"]
+position = Vector2(1416, 77)
+sprite_frames = SubResource("SpriteFrames_soldado")
+animation = &"idle"
+autoplay = "idle"
+script = ExtResource("14_npc")
+dialogue_path = "res://dialogues/castillo_soldado_1.json"
+
+[node name="Visibilidad" type="Node" parent="Objetos/Soldado1"]
+script = ExtResource("13_visibilidad")
+show_when_encounter = "mazmorra_reina"
+
+[node name="Soldado2" type="AnimatedSprite2D" parent="Objetos"]
+position = Vector2(1352, 301)
+sprite_frames = SubResource("SpriteFrames_soldado")
+animation = &"idle"
+autoplay = "idle"
+script = ExtResource("14_npc")
+dialogue_path = "res://dialogues/castillo_soldado_2.json"
+
+[node name="Visibilidad" type="Node" parent="Objetos/Soldado2"]
+script = ExtResource("13_visibilidad")
+show_when_encounter = "mazmorra_reina"
+
+[node name="Soldado3" type="AnimatedSprite2D" parent="Objetos"]
+position = Vector2(360, 333)
+sprite_frames = SubResource("SpriteFrames_soldado")
+animation = &"idle"
+autoplay = "idle"
+script = ExtResource("14_npc")
+dialogue_path = "res://dialogues/castillo_soldado_3.json"
+
+[node name="Visibilidad" type="Node" parent="Objetos/Soldado3"]
+script = ExtResource("13_visibilidad")
+show_when_encounter = "mazmorra_reina"
+
+[node name="Soldado4" type="AnimatedSprite2D" parent="Objetos"]
+position = Vector2(328, 557)
+sprite_frames = SubResource("SpriteFrames_soldado")
+animation = &"idle"
+autoplay = "idle"
+script = ExtResource("14_npc")
+dialogue_path = "res://dialogues/castillo_soldado_4.json"
+
+[node name="Visibilidad" type="Node" parent="Objetos/Soldado4"]
+script = ExtResource("13_visibilidad")
+show_when_encounter = "mazmorra_reina"
+
+[node name="Soldado5" type="AnimatedSprite2D" parent="Objetos"]
+position = Vector2(728, 557)
+sprite_frames = SubResource("SpriteFrames_soldado")
+animation = &"idle"
+autoplay = "idle"
+script = ExtResource("14_npc")
+dialogue_path = "res://dialogues/castillo_soldado_5.json"
+
+[node name="Visibilidad" type="Node" parent="Objetos/Soldado5"]
+script = ExtResource("13_visibilidad")
+show_when_encounter = "mazmorra_reina"
+
+[node name="Soldado6" type="AnimatedSprite2D" parent="Objetos"]
+position = Vector2(1256, 637)
+sprite_frames = SubResource("SpriteFrames_soldado")
+animation = &"idle"
+autoplay = "idle"
+script = ExtResource("14_npc")
+dialogue_path = "res://dialogues/castillo_soldado_6.json"
+
+[node name="Visibilidad" type="Node" parent="Objetos/Soldado6"]
+script = ExtResource("13_visibilidad")
+show_when_encounter = "mazmorra_reina"
+
+[node name="Soldado7" type="AnimatedSprite2D" parent="Objetos"]
+position = Vector2(424, 733)
+sprite_frames = SubResource("SpriteFrames_soldado")
+animation = &"idle"
+autoplay = "idle"
+script = ExtResource("14_npc")
+dialogue_path = "res://dialogues/castillo_soldado_7.json"
+
+[node name="Visibilidad" type="Node" parent="Objetos/Soldado7"]
+script = ExtResource("13_visibilidad")
+show_when_encounter = "mazmorra_reina"
+
+[node name="CapitanTrono" type="AnimatedSprite2D" parent="Objetos"]
+position = Vector2(1096, 944)
+sprite_frames = SubResource("SpriteFrames_capitan")
+animation = &"idle"
+autoplay = "idle"
+script = ExtResource("14_npc")
+dialogue_path = "res://dialogues/castillo_capitan_trono.json"
+
+[node name="Visibilidad" type="Node" parent="Objetos/CapitanTrono"]
+script = ExtResource("13_visibilidad")
+show_when_encounter = "mazmorra_reina"
+
+[node name="Ambientacion" type="Node2D" parent="."]
+script = ExtResource("17_ambiente")
+ambient_color = Color(0.5, 0.46, 0.6, 1)
+player_light_color = Color(0.95, 0.9, 1, 1)
+vignette_strength = 0.5

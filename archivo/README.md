@@ -11,7 +11,7 @@ Lo que el juego ya no usa para avanzar, apartado en P72 (`docs/P72_ORGANIZACION_
 
 ## Por qué
 
-- **`tiles_v1/` y `mapas_viejos/` no llevan `.gdignore`:** algo los referencia y tienen que seguir abriendo, porque la ruta actual corre por `tiles_v1/` y `mundo_1` se comprueba al tocar scripts compartidos. No se toman como referencia de diseño ni se arreglan (TASK.md).
+- **`tiles_v1/` y `mapas_viejos/` no llevan `.gdignore`:** algo los referencia y tienen que seguir abriendo, porque la ruta actual corre por `tiles_v1/` y los mapas viejos se conservan por si se quieren consultar (desde 2026-11-10 `mundo_1` ya no se comprueba al tocar scripts compartidos). No se toman como referencia de diseño ni se arreglan (TASK.md).
 - **Los `.txt` de `tiles_v1/mapas_texto/` y `mapas_viejos/mapas_texto/` ya no se regeneran en su sitio:** el constructor solo escribe en `res://escenas/mapas/`. Son la fuente de lo que hay, no de lo que vendrá.
 - **`sin_uso/` lleva `.gdignore`:** así Godot no importa sus ~2 900 archivos.
 

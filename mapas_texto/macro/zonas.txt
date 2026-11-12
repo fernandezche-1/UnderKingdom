@@ -11,8 +11,8 @@
 ; Verificar: python3 herramientas/macro_mapa/verificar_mundo.py
 
 prision        prologo_prision/camara_sellado_alma.tscn  -                                      -  -
-calabozo       tiles_calabozo_combate.tscn               mapas_texto/macro/zonas/calabozo.txt   36  36
-castillo       tiles_castillo_combate.tscn               mapas_texto/macro/zonas/castillo.txt   136  0
+calabozo       tiles_calabozo_combate.tscn               mapas_texto/tiles_calabozo.txt         36  36
+castillo       tiles_castillo_combate.tscn               mapas_texto/tiles_castillo.txt         136  0
 cementerio     tiles_cementerio_combate.tscn             mapas_texto/macro/zonas/cementerio.txt 246  43
 minas          tiles_mineria_combate.tscn                mapas_texto/macro/zonas/minas.txt      150  133
 mazmorra       tiles_mazmorra_combate.tscn               mapas_texto/macro/zonas/mazmorra.txt   30  133

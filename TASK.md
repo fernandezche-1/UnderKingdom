@@ -80,12 +80,12 @@ Responde en español.
 
 ## Fase 2: piezas en Godot
 
-Cada pieza se prueba en la zona de pruebas (`escenas/mapas/zona_pruebas_combate.tscn`) y se documenta en una etapa nueva de `docs/`. Si toca el Player o el `GameManager`, se comprueba también `mundo_1`.
+Cada pieza se prueba en la zona de pruebas (`escenas/mapas/zona_pruebas_combate.tscn`) y se documenta en una etapa nueva de `docs/`. Si toca el Player o el `GameManager`, se comprueban también las zonas ya generadas en la Fase 3.
 
 **Una pieza está hecha cuando:**
 - funciona en la zona de pruebas, montada en `zona_pruebas_combate.tscn` (o en el `.txt` si lleva letra), con un caso que muestre que cierra y otro que muestre que abre;
 - se probó sin ventana con una escena temporal que simula entradas e imprime el resultado, y esa escena se borró;
-- arrancan sin errores el juego (`godot --headless --quit-after 120`) y la zona de pruebas, y también `mundo_1` si se tocó el Player, un enemigo, el `GameManager` o el Capitán;
+- arrancan sin errores el juego (`godot --headless --quit-after 120`) y la zona de pruebas, y también las zonas ya generadas en la Fase 3 si se tocó el Player, un enemigo, el `GameManager` o un jefe;
 - si guarda estado, se reinicia en `reset_for_new_game`, se guarda en `_make_save_data` / `_restore_game_state` y se sube `SAVE_FORMAT_VERSION`;
 - hay una etapa nueva en `docs/` (la siguiente libre es P74), con el formato de las demás, y está al día lo que la nombra: P46 (secciones 5 y 10), CLAUDE.md si cambia una regla o una pieza a reutilizar, y esta lista;
 - hay un commit, sin push.
@@ -193,10 +193,21 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
 **Estructura primero, vestir después** (P73): cada zona se genera y se juega con el arte y los enemigos de hoy (lista de abajo), y después se viste con arte y enemigos nuevos (lista "Vestir cada zona"). Lo que se pone en la `_combate` no se pierde al regenerar la base.
 
 **Estructura de cada zona:**
-- [ ] **Calabozo:** cinco rejas, las dos cinemáticas y sus puntos, enemigos y carcelero, espada y preso, pared agrietada, depósito del alcaide con el acta y la empuñadura, trampilla, transición y spawn de `:B:`.
-- [ ] **Castillo:**
+- [x] **Calabozo:** cinco rejas, las dos cinemáticas y sus puntos, enemigos y carcelero, espada y preso, pared agrietada, depósito del alcaide con el acta y la empuñadura, trampilla, transición y spawn de `:B:`. Base generada y `_combate` montada (2026-11-10, `escenas/mapas/tiles_calabozo_combate.tscn`); la salida de la prisión ya apunta a la `_combate`.
+  - La reja del depósito pide la llave `mazmorra_alcaide`: la mazmorra la da con ese id y añade su nombre a `KEY_NAMES` (`pause_menu_overlay.gd`).
+  - Sin pieza de arcón: el acta y la empuñadura están sueltas en el suelo, en (14, 26) y (15, 26). Las marcas del secreto usan `dialogues/lore_marcas_preso.json` (texto provisional).
+  - `SalidaAtajoB` apunta a `tiles_mazmorra_combate.tscn#DesdeCalabozo`, aún sin generar; se crea al montar la mazmorra. `[L1]` apunta a `tiles_castillo_combate.tscn#SpawnInicio`.
+- [x] **Castillo:**
   - el Rey con `ability_reward` de Rodar, la reja de `[H2]`, las trampillas y la trampilla de `:C:`;
   - los aposentos de la Reina y el castillo sin hechizo (soldados NPC y el Capitán).
+  - Base generada y `_combate` montada (2026-11-11, `escenas/mapas/tiles_castillo_combate.tscn`); `[L1]` del calabozo ya apunta a la `_combate` (`tiles_calabozo.txt` y `target_scene_path` de `tiles_calabozo.tscn`, sin regenerar). `CASTLE_SCENE_PATH` y `debug_slide_collisions` apuntan a `escenas/mapas/`. `[H2]` apunta al cementerio nuevo, aún sin generar.
+  - `SalaRey` (`boss_arena.gd`, `encounter_id` `castillo_rey`, `ability_reward roll`, sin llave): puerta en la columna 102 y trampilla de x 70-72 en `Atajos`; la reliquia cae en (86, 62). La llave `castillo_rey` sale de `KEY_NAMES` y de `BOSS_KEY_IDS` (P46, sección 6).
+  - Cerrojo del gran salón: barrera en la columna 68 con `open_on_encounter` `castillo_cerrojo_salon`, la palanca en la repisa de la antecámara, (70, 36).
+  - `:C:`: trampilla en la fila 76 y cabina (`AscensorC`) en el pozo, filas 76-78, sobre una barrera fija en la fila 79 que hace de suelo (el pozo llega al borde de abajo y la cabina no tiene colisión). Las dos escuchan `minas_atajo_c_abierto`: **la palanca de las minas lleva ese `encounter_id`**, y su cabina apunta a `tiles_castillo_combate.tscn#DesdeMinas`; la del castillo va a `tiles_mineria_combate.tscn#DesdeCastillo`.
+  - El castillo sin hechizo escucha `mazmorra_reina`, el id con el que la sala de la Reina ya se marca en v1: **la mazmorra nueva lo conserva**. Los 7 Guardias se ocultan y aparecen `Soldado1`…`Soldado7` y `CapitanTrono` (`npc.gd`, cuadro `idle` de la Guardia y del Capitán, de pie: falta el arte de rodillas), con `encounter_visibility.gd`.
+  - Aposentos: `PuertaAposentos` (`minas_caballero`), el diario I (`diario_reina_1`) y el fragmento `castillo_1`. E2 (`AtuendoSoldado`) en el nicho de la armería, (105, 10).
+  - Textos provisionales: `dialogues/lore_diario_reina_1.json`, `castillo_soldado_1.json` a `_7.json` y `castillo_capitan_trono.json`.
+  - La repisa de la palanca (fila 37, x 69-74) queda 4 piezas sobre el suelo de la antecámara: se sube con E1 (4,3), pero la cabecera dice que ningún escalón pasa de 3. Revisarlo al jugarla.
 - [ ] **Cementerio:**
   - el Capitán sin llave, las tres tumbas sello y su contador, la losa de `[S3]`, las trampillas del atajo y de la fosa, la casa del sepulturero y E3;
   - la estatua de la Reina, con las notas y el amuleto; la losa, la puerta de velas, la corona con la carta y el fragmento de vida 2/4 de la cripta de la primera reina.
@@ -205,7 +216,7 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
   - la gruta de cristal: fuego infernal, checkpoint y el Mauler con su `boss_arena` (trampilla de entrada en `Puertas`, la del suelo en `Atajos`, `ability_reward adrenaline`).
 - [ ] **Mazmorra:**
   - la Reina con `ability_reward` del Ultimate y sin llave, el suelo que se hunde y el derrumbe, la compuerta y la palanca del atajo, la trampilla del colector y la transición de `[!5]`;
-  - la palanca, la transición y el spawn de `:B:`, y la llave del alcaide;
+  - la palanca, la transición y el spawn de `:B:` (el calabozo sale a `#DesdeCalabozo` y espera llegar a `#DesdeMazmorra`), y la llave del alcaide (`mazmorra_alcaide`);
   - la trampilla, la transición y el spawn del pozo de los condenados (`:F:`).
 - [ ] **Ruina:**
   - el Guardián, la reja de salida en `Atajos`, el hielo de `[P6]` y la llama eterna, la luz de la parte oscura;
@@ -224,6 +235,81 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
   - Cthulhu en el trono, con la reja en `Puertas`, el activador, `PuntosJefe` y el aviso del final;
   - la transición y el spawn de `[S7]`, y la marca `infierno_animas_liberadas` del coliseo.
 
+**Plantillas de prompt de la estructura.** La estructura de cada zona se hace en dos sesiones, cada una con su commit:
+- parte 1, generar la base: modo normal;
+- parte 2, montar la `_combate`: modo plan.
+
+Después, la zona se juega a mano antes de vestirla. En cada plantilla, cambiar `<zona>`.
+
+Parte 1, generar la base:
+
+```
+Tarea: Fase 3 de TASK.md, estructura de <zona>, parte 1: generar la escena base.
+
+Antes de nada, lee:
+- CLAUDE.md (mapas en uso, cómo se monta un mundo, validar cambios);
+- en TASK.md, la Fase 3: el bloque "Al generar cada zona, además" y la
+  línea de <zona>;
+- docs/P46_MACRO_MAPA.md, secciones 9 y 10 (la fila de <zona> en
+  "Desbloqueos por zona");
+- mapas_texto/macro/conexiones.txt, zonas.txt y el ASCII
+  mapas_texto/macro/zonas/<zona>.txt, sobre todo su cabecera;
+- mapas_texto/LEYENDA.md (cómo se usa el constructor).
+
+Qué hacer:
+- Mueve el ASCII a mapas_texto/tiles_<zona>.txt y cambia su ruta en zonas.txt.
+- Genera escenas/mapas/tiles_<zona>.tscn con el constructor. Todavía no
+  hagas la _combate.
+- Cambia a la escena nueva las salidas que llegan a <zona> desde zonas aún
+  viejas (archivo/tiles_v1/ o la prisión) y, si es el castillo o el
+  cementerio, CASTLE_SCENE_PATH / CEMETERY_SCENE_PATH y
+  debug_slide_collisions de player.gd. Antes de tocar las salidas, dime
+  cuáles vas a cambiar.
+
+Al terminar:
+- verificar_mundo.py con 0 errores, y arranque sin errores de la escena
+  nueva y del juego;
+- regenera el Atlas (datos_atlas.py) y publícalo de nuevo;
+- dime qué .tscn cambiaste, para recargarlos, y haz un commit sin push.
+Si algo no cuadra con los archivos, dímelo antes de seguir. Responde en español.
+```
+
+Parte 2, montar la `_combate`:
+
+```
+Tarea: Fase 3 de TASK.md, estructura de <zona>, parte 2: montar
+escenas/mapas/tiles_<zona>_combate.tscn, que hereda de tiles_<zona>.tscn.
+
+Antes de nada, lee:
+- CLAUDE.md, sobre todo "Cómo se monta un mundo" y las piezas a reutilizar;
+- en TASK.md, la lista de <zona> en la Fase 3: es lo que hay que montar;
+- la cabecera de mapas_texto/tiles_<zona>.txt (sitios, coordenadas,
+  encuentros, llaves);
+- docs/P46_MACRO_MAPA.md, sección 10 (con qué llega el jugador y qué
+  consigue aquí);
+- las etapas de las piezas que usa (P48-P70) y
+  docs/P33_ENEMIGOS_POR_PROFUNDIDAD.md.
+
+Cómo trabajar:
+- Antes de montar nada, pásame una lista: cada nodo, su escena o script, su
+  posición en piezas y sus valores (encounter_id, key_id, ability_reward...).
+  Espera a que la apruebe.
+- Reutiliza las piezas de la Fase 2. No crees piezas nuevas: si falta algo,
+  dímelo.
+- No regeneres la base ni toques su .txt. Si hace falta, dímelo.
+- Static typing; daño y curación en múltiplos de 0.25.
+
+Al terminar:
+- una prueba sin ventana (escena temporal, que se borra al acabar) de la
+  secuencia principal: jefe, llave o puerta, salida;
+- arranque sin errores de la _combate y del juego y, si tocaste scripts
+  compartidos, de la zona de pruebas y de las zonas ya generadas;
+- cambia las salidas para que apunten a la _combate;
+- marca la casilla de <zona> en TASK.md, dime qué .tscn cambiaste y haz un
+  commit sin push.
+Si algo no cuadra, dímelo antes de seguir. Responde en español.
+```
+
 ### Vestir cada zona: arte y enemigos nuevos (P73)
 
 Hay tres pasos por zona; cada uno es una sesión con su commit:
@@ -233,7 +319,9 @@ Hay tres pasos por zona; cada uno es una sesión con su commit:
 
 El criterio de "hecho" de cada paso está en P73, sección 2. La ficha se puede armar antes de que exista la estructura, pero para vestir hay que tenerla.
 
-- [ ] Calabozo: [ ] ficha, [ ] piezas, [ ] vestida.
+Modo de cada paso: la ficha y vestir, en modo normal; las piezas, en modo plan si llevan un script o una escena nueva.
+
+- [x] Calabozo: [x] ficha, [x] piezas, [x] vestida (2026-11-11: tileset, bloques y fondo `calabozo`, rejillas y telarañas; colisiones iguales, verificador con 0 errores, Atlas publicado y jugada a mano).
 - [ ] Castillo: [ ] ficha, [ ] piezas, [ ] vestida.
 - [ ] Cementerio: [ ] ficha, [ ] piezas, [ ] vestida.
 - [ ] Minas: [ ] ficha, [ ] piezas, [ ] vestida.

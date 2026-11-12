@@ -20,7 +20,7 @@
 ; al este de la antesala, que se abre con la ascua del Demon Slime
 ; (profundidades). Opcional; vuelta por :E:.
 ; Ningún escalón obligatorio pide más de 4 piezas de salto (con E1 se saltan
-; unas 4,6) ni huecos de más de 3; el camino obligatorio sale incluso con 3.
+; unas 4,3) ni huecos de más de 3; el camino obligatorio sale incluso con 3.
 ; Solo el secreto del dash pide más.
 ; Camino obligatorio: [!5] -> llegada -> exterior helado -> torre caída ->
 ; galería alta -> escalera 118 -> galería baja -> escalera 24 -> capilla

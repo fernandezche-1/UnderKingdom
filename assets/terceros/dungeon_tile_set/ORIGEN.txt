@@ -17,3 +17,21 @@ Aquí solo está lo que usa el juego:
 - archivo/tiles_v1/escenas/tiles_mazmorra.tscn
 - archivo/tiles_v1/escenas/tiles_mineria.tscn
 - y 6 más
+
+tileset_calabozo.png (P73, ficha del calabozo): atlas del tileset "calabozo"
+del constructor (herramientas/constructor_mapas/tilesets/calabozo.gd),
+512x384, piezas de 16. Lo arma herramientas/constructor_mapas/atlas_calabozo.py
+(se rehace con ese script, no a mano):
+- filas 0-19: copia de assets/terceros/raou_castillo/tileset_castillo.png
+  (atlas de mazmorra, CC0, y piezas de Raou);
+- filas 20-23: piezas de "Dungeon Tile Set.png" copiadas sin repintar: el
+  bloque de piedra 3x3 (1,1)-(3,3), con la columna, las tiras y la pieza
+  suelta armadas con mitades y cuartos de sus piezas; la viga (1,9)-(3,9); la
+  escalera (5,9); la pared de fondo (6,6)-(12,7); la cadena larga (2,12)-(2,13),
+  la jaula (7,12)-(9,13), el barril (10,12), la caja (10,10), la rejilla
+  (10,3)-(11,4) y la telaraña (10,14)-(13,14). Los decorados que cuelgan van
+  recortados por su borde y pegados arriba de su hueco;
+- (15,20)-(18,20): la antorcha de assets/terceros/dungeon_sidescroller-Raou/
+  spr_torch.png, sus 4 cuadros recortados a 7x16 (x 7-14, y 4-20 de cada uno).
+Licencias: las de cada pack (este, Raou y el de mazmorra), por confirmar antes
+de publicar (TASK.md, "Otros pendientes").

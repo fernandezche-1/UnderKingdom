@@ -14,7 +14,7 @@
 ; Golpe final y la llave del Caballero; la salida [L4] pide esa llave (P46,
 ; sección 10).
 ; Ningún escalón obligatorio pide más de 3 piezas de salto (con E1 se saltan
-; unas 4,6) ni huecos de más de 3. Solo el secreto pide la Agilidad, y el
+; unas 4,3) ni huecos de más de 3. Solo el secreto pide la Agilidad, y el
 ; secreto del dash de la galería de los mineros, el dash.
 ; Camino obligatorio: [S3] -> bocamina -> pozo principal (o galería alta y su
 ; caída) -> galería de las vagonetas -> veta ardiente -> galería honda ->
@@ -35,7 +35,7 @@
 ; - SECRETO DE LA AGILIDAD: x 129-141, filas 9-14 (suelo 15), abierto a la
 ;   bocamina por la columna 129, filas 11-14. Su suelo está 5 piezas por
 ;   encima del de la bocamina y no hay nada cerca a lo que subirse: con E1
-;   (unas 4,6) no se llega; con la Agilidad (6,5) sí. Es el mismo escalón que
+;   (unas 4,3) no se llega; con la Agilidad (6,4) sí. Es el mismo escalón que
 ;   pedía la poción de (29, 6) de las minas de hoy (P45). Sitio de un cofre en
 ;   (140, 14).
 ; - Galería alta (las vigas): x 33-83, filas 14-19 (suelo 20), al oeste de la
@@ -94,8 +94,8 @@
 ; y E5):
 ; - BOCA: columna 131, filas 52-55, en la pared este de la veta. El suelo del
 ;   pasillo (fila 56) queda 5 piezas por encima del de la veta (fila 61), el
-;   mismo escalón que el secreto de la Agilidad: con E1 (unas 4,6) no se
-;   llega; con la Agilidad (6,5) sí. Desde la veta se ve el resplandor del
+;   mismo escalón que el secreto de la Agilidad: con E1 (unas 4,3) no se
+;   llega; con la Agilidad (6,4) sí. Desde la veta se ve el resplandor del
 ;   fuego.
 ; - PASILLO DEL FUEGO: x 131-143, filas 52-55 (suelo 56; 4 de alto, no se
 ;   salta por encima). FUEGO INFERNAL (F) en x 133-141, fila 55: la pieza

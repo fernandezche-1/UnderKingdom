@@ -30,6 +30,7 @@
 [ext_resource type="SpriteFrames" path="res://escenas/atuendos/fire_knight.tres" id="31_fire_knight"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/atuendo.tscn" id="32_atuendo"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/espada_oxidada.tscn" id="33_espada_oxidada"]
+[ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_calabozo.tscn" id="34_muestra_calabozo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_losa_medio"]
 atlas = ExtResource("8_tileset")
@@ -443,6 +444,9 @@ theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 16
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="MuestraCalabozo" parent="Objetos" instance=ExtResource("34_muestra_calabozo")]
+position = Vector2(1776, 1392)
 
 [node name="Carteles" type="Node2D" parent="."]
 
@@ -1013,6 +1017,37 @@ theme_override_constants/outline_size = 3
 text = "ARENA CON OLEADAS (P67)
 Va en: infierno (coliseo y salón de los verdugos) y coliseo de ceniza.
 Al entrar se cierra. Vence las 2 oleadas y se abre la salida. Si mueres, empieza de nuevo."
+autowrap_mode = 3
+
+[node name="Zona22" type="Label" parent="Carteles"]
+offset_left = 1778.0
+offset_top = 1297.0
+offset_right = 2194.0
+offset_bottom = 1321.0
+theme_type_variation = &"Encabezado"
+text = "Calabozo"
+
+[node name="Nombre22" type="Label" parent="Carteles"]
+offset_left = 1778.0
+offset_top = 1326.0
+offset_right = 2190.0
+offset_bottom = 1346.0
+theme_type_variation = &"TextoAcento"
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "TILESET CALABOZO"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Texto22" type="Label" parent="Carteles"]
+offset_left = 1956.0
+offset_top = 1394.0
+offset_right = 2188.0
+offset_bottom = 1470.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "TILESET CALABOZO (P73)
+Bloques, viga (=), escalera, fondo y decorados del Dungeon Tile Set; antorcha de Raou. Las luces no se ven aquí (sin MapAmbience)."
 autowrap_mode = 3
 
 [node name="Inicio" type="Label" parent="Carteles"]

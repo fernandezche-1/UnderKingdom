@@ -244,7 +244,9 @@ func _play_encounter() -> void:
 func _play_dialogue() -> void:
     var lines := _load_dialogue_lines()
     if not lines.is_empty():
-        if activation == Activation.ON_START:
+        # Sin líneas del "friend" no se muestra su retrato (el del Capitán por
+        # defecto), que si no aparece a la derecha en los monólogos.
+        if activation == Activation.ON_START or not _has_friend_lines(lines):
             _dialogue.start_dialogue(lines, {"friend": null})
         else:
             _dialogue.start_dialogue(lines)
@@ -348,3 +350,10 @@ func _exit_tree() -> void:
         _restore_everything()
     elif not _done:
         _restore_actor()
+
+
+func _has_friend_lines(lines: Array) -> bool:
+    for line: Variant in lines:
+        if line is Dictionary and str((line as Dictionary).get("speaker_id", "")) == "friend":
+            return true
+    return false

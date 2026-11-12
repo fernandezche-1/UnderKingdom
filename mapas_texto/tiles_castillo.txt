@@ -1,12 +1,15 @@
 ; CASTILLO (macro mapa, docs/P46_MACRO_MAPA.md): ASCII de la zona. Primera
 ; pasada (estructura, P, checkpoints y aperturas) y segunda pasada (enemigos,
 ; objetos y decorados) hechas. Puertas hacia atrás 2 y 3 (2026-11-06).
-; NO GENERAR TODAVÍA: la escena de abajo es la del castillo que se juega hoy y
-; el constructor la reemplazaría. Al aprobarlo, este archivo pasa a
-; mapas_texto/tiles_castillo.txt (sección 9 de P46).
+; Generado en la Fase 3 (2026-11-11): este archivo pasó de
+; mapas_texto/macro/zonas/ a mapas_texto/tiles_castillo.txt (P46, sección 9) y
+; es la fuente de escenas/mapas/tiles_castillo.tscn. Generar:
+;   godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/tiles_castillo.txt
+; - La entrada [L1] ("<", "anterior") y la salida [H2] (">", "siguiente") las
+;   pone el constructor; :C: va en la _combate.
 ;
 ; Coordenadas (columna, fila), desde 0. 110 x 80 piezas. Ningún escalón pide
-; más de 3 piezas de salto (con E1 se saltan unas 4,6).
+; más de 3 piezas de salto (con E1 se saltan unas 4,3).
 ; Camino obligatorio: galería -> gran salón -> biblioteca -> almenas -> armería
 ; -> caída por el hueco x 88-90 -> antecámara -> vestíbulo -> trono ->
 ; trampilla -> paso bajo el trono -> reja (rodando) -> [H2].
@@ -29,7 +32,10 @@
 ; - Almenas (camino de ronda): x 12-90, filas 2-5 (suelo 6). Tramos altos de 2
 ;   piezas en x 28-38 y x 70-77, y un tramo derrumbado de 3 de hondo en
 ;   x 62-66 (suelo en la fila 9). Unen la biblioteca, la capilla (escalera 52)
-;   y la armería (escalera 82).
+;   y la armería (escalera 82). Sobre los tramos altos y 4 piezas a cada lado
+;   el techo sube a la fila 1 (x 23-43 y x 65-82), para dejar 3 piezas de hueco
+;   y sitio para tomar el salto: con el techo en la fila 2 quedaban 2 (32 px) y
+;   el Player, de 40 px, no pasaba (2026-11-11).
 ; - Capilla, fuera del camino: x 44-60, filas 8-18 (suelo 19). Cofre.
 ; - Aposentos de la Reina (puerta hacia atrás, idea 2 del punto 1 de
 ;   mapas_texto/macro/sugerencias_exploracion.txt), fuera del camino: x 62-74,
@@ -111,7 +117,7 @@ anterior: res://escenas/mapas/tiles_calabozo_combate.tscn
 siguiente: res://escenas/mapas/tiles_cementerio_combate.tscn
 ---
 ##############################################################################################################
-##############################################################################################################
+#######################.....................#####################..................###########################
 ############...............................................................................###################
 ############.....................t.........................................................###################
 ############................###########.........................m.....########.............###################
