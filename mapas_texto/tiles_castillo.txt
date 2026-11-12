@@ -99,8 +99,9 @@
 ;   (21, 75) a (22, 75), para dejar sitio al estante.
 ; - Ficha revisada (P73, 2026-11-11): una pared por sala (fondo_sala, en la
 ;   cabecera) y cielo nocturno en las almenas. Decorados nuevos: biblioteca,
-;   lámparas y (10, 8), (24, 8) y (30, 8), estanterías altas l (4, 15), sobre
-;   el estante, y (13, 21), y mesa n (26, 21); capilla, vidrieras w (45, 12) y
+;   lámparas y (10, 8), (24, 8) y (30, 8), estanterías altas l (4, 15) y
+;   (9, 12), sobre los estantes, y (3, 21), (13, 21) y (19, 21) (las de (3, 21)
+;   y (19, 21) eran estanterías E), y mesa n (26, 21); capilla, vidrieras w (45, 12) y
 ;   (55, 13), que sustituye a la ventana r de (55, 12), y lámpara y (50, 8);
 ;   gran salón, columnas K (26, 35) y (35, 35) a los lados del cráneo y la
 ;   fogata, tapices U (14, 28) y (56, 29) y celosía w (47, 28); sala del
@@ -132,10 +133,12 @@ tileset: castillo
 bloques: castillo
 fondo: castillo
 ; Una pared por sala (P73, ficha revisada): fondo_sala <pared> x0 y0 x1 y1.
-; La armería y los pasos sin sala se quedan con la de "fondo".
+; La armería y los pasos sin sala se quedan con la de "fondo". La biblioteca
+; lleva piedra y el gran salón columnas: las estanterías de fondo se confundían
+; con la escalera y los estantes, y la arcada se veía rara (2026-11-11).
 fondo_sala: piedra_oscura 0 39 58 47
-fondo_sala: arcada 7 23 67 35
-fondo_sala: libros 1 7 35 22
+fondo_sala: columnas 7 23 67 35
+fondo_sala: piedra 1 7 35 22
 fondo_sala: piedra_clara 43 7 61 19
 fondo_sala: madera_oscura 62 10 75 19
 fondo_sala: ladrillo 68 21 108 41
@@ -162,7 +165,7 @@ siguiente: res://escenas/mapas/tiles_cementerio_combate.tscn
 ##.c..........#.H..................#########....h...H...h....###############......H....h...........h........##
 ##======......#.H..................#########........H........###############......H...................t.....##
 ##............#.H..................#########........H........#.......y.....#......H..................#########
-##............#.H..................#########.w......H........#..h.......h..#......H..................#########
+##.......l....#.H..................#########.w......H........#..h.......h..#......H..................#########
 ##.....======.#.H..................#########........H..w.....#.............#......H.......D.....$$...#########
 ##............#.H..................#########..!.....H...m....#.....r.......#......H...........======.#########
 ##..l.....m...#.H............$$.E..#########======..H........#..Q..........#......H..................#########
@@ -171,7 +174,7 @@ siguiente: res://escenas/mapas/tiles_cementerio_combate.tscn
 ##............#.H..................#########.t......H..t..c.C..E....t.n....#......H..................#########
 ##......=====...H..........=======.#########################################.T.A..H.Gbx....A...v.O.T.#########
 ##..............H..................#####################################################...###################
-##.E..t..E...l..H..E..G...n.E..E...#####################################################...###################
+##.l..t..E...l..H..l..G...n.E..E...#####################################################...###################
 #######################.H.###########################################.......................................##
 #######################.H.###########################################......h.......h...........h......h.....##
 ########................H..........................................##.......................................##

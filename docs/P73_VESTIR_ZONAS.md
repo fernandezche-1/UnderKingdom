@@ -302,8 +302,8 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
 
   | Sala | Pared | De `Tilesetv3.png` |
   |---|---|---|
-  | Biblioteca | `libros`: la estantería alta sobre la madera oscura, con el brillo al 60% para que no se confunda con los tablones (solo se oscurece, sin repintar; aprobado) | (0,34) sobre (14,17) |
-  | Gran salón | `arcada`: dos pisos de arcos, 6x8 | (10,28) |
+  | Biblioteca | `piedra`, con estanterías altas `l` delante (cambio del 2026-11-11, ver abajo) | (8,20) |
+  | Gran salón | `columnas`, la misma del trono (cambio del 2026-11-11, ver abajo) | (5,17) |
   | Capilla | `piedra_clara` | (5,20) |
   | Aposentos de la Reina | `madera_oscura`: ladrillo con postes y baranda | (14,17) |
   | Antecámara y vestíbulo | `ladrillo`: ladrillo claro | (5,14) |
@@ -313,7 +313,13 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
   | Armería | `castillo`, la de hoy con pilastras | |
   | Almenas | `ninguno`: el cielo de `assets/terceros/gothicvania/pueblo_noche/` (cielo, nubes y montes) como parallax; aprobado aunque su tono es más verdoso | |
 
-  Hay además `madera` (8,17), la versión clara de la de los aposentos, y `marco` (8,14), ladrillo con marco de piedra clara: se probaron y no se usan por ahora (en la biblioteca la madera sola parecía una cuadrícula, y el marco cansaba la vista en la antecámara).
+  En el atlas quedan además, probadas y sin usar:
+  - `madera` (8,17), la versión clara de la de los aposentos: en la biblioteca parecía una cuadrícula, y sus barandas se confunden con los tablones;
+  - `marco` (8,14), ladrillo con marco de piedra clara, que cansaba la vista en la antecámara;
+  - `libros`, la estantería alta sobre la madera oscura al 60% de brillo, que se confundía con la escalera y los estantes;
+  - `arcada` (10,28), dos pisos de arcos de 6x8, que se veía rara en el gran salón.
+
+  La muestra "CASTILLO, SALAS" de la galería las enseña igual.
 - **Decorados nuevos** (solo el tileset `castillo` los dibuja):
 
   | Letra | Pieza | Sala |
@@ -363,10 +369,15 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
   - Ninguno pisa los objetos de la `_combate` (diario, fragmento, palanca, reliquia, sitio del Rey, E2).
 - **Colisiones:** iguales antes y después de la revisión, y también iguales a las de antes de vestir (4002 sólidas y 159 de una vía, mismos polígonos).
 - Arrancan sin errores la `_combate`, el juego, el calabozo y la zona de pruebas, y `verificar_mundo.py` da 0 errores. Capturas de todas las salas, y el Atlas publicado con los nombres de las letras nuevas.
+- **Corrección tras verla (2026-11-11):**
+  - la pared de libros de la biblioteca se confundía con la escalera y los estantes: pasa a `piedra`, y las estanterías van delante como decorado; las `E` de (3, 21) y (19, 21) pasan a estanterías altas `l` y se añade otra en (9, 12), sobre el estante;
+  - la arcada del gran salón se veía rara: pasa a `columnas`;
+  - se eligió entre cuatro opciones con capturas de cada sala, y la galería de las celdas, con piedra oscura, se queda.
+
+  Colisiones iguales otra vez. Arrancan el juego y la `_combate`, y el verificador da 0 errores.
 - **Al jugarla, mirar:**
   - el cielo de las almenas en movimiento: el parallax solo se vio en capturas (LEYENDA, sección 9);
   - la luz ambiente de la `_combate`, (0.5, 0.46, 0.6), con las paredes nuevas;
-  - que las estanterías del fondo de la biblioteca no se confundan con los tablones.
 
 ### Cementerio
 - Parte de: tileset `cementerio`, parallax de `gothicvania_cementerio/fondo` (cielo, montes y cementerio). Vanguardia, murciélago, esqueleto de tumba; el Capitán.
