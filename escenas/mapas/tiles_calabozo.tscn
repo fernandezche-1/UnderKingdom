@@ -4214,7 +4214,7 @@ metadata/_edit_group_ = true
 position = Vector2(1592, 144)
 collision_layer = 0
 script = ExtResource("7_adcpl")
-target_scene_path = "res://escenas/mapas/tiles_castillo.tscn"
+target_scene_path = "res://escenas/mapas/tiles_castillo_combate.tscn"
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" parent="SistemasMapa/Transiciones/SalidaSiguiente1" index="0"]

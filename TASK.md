@@ -196,11 +196,18 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
 - [x] **Calabozo:** cinco rejas, las dos cinemáticas y sus puntos, enemigos y carcelero, espada y preso, pared agrietada, depósito del alcaide con el acta y la empuñadura, trampilla, transición y spawn de `:B:`. Base generada y `_combate` montada (2026-11-10, `escenas/mapas/tiles_calabozo_combate.tscn`); la salida de la prisión ya apunta a la `_combate`.
   - La reja del depósito pide la llave `mazmorra_alcaide`: la mazmorra la da con ese id y añade su nombre a `KEY_NAMES` (`pause_menu_overlay.gd`).
   - Sin pieza de arcón: el acta y la empuñadura están sueltas en el suelo, en (14, 26) y (15, 26). Las marcas del secreto usan `dialogues/lore_marcas_preso.json` (texto provisional).
-  - `SalidaAtajoB` apunta a `tiles_mazmorra_combate.tscn#DesdeCalabozo`, aún sin generar, y `[L1]` a `tiles_castillo_combate.tscn`, que tampoco existe todavía. Las dos escenas se crean al montar sus zonas.
-- [ ] **Castillo:**
+  - `SalidaAtajoB` apunta a `tiles_mazmorra_combate.tscn#DesdeCalabozo`, aún sin generar; se crea al montar la mazmorra. `[L1]` apunta a `tiles_castillo_combate.tscn#SpawnInicio`.
+- [x] **Castillo:**
   - el Rey con `ability_reward` de Rodar, la reja de `[H2]`, las trampillas y la trampilla de `:C:`;
   - los aposentos de la Reina y el castillo sin hechizo (soldados NPC y el Capitán).
-  - Base generada (2026-11-11). `[L1]` del calabozo apunta a la base (`tiles_castillo.tscn#SpawnInicio`, en `tiles_calabozo.txt` y en la línea `target_scene_path` de `tiles_calabozo.tscn`) hasta que exista la `_combate`: al montarla, cambiarla a `tiles_castillo_combate.tscn`. `CASTLE_SCENE_PATH` y `debug_slide_collisions` ya apuntan a `escenas/mapas/`. `[H2]` apunta al cementerio nuevo, aún sin generar.
+  - Base generada y `_combate` montada (2026-11-11, `escenas/mapas/tiles_castillo_combate.tscn`); `[L1]` del calabozo ya apunta a la `_combate` (`tiles_calabozo.txt` y `target_scene_path` de `tiles_calabozo.tscn`, sin regenerar). `CASTLE_SCENE_PATH` y `debug_slide_collisions` apuntan a `escenas/mapas/`. `[H2]` apunta al cementerio nuevo, aún sin generar.
+  - `SalaRey` (`boss_arena.gd`, `encounter_id` `castillo_rey`, `ability_reward roll`, sin llave): puerta en la columna 102 y trampilla de x 70-72 en `Atajos`; la reliquia cae en (86, 62). La llave `castillo_rey` sale de `KEY_NAMES` y de `BOSS_KEY_IDS` (P46, sección 6).
+  - Cerrojo del gran salón: barrera en la columna 68 con `open_on_encounter` `castillo_cerrojo_salon`, la palanca en la repisa de la antecámara, (70, 36).
+  - `:C:`: trampilla en la fila 76 y cabina (`AscensorC`) en el pozo, filas 76-78, sobre una barrera fija en la fila 79 que hace de suelo (el pozo llega al borde de abajo y la cabina no tiene colisión). Las dos escuchan `minas_atajo_c_abierto`: **la palanca de las minas lleva ese `encounter_id`**, y su cabina apunta a `tiles_castillo_combate.tscn#DesdeMinas`; la del castillo va a `tiles_mineria_combate.tscn#DesdeCastillo`.
+  - El castillo sin hechizo escucha `mazmorra_reina`, el id con el que la sala de la Reina ya se marca en v1: **la mazmorra nueva lo conserva**. Los 7 Guardias se ocultan y aparecen `Soldado1`…`Soldado7` y `CapitanTrono` (`npc.gd`, cuadro `idle` de la Guardia y del Capitán, de pie: falta el arte de rodillas), con `encounter_visibility.gd`.
+  - Aposentos: `PuertaAposentos` (`minas_caballero`), el diario I (`diario_reina_1`) y el fragmento `castillo_1`. E2 (`AtuendoSoldado`) en el nicho de la armería, (105, 10).
+  - Textos provisionales: `dialogues/lore_diario_reina_1.json`, `castillo_soldado_1.json` a `_7.json` y `castillo_capitan_trono.json`.
+  - La repisa de la palanca (fila 37, x 69-74) queda 4 piezas sobre el suelo de la antecámara: se sube con E1 (4,3), pero la cabecera dice que ningún escalón pasa de 3. Revisarlo al jugarla.
 - [ ] **Cementerio:**
   - el Capitán sin llave, las tres tumbas sello y su contador, la losa de `[S3]`, las trampillas del atajo y de la fosa, la casa del sepulturero y E3;
   - la estatua de la Reina, con las notas y el amuleto; la losa, la puerta de velas, la corona con la carta y el fragmento de vida 2/4 de la cripta de la primera reina.
