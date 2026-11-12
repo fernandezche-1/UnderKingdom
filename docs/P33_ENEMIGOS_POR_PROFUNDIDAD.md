@@ -6,6 +6,7 @@
   - al fondo, demonios.
 - Antes había cualquier enemigo en cualquier mapa: diablillos y minotauros en las minas, un Vanguardia en el infierno.
 - Ahora cada mundo usa solo los enemigos de su profundidad. Los cambios se hicieron en los PNG y se regeneraron las escenas.
+- **Sin repetir (2026-11-12, ficha de las minas en P73):** un enemigo no vuelve a salir en otra zona. Los que ya aparecieron más arriba en la ruta se quitan al vestir cada zona, y su sitio lo toma un enemigo nuevo de esa profundidad. Excepción: el infierno (P46). Pendiente: el cementerio repite la Vanguardia y el murciélago del castillo, y la mazmorra y la ruina comparten la lista de abajo.
 
 ## Tabla
 
@@ -14,7 +15,7 @@
 | 0 | `tiles_calabozo` (antes del castillo) | rata, murciélago grande, slime y esqueleto carcelero (en el nivel de hoy, a mano en la escena `_combate`, ver `P42_CALABOZO_INICIAL.md`; en el calabozo rehecho, con letra: `R` rata, `L` slime y `B` murciélago grande; el carcelero sigue a mano) | |
 | 0 | `tiles_castillo` (el castillo, sobre el cementerio) | Guardia `G` (caballero con escudo, ver `P40_CASTILLO_CON_TILES.md`), Vanguardia `v`, murciélago `m` | |
 | 1 | `tiles_cementerio` (superficie) | Vanguardia `v` (el viejito), murciélago `m` (cripta y abismo), esqueleto de tumba `u`, cuervo `o` (exterior; `escenas/enemigos/cuervo.tscn`) y ánima `N` (cripta honda; `escenas/enemigos/anima.tscn`), de la ficha del cementerio (P73). Al vestir la zona (2026-11-12) se colocaron 3 cuervos en el exterior y 3 ánimas en lugar de 3 murciélagos (P73, "Vestida") | |
-| 2 | `tiles_mineria` (bajo tierra) | kolbo `k`, kolbo2 `j`, kolbo3 `q`, murciélago `m` | |
+| 2 | `tiles_mineria` (bajo tierra) | kolbo `k`, kolbo2 `j`, kolbo3 `q`, murciélago `m`. Ficha de las minas (P73, 2026-11-12): salen los murciélagos (ya aparecieron arriba) y entran ojo volador `p`, sapo de la cueva `s` y Mimic `i` | ojo volador, sapo y Mimic (paso de piezas) |
 | 3 | `tiles_mazmorra` | Aprendis `a` (esqueleto de fuego), mino `M`, kolbo3 `q`, esqueleto `e` | |
 | 4 | `tiles_ruina` | Aprendis `a` (esqueleto de fuego), mino `M`, kolbo3 `q`, esqueleto `e` | |
 | 5 | `tiles_profundidades` (abismo) | diablillo `d` | |

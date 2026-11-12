@@ -545,8 +545,83 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
 - **Falta, antes de marcarla vestida en `TASK.md`:** jugarla a mano, con la fosa agrandada y sus oleadas (`TASK.md`, estructura del cementerio).
 
 ### Minas
-- Parte de: tileset `mazmorra` con `bloques: madera`, parallax de `pixelfantasy_caves`. Kolbos y murciélago; el Caballero y el Crystal Mauler.
-- Ficha: por armar.
+- Parte de: tileset `mazmorra` con `bloques: madera`, `fondo: ninguno` y el parallax de `pixelfantasy_caves` (`fondo1`-`fondo4a`) en toda la zona. Luz ambiente de la `_combate`: (0.3, 0.28, 0.36). En el ASCII, 6 kolbo `k`, 6 kolbo2 `j`, 4 kolbo3 `q` y 10 murciélagos `m`; el Caballero y el Crystal Mauler en la `_combate`.
+- **Ficha aprobada el 2026-11-12.**
+- **Por qué cambia** (capturas con el juego abierto de 10 salas de la `_combate`):
+  - los bloques `madera` son cuadros casi negros con un borde fino: la roca se lee como un hueco;
+  - el parallax de cuevas sale igual en todas las salas, y la galería alta, la de las vagonetas y la honda no se distinguen;
+  - nada dice "mina": ni vigas, ni entibado, ni bocamina, y las vagonetas son cajas y barriles;
+  - las escaleras de mazmorra (161 piezas `H`) apenas se ven.
+
+**Ambientación** (tileset nuevo `minas`, `herramientas/constructor_mapas/tilesets/minas.gd`, como `calabozo`: las filas 0-15 copian el atlas de mazmorra, por la antorcha, la lava, la fogata, los cristales y los hongos, y debajo van piezas de `mainlev_build.png` y `props1.png` de PixelFantasy Caves, el pack del parallax de hoy; un script `herramientas/constructor_mapas/atlas_minas.py` arma el atlas):
+- **Escala:** el arte del pack está dibujado con píxeles dobles, como su parallax, sobre una rejilla de 16 px. Se usa tal cual, sin reducirlo: a la mitad, la boca de galería quedaría más baja que el Player. Se comprueba en la galería.
+- **Bloques `minas`:** la roca marrón de `mainlev_build`, solo piezas macizas.
+- **Plataformas `=`** (29): la viga de madera del pack, con la clave `plataformas`. La colisión de una vía no cambia.
+- **Escalera:** la de madera del Dungeon Tile Set, como en el calabozo.
+- **Cofres `c`** (5): `cofre_madera.tscn`, con la clave `cofre` del tileset (la ficha del castillo pedía el cofre del Mimic en los cofres de verdad de su zona).
+- **Paredes**, con `fondo` y `fondo_sala` (los rectángulos exactos se fijan al vestir):
+
+  | Pared | Arte | Dónde |
+  |---|---|---|
+  | `galeria` (nueva, el `fondo:` de la zona) | roca oscura con un marco de postes y viga del pack cada pocas columnas, como la pilastra del castillo | lo excavado: galerías alta, de las vagonetas, de los mineros y honda, antecámara, túnel de `[L4]` y pozos |
+  | `ladrillo` (nueva) | el muro de ladrillo del pack, oscurecido | lo construido: estación del ascensor y sala del Caballero |
+  | `ninguno` | el parallax de hoy | las cuevas naturales: bocamina, secreto de la Agilidad, veta ardiente y gruta de cristal |
+
+- **Decorados** (reutilizan letras, como el cementerio, así que no hay colores nuevos; los tamaños se miden en el paso de piezas):
+
+  | Letra | En `minas` | Dónde |
+  |---|---|---|
+  | `t`, `f`, `C`, `x`, `b`, `r`, `h` | se quedan: antorchas, fogata, tienda del campamento, cajas y barriles de las vagonetas, cristales y hongos | |
+  | `K` | entibado: marco de madera con aspa, unas 3x3 | galerías |
+  | `U` | boca de galería: marco de madera, unas 3x4 | bocamina y túnel de `[L4]` |
+  | `T` | estalagmita de `props1`, unas 2x3 | veta y gruta |
+  | `y` | estalactita que cuelga del techo | veta y gruta (en lugar de las estalactitas de bloque) |
+
+  - **Vagonetas:** no hay arte de vagoneta en ningún pack; se quedan las cajas y los barriles.
+  - Los decorados nuevos siguen la regla de la cabecera del `.txt`: ninguno pisa una escalera, sus columnas vecinas ni las tres filas de encima, un spawn ni otro decorado, ni los objetos de la `_combate`.
+- **Luces:** ninguna pieza nueva da luz; los cristales y los hongos ya la tienen en `DECOR_LIGHTS`. La luz ambiente se ajusta al vestir, solo en la `_combate`.
+
+**Enemigos.** Regla nueva (2026-11-12): **un enemigo no se repite en otra zona**. Los que ya aparecieron más arriba no vuelven a salir (P33).
+- Antes de las minas salen: rata, slime y murciélago grande (calabozo); Guardia, Vanguardia y murciélago `m` (castillo); Vanguardia, murciélago `m`, esqueleto de tumba, cuervo y ánima (cementerio).
+- **Salen los 10 murciélagos `m`.**
+- **Se quedan** los kolbos, que salen por primera vez: kolbo `k` (6), kolbo2 `j` (6) y kolbo3 `q` (4). El Caballero y el Mauler siguen en la `_combate`.
+  - El kolbo3 tiene `attack_damage = 0.60`, que no es múltiplo de 0.25: pasa a **0.5** en el paso de piezas (su escena es compartida).
+- **Nuevos** (los tres de profundidad 2, criaturas; letras y colores nuevos en `COLORS`, la paleta, LEYENDA y P33):
+
+  | | Ojo volador `p` | Sapo de la cueva `s` | Mimic `i` |
+  |---|---|---|---|
+  | Arte | FlyEye de Super Grotto (CC0): 4 cuadros de 48x48, un ojo con alas | mutant-toad de Gothicvania (CC0), 80x64: `idle` 4, `jump` 4 y `attack` 3, con lengua | Mimic de Monsters Creatures Fantasy 2, cuadros de 146x146: cofre cerrado, `transform`, `walk`, `attack_1` (mordisco), `death` |
+  | Script base | `lunge_enemy.gd`, vuela y embiste (su arte no trae golpe) | `enemy_base.gd`: avanza a saltos (`jump` como `move`) y golpea con la lengua, de unas 2 piezas de alcance. Muere con el efecto `muerte`, porque no trae muerte | `rising_enemy.gd` sin cambios: dormido es un cofre cerrado (cuadro 0 de `transform`, la misma región que `cofre_madera`); despierta con `transform` con el Player a unas 3 piezas, persigue con `walk`, embiste con el mordisco y muere con `death` |
+  | Vida y daño | 2 de vida, 0.5 de daño y 0.25 de contacto | 3 de vida, 0.5 de daño y 0.25 de contacto | 4 de vida, 0.5 de daño y 0.25 de contacto |
+  | Sitio | 6 de los sitios de los murciélagos, los del aire: sobre los fosos de lava (75, 53) y (99, 51), veta este (120, 52), junto al pozo de `:D:` (136, 82), vagonetas (112, 36) y galería alta (60, 15) | los otros 4, bajados al suelo: vagonetas (bajo (70, 36)), galería de los mineros (bajo (21, 52)) y galería honda (bajo (80, 82) y (110, 82)) | 2, en callejones sin salida: cochera de la galería de las vagonetas (x 121-130) y galería de los mineros, que ya tiene un cofre de verdad al fondo |
+
+  - Los sitios exactos del sapo y del Mimic se fijan al vestir, con la regla de las escaleras.
+  - Dormido, el Mimic no muestra "E Abrir": es la pista para el que se fije.
+  - Si `rising_enemy.gd` o `lunge_enemy.gd` no sirven sin cambios, se pregunta antes de tocarlos o de hacer un script propio.
+- Quedan 16 kolbos, 6 ojos, 4 sapos y 2 Mimics (28; antes, 26).
+- **La regla fuera de las minas** (pendiente, cada una en su sesión):
+  - el cementerio, vestido pero sin marcar, repite la Vanguardia `v` (4) y el murciélago `m` (8) del castillo. No se toca hasta que se decida;
+  - según P33, el kolbo3 vuelve a salir en la mazmorra y la ruina, y la ruina repite toda la lista de la mazmorra: sus fichas traen enemigos propios;
+  - el infierno sigue siendo la excepción de P46: mezcla los más duros de todas las profundidades.
+
+**Origen del arte:**
+- **PixelFantasy Caves** (ya en el repo): `mainlev_build.png` y `props1.png` vuelven de `archivo/sin_uso/assets/PixelFantasy_Caves_1.0/` a `assets/terceros/pixelfantasy_caves/` y se anotan en su `ORIGEN.txt`.
+- **Mimic:** el resto de sus animaciones se trae de `Monsters Creatures Fantasy 2.zip` (Descargas) a `assets/terceros/monster_creatures_2/mimic/`.
+- **FlyEye** (`Super Grotto Escape Files.zip`) y **mutant-toad** (`Legacy Collection.zip`), CC0: a `assets/terceros/super_grotto/` y `assets/terceros/gothicvania/`, con sus `ORIGEN.txt`.
+- **Escalera:** la del Dungeon Tile Set, ya en el repo.
+- Sin pack nuevo ni IA.
+- **Licencias:** PixelFantasy Caves, Monsters Creatures Fantasy 2 y el Dungeon Tile Set están por confirmar antes de publicar (ver "Otros pendientes" de `TASK.md`). Se usan igual, como en el calabozo y el castillo.
+- **Mirado y descartado:**
+  - el caracol de cristal de Super Grotto: rosa chillón, de estilo tierno;
+  - el lagarto y la serpiente de Grotto Escape 2: muy pequeños;
+  - el ojo demonio y la calavera de fuego de la Legacy: un demonio y un esqueleto, de más abajo;
+  - el Rocky Tileset (playa soleada), las Caverns de Gothicvania (ya son el parallax de la ruina), los Tiles de Anokolisa (pasto y colores de bosque) y las gemas de la Legacy (estilo match-3).
+
+**Reto obligatorio:** coincide con su fila de P46, sección 10.
+- Llega con la Ráfaga y Rodar (E1 o E2; la Agilidad solo si encontró E3) y sale por `[L4]` con la llave del Caballero.
+- Los dos Mimics van fuera del camino obligatorio.
+- Ningún reto obligatorio pide E3, el dash ni una mejora de la tienda.
+- Vestir no cambia celdas sólidas y las plataformas siguen siendo de una vía; se comprueba en el paso D.
 
 ### Mazmorra
 - Parte de: tileset `mazmorra` con `bloques: oliva`, parallax de `gothicvania/castillo_viejo`. Aprendis, mino, kolbo3, esqueleto; la Reina.

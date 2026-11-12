@@ -8,6 +8,7 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
   - Cada mundo es un mapa para explorar al estilo Hollow Knight: zonas, atajos, checkpoints, enemigos repartidos y una sala de jefe que se cierra al entrar.
   - Los enemigos cambian conforme se baja: personas y bichos comunes arriba; criaturas y esqueletos en medio (el Aprendis, mago de fuego con calavera, cuenta como esqueleto); demonios al fondo.
   - Cada mundo usa solo los de su profundidad (tabla en `docs/P33_ENEMIGOS_POR_PROFUNDIDAD.md`); no se mezclan con los de otro nivel. Excepción: el infierno, la prueba final, mezcla los más duros de todas las profundidades (P46).
+  - Un enemigo no se repite entre zonas: los que ya salieron más arriba se quitan al vestir cada zona (P33, 2026-11-12).
 - **Se construye en tres fases** (`TASK.md`, con el estado, las casillas y las plantillas de prompt de cada paso):
   1. **Fase 1, los ASCII:** hecha. Cada zona está dibujada a escala real en `mapas_texto/macro/zonas/<zona>.txt`.
   2. **Fase 2, las piezas en Godot:** hecha, salvo el arte de los atuendos E2-E4. Las piezas están en "Cómo se monta una zona", abajo, y cada una tiene su sala en la galería de la zona de pruebas.
