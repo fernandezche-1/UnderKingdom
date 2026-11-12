@@ -346,6 +346,28 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
   - captura del cuarto;
   - prueba sin ventana: las 5 paredes con su patrón, los 7 decorados en su pieza del atlas y con arte, el suelo macizo y los 9 tablones de una vía.
 
+**Vestida con la ficha revisada (2026-11-11, falta jugarla a mano):**
+- `mapas_texto/tiles_castillo.txt` lleva en la cabecera las paredes de cada sala (`fondo_sala`, con los rectángulos de la tabla de la ficha) y el parallax de `pueblo_noche` (cielo, nubes y montes, a 0.05, 0.1 y 0.2, al doble). Las almenas, x 12-90, filas 1-5, y el tramo derrumbado, x 62-66, filas 6-8, quedan sin pared.
+- **Decorados nuevos** (sitio de abajo a la izquierda):
+
+  | Sala | Decorados |
+  |---|---|
+  | Biblioteca | lámparas `y` (10, 8), (24, 8) y (30, 8); estanterías altas `l` (4, 15), sobre el estante, y (13, 21); mesa `n` (26, 21) |
+  | Capilla | vidrieras `w` (45, 12) y (55, 13), que sustituye a la ventana `r` de (55, 12); lámpara `y` (50, 8) |
+  | Gran salón | columnas `K` (26, 35) y (35, 35), a los lados del cráneo y de la fogata; tapices `U` (14, 28) y (56, 29); celosía `w` (47, 28) |
+  | Sala del trono | tapiz `U` (84, 55); columnas `K` (72, 62) y (98, 62), sin pisar el sitio del Rey (68, 62) |
+  | Aposentos | lámpara `y` (69, 11); mesa `n` (70, 18) |
+  | Bodegas del sótano | mostrador `V` (37, 75) |
+
+  - La estantería alta se probó primero en (25, 21), pero pisaba las tres filas de encima de la escalera del gran salón (columna 24).
+  - Ninguno pisa los objetos de la `_combate` (diario, fragmento, palanca, reliquia, sitio del Rey, E2).
+- **Colisiones:** iguales antes y después de la revisión, y también iguales a las de antes de vestir (4002 sólidas y 159 de una vía, mismos polígonos).
+- Arrancan sin errores la `_combate`, el juego, el calabozo y la zona de pruebas, y `verificar_mundo.py` da 0 errores. Capturas de todas las salas, y el Atlas publicado con los nombres de las letras nuevas.
+- **Al jugarla, mirar:**
+  - el cielo de las almenas en movimiento: el parallax solo se vio en capturas (LEYENDA, sección 9);
+  - la luz ambiente de la `_combate`, (0.5, 0.46, 0.6), con las paredes nuevas;
+  - que las estanterías del fondo de la biblioteca no se confundan con los tablones.
+
 ### Cementerio
 - Parte de: tileset `cementerio`, parallax de `gothicvania_cementerio/fondo` (cielo, montes y cementerio). Vanguardia, murciélago, esqueleto de tumba; el Capitán.
   - Pendiente de P34, sección 5: el cielo se ve también dentro de las cuevas, porque cada mapa tiene un solo parallax.
