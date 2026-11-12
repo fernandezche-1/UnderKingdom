@@ -382,7 +382,79 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
 ### Cementerio
 - Parte de: tileset `cementerio`, parallax de `gothicvania_cementerio/fondo` (cielo, montes y cementerio). Vanguardia, murciélago, esqueleto de tumba; el Capitán.
   - Pendiente de P34, sección 5: el cielo se ve también dentro de las cuevas, porque cada mapa tiene un solo parallax.
-- Ficha: por armar.
+  - Más detalle: `fondo: ninguno`, `bloques: cementerio` en toda la zona y luz ambiente de la `_combate` (0.42, 0.46, 0.6). En el ASCII, 4 Vanguardias `v`, 13 esqueletos de tumba `u` y 11 murciélagos `m`; en las oleadas de la fosa (`_combate`), 5 `u` y 1 `m`.
+- **Ficha aprobada el 2026-11-12.**
+- **Por qué cambia** (capturas sin ventana de la zona generada):
+  - la luna y el cielo se ven dentro de la fosa, el osario, las catacumbas y la cripta de la primera reina;
+  - bajo tierra, todos los suelos, techos y repisas llevan pasto;
+  - las "estanterías de huesos" `E` de la cabecera del ASCII son la estantería de libros y frascos de la mazmorra;
+  - el exterior solo tiene una lápida, repetida.
+
+**Ambientación** (sin tileset nuevo: cambian `cementerio.gd` y su atlas `assets/terceros/gothicvania_cementerio/tileset_cementerio.png`, que rehará un script `herramientas/constructor_mapas/atlas_cementerio.py`, como el del castillo; pasa de 512x320 a 512x512 y las filas 0-19 no cambian):
+- **Paredes**, con `fondo` y `fondo_sala`:
+
+  | Pared | Arte | Dónde |
+  |---|---|---|
+  | `ninguno` | el parallax de hoy (cielo, montes y cementerio) | el aire libre: x 0-119, filas 0-26, y el foso de pinchos hasta la fila 29 |
+  | `tierra` (nueva) | la tierra con calaveras del propio pack, oscurecida (como `libros` del castillo, al 60 %) | lo excavado: fosa, catacumbas alta y baja, pozo del sello, cueva de la estatua y hueco al osario. Pasa a ser el `fondo:` de la zona |
+  | `ladrillo` (nueva) | el muro de ladrillo con musgo de Gothic Horror (Legacy), oscurecido | lo construido: casa del sepulturero, antecripta, osario, antesala, cámara de la tumba real, panteón del caballero y cripta de la primera reina |
+
+  Los rectángulos exactos se fijan al vestir.
+- **Bloques:** opción nueva del constructor `bloques_sala: <estilo> x0 y0 x1 y1`, como `fondo_sala` (se repite; si dos se pisan, gana la de más abajo; sin ella el constructor genera lo mismo que antes).
+  - Estilo nuevo `cripta`: la tierra con calaveras del pack en las 9 piezas del juego de bloques, sin pasto. Todas macizas: las colisiones no cambian.
+  - Bajo tierra, las plataformas `=` pasan a la repisa de piedra de Gothic Horror, con la colisión de una vía de siempre.
+  - El exterior se queda con `cementerio` (pasto arriba y plataformas de pasto).
+- **Decorados** (solo el tileset `cementerio` los dibuja; reutilizan letras del castillo, como el calabozo reinterpretó las de la mazmorra, así que no hay colores nuevos; los tamaños se miden en el paso de piezas):
+
+  | Letra | En `cementerio` hoy | Propuesta | Dónde |
+  |---|---|---|---|
+  | `T`, `g`, `r`, `t`, `h`, `b`, `x` | lápida, pasto, zarzas, antorcha, hongos, barril y caja | se quedan | |
+  | `E` | estantería de la mazmorra, 3x3 | nicho de calaveras de Gothic Horror, 2x3 | sus 4 sitios de hoy: osario, catacumba alta, cueva de la estatua y cripta de la primera reina |
+  | `K` | — | cruz de piedra (`stone-2`), 2x3 | exterior |
+  | `Q` | — | lápida inclinada (`stone-3`), 2x3 | exterior |
+  | `D` | — | árbol muerto (`tree-2`), unas 11x8 | exterior, 2 o 3 |
+  | `O` | — | arbusto con cruz (`bush-large`), 5x5 | exterior |
+  | `A` | — | gárgola de Gothic Horror, unas 2x3 | casa del sepulturero y mausoleo |
+  | `n` | — | montón de huesos de Gothic Horror, 2x2 | osario y catacumbas |
+  | `U` | — | calavera en el muro de Gothic Horror, 2x2 | catacumbas y pozo del sello |
+  | `V` | — | nicho con llama de Gothic Horror, 2x3 | antesala, cámara de la tumba real, panteón y cripta de la primera reina |
+
+  - La letra `C` (tienda de campaña) sigue sin usarse.
+  - Los decorados nuevos siguen la regla de la cabecera del `.txt`: ninguno pisa una escalera, sus columnas vecinas ni las tres filas de encima, un spawn ni otro decorado, ni los objetos de la `_combate`.
+- **Luces:** el nicho con llama `V` va en `DECOR_LIGHTS`, con la luz naranja de la antorcha. La luz ambiente se ajusta al vestir, solo en la `_combate`.
+- **Parallax:** se queda el de hoy, que ya solo se ve en el exterior. Resuelve el pendiente de P34, sección 5.
+
+**Enemigos:**
+- Se quedan, en sus sitios de hoy: Vanguardia `v`, esqueleto de tumba `u` y murciélago `m`. El Capitán y las oleadas de la fosa siguen en la `_combate`.
+- Nuevos (los dos de profundidad 1; se suman a la tabla de P33):
+
+  | | Cuervo `o` | Ánima `N` |
+  |---|---|---|
+  | Qué es | bicho común de la superficie | alma en pena: un muerto de la cripta, como el esqueleto de tumba |
+  | Script base | `lunge_enemy.gd`, vuela como el murciélago | `rising_enemy.gd` con `use_gravity = false`: dormida es una brizna (primer cuadro de `appear`), aparece al acercarse el Player, persigue y embiste, y al morir se desvanece (`vanish`) |
+  | Vida y daño | 1 de vida, 0.25 de daño | 2.5 de vida, 0.5 de daño |
+  | Sitio | 3 nuevos en el exterior: rincón de la colina, sobre el tejado de la casa y junto al mausoleo. Ninguno sobre el foso de pinchos | sustituye a 3 murciélagos: catacumba baja (60, 69), panteón (96, 79) y pozo del sello (8, 80) |
+  | Arte | `crow` de la Legacy, 48x48: `idle` 3, `front` 3 y `fly` 2 | `Ghost-Files` de la Legacy, 64x80: `appear` 6, `idle` 7, `chase` 4, `shriek` 4 y `vanish` 7 |
+
+  - Si `rising_enemy.gd` no sirve para un enemigo que vuela sin cambios, se pregunta antes de tocarlo o de hacerle un script propio.
+  - Los sitios exactos de los cuervos se fijan al vestir.
+
+**Origen del arte:**
+- **Gothicvania Cemetery** (CC0, ya en el repo; el ZIP sigue en Descargas): cruz, lápida inclinada, árbol, arbusto y la tierra con calaveras.
+- **Legacy Collection** (CC0, ya en el repo en `assets/terceros/gothicvania/`): de `Gothic-Horror-Files`, el ladrillo, la repisa de piedra, el montón de huesos, el nicho de calaveras, la calavera en el muro, el nicho con llama y la gárgola; `crow` y `Ghost-Files`.
+- Lo que se use se copia a `assets/terceros/` y se anota en su `ORIGEN.txt`. Sin pack nuevo ni IA, y sin licencias por confirmar.
+- **Mirado y descartado:**
+  - el fantasma con farol del Cemetery, porque se confunde con el Barquero;
+  - el hell-gato del Cemetery, que es un demonio: queda para las profundidades;
+  - la estatua de la Parca del Cemetery, porque se confundiría con la estatua rompible de la Reina;
+  - el esqueleto de lanza, que es el carcelero.
+
+**Reto obligatorio:** coincide con su fila de P46, sección 10.
+- Llega con E1 o E2 y Rodar, y sale por `[S3]` (tres tumbas sello, la última la del Capitán).
+- Vestir no cambia celdas sólidas; se comprueba en el paso D.
+- Los cuervos quedan lejos del foso de pinchos de la tumba sello 2, y ninguna ánima va en la sala del Capitán ni en la antesala.
+- Ningún reto obligatorio pide E3, la Agilidad ni una mejora de la tienda.
+- Antes de dar la zona por vestida falta volver a jugar la fosa agrandada y ajustar sus oleadas (`TASK.md`, estructura del cementerio).
 
 ### Minas
 - Parte de: tileset `mazmorra` con `bloques: madera`, parallax de `pixelfantasy_caves`. Kolbos y murciélago; el Caballero y el Crystal Mauler.
