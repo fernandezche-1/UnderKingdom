@@ -75,7 +75,7 @@ size = Vector2(48, 16)
 size = Vector2(240, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_activador_fosa"]
-size = Vector2(144, 32)
+size = Vector2(448, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_activador_capitan"]
 size = Vector2(32, 176)
@@ -90,7 +90,7 @@ script = ExtResource("8_oleadas")
 encounter_id = "cementerio_fosa"
 
 [node name="Activador" type="Area2D" parent="SistemasMapa/ArenaFosa"]
-position = Vector2(616, 512)
+position = Vector2(640, 560)
 collision_layer = 0
 monitorable = false
 
@@ -113,24 +113,24 @@ disabled = true
 [node name="Oleada1" type="Node2D" parent="SistemasMapa/ArenaFosa/Oleadas"]
 
 [node name="Esqueleto1" parent="SistemasMapa/ArenaFosa/Oleadas/Oleada1" instance=ExtResource("9_esqueleto")]
-position = Vector2(536, 502)
+position = Vector2(448, 550)
 
 [node name="Esqueleto2" parent="SistemasMapa/ArenaFosa/Oleadas/Oleada1" instance=ExtResource("9_esqueleto")]
-position = Vector2(664, 502)
+position = Vector2(776, 550)
 
 [node name="Esqueleto3" parent="SistemasMapa/ArenaFosa/Oleadas/Oleada1" instance=ExtResource("9_esqueleto")]
-position = Vector2(712, 502)
+position = Vector2(832, 550)
 
 [node name="Oleada2" type="Node2D" parent="SistemasMapa/ArenaFosa/Oleadas"]
 
 [node name="Esqueleto1" parent="SistemasMapa/ArenaFosa/Oleadas/Oleada2" instance=ExtResource("9_esqueleto")]
-position = Vector2(568, 502)
+position = Vector2(480, 550)
 
 [node name="Esqueleto2" parent="SistemasMapa/ArenaFosa/Oleadas/Oleada2" instance=ExtResource("9_esqueleto")]
-position = Vector2(680, 502)
+position = Vector2(800, 550)
 
 [node name="Murcielago1" parent="SistemasMapa/ArenaFosa/Oleadas/Oleada2" instance=ExtResource("10_murcielago")]
-position = Vector2(616, 464)
+position = Vector2(640, 512)
 
 [node name="UI" type="CanvasLayer" parent="SistemasMapa/ArenaFosa"]
 layer = 9
@@ -259,7 +259,7 @@ position = Vector2(136, 1329)
 spawn_id = &"DesdeMinas"
 
 [node name="SelloFosa" parent="Objetos" instance=ExtResource("13_sello")]
-position = Vector2(608, 496)
+position = Vector2(608, 544)
 seal_group = "cementerio_s3"
 seal_id = "fosa"
 listen_encounter = "cementerio_fosa"
