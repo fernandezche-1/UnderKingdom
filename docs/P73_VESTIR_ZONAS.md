@@ -271,7 +271,7 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
   - se aparta la antorcha de (59, 18), que tapa el cofre;
   - el estandarte viejo de (10,16) sale del atlas.
 
-**Vestida (2026-11-11, falta jugarla a mano):**
+**Vestida antes de la revisión (2026-11-11):**
 - La cabecera de `mapas_texto/tiles_castillo.txt` no cambia. Se regeneró la base `escenas/mapas/tiles_castillo.tscn` y la `_combate` no se tocó.
   - Con el tileset de hoy salen el tablón en las 159 `=`, la pared con pilastras, los 9 estandartes rojos y los 4 cofres del Mimic.
 - Decorados nuevos en el ASCII. Cumplen la regla de la cabecera, y ninguno pisa un cofre, un enemigo ni un objeto de la `_combate`:
@@ -352,7 +352,7 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
   - captura del cuarto;
   - prueba sin ventana: las 5 paredes con su patrón, los 7 decorados en su pieza del atlas y con arte, el suelo macizo y los 9 tablones de una vía.
 
-**Vestida con la ficha revisada (2026-11-11, falta jugarla a mano):**
+**Vestida con la ficha revisada (2026-11-11; jugada a mano y vestida el 2026-11-11):**
 - `mapas_texto/tiles_castillo.txt` lleva en la cabecera las paredes de cada sala (`fondo_sala`, con los rectángulos de la tabla de la ficha) y el parallax de `pueblo_noche` (cielo, nubes y montes, a 0.05, 0.1 y 0.2, al doble). Las almenas, x 12-90, filas 1-5, y el tramo derrumbado, x 62-66, filas 6-8, quedan sin pared.
 - **Decorados nuevos** (sitio de abajo a la izquierda):
 
