@@ -37,6 +37,10 @@ const DATA := {
     },
     "bloques_por_defecto": "cementerio",
 
+    # Cofre (c): el mismo del castillo (el del Mimic), para que el Mimic de
+    # más abajo sorprenda.
+    "cofre": "res://escenas/objetos/cofre_madera.tscn",
+
     # Decorados: letra -> [pieza de abajo a la izquierda, tamaño en piezas].
     "decorados": {
         "t": [Vector2i(0, 10), Vector2i(1, 1)],    # antorcha (animada)

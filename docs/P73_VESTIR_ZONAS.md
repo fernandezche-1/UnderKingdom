@@ -538,6 +538,7 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
 
   Quedan 4 Vanguardias, 13 esqueletos de tumba, 8 murciélagos, 3 cuervos y 3 ánimas. Prueba sin ventana con el Player en la P: a los 3 s los cuervos siguen en su sitio (se mecen 5,5 px) y las ánimas duermen (capa 0).
 - **Al jugarla, mirar:** el ánima del pozo del sello está a 3 piezas sobre el spawn `DesdeMinas`, así que despierta en cuanto se vuelve de las minas (antes, el murciélago estaba en el mismo sitio).
+- **Cofres (2026-11-12):** los 4 cofres `c` usan el del castillo, `cofre_madera.tscn` (el del Mimic), con la clave `cofre` del tileset `cementerio.gd`; antes salía `cofre.tscn`. Base regenerada: solo cambian los 4 cofres (escena, `offset` y 1 px más arriba, por su alto de 20 px); capas y colisiones iguales. El de (117, 9) tapa unos 7 px del pasto de (118, 9).
 - **Colisiones:** iguales antes y después, 4697 piezas sólidas y 74 de una vía, con los mismos polígonos y la misma marca de una vía, volcadas de las capas de la base con una escena temporal.
 - Arrancan sin errores la `_combate`, el juego y la zona de pruebas, y `verificar_mundo.py` da 0 errores. Capturas con el juego abierto de las 21 salas y del túnel. El Atlas se publicó de nuevo, con los nombres de las letras del cementerio, el cuervo y el ánima.
 - La luz ambiente de la `_combate`, (0.42, 0.46, 0.6), se queda hasta jugarla.
