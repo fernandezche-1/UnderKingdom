@@ -294,6 +294,41 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
 - Arrancan sin errores la `_combate`, el juego, el calabozo y la zona de pruebas, y `verificar_mundo.py` da 0 errores. El Atlas se publicó de nuevo, con los nombres de `A`, `D`, `O` y `Q`.
 - La luz ambiente de la `_combate`, (0.5, 0.46, 0.6), se queda hasta jugarla.
 
+**Ficha revisada (aprobada el 2026-11-11): una pared por sala.**
+- **Por qué:** vestido así, el castillo se veía igual en todas las salas; la biblioteca, por ejemplo, no parecía una biblioteca. Cada sala tiene que notarse al entrar.
+- **Constructor:** opción nueva `fondo_sala: <pared> x0 y0 x1 y1`, que se puede repetir. Pinta otra pared en ese rectángulo de piezas (bordes incluidos); si dos se pisan, gana la de más abajo, y `ninguno` deja la pared vacía para ver el parallax. Sin `fondo_sala` el constructor genera lo mismo que antes.
+- **Atlas:** `atlas_castillo.py` lo agranda de 512x384 a 512x512. Las filas 0-23 no cambian y las 24-31 llevan las paredes y los decorados nuevos, todo de `Tilesetv3.png` de Raou (sin pack nuevo ni IA). El atlas del calabozo sigue copiando las filas 0-19 y mide 512x384.
+- **Paredes:**
+
+  | Sala | Pared | De `Tilesetv3.png` |
+  |---|---|---|
+  | Biblioteca | `libros`: la estantería alta sobre la madera oscura, con el brillo al 60% para que no se confunda con los tablones (solo se oscurece, sin repintar; aprobado) | (0,34) sobre (14,17) |
+  | Gran salón | `arcada`: dos pisos de arcos, 6x8 | (10,28) |
+  | Capilla | `piedra_clara` | (5,20) |
+  | Aposentos de la Reina | `madera_oscura`: ladrillo con postes y baranda | (14,17) |
+  | Antecámara y vestíbulo | `ladrillo`: ladrillo claro | (5,14) |
+  | Sala del trono | `columnas`: ladrillo con una columna de piedra | (5,17) |
+  | Galería de las celdas | `piedra_oscura` | (11,20) |
+  | Sótano y paso bajo el trono | `piedra` | (8,20) |
+  | Armería | `castillo`, la de hoy con pilastras | |
+  | Almenas | `ninguno`: el cielo de `assets/terceros/gothicvania/pueblo_noche/` (cielo, nubes y montes) como parallax; aprobado aunque su tono es más verdoso | |
+
+  Hay además `madera` (8,17), la versión clara de la de los aposentos, y `marco` (8,14), ladrillo con marco de piedra clara: se probaron y no se usan por ahora (en la biblioteca la madera sola parecía una cuadrícula, y el marco cansaba la vista en la antecámara).
+- **Decorados nuevos** (solo el tileset `castillo` los dibuja):
+
+  | Letra | Pieza | Sala |
+  |---|---|---|
+  | `w` | ventana de celosía de piedra, 3x3 | capilla (como vidriera) y gran salón |
+  | `K` | columna alta, 2x7 | capilla y gran salón |
+  | `U` | tapiz, 2x3 | sala del trono y gran salón |
+  | `l` | estantería alta, 2x3 | biblioteca y aposentos |
+  | `n` | mesa con frascos, 2x1 | biblioteca y aposentos |
+  | `y` | lámpara colgante, 1x1 (cuelga del techo) | biblioteca, capilla y aposentos |
+  | `V` | mostrador con frascos, 2x2 | bodegas del sótano |
+
+  El armario, los pergaminos y el escudo redondo de Raou se miraron y se dejan fuera.
+- Las reglas de siempre: ninguna celda sólida cambia y ningún reto obligatorio cambia.
+
 ### Cementerio
 - Parte de: tileset `cementerio`, parallax de `gothicvania_cementerio/fondo` (cielo, montes y cementerio). Vanguardia, murciélago, esqueleto de tumba; el Capitán.
   - Pendiente de P34, sección 5: el cielo se ve también dentro de las cuevas, porque cada mapa tiene un solo parallax.
