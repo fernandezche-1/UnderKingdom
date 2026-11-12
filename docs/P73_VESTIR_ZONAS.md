@@ -179,8 +179,62 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
 - Arranca sin errores, `verificar_mundo.py` da 0 errores y el Atlas se publicó de nuevo (con los nombres de las letras del tileset `calabozo`). Jugada a mano y vestida el 2026-11-11.
 
 ### Castillo
-- Parte de: tileset `castillo`, `fondo: castillo`. Guardia, Vanguardia, murciélago; el Rey Caído.
-- Ficha: por armar.
+- Parte de: tileset `castillo` (muro de Raou), `bloques: castillo`, `fondo: castillo` (pared lisa de 1x3). Enemigos de P33, profundidad 0: 7 Guardias `G`, 5 Vanguardias `v` y 11 murciélagos `m`; el Rey Caído. Luz ambiente de la `_combate`: (0.5, 0.46, 0.6).
+- **Ficha aprobada el 2026-11-11.**
+- **Por qué cambia:** con el calabozo en su propio tileset, el castillo ya se distingue de él. Le faltan:
+  - salas que se lean como de un castillo habitado (armería, salón real);
+  - que las 159 plataformas `=` se vean de una vía: hoy son la misma tira de ladrillo que los bloques;
+  - preparar al jugador para el Mimic de más abajo.
+
+**Ambientación** (sin tileset nuevo: cambian `castillo.gd` y su atlas `assets/terceros/raou_castillo/tileset_castillo.png`):
+- **Bloques:** se quedan los `castillo`.
+- **Plataformas `=`:** el tablón de madera de Raou, piezas (7,8)-(9,8) de `Tilesetv3.png`, con la clave `plataformas` del tileset (como la viga del calabozo). Mantiene la colisión de una vía de siempre.
+- **Fondo `castillo`:** la pared con pilastras de Raou (filas 17-19 de `Tilesetv3.png`), con una pilastra cada pocas columnas, si se repite sin costura. Si no, se queda la pared lisa.
+- **Cofres:** los 4 cofres `c` toman el aspecto del cofre del Mimic (`Idle_closed` cerrado, `idle_open` abierto), para que el jugador se acostumbre a ese cofre y el Mimic de más abajo lo sorprenda.
+  - Escena nueva `escenas/objetos/cofre_madera.tscn`, con el mismo `chest_interactable.gd`.
+  - El tileset la elige con una clave nueva, `cofre`; el constructor usa `cofre.tscn` si el tileset no la trae.
+  - El calabozo conserva el cofre del pack de la prisión.
+  - Mide 31x20 px (casi 2 piezas). En la capilla, el cofre de (58, 18) tapa la mitad de la antorcha de (59, 18): al vestir se mueve el decorado, sin tocar celdas sólidas.
+- **Decorados:**
+
+  | Letra | En `castillo` hoy | Propuesta |
+  |---|---|---|
+  | `h` | estandarte de `dark_castle_tileset.png` (v4 de Armando, origen sin anotar) | estandarte rojo de craftpix (`Other_objects.png`), 1x2 |
+  | `t`, `T`, `E`, `f`, `g`, `r`, `C`, `b`, `x` | — | se quedan |
+  | `A` (nueva) | — | armero con armas de craftpix (`supplies_objects.png`), 2x2. En la armería |
+  | `D` (nueva) | — | trofeo de cráneo de dragón de craftpix (`Other_objects.png`), 2x2. Armería, gran salón y sala del trono |
+  | `O` (nueva) | — | estante con provisiones de craftpix (`supplies_objects.png`), 2x2. Armería y sótano (bodegas) |
+  | `Q` (nueva) | — | cuadro de Raou (filas 41-44 de `Tilesetv3.png`), 1x1 o 2x2 según la pieza. Gran salón y aposentos de la Reina |
+
+  - Son las piezas de craftpix que la armería del castillo viejo (`archivo/tiles_v1/escenas/tiles_castillo.tscn`) pintaba a mano. Se toma el arte, no la sala: la armería nueva conserva su trazado.
+  - Las letras nuevas van en `COLORS` del constructor, en la tabla de LEYENDA (sección 5) y en la paleta. En los tilesets que no las definen no dibujan nada.
+  - Los decorados nuevos siguen la regla de la cabecera del `.txt`: ninguno pisa una escalera, sus columnas vecinas ni las tres filas de encima, un spawn ni otro decorado.
+  - Los bustos de armadura de craftpix no entran: ya está la armadura `T`.
+- **Luces:** ninguna pieza nueva da luz. La luz ambiente se ajusta al vestir, solo en la `_combate`.
+- **Parallax:** no. El `fondo` pinta todas las celdas, así que en este constructor un cielo en las almenas taparía o quedaría tapado.
+
+**Enemigos:**
+- Se quedan los de profundidad 0, en sus sitios de hoy: Guardia `G`, Vanguardia `v` y murciélago `m`. El Rey Caído sigue en la `_combate`.
+- Sin enemigos nuevos.
+- **El Mimic** (Monsters Creatures Fantasy 2, cuadros de 146x146) se propuso y se descartó para el castillo, por coherencia con P33: es una criatura. Queda para más adelante, en la profundidad de las criaturas, y se decide en la ficha de esa zona. Lo que ya se sabe:
+  - los cofres de verdad de su zona usan también `cofre_madera.tscn`;
+  - trae cerrado, apertura, transformación, andar, mordisco, latigazo con la lengua (unas 3 piezas de alcance), daño y muerte;
+  - mide 31x20 px cerrado y unos 43x30 despierto, a escala 1.
+
+**Origen del arte:**
+- **craftpix dungeon objects:** ya está en el repo, con su `License.txt` (licencia de craftpix para juegos). Lo que se use vuelve de `archivo/sin_uso/` a `assets/terceros/` y se anota en su `ORIGEN.txt`.
+- **Raou `Tilesetv3.png`:** tablón, pared con pilastras y cuadro. Con el permiso informal de siempre.
+- **Cofre:** `Monsters Creatures Fantasy 2.zip` (Mimic). Va a `assets/terceros/monster_creatures_2/mimic/` y se anota en su `ORIGEN.txt`.
+- Sin pack nuevo ni IA.
+- **Licencias:** Raou y Monsters Creatures Fantasy 2 están por confirmar antes de publicar (ver "Otros pendientes" de `TASK.md`). Se usan igual, como en el calabozo. El estandarte de origen desconocido sale del castillo.
+- **Mirado en Descargas y descartado para el castillo:**
+  - el crusher de unTied Games (licencia para juegos con créditos), que pega más con la mazmorra o la ruina;
+  - `Monster_Creatures_Fantasy(Version 1.3)`, que solo trae `Attack3` de cada bicho.
+
+**Reto obligatorio:** coincide con su fila de P46, sección 10.
+- Llega con E1 (salto de unas 4,3 piezas) y sale por `[H2]` rodando, con Rodar del Rey Caído.
+- Ningún reto obligatorio pide E2 ni una mejora de la tienda.
+- Vestir no cambia celdas sólidas y las plataformas siguen siendo de una vía; se comprueba en el paso D.
 
 ### Cementerio
 - Parte de: tileset `cementerio`, parallax de `gothicvania_cementerio/fondo` (cielo, montes y cementerio). Vanguardia, murciélago, esqueleto de tumba; el Capitán.
