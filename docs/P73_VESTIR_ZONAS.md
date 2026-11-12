@@ -502,6 +502,47 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
   - arrancan sin errores el juego, la zona de pruebas y las `_combate` del calabozo, el castillo y el cementerio.
 - **Al vestir, mirar:** en la captura la pared `tierra` al 60 % se distingue poco de los bloques de tierra de la cripta. Si al jugar cuesta leer qué es suelo, se baja su brillo (por ejemplo, al 45 %) en `atlas_cementerio.py`.
 
+**Vestida (2026-11-12), falta jugarla a mano:**
+- `mapas_texto/tiles_cementerio.txt` pasa a `fondo: tierra`, con `fondo_sala` y `bloques_sala`, y se regeneró la base `escenas/mapas/tiles_cementerio.tscn`. La `_combate` no se tocó.
+- **Paredes:**
+
+  | Pared | Rectángulos (x0 y0 x1 y1) |
+  |---|---|
+  | `ninguno` (el parallax) | aire libre 0 0 119 26 y foso de pinchos 87 27 103 29 |
+  | `tierra` (el `fondo:`) | todo el subsuelo, más el túnel de `[H2]` (0 24 9 26) y la cueva de la estatua (111 12 118 17) |
+  | `ladrillo` | casa 51 21 63 26; cripta de la primera reina 62 29 74 34 y su nicho 67 35 69 37; antecripta 44 42 61 50; osario 62 38 100 50; antesala 56 80 70 86; cámara de la tumba real 24 76 54 86; panteón 88 76 117 86 |
+
+  - El túnel de `[H2]` y la cueva de la estatua van con tierra, aunque caen en el rectángulo del aire libre de la ficha, porque tienen techo. El rincón de la colina se abre al exterior y se queda con el cielo.
+  - Las puertas de la casa (columnas 50 y 64) dejan ver el cielo.
+- **Bloques `cripta`:** 0 28 119 89 (todo lo que queda bajo la fila del suelo), el túnel de `[H2]` (0 23 9 27), la cueva de la estatua (112 10 119 18) y el suelo de la casa (51 27 63 27). El foso de pinchos (86 28 104 30) vuelve a `cementerio`, para que los pilares no cambien de pieza a media altura. Las 54 piezas `=` de bajo tierra (de 74) son ahora la repisa de piedra.
+- **Pared `tierra` al 35 %:** al 60 % y al 45 %, en las capturas de la fosa y las catacumbas no se veía dónde acababa la pared y empezaban los lados y los techos de la cueva. `atlas_cementerio.py` tiene ahora su propio brillo (`EARTH_WALL_BRIGHTNESS`), y el ladrillo sigue al 60 %. En el atlas solo cambian sus piezas, (7,20)-(10,21).
+- **Decorados nuevos** (sitio de abajo a la izquierda):
+
+  | Letra | Sitios |
+  |---|---|
+  | `Q` lápida inclinada | (10, 26), en la boca del túnel |
+  | `K` cruz | (18, 26), junto a la lápida de la fogata |
+  | `D` árbol muerto | (24, 26), junto a la fosa |
+  | `O` arbusto con cruz | (79, 26), pasado el hueco al osario |
+  | `A` gárgola | tejado de la casa (50, 19) y (63, 19); mausoleo (73, 21) |
+  | `n` calaveras en la pared | osario (77, 49) y (94, 47); catacumba alta (68, 57); catacumba baja (78, 70), sobre los pinchos |
+  | `U` arco con calavera | catacumba alta (50, 60) y (102, 60); catacumba baja (20, 72); pozo del sello (17, 86) |
+  | `V` nicho con llama | cripta de la primera reina (70, 34); antesala (61, 86) y (66, 86), a los lados de la escalera; cámara de la tumba real (35, 86) y (42, 86), a los lados de la tumba; panteón (98, 86) |
+
+  - **Un solo árbol**, no 2 o 3: mide 11x8 y en el resto del exterior pisaría plataformas, la fogata, el cofre y el sello del panteón, o las lápidas de antes del foso.
+  - **Se quitaron o movieron:** el pasto y la zarza de (29, 26) y (30, 26), bajo el árbol (la zarza pasa a (12, 26)); el pasto de (11, 26), por la lápida inclinada; y las lápidas `T` de (79, 26) y (83, 26), por el arbusto.
+  - Cumplen la regla de la cabecera del `.txt`, comprobada con un script sobre el ASCII: ninguno pisa una escalera, sus columnas vecinas ni sus tres filas de encima, un spawn, un cofre, una moneda, una poción, otro decorado ni los objetos de la `_combate`. Solo las Vanguardias de (27, 26) y (82, 26) empiezan delante del árbol y del arbusto; son nodos que patrullan y se dibujan delante.
+- **Enemigos nuevos en el ASCII:**
+  - cuervos `o`: rincón de la colina (8, 13), sobre el tejado de la casa (57, 14) y junto al mausoleo (66, 19), lejos del foso de pinchos;
+  - ánimas `N`, en lugar de los murciélagos: catacumba baja (60, 69), panteón (96, 79) y pozo del sello (8, 80).
+
+  Quedan 4 Vanguardias, 13 esqueletos de tumba, 8 murciélagos, 3 cuervos y 3 ánimas. Prueba sin ventana con el Player en la P: a los 3 s los cuervos siguen en su sitio (se mecen 5,5 px) y las ánimas duermen (capa 0).
+- **Al jugarla, mirar:** el ánima del pozo del sello está a 3 piezas sobre el spawn `DesdeMinas`, así que despierta en cuanto se vuelve de las minas (antes, el murciélago estaba en el mismo sitio).
+- **Colisiones:** iguales antes y después, 4697 piezas sólidas y 74 de una vía, con los mismos polígonos y la misma marca de una vía, volcadas de las capas de la base con una escena temporal.
+- Arrancan sin errores la `_combate`, el juego y la zona de pruebas, y `verificar_mundo.py` da 0 errores. Capturas con el juego abierto de las 21 salas y del túnel. El Atlas se publicó de nuevo, con los nombres de las letras del cementerio, el cuervo y el ánima.
+- La luz ambiente de la `_combate`, (0.42, 0.46, 0.6), se queda hasta jugarla.
+- **Falta, antes de marcarla vestida en `TASK.md`:** jugarla a mano, con la fosa agrandada y sus oleadas (`TASK.md`, estructura del cementerio).
+
 ### Minas
 - Parte de: tileset `mazmorra` con `bloques: madera`, parallax de `pixelfantasy_caves`. Kolbos y murciélago; el Caballero y el Crystal Mauler.
 - Ficha: por armar.

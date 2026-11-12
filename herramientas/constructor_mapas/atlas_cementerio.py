@@ -46,6 +46,9 @@ LAYOUT = {
 EARTH = [(4, 5), (5, 5), (6, 5), (7, 5)]
 # Brillo de las paredes de fondo, como "libros" del castillo.
 WALL_BRIGHTNESS = 0.6
+# La pared "tierra" va más oscura: al vestir el cementerio, al 60 % no se
+# distinguía de los bloques "cripta", que usan la misma tierra (P73).
+EARTH_WALL_BRIGHTNESS = 0.35
 # Fachada con musgo de Gothic Horror: 7 x 3 piezas que se repiten sin costura
 # (de lado cada 7 columnas; en vertical, cada 16 px, la altura de dos hiladas).
 BRICK = (34, 8)
@@ -59,8 +62,8 @@ def place(atlas, piece, dest, dx=0, dy=0):
     atlas.alpha_composite(piece, (dest[0] * T + dx, dest[1] * T + dy))
 
 
-def dark(img):
-    rgb = ImageEnhance.Brightness(img.convert("RGB")).enhance(WALL_BRIGHTNESS)
+def dark(img, brightness=WALL_BRIGHTNESS):
+    rgb = ImageEnhance.Brightness(img.convert("RGB")).enhance(brightness)
     return rgb.convert("RGBA")
 
 
@@ -111,7 +114,7 @@ def main():
     for i, (sx, sy) in enumerate(EARTH):
         wall.alpha_composite(tile(cem, sx, sy), (i * T, 0))
         wall.alpha_composite(tile(old, i, 18), (i * T, T))
-    place(atlas, dark(wall), LAYOUT["tierra"][0])
+    place(atlas, dark(wall, EARTH_WALL_BRIGHTNESS), LAYOUT["tierra"][0])
 
     # Pared "ladrillo": la fachada con musgo de Gothic Horror, oscurecida.
     dest, (w, h) = LAYOUT["ladrillo"]

@@ -30,8 +30,8 @@ Solo se copió lo que usa el juego, sin cambiar el arte:
                   herramientas/constructor_mapas/atlas_cementerio.py, que
                   agranda el atlas a 512x512 sin tocar las filas 0-19:
                   juego de bloques "cripta" (tierra con calaveras sin pasto),
-                  repisa de piedra, paredes "tierra" y "ladrillo" (al 60 % de
-                  brillo) y los decorados cruz, lápida inclinada, árbol muerto,
+                  repisa de piedra, paredes "tierra" (al 35 % de brillo) y
+                  "ladrillo" (al 60 %) y los decorados cruz, lápida inclinada, árbol muerto,
                   arbusto, calaveras amontonadas, arco con calavera, gárgola,
                   calaveras en la pared y nicho con llama. Las piezas de
                   Gothic Horror salen de

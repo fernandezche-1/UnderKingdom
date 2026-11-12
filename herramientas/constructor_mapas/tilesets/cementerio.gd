@@ -81,7 +81,7 @@ const DATA := {
     "fondos": {
         "cueva": [Vector2i(24, 0), Vector2i(8, 4)],
         # P73: tierra con calaveras (lo excavado) y ladrillo con musgo de
-        # Gothic Horror (lo construido), al 60 % de brillo.
+        # Gothic Horror (lo construido), al 35 % y al 60 % de brillo.
         "tierra": [Vector2i(7, 20), Vector2i(4, 2)],
         "ladrillo": [Vector2i(11, 20), Vector2i(7, 3)],
     },
