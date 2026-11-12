@@ -16,6 +16,7 @@ mapas_texto/zona_pruebas_muestra_<tileset>.txt.
 Uso, desde la raíz del proyecto:
   python3 herramientas/zona_pruebas/galeria.py [cabecera.txt]
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_calabozo.txt
+  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_castillo.txt
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas.txt
 """
 import sys
@@ -687,6 +688,38 @@ def b_tileset_calabozo(c):
 room("D", "Calabozo", "TILESET CALABOZO",
      "TILESET CALABOZO (P73)\nBloques, viga (=), escalera, fondo y decorados del Dungeon Tile Set; "
      "antorcha de Raou. Las luces no se ven aquí (sin MapAmbience).", 26, b_tileset_calabozo)
+
+
+# Castillo (ficha de P73): techo a la izquierda con el estandarte (h), el
+# cuadro (Q) y el trofeo de cráneo de dragón (D) en la pared con pilastras;
+# dos tablones (=) a distinta altura, el de abajo con antorcha (t); en el suelo
+# el armero (A), el estante con provisiones (O), el cofre del Mimic (c), la
+# armadura (T), la estantería (E) y un barril (b), y la escalera (H) a una
+# repisa. A la derecha, arriba, aire para el cartel.
+MUESTRA_CASTILLO = [
+    "#############..............",
+    "#############..............",
+    "#############..............",
+    "#############..............",
+    "#############..............",
+    "...........................",
+    "..h............===.........",
+    ".....Q................H####",
+    "........D...........t.H....",
+    "..............=====...H....",
+    "......................H....",
+    ".A..O...c..T...E......H..b.",
+    "###########################",
+]
+
+
+def b_tileset_castillo(c):
+    return muestra_tileset(c, "castillo", MUESTRA_CASTILLO, "35_muestra_castillo", 13)
+
+
+room("D", "Castillo", "TILESET CASTILLO",
+     "TILESET CASTILLO (P73)\nPared con pilastras, tablón (=) y estandarte (h) de Raou y craftpix; "
+     "armero (A), trofeo (D), provisiones (O), cuadro (Q) y el cofre del Mimic (c).", 30, b_tileset_castillo)
 
 
 # ---------------------------------------------------------------- colocar

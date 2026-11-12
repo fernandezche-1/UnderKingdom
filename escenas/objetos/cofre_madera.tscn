@@ -1,0 +1,38 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/terceros/monster_creatures_2/mimic/Idle_closed.png" id="1_cerrado"]
+[ext_resource type="Texture2D" path="res://assets/terceros/monster_creatures_2/mimic/idle_open.png" id="2_abierto"]
+[ext_resource type="Script" path="res://scripts/environment/chest_interactable.gd" id="3_chest"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cerrado"]
+atlas = ExtResource("1_cerrado")
+region = Rect2(46, 63, 43, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_abierto"]
+atlas = ExtResource("2_abierto")
+region = Rect2(46, 63, 43, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cofre"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cerrado")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_abierto")
+}],
+"loop": false,
+"name": &"default",
+"speed": 1.0
+}]
+
+[node name="CofreMadera" type="AnimatedSprite2D"]
+offset = Vector2(-6, 0)
+sprite_frames = SubResource("SpriteFrames_cofre")
+script = ExtResource("3_chest")
+interaction_radius = 64.0
+coin_count = 3
+potion_count = 1
+
+[node name="LootSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(0, 0)

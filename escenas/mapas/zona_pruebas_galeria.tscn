@@ -31,6 +31,7 @@
 [ext_resource type="PackedScene" path="res://escenas/objetos/atuendo.tscn" id="32_atuendo"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/espada_oxidada.tscn" id="33_espada_oxidada"]
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_calabozo.tscn" id="34_muestra_calabozo"]
+[ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_castillo.tscn" id="35_muestra_castillo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_losa_medio"]
 atlas = ExtResource("8_tileset")
@@ -447,6 +448,9 @@ vertical_alignment = 1
 
 [node name="MuestraCalabozo" parent="Objetos" instance=ExtResource("34_muestra_calabozo")]
 position = Vector2(1776, 1392)
+
+[node name="MuestraCastillo" parent="Objetos" instance=ExtResource("35_muestra_castillo")]
+position = Vector2(1248, 1392)
 
 [node name="Carteles" type="Node2D" parent="."]
 
@@ -1048,6 +1052,37 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 text = "TILESET CALABOZO (P73)
 Bloques, viga (=), escalera, fondo y decorados del Dungeon Tile Set; antorcha de Raou. Las luces no se ven aquí (sin MapAmbience)."
+autowrap_mode = 3
+
+[node name="Zona23" type="Label" parent="Carteles"]
+offset_left = 1250.0
+offset_top = 1297.0
+offset_right = 1730.0
+offset_bottom = 1321.0
+theme_type_variation = &"Encabezado"
+text = "Castillo"
+
+[node name="Nombre23" type="Label" parent="Carteles"]
+offset_left = 1250.0
+offset_top = 1326.0
+offset_right = 1726.0
+offset_bottom = 1346.0
+theme_type_variation = &"TextoAcento"
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "TILESET CASTILLO"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Texto23" type="Label" parent="Carteles"]
+offset_left = 1460.0
+offset_top = 1394.0
+offset_right = 1724.0
+offset_bottom = 1470.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "TILESET CASTILLO (P73)
+Pared con pilastras, tablón (=) y estandarte (h) de Raou y craftpix; armero (A), trofeo (D), provisiones (O), cuadro (Q) y el cofre del Mimic (c)."
 autowrap_mode = 3
 
 [node name="Inicio" type="Label" parent="Carteles"]

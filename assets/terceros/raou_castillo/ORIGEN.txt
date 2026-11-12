@@ -31,6 +31,25 @@ arte):
   (196,56)-(220,86), con el hueco relleno de un solo color oscuro. Es la única
   pieza en la que se pintó algo.
 
+Filas 20-23 (P73, ficha del castillo): las arma
+herramientas/constructor_mapas/atlas_castillo.py, que deja las filas 0-19
+como están y rehace solo estas. Recortes sin repintar:
+- (0,20)-(2,20) tablón de las plataformas "=": Tilesetv3.png, piezas
+  (7,8)-(9,8).
+- (3,20)-(8,22) pared de fondo "castillo", 6x3: cinco veces la pared lisa
+  (12,14)-(12,16) de Tilesetv3.png y la pilastra (12,17)-(12,19).
+- (9,20) estandarte rojo 1x2 (h): craftpix Other_objects.png, píxeles
+  (225,64)-(240,83).
+- (10,20) armero 2x3 (A): craftpix supplies_objects.png, (64,472)-(96,505).
+- (12,20) cráneo de dragón 3x3 (D): craftpix Other_objects.png,
+  (7,5)-(41,48).
+- (15,20) estante con provisiones 2x3 (O): craftpix supplies_objects.png,
+  (146,10)-(175,55).
+- (17,20) cuadro 2x2 (Q): Tilesetv3.png, (51,690)-(76,717).
+El estandarte de (10,16), de dark_castle_tileset.png, ya no lo usa la letra
+h del castillo; sigue en el atlas mientras la base generada antes de P73 lo
+pinte (se quita al vestir el castillo).
+
 Licencias:
 - Tilesetv3.png es "Dark Dungeon - Side-Scroller Tileset" de Raou
   (https://raou.itch.io/dark-dun), gratis con pago voluntario. Sin licencia
@@ -39,3 +58,5 @@ Licencias:
   redistribuya. Antes de publicar el juego conviene pedirle la confirmación
   por escrito y no dejar sus PNG sueltos en un repositorio público.
 - dark_castle_tileset.png: pieza de Armando en la v4, origen sin anotar.
+- craftpix dungeon objects: licencia de craftpix, ver
+  assets/terceros/craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/.

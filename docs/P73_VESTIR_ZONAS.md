@@ -236,6 +236,41 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
 - Ningún reto obligatorio pide E2 ni una mejora de la tienda.
 - Vestir no cambia celdas sólidas y las plataformas siguen siendo de una vía; se comprueba en el paso D.
 
+**Piezas (hechas el 2026-11-11).** Decisiones aprobadas al pasar la ficha a piezas:
+- **Atlas:** `herramientas/constructor_mapas/atlas_castillo.py` rehace las filas 20-23 de `tileset_castillo.png` y deja las 0-19 como están, así que las escenas ya generadas se ven igual. `atlas_calabozo.py` copia ahora solo las filas 0-19 del castillo; su atlas sale igual píxel a píxel. Coordenadas en `assets/terceros/raou_castillo/ORIGEN.txt`.
+- **Tablón:** en `plataformas` (0,20). Lleva la misma colisión de una vía que las tiras de antes.
+- **Fondo `castillo`:** 6x3, con cinco columnas de la pared lisa de hoy y la pilastra de Raou (12,17)-(12,19).
+  - De lado se repite sin costura.
+  - En vertical la pilastra repite capitel y basa cada 3 filas, al mismo paso que la banda oscura que ya tenía la pared lisa.
+- **Tamaños** (el arte no cabía en 2x2 sin recortarlo):
+  - `A` armero con espadas, **2x3** (32x33 px);
+  - `D` cráneo de dragón, **3x3** (34x43);
+  - `O` estante estrecho con provisiones, **2x3** (29x45);
+  - `Q` el paisaje grande de Raou, **2x2** (25x27);
+  - `h` el estandarte rojo pequeño, 1x2 (15x19), pegado arriba.
+
+  `A` y `O` apoyan abajo; `D` y `Q` van centrados en su hueco.
+- **Cofre:** `escenas/objetos/cofre_madera.tscn`, con `Idle_closed` e `idle_open` del Mimic (`assets/terceros/monster_creatures_2/mimic/`).
+  - Los dos cuadros usan la misma región, 43x20, porque la tapa abierta cae a la izquierda; `offset.x = -6` centra el cuerpo del cofre en su pieza.
+  - No usa la animación `opening`: `chest_interactable.gd` pone el cuadro 1 al abrir.
+  - El constructor lo toma de la clave `cofre` del tileset, y el calabozo sigue con `cofre.tscn`.
+- **Letras** `A`, `D`, `O` y `Q`: en `COLORS`, la paleta y LEYENDA (sección 5). Solo el tileset `castillo` las dibuja.
+- **La zona de pruebas** usa el tileset `castillo`, así que ya lleva el tablón, la pared con pilastras y el estandarte nuevo.
+  - Las colisiones salen iguales.
+  - Solo cambia el cuarto nuevo de la galería: x 78-107, filas 86-98.
+- **Probado** en el piso D de la galería ("TILESET CASTILLO"):
+  - captura con el juego abierto, con el cofre cerrado y abierto;
+  - prueba sin ventana:
+    - 96 bloques macizos y 8 piezas de tablón de una vía;
+    - el Player se apoya en el tablón y en el suelo;
+    - los decorados en su sitio;
+    - el cofre abre y suelta 3 monedas y 1 poción.
+- **Al vestir:**
+  - la cabecera del `.txt` no cambia (`tileset`, `bloques` y `fondo: castillo`);
+  - se colocan `A`, `D`, `O` y `Q`, cada uno con su tamaño de arriba;
+  - se aparta la antorcha de (59, 18), que tapa el cofre;
+  - el estandarte viejo de (10,16) sale del atlas.
+
 ### Cementerio
 - Parte de: tileset `cementerio`, parallax de `gothicvania_cementerio/fondo` (cielo, montes y cementerio). Vanguardia, murciélago, esqueleto de tumba; el Capitán.
   - Pendiente de P34, sección 5: el cielo se ve también dentro de las cuevas, porque cada mapa tiene un solo parallax.

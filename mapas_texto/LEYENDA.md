@@ -136,6 +136,10 @@ El mapa original no se toca. El PNG es un punto de partida: faltan las salidas, 
 | `T` | #206020 | 32, 96, 32 | árbol (2x3 piezas) |
 | `E` | #604080 | 96, 64, 128 | estantería (3x3 piezas) |
 | `C` | #e0e0a0 | 224, 224, 160 | tienda de campaña (3x2 piezas) |
+| `A` | #7090b0 | 112, 144, 176 | armero (solo tileset `castillo`, 2x3 piezas) |
+| `D` | #f0f0f0 | 240, 240, 240 | trofeo de cráneo de dragón (solo `castillo`, 3x3 piezas) |
+| `O` | #90a040 | 144, 160, 64 | estante con provisiones (solo `castillo`, 2x3 piezas) |
+| `Q` | #d0a070 | 208, 160, 112 | cuadro (solo `castillo`, 2x2 piezas) |
 
 ## 6. Si me pasan un boceto en vez del PNG
 Una foto de papel cuadriculado o una captura de un juego de referencia también sirve. Conviene que traiga:
@@ -160,6 +164,8 @@ Con eso se pasa a PNG, se genera el nivel y se revisa jugando.
    Si el paquete no trae ese juego de 4x4, se arma un atlas nuevo copiando sus piezas, sin dibujar arte nuevo; mejor con un script que lo rehaga, como `herramientas/constructor_mapas/atlas_calabozo.py`.
 
    Si las plataformas `=` no deben ser la fila de tiras del juego de bloques (una viga fina, por ejemplo), el tileset añade `"plataformas": Vector2i(x, y)`: sus tres piezas en fila (izquierda, medio, derecha) llevan la colisión de una vía aunque sus esquinas no sean opacas.
+
+   Si el tema pide otro cofre, el tileset añade `"cofre": "res://escenas/objetos/<cofre>.tscn"` (una escena con `chest_interactable.gd`, como `cofre_madera.tscn` del castillo); sin esa clave, `c` pone `cofre.tscn`. Las letras de decorado que un tileset no define no dibujan nada.
 5. **Probarlo** en el piso D de la galería de la zona de pruebas: un cuarto en `herramientas/zona_pruebas/galeria.py` con su muestra (`muestra_tileset`), que se genera con la opción `muestra: si`.
 6. **Letras y colores nuevos:** si trae decorados o enemigos sin letra, se agregan a `COLORS` / `ENEMIES` del constructor. Después se regenera la paleta (`-- --paleta`) y se actualiza la tabla de la sección 5.
 7. **Enemigos:** escena con `enemy_base.gd` y sus valores (cuadros de golpe, hitbox, `collision_layer = 5`), siguiendo el patrón de `kolbo` y `mino`. Se prueban en la zona de pruebas (`zona_pruebas_combate.tscn`).

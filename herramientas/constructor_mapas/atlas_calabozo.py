@@ -1,9 +1,11 @@
 """Arma el atlas del tileset "calabozo" (P73, ficha del calabozo).
 
 assets/terceros/dungeon_tile_set/tileset_calabozo.png, 512x384, piezas de 16:
-- filas 0-19: copia de assets/terceros/raou_castillo/tileset_castillo.png
-  (atlas de mazmorra en 0-15 y piezas de Raou en 16-19: rejas, estantería,
-  armadura, pared "castillo"), para que las letras sigan valiendo;
+- filas 0-19: copia de las filas 0-19 de
+  assets/terceros/raou_castillo/tileset_castillo.png (atlas de mazmorra en
+  0-15 y piezas de Raou en 16-19: rejas, estantería, armadura, pared
+  "castillo"), para que las letras sigan valiendo; las 20-23 del castillo, que
+  arma atlas_castillo.py, no se copian;
 - filas 20-23: piezas del Dungeon Tile Set (el pack de la prisión) y la
   antorcha de Raou, recortadas sin repintar. Coordenadas en LAYOUT, abajo;
   herramientas/constructor_mapas/tilesets/calabozo.gd las usa.
@@ -47,11 +49,11 @@ def place(atlas, piece, dest, dx=0, dy=0):
 
 
 def main():
-    atlas = Image.open(CASTILLO).convert("RGBA")
-    assert atlas.size == (512, 384), atlas.size
-    for y in range(20 * T, atlas.height):
-        for x in range(atlas.width):
-            assert atlas.getpixel((x, y))[3] == 0, "las filas 20-23 del castillo no están vacías"
+    castillo = Image.open(CASTILLO).convert("RGBA")
+    assert castillo.size == (512, 384), castillo.size
+    # Solo las filas 0-19: las 20-23 del castillo son suyas (atlas_castillo.py).
+    atlas = Image.new("RGBA", castillo.size)
+    atlas.paste(castillo.crop((0, 0, castillo.width, 20 * T)), (0, 0))
     dts = Image.open(DTS).convert("RGBA")
     torch = Image.open(TORCH).convert("RGBA")
 

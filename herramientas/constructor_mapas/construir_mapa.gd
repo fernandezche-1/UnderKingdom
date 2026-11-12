@@ -67,6 +67,10 @@ const COLORS := {
     "T": ["206020", "árbol (2x3)"],
     "E": ["604080", "estantería (3x3)"],
     "C": ["e0e0a0", "tienda de campaña (3x2)"],
+    "A": ["7090b0", "armero (castillo, 2x3)"],
+    "D": ["f0f0f0", "trofeo de cráneo (castillo, 3x3)"],
+    "O": ["90a040", "estante con provisiones (castillo, 2x3)"],
+    "Q": ["d0a070", "cuadro (castillo, 2x2)"],
 }
 
 const PLAYER_SCENE := "res://escenas/player.tscn"
@@ -661,7 +665,8 @@ func _build(text_path: String) -> String:
                     var checkpoint: Node2D = _instance(_group(sistemas, "Checkpoints"), CHECKPOINT_SCENE, "Checkpoint")
                     checkpoint.position = Vector2((x + 0.5) * T, (y + 1) * T - player_feet)
                 "c":
-                    var chest: Node2D = _instance(_group(root, "Objetos"), CHEST_SCENE, "Cofre")
+                    # El tileset puede traer su cofre ("cofre"); si no, el de siempre.
+                    var chest: Node2D = _instance(_group(root, "Objetos"), String(_ts.get("cofre", CHEST_SCENE)), "Cofre")
                     chest.position = Vector2((x + 0.5) * T, (y + 1) * T - _sprite_half_height(chest))
                     chest.set("coin_count", int(options.cofre_monedas))
                     chest.set("potion_count", int(options.cofre_pociones))

@@ -1,7 +1,11 @@
 Monsters Creatures Fantasy 2 (carpeta de Documentos/RecursosUnderKingdom).
 El paquete no trae archivo de licencia: confirmarla antes de publicar.
 
-Se copiaron sin cambios Bat, Rat y Slime. Mimic y el resto no se usan.
+Se copiaron sin cambios Bat, Rat y Slime, y de Mimic solo Idle_closed.png e
+idle_open.png (iguales a los del ZIP de Descargas). El resto del Mimic queda
+para cuando entre como enemigo (P73, ficha del castillo).
 - rat/    enemigos/rata.tscn (cuadros de 70x70)
 - slime/  enemigos/slime.tscn (cuadros de 156x156)
 - bat/    enemigos/murcielago_grande.tscn (cuadros de 87x87; fall y fly-to-fall sin usar)
+- mimic/  objetos/cofre_madera.tscn, el cofre del castillo (cuadros de 146x146;
+          el cofre ocupa la región (46,63) de 43x20 en los dos)

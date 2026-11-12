@@ -6,6 +6,11 @@ Licencia: ver License.txt, readme.txt
 Aquí solo está lo que usa el juego:
 - archivo/tiles_v1/escenas/tiles_castillo.tscn
 - escenas/objetos/objeto_lore.tscn
+- herramientas/constructor_mapas/atlas_castillo.py (P73, castillo): copia al
+  atlas del castillo el estandarte rojo pequeño y el cráneo de dragón de
+  Other_objects.png y el armero con espadas y el estante con provisiones de
+  supplies_objects.png (coordenadas en
+  assets/terceros/raou_castillo/ORIGEN.txt).
 
 El resto del pack se apartó sin borrar nada:
 - archivo/sin_uso/assets/craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/

@@ -2,10 +2,15 @@ extends RefCounted
 
 ## Tileset del castillo: el atlas de mazmorra (filas 0-15, sin cambios) más
 ## piezas del muro de ladrillo de Raou y decorados de castillo en las filas
-## 16-19, ver assets/terceros/raou_castillo/ORIGEN.txt. Mismas letras que
-## mazmorra; cambian el bloque "castillo", la pared de fondo "castillo" y los
-## decorados T (armadura), h (estandarte), g (cadena), r (ventana), C (puerta
-## en arco), E (estantería) y f (rejas de celda, en vez de la fogata). Coordenadas en piezas, no en píxeles.
+## 16-19 y, desde P73 (ficha del castillo), las piezas de las filas 20-23 que
+## arma herramientas/constructor_mapas/atlas_castillo.py; ver
+## assets/terceros/raou_castillo/ORIGEN.txt. Mismas letras que mazmorra;
+## cambian el bloque "castillo", la pared de fondo "castillo" (con pilastras),
+## las plataformas (tablón de madera), el cofre (el del Mimic) y los decorados
+## T (armadura), h (estandarte rojo), g (cadena), r (ventana), C (puerta en
+## arco), E (estantería) y f (rejas de celda, en vez de la fogata). Letras
+## propias: A (armero), D (trofeo), O (provisiones) y Q (cuadro). Coordenadas
+## en piezas, no en píxeles.
 
 const DATA := {
     "textura": "res://assets/terceros/raou_castillo/tileset_castillo.png",
@@ -28,6 +33,14 @@ const DATA := {
     },
     "bloques_por_defecto": "castillo",
 
+    # Plataformas de una vía (=): el tablón de madera de Raou (izquierda,
+    # medio, derecha). No tiene las esquinas opacas; el constructor le da la
+    # colisión de una vía sin mirarlas.
+    "plataformas": Vector2i(0, 20),
+
+    # Cofre (c): el del Mimic, para que el Mimic de más abajo sorprenda.
+    "cofre": "res://escenas/objetos/cofre_madera.tscn",
+
     # Decorados: letra -> [pieza de abajo a la izquierda, tamaño en piezas].
     "decorados": {
         "t": [Vector2i(0, 10), Vector2i(1, 1)],    # antorcha (animada)
@@ -35,11 +48,15 @@ const DATA := {
         "b": [Vector2i(29, 9), Vector2i(1, 1)],    # barril
         "x": [Vector2i(26, 10), Vector2i(1, 1)],   # caja
         "T": [Vector2i(8, 17), Vector2i(2, 2)],    # armadura
-        "h": [Vector2i(10, 17), Vector2i(1, 2)],   # estandarte (cuelga del techo)
+        "h": [Vector2i(9, 21), Vector2i(1, 2)],    # estandarte rojo de craftpix (cuelga del techo)
         "g": [Vector2i(11, 17), Vector2i(1, 2)],   # cadena (cuelga del techo)
         "r": [Vector2i(19, 17), Vector2i(2, 2)],   # ventana en arco
         "C": [Vector2i(13, 18), Vector2i(2, 3)],   # puerta en arco
         "E": [Vector2i(15, 17), Vector2i(2, 2)],   # estantería
+        "A": [Vector2i(10, 22), Vector2i(2, 3)],   # armero con espadas (craftpix)
+        "D": [Vector2i(12, 22), Vector2i(3, 3)],   # trofeo: cráneo de dragón (craftpix)
+        "O": [Vector2i(15, 22), Vector2i(2, 3)],   # estante con provisiones (craftpix)
+        "Q": [Vector2i(17, 21), Vector2i(2, 2)],   # cuadro (Raou)
     },
 
     # Piezas animadas: base -> [cuadros, columnas (0 = en fila), fps].
@@ -62,6 +79,7 @@ const DATA := {
     # Fondos de pared: nombre -> [origen del patrón, tamaño del patrón].
     "fondos": {
         "cueva": [Vector2i(24, 0), Vector2i(8, 4)],
-        "castillo": [Vector2i(4, 16), Vector2i(1, 3)],
+        # Pared de Raou con una pilastra cada 6 columnas.
+        "castillo": [Vector2i(3, 20), Vector2i(6, 3)],
     },
 }
