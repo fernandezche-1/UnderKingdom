@@ -19,4 +19,4 @@ bloques: oliva
 fondo: ninguno
 parallax: assets_prueba/gothicvania/castillo_viejo/fondo.png 0.2
 siguiente: res://archivo/tiles_v1/escenas/tiles_ruina_combate.tscn
-anterior: res://escenas/mapas/tiles_mineria.tscn
+anterior: res://escenas/mapas/tiles_mineria_combate.tscn

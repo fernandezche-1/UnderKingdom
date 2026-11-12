@@ -1,0 +1,265 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://escenas/mapas/tiles_mineria.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/combat/boss_arena.gd" id="2_sala"]
+[ext_resource type="PackedScene" path="res://escenas/jefes/caballero_reina.tscn" id="3_caballero"]
+[ext_resource type="PackedScene" path="res://escenas/items/llave_jefe_m1.tscn" id="4_llave"]
+[ext_resource type="Script" path="res://scripts/environment/arena_barrier.gd" id="5_barrera"]
+[ext_resource type="Script" path="res://scripts/environment/locked_door.gd" id="6_puerta_llave"]
+[ext_resource type="Texture2D" path="res://assets/terceros/dungeon_platformer/dungeontilesetfull.png" id="7_tileset"]
+[ext_resource type="Script" path="res://scripts/environment/map_ambience.gd" id="8_ambiente"]
+[ext_resource type="PackedScene" path="res://escenas/jefes/crystal_mauler.tscn" id="9_mauler"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/fuego_infernal.tscn" id="10_fuego"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/map_transition.tscn" id="11_transicion"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/spawn_point.tscn" id="12_spawn"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/palanca.tscn" id="13_palanca"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/ascensor.tscn" id="14_ascensor"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna_tope"]
+atlas = ExtResource("7_tileset")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna_medio"]
+atlas = ExtResource("7_tileset")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna_base"]
+atlas = ExtResource("7_tileset")
+region = Rect2(48, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_losa_izq"]
+atlas = ExtResource("7_tileset")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_losa_medio"]
+atlas = ExtResource("7_tileset")
+region = Rect2(16, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_losa_der"]
+atlas = ExtResource("7_tileset")
+region = Rect2(32, 48, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_activador_caballero"]
+size = Vector2(368, 176)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_puerta_entrada"]
+size = Vector2(16, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_puerta_l4"]
+size = Vector2(16, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trampilla"]
+size = Vector2(48, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_activador_mauler"]
+size = Vector2(48, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_salida_s3"]
+size = Vector2(48, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_salida_d"]
+size = Vector2(48, 16)
+
+[node name="TilesMineriaCombate" instance=ExtResource("1_base")]
+
+[node name="SalaCaballero" type="Node2D" parent="SistemasMapa"]
+script = ExtResource("2_sala")
+encounter_id = "minas_caballero"
+boss_scene = ExtResource("3_caballero")
+key_scene = ExtResource("4_llave")
+key_id = "minas_caballero"
+ability_reward = "combo_3"
+boss_message = "CABALLERO DE LA REINA"
+
+[node name="Activador" type="Area2D" parent="SistemasMapa/SalaCaballero"]
+position = Vector2(312, 1304)
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaCaballero/Activador"]
+shape = SubResource("RectangleShape2D_activador_caballero")
+
+[node name="Puertas" type="Node2D" parent="SistemasMapa/SalaCaballero"]
+
+[node name="PuertaEntrada" type="StaticBody2D" parent="SistemasMapa/SalaCaballero/Puertas"]
+position = Vector2(568, 1352)
+script = ExtResource("5_barrera")
+piece_start = SubResource("AtlasTexture_columna_tope")
+piece_middle = SubResource("AtlasTexture_columna_medio")
+piece_end = SubResource("AtlasTexture_columna_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaCaballero/Puertas/PuertaEntrada"]
+shape = SubResource("RectangleShape2D_puerta_entrada")
+disabled = true
+
+[node name="PuntosJefe" type="Node2D" parent="SistemasMapa/SalaCaballero"]
+
+[node name="JefeOeste" type="Marker2D" parent="SistemasMapa/SalaCaballero/PuntosJefe"]
+position = Vector2(120, 1326)
+
+[node name="JefeEste" type="Marker2D" parent="SistemasMapa/SalaCaballero/PuntosJefe"]
+position = Vector2(504, 1326)
+
+[node name="PuntoLlave" type="Marker2D" parent="SistemasMapa/SalaCaballero"]
+position = Vector2(312, 1360)
+
+[node name="UI" type="CanvasLayer" parent="SistemasMapa/SalaCaballero"]
+layer = 9
+
+[node name="Aviso" type="Label" parent="SistemasMapa/SalaCaballero/UI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_type_variation = &"Encabezado"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PuertaL4" type="StaticBody2D" parent="SistemasMapa"]
+position = Vector2(456, 1080)
+script = ExtResource("6_puerta_llave")
+piece_start = SubResource("AtlasTexture_columna_tope")
+piece_middle = SubResource("AtlasTexture_columna_medio")
+piece_end = SubResource("AtlasTexture_columna_base")
+key_id = "minas_caballero"
+locked_message = "NECESITAS LA LLAVE DEL CABALLERO"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/PuertaL4"]
+shape = SubResource("RectangleShape2D_puerta_l4")
+
+[node name="TrampillaAtajo" type="StaticBody2D" parent="SistemasMapa"]
+position = Vector2(776, 664)
+script = ExtResource("5_barrera")
+piece_start = SubResource("AtlasTexture_losa_izq")
+piece_middle = SubResource("AtlasTexture_losa_medio")
+piece_end = SubResource("AtlasTexture_losa_der")
+start_closed = true
+open_on_encounter = "minas_atajo_interno"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/TrampillaAtajo"]
+shape = SubResource("RectangleShape2D_trampilla")
+
+[node name="RejaD" type="StaticBody2D" parent="SistemasMapa"]
+position = Vector2(2128, 1400)
+script = ExtResource("5_barrera")
+piece_start = SubResource("AtlasTexture_losa_izq")
+piece_middle = SubResource("AtlasTexture_losa_medio")
+piece_end = SubResource("AtlasTexture_losa_der")
+start_closed = true
+open_on_encounter = "ruina_atajo_d_abierto"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/RejaD"]
+shape = SubResource("RectangleShape2D_trampilla")
+
+[node name="FuegoInfernal" parent="SistemasMapa" instance=ExtResource("10_fuego")]
+position = Vector2(2128, 880)
+width_tiles = 9
+
+[node name="SalaMauler" type="Node2D" parent="SistemasMapa"]
+script = ExtResource("2_sala")
+encounter_id = "minas_mauler"
+boss_scene = ExtResource("9_mauler")
+ability_reward = "adrenaline"
+boss_message = "CRYSTAL MAULER"
+
+[node name="Activador" type="Area2D" parent="SistemasMapa/SalaMauler"]
+position = Vector2(2328, 1216)
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaMauler/Activador"]
+shape = SubResource("RectangleShape2D_activador_mauler")
+
+[node name="Puertas" type="Node2D" parent="SistemasMapa/SalaMauler"]
+
+[node name="TrampillaEntrada" type="StaticBody2D" parent="SistemasMapa/SalaMauler/Puertas"]
+position = Vector2(2328, 1016)
+script = ExtResource("5_barrera")
+piece_start = SubResource("AtlasTexture_losa_izq")
+piece_middle = SubResource("AtlasTexture_losa_medio")
+piece_end = SubResource("AtlasTexture_losa_der")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaMauler/Puertas/TrampillaEntrada"]
+shape = SubResource("RectangleShape2D_trampilla")
+disabled = true
+
+[node name="Atajos" type="Node2D" parent="SistemasMapa/SalaMauler"]
+
+[node name="TrampillaSuelo" type="StaticBody2D" parent="SistemasMapa/SalaMauler/Atajos"]
+position = Vector2(2224, 1256)
+script = ExtResource("5_barrera")
+piece_start = SubResource("AtlasTexture_losa_izq")
+piece_middle = SubResource("AtlasTexture_losa_medio")
+piece_end = SubResource("AtlasTexture_losa_der")
+start_closed = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaMauler/Atajos/TrampillaSuelo"]
+shape = SubResource("RectangleShape2D_trampilla")
+
+[node name="PuntosJefe" type="Node2D" parent="SistemasMapa/SalaMauler"]
+
+[node name="JefeOeste" type="Marker2D" parent="SistemasMapa/SalaMauler/PuntosJefe"]
+position = Vector2(2152, 1182)
+
+[node name="PuntoLlave" type="Marker2D" parent="SistemasMapa/SalaMauler"]
+position = Vector2(2200, 1216)
+
+[node name="UI" type="CanvasLayer" parent="SistemasMapa/SalaMauler"]
+layer = 9
+
+[node name="Aviso" type="Label" parent="SistemasMapa/SalaMauler/UI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_type_variation = &"Encabezado"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SalidaS3" parent="SistemasMapa/Transiciones" instance=ExtResource("11_transicion")]
+position = Vector2(1720, 16)
+target_scene_path = "res://escenas/mapas/tiles_cementerio_combate.tscn"
+target_spawn_id = &"DesdeMinas"
+
+[node name="CollisionShape2D" parent="SistemasMapa/Transiciones/SalidaS3" index="0"]
+shape = SubResource("RectangleShape2D_salida_s3")
+
+[node name="SalidaD" parent="SistemasMapa/Transiciones" instance=ExtResource("11_transicion")]
+position = Vector2(2128, 1432)
+target_scene_path = "res://escenas/mapas/tiles_ruina_combate.tscn"
+target_spawn_id = &"DesdeMinas"
+
+[node name="CollisionShape2D" parent="SistemasMapa/Transiciones/SalidaD" index="0"]
+shape = SubResource("RectangleShape2D_salida_d")
+
+[node name="DesdeCementerio" parent="SistemasMapa" instance=ExtResource("12_spawn")]
+position = Vector2(1672, 257)
+spawn_id = &"DesdeCementerio"
+
+[node name="DesdeRuina" parent="SistemasMapa" instance=ExtResource("12_spawn")]
+position = Vector2(2104, 1329)
+spawn_id = &"DesdeRuina"
+
+[node name="PalancaC" parent="Objetos" instance=ExtResource("13_palanca")]
+position = Vector2(192, 624)
+encounter_id = "minas_atajo_c_abierto"
+
+[node name="PalancaAtajo" parent="Objetos" instance=ExtResource("13_palanca")]
+position = Vector2(720, 1360)
+encounter_id = "minas_atajo_interno"
+
+[node name="AscensorC" parent="Objetos" instance=ExtResource("14_ascensor")]
+position = Vector2(344, 656)
+target_scene_path = "res://escenas/mapas/tiles_castillo_combate.tscn"
+target_spawn_id = &"DesdeMinas"
+arrival_spawn_id = &"DesdeCastillo"
+requires_encounter = "minas_atajo_c_abierto"
+prompt_text = "E  Subir"
+
+[node name="Ambientacion" type="Node2D" parent="."]
+script = ExtResource("8_ambiente")
+ambient_color = Color(0.3, 0.28, 0.36, 1)
+player_light_radius = 112
+vignette_strength = 0.6
