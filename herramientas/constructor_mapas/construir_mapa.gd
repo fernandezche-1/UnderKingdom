@@ -71,6 +71,13 @@ const COLORS := {
     "D": ["f0f0f0", "trofeo de cráneo (castillo, 3x3)"],
     "O": ["90a040", "estante con provisiones (castillo, 2x3)"],
     "Q": ["d0a070", "cuadro (castillo, 2x2)"],
+    "w": ["a0c0e0", "ventana de celosía (castillo, 3x3)"],
+    "K": ["8080a0", "columna alta (castillo, 2x7)"],
+    "U": ["b06080", "tapiz (castillo, 2x3)"],
+    "l": ["805030", "estantería alta (castillo, 2x3)"],
+    "n": ["a07040", "mesa con frascos (castillo, 2x1)"],
+    "y": ["ffe060", "lámpara colgante (castillo, 1x1)"],
+    "V": ["60a0a0", "mostrador con frascos (castillo, 2x2)"],
 }
 
 const PLAYER_SCENE := "res://escenas/player.tscn"
@@ -160,7 +167,12 @@ func _read_map_file(text_path: String, options: Dictionary) -> String:
                 in_map = true
             elif clean != "" and not clean.begins_with(";") and ":" in clean:
                 var parts := clean.split(":", true, 1)
-                options[parts[0].strip_edges()] = parts[1].strip_edges()
+                var key := parts[0].strip_edges()
+                if key == "fondo_sala":
+                    # Se puede repetir: una línea por sala.
+                    (options.fondo_sala as Array).append(parts[1].strip_edges())
+                else:
+                    options[key] = parts[1].strip_edges()
         elif line.strip_edges() != "":
             _grid.append(line.rstrip(" \t"))
     return ""
@@ -502,7 +514,7 @@ func _build(text_path: String) -> String:
     var options := {
         "tileset": "mazmorra", "bloques": "", "fondo": "cueva", "escena": "", "imagen": "",
         "siguiente": "", "anterior": "", "cofre_monedas": "3", "cofre_pociones": "1", "parallax": "",
-        "depuracion": "no", "jugador": PLAYER_SCENE, "muestra": "no",
+        "depuracion": "no", "jugador": PLAYER_SCENE, "muestra": "no", "fondo_sala": [],
     }
     var error := _read_map_file(text_path, options)
     if error != "":
@@ -526,6 +538,20 @@ func _build(text_path: String) -> String:
         return "bloques: '%s' no existe. Opciones: %s" % [options.bloques, ", ".join(_ts.bloques.keys())]
     if options.fondo != "ninguno" and not _ts.fondos.has(options.fondo):
         return "fondo: '%s' no existe. Opciones: ninguno, %s" % [options.fondo, ", ".join(_ts.fondos.keys())]
+    # fondo_sala: "<fondo> <x0> <y0> <x1> <y1>", un rectángulo de piezas (con
+    # los bordes) que lleva otro fondo; si dos se pisan, gana el de más abajo.
+    # "ninguno" deja esas celdas sin pared, para ver el parallax.
+    var rooms: Array = []
+    for spec: String in options.fondo_sala:
+        var words := spec.split(" ", false)
+        var numbers_ok := words.size() == 5
+        for i in range(1, words.size()):
+            numbers_ok = numbers_ok and words[i].is_valid_int()
+        if not numbers_ok:
+            return "fondo_sala: se escribe \"<fondo> <x0> <y0> <x1> <y1>\", no '%s'." % spec
+        if words[0] != "ninguno" and not _ts.fondos.has(words[0]):
+            return "fondo_sala: '%s' no existe. Opciones: ninguno, %s" % [words[0], ", ".join(_ts.fondos.keys())]
+        rooms.append([words[0], Rect2i(Vector2i(int(words[1]), int(words[2])), Vector2i(int(words[3]) - int(words[1]) + 1, int(words[4]) - int(words[2]) + 1))])
     var out_path: String = options.escena
     if not out_path.begins_with("res://escenas/mapas/") or not out_path.ends_with(".tscn"):
         return "escena: debe ser res://escenas/mapas/<nombre>.tscn"
@@ -562,7 +588,8 @@ func _build(text_path: String) -> String:
         if not ResourceLoader.exists(image_path):
             return "parallax: no existe la imagen %s" % image_path
         parallax_layers.append([image_path, float(words[-1]), scale])
-    if not parallax_layers.is_empty() and options.fondo != "ninguno":
+    var some_sky := rooms.any(func(room: Array) -> bool: return room[0] == "ninguno")
+    if not parallax_layers.is_empty() and options.fondo != "ninguno" and not some_sky:
         print("CONSTRUCTOR: aviso, el fondo '%s' tapa el parallax; usa \"fondo: ninguno\" para verlo." % options.fondo)
 
     var tex: Texture2D = load(_ts.textura)
@@ -620,11 +647,19 @@ func _build(text_path: String) -> String:
     var spawn := Vector2(-1, -1)
     var counts := {}
 
-    if options.fondo != "ninguno":
-        var pattern_base: Vector2i = _ts.fondos[options.fondo][0]
-        var pattern_size: Vector2i = _ts.fondos[options.fondo][1]
+    if options.fondo != "ninguno" or not rooms.is_empty():
         for y in _h:
             for x in _w:
+                var wall: String = options.fondo
+                for room: Array in rooms:
+                    if (room[1] as Rect2i).has_point(Vector2i(x, y)):
+                        wall = room[0]
+                if wall == "ninguno":
+                    continue
+                # El patrón cuenta desde la esquina del mapa, así una sala
+                # partida en dos rectángulos casa sin costura.
+                var pattern_base: Vector2i = _ts.fondos[wall][0]
+                var pattern_size: Vector2i = _ts.fondos[wall][1]
                 fondo.set_cell(Vector2i(x, y), 0, pattern_base + Vector2i(x % pattern_size.x, y % pattern_size.y))
 
     for y in _h:

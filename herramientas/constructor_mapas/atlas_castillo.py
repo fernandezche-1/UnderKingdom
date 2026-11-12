@@ -6,9 +6,10 @@ assets/terceros/raou_castillo/tileset_castillo.png, 512x384, piezas de 16:
   usan el atlas se ven igual. Solo se borra el estandarte viejo de
   (10,16)-(10,17), de origen sin anotar, que la letra h ya no usa desde que
   se vistió el castillo;
-- filas 20-23: se borran y se vuelven a poner con las piezas de LAYOUT,
+- filas 20-31: se borran y se vuelven a poner con las piezas de LAYOUT,
   recortadas de Tilesetv3.png de Raou y del pack de craftpix sin repintar.
-  herramientas/constructor_mapas/tilesets/castillo.gd las usa.
+  herramientas/constructor_mapas/tilesets/castillo.gd las usa. Las 24-31
+  (paredes de fondo de cada sala) agrandaron el atlas de 512x384 a 512x512.
 
 Se puede correr las veces que haga falta: el resultado es el mismo.
 atlas_calabozo.py toma solo las filas 0-19 de este atlas.
@@ -18,7 +19,7 @@ Uso, desde la raíz del proyecto:
 """
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageEnhance
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "assets/terceros/raou_castillo/tileset_castillo.png"
@@ -40,7 +41,47 @@ LAYOUT = {
     "trofeo": ((12, 20), (3, 3)),
     "provisiones": ((15, 20), (2, 3)),
     "cuadro": ((17, 20), (2, 2)),
+    # Paredes de fondo de las salas (fondo_sala), filas 24-31.
+    "piedra_oscura": ((0, 24), (3, 3)),
+    "piedra": ((3, 24), (3, 3)),
+    "piedra_clara": ((6, 24), (3, 3)),
+    "madera": ((9, 24), (3, 3)),
+    "madera_oscura": ((12, 24), (3, 3)),
+    "columnas": ((15, 24), (3, 3)),
+    "marco": ((18, 24), (3, 3)),
+    "arcada": ((21, 24), (6, 8)),
+    "ladrillo": ((27, 24), (3, 3)),
+    "libros": ((0, 27), (3, 3)),
+    # Decorados de la ficha revisada (Raou), filas 24-31.
+    "celosia": ((3, 27), (3, 3)),
+    "tapiz": ((6, 27), (2, 3)),
+    "estanteria": ((8, 27), (2, 3)),
+    "mostrador": ((10, 27), (2, 2)),
+    "mesa": ((12, 27), (2, 1)),
+    "lampara": ((14, 27), (1, 1)),
+    "columna": ((30, 24), (2, 7)),
 }
+
+# De dónde sale cada pared en Tilesetv3.png (pieza de arriba a la izquierda).
+# Se repiten sin costura de lado y en vertical cada 3 filas (la arcada, cada 8).
+WALLS = {
+    "piedra_oscura": (11, 20),   # bloques de piedra, los más oscuros
+    "piedra": (8, 20),           # bloques de piedra medios
+    "piedra_clara": (5, 20),     # bloques de piedra claros
+    "madera": (8, 17),           # ladrillo con postes y baranda de madera
+    "madera_oscura": (14, 17),   # la misma, más oscura
+    "columnas": (5, 17),         # ladrillo con una columna de piedra
+    "marco": (8, 14),            # ladrillo con marco de piedra clara
+    "arcada": (10, 28),          # dos pisos de arcos
+    "ladrillo": (5, 14),         # ladrillo claro con juntas verticales
+}
+# Pared de la biblioteca: la estantería alta (0,34)-(1,36) sobre la madera
+# oscura, con el brillo bajado para que no se confunda con los tablones.
+BOOKS_WALL = (14, 17)
+BOOKCASE = (0, 34)
+BOOKS_BRIGHTNESS = 0.6
+# Fondo de los huecos transparentes de la arcada (el negro de sus bandas).
+ARCH_DARK = (6, 6, 6, 255)
 
 
 def tile(img, tx, ty, w=1, h=1):
@@ -64,10 +105,11 @@ def fit(atlas, img, region, name, align):
 
 
 def main():
-    atlas = Image.open(OUT).convert("RGBA")
-    assert atlas.size == (512, 384), atlas.size
-    # Borra las filas 20-23 para rehacerlas.
-    atlas.paste(Image.new("RGBA", (atlas.width, atlas.height - FIRST_ROW * T)), (0, FIRST_ROW * T))
+    old = Image.open(OUT).convert("RGBA")
+    assert old.width == 512 and old.height in (384, 512), old.size
+    # Filas 0-19 tal cual; las 20-31 se rehacen.
+    atlas = Image.new("RGBA", (512, 512))
+    atlas.paste(old.crop((0, 0, 512, FIRST_ROW * T)), (0, 0))
     # Borra el estandarte viejo (P73, castillo vestido).
     (bx, by), (bw, bh) = OLD_BANNER
     atlas.paste(Image.new("RGBA", (bw * T, bh * T)), (bx * T, by * T))
@@ -91,6 +133,29 @@ def main():
     fit(atlas, other, (7, 5, 41, 48), "trofeo", "centro")                     # cráneo de dragón, 34x43
     fit(atlas, supplies, (146, 10, 175, 55), "provisiones", "abajo")          # estante, 29x45
     fit(atlas, raou, (51, 690, 76, 717), "cuadro", "centro")                  # paisaje, 25x27
+
+    # Paredes de fondo de las salas, opacas (la arcada tiene los arcos huecos).
+    for name, (sx, sy) in WALLS.items():
+        dest, (w, h) = LAYOUT[name]
+        wall = Image.new("RGBA", (w * T, h * T), ARCH_DARK)
+        wall.alpha_composite(tile(raou, sx, sy, w, h))
+        place(atlas, wall, dest)
+    dest, (w, h) = LAYOUT["libros"]
+    wall = Image.new("RGBA", (w * T, h * T), ARCH_DARK)
+    wall.alpha_composite(tile(raou, *BOOKS_WALL, w, h))
+    wall.alpha_composite(tile(raou, *BOOKCASE, 2, 3))
+    rgb = ImageEnhance.Brightness(wall.convert("RGB")).enhance(BOOKS_BRIGHTNESS)
+    wall = rgb.convert("RGBA")
+    place(atlas, wall, dest)
+
+    # Decorados de la ficha revisada, de Tilesetv3.png (píxeles), sin repintar.
+    fit(atlas, raou, (208, 624, 256, 672), "celosia", "centro")     # ventana de celosía, 38x41
+    fit(atlas, raou, (80, 416, 112, 464), "tapiz", "centro")        # tapiz, 32x48
+    fit(atlas, raou, (0, 544, 32, 592), "estanteria", "abajo")      # estantería alta, 26x48
+    fit(atlas, raou, (128, 592, 160, 624), "mostrador", "abajo")    # mostrador con frascos, 26x21
+    fit(atlas, raou, (32, 608, 64, 624), "mesa", "abajo")           # mesa con frascos, 24x16
+    fit(atlas, raou, (32, 560, 48, 576), "lampara", "arriba")       # lámpara colgante
+    fit(atlas, raou, (80, 32, 112, 144), "columna", "abajo")        # columna alta, 32x109
 
     atlas.save(OUT)
     print("atlas:", OUT.relative_to(ROOT), atlas.size)

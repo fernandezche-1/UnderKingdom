@@ -50,9 +50,10 @@ def place(atlas, piece, dest, dx=0, dy=0):
 
 def main():
     castillo = Image.open(CASTILLO).convert("RGBA")
-    assert castillo.size == (512, 384), castillo.size
-    # Solo las filas 0-19: las 20-23 del castillo son suyas (atlas_castillo.py).
-    atlas = Image.new("RGBA", castillo.size)
+    assert castillo.width == 512 and castillo.height >= 384, castillo.size
+    # Solo las filas 0-19: las 20 en adelante del castillo son suyas
+    # (atlas_castillo.py). El atlas del calabozo sigue midiendo 512x384.
+    atlas = Image.new("RGBA", (512, 384))
     atlas.paste(castillo.crop((0, 0, castillo.width, 20 * T)), (0, 0))
     dts = Image.open(DTS).convert("RGBA")
     torch = Image.open(TORCH).convert("RGBA")

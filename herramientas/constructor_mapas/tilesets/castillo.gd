@@ -9,8 +9,10 @@ extends RefCounted
 ## las plataformas (tablón de madera), el cofre (el del Mimic) y los decorados
 ## T (armadura), h (estandarte rojo), g (cadena), r (ventana), C (puerta en
 ## arco), E (estantería) y f (rejas de celda, en vez de la fogata). Letras
-## propias: A (armero), D (trofeo), O (provisiones) y Q (cuadro). Coordenadas
-## en piezas, no en píxeles.
+## propias: A (armero), D (trofeo), O (provisiones) y Q (cuadro); y, desde la
+## ficha revisada, w (ventana de celosía), K (columna), U (tapiz), l
+## (estantería alta), n (mesa), y (lámpara) y V (mostrador), más una pared por
+## sala para fondo_sala. Coordenadas en piezas, no en píxeles.
 
 const DATA := {
     "textura": "res://assets/terceros/raou_castillo/tileset_castillo.png",
@@ -57,6 +59,14 @@ const DATA := {
         "D": [Vector2i(12, 22), Vector2i(3, 3)],   # trofeo: cráneo de dragón (craftpix)
         "O": [Vector2i(15, 22), Vector2i(2, 3)],   # estante con provisiones (craftpix)
         "Q": [Vector2i(17, 21), Vector2i(2, 2)],   # cuadro (Raou)
+        # Ficha revisada (P73): decorados de Raou para que cada sala se note.
+        "w": [Vector2i(3, 29), Vector2i(3, 3)],    # ventana de celosía (vidriera de la capilla)
+        "K": [Vector2i(30, 30), Vector2i(2, 7)],   # columna alta
+        "U": [Vector2i(6, 29), Vector2i(2, 3)],    # tapiz
+        "l": [Vector2i(8, 29), Vector2i(2, 3)],    # estantería alta
+        "n": [Vector2i(12, 27), Vector2i(2, 1)],   # mesa con frascos
+        "y": [Vector2i(14, 27), Vector2i(1, 1)],   # lámpara (cuelga del techo)
+        "V": [Vector2i(10, 28), Vector2i(2, 2)],   # mostrador con frascos
     },
 
     # Piezas animadas: base -> [cuadros, columnas (0 = en fila), fps].
@@ -81,5 +91,16 @@ const DATA := {
         "cueva": [Vector2i(24, 0), Vector2i(8, 4)],
         # Pared de Raou con una pilastra cada 6 columnas.
         "castillo": [Vector2i(3, 20), Vector2i(6, 3)],
+        # Paredes de cada sala (fondo_sala), de Raou; las arma atlas_castillo.py.
+        "piedra_oscura": [Vector2i(0, 24), Vector2i(3, 3)],
+        "piedra": [Vector2i(3, 24), Vector2i(3, 3)],
+        "piedra_clara": [Vector2i(6, 24), Vector2i(3, 3)],
+        "madera": [Vector2i(9, 24), Vector2i(3, 3)],
+        "madera_oscura": [Vector2i(12, 24), Vector2i(3, 3)],
+        "columnas": [Vector2i(15, 24), Vector2i(3, 3)],
+        "marco": [Vector2i(18, 24), Vector2i(3, 3)],
+        "arcada": [Vector2i(21, 24), Vector2i(6, 8)],
+        "ladrillo": [Vector2i(27, 24), Vector2i(3, 3)],
+        "libros": [Vector2i(0, 27), Vector2i(3, 3)],
     },
 }

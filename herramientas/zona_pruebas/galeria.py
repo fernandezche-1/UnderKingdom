@@ -17,6 +17,7 @@ Uso, desde la raíz del proyecto:
   python3 herramientas/zona_pruebas/galeria.py [cabecera.txt]
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_calabozo.txt
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_castillo.txt
+  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_castillo_salas.txt
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas.txt
 """
 import sys
@@ -648,13 +649,15 @@ room("C", "Infierno", "ARENA CON OLEADAS",
 MUESTRAS = []
 
 
-def muestra_tileset(c, tileset, filas, ext_id, label_from):
+def muestra_tileset(c, tileset, filas, ext_id, label_from, sufijo="", cabecera=""):
+    """sufijo: para una segunda muestra del mismo tileset; cabecera: líneas
+    más para su .txt (por ejemplo fondo_sala)."""
     assert c.dir == -1 and len(filas) == c.F - c.techo, (tileset, len(filas))
     assert all(len(f) == c.W - 3 for f in filas), tileset
-    nombre = f"zona_pruebas_muestra_{tileset}"
-    MUESTRAS.append((tileset, nombre, filas, ext_id))
+    nombre = f"zona_pruebas_muestra_{tileset}{sufijo}"
+    MUESTRAS.append((tileset, nombre, filas, ext_id, cabecera))
     node(f'''
-[node name="Muestra{tileset.capitalize()}" parent="Objetos" instance=ExtResource("{ext_id}")]
+[node name="Muestra{(tileset + sufijo).title().replace('_', '')}" parent="Objetos" instance=ExtResource("{ext_id}")]
 position = Vector2({c.x0 * T}, {(c.techo + 1) * T})''')
     return {"label_from": c.x0 + label_from}
 
@@ -722,6 +725,47 @@ room("D", "Castillo", "TILESET CASTILLO",
      "armero (A), trofeo (D), provisiones (O), cuadro (Q) y el cofre del Mimic (c).", 30, b_tileset_castillo)
 
 
+# Castillo, ficha revisada (P73): una pared por sala con fondo_sala, de
+# izquierda a derecha libros (biblioteca), arcada (gran salón), piedra clara
+# (capilla), madera oscura (aposentos) y columnas (trono); y los decorados
+# nuevos: lámparas (y) colgadas del techo, tapiz (U), ventana de celosía (w),
+# columna alta (K), estantería alta (l), mesas (n) y mostrador (V), con dos
+# tablones (=) delante de las paredes. A la derecha, arriba, aire para el cartel.
+MUESTRA_CASTILLO_SALAS = [
+    "...y.............y...............",
+    ".................................",
+    ".................................",
+    ".................................",
+    "........U........................",
+    "...............w.................",
+    ".......................=====.....",
+    ".====............................",
+    ".................................",
+    ".................................",
+    "............................U....",
+    ".l..n......K.........V...n.......",
+    "#################################",
+]
+FONDOS_CASTILLO_SALAS = (
+    "fondo_sala: libros 0 0 6 12\n"
+    "fondo_sala: arcada 7 0 13 12\n"
+    "fondo_sala: piedra_clara 14 0 19 12\n"
+    "fondo_sala: madera_oscura 20 0 25 12\n"
+    "fondo_sala: columnas 26 0 32 12\n"
+)
+
+
+def b_castillo_salas(c):
+    return muestra_tileset(c, "castillo", MUESTRA_CASTILLO_SALAS, "36_muestra_castillo_salas", 20,
+                           sufijo="_salas", cabecera=FONDOS_CASTILLO_SALAS)
+
+
+room("D", "Castillo", "CASTILLO, SALAS",
+     "CASTILLO, SALAS (P73)\nUna pared por sala (fondo_sala): libros, arcada, piedra clara, madera oscura "
+     "y columnas; lámpara (y), tapiz (U), celosía (w), columna (K), estantería (l), mesa (n) y mostrador (V).",
+     36, b_castillo_salas)
+
+
 # ---------------------------------------------------------------- colocar
 def add_label(name, x, y, w, h, text, variation=None, align=0, header=False):
     carteles.append((name, x, y, w, h, text, variation, align, header))
@@ -776,12 +820,12 @@ for r in range(ROWS):
 mapa = "\n".join("".join(row) for row in g)
 header = Path(sys.argv[1]).read_text(encoding="utf-8") if len(sys.argv) > 1 else head + "\n"
 TXT.write_text(header + "---\n" + mapa + "\n", encoding="utf-8")
-for tileset, nombre, filas, _ in MUESTRAS:
+for tileset, nombre, filas, _, cabecera in MUESTRAS:
     (ROOT / f"mapas_texto/{nombre}.txt").write_text(
         f"; Muestra del tileset {tileset} para la galería de la zona de pruebas (P73).\n"
         "; La escribe herramientas/zona_pruebas/galeria.py: no se edita a mano.\n"
         f"escena: res://escenas/mapas/{nombre}.tscn\n"
-        f"tileset: {tileset}\nbloques: {tileset}\nfondo: {tileset}\nmuestra: si\n---\n"
+        f"tileset: {tileset}\nbloques: {tileset}\nfondo: {tileset}\n{cabecera}muestra: si\n---\n"
         + "\n".join(filas) + "\n", encoding="utf-8")
 
 # ---------------------------------------------------------------- salida .tscn
@@ -817,7 +861,7 @@ ext = '''[ext_resource type="PackedScene" path="res://escenas/enemigos/rata.tscn
 [ext_resource type="PackedScene" path="res://escenas/objetos/espada_oxidada.tscn" id="33_espada_oxidada"]
 ''' + "".join(
     f'[ext_resource type="PackedScene" path="res://escenas/mapas/{nombre}.tscn" id="{ext_id}"]\n'
-    for _, nombre, _, ext_id in MUESTRAS)
+    for _, nombre, _, ext_id, _ in MUESTRAS)
 sub = '''[sub_resource type="AtlasTexture" id="AtlasTexture_losa_medio"]
 atlas = ExtResource("8_tileset")
 region = Rect2(16, 304, 16, 16)

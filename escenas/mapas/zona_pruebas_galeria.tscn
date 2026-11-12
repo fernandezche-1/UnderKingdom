@@ -32,6 +32,7 @@
 [ext_resource type="PackedScene" path="res://escenas/objetos/espada_oxidada.tscn" id="33_espada_oxidada"]
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_calabozo.tscn" id="34_muestra_calabozo"]
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_castillo.tscn" id="35_muestra_castillo"]
+[ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_castillo_salas.tscn" id="36_muestra_castillo_salas"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_losa_medio"]
 atlas = ExtResource("8_tileset")
@@ -451,6 +452,9 @@ position = Vector2(1776, 1392)
 
 [node name="MuestraCastillo" parent="Objetos" instance=ExtResource("35_muestra_castillo")]
 position = Vector2(1248, 1392)
+
+[node name="MuestraCastilloSalas" parent="Objetos" instance=ExtResource("36_muestra_castillo_salas")]
+position = Vector2(656, 1392)
 
 [node name="Carteles" type="Node2D" parent="."]
 
@@ -1083,6 +1087,29 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 text = "TILESET CASTILLO (P73)
 Pared con pilastras, tablón (=) y estandarte (h) de Raou y craftpix; armero (A), trofeo (D), provisiones (O), cuadro (Q) y el cofre del Mimic (c)."
+autowrap_mode = 3
+
+[node name="Nombre24" type="Label" parent="Carteles"]
+offset_left = 658.0
+offset_top = 1326.0
+offset_right = 1230.0
+offset_bottom = 1346.0
+theme_type_variation = &"TextoAcento"
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "CASTILLO, SALAS"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Texto24" type="Label" parent="Carteles"]
+offset_left = 980.0
+offset_top = 1394.0
+offset_right = 1228.0
+offset_bottom = 1470.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "CASTILLO, SALAS (P73)
+Una pared por sala (fondo_sala): libros, arcada, piedra clara, madera oscura y columnas; lámpara (y), tapiz (U), celosía (w), columna (K), estantería (l), mesa (n) y mostrador (V)."
 autowrap_mode = 3
 
 [node name="Inicio" type="Label" parent="Carteles"]

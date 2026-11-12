@@ -329,6 +329,23 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
   El armario, los pergaminos y el escudo redondo de Raou se miraron y se dejan fuera.
 - Las reglas de siempre: ninguna celda sólida cambia y ningún reto obligatorio cambia.
 
+**Piezas de la revisión (hechas el 2026-11-11):**
+- **Constructor:** `fondo_sala` en `construir_mapa.gd`, documentado en LEYENDA (sección 3). Sin esa opción genera lo mismo que antes. Las letras `w`, `K`, `U`, `l`, `n`, `y` y `V` van en `COLORS`, la paleta y LEYENDA (sección 5).
+- **Atlas** (`atlas_castillo.py`, 512x512):
+  - paredes en (0,24)-(29,26), más `libros` en (0,27) y la `arcada` 6x8 en (21,24);
+  - decorados: `w` en (3,27), `U` (6,27), `l` (8,27), `V` (10,27), `n` (12,27), `y` (14,27) y `K` (30,24).
+
+  Los huecos de los arcos de la arcada se rellenan con su negro (6, 6, 6), para que la pared sea opaca.
+- **Las escenas que ya usan el atlas** no cambian en sus capas. Al regenerarlas solo cambia el TileSet incrustado, que trae las piezas nuevas (comprobado en las muestras del castillo y del calabozo).
+- **Galería:** cuarto "CASTILLO, SALAS" en el piso D (x 41-76, filas 86-98), con la muestra `zona_pruebas_muestra_castillo_salas`:
+  - cinco paredes una al lado de la otra (libros, arcada, piedra clara, madera oscura y columnas), con los siete decorados y dos tablones;
+  - `galeria.py` aprendió a escribir una segunda muestra del mismo tileset (`sufijo`) con líneas de cabecera (`cabecera`).
+
+  La zona de pruebas se regeneró: sus colisiones solo cambian en el cuarto nuevo.
+- **Probado:**
+  - captura del cuarto;
+  - prueba sin ventana: las 5 paredes con su patrón, los 7 decorados en su pieza del atlas y con arte, el suelo macizo y los 9 tablones de una vía.
+
 ### Cementerio
 - Parte de: tileset `cementerio`, parallax de `gothicvania_cementerio/fondo` (cielo, montes y cementerio). Vanguardia, murciélago, esqueleto de tumba; el Capitán.
   - Pendiente de P34, sección 5: el cielo se ve también dentro de las cuevas, porque cada mapa tiene un solo parallax.
