@@ -196,7 +196,7 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
 - [x] **Calabozo:** cinco rejas, las dos cinemáticas y sus puntos, enemigos y carcelero, espada y preso, pared agrietada, depósito del alcaide con el acta y la empuñadura, trampilla, transición y spawn de `:B:`. Base generada y `_combate` montada (2026-11-10, `escenas/mapas/tiles_calabozo_combate.tscn`); la salida de la prisión ya apunta a la `_combate`.
   - La reja del depósito pide la llave `mazmorra_alcaide`: la mazmorra la da con ese id y añade su nombre a `KEY_NAMES` (`pause_menu_overlay.gd`).
   - Sin pieza de arcón: el acta y la empuñadura están sueltas en el suelo, en (14, 26) y (15, 26). Las marcas del secreto usan `dialogues/lore_marcas_preso.json` (texto provisional).
-  - `SalidaAtajoB` apunta a `tiles_mazmorra_combate.tscn#DesdeCalabozo`, aún sin generar; se crea al montar la mazmorra. `[L1]` apunta a `tiles_castillo_combate.tscn#SpawnInicio`.
+  - `SalidaAtajoB` apunta a `tiles_mazmorra_combate.tscn#DesdeCalabozo` (montada el 2026-11-15). `[L1]` apunta a `tiles_castillo_combate.tscn#SpawnInicio`.
 - [x] **Castillo:**
   - el Rey con `ability_reward` de Rodar, la reja de `[H2]`, las trampillas y la trampilla de `:C:`;
   - los aposentos de la Reina y el castillo sin hechizo (soldados NPC y el Capitán).
@@ -231,12 +231,35 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
   - La llave (`llave_jefe_m1.tscn`) se dibuja a escala 1.5, no entera: queda pendiente.
   - `[L4]` (`siguiente:`) iba a la mazmorra de v1; desde el 2026-11-15 va a la base nueva (`siguiente:` de `tiles_mineria.txt` y `target_scene_path` de `tiles_mineria.tscn`, sin regenerar: `escenas/mapas/tiles_mazmorra.tscn#DesdeAnterior`) y, al montar su `_combate`, pasa a `tiles_mazmorra_combate.tscn`.
   - El fuego infernal (x 133-141, fila 55) salió del ASCII: la `F` del constructor es la trampa de fuego normal, que quema también con E5. Va en la `_combate` (`fuego_infernal.tscn`, `width_tiles` 9). Ojo al hacer las profundidades: su santuario lo marca igual con `F`.
-- [ ] **Mazmorra:**
+- [x] **Mazmorra:**
   - la Reina con `ability_reward` del Ultimate y sin llave, el suelo que se hunde y el derrumbe, la compuerta y la palanca del atajo, la trampilla del colector y la transición de `[!5]`;
   - la palanca, la transición y el spawn de `:B:` (el calabozo sale a `#DesdeCalabozo` y espera llegar a `#DesdeMazmorra`), y la llave del alcaide (`mazmorra_alcaide`);
   - la trampilla, la transición y el spawn del pozo de los condenados (`:F:`).
-  - Base generada (2026-11-15, `escenas/mapas/tiles_mazmorra.tscn`, desde `mapas_texto/tiles_mazmorra.txt`): 20 enemigos (5 Aprendis, 2 mino, 7 kolbo3 y 6 esqueletos), 18 pinchos, 3 cofres, 14 monedas, 3 pociones y 2 checkpoints. Falta la `_combate` (parte 2). Hasta entonces, `[L4]` de las minas va a la base (`#DesdeAnterior`, el spawn de la `<`) y la salida anterior de la ruina de v1 (`anterior:` de `archivo/tiles_v1/mapas_texto/tiles_ruina.txt` y `SalidaAnterior1` de `tiles_ruina.tscn`, sin regenerar) también, con `#DesdeRuina`: se llega al `SpawnInicio` hasta montar la `_combate`. Al montarla, las dos pasan a `tiles_mazmorra_combate.tscn`. `SalidaAtajoB` del calabozo ya apunta a `tiles_mazmorra_combate.tscn#DesdeCalabozo`.
+  - Base generada y `_combate` montada (2026-11-15, `escenas/mapas/tiles_mazmorra_combate.tscn`): 20 enemigos (5 Aprendis, 2 mino, 7 kolbo3 y 6 esqueletos), 18 pinchos, 3 cofres, 14 monedas, 3 pociones y 2 checkpoints en la base.
+  - Salidas que llegan a la `_combate`:
+    - `[L4]` de las minas (`siguiente:` de `tiles_mineria.txt` y `target_scene_path` de `tiles_mineria.tscn`, sin regenerar), a `#DesdeAnterior`, el spawn de la `<`;
+    - la salida anterior de la ruina de v1 (`anterior:` de `archivo/tiles_v1/mapas_texto/tiles_ruina.txt` y `SalidaAnterior1` de `tiles_ruina.tscn`), a `#DesdeRuina`;
+    - `SalidaAtajoB` del calabozo, a `#DesdeCalabozo`.
   - La `<` de `[L4]` la pone el constructor y va a `tiles_mineria_combate.tscn#DesdeSiguiente`; la cabecera no tiene `siguiente:` (`[!5]` sale por abajo, en la `_combate`).
+  - Suelo de la sala de la Reina: `collapse_sequence.gd` pone su propio suelo y no quita celdas de `Terreno`. Por eso la fila 75, x 8-22, del `.txt` pasó de bloque a hueco y la base se regeneró; solo hay 15 celdas sólidas menos y las plataformas no cambian.
+  - `SalaReina` (`boss_arena.gd`, `encounter_id` `mazmorra_reina`, el que escucha el castillo sin hechizo; `ability_reward ultimate`, sin llave):
+    - activador en el suelo, x 4-26, filas 69-74;
+    - `TrampillaEntrada` (x 14-16, fila 57) en `Puertas`;
+    - la Reina sale en (6, 74) o (24, 74);
+    - `PuntoLlave` en (19, 74), solo para la reliquia, que cae sobre el suelo que se hunde.
+  - `Derrumbe` (`collapse_sequence.gd`, `collapse_id` `mazmorra_derrumbe`):
+    - suelo de 15 piezas en x 8-22, fila 75;
+    - espera a que se recoja el Ultimate y sella `TrampillaEntrada`;
+    - 7 escombros en la huida, de x 44 a x 112;
+    - `FinHuida`, en x 115-117, filas 87-88, marca `mazmorra_derrumbe_huida`;
+    - `CheckpointFosa` en (25, 86), para no reaparecer en la antesala sin camino.
+  - Atajos:
+    - interno: `Compuerta` (columna 37, filas 51-56), que abre `PalancaCompuerta` (34, 56) (`mazmorra_atajo_interno`);
+    - colector: `TrampillaColector` (x 85-87, fila 69), que abre `PalancaColector` (84, 83), desde la huida (`mazmorra_colector`).
+  - `:B:`: `PalancaB` (67, 21) (`mazmorra_atajo_b_abierto`), `LlaveAlcaide` (`llave_jefe_m1.tscn`, `key_id` `mazmorra_alcaide`) en (73, 21), `SalidaB` (x 70-72, filas 0-1) a `tiles_calabozo_combate.tscn#DesdeMazmorra` y spawn `DesdeCalabozo` en (69, 21). La llave aparece en el menú de pausa (`KEY_NAMES`).
+  - `[!5]`: `Salida5` (x 115-117, fila 89) y spawn `DesdeRuina` en (113, 87). **Va por ahora a la ruina de v1** (`archivo/tiles_v1/escenas/tiles_ruina_combate.tscn#DesdeAnterior`); al generar la ruina pasa a `tiles_ruina_combate.tscn#DesdeMazmorra`.
+  - `:F:`: `TrampillaF` (x 88-90, fila 84) escucha `mazmorra_atajo_f_abierto`: **la palanca de las profundidades, en (23, 25), lleva ese `encounter_id`**. `SalidaF` (fila 89) ya apunta a `tiles_profundidades_combate.tscn#DesdeMazmorra`, aún sin generar; spawn `DesdeProfundidades` en (92, 83).
+  - Rejas y losas con piezas del atlas `dungeontilesetfull.png` (las de v1). La llave se dibuja a escala 1.5, como la de las minas, y el suelo que se hunde y los escombros son provisionales (P64).
 - [ ] **Ruina:**
   - el Guardián, la reja de salida en `Atajos`, el hielo de `[P6]` y la llama eterna, la luz de la parte oscura;
   - la palanca y la reja de `:D:`, las trampillas del atajo y de `:E:`, y las transiciones de `[!5]`, `:D:`, `[P6]` y `:E:`;

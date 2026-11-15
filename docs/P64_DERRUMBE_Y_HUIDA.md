@@ -56,8 +56,8 @@ Hijo `Escombros`: un `Marker2D` por sitio de caída, a la altura del suelo donde
 ## 6. Cómo se monta en la Fase 3
 
 - Sala de la Reina: nodo `Derrumbe` en x 8, fila 75 (15 piezas, `floor_width_tiles` 15), `trigger_encounter` = el de la `BossArena`, `wait_for_ability` `ultimate`, `sealed_barriers` = `TrampillaEntrada`, `exit_area_path` = zona sobre `[!5]` (x 115-117, filas 87-89). `Escombros` en los fosos y escalones de la huida (x 27-118).
-- **El suelo del ASCII es bloque (P46).** El suelo de esta pieza es un cuerpo aparte, así que en el nivel generado hay que dejar libres esas 15 celdas (o quitarlas de la capa `Terreno` al montar la `_combate`) y rellenarlas con la pieza. Es cambio de la Fase 3, y las colisiones validadas de la mazmorra no se tocan hasta entonces.
-- **Punto de reaparición:** con la trampilla sellada, un checkpoint en la fosa evita que morir en la huida deje al Player en la antesala sin camino. Se coloca en la Fase 3.
+- **El suelo de esta pieza es un cuerpo aparte:** no quita celdas de `Terreno`, así que en el ASCII esas 15 celdas van vacías y la pieza las tapa. Hecho en la Fase 3 (2026-11-15): la fila 75, x 8-22, de `tiles_mazmorra.txt` pasó de bloque a hueco y la base se regeneró con solo esas 15 celdas sólidas de menos.
+- **Punto de reaparición:** con la trampilla sellada, un checkpoint en la fosa evita que morir en la huida deje al Player en la antesala sin camino. Colocado en la Fase 3 (`CheckpointFosa`, en (25, 86), el borde este de la fosa); el primer escombro queda a más de `rubble_range` de él.
 
 ## 7. Pendiente
 

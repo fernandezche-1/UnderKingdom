@@ -1,0 +1,248 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://escenas/mapas/tiles_mazmorra.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/combat/boss_arena.gd" id="2_sala"]
+[ext_resource type="PackedScene" path="res://escenas/jefes/reina_jefe.tscn" id="3_reina"]
+[ext_resource type="Script" path="res://scripts/environment/arena_barrier.gd" id="4_barrera"]
+[ext_resource type="Texture2D" path="res://assets/terceros/dungeon_platformer/dungeontilesetfull.png" id="5_tileset"]
+[ext_resource type="Script" path="res://scripts/environment/collapse_sequence.gd" id="6_derrumbe"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/checkpoint.tscn" id="7_checkpoint"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/map_transition.tscn" id="8_transicion"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/spawn_point.tscn" id="9_spawn"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/palanca.tscn" id="10_palanca"]
+[ext_resource type="PackedScene" path="res://escenas/items/llave_jefe_m1.tscn" id="11_llave"]
+[ext_resource type="Script" path="res://scripts/environment/map_ambience.gd" id="12_ambiente"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna_tope"]
+atlas = ExtResource("5_tileset")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna_medio"]
+atlas = ExtResource("5_tileset")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna_base"]
+atlas = ExtResource("5_tileset")
+region = Rect2(48, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_losa_izq"]
+atlas = ExtResource("5_tileset")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_losa_medio"]
+atlas = ExtResource("5_tileset")
+region = Rect2(16, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_losa_der"]
+atlas = ExtResource("5_tileset")
+region = Rect2(32, 48, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_activador_reina"]
+size = Vector2(368, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trampilla"]
+size = Vector2(48, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_compuerta"]
+size = Vector2(16, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fin_huida"]
+size = Vector2(48, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_salida_b"]
+size = Vector2(48, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_salida_suelo"]
+size = Vector2(48, 16)
+
+[node name="TilesMazmorraCombate" instance=ExtResource("1_base")]
+
+[node name="SalaReina" type="Node2D" parent="SistemasMapa"]
+script = ExtResource("2_sala")
+encounter_id = "mazmorra_reina"
+boss_scene = ExtResource("3_reina")
+ability_reward = "ultimate"
+boss_message = "LA REINA"
+
+[node name="Activador" type="Area2D" parent="SistemasMapa/SalaReina"]
+position = Vector2(248, 1152)
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaReina/Activador"]
+shape = SubResource("RectangleShape2D_activador_reina")
+
+[node name="Puertas" type="Node2D" parent="SistemasMapa/SalaReina"]
+
+[node name="TrampillaEntrada" type="StaticBody2D" parent="SistemasMapa/SalaReina/Puertas"]
+position = Vector2(248, 920)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_losa_izq")
+piece_middle = SubResource("AtlasTexture_losa_medio")
+piece_end = SubResource("AtlasTexture_losa_der")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaReina/Puertas/TrampillaEntrada"]
+shape = SubResource("RectangleShape2D_trampilla")
+disabled = true
+
+[node name="PuntosJefe" type="Node2D" parent="SistemasMapa/SalaReina"]
+
+[node name="JefeOeste" type="Marker2D" parent="SistemasMapa/SalaReina/PuntosJefe"]
+position = Vector2(104, 1136)
+
+[node name="JefeEste" type="Marker2D" parent="SistemasMapa/SalaReina/PuntosJefe"]
+position = Vector2(392, 1136)
+
+[node name="PuntoLlave" type="Marker2D" parent="SistemasMapa/SalaReina"]
+position = Vector2(312, 1168)
+
+[node name="UI" type="CanvasLayer" parent="SistemasMapa/SalaReina"]
+layer = 9
+
+[node name="Aviso" type="Label" parent="SistemasMapa/SalaReina/UI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_type_variation = &"Encabezado"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Derrumbe" type="Node2D" parent="SistemasMapa"]
+position = Vector2(128, 1200)
+script = ExtResource("6_derrumbe")
+trigger_encounter = "mazmorra_reina"
+wait_for_ability = "ultimate"
+collapse_id = "mazmorra_derrumbe"
+sealed_barriers = Array[NodePath]([NodePath("../SalaReina/Puertas/TrampillaEntrada")])
+exit_area_path = NodePath("../FinHuida")
+
+[node name="Escombros" type="Node2D" parent="SistemasMapa/Derrumbe"]
+
+[node name="Escombro1" type="Marker2D" parent="SistemasMapa/Derrumbe/Escombros"]
+position = Vector2(584, 144)
+
+[node name="Escombro2" type="Marker2D" parent="SistemasMapa/Derrumbe/Escombros"]
+position = Vector2(760, 96)
+
+[node name="Escombro3" type="Marker2D" parent="SistemasMapa/Derrumbe/Escombros"]
+position = Vector2(936, 96)
+
+[node name="Escombro4" type="Marker2D" parent="SistemasMapa/Derrumbe/Escombros"]
+position = Vector2(1096, 144)
+
+[node name="Escombro5" type="Marker2D" parent="SistemasMapa/Derrumbe/Escombros"]
+position = Vector2(1336, 144)
+
+[node name="Escombro6" type="Marker2D" parent="SistemasMapa/Derrumbe/Escombros"]
+position = Vector2(1448, 160)
+
+[node name="Escombro7" type="Marker2D" parent="SistemasMapa/Derrumbe/Escombros"]
+position = Vector2(1672, 208)
+
+[node name="FinHuida" type="Area2D" parent="SistemasMapa"]
+position = Vector2(1880, 1408)
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/FinHuida"]
+shape = SubResource("RectangleShape2D_fin_huida")
+
+[node name="CheckpointFosa" parent="SistemasMapa/Checkpoints" instance=ExtResource("7_checkpoint")]
+position = Vector2(408, 1329)
+
+[node name="Compuerta" type="StaticBody2D" parent="SistemasMapa"]
+position = Vector2(600, 864)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_columna_tope")
+piece_middle = SubResource("AtlasTexture_columna_medio")
+piece_end = SubResource("AtlasTexture_columna_base")
+start_closed = true
+open_on_encounter = "mazmorra_atajo_interno"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/Compuerta"]
+shape = SubResource("RectangleShape2D_compuerta")
+
+[node name="TrampillaColector" type="StaticBody2D" parent="SistemasMapa"]
+position = Vector2(1384, 1112)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_losa_izq")
+piece_middle = SubResource("AtlasTexture_losa_medio")
+piece_end = SubResource("AtlasTexture_losa_der")
+start_closed = true
+open_on_encounter = "mazmorra_colector"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/TrampillaColector"]
+shape = SubResource("RectangleShape2D_trampilla")
+
+[node name="TrampillaF" type="StaticBody2D" parent="SistemasMapa"]
+position = Vector2(1432, 1352)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_losa_izq")
+piece_middle = SubResource("AtlasTexture_losa_medio")
+piece_end = SubResource("AtlasTexture_losa_der")
+start_closed = true
+open_on_encounter = "mazmorra_atajo_f_abierto"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/TrampillaF"]
+shape = SubResource("RectangleShape2D_trampilla")
+
+[node name="SalidaB" parent="SistemasMapa/Transiciones" instance=ExtResource("8_transicion")]
+position = Vector2(1136, 16)
+target_scene_path = "res://escenas/mapas/tiles_calabozo_combate.tscn"
+target_spawn_id = &"DesdeMazmorra"
+
+[node name="CollisionShape2D" parent="SistemasMapa/Transiciones/SalidaB" index="0"]
+shape = SubResource("RectangleShape2D_salida_b")
+
+[node name="Salida5" parent="SistemasMapa/Transiciones" instance=ExtResource("8_transicion")]
+position = Vector2(1880, 1432)
+target_scene_path = "res://archivo/tiles_v1/escenas/tiles_ruina_combate.tscn"
+target_spawn_id = &"DesdeAnterior"
+
+[node name="CollisionShape2D" parent="SistemasMapa/Transiciones/Salida5" index="0"]
+shape = SubResource("RectangleShape2D_salida_suelo")
+
+[node name="SalidaF" parent="SistemasMapa/Transiciones" instance=ExtResource("8_transicion")]
+position = Vector2(1432, 1432)
+target_scene_path = "res://escenas/mapas/tiles_profundidades_combate.tscn"
+target_spawn_id = &"DesdeMazmorra"
+
+[node name="CollisionShape2D" parent="SistemasMapa/Transiciones/SalidaF" index="0"]
+shape = SubResource("RectangleShape2D_salida_suelo")
+
+[node name="DesdeCalabozo" parent="SistemasMapa" instance=ExtResource("9_spawn")]
+position = Vector2(1112, 289)
+spawn_id = &"DesdeCalabozo"
+
+[node name="DesdeRuina" parent="SistemasMapa" instance=ExtResource("9_spawn")]
+position = Vector2(1816, 1345)
+spawn_id = &"DesdeRuina"
+
+[node name="DesdeProfundidades" parent="SistemasMapa" instance=ExtResource("9_spawn")]
+position = Vector2(1480, 1281)
+spawn_id = &"DesdeProfundidades"
+
+[node name="PalancaCompuerta" parent="Objetos" instance=ExtResource("10_palanca")]
+position = Vector2(544, 880)
+encounter_id = "mazmorra_atajo_interno"
+
+[node name="PalancaColector" parent="Objetos" instance=ExtResource("10_palanca")]
+position = Vector2(1344, 1312)
+encounter_id = "mazmorra_colector"
+
+[node name="PalancaB" parent="Objetos" instance=ExtResource("10_palanca")]
+position = Vector2(1072, 320)
+encounter_id = "mazmorra_atajo_b_abierto"
+
+[node name="LlaveAlcaide" parent="Objetos" instance=ExtResource("11_llave")]
+position = Vector2(1176, 336)
+activate_after_world1_boss_defeated = false
+key_id = "mazmorra_alcaide"
+
+[node name="Ambientacion" type="Node2D" parent="."]
+script = ExtResource("12_ambiente")
+ambient_color = Color(0.44, 0.38, 0.56, 1)
+player_light_color = Color(0.9, 0.85, 1, 1)
+vignette_strength = 0.6

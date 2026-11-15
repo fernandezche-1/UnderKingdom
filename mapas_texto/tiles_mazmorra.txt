@@ -98,11 +98,12 @@
 ;   Activador: el suelo de la sala (filas 69-74). PuntosJefe hacia (6, 74) y
 ;   (24, 74): la Reina sale en el extremo más lejano al Player, como hoy. Al
 ;   vencerla da el Ultimate (ability_reward ultimate) y ya no suelta llave.
-; - SUELO QUE SE HUNDE (pieza nueva, sin hacer): x 8-22, fila 75, 15 piezas del
-;   suelo de la sala. En el ASCII es bloque, para que la sala quede entera
-;   mientras dura el combate; al morir la Reina la pieza quita esas celdas y el
-;   Player cae a la fosa. La trampilla de la entrada no se vuelve a abrir: la
-;   tapan los escombros del derrumbe.
+; - SUELO QUE SE HUNDE (collapse_sequence.gd, P64): x 8-22, fila 75, 15 piezas
+;   del suelo de la sala. En el ASCII es hueco (2026-11-15; antes era bloque):
+;   lo tapa la pieza Derrumbe de la _combate, que es un suelo aparte y no
+;   quita celdas de Terreno. Al morir la Reina y recoger el Ultimate, ese suelo
+;   cae y el Player cae a la fosa. La trampilla de la entrada no se vuelve a
+;   abrir: la tapan los escombros del derrumbe.
 ; - HUIDA (solo tras el derrumbe), de oeste a este, bajo los desagües y el
 ;   cuerpo de guardia:
 ;   - fosa del derrumbe: x 4-26, filas 76-86 (suelo 87);
@@ -316,7 +317,7 @@ anterior: res://escenas/mapas/tiles_mineria_combate.tscn
 ####..====.....H.....====..##########################################################.H.################################
 ####...........H...........##########################################################.H.################################
 ####...........H...........##########################################################.H.################################
-#####################################################################################.H.################################
+########...............##############################################################.H.################################
 ####.......................########################....................##############.H.################################
 ####.......................########################....................##############.H.################################
 ####..................................................................................H......###########################
