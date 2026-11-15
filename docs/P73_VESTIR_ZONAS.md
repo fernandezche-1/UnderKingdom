@@ -685,6 +685,46 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
   - las `y` no pueden ir "en lugar de las estalactitas de bloque" de la veta (x 66-67 y 110-111): quitar esos bloques cambia celdas sólidas. Van al lado, o se pregunta antes;
   - una `y` cuelga 4 piezas: su letra va cuatro filas debajo del techo.
 
+**Vestida (2026-11-15), falta jugarla a mano:**
+- `mapas_texto/tiles_mineria.txt` pasa a `tileset: minas`, `bloques: minas` y `fondo: galeria`, con `fondo_sala`. El parallax de `pixelfantasy_caves` no cambia. Se regeneró la base `escenas/mapas/tiles_mineria.tscn`; la `_combate` no se tocó.
+- **Paredes:**
+
+  | Pared | Rectángulos (x0 y0 x1 y1) |
+  |---|---|
+  | `galeria` (el `fondo:`) | lo demás: galerías alta, de las vagonetas, de los mineros y honda, antecámara, túnel de `[L4]` y pozos |
+  | `ladrillo` | estación del ascensor 8 30 32 40; sala del Caballero 4 74 35 86, con la columna de su puerta |
+  | `ninguno` (el parallax) | bocamina 84 10 128 19; secreto de la Agilidad 129 9 141 14; veta 56 48 130 60; gruta de cristal 132 64 147 77, con la boca y el pasillo del fuego (131 52 146 55) y la bajada (144 56 146 63) |
+
+  La boca, el pasillo y la bajada van con la gruta porque la cabecera del ASCII los cuenta como parte de ella.
+- **Decorados nuevos** (sitio de abajo a la izquierda):
+
+  | Letra | Sitios |
+  |---|---|
+  | `K` entibado | galería alta (49, 19) y (65, 19), bajo las vigas de bloque; vagonetas (40, 40), (61, 40) y (78, 40); mineros (22, 56); honda (65, 86) y (106, 86) |
+  | `U` boca de galería | (81, 19), entre la bocamina y la galería alta; (36, 68), en la boca del túnel de `[L4]`, del lado de la antecámara |
+  | `T` estalagmita | veta (65, 60) y (110, 60), bajo las estalactitas de bloque; gruta (143, 77) |
+  | `y` estalactita | veta (68, 51) y (112, 51), al lado de las estalactitas de bloque, que se quedan; gruta (133, 67) y (140, 67) |
+
+  - El túnel de `[L4]` mide 3 de alto y la boca 4: no cabe dentro, así que va en su boca.
+  - Cumplen la regla de la cabecera del `.txt`, comprobada con un script sobre el ASCII: ninguno pisa una escalera, sus columnas vecinas ni sus tres filas de encima, un spawn, un cofre, una moneda, una poción, un enemigo, otro decorado ni los objetos de la `_combate`. Los de pie se apoyan en roca y las estalactitas cuelgan de ella.
+- **Enemigos en el ASCII:**
+  - salen los 10 murciélagos;
+  - ojos voladores `p` en 6 de sus sitios: galería alta (60, 15), vagonetas (112, 36), sobre los fosos de lava (75, 53) y (99, 51), veta este (120, 52) y junto al pozo de `:D:` (136, 82);
+  - sapos `s` en el suelo, bajo los otros 4: vagonetas (70, 40), mineros (21, 56) y honda (80, 86) y (110, 86);
+  - Mimics `i`: al fondo oeste de la galería de los mineros (10, 56), a tres piezas del cofre de verdad de (7, 56), y al fondo de la cochera (129, 40). Los dos, fuera del camino obligatorio.
+
+  Quedan 16 kolbos, 6 ojos, 4 sapos y 2 Mimics (28).
+- **Colisiones:** iguales antes y después, 8316 piezas sólidas y 29 de una vía, con los mismos polígonos y la misma marca de una vía (`Terreno`, `Plataformas` y `Liquidos`), volcadas de la base con una escena temporal.
+- **Prueba sin ventana** (5388 comprobaciones bien): cada celda sin bloque tiene su pared (2758 de `galeria`, 659 de `ladrillo` y 1767 sin pared); los 17 decorados nuevos están en su pieza del atlas; no queda ningún murciélago; a los 3 s los ojos y los sapos siguen en su sitio (se mecen o patrullan 5,5 px, los sapos en el suelo) y los Mimics duermen en la capa 0 sin moverse. `MapAmbience` pone 94 luces, sin fuentes nuevas.
+- Capturas con el juego abierto de 14 salas: bocamina, galería alta, estación, vagonetas, cochera, mineros, veta oeste y este, túnel de `[L4]`, sala del Caballero, galería honda, gruta y secreto.
+- Arrancan sin errores la `_combate` y el juego, y `verificar_mundo.py` da 0 errores. El Atlas se publicó de nuevo, con los nombres de `K`, `U`, `T` e `y` del tileset `minas` y de `p`, `s` e `i`.
+- La luz ambiente de la `_combate`, (0.3, 0.28, 0.36), se queda hasta jugarla.
+- **Al jugarla, mirar:**
+  - las estalagmitas y las estalactitas se ven oscuras con esa luz ambiente;
+  - el sapo de los mineros está junto al kolbo3 de (16, 56) y el Mimic: la galería tiene ahora tres enemigos y el cofre;
+  - el Mimic de los mineros despierta al pasar hacia el cofre de verdad.
+- **Falta, antes de marcarla vestida en `TASK.md`:** jugarla a mano.
+
 ### Mazmorra
 - Parte de: tileset `mazmorra` con `bloques: oliva`, parallax de `gothicvania/castillo_viejo`. Aprendis, mino, kolbo3, esqueleto; la Reina.
 - Ficha: por armar.
