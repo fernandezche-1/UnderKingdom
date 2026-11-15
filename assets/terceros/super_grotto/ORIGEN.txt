@@ -10,3 +10,6 @@ Solo se copió lo que usa el juego, sin cambiar el arte:
                    (5 cuadros de 48x48; enemigos/murcielago.tscn)
 - recoger.png      Assets/Fx/Spritesheets/pick-feedback-2.png
                    (5 cuadros de 16x16; destello al recoger monedas y pociones)
+- ojo_volador.png  Assets/Characters/Enemies/FlyEye/fly-eye.png
+                   (4 cuadros de 48x48; enemigos/ojo_volador.tscn, el ojo
+                   volador de las minas, P73)

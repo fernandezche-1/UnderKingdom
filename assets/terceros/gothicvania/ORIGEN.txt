@@ -42,3 +42,10 @@ Cementerio (P73, ficha del cementerio), sin cambiar el arte:
 - personajes/anima.png     Characters/Ghost-Files/Spritesheets: ghost-Appear
   (6), ghost-Idle (7), ghost-Chase (4), ghost-Shriek (4) y ghost-Vanish (7), una
   fila cada una, cuadros de 64x80. El ánima (escenas/enemigos/anima.tscn).
+
+Minas (P73, ficha de las minas), sin cambiar el arte:
+- personajes/sapo.png      Characters/mutant-toad/Spritesheets:
+  mutant-toad-idle (4), mutant-toad-jump (4) y mutant-toad-attack (3), una fila
+  cada una, cuadros de 80x64. El sapo de la cueva (escenas/enemigos/sapo.tscn):
+  jump es su andar y el lengüetazo golpea en el tercer cuadro de attack. No
+  trae daño ni muerte: muere con el efecto "muerte".

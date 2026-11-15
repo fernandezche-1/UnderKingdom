@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://chgm08ngs0pts"
-path="res://.godot/imported/mainlev_build.png-f84816047a98d189af1ec61e0da6a0e3.ctex"
+uid="uid://dgbqseplhyc4a"
+path="res://.godot/imported/mainlev_build.png-841dc64d281e72332ab54a8250ea5cad.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://prueba/PixelFantasy_Caves_1.0/mainlev_build.png"
-dest_files=["res://.godot/imported/mainlev_build.png-f84816047a98d189af1ec61e0da6a0e3.ctex"]
+source_file="res://assets/terceros/pixelfantasy_caves/mainlev_build.png"
+dest_files=["res://.godot/imported/mainlev_build.png-841dc64d281e72332ab54a8250ea5cad.ctex"]
 
 [params]
 

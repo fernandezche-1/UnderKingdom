@@ -1,11 +1,19 @@
 Monsters Creatures Fantasy 2 (carpeta de Documentos/RecursosUnderKingdom).
 El paquete no trae archivo de licencia: confirmarla antes de publicar.
 
-Se copiaron sin cambios Bat, Rat y Slime, y de Mimic solo Idle_closed.png e
-idle_open.png (iguales a los del ZIP de Descargas). El resto del Mimic queda
-para cuando entre como enemigo (P73, ficha del castillo).
+Se copiaron sin cambios Bat, Rat y Slime, y de Mimic Idle_closed.png e
+idle_open.png (iguales a los del ZIP de Descargas). El resto del Mimic entró
+como enemigo en las minas (P73, ficha de las minas; ver abajo).
 - rat/    enemigos/rata.tscn (cuadros de 70x70)
 - slime/  enemigos/slime.tscn (cuadros de 156x156)
 - bat/    enemigos/murcielago_grande.tscn (cuadros de 87x87; fall y fly-to-fall sin usar)
 - mimic/  objetos/cofre_madera.tscn, el cofre del castillo (cuadros de 146x146;
           el cofre ocupa la región (46,63) de 43x20 en los dos)
+- mimic/mimic.png  enemigos/mimic.tscn, el Mimic de las minas (P73). Hoja con una
+          fila por animación, del ZIP de Descargas ("Monsters Creatures Fantasy
+          2.zip", carpeta Mimic), sin cambiar el arte: cada cuadro de 146x146
+          recortado a la caja común (32,38)-(116,84), 84x46, centrada en el
+          cofre. Filas: rise = opening (6) + transform (7), idle =
+          idle_transformed (9), move = walk (6), attack = attack_1 (14), hurt (3)
+          y death (6). El cuadro 0 de rise es el cofre cerrado (el primero de
+          opening, igual que Idle_closed): así duerme. attack_2 no se usa.

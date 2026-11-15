@@ -11,7 +11,9 @@ se vuelve a correr; no se edita la escena de la galería a mano.
 El piso D tiene un cuarto por tileset nuevo (P73, paso de las piezas): cada uno
 instancia una muestra que el constructor genera con ese tileset ("muestra: si",
 sin Player ni límites). galeria.py escribe su texto en
-mapas_texto/zona_pruebas_muestra_<tileset>.txt.
+mapas_texto/zona_pruebas_muestra_<tileset>.txt. Con el piso D lleno, las piezas
+de las minas (enemigos y tileset, P73) van en el piso E, debajo, y las de las
+zonas siguientes siguen allí.
 
 Uso, desde la raíz del proyecto:
   python3 herramientas/zona_pruebas/galeria.py [cabecera.txt]
@@ -19,6 +21,7 @@ Uso, desde la raíz del proyecto:
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_castillo.txt
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_castillo_salas.txt
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_cementerio.txt
+  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_minas.txt
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas.txt
 """
 import sys
@@ -29,7 +32,7 @@ TXT = ROOT / "mapas_texto/zona_pruebas.txt"
 TSCN = ROOT / "escenas/mapas/zona_pruebas_galeria.tscn"
 T = 16
 COLS = 146
-ROWS = 101
+ROWS = 120
 
 # ---------------------------------------------------------------- mapa viejo
 raw = TXT.read_text(encoding="utf-8")
@@ -50,6 +53,7 @@ PISOS = {
     "B": dict(corr=43, techo=48, suelo=61, dir=-1),
     "C": dict(corr=62, techo=67, suelo=80, dir=1),
     "D": dict(corr=81, techo=86, suelo=99, dir=-1),
+    "E": dict(corr=100, techo=105, suelo=118, dir=-1),
 }
 for p in PISOS.values():
     for r in range(p["corr"], p["corr"] + 5):
@@ -76,15 +80,18 @@ ladder(3, 20, 28)
 ladder(139, 29, 47)
 ladder(4, 48, 66)
 ladder(139, 67, 85)
+# Del piso D al E, a la derecha (los cuartos del D llegan hasta la columna 2).
+ladder(143, 86, 104)
 # Checkpoints de la galería.
 put(28, 6, "S")
 put(47, 141, "S")
 put(66, 6, "S")
 put(85, 141, "S")
+put(104, 141, "S")
 
 # ---------------------------------------------------------------- cuartos
 # Cada cuarto: zona, nombre corto (cartel del pasillo), texto, ancho y piezas.
-ROOMS = {"A": [], "B": [], "C": [], "D": []}
+ROOMS = {"A": [], "B": [], "C": [], "D": [], "E": []}
 
 
 def room(piso, zona, nombre, texto, ancho, build, **extra):
@@ -820,6 +827,59 @@ room("D", "Cementerio", "TILESET CEMENTERIO",
      "TILESET CEMENTERIO (P73)\nExterior con pasto; cripta sin pasto (bloques_sala), paredes de tierra y "
      "ladrillo, repisa de piedra (=), cruz (K), lápida (Q), árbol (D), arbusto (O), arco (U), gárgola (A), "
      "calaveras (E, n) y nicho con llama (V).", 36, b_tileset_cementerio)
+
+
+# ---- 10. Minas (piso E, P73): los enemigos nuevos y el tileset.
+# El ojo volador vuela desde el principio; el sapo patrulla a saltos; el Mimic
+# duerme como un cofre cerrado (sin "E Abrir") hasta que el Player se acerca.
+def b_minas_enemigos(c):
+    c.cell(3, c.F - 4, "p")
+    c.cell(8, c.F - 1, "s")
+    c.cell(19, c.F - 1, "i")
+
+
+room("E", "Minas", "OJO, SAPO Y MIMIC",
+     "OJO, SAPO Y MIMIC (P73)\nVan en: minas. El ojo vuela y embiste (0.5). El sapo da un lengüetazo (0.5). "
+     "El Mimic es el cofre del fondo: despierta al acercarte y muerde (0.5).",
+     24, b_minas_enemigos)
+
+
+# Minas (ficha de P73): a la izquierda la cueva natural, sin pared (en el
+# mapa, el parallax), con techo, la estalactita (y) colgada y la estalagmita
+# (T); una columna colgada separa la galería (pared con el marco de postes y
+# viga), con una tira y una pieza suelta (macizas), la viga (=), cristales (r),
+# hongos (h), el entibado (K) y la boca de galería (U); a la derecha, la pared
+# de ladrillo de la estación, con la escalera (H) a una repisa y la antorcha (t).
+MUESTRA_MINAS = [
+    "##########.......................",
+    "##########.......................",
+    "##########.......................",
+    ".........#.......................",
+    ".........#.......................",
+    ".........#..####..#..............",
+    "..y......#................H####..",
+    "..........................H......",
+    "...........====...........H......",
+    "..........................H...t..",
+    "..........................H......",
+    ".T........r.h...K...U.....H......",
+    "#################################",
+]
+CABECERA_MINAS = (
+    "fondo_sala: ninguno 0 0 8 11\n"
+    "fondo_sala: ladrillo 27 0 32 11\n"
+)
+
+
+def b_tileset_minas(c):
+    return muestra_tileset(c, "minas", MUESTRA_MINAS, "38_muestra_minas", 13,
+                           cabecera=CABECERA_MINAS, fondo="galeria")
+
+
+room("E", "Minas", "TILESET MINAS",
+     "TILESET MINAS (P73)\nRoca, viga (=), escalera y paredes de PixelFantasy Caves: cueva sin pared, "
+     "galería con postes y ladrillo; entibado (K), boca (U), estalagmita (T), estalactita (y).",
+     36, b_tileset_minas)
 
 
 # ---------------------------------------------------------------- colocar

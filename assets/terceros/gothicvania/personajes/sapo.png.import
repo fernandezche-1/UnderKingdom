@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://do0kirpxgf2mk"
-path="res://.godot/imported/props1.png-cf59ba19c2771a245a2c3ebf94abdf9e.ctex"
+uid="uid://iooxle8tqc0f"
+path="res://.godot/imported/sapo.png-3c346e4c1e010d696448711f39624884.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://prueba/PixelFantasy_Caves_1.0/props1.png"
-dest_files=["res://.godot/imported/props1.png-cf59ba19c2771a245a2c3ebf94abdf9e.ctex"]
+source_file="res://assets/terceros/gothicvania/personajes/sapo.png"
+dest_files=["res://.godot/imported/sapo.png-3c346e4c1e010d696448711f39624884.ctex"]
 
 [params]
 

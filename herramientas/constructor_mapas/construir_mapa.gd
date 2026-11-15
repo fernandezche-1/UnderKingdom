@@ -59,6 +59,9 @@ const COLORS := {
     "B": ["a040a0", "murciélago grande"],
     "o": ["485060", "cuervo"],
     "N": ["a0e0ff", "ánima"],
+    "p": ["50f0d0", "ojo volador"],
+    "s": ["608030", "sapo de la cueva"],
+    "i": ["903020", "Mimic"],
     "t": ["ffc090", "antorcha"],
     "f": ["c03000", "fogata"],
     "b": ["a08060", "barril"],
@@ -117,6 +120,9 @@ const ENEMIES := {
     "B": "res://escenas/enemigos/murcielago_grande.tscn",
     "o": "res://escenas/enemigos/cuervo.tscn",
     "N": "res://escenas/enemigos/anima.tscn",
+    "p": "res://escenas/enemigos/ojo_volador.tscn",
+    "s": "res://escenas/enemigos/sapo.tscn",
+    "i": "res://escenas/enemigos/mimic.tscn",
 }
 
 var _grid: Array[String] = []

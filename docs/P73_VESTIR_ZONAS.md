@@ -623,6 +623,68 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
 - Ningún reto obligatorio pide E3, el dash ni una mejora de la tienda.
 - Vestir no cambia celdas sólidas y las plataformas siguen siendo de una vía; se comprueba en el paso D.
 
+**Piezas (hechas el 2026-11-15).** Decisiones aprobadas al pasar la ficha a piezas:
+- **Lo que no cuadraba con la ficha** (hallado al mirar el arte):
+  - **Mimic:** el cuadro 0 de `transform` no es el cofre cerrado, sino el cofre abierto y tumbado (43x11). En el pack van `Idle_closed`, `opening` (6), `transform` (7) e `idle_transformed`. Su `rise` une `opening` y `transform` (13 cuadros), y duerme en el cuadro 0, el cofre cerrado de `cofre_madera`. `rising_enemy.gd` no cambia.
+  - **`T` e `y`:** las estalagmitas más pequeñas de `props1.png` miden 48x55, así que van a **3x4**. Son las dos mitades de la misma roca.
+  - **Píxeles dobles:** `mainlev_build.png` está dibujado a 1:1 sobre una rejilla de 16 px. Se usa tal cual, como decía la ficha.
+  - **Bordes de la roca:** el pack dibuja casi todos los remates sobresaliendo a la celda vecina. Solo se usan celdas macizas:
+    - arriba, la franja clara bajo los remates (fila 40);
+    - abajo, la de la fila 58;
+    - a los lados, la roca con vetas claras, porque el pack no trae otro borde macizo;
+    - lo que sobresale se queda fuera.
+  - **Galería llena:** los pisos B y D no tenían sitio. Se añadió un **piso E** debajo del D (aprobado el 2026-11-15).
+- **Atlas** `assets/terceros/pixelfantasy_caves/tileset_minas.png` (512x320), que arma `herramientas/constructor_mapas/atlas_minas.py`:
+  - filas 0-15: el atlas de mazmorra sin cambios. `t`, `f`, `b`, `x`, `h`, `r` y `C` conservan sus piezas, y `DECOR_LIGHTS` les da luz sin entradas nuevas;
+  - fila 16:
+    - juego `minas` (0,16), con las 16 piezas macizas;
+    - viga (4,16);
+    - escalera de madera del Dungeon Tile Set (7,16);
+    - pared `galeria` (8,16), de 6x4: el relleno de roca, que se repite sin costura, con el marco de postes y viga a la izquierda, al 60 %;
+    - pared `ladrillo` (14,16), de 2x2, al 60 %;
+    - `K` entibado 3x3 (16,16), `U` boca de galería 3x4 (19,16), `T` estalagmita 3x4 (22,16) e `y` estalactita 3x4 (25,16), que cuelga.
+
+  Coordenadas en `assets/terceros/pixelfantasy_caves/ORIGEN.txt`. `mainlev_build.png` y `props1.png` vuelven a `assets/terceros/pixelfantasy_caves/`.
+- **Tileset** `herramientas/constructor_mapas/tilesets/minas.gd`:
+  - `bloques_por_defecto: minas` (sin rampas: quedan las de `madera`);
+  - `plataformas`, `escalera`, `cofre` (`cofre_madera.tscn`) y `fondos` (`cueva`, `galeria` y `ladrillo`).
+
+  El constructor no cambia.
+- **Enemigos** (sin scripts nuevos; todos en la capa 5, con 0.5 de daño y 0.25 de contacto):
+
+  | | Escena | Script | Vida | Detalle |
+  |---|---|---|---|---|
+  | Ojo volador `p` | `escenas/enemigos/ojo_volador.tscn` | `lunge_enemy.gd`, sin gravedad | 2 | Aleteo en `idle`, `move` y `attack`; avisa 0.3 s y embiste 0.35 s. Muere con el efecto `muerte` |
+  | Sapo de la cueva `s` | `escenas/enemigos/sapo.tscn` | `enemy_base.gd` | 3 | `move` es `jump`; el lengüetazo golpea en el cuadro 2 de `attack` (caja de 28x14, 26 px por delante). Sin `hurt` ni `death`: muere con el efecto `muerte` |
+  | Mimic `i` | `escenas/enemigos/mimic.tscn` | `rising_enemy.gd` | 4 | Duerme como cofre (capa 0, sin "E Abrir") y despierta a 48 px de lado y 40 de alto. `attack` es `attack_1`: se alza 0.65 s (aviso) y se lanza 0.3 s. Muere con `death` |
+
+  - Hojas: `assets/terceros/super_grotto/ojo_volador.png`, `assets/terceros/gothicvania/personajes/sapo.png` y `assets/terceros/monster_creatures_2/mimic/mimic.png` (cuadros recortados a 84x46, sin cambiar el arte), anotadas en sus `ORIGEN.txt`.
+  - Letras `p`, `s` e `i` en `COLORS` y `ENEMIES`, la paleta, LEYENDA (sección 5) y P33.
+- **kolbo3:** `attack_damage` pasa de 0.60 a 0.5. La escena la comparten las minas y la mazmorra y la ruina de v1.
+- **Galería:**
+  - **piso E** (filas 100-118, hacia la izquierda), con el pozo desde el D a la derecha (columna 143) y un checkpoint. La zona de pruebas solo cambia en el piso E y en ese pozo;
+  - cuarto "OJO, SAPO Y MIMIC": el ojo en el aire, el sapo en medio y el Mimic al fondo, junto a la pared;
+  - cuarto "TILESET MINAS", con la muestra `zona_pruebas_muestra_minas`:
+    - a la izquierda, la cueva sin pared, con techo, estalactita y estalagmita;
+    - una columna colgada, una tira, una pieza suelta, la viga, cristales, hongos, el entibado y la boca sobre la pared `galeria`;
+    - a la derecha, la pared `ladrillo`, con la escalera a una repisa y la antorcha.
+- **Probado:**
+  - capturas de los dos cuartos con el juego abierto;
+  - prueba sin ventana con 45 comprobaciones bien:
+    - los 76 bloques de la muestra son macizos y del juego `minas` (columna, tira y pieza suelta incluidas), y las 4 piezas de viga son de una vía;
+    - el Player se apoya en la viga y en el suelo;
+    - los 7 decorados y la escalera están en su pieza, y las tres paredes salen bien;
+    - `MapAmbience` pone 3 luces (antorcha, cristales y hongos);
+    - los tres enemigos siguen en su sitio a los 3 s;
+    - el Mimic duerme en la capa 0 como cofre cerrado, rechaza golpes, a 60 px sigue dormido, a 40 despierta y se transforma;
+    - los tres reciben golpes, dañan en múltiplos de 0.25 (el sapo quitó 1.5 al Player en 4 s) y mueren;
+    - el kolbo3 hace 0.5;
+  - arrancan sin errores el juego, la zona de pruebas, las `_combate` de las minas, el calabozo, el castillo y el cementerio, y la mazmorra de v1.
+- **Al vestir, mirar:**
+  - las tiras de una pieza de alto se ven como una fila de barriles, por las vetas verticales de la franja de arriba. En el ASCII de las minas casi no hay; si molestan, se arman con otra celda;
+  - las `y` no pueden ir "en lugar de las estalactitas de bloque" de la veta (x 66-67 y 110-111): quitar esos bloques cambia celdas sólidas. Van al lado, o se pregunta antes;
+  - una `y` cuelga 4 piezas: su letra va cuatro filas debajo del techo.
+
 ### Mazmorra
 - Parte de: tileset `mazmorra` con `bloques: oliva`, parallax de `gothicvania/castillo_viejo`. Aprendis, mino, kolbo3, esqueleto; la Reina.
 - Ficha: por armar.
