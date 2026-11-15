@@ -6,8 +6,9 @@
 ; sección 9) y es la fuente de escenas/mapas/tiles_mineria.tscn. Generar:
 ;   godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/tiles_mineria.txt
 ; - La salida [L4] (">", "siguiente") la pone el constructor. Hasta generar la
-;   mazmorra nueva va a la de v1 (archivo/tiles_v1/, spawn DesdeAnterior); al
-;   generarla se cambia a tiles_mazmorra_combate.tscn. [S3] y :C: van en la
+;   mazmorra nueva iba a la de v1; desde el 2026-11-15 va a la base nueva
+;   (escenas/mapas/tiles_mazmorra.tscn, spawn DesdeAnterior) y, al montar su
+;   _combate, pasa a tiles_mazmorra_combate.tscn. [S3] y :C: van en la
 ;   _combate, con los spawns DesdeCementerio y DesdeCastillo.
 ;
 ; Coordenadas (columna, fila), desde 0. 150 x 90 piezas; en el mundo en
@@ -277,7 +278,7 @@ fondo_sala: ninguno 131 52 146 55
 fondo_sala: ninguno 144 56 146 63
 fondo_sala: ninguno 132 64 147 77
 parallax: assets/terceros/pixelfantasy_caves/fondo1.png 0; assets/terceros/pixelfantasy_caves/fondo2.png 0.1; assets/terceros/pixelfantasy_caves/fondo3.png 0.2; assets/terceros/pixelfantasy_caves/fondo4a.png 0.3
-siguiente: res://archivo/tiles_v1/escenas/tiles_mazmorra_combate.tscn#DesdeAnterior
+siguiente: res://escenas/mapas/tiles_mazmorra.tscn#DesdeAnterior
 ---
 ####################...###################################################################################.H.#########################################
 ####################...###################################################################################.H.#########################################

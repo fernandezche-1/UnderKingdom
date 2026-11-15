@@ -2,9 +2,14 @@
 ; (estructura, P, checkpoints, aperturas, sala de la Reina, derrumbe y huida, y
 ; sitio de cada pieza) y segunda pasada (enemigos, objetos y decorados) hechas.
 ; Pozo de :F: (puerta hacia atrás, idea 7) dibujado el 2026-11-06.
-; NO GENERAR TODAVÍA: la escena de abajo es la de la mazmorra que se juega hoy
-; (mapas_texto/tiles_mazmorra.txt) y el constructor la reemplazaría. Al
-; aprobarlo, este archivo pasa a mapas_texto/tiles_mazmorra.txt (sección 9).
+; Generado en la Fase 3 (2026-11-15): este archivo pasó de
+; mapas_texto/macro/zonas/mazmorra.txt a mapas_texto/tiles_mazmorra.txt (P46,
+; sección 9) y es la fuente de escenas/mapas/tiles_mazmorra.tscn. Generar:
+;   godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/tiles_mazmorra.txt
+; - La salida [L4] ("<", "anterior") la pone el constructor y lleva al spawn
+;   DesdeSiguiente de las minas. [!5], :B: y :F: van en la _combate, con los
+;   spawns DesdeRuina, DesdeCalabozo y DesdeProfundidades.
+; - La mazmorra de v1 se queda en archivo/tiles_v1/: no se toma como referencia.
 ;
 ; Coordenadas (columna, fila), desde 0. 120 x 90 piezas; en el mundo en
 ; (30, 133), a la izquierda de las minas y a su misma profundidad: su borde

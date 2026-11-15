@@ -3550,8 +3550,8 @@ shape = SubResource("RectangleShape2D_surld")
 position = Vector2(8, 576)
 collision_layer = 0
 script = ExtResource("9_l2ai8")
-target_scene_path = "res://archivo/tiles_v1/escenas/tiles_mazmorra_combate.tscn"
-target_spawn_id = &"DesdeSiguiente"
+target_scene_path = "res://escenas/mapas/tiles_mazmorra.tscn"
+target_spawn_id = &"DesdeRuina"
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" parent="SistemasMapa/Transiciones/SalidaAnterior1" index="0"]
