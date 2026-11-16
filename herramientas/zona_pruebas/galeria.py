@@ -13,7 +13,9 @@ instancia una muestra que el constructor genera con ese tileset ("muestra: si",
 sin Player ni límites). galeria.py escribe su texto en
 mapas_texto/zona_pruebas_muestra_<tileset>.txt. Con el piso D lleno, las piezas
 de las minas (enemigos y tileset, P73) van en el piso E, debajo, y las de las
-zonas siguientes siguen allí.
+zonas siguientes siguen allí: la mazmorra, a la izquierda de las minas. Con la
+mazmorra solo quedan 8 columnas libres en el piso E: la zona siguiente abre un
+piso F.
 
 Uso, desde la raíz del proyecto:
   python3 herramientas/zona_pruebas/galeria.py [cabecera.txt]
@@ -22,6 +24,7 @@ Uso, desde la raíz del proyecto:
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_castillo_salas.txt
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_cementerio.txt
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_minas.txt
+  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_mazmorra_reina.txt
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas.txt
 """
 import sys
@@ -880,6 +883,64 @@ room("E", "Minas", "TILESET MINAS",
      "TILESET MINAS (P73)\nRoca, viga (=), escalera y paredes de PixelFantasy Caves: cueva sin pared, "
      "galería con postes y ladrillo; entibado (K), boca (U), estalagmita (T), estalactita (y).",
      36, b_tileset_minas)
+
+
+# ---- 11. Mazmorra (piso E, P73): los enemigos nuevos y el tileset.
+# El esqueleto camina y da un tajo con el hacha; el ogro patrulla bajo una losa
+# a 4 piezas del suelo (los 64 px de los dinteles de las celdas bajas); la
+# calavera de fuego vuela y embiste.
+def b_mazmorra_enemigos(c):
+    c.cell(3, c.F - 1, "e")
+    for u in range(8, 17):
+        for r in range(c.F - 7, c.F - 4):
+            c.cell(u, r, "#")
+    c.cell(12, c.F - 1, "W")
+    c.cell(20, c.F - 6, "X")
+
+
+room("E", "Mazmorra", "OGRO, CALAVERA Y ESQUELETO",
+     "OGRO, CALAVERA Y ESQUELETO (P73)\nVan en: mazmorra. El esqueleto da un tajo (0.5). El ogro, bajo la losa "
+     "a 4 piezas, golpea con la maza (0.75). La calavera vuela y embiste (0.5).",
+     26, b_mazmorra_enemigos)
+
+
+# Mazmorra (ficha de P73): a la izquierda, sin pared (en el mapa, el parallax),
+# con techo, una columna colgada, una tira y una pieza suelta (macizas) y
+# cristales (r); en medio la pared "cloaca", con la cadena (g) colgada del
+# techo, el arco del desagüe (U), una antorcha (t) y hongos (h); a la derecha
+# la pared "piedra" (el fondo de la zona), con la reja de celda (w), la
+# estantería (E), la pasarela (=), la escalera (H) a una repisa, otra antorcha,
+# una caja (x) y un barril (b).
+MUESTRA_MAZMORRA = [
+    "####################.............",
+    "####################.............",
+    "........#........................",
+    "........#........................",
+    "........#........................",
+    "..............g..................",
+    "..####......................H####",
+    ".................t..........H....",
+    "......................=====.H....",
+    ".....#......................H..t.",
+    "............................H....",
+    "..r........U......h..w..E...H.x.b",
+    "#################################",
+]
+CABECERA_MAZMORRA = (
+    "fondo_sala: ninguno 0 0 8 11\n"
+    "fondo_sala: cloaca 9 0 19 11\n"
+)
+
+
+def b_tileset_mazmorra(c):
+    return muestra_tileset(c, "mazmorra_reina", MUESTRA_MAZMORRA, "39_muestra_mazmorra_reina", 21,
+                           cabecera=CABECERA_MAZMORRA, fondo="piedra")
+
+
+room("E", "Mazmorra", "TILESET MAZMORRA",
+     "TILESET MAZMORRA (P73)\nPiedra verde, pasarela (=) y paredes del Old Dark Castle: sin pared, cloaca y "
+     "piedra; cadena (g), arco del desagüe (U), reja de celda (w).",
+     36, b_tileset_mazmorra)
 
 
 # ---------------------------------------------------------------- colocar

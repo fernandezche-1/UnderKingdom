@@ -13,7 +13,8 @@ Solo se copió lo que usa el juego, sin cambiar el arte:
                   3. skeleton/skeleton-rise (6)
                   4. skeleton/skeleton-rise-clothed (6)
                   5. EnemyDeath/Sprites (5), nube de muerte
-                  (enemigos/esqueleto.tscn y enemigos/esqueleto_tumba.tscn)
+                  (enemigos/esqueleto_tumba.tscn; enemigos/esqueleto.tscn
+                  la usaba hasta el 2026-11-16, ver jesse_m_esqueleto/)
 - tileset_cementerio.png
                   atlas del tileset "cementerio" del constructor
                   (herramientas/constructor_mapas/tilesets/cementerio.gd).

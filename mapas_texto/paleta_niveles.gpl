@@ -38,6 +38,8 @@ Columns: 8
  80 240 208	ojo volador (p)
  96 128  48	sapo de la cueva (s)
 144  48  32	Mimic (i)
+ 80 112  80	ogro (W)
+255  80  48	calavera de fuego (X)
 255 192 144	antorcha (t)
 192  48   0	fogata (f)
 160 128  96	barril (b)

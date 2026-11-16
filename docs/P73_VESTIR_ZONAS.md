@@ -806,6 +806,71 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
 - Ningún reto obligatorio pide E3, el dash ni una mejora de la tienda.
 - Vestir no cambia celdas sólidas y las plataformas siguen siendo de una vía; se comprueba en el paso D.
 
+**Piezas (hechas el 2026-11-16).** Decisiones aprobadas al pasar la ficha a piezas:
+- **Lo que no cuadraba con la ficha** (hallado al mirar el arte):
+  - **La piedra del pack** son losas redondeadas que sobresalen a la celda vecina. Las únicas celdas macizas son el remate de musgo de los pilares, su cuerpo de ladrillo oscuro y la piedra verde (10,6).
+    - El ladrillo oscuro es igual de oscuro que la pared, (12,34,29) frente a (12,29,28), y la roca se leería como un hueco, el mismo problema de la `oliva` de hoy.
+    - Por eso el juego usa el remate arriba y la piedra verde, el doble de clara, en todo lo demás. Se repite como un aparejo de bloques.
+  - **La pasarela** es una sola pieza del puente del pack, con las tablas a 10 px de la fila 5. Se recorta desde el borde de las tablas, con su viga, y se repite. No trae cuerda.
+  - **La cadena y el arco** vienen pintados sobre la pared lisa. Al ponerlos en el atlas, ese color plano pasa a transparente, para que sirvan sobre `cloaca`.
+  - **El esqueleto** (aprobado el 2026-11-16) va **a escala 1**: mide 32 px de alto, algo menos que el Player, con los píxeles del mismo tamaño que el resto del arte.
+  - **El ogro:** en los cuadros 2-4 la maza levantada llega a 72-76 px y asoma sobre un dintel de 64. El cuerpo, de 30x50, sí cabe.
+- **Atlas** `assets/terceros/gothicvania/castillo_viejo/tileset_mazmorra_reina.png` (512x320), que arma `herramientas/constructor_mapas/atlas_mazmorra_reina.py`:
+  - filas 0-15: el atlas de mazmorra sin cambios. `t`, `f`, `b`, `x`, `h`, `r` y `E` conservan sus piezas, y `DECOR_LIGHTS` les da luz sin entradas nuevas;
+  - fila 16:
+    - juego `mazmorra_reina` (0,16), con las 16 piezas macizas;
+    - pasarela (4,16);
+    - escalera de madera del Dungeon Tile Set (7,16);
+    - pared `piedra` (8,16), de 6x4: la pilastra, sin cortes de arriba abajo, y cuatro columnas de pared lisa con su hilada de ladrillo;
+    - pared `cloaca` (14,16): la misma, al 60 %;
+    - `g` cadena 1x4 (20,16), que cuelga; `U` arco del desagüe 6x3 (21,16); `w` reja de celda de Raou 2x2 (27,16), copiada del atlas del castillo.
+
+  El pack va tal cual en `castillo_viejo/tileset.png`. Las coordenadas están en `assets/terceros/gothicvania/ORIGEN.txt`.
+- **Tileset** `herramientas/constructor_mapas/tilesets/mazmorra_reina.gd`:
+  - `bloques_por_defecto: mazmorra_reina` (sin rampas: quedan las de `oliva`);
+  - `plataformas`, `escalera`, `cofre` (`cofre_madera.tscn`) y `fondos` (`cueva`, `piedra` y `cloaca`).
+
+  El constructor no cambia, salvo las letras nuevas.
+- **Enemigos** (sin scripts nuevos; todos en la capa 5 y con 0.25 de contacto):
+
+  | | Escena | Script | Vida | Daño | Detalle |
+  |---|---|---|---|---|---|
+  | Esqueleto `e` | `escenas/enemigos/esqueleto.tscn` (la misma) | `enemy_base.gd` | 3 | 0.5 | `idle`, `walk`, `attack` (18 cuadros a 14 fps; el tajo golpea en los cuadros 7-8), `hurt` y `death`. Se acerca a 24 px para que el hacha, de unos 27 px, alcance |
+  | Ogro `W` | `escenas/enemigos/ogro.tscn` | `enemy_base.gd` | 4 | 0.75 | Mira a la izquierda; la maza golpea en los cuadros 4-5 (caja de 52x34, 38 px por delante y abajo), cada 1.8 s. Lento: patrulla a 20 y persigue a 40. Muere con el efecto `muerte` |
+  | Calavera de fuego `X` | `escenas/enemigos/calavera_fuego.tscn` | `lunge_enemy.gd`, sin gravedad | 2 | 0.5 | La misma animación para `idle`, `move` y `attack`. Avisa 0.3 s y embiste 0.35 s desde 48 px; la caja (36x28) es más ancha que el cuerpo (24x24), como en los otros voladores, porque si no, el cuerpo choca con el del Player antes de tocarlo. Lleva un `PointLight2D` naranja. Muere con el efecto `muerte` |
+
+  - Hojas: `assets/terceros/jesse_m_esqueleto/esqueleto.png` (las animaciones en un cuadro común de 58x38, alineadas por el centro del cuerpo y los pies, sin cambiar el arte), `assets/terceros/gothicvania/personajes/ogro.png` y `calavera_fuego.png`, anotadas en sus `ORIGEN.txt`.
+  - Letras `W` (`507050`) y `X` (`ff5030`) en `COLORS` y `ENEMIES`, la paleta, LEYENDA (sección 5) y P33.
+  - `esqueleto.tscn` la usan también la ruina y la mazmorra de v1 y la zona de pruebas. Sus pies quedan 7 px más arriba que los del esqueleto viejo: los esqueletos ya colocados caen al suelo y a los 3 s siguen en su sitio.
+- **Galería, piso E**, zona "Mazmorra", a la izquierda de las minas (x 10-72). Quedan 8 columnas libres: la zona siguiente abre un piso F.
+  - Cuarto "OGRO, CALAVERA Y ESQUELETO": el esqueleto junto a la escalera, el ogro bajo una losa a 4 piezas del suelo (los 64 px de los dinteles de las celdas bajas) y la calavera en el aire.
+  - Cuarto "TILESET MAZMORRA", con la muestra `zona_pruebas_muestra_mazmorra_reina`:
+    - a la izquierda, sin pared, con techo, una columna colgada, una tira, una pieza suelta y cristales;
+    - en medio, la pared `cloaca`, con la cadena, el arco, una antorcha y hongos;
+    - a la derecha, la pared `piedra`, con la reja, la estantería, la pasarela, la escalera a una repisa, otra antorcha, una caja y un barril.
+
+  La zona de pruebas solo cambia en esos dos cuartos (x 10-72, filas 105-117).
+- **Probado:**
+  - capturas de los dos cuartos con el juego abierto;
+  - prueba sin ventana con 727 comprobaciones bien:
+    - los 85 bloques de la muestra son macizos y del juego `mazmorra_reina` (columna, tira y pieza suelta incluidas), y las 5 piezas de la pasarela son de una vía;
+    - el Player se apoya en la pasarela y en el suelo;
+    - los decorados y la escalera están en su pieza del atlas, y las tres paredes salen bien;
+    - `MapAmbience` pone 4 luces (2 antorchas, hongos y cristales);
+    - los tres enemigos siguen en su sitio a los 3 s y reciben golpes;
+    - dañan lo suyo, en múltiplos de 0.25: el esqueleto 0.5, el ogro 0.75 y la calavera 0.5;
+    - el ogro persigue al Player bajo la losa sin atascarse;
+    - mueren (el esqueleto, con `death`) y se borran;
+    - la calavera lleva su luz;
+  - en la galería, los tres siguen en su sitio a los 3 s;
+  - arrancan sin errores el juego, la zona de pruebas, las `_combate` del calabozo, el castillo, el cementerio, las minas y la mazmorra, y la ruina y la mazmorra de v1.
+- **Al vestir, mirar:**
+  - los ogros no van bajo un dintel, por la maza;
+  - la calavera mide unos 85x88 con las llamas: en los desagües, de 6 de alto, puede estorbar (la ficha deja la versión sin fuego, de 40x55, si hace falta);
+  - la reja de Raou es clara y brillante sobre la piedra oscura;
+  - el remate de musgo repite su brillo cada pieza a lo largo de los suelos largos;
+  - una `g` cuelga 4 piezas: su letra va cuatro filas debajo del techo.
+
 ### Ruina
 - Parte de: tileset `mazmorra` con `bloques: ladrillo`, parallax de `gothicvania/cavernas`. Los mismos de la profundidad 3-4; el Guardián de hielo.
 - Ficha: por armar.

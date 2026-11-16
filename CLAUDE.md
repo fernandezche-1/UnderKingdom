@@ -159,7 +159,7 @@ Ordenada en P72 (`docs/P72_ORGANIZACION_REPO.md`).
   - los `tiles_<zona>.txt` ya generados;
   - `LEYENDA.md`: guía, colores y letras del constructor; su sección 8 explica cómo integrar un paquete de arte.
 - `herramientas/`:
-  - `constructor_mapas/`: `construir_mapa.tscn` genera la escena desde el `.txt`. Cada tileset está en `tilesets/<nombre>.gd`: hoy `mazmorra` (CC0), `cementerio`, `castillo`, `calabozo` y `minas`, hechos sobre el atlas de `mazmorra` (`calabozo`, sobre el de `castillo`).
+  - `constructor_mapas/`: `construir_mapa.tscn` genera la escena desde el `.txt`. Cada tileset está en `tilesets/<nombre>.gd`: hoy `mazmorra` (CC0), `cementerio`, `castillo`, `calabozo`, `minas` y `mazmorra_reina`, hechos sobre el atlas de `mazmorra` (`calabozo`, sobre el de `castillo`).
     - La colisión de cada pieza se deduce de la opacidad de sus esquinas, así que un tileset nuevo solo usa piezas macizas en los bloques.
   - `macro_mapa/`: `verificar_mundo.py`, `datos_atlas.py` y `macro_mapa.py`;
   - `sprites/`: `tira_ia_a_hoja.py` y el generador del Fire Knight;

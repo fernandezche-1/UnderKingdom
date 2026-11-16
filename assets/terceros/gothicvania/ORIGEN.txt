@@ -49,3 +49,38 @@ Minas (P73, ficha de las minas), sin cambiar el arte:
   cada una, cuadros de 80x64. El sapo de la cueva (escenas/enemigos/sapo.tscn):
   jump es su andar y el lengüetazo golpea en el tercer cuadro de attack. No
   trae daño ni muerte: muere con el efecto "muerte".
+
+Mazmorra (P73, ficha de la mazmorra), sin cambiar el arte:
+- castillo_viejo/tileset.png  Environments/Old-dark-Castle-tileset-Files/PNG/
+  old-dark-castle-interior-tileset.png tal cual (832x240, piezas de 16).
+- castillo_viejo/tileset_mazmorra_reina.png  atlas del tileset
+  "mazmorra_reina" del constructor (tilesets/mazmorra_reina.gd), que arma
+  herramientas/constructor_mapas/atlas_mazmorra_reina.py. 512x320:
+  filas 0-15, copia sin cambios del atlas de mazmorra
+  (dungeon_platformer/dungeontilesetfull.png); filas 16-19, recortes de
+  castillo_viejo/tileset.png (piezas de 16, de arriba a la izquierda):
+  - (0,16) juego de bloques 4x4: arriba el remate de musgo de los pilares,
+    (32,10) y en la esquina derecha (33,10); el resto, la piedra verde
+    (10,6). Todas macizas. La fila de tiras une la mitad de arriba del remate
+    con la de abajo de la piedra;
+  - (4,16)-(6,16) pasarela de las plataformas "=": píxeles (144,90)-(160,106),
+    las tablas del puente con su viga, tres veces;
+  - (7,16) escalera: la (5,9) del Dungeon Tile Set (dungeon_tile_set/);
+  - (8,16) pared "piedra" 6x4: la pilastra (19,3)-(20,4), dos veces en alto,
+    y la pared lisa con su hilada de ladrillo (21,2)-(24,5);
+  - (14,16) pared "cloaca" 6x4: la misma, al 60 % de brillo;
+  - (20,16) cadena "g" 1x4: (45,3)-(45,6);
+  - (21,16) arco del desagüe "U" 6x3: (5,9)-(10,11);
+    a la cadena y al arco se les quitó el color plano de la pared lisa
+    (12,29,28), que pasa a transparente, para que sirvan sobre "cloaca";
+  - (27,16) reja de celda "w" 2x2: las piezas (17,16)-(18,17) del atlas del
+    castillo (raou_castillo/tileset_castillo.png), la "f" del castillo.
+- personajes/ogro.png  Characters/Ogre/Spritesheets: ogre-idle (4),
+  ogre-walk (6) y ogre-attack (7), una fila cada una, cuadros de 144x80. El
+  ogro (escenas/enemigos/ogro.tscn): mira a la izquierda y la maza baja en
+  los cuadros 4-5 de attack. No trae daño ni muerte: muere con el efecto
+  "muerte".
+- personajes/calavera_fuego.png  Characters/Fire-Skull-Files/Spritesheets/
+  fire-skull.png tal cual (8 cuadros de 96x112). La calavera de fuego
+  (escenas/enemigos/calavera_fuego.tscn). La versión sin fuego
+  (fire-skull-no-fire, 4 cuadros de 54x70) no se copió.
