@@ -726,8 +726,85 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
 - **Falta, antes de marcarla vestida en `TASK.md`:** jugarla a mano.
 
 ### Mazmorra
-- Parte de: tileset `mazmorra` con `bloques: oliva`, parallax de `gothicvania/castillo_viejo`. Aprendis, mino, kolbo3, esqueleto; la Reina.
-- Ficha: por armar.
+- Parte de: tileset `mazmorra` con `bloques: oliva`, `fondo: ninguno` y el parallax de `gothicvania/castillo_viejo` (el interior del castillo viejo, con su vidriera) en toda la zona. Luz ambiente de la `_combate`: (0.44, 0.38, 0.56). En el ASCII, 5 Aprendis `a`, 2 mino `M`, 7 kolbo3 `q` y 6 esqueletos `e`; la Reina en la `_combate`.
+- **Ficha aprobada el 2026-11-16.**
+- **Por qué cambia** (capturas con el juego abierto de 12 salas de la `_combate`):
+  - los bloques `oliva` son cuadros casi negros con un borde punteado: la roca se lee como un hueco, como la `madera` de las minas;
+  - el parallax, con su vidriera en arco, sale igual en todas las salas, también en los desagües, la fosa y los pasillos de 4 de alto: celdas, torre y desagües no se distinguen;
+  - las 72 plataformas `=` son tiras moradas del bloque y no se leen de una vía;
+  - las 120 escaleras `H` apenas se ven.
+- **Lo que no cuadraba** (hallado al armar la ficha):
+  - los 7 kolbo3 ya salieron en las minas (4): con la regla de no repetir (P33), salen;
+  - el esqueleto `e` y el esqueleto de tumba `u` del cementerio (13) usan la misma hoja (`gothicvania_cementerio/esqueleto.png`) y la misma embestida: para el jugador son el mismo esqueleto. El `e` cambia de arte (abajo). `esqueleto.tscn` la usan también la ruina de v1 y la zona de pruebas, que cambian con ella.
+
+**Ambientación** (tileset nuevo `mazmorra_reina`, `herramientas/constructor_mapas/tilesets/mazmorra_reina.gd`, como `minas`: las filas 0-15 copian el atlas de mazmorra, por la antorcha, la lava, la fogata, la estantería, los hongos y los cristales, y debajo van piezas del tileset Old Dark Castle interior de la Legacy, el pack del parallax de hoy; un script `herramientas/constructor_mapas/atlas_mazmorra_reina.py` arma el atlas):
+- **Escala:** el pack ya va en una rejilla de 16 px y se usa tal cual.
+- **Bloques `mazmorra_reina`:** la piedra verde del pack, con el remate de musgo arriba. Solo celdas macizas: lo que sobresale a la celda vecina se queda fuera, como en las minas.
+- **Plataformas `=`** (72): la pasarela de madera con cuerda del pack, con la clave `plataformas`. La colisión de una vía no cambia.
+- **Escalera:** la de madera del Dungeon Tile Set, como en el calabozo y las minas.
+- **Cofres `c`** (3): `cofre_madera.tscn` (el del Mimic), con la clave `cofre` del tileset.
+- **Paredes**, con `fondo` y `fondo_sala` (los rectángulos exactos se fijan al vestir):
+
+  | Pared | Arte | Dónde |
+  |---|---|---|
+  | `piedra` (nueva, el `fondo:` de la zona) | el ladrillo verde oscuro del pack, con su pilastra cada pocas columnas, como la del castillo | torre del alcaide, celdas altas y bajas, cuerpo de guardia, llegada, antesala y sala de tortura |
+  | `cloaca` (nueva) | la misma piedra, oscurecida (entre el 45 y el 60 %) | desagües, fosa y huida, y los pozos de `:B:` y `:F:` |
+  | `ninguno` | el parallax de hoy, con la vidriera | gran sala de guardia y sala de la Reina |
+
+- **Decorados** (reutilizan letras, así que no hay colores nuevos; los tamaños se miden en el paso de piezas):
+
+  | Letra | En `mazmorra_reina` | Dónde |
+  |---|---|---|
+  | `t`, `E`, `x`, `b`, `f`, `h`, `r` | se quedan: antorchas, estanterías, cajas, barriles, fogata, hongos y cristales | |
+  | `g` | cadena del pack, unas 1x4, cuelga del techo | celdas, sala de tortura y antesala |
+  | `U` | arco del desagüe del pack, unas 6x3 | desagües y fosa |
+  | `w` | reja de celda de Raou, 2x2 (la `f` del calabozo y del castillo) | al fondo de las celdas altas y bajas |
+
+  - Los decorados nuevos siguen la regla de la cabecera del `.txt`: ninguno pisa una escalera, sus columnas vecinas ni las tres filas de encima, un spawn ni otro decorado, ni los objetos de la `_combate`.
+  - El agua `%` se queda como está.
+- **Luces:** ninguna pieza nueva da luz; las antorchas ya la tienen en `DECOR_LIGHTS`. La luz ambiente se ajusta al vestir, solo en la `_combate`.
+
+**Enemigos** (profundidad 3, criaturas y esqueletos):
+- **Se quedan**, porque salen aquí por primera vez: Aprendis `a` (5) y mino `M` (2). La Reina sigue en la `_combate`.
+- **Salen** los 7 kolbo3 `q` (ya en las minas).
+- **Esqueleto `e`** (6), con arte nuevo: el Skeleton Sprite Pack de Jesse M, de 22x32, con `idle` 11, `walk` 13, `attack` 18 (tajo con espada), `hit` 8, `dead` 15 (se desarma) y `react` 4. Como trae golpe, pasa de `lunge_enemy.gd` a `enemy_base.gd`, con 3 de vida, 0.5 de daño y 0.25 de contacto. Cambia la misma `esqueleto.tscn`, así que el ASCII no cambia.
+- **Nuevos** (letras y colores nuevos en `COLORS`, la paleta, LEYENDA y P33):
+
+  | | Ogro `W` (criatura) | Calavera de fuego `X` (esqueleto) |
+  |---|---|---|
+  | Arte | `Ogre` de la Legacy, cuadros de 144x80 (la figura, unos 55x58): `idle` 4, `walk` 6 y `attack` 7, con la maza | `Fire-Skull` de la Legacy, 8 cuadros de 96x112 (unos 80x90 con las llamas) |
+  | Script base | `enemy_base.gd`, golpe de maza hacia los cuadros 4-5. No trae daño ni muerte: muere con el efecto `muerte` | `lunge_enemy.gd`, sin gravedad, como el ojo volador. Muere con el efecto `muerte`. Su escena lleva una luz naranja pequeña |
+  | Vida y daño | 4 de vida, 0.75 de daño (golpe lento y fuerte) y 0.25 de contacto | 2 de vida, 0.5 de daño y 0.25 de contacto |
+  | Sitio | 4 de los sitios de los kolbo3, los de suelo: sala de tortura (16, 46), de verdugo junto al cofre; cuerpo de guardia (84, 68); celdas bajas (100, 48); celdas altas (92, 37) | los otros 3, en el aire: sobre la repisa alta (por el de (62, 21)), la torre (por el de (104, 21)) y los desagües (por el de (66, 65)) |
+
+  - Los sitios exactos se fijan al vestir, con la regla de las escaleras.
+  - Bajo los dinteles de las celdas bajas quedan 64 px de alto y el ogro mide unos 58: se comprueba en la galería.
+  - Si la calavera con llamas estorba en los desagües, el pack trae una versión sin fuego, de 40x55.
+  - Si `enemy_base.gd` o `lunge_enemy.gd` no sirven sin cambios, se pregunta antes de tocarlos o de hacer un script propio.
+- Quedan 5 Aprendis, 2 mino, 6 esqueletos, 4 ogros y 3 calaveras (20, como antes).
+
+**Origen del arte:**
+- **Legacy Collection** (CC0, `Legacy Collection.zip` en Descargas): el tileset Old Dark Castle interior (bloques, pasarela, paredes, cadena y arco del desagüe) va a `assets/terceros/gothicvania/castillo_viejo/`, junto a su fondo; `Ogre` y `Fire-Skull`, a `assets/terceros/gothicvania/personajes/`. Se anotan en su `ORIGEN.txt`.
+- **Skeleton Sprite Pack** de Jesse M (`Skeleton Sprite Pack.rar` en Descargas): a `assets/terceros/jesse_m_esqueleto/`, con su `ORIGEN.txt`.
+- **Reja de celda:** la de Raou, ya en el repo.
+- **Escalera:** la del Dungeon Tile Set, ya en el repo.
+- Sin pack nuevo ni IA.
+- **Licencias:** el RAR del esqueleto no trae licencia, y el Dungeon Tile Set y Raou siguen por confirmar antes de publicar (ver "Otros pendientes" de `TASK.md`). Se usan igual, como en las zonas de arriba.
+- **Mirado y descartado:**
+  - el tileset grunge de la Legacy: alambrada y puertas modernas;
+  - el Gothic Castle de la Legacy: pocas piezas;
+  - la puerta de madera del Old Dark Castle: parece que se abre;
+  - el `enemy-ghost` de la Legacy: ya está el ánima;
+  - el Terrible Knight de la Legacy: es una hoja de personaje jugable;
+  - el Skeleton de Monster Creatures Fantasy 1.3: solo trae `Attack3`;
+  - Hell-Hound, Hell-Beast, demon y Nightmare de la Legacy: demonios, de más abajo.
+
+**Reto obligatorio:** coincide con su fila de P46, sección 10.
+- Llega con el Golpe final, la Ráfaga y Rodar (E1 o E2; la Agilidad solo si encontró E3) y sale por `[!5]`, con el derrumbe tras la Reina.
+- Los 3 ogros del camino obligatorio (cuerpo de guardia, celdas bajas y celdas altas) se vencen a espada.
+- Ningún enemigo va en la llegada, la antesala, la sala de la Reina ni la huida.
+- Ningún reto obligatorio pide E3, el dash ni una mejora de la tienda.
+- Vestir no cambia celdas sólidas y las plataformas siguen siendo de una vía; se comprueba en el paso D.
 
 ### Ruina
 - Parte de: tileset `mazmorra` con `bloques: ladrillo`, parallax de `gothicvania/cavernas`. Los mismos de la profundidad 3-4; el Guardián de hielo.

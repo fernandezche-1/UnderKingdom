@@ -6,7 +6,7 @@
   - al fondo, demonios.
 - Antes había cualquier enemigo en cualquier mapa: diablillos y minotauros en las minas, un Vanguardia en el infierno.
 - Ahora cada mundo usa solo los enemigos de su profundidad. Los cambios se hicieron en los PNG y se regeneraron las escenas.
-- **Sin repetir (2026-11-12, ficha de las minas en P73):** un enemigo no vuelve a salir en otra zona. Los que ya aparecieron más arriba en la ruta se quitan al vestir cada zona, y su sitio lo toma un enemigo nuevo de esa profundidad. Excepción: el infierno (P46). Pendiente: el cementerio repite la Vanguardia y el murciélago del castillo, y la mazmorra y la ruina comparten la lista de abajo.
+- **Sin repetir (2026-11-12, ficha de las minas en P73):** un enemigo no vuelve a salir en otra zona. Los que ya aparecieron más arriba en la ruta se quitan al vestir cada zona, y su sitio lo toma un enemigo nuevo de esa profundidad. Excepción: el infierno (P46). Pendiente: el cementerio repite la Vanguardia y el murciélago del castillo, y la ruina comparte la lista de la mazmorra. La mazmorra ya tiene su ficha (P73, 2026-11-16): sin kolbo3 y con el esqueleto `e` de arte nuevo, que antes era el mismo que el `u` del cementerio.
 
 ## Tabla
 
@@ -16,7 +16,7 @@
 | 0 | `tiles_castillo` (el castillo, sobre el cementerio) | Guardia `G` (caballero con escudo, ver `P40_CASTILLO_CON_TILES.md`), Vanguardia `v`, murciélago `m` | |
 | 1 | `tiles_cementerio` (superficie) | Vanguardia `v` (el viejito), murciélago `m` (cripta y abismo), esqueleto de tumba `u`, cuervo `o` (exterior; `escenas/enemigos/cuervo.tscn`) y ánima `N` (cripta honda; `escenas/enemigos/anima.tscn`), de la ficha del cementerio (P73). Al vestir la zona (2026-11-12) se colocaron 3 cuervos en el exterior y 3 ánimas en lugar de 3 murciélagos (P73, "Vestida") | |
 | 2 | `tiles_mineria` (bajo tierra) | kolbo `k`, kolbo2 `j`, kolbo3 `q` (0.5 de daño desde el 2026-11-15), murciélago `m`. Ficha de las minas (P73, 2026-11-12): salen los murciélagos (ya aparecieron arriba) y entran ojo volador `p` (`escenas/enemigos/ojo_volador.tscn`), sapo de la cueva `s` (`escenas/enemigos/sapo.tscn`) y Mimic `i` (`escenas/enemigos/mimic.tscn`), hechos en el paso de piezas (2026-11-15). Al vestir la zona (2026-11-15) se quitaron los 10 murciélagos y se colocaron 6 ojos en sus sitios del aire, 4 sapos en el suelo bajo los otros 4 y 2 Mimics en callejones sin salida (P73, "Vestida") | |
-| 3 | `tiles_mazmorra` | Aprendis `a` (esqueleto de fuego), mino `M`, kolbo3 `q`, esqueleto `e` | |
+| 3 | `tiles_mazmorra` | Aprendis `a` (esqueleto de fuego), mino `M`, kolbo3 `q`, esqueleto `e`. Ficha de la mazmorra (P73, 2026-11-16): salen los 7 kolbo3 (ya salieron en las minas); el esqueleto `e`, que usaba la misma hoja que el `u` del cementerio, pasa al Skeleton Sprite Pack de Jesse M con `enemy_base.gd`; entran el ogro `W` (criatura) y la calavera de fuego `X` (esqueleto) | ogro `W` y calavera de fuego `X`, y el arte nuevo del esqueleto `e` (paso de piezas) |
 | 4 | `tiles_ruina` | Aprendis `a` (esqueleto de fuego), mino `M`, kolbo3 `q`, esqueleto `e` | |
 | 5 | `tiles_profundidades` (abismo) | diablillo `d` | |
 | 6 | `tiles_jefe` (infierno) | diablillo `d`. En el infierno rehecho (la prueba final, P46): los más duros de todas las profundidades, excepción a esta tabla | demonslime como enemigo común (hoy sin letra) |
