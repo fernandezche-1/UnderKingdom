@@ -871,6 +871,51 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
   - el remate de musgo repite su brillo cada pieza a lo largo de los suelos largos;
   - una `g` cuelga 4 piezas: su letra va cuatro filas debajo del techo.
 
+**Vestida (2026-11-16), falta jugarla a mano:**
+- `mapas_texto/tiles_mazmorra.txt` pasa a `tileset: mazmorra_reina`, `bloques: mazmorra_reina` y `fondo: piedra`, con `fondo_sala`. El parallax de `castillo_viejo` no cambia. Se regeneró la base `escenas/mapas/tiles_mazmorra.tscn`; la `_combate` no se tocó.
+- **Paredes:**
+
+  | Pared | Rectángulos (x0 y0 x1 y1) |
+  |---|---|
+  | `piedra` (el `fondo:`) | lo demás: torre del alcaide y secreto, celdas altas y bajas, cuerpo de guardia, llegada, antesala, sala de tortura y los huecos de las escaleras |
+  | `cloaca` | desagües 36 51 45 56, 46 54 53 59, 54 57 61 62 y 62 60 71 65; pozo de `:B:` 70 0 72 11; hueco del colector 85 69 87 74; todo lo de abajo (fosa, huida, pozo de `:F:` y `[!5]`) 0 75 119 89 |
+  | `ninguno` (el parallax) | gran sala de guardia 28 12 71 46; sala de la Reina 4 58 26 74 |
+
+  - La gran sala llega a la columna 71, una más que la sala: así la pared de la torre y de las celdas altas empieza en la pilastra de las columnas 72-73 y no en un corte liso.
+  - La fila 75, el suelo que se hunde, va con la fosa.
+- **Decorados nuevos** (sitio de abajo a la izquierda):
+
+  | Letra | Sitios |
+  |---|---|
+  | `w` reja de celda | celdas altas, una por celda: (86, 37), (90, 37), (96, 37), (101, 37), (107, 37) y (111, 37); celdas bajas, en las que no tienen antorcha: (81, 48), (85, 48), (93, 48) y (103, 48) |
+  | `g` cadena | sala de tortura (8, 43), (13, 43), (17, 43) y (24, 43); antesala (11, 54) y (19, 54), a los lados de la trampilla de la Reina; celdas altas (82, 35) y (117, 35); celdas bajas (74, 47) y (111, 47) |
+  | `U` arco del desagüe | desagües (54, 62), con la boca sobre el agua de x 55-58, y (66, 65), sobre la de x 68-70; fosa (6, 86) y (17, 86) |
+
+  - Las rejas van a ras de suelo, como las `f` del castillo y del calabozo.
+  - La huida sigue sin decorados, como pedía la cabecera del ASCII.
+  - Cumplen la regla de la cabecera del `.txt`, comprobada con un script sobre el ASCII: ninguno pisa una escalera, sus columnas vecinas ni sus tres filas de encima, un spawn, un cofre, una moneda, una poción, un enemigo, otro decorado ni los objetos de la `_combate`. Los de pie se apoyan en roca y las cadenas cuelgan de ella.
+- **Enemigos en el ASCII:**
+  - salen los 7 kolbo3;
+  - ogros `W` en 4 de sus sitios: sala de tortura (16, 46), cuerpo de guardia (84, 68), celdas altas (92, 37) y celdas bajas (98, 48). El de las celdas bajas pasa de la columna 100 a la 98, al centro de la celda, entre los dinteles de las columnas 96 y 101;
+  - calaveras de fuego `X` en el aire, por los otros 3: sobre la repisa alta (62, 18), en la torre (104, 17) y en el último tramo de los desagües (67, 62);
+  - los 5 Aprendis, los 2 mino y los 6 esqueletos no se mueven.
+
+  Quedan 5 Aprendis, 2 mino, 6 esqueletos, 4 ogros y 3 calaveras (20, como antes).
+- **Colisiones:** iguales antes y después, 5786 piezas sólidas y 72 de una vía, con los mismos polígonos y la misma marca de una vía (`Terreno`, `Plataformas` y `Liquidos`), volcadas de la base con una escena temporal.
+- **Comprobado sobre la base** (volcado de sus capas contra el ASCII): las 10800 celdas llevan su pared (1929 sin bloque con `piedra`, 1191 con `cloaca` y 1894 sin pared); los 5786 bloques son del juego `mazmorra_reina` y las 72 piezas de plataforma, de la pasarela; los 24 decorados nuevos y las 120 piezas de escalera están en su pieza del atlas; los 3 cofres son `cofre_madera.tscn`.
+- **Prueba sin ventana** de la `_combate` (115 comprobaciones bien): no queda ningún kolbo3; todos los enemigos van en la capa 5 y dañan en múltiplos de 0.25; a los 3 s los 20 siguen en su sitio (los ogros y las calaveras se mueven unos 5 px, y los de suelo siguen sobre el suelo); las 3 calaveras llevan su luz. `MapAmbience` pone 29 luces, sin fuentes nuevas.
+- Capturas con el juego abierto de toda la zona, pantalla a pantalla, y de 13 salas con el Player dentro.
+- Arrancan sin errores la `_combate`, el juego, las `_combate` de las minas y del calabozo y la zona de pruebas, y `verificar_mundo.py` da 0 errores. El Atlas se publicó de nuevo, con los nombres de `g`, `U` y `w` del tileset `mazmorra_reina` y de `W` y `X`.
+- La luz ambiente de la `_combate`, (0.44, 0.38, 0.56), se queda hasta jugarla.
+- **Al jugarla, mirar:**
+  - **el suelo que se hunde** de la sala de la Reina (`Derrumbe`, en la `_combate`) sigue con su pieza morada por defecto y ahora destaca sobre el remate de musgo. Tiene `piece_texture` para darle la pieza del suelo nuevo; no se tocó porque al vestir la `_combate` solo cambia por las luces;
+  - la calavera del último tramo de los desagües, con sus llamas (hasta unos 85x88), va en un túnel de 96 de alto: en la captura cabe sin salirse, pero casi lo tapa. Si estorba, la ficha deja la versión sin fuego del pack;
+  - la maza del ogro de las celdas bajas asoma hasta 12 px sobre un dintel cuando golpea debajo de uno. De patrulla y parado, con 58 px de alto, pasa por debajo sin tocarlo;
+  - la calavera de la repisa alta ve al Player al llegar del calabozo por `:B:` (está a 7 piezas del spawn, como antes el kolbo3);
+  - la fosa y la huida no tienen antorchas y con la pared `cloaca` se ven muy oscuras fuera de la luz del Player; los arcos de la fosa apenas se distinguen hasta acercarse;
+  - las cadenas son de un verde oscuro y se ven poco sobre la pared.
+- **Falta, antes de marcarla vestida en `TASK.md`:** jugarla a mano.
+
 ### Ruina
 - Parte de: tileset `mazmorra` con `bloques: ladrillo`, parallax de `gothicvania/cavernas`. Los mismos de la profundidad 3-4; el Guardián de hielo.
 - Ficha: por armar.
