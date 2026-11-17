@@ -917,8 +917,89 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
 - **Falta, antes de marcarla vestida en `TASK.md`:** jugarla a mano.
 
 ### Ruina
-- Parte de: tileset `mazmorra` con `bloques: ladrillo`, parallax de `gothicvania/cavernas`. Los mismos de la profundidad 3-4; el Guardián de hielo.
-- Ficha: por armar.
+- Parte de: tileset `mazmorra` con `bloques: ladrillo`, `fondo: ninguno` y el parallax de `gothicvania/cavernas` (`fondo.png` y `paredes.png`) en toda la zona. En el ASCII, 6 Aprendis `a`, 2 mino `M`, 7 kolbo3 `q` y 8 esqueletos `e`; el Guardián de hielo en la `_combate`.
+- **Ficha aprobada el 2026-11-16.**
+- **Por qué cambia** (leído de la cabecera de `mapas_texto/tiles_ruina.txt`, sin capturas):
+  - el parallax de cuevas sale en todas las salas, también en la capilla, las criptas y las galerías de 6 de alto;
+  - las 53 plataformas `=` son tiras del bloque `ladrillo` y las 177 escaleras `H` son las de mazmorra, que apenas se ven;
+  - lo único que dice "helada" son los 18 cristales `r`.
+- **Lo que no cuadraba** (hallado al armar la ficha):
+  - los cuatro enemigos de la profundidad 4 de P33 ya salieron más arriba: `a`, `M` y `e` en la mazmorra y `q` en las minas. Con la regla de no repetir (P33) salen los 23;
+  - no hay arte de hielo en ningún pack del repo, de `archivo/sin_uso/` ni de Descargas (Legacy, Super Grotto, Monsters Creatures Fantasy 2, PixelFantasy, crusher);
+  - no queda arte de esqueleto que sirva: el de Super Grotto ya se descartó (cabezón) y Monster Creatures Fantasy 1.3 solo trae `Attack3`. El esqueleto de la ruina sale de la IA.
+
+**Ambientación** (tileset nuevo `ruina`, `herramientas/constructor_mapas/tilesets/ruina.gd`, como `minas` y `mazmorra_reina`: las filas 0-15 copian el atlas de mazmorra, por la antorcha, la fogata, el agua, los cristales, los hongos, la estantería, la caja y el barril, y debajo van piezas de `caverns-files-web/layers/tiles.png` de la Legacy, el pack del parallax de hoy (`cavernas/paredes.png` es su `back-walls.png`); un script `herramientas/constructor_mapas/atlas_ruina.py` arma el atlas):
+- **Escala:** el pack ya va en una rejilla de 16 px (512x288, 32x18 piezas) y se usa tal cual. Es una escena pintada, no un juego de piezas: se recortan las celdas que sirvan.
+- **Bloques `ruina`:** el borde de cantos morados del pack (suelo con piedras, laterales y techo con flecos). Solo celdas macizas: lo que sobresale a la celda vecina se queda fuera, como en las minas.
+  - El interior del pack es casi negro, del mismo color que el hueco de la cueva. Si en la galería la roca se lee como un hueco (lo de `oliva` y `madera`), el interior se arma con la textura de cantos de los laterales.
+- **Plataformas `=`** (53): una tira del borde de cantos, con la clave `plataformas`. Si no se lee como repisa, la viga de madera del calabozo. La colisión de una vía no cambia.
+- **Escalera:** la de madera del Dungeon Tile Set, como en el calabozo, las minas y la mazmorra.
+- **Cofres `c`** (4): `cofre_madera.tscn` (el del Mimic), con la clave `cofre` del tileset.
+- **Paredes**, con `fondo` y `fondo_sala` (los rectángulos exactos se fijan al vestir):
+
+  | Pared | Arte | Dónde |
+  |---|---|---|
+  | `ruina` (nueva, el `fondo:` de la zona) | el muro de ladrillo roto de la banda central del pack | lo construido: llegada, torre caída, pasillo, galerías alta y baja, capilla, criptas y refugio, antesala, sala del Guardián, cámaras del deshielo y del hielo negro, secreto del dash y pozos |
+  | `ninguno` | el parallax de hoy | lo natural: exterior helado, cumbre del viento, lago helado y pie del pozo `:D:` |
+
+- **Decorados** (reutilizan letras, así que no hay colores nuevos; los tamaños se miden en el paso de piezas):
+
+  | Letra | En `ruina` | Dónde |
+  |---|---|---|
+  | `t`, `r`, `x`, `b`, `h`, `E` | se quedan: antorchas, cristales (el hielo), cajas, barriles, hongos y estanterías | |
+  | `V` | hornacina con llama rosa del pack, unas 2x2, da luz | galerías y capilla |
+  | `U` | contrafuerte en arco del muro del pack, unas 3x4 | galerías alta y baja y antesala |
+  | `n` | pedruscos caídos del pack | galerías y exterior |
+
+  - El agua `%` del lago se queda como está. Las estalactitas de hielo del exterior son de bloque y se quedan.
+  - Los decorados nuevos siguen la regla de la cabecera del `.txt`: ninguno pisa una escalera, sus columnas vecinas ni las tres filas de encima, un spawn ni otro decorado, ni los objetos de la `_combate`.
+- **Luces:** la hornacina `V` va en `ATLAS_DECOR_LIGHTS`. La luz ambiente se ajusta al vestir, solo en la `_combate`.
+- **Hielo** (aprobado el 2026-11-16: se prueban los dos): sin arte de hielo, el frío sale de:
+  - una luz ambiente fría en la `_combate`, por ejemplo (0.40, 0.48, 0.62);
+  - un tinte frío de las piezas del pack en `atlas_ruina.py` (un recoloreo, sin dibujar arte nuevo, como el 60 % de las paredes).
+
+  En el paso de piezas la galería enseña las piezas con y sin tinte, y se elige con capturas.
+
+**Enemigos** (profundidad 4, criaturas y esqueletos):
+- **Salen los 23:** 6 Aprendis `a`, 2 mino `M`, 7 kolbo3 `q` y 8 esqueletos `e`, porque ya salieron en la mazmorra y las minas. El Guardián sigue en la `_combate`.
+- **Nuevos** (letras y colores nuevos en `COLORS`, la paleta, LEYENDA y P33; `J`, `Z` e `Y` están libres):
+
+  | | Lobo de la escarcha `J` (criatura) | Ave de las nieves `Z` (criatura) | Esqueleto helado `Y` (esqueleto) |
+  |---|---|---|---|
+  | Arte | `WereWolf` de la Legacy, cuadros de 96x76 (la figura, unos 60x40): `idle` 5, `run` 6, `jump` 2 y `fall` 2. No trae golpe, daño ni muerte | `flying-bird` de la Legacy, la versión blanca: 7 cuadros de 32x32 (la figura, unos 25x25) | IA, con la receta de abajo |
+  | Script base | `lunge_enemy.gd` en el suelo: corre (`run`), avisa (`idle`) y salta sobre el Player (`jump` y `fall`). Muere con el efecto `muerte` | `lunge_enemy.gd`, sin gravedad, como el cuervo y el ojo volador. Muere con el efecto `muerte` | `enemy_base.gd`, con tajo de espada |
+  | Vida y daño | 3 de vida, 0.5 de daño y 0.25 de contacto. Rápido | 1.5 de vida, 0.5 de daño y 0.25 de contacto | 3 de vida, 0.75 de daño y 0.25 de contacto |
+  | Sitio | los 9 de suelo de los kolbo3 y los mino: exterior (49, 15) y (72, 15), bajo la repisa de la cumbre (84, 18), lago (64, 23), galería alta (80, 33) y (144, 33), galería baja (14, 47) y su tramo alto (100, 45), cripta oscura (58, 64) | los 6 del aire de los Aprendis: exterior (52, 9), cumbre (70, 6), torre (108, 13), galería alta (46, 30), galería baja (90, 44) y capilla (14, 59) | los 8 de los esqueletos: exterior (97, 21), cumbre (90, 5), pasillo (126, 17), galería alta (20, 33) y (98, 33), galería baja (52, 47) y (125, 47), cripta oscura (36, 64) |
+
+  - Los sitios exactos se fijan al vestir, con la regla de las escaleras. El lobo mide unas 2,5 piezas de alto: cabe en las galerías (6), el pasillo (5) y el lago (6).
+  - Si `enemy_base.gd` o `lunge_enemy.gd` no sirven sin cambios, se pregunta antes de tocarlos o de hacer un script propio.
+- **Receta IA del esqueleto helado** (P73, sección 2, "Arte con IA para enemigos"; aprobada el 2026-11-16):
+  1. Figura de referencia, que se aprueba antes de pedir las tiras: un esqueleto con restos de armadura cubiertos de escarcha y una espada, de perfil mirando a la derecha, en pose `idle`.
+  2. Tiras `idle`, `walk`, `attack`, `hurt` y `death`, seguidas, con el mismo prompt base y la figura de referencia, sobre fondo magenta y sin salirse de su casilla.
+  3. Se procesan con `herramientas/sprites/tira_ia_a_hoja.py`, probando primero `--escala` y `--fila-pies`, para que mida unos 36-40 px de alto (el esqueleto de la mazmorra mide 32). Solo si no basta se le añade un modo para enemigos, sin cambiar lo que hace con el Player.
+  4. Una carpeta con cada `original_ia.png` y los prompts exactos, para poder regenerar.
+- Quedan 9 lobos, 6 aves y 8 esqueletos helados (23, como antes).
+
+**Origen del arte:**
+- **Legacy Collection** (CC0, `Legacy Collection.zip` en Descargas): `caverns-files-web/layers/tiles.png` va a `assets/terceros/gothicvania/cavernas/`, junto a su fondo; `WereWolf` y `flying-bird`, a `assets/terceros/gothicvania/personajes/`. Se anotan en su `ORIGEN.txt`.
+- **Esqueleto helado:** IA.
+- **Escalera:** la del Dungeon Tile Set, ya en el repo.
+- **Licencias:** el Dungeon Tile Set sigue por confirmar antes de publicar (ver "Otros pendientes" de `TASK.md`). Se usa igual, como en las zonas de arriba.
+- **Mirado y descartado:**
+  - el cangrejo, el slime, el fantasma y el lagarto de Super Grotto: de estilo tierno;
+  - el meerman de la Legacy: solo trae 2 cuadros;
+  - el crusher de unTied Games: mecánico, y su licencia pide créditos;
+  - Rocky Pass y Rocky Tileset de la Legacy: desierto;
+  - `cavesofgallet` y `lilspook` (Descargas): piezas de 8 px, de otro estilo;
+  - los props de PixelFantasy Caves: árboles y rocas de bosque;
+  - Hell-Hound, Nightmare y flying-eye-demon de la Legacy: demonios, de más abajo;
+  - Gothicvania Cold Corridors de Ansimuz (gratis en itch.io): su página no dice la licencia ni habla de hielo. Queda como alternativa si se baja.
+
+**Reto obligatorio:** coincide con su fila de P46, sección 10.
+- Llega con la Ultimate (más Rodar, la Ráfaga y el Golpe final; la Agilidad solo si encontró E3) y sale por `[P6]`, con el Guardián vencido y la llama eterna.
+- Los enemigos nuevos van en los sitios de hoy: ninguno en la llegada, el pie del pozo, la antesala, la sala del Guardián, las cámaras del deshielo y del hielo negro ni los secretos.
+- Ningún reto obligatorio pide el dash, E4 ni una mejora de la tienda. Las zonas frías siguen sin mecánica: no son de esta ficha.
+- Vestir no cambia celdas sólidas y las plataformas siguen siendo de una vía; se comprueba en el paso D.
 
 ### Profundidades
 - Parte de: tileset `mazmorra` con `bloques: oro`, parallax de `gothicvania/lava`. Diablillo; el Demon Slime. Faltan los minijefes de los altares (P46, sección 7).
