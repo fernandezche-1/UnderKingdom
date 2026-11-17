@@ -41,6 +41,9 @@ LAYOUT = {
     "horno": (17, 16),       # V, 2x6 (filas 16-21; da luz)
     "arco": (19, 16),        # U, 2x3
     "calaveras": (21, 16),   # n, 2x3
+    # Pared agrietada del secreto (P48): la columna del juego de bloques tres
+    # veces, 1x3, para escenas/objetos/pared_agrietada_profundidades.tscn.
+    "pared_agrietada": (23, 16),
 }
 
 # Juego de bloques: el de la ruina (atlas_ruina.py), sin tinte. Arriba, el
@@ -160,6 +163,11 @@ def blocks(caverns, atlas):
     column.paste(tile(caverns, *LEFT).crop((0, 0, T // 2, T)), (0, 0))
     column.paste(tile(caverns, *RIGHT).crop((T // 2, 0, T, T)), (T // 2, 0))
     pieces[(3, 1)] = solid(column, "columna")
+    # La pared agrietada (P48) es la misma columna, de 1x3: la roca que sigue
+    # hasta el suelo bajo la columna de la galería.
+    wx, wy = LAYOUT["pared_agrietada"]
+    for j in range(3):
+        place(atlas, column, (wx, wy + j))
     # Tiras de una pieza de alto: la mitad de arriba del borde de arriba con la
     # de abajo del de abajo.
     half = T // 2

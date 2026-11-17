@@ -19,7 +19,7 @@
 [ext_resource type="PackedScene" path="res://escenas/sistemas/spawn_point.tscn" id="17_spawn"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/atuendo.tscn" id="18_atuendo"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/objeto_lore.tscn" id="19_lore"]
-[ext_resource type="PackedScene" path="res://escenas/objetos/pared_agrietada.tscn" id="20_pared"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/pared_agrietada_profundidades.tscn" id="20_pared"]
 [ext_resource type="PackedScene" path="res://escenas/items/fragmento_vida.tscn" id="21_fragmento"]
 [ext_resource type="Script" path="res://scripts/environment/encounter_visibility.gd" id="22_visibilidad"]
 [ext_resource type="Texture2D" path="res://assets/terceros/Medieval King Pack 2/Sprites/Idle.png" id="23_rey_idle"]

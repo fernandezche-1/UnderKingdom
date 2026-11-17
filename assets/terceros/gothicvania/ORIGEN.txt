@@ -151,7 +151,10 @@ personajes:
   - (19,16) arco con cara de demonio "U" 2x3: (224,112)-(256,160), teñido de
     rojo;
   - (21,16) montón de calaveras "n" 2x3: (128,96)-(160,144) tal cual, recortado
-    por su borde y apoyado abajo.
+    por su borde y apoyado abajo;
+  - (23,16) pared agrietada 1x3 (P48, 2026-11-17): la pieza de columna del
+    juego de bloques (3,17) tres veces, para
+    escenas/objetos/pared_agrietada_profundidades.tscn.
 - personajes/bestia_infernal.png  Characters/Hell-Beast-Files: Idle/Sprites
   hell-beast-idle1-6, Breath/Sprites hell-beast-breath1-4 y Burn/Sprites
   hell-beast-burn1-4, una fila cada una, en cuadros de 80x72 (las filas 88-160

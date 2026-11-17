@@ -90,7 +90,7 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
   - `escenas/objetos/palanca.tscn`: palanca que marca un `encounter_id` (P49).
   - `escenas/objetos/sello.tscn`: sello de un contador (`seal_group`, `seal_id`, `seal_total`) (P55).
   - `escenas/objetos/objeto_lore.tscn`: lore que se lee con E, con un diálogo en JSON (P50).
-  - `escenas/objetos/pared_agrietada.tscn`: pared falsa que se rompe a golpes (P48).
+  - `escenas/objetos/pared_agrietada.tscn`: pared falsa que se rompe a golpes (P48); `pared_agrietada_profundidades.tscn` la hereda con la roca de las profundidades.
   - `escenas/objetos/rompible_selectivo.tscn`: solo se rompe con el tajo ascendente con Golpe final o con la Ultimate (P56).
   - `escenas/objetos/ascensor.tscn`: ascensor minero (`:C:`), con `requires_encounter` (P60).
   - `escenas/objetos/atuendo.tscn`: atuendo que se recoge (`outfit_id`) (P69); de él hereda la espada oxidada.

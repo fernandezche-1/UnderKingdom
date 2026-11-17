@@ -1289,6 +1289,8 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
   - bestias `I` en el suelo, bajo los diablillos que salen: galería (28, 25) y (72, 25), cornisa (108, 25) y (178, 25), sobre la roca, y encrucijada (93, 60) y (118, 60);
   - pesadillas `Y` en el puente de huesos, en medio de cada tramo entre pozas (de 27, 27 y 15 piezas): (131, 37), (161, 37) y (185, 37).
 
+  - el diablillo del pasillo del fuego pasa de (184, 76) a (172, 76) (aprobado el 2026-11-17): estaba antes que la `_combate`, encima del sitio oeste de la Bestia infernal mayor, `JefePasilloOeste` (184, 76). Ahora queda entre la chimenea y el altar, a 12 piezas de ese sitio y en el aire del pasillo, con 3 piezas libres a cada lado.
+
   Quedan 13 diablillos, 6 bestias y 3 pesadillas (22, como antes). Ninguno a menos de 8 piezas de la P, los checkpoints o los spawns.
 - **Decorados nuevos** (sitio de abajo a la izquierda, todos apoyados en el suelo):
 
@@ -1312,8 +1314,9 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
   - las bestias de la cornisa, que disparan al puente colgante, y las dos de la encrucijada;
   - las pesadillas del puente de huesos: cada tramo les deja sitio para embestir, pero el de (185, 37) es el más corto (15 piezas, entre la poza de x 175-177 y la escalera 194);
   - el corte del parallax en el puente de ceniza;
-  - el diablillo del pasillo del fuego, (184, 76), que estaba antes que la `_combate`: queda sobre el sitio oeste de la Bestia infernal mayor, `JefePasilloOeste` (184, 76).
-- **Pendiente** (P48 y TASK.md lo dejaban para este paso): la pared agrietada del secreto sigue con el arte provisional de siempre. La heredada `pared_agrietada_profundidades.tscn` es una escena nueva y cambia la `_combate`, y su arte no está en la ficha: se decide aparte.
+  - la pared agrietada del secreto, que se lee como roca: la delata solo la franja de techo de encima.
+- **Pared agrietada** (P48 y TASK.md la dejaban para este paso; aprobada el 2026-11-17 al acabar de vestir): `escenas/objetos/pared_agrietada_profundidades.tscn`, heredada, con la roca del tileset (la columna del juego de bloques, 1x3, en (23,16) del atlas). La `_combate` la instancia en lugar de la de siempre. Detalle y prueba en P48, sección 7.
+- **Colisiones** tras mover el diablillo y añadir la pieza al atlas: las mismas que antes de vestir.
 
 ### Infierno
 - Parte de: tileset `mazmorra` con `bloques: ladrillo`, parallax de `gothicvania/lava`. La mezcla de los más duros (P46); Cthulhu. Faltan los enemigos definitivos.

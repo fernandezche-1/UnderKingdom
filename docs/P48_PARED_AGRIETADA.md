@@ -45,7 +45,7 @@ Tres exportaciones nuevas. Su valor por defecto deja la caja y la estatua como e
 - La columna de ladrillo morado del tileset `castillo`: piezas (3, 16-18) de `assets/terceros/raou_castillo/tileset_castillo.png`, región `(48, 256, 16, 48)`, igual en los cuatro estados (intacta, dañada, crítica y rota).
 - **Pendiente:**
   - arte propio de ladrillo con grietas, en tres grados de daño más los escombros. Con los escombros, `hide_sprite_when_destroyed` pasa a `false`;
-  - para las profundidades (tileset `mazmorra`, bloques `oro`), una escena heredada `pared_agrietada_profundidades.tscn` que solo cambie el `SpriteFrames` (decidido el 2026-11-08). Al montar la `_combate` (2026-11-17) se dejó la de siempre: la heredada se hace al vestir la zona, con el tileset `profundidades`, que cambia el aspecto de la roca.
+  - para las profundidades (tileset `mazmorra`, bloques `oro`), una escena heredada `pared_agrietada_profundidades.tscn` que solo cambie el `SpriteFrames` (decidido el 2026-11-08). Al montar la `_combate` (2026-11-17) se dejó la de siempre: la heredada se hace al vestir la zona, con el tileset `profundidades`, que cambia el aspecto de la roca. **Hecha el 2026-11-17** (sección 7).
 - No hay sonido de derrumbe en el proyecto. Cuando lo haya, se añade aquí.
 
 ## 5. Zona de pruebas
@@ -64,3 +64,15 @@ Tres exportaciones nuevas. Su valor por defecto deja la caja y la estatua como e
   - **con espada:** 2 tajos (0.5 y rota), y el Player la cruza;
   - en los dos casos, al volver a instanciar el mapa sale rota, con la colisión desactivada y la capa a 0.
 - Arrancan sin errores el juego, la zona de pruebas y `mundo_1` (el aviso de SpawnPoint de `mundo_1` ya salía antes).
+
+## 7. La pared de las profundidades (2026-11-17)
+
+- `escenas/objetos/pared_agrietada_profundidades.tscn`, heredada de `pared_agrietada.tscn`: solo cambia el `SpriteFrames`. Mismo script, colisión, vida y efectos al romperse.
+- **Arte:** la roca del tileset `profundidades`. Es la pieza de columna del juego de bloques, tres veces (16x48), en (23,16)-(23,18) del atlas `assets/terceros/gothicvania/lava/tileset_profundidades.png`, que la pone `herramientas/constructor_mapas/atlas_profundidades.py`. El atlas solo cambia en esas tres piezas, que estaban vacías.
+  - En el secreto de la galería (columna 8, filas 23-25) se lee como la columna de roca de las filas 21-22 que llega al suelo. La pista es la franja de techo que el constructor pone en la fila 22, encima de la pared.
+  - Como las otras dos, es provisional hasta el arte propio con grietas (sección 4).
+- **En las profundidades:** `Objetos/ParedAgrietada` de `tiles_profundidades_combate.tscn` instancia la heredada, en el mismo sitio, (128, 368).
+- **Galería:** cuarto "PARED DE ROCA" en el piso G (x 53-66, filas 143-155), como el de la pared del calabozo, con una moneda detrás. La zona de pruebas solo cambia en ese cuarto.
+- **Prueba sin ventana**, en las profundidades y en la galería, sin espada: la región del sprite es la de la roca, a escala 1 y maciza; el Player se queda contra la pared, la rompe con 4 puñetazos, el sprite se oculta y la cruza. Capturas de los dos sitios.
+- Tras cambiar el atlas hay que reimportarlo (`godot --headless --import`, o abrir el editor): sin eso, la escena sale con la pieza vacía.
+

@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="PackedScene" path="res://escenas/objetos/pared_agrietada.tscn" id="1_pared"]
+[ext_resource type="Texture2D" path="res://assets/terceros/gothicvania/lava/tileset_profundidades.png" id="2_tex"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_roca"]
+atlas = ExtResource("2_tex")
+region = Rect2(368, 256, 16, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_roca"]
+animations = [{
+"frames": [{"duration": 1.0, "texture": SubResource("AtlasTexture_roca")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_roca")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_roca")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_roca")}],
+"loop": false,
+"name": &"states",
+"speed": 1.0
+}]
+
+[node name="ParedAgrietada" instance=ExtResource("1_pared")]
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_roca")

@@ -1105,6 +1105,24 @@ room("G", "Profundidades", "TILESET PROFUNDIDADES",
      36, b_tileset_profundidades)
 
 
+# La pared agrietada de las profundidades (P48): la misma pieza con la roca del
+# tileset profundidades (la columna del juego de bloques, 1x3), como la del
+# calabozo, de la que hereda.
+def b_pared_profundidades(c):
+    u = 3
+    column_above(c, u, 3)
+    node(f'''
+[node name="ParedAgrietadaProfundidades" parent="Objetos" instance=ExtResource("51_pared_profundidades")]
+position = Vector2({c.col(u) * T}, {c.fy() - 48})''')
+    c.cell(5, c.F - 1, "$")
+
+
+room("G", "Profundidades", "PARED DE ROCA",
+     "PARED AGRIETADA, PROFUNDIDADES (P48)\nVa en: el secreto de la galería de los condenados. "
+     "La roca del tileset profundidades; se rompe a golpes, también a puños.",
+     14, b_pared_profundidades)
+
+
 # ---------------------------------------------------------------- colocar
 def add_label(name, x, y, w, h, text, variation=None, align=0, header=False):
     carteles.append((name, x, y, w, h, text, variation, align, header))
@@ -1199,6 +1217,7 @@ ext = '''[ext_resource type="PackedScene" path="res://escenas/enemigos/rata.tscn
 [ext_resource type="PackedScene" path="res://escenas/objetos/atuendo.tscn" id="32_atuendo"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/espada_oxidada.tscn" id="33_espada_oxidada"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/clima_nieve.tscn" id="50_clima_nieve"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/pared_agrietada_profundidades.tscn" id="51_pared_profundidades"]
 ''' + "".join(
     f'[ext_resource type="PackedScene" path="res://escenas/mapas/{nombre}.tscn" id="{ext_id}"]\n'
     for _, nombre, _, ext_id, _, _ in MUESTRAS)
