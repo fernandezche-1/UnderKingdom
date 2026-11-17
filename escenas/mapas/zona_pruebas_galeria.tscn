@@ -38,6 +38,7 @@
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_minas.tscn" id="38_muestra_minas"]
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_mazmorra_reina.tscn" id="39_muestra_mazmorra_reina"]
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_ruina.tscn" id="40_muestra_ruina"]
+[ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_profundidades.tscn" id="41_muestra_profundidades"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_losa_medio"]
 atlas = ExtResource("8_tileset")
@@ -495,6 +496,9 @@ height_tiles = 6
 amount = 60
 wind = Vector2(85, 0)
 sway = 0.0
+
+[node name="MuestraProfundidades" parent="Objetos" instance=ExtResource("41_muestra_profundidades")]
+position = Vector2(1088, 2304)
 
 [node name="Carteles" type="Node2D" parent="."]
 
@@ -1390,6 +1394,60 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 text = "NIEVE Y ESCARCHA (P73)
 Va en: ruina. Escarcha que flota, nieve que cae de una grieta (izquierda) y ventisca (derecha). Sin arte: cuadrados de 1 y 2 px. No se pinta sobre la roca."
+autowrap_mode = 3
+
+[node name="Zona34" type="Label" parent="Carteles"]
+offset_left = 1682.0
+offset_top = 2209.0
+offset_right = 2194.0
+offset_bottom = 2233.0
+theme_type_variation = &"Encabezado"
+text = "Profundidades"
+
+[node name="Nombre34" type="Label" parent="Carteles"]
+offset_left = 1682.0
+offset_top = 2238.0
+offset_right = 2190.0
+offset_bottom = 2258.0
+theme_type_variation = &"TextoAcento"
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "BESTIA Y PESADILLA"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Texto34" type="Label" parent="Carteles"]
+offset_left = 1684.0
+offset_top = 2306.0
+offset_right = 2188.0
+offset_bottom = 2382.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "BESTIA Y PESADILLA (P73)
+Van en: profundidades. La bestia escupe fuego desde la repisa (0.5). La pesadilla avisa y embiste lejos (0.75): esquívala rodando."
+autowrap_mode = 3
+
+[node name="Nombre35" type="Label" parent="Carteles"]
+offset_left = 1090.0
+offset_top = 2238.0
+offset_right = 1662.0
+offset_bottom = 2258.0
+theme_type_variation = &"TextoAcento"
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "TILESET PROFUNDIDADES"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Texto35" type="Label" parent="Carteles"]
+offset_left = 1428.0
+offset_top = 2306.0
+offset_right = 1660.0
+offset_bottom = 2382.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "TILESET PROFUNDIDADES (P73)
+Cantos de Caverns en su morado, repisa (=); sin pared, ladrillo rojo y basalto; horno (V), arco con cara de demonio (U), calaveras (n)."
 autowrap_mode = 3
 
 [node name="Inicio" type="Label" parent="Carteles"]

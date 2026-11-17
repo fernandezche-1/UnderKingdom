@@ -8,6 +8,10 @@ const FIREBALL_SCENE := preload("res://escenas/proyectiles/fuego_diablillo.tscn"
 @export_range(40.0, 600.0, 5.0) var projectile_speed: float = 210.0
 @export_range(0.05, 4.0, 0.05) var projectile_damage: float = 0.50
 @export var projectile_spawn_offset: Vector2 = Vector2(24.0, -2.0)
+## Punto al que apunta, respecto al origen del Player (62 px sobre sus pies).
+## El de siempre (-8) va bien desde el aire, como el diablillo; desde el suelo
+## pasa sobre la cabeza, así que la bestia infernal apunta al torso (30).
+@export var projectile_target_offset: Vector2 = Vector2(0.0, -8.0)
 
 var _projectile_spawned: bool = false
 
@@ -46,7 +50,7 @@ func _spawn_fireball() -> void:
 
 	var facing := _facing_direction()
 	var origin := global_position + Vector2(projectile_spawn_offset.x * facing, projectile_spawn_offset.y)
-	var target_position := _target.global_position + Vector2(0.0, -8.0)
+	var target_position := _target.global_position + projectile_target_offset
 	projectile.call(
 		"setup",
 		origin,

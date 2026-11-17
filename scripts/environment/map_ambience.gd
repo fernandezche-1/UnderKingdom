@@ -65,6 +65,9 @@ const ATLAS_DECOR_LIGHTS := {
 	"res://assets/terceros/gothicvania/cavernas/tileset_ruina.png": {
 		Vector2i(15, 17): [Color(1.0, 0.45, 0.7), 40, 0.8, true],   # hornacina con llama rosa (V)
 	},
+	"res://assets/terceros/gothicvania/lava/tileset_profundidades.png": {
+		Vector2i(17, 20): [Color(1.0, 0.55, 0.2), 56, 0.9, true],   # horno con llama (V)
+	},
 }
 const LAVA_SURFACE := Vector2i(12, 8)
 const LAVA_LIGHT := [Color(1.0, 0.35, 0.1), 48, 0.9, true]

@@ -15,7 +15,9 @@ mapas_texto/zona_pruebas_muestra_<tileset>.txt. Con el piso D lleno, las piezas
 de las minas (enemigos y tileset, P73) van en el piso E, debajo, y las de las
 zonas siguientes siguen allí: la mazmorra, a la izquierda de las minas. Con la
 mazmorra solo quedan 8 columnas libres en el piso E: la ruina abre el piso F,
-debajo, al que se baja por la izquierda del E.
+debajo, al que se baja por la izquierda del E. Con la ruina solo quedan 36
+columnas libres en el F: las profundidades abren el piso G, debajo, al que se
+baja por la derecha del F.
 
 Uso, desde la raíz del proyecto:
   python3 herramientas/zona_pruebas/galeria.py [cabecera.txt]
@@ -26,6 +28,7 @@ Uso, desde la raíz del proyecto:
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_minas.txt
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_mazmorra_reina.txt
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_ruina.txt
+  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_profundidades.txt
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas.txt
 """
 import sys
@@ -36,7 +39,7 @@ TXT = ROOT / "mapas_texto/zona_pruebas.txt"
 TSCN = ROOT / "escenas/mapas/zona_pruebas_galeria.tscn"
 T = 16
 COLS = 146
-ROWS = 139
+ROWS = 158
 
 # ---------------------------------------------------------------- mapa viejo
 raw = TXT.read_text(encoding="utf-8")
@@ -59,6 +62,7 @@ PISOS = {
     "D": dict(corr=81, techo=86, suelo=99, dir=-1),
     "E": dict(corr=100, techo=105, suelo=118, dir=-1),
     "F": dict(corr=119, techo=124, suelo=137, dir=1),
+    "G": dict(corr=138, techo=143, suelo=156, dir=-1),
 }
 for p in PISOS.values():
     for r in range(p["corr"], p["corr"] + 5):
@@ -89,6 +93,8 @@ ladder(139, 67, 85)
 ladder(143, 86, 104)
 # Del piso E al F, a la izquierda (los cuartos del E llegan hasta la columna 10).
 ladder(4, 105, 123)
+# Del piso F al G, a la derecha (los cuartos del F llegan hasta la columna 104).
+ladder(143, 124, 142)
 # Checkpoints de la galería.
 put(28, 6, "S")
 put(47, 141, "S")
@@ -96,10 +102,11 @@ put(66, 6, "S")
 put(85, 141, "S")
 put(104, 141, "S")
 put(123, 6, "S")
+put(142, 141, "S")
 
 # ---------------------------------------------------------------- cuartos
 # Cada cuarto: zona, nombre corto (cartel del pasillo), texto, ancho y piezas.
-ROOMS = {"A": [], "B": [], "C": [], "D": [], "E": [], "F": []}
+ROOMS = {"A": [], "B": [], "C": [], "D": [], "E": [], "F": [], "G": []}
 
 
 def room(piso, zona, nombre, texto, ancho, build, **extra):
@@ -1039,6 +1046,63 @@ room("F", "Ruina", "NIEVE Y ESCARCHA",
      "NIEVE Y ESCARCHA (P73)\nVa en: ruina. Escarcha que flota, nieve que cae de una grieta (izquierda) "
      "y ventisca (derecha). Sin arte: cuadrados de 1 y 2 px. No se pinta sobre la roca.",
      30, b_nieve)
+
+
+# ---- 13. Profundidades (piso G, P73): los enemigos nuevos y el tileset.
+# La bestia infernal hace de torreta sobre una repisa de 3 de alto y escupe la
+# bola de fuego del diablillo; la pesadilla patrulla el suelo, avisa y embiste
+# lejos, y se esquiva rodando a través de ella.
+def b_profundidades_enemigos(c):
+    for u in range(3, 11):
+        for r in range(c.F - 3, c.F):
+            c.cell(u, r, "#")
+    c.cell(7, c.F - 4, "I")
+    c.cell(22, c.F - 1, "Y")
+
+
+room("G", "Profundidades", "BESTIA Y PESADILLA",
+     "BESTIA Y PESADILLA (P73)\nVan en: profundidades. La bestia escupe fuego desde la repisa (0.5). "
+     "La pesadilla avisa y embiste lejos (0.75): esquívala rodando.",
+     32, b_profundidades_enemigos)
+
+
+# Profundidades (ficha de P73): a la izquierda, sin pared (en el mapa, el
+# parallax de lava), con techo, una columna colgada, una tira, una pieza suelta
+# (macizas) y cristales (r, las ascuas); en medio la pared "ladrillo" (lo
+# construido: la forja), con el horno (V), el arco con cara de demonio (U) y
+# una antorcha (t); a la derecha la pared "basalto" (el fondo de la zona), con
+# el montón de calaveras (n), la repisa de piedras (=), un barril (b), la
+# escalera (H) a una repisa y una caja (x). Los cantos van en su morado.
+MUESTRA_PROFUNDIDADES = [
+    "####################.............",
+    "####################.............",
+    "........#........................",
+    "........#........................",
+    "........#........................",
+    ".................................",
+    "..####......................H####",
+    "............................H....",
+    ".....................====...H....",
+    ".....#......................H....",
+    "............................H....",
+    "..r.......V..U...t.....n..b.H..x.",
+    "#################################",
+]
+CABECERA_PROFUNDIDADES = (
+    "fondo_sala: ninguno 0 0 9 11\n"
+    "fondo_sala: ladrillo 10 0 20 11\n"
+)
+
+
+def b_tileset_profundidades(c):
+    return muestra_tileset(c, "profundidades", MUESTRA_PROFUNDIDADES, "41_muestra_profundidades", 21,
+                           cabecera=CABECERA_PROFUNDIDADES, fondo="basalto")
+
+
+room("G", "Profundidades", "TILESET PROFUNDIDADES",
+     "TILESET PROFUNDIDADES (P73)\nCantos de Caverns en su morado, repisa (=); sin pared, ladrillo rojo y "
+     "basalto; horno (V), arco con cara de demonio (U), calaveras (n).",
+     36, b_tileset_profundidades)
 
 
 # ---------------------------------------------------------------- colocar

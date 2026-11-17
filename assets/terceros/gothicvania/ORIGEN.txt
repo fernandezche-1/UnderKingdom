@@ -123,3 +123,45 @@ Ruina (P73, ficha de la ruina), sin cambiar el arte:
   en fila (7 cuadros de 32x32). El ave de las nieves
   (escenas/enemigos/ave_nieves.tscn): mira a la derecha; muere con el efecto
   "muerte".
+
+Profundidades (P73, ficha de las profundidades), sin cambiar el arte de los
+personajes:
+- lava/tileset_profundidades.png  atlas del tileset "profundidades" del
+  constructor (tilesets/profundidades.gd), que arma
+  herramientas/constructor_mapas/atlas_profundidades.py. 512x352: filas 0-15,
+  copia sin cambios del atlas de mazmorra (dungeon_platformer/
+  dungeontilesetfull.png); filas 16-21, recortes de cavernas/tiles.png (en su
+  morado, sin tinte) y de gothic_horror/tiles.png (piezas de 16, de arriba a
+  la izquierda):
+  - (0,16) juego de bloques 4x4, el mismo armado que el de la ruina (ver
+    arriba) sin el tinte frío; todas macizas;
+  - (4,16)-(6,16) repisa de las plataformas "=": la banda de piedras de
+    cavernas (2,15), sin el negro de debajo, tres veces;
+  - (7,16) escalera: la (5,9) del Dungeon Tile Set (dungeon_tile_set/);
+  - (8,16) pared "basalto" 2x4: los cantos de los laterales de cavernas, las
+    columnas 7 y 23 de las filas 1-4, al 32 % de brillo;
+  - (10,16) pared "ladrillo" 7x2: la fachada de gothic_horror, solo la fila 7
+    (la única entera sin musgo), en las columnas 31, 32, 34, 35, 36, 41 y 42
+    (sin los postes de la 33 y la 44 ni el revoque claro de la 37-40), en dos
+    órdenes; teñida de rojo (cada color se acerca a su luminancia teñida de
+    rojo, al 85 %) y al 60 % de brillo;
+  - (17,16) horno "V" 2x6: el nicho con llama y chimenea de gothic_horror,
+    píxeles (272,64)-(304,160), teñido de rojo; la llama (amarilla y verdosa
+    en el pack) pasa a una rampa naranja;
+  - (19,16) arco con cara de demonio "U" 2x3: (224,112)-(256,160), teñido de
+    rojo;
+  - (21,16) montón de calaveras "n" 2x3: (128,96)-(160,144) tal cual, recortado
+    por su borde y apoyado abajo.
+- personajes/bestia_infernal.png  Characters/Hell-Beast-Files: Idle/Sprites
+  hell-beast-idle1-6, Breath/Sprites hell-beast-breath1-4 y Burn/Sprites
+  hell-beast-burn1-4, una fila cada una, en cuadros de 80x72 (las filas 88-160
+  de cada cuadro de 80x160, que encima solo tienen aire). La bestia infernal
+  (escenas/enemigos/bestia_infernal.tscn): mira a la izquierda; "attack" es
+  breath, que suelta la bola de fuego del diablillo en el cuadro 3, y "death"
+  es burn 1-4. No se copiaron burn5-6 (la columna de fuego de 160 px) ni su
+  Fireball.
+- personajes/pesadilla.png  Characters/Nightmare-Files/Sprites: Idle/frame1-4
+  y Run/frame1-3, una fila cada una, cuadros de 160x96 tal cual. La pesadilla
+  (escenas/enemigos/pesadilla.tscn): mira a la izquierda; su "attack" es el
+  cuadro 0 de idle (el aviso) y después run dos veces. No trae golpe, daño ni
+  muerte: muere con el efecto "muerte".

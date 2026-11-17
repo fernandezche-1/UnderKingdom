@@ -1211,6 +1211,67 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
 - Ningún reto obligatorio pide el dash, la Agilidad, E4 ni una mejora de la tienda.
 - Vestir no cambia celdas sólidas y las plataformas siguen siendo de una vía; se comprueba en el paso D.
 
+**Piezas (hechas el 2026-11-17).** Decisiones aprobadas al pasar la ficha a piezas:
+- **Galería:** con la ruina, al piso F solo le quedaban 36 columnas libres. Las profundidades abren el **piso G** con sus dos cuartos.
+- **Horno `V`** con su chimenea, **2x6** (la ficha decía unas 2x4); cabe en la forja, de 13 de alto.
+- **Huesos `n`:** el **montón de calaveras 2x3**, sin fondo (la ficha decía unas 2x2; el panel de calaveras 2x2 del cementerio es opaco y sobre el basalto se vería como un cuadro oscuro).
+- **Muerte de la bestia:** `burn` del cuadro 1 al 4 (se envuelve en llamas y queda en silueta), sin los cuadros 5-6, una columna de fuego de 160 px que atravesaría techos. Se miró en captura y se lee como muerte.
+- **`ranged_demon.gd` no servía sin cambios** (aprobado cambiarlo): apuntaba siempre 8 px sobre el origen del Player, que está 62 px por encima de sus pies, así que la bola pasaba sobre la cabeza de un Player de pie. Desde el aire (el diablillo) da igual; desde el suelo, no. Nuevo export `projectile_target_offset`, con el valor de antes, (0, -8), por defecto, así que el diablillo no cambia; la bestia apunta al torso, (0, 30).
+- **Lo que no cuadraba con la ficha** (hallado al mirar el arte):
+  - el `run` de la pesadilla tiene 3 cuadros, no 4;
+  - la fachada de Gothic Horror tiene musgo en casi todas sus piezas: solo la fila 7 está entera sin él, así que la pared `ladrillo` es de 7x2, con piezas de esa fila en dos órdenes;
+  - la llama del horno es amarilla y verdosa en el pack: se recolorea a una rampa naranja, sin repintar.
+- **Atlas** `assets/terceros/gothicvania/lava/tileset_profundidades.png` (512x352), que arma `herramientas/constructor_mapas/atlas_profundidades.py`:
+  - filas 0-15: el atlas de mazmorra sin cambios (lava animada, antorcha, fogata, cristales, caja y barril, con sus luces de `DECOR_LIGHTS`);
+  - filas 16-21:
+    - juego `profundidades` (0,16), el mismo armado que el de la ruina, sin el tinte frío, con las 16 piezas macizas;
+    - repisa (4,16) y escalera de madera (7,16);
+    - pared `basalto` (8,16), 2x4: los cantos de los laterales al 32 %, más oscuros que el interior de la roca (55 %);
+    - pared `ladrillo` (10,16), 7x2, teñida de rojo;
+    - `V` horno 2x6 (17,16), `U` arco con cara de demonio 2x3 (19,16), los dos teñidos de rojo, y `n` montón de calaveras 2x3 (21,16), tal cual.
+
+  Coordenadas y recortes en `assets/terceros/gothicvania/ORIGEN.txt`.
+- **Tileset** `herramientas/constructor_mapas/tilesets/profundidades.gd`:
+  - `bloques_por_defecto: profundidades` (sin rampas: quedan las de `ladrillo`; las profundidades no tienen);
+  - `plataformas`, `escalera`, `cofre` (`cofre_madera.tscn`) y `fondos` (`cueva`, `basalto` y `ladrillo`);
+  - decorados `t`, `f`, `b`, `x` y `r` como en mazmorra, y `V`, `U` y `n` nuevos.
+
+  El constructor no cambia, salvo las letras nuevas.
+- **Luz:** la llama del horno (17,20) va en `ATLAS_DECOR_LIGHTS` de `scripts/environment/map_ambience.gd`, con una luz naranja que parpadea.
+- **Enemigos** (los dos en la capa 5, con 0.25 de contacto y mirando a la izquierda):
+
+  | | Escena | Vida | Daño | Detalle |
+  |---|---|---|---|---|
+  | Bestia `I` | `escenas/enemigos/bestia_infernal.tscn` | 3 | bola de 0.5 | `ranged_demon.gd` con gravedad. Casi quieta: patrulla 16 px a 15 y persigue a 20. Desde 170 px escupe (`attack` = `breath`) cada 2 s; la bola sale en el cuadro 3, 24 px por delante (fuera de su cuerpo: el proyectil se destruye contra cualquier cuerpo) y apunta al torso. Cuerpo de 28x52 |
+  | Pesadilla `Y` | `escenas/enemigos/pesadilla.tscn` | 4 | 0.75 | `lunge_enemy.gd` con gravedad. Patrulla 80 px a 40 y persigue a 90; desde 110 px avisa 0.45 s y embiste a 260 durante 0.5 s (unas 8 piezas). Cuerpo de 64x52; `ledge_check_forward` 34, para que el borde se mire desde su pecho y no desde el centro |
+
+  - Hojas `assets/terceros/gothicvania/personajes/bestia_infernal.png` (cuadros de 80x72) y `pesadilla.png` (160x96).
+  - Letras `I` (`e04020`) y `Y` (`203040`) en `COLORS` y `ENEMIES`, la paleta, LEYENDA (sección 5) y P33.
+- **Galería, piso G nuevo** (filas 138-157), al que se baja por la derecha del piso F (escalera de la columna 143), con su checkpoint en (141, 142). La zona de pruebas pasa de 139 a 158 filas; del resto solo cambia el pozo de la bajada (x 142-144, filas 124-137). Zona "Profundidades":
+  - cuarto "BESTIA Y PESADILLA": la bestia sobre una repisa de 3 de alto y la pesadilla en el suelo;
+  - cuarto "TILESET PROFUNDIDADES", con la muestra `zona_pruebas_muestra_profundidades`:
+    - a la izquierda, sin pared (en el mapa, el parallax), techo, una columna colgada, una tira, una pieza suelta y cristales;
+    - en medio, el ladrillo, con el horno, el arco y una antorcha;
+    - a la derecha, el basalto, con las calaveras, la repisa, un barril, la escalera a una repisa y una caja.
+- **Probado:**
+  - capturas con el juego abierto de los dos cuartos y de la muerte de la bestia;
+  - prueba sin ventana con 668 comprobaciones bien:
+    - los 85 bloques de la muestra son macizos, del juego `profundidades` y con colisión, y las 4 piezas de la repisa son de una vía;
+    - el Player se apoya en la repisa y en el suelo;
+    - los decorados y la escalera están en su pieza del atlas, y cada celda lleva su pared (sin pared, ladrillo o basalto);
+    - `MapAmbience` pone la luz naranja del horno;
+    - los dos enemigos siguen en su sitio a los 3 s y reciben golpes;
+    - la bestia escupe una bola que daña 0.5 al Player de pie, también desde una repisa de 3 con el Player abajo a 80 y a 140 px; muere con `death` y se borra;
+    - la pesadilla embiste con 0.75 y no se tira de una repisa: se para con el centro 30 px antes del borde;
+    - rodando a través de la embestida al acabar el aviso no recibe daño y acaba al otro lado. Saltando en el sitio la recibe (0.75 más 0.25 de contacto): se esquiva rodando, como pedía la ficha;
+    - en la galería, los dos siguen en su sitio a los 3 s, dentro de su patrulla;
+  - arrancan sin errores el juego, la zona de pruebas, la base de las profundidades (sus 22 diablillos usan `ranged_demon.gd`) y las `_combate` del calabozo, el castillo, el cementerio, las minas, la mazmorra y la ruina; `verificar_mundo.py` da 0 errores.
+- **Al vestir, mirar:**
+  - el basalto repite sus dos columnas de cantos: en las salas grandes puede verse a rayas;
+  - la bestia de la cornisa dispara al puente colgante, a su altura; y los dos de la encrucijada, a su suelo;
+  - la pesadilla mide 64 px de largo: en el puente de huesos, entre pozas de 3, se para en el borde, y el tramo tiene que dejarle sitio para embestir;
+  - en la `_combate` (la de la forja), la luz del horno junto a la de la lava.
+
 ### Infierno
 - Parte de: tileset `mazmorra` con `bloques: ladrillo`, parallax de `gothicvania/lava`. La mezcla de los más duros (P46); Cthulhu. Faltan los enemigos definitivos.
 - Ficha: por armar.
