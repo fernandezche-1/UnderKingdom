@@ -258,7 +258,7 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
     - colector: `TrampillaColector` (x 85-87, fila 69), que abre `PalancaColector` (84, 83), desde la huida (`mazmorra_colector`).
   - `:B:`: `PalancaB` (67, 21) (`mazmorra_atajo_b_abierto`), `LlaveAlcaide` (`llave_jefe_m1.tscn`, `key_id` `mazmorra_alcaide`) en (73, 21), `SalidaB` (x 70-72, filas 0-1) a `tiles_calabozo_combate.tscn#DesdeMazmorra` y spawn `DesdeCalabozo` en (69, 21). La llave aparece en el menú de pausa (`KEY_NAMES`).
   - `[!5]`: `Salida5` (x 115-117, fila 89) y spawn `DesdeRuina` en (113, 87). Iba a la ruina de v1; desde el 2026-11-16 va a `tiles_ruina_combate.tscn#DesdeMazmorra`.
-  - `:F:`: `TrampillaF` (x 88-90, fila 84) escucha `mazmorra_atajo_f_abierto`: **la palanca de las profundidades, en (23, 25), lleva ese `encounter_id`**. `SalidaF` (fila 89) ya apunta a `tiles_profundidades_combate.tscn#DesdeMazmorra`, aún sin generar; spawn `DesdeProfundidades` en (92, 83).
+  - `:F:`: `TrampillaF` (x 88-90, fila 84) escucha `mazmorra_atajo_f_abierto`: **la palanca de las profundidades, en (23, 25), lleva ese `encounter_id`**. `SalidaF` (fila 89) apunta a `tiles_profundidades_combate.tscn#DesdeMazmorra` (montada el 2026-11-17); spawn `DesdeProfundidades` en (92, 83).
   - Rejas y losas con piezas del atlas `dungeontilesetfull.png` (las de v1). La llave se dibuja a escala 1.5, como la de las minas, y el suelo que se hunde y los escombros son provisionales (P64).
 - [x] **Ruina:**
   - el Guardián, la reja de salida en `Atajos`, el hielo de `[P6]` y la llama eterna, la luz de la parte oscura;
@@ -278,30 +278,51 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
   - `[P6]`:
     - `LlamaEterna` en el altar de la capilla, (5, 62);
     - `HieloP6` (`locked_door`, `antorcha`, E, MELT) en la columna 144, filas 70-72;
-    - `SalidaP6` (x 145-147, fila 79) iba a las profundidades de v1; desde el 2026-11-17 va a la base nueva (`escenas/mapas/tiles_profundidades.tscn#DesdeRuina`: se llega al `SpawnInicio`, en la llegada) y, al montar su `_combate`, pasa a `tiles_profundidades_combate.tscn#DesdeRuina`;
+    - `SalidaP6` (x 145-147, fila 79) iba a las profundidades de v1; desde el 2026-11-17 va a la base nueva (`escenas/mapas/tiles_profundidades.tscn#DesdeRuina`) y, desde que se montó su `_combate` (2026-11-17), a `tiles_profundidades_combate.tscn#DesdeRuina`;
     - spawn `DesdeProfundidades` en (149, 72).
   - Parte oscura: `ZonaOscura` (`dark_zone.gd`, x 32-62, filas 58-64) y `ZonaOscuraAlta` (x 55-70, filas 50-57: la parte alta y el refugio).
   - `:D:`: `PalancaD` (140, 17) con `ruina_atajo_d_abierto`, el que escucha `RejaD` de las minas; `SalidaD` (x 146-148, filas 0-1) a `tiles_mineria_combate.tscn#DesdeRuina`; spawn `DesdeMinas` en (144, 17). Si se sube sin tirar de la palanca, se llega a las minas por encima de la reja cerrada.
   - `[!5]`: `Salida5` (x 9-11, filas 0-1) a `tiles_mazmorra_combate.tscn#DesdeRuina`; spawn `DesdeMazmorra` en (13, 12).
-  - `:E:`: `TrampillaE` (x 90-92, fila 59) escucha `ruina_atajo_e_abierto`: **la palanca de las profundidades, en (119, 13), lleva ese `encounter_id`**. `SalidaE` (fila 79) ya apunta a `tiles_profundidades_combate.tscn#DesdeRuinaAtajo`, aún sin generar; spawn `DesdeProfundidadesAtajo` en (94, 58).
+  - `:E:`: `TrampillaE` (x 90-92, fila 59) escucha `ruina_atajo_e_abierto`: **la palanca de las profundidades, en (119, 13), lleva ese `encounter_id`**. `SalidaE` (fila 79) apunta a `tiles_profundidades_combate.tscn#DesdeRuinaAtajo` (montada el 2026-11-17); spawn `DesdeProfundidadesAtajo` en (94, 58).
   - Atajo interno: `TrampillaAtajo` (x 4-6, fila 13, el suelo de la llegada) se abre con `PalancaAtajo` (10, 33), en la galería alta junto al pozo (`ruina_atajo_interno`).
   - Hielo negro: `HieloNegro` (`locked_door`, `profundidades_ascua`, E, MELT, tinte oscuro, "LA LLAMA NO BASTA") en la columna 113, filas 56-58; `DiarioReina3` (`dialogues/lore_diario_reina_3.json`, texto provisional) en (117, 58) y `FragmentoVida1` (`ruina_1`) en (125, 55).
   - E4: `AtuendoAbrigo` (`abrigo`) en el refugio, (69, 56). Las zonas frías no llevan nada: la mecánica del frío no existe.
-  - Rejas, hielos y losas con piezas del atlas `dungeontilesetfull.png`, teñidas en los hielos (falta su arte, P65). `profundidades_ascua` entra en `KEY_NAMES` al montar las profundidades.
-- [ ] **Profundidades:**
-  - elegir los minijefes de los altares (P46, sección 7);
-  - los tres altares y su contador, el fuego infernal y E5;
+  - Rejas, hielos y losas con piezas del atlas `dungeontilesetfull.png`, teñidas en los hielos (falta su arte, P65). `profundidades_ascua` entró en `KEY_NAMES` al montar las profundidades (2026-11-17).
+- [x] **Profundidades:**
+  - los minijefes de los altares (P46, sección 7), los tres altares y su contador, el fuego infernal y E5;
   - el Demon Slime, con reja y trampilla en `Puertas`, reja de salida en `Atajos` y la ascua (`profundidades_ascua`, en su `PuntoLlave`);
   - la palanca de `:E:`, las trampillas del atajo, del lago y del coliseo, y las transiciones de `[P6]`, `:E:` y `[S7]`;
   - la palanca, la transición y el spawn de `:F:`, los restos de los condenados y la página II del diario;
   - la jaula del rey encadenado: rejilla, el rey (sprite del Rey Caído), su alma y el fragmento de vida 4/4, según `infierno_animas_liberadas`.
-  - Base generada (2026-11-17, `escenas/mapas/tiles_profundidades.tscn`, desde `mapas_texto/tiles_profundidades.txt`): 22 diablillos, 78 piezas de lava, 3 pinchos, 5 cofres, 15 monedas, 4 pociones y 4 checkpoints. Falta la `_combate` (parte 2). Hasta entonces se llega al `SpawnInicio` (la P de la llegada, en (186, 13)):
-    - `[P6]`: `SalidaP6` de `tiles_ruina_combate.tscn` va a la base (`#DesdeRuina`);
-    - la salida anterior del infierno de v1 (`anterior:` de `archivo/tiles_v1/mapas_texto/tiles_jefe.txt` y `SalidaAnterior1` de `tiles_jefe.tscn`, sin regenerar) va a la base (`#DesdeInfierno`);
-    - `SalidaE` de la ruina (`#DesdeRuinaAtajo`) y `SalidaF` de la mazmorra (`#DesdeMazmorra`) siguen apuntando a la `_combate`, que aún no existe: sus trampillas solo se abren con las palancas de las profundidades.
-    - La base no tiene salidas: quien entra por `[P6]` no pasa al infierno hasta montar la `_combate`.
-  - Sin salidas del constructor (ni `siguiente:` ni `anterior:`): `[P6]`, `:E:`, `:F:` y `[S7]` van en la `_combate`, con los spawns `DesdeRuina`, `DesdeRuinaAtajo`, `DesdeMazmorra` y `DesdeInfierno`.
-  - El fuego del santuario de las llamas (fila 78, x 160-162 y x 164-198) salió del ASCII, como el de la gruta de cristal: la `F` del constructor es la trampa de fuego normal, que quema también con E5. Va en la `_combate` (`fuego_infernal.tscn`); en la fila 78 quedan huecos.
+  - Base generada (2026-11-17, `escenas/mapas/tiles_profundidades.tscn`, desde `mapas_texto/tiles_profundidades.txt`): 22 diablillos, 78 piezas de lava, 3 pinchos, 5 cofres, 15 monedas, 4 pociones y 4 checkpoints. Sin salidas del constructor (ni `siguiente:` ni `anterior:`): todas van en la `_combate`.
+  - `_combate` montada (2026-11-17, `escenas/mapas/tiles_profundidades_combate.tscn`). Salidas que llegan a ella:
+    - `[P6]`: `SalidaP6` de `tiles_ruina_combate.tscn`, a `#DesdeRuina`;
+    - la salida anterior del infierno de v1 (`anterior:` de `archivo/tiles_v1/mapas_texto/tiles_jefe.txt` y `SalidaAnterior1` de `tiles_jefe.tscn`, sin regenerar), a `#DesdeInfierno`;
+    - `SalidaE` de la ruina (`#DesdeRuinaAtajo`) y `SalidaF` de la mazmorra (`#DesdeMazmorra`), que ya apuntaban.
+  - Minijefes (decididos el 2026-11-17, sin arte nuevo ni repetir al Demon Slime): escenas heredadas en `escenas/jefes/` con más vida y `BossHealthBar`, como `caballero_reina.tscn`:
+    - `pesadilla_ceniza.tscn` (10 de vida, 1.0 de daño, 0.5 de contacto);
+    - `diablillo_mayor.tscn` (sprite a escala 2 y colisión de 52x52, 8 de vida, bola de 0.75; `attack_range` 72 y `minimum_player_distance` 40, para que se acerque: con los 175 del diablillo se quedaba fuera del alcance de la espada);
+    - `bestia_mayor.tscn` (8 de vida, bola de 0.75, `attack_range` 260).
+  - Altares (`sello.tscn`, grupo `profundidades_s7`, cada uno con `listen_encounter`):
+    - `ArenaColiseo` (`wave_arena.gd`, `profundidades_altar_coliseo`): activador junto al altar, x 21-27, filas 41-44. `Puertas`: `TrampillaGaleria` (x 40-42, fila 26) y `TrampillaForja` (x 7-9, fila 45). Oleadas: 1, tres diablillos; 2, dos bestias infernales y un diablillo; 3, la Pesadilla de ceniza. `SelloColiseo` en (24, 44);
+    - `SalaLago` (`boss_arena.gd`, `profundidades_altar_lago`, Diablillo mayor): activador en la isla, x 186-196, filas 50-54, sin `Puertas`. Sale sobre la isla, en (187, 48) o (195, 48): desde la lava no pasaba el pilar de x 181-182, 5 piezas más alto que la isla. `SelloLago` en (191, 54);
+    - `SalaSantuario` (`boss_arena.gd`, `profundidades_altar_santuario`, Bestia infernal mayor): activador x 162-164, filas 75-78, sin `Puertas`; la bestia sale al este del pasillo, en (192, 78) o (184, 78), y escupe fuego por él. `SelloSantuario` en (163, 78). Fuego infernal: `FuegoSantuarioOeste` (x 160-162, fila 78, `width_tiles` 3) y `FuegoSantuario` (x 164-198, `width_tiles` 35).
+  - `SalaDemonSlime` (`boss_arena.gd`, `encounter_id` `profundidades_demon_slime`, `demon_slime_jefe.tscn`, `key_scene` `llave_jefe_m1.tscn` con `key_id` `profundidades_ascua`, sin `ability_reward`):
+    - activador x 94-111, filas 74-78;
+    - `Puertas`: `RejaEntrada` (columna 90, filas 74-78) y `TrampillaPozo` (x 106-111, fila 69);
+    - `Atajos`: `RejaSalida` (columna 112, filas 76-78);
+    - el jefe sale en (94, 78) o (109, 78) y la ascua cae en (100, 78);
+    - **barrera doble:** `boss_arena.gd` abre sus `Puertas` en `_ready`, así que lo que las cierra hasta los tres altares son `SelloReja` y `SelloTrampilla`, dos barreras en las mismas casillas con `open_on_seal_group` `profundidades_s7`. Sin tocar el script.
+    - La ascua entra en `KEY_NAMES` (`pause_menu_overlay.gd`). Usa el dibujo de la llave, a escala 1.5 (pendiente, como en las minas).
+  - Atajos internos (la cabecera solo dice que se abren desde abajo): `TrampillaAtajo` (x 67-69, fila 26) se abre con `PalancaAtajo` (71, 78), en la antesala, al pie de la escalera 68 (`profundidades_atajo_interno`); `TrampillaLago` (x 193-195, fila 38) se abre con `PalancaLago` (196, 54), en la isla, junto a la escalera 194 (`profundidades_atajo_lago`).
+  - `:E:`: `PalancaE` (119, 13) con `ruina_atajo_e_abierto`, el que escucha `TrampillaE` de la ruina; `SalidaE` (x 126-128, filas 0-1) a `tiles_ruina_combate.tscn#DesdeProfundidadesAtajo`; spawn `DesdeRuinaAtajo` en (123, 13).
+  - `:F:`: `PalancaF` (23, 25) con `mazmorra_atajo_f_abierto`, el que escucha `TrampillaF` de la mazmorra; `SalidaF` (x 18-20, filas 0-1) a `tiles_mazmorra_combate.tscn#DesdeProfundidades`; spawn `DesdeMazmorra` en (16, 25). Al pie del pozo: `RestosCondenados` (14, 25) y `DiarioReina2` (12, 25), con `dialogues/lore_restos_condenados.json` y `lore_diario_reina_2.json` (textos provisionales).
+  - `[P6]`: `SalidaP6` (x 181-183, filas 0-1) a `tiles_ruina_combate.tscn#DesdeProfundidades`; spawn `DesdeRuina` en (185, 13).
+  - `[S7]`: `SalidaS7` (x 114-116, fila 84) va al infierno de v1 (`archivo/tiles_v1/escenas/tiles_jefe_combate.tscn#DesdeAnterior`) hasta rehacerlo; spawn `DesdeInfierno` en (118, 78).
+  - Jaula: `RejillaJaula` (x 44-48, fila 20, `open_on_encounter` `infierno_animas_liberadas`). `ReyEncadenado` (el `idle` del Rey Caído, en un AnimatedSprite2D) en (46, 19), que se oculta con esa marca. Con ella se muestran `AlmaRey` (`objeto_lore.tscn` con el Rey teñido de azul y semitransparente, `lore_alma_rey.json`, texto provisional) en (46, 25) y `FragmentoVida1` (`profundidades_1`) en (44, 25).
+  - Secreto: `ParedAgrietada` (columna 8, filas 23-25) con el arte provisional de siempre; la heredada `pared_agrietada_profundidades.tscn` (P48) se hace al vestir, con el tileset `profundidades`.
+  - E5: `AtuendoFireKnight` (`fire_knight`) en (30, 78), sobre el yunque.
+  - Rejas, trampillas y losas con piezas del atlas `dungeontilesetfull.png`, como en la ruina. La luz ambiente se ajusta al vestir.
 - [ ] **Infierno:**
   - decidir los enemigos definitivos de la prueba final;
   - las arenas con oleadas del coliseo y del salón, las rejas bajas del pasillo y el fuego infernal;

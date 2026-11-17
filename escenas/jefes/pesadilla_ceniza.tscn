@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://escenas/enemigos/pesadilla.tscn" id="1_pesadilla"]
+[ext_resource type="PackedScene" path="res://escenas/ui/boss_health_bar.tscn" id="2_barra"]
+
+[node name="PesadillaCeniza" instance=ExtResource("1_pesadilla")]
+max_health = 10.0
+contact_damage = 0.5
+attack_damage = 1.0
+detection_range = 420.0
+detection_vertical_range = 160.0
+lose_aggro_range = 640.0
+lose_aggro_vertical_range = 220.0
+show_health_bar = false
+
+[node name="BossHealthBar" parent="." instance=ExtResource("2_barra")]
+boss_name = "PESADILLA DE CENIZA"
+show_only_with_aggro = true

@@ -18,4 +18,4 @@ tileset: mazmorra
 bloques: ladrillo
 fondo: ninguno
 parallax: assets_prueba/gothicvania/lava/fondo.png 0.05 x2; assets_prueba/gothicvania/lava/rocas.png 0.2 x2
-anterior: res://escenas/mapas/tiles_profundidades.tscn#DesdeInfierno
+anterior: res://escenas/mapas/tiles_profundidades_combate.tscn#DesdeInfierno

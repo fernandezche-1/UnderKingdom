@@ -1,0 +1,555 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://escenas/mapas/tiles_profundidades.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/combat/boss_arena.gd" id="2_sala"]
+[ext_resource type="Script" path="res://scripts/combat/wave_arena.gd" id="3_oleadas"]
+[ext_resource type="Script" path="res://scripts/environment/arena_barrier.gd" id="4_barrera"]
+[ext_resource type="Texture2D" path="res://assets/terceros/dungeon_platformer/dungeontilesetfull.png" id="5_tileset"]
+[ext_resource type="PackedScene" path="res://escenas/jefes/demon_slime_jefe.tscn" id="6_demon_slime"]
+[ext_resource type="PackedScene" path="res://escenas/jefes/pesadilla_ceniza.tscn" id="7_pesadilla_ceniza"]
+[ext_resource type="PackedScene" path="res://escenas/jefes/diablillo_mayor.tscn" id="8_diablillo_mayor"]
+[ext_resource type="PackedScene" path="res://escenas/jefes/bestia_mayor.tscn" id="9_bestia_mayor"]
+[ext_resource type="PackedScene" path="res://escenas/enemigos/diablillo.tscn" id="10_diablillo"]
+[ext_resource type="PackedScene" path="res://escenas/enemigos/bestia_infernal.tscn" id="11_bestia"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/sello.tscn" id="12_sello"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/fuego_infernal.tscn" id="13_fuego"]
+[ext_resource type="PackedScene" path="res://escenas/items/llave_jefe_m1.tscn" id="14_llave"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/palanca.tscn" id="15_palanca"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/map_transition.tscn" id="16_transicion"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/spawn_point.tscn" id="17_spawn"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/atuendo.tscn" id="18_atuendo"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/objeto_lore.tscn" id="19_lore"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/pared_agrietada.tscn" id="20_pared"]
+[ext_resource type="PackedScene" path="res://escenas/items/fragmento_vida.tscn" id="21_fragmento"]
+[ext_resource type="Script" path="res://scripts/environment/encounter_visibility.gd" id="22_visibilidad"]
+[ext_resource type="Texture2D" path="res://assets/terceros/Medieval King Pack 2/Sprites/Idle.png" id="23_rey_idle"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna_tope"]
+atlas = ExtResource("5_tileset")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna_medio"]
+atlas = ExtResource("5_tileset")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna_base"]
+atlas = ExtResource("5_tileset")
+region = Rect2(48, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_losa_izq"]
+atlas = ExtResource("5_tileset")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_losa_medio"]
+atlas = ExtResource("5_tileset")
+region = Rect2(16, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_losa_der"]
+atlas = ExtResource("5_tileset")
+region = Rect2(32, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rey_0"]
+atlas = ExtResource("23_rey_idle")
+region = Rect2(0, 0, 160, 111)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rey_1"]
+atlas = ExtResource("23_rey_idle")
+region = Rect2(160, 0, 160, 111)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rey_2"]
+atlas = ExtResource("23_rey_idle")
+region = Rect2(320, 0, 160, 111)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rey_3"]
+atlas = ExtResource("23_rey_idle")
+region = Rect2(480, 0, 160, 111)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rey_4"]
+atlas = ExtResource("23_rey_idle")
+region = Rect2(640, 0, 160, 111)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rey_5"]
+atlas = ExtResource("23_rey_idle")
+region = Rect2(800, 0, 160, 111)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rey_6"]
+atlas = ExtResource("23_rey_idle")
+region = Rect2(960, 0, 160, 111)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rey_7"]
+atlas = ExtResource("23_rey_idle")
+region = Rect2(1120, 0, 160, 111)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rey"]
+animations = [{
+"frames": [{"duration": 1.0, "texture": SubResource("AtlasTexture_rey_0")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_rey_1")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_rey_2")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_rey_3")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_rey_4")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_rey_5")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_rey_6")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_rey_7")}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_112x64"]
+size = Vector2(112, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_48x16"]
+size = Vector2(48, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_176x80"]
+size = Vector2(176, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_48x64"]
+size = Vector2(48, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_288x80"]
+size = Vector2(288, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_16x80"]
+size = Vector2(16, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_96x16"]
+size = Vector2(96, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_16x48"]
+size = Vector2(16, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_80x16"]
+size = Vector2(80, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_48x32"]
+size = Vector2(48, 32)
+
+[node name="TilesProfundidadesCombate" instance=ExtResource("1_base")]
+
+[node name="ArenaColiseo" type="Node2D" parent="SistemasMapa"]
+script = ExtResource("3_oleadas")
+encounter_id = "profundidades_altar_coliseo"
+victory_message = "EL ALTAR DESPIERTA"
+
+[node name="Activador" type="Area2D" parent="SistemasMapa/ArenaColiseo"]
+position = Vector2(392, 688)
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/ArenaColiseo/Activador"]
+shape = SubResource("RectangleShape2D_112x64")
+
+[node name="Puertas" type="Node2D" parent="SistemasMapa/ArenaColiseo"]
+
+[node name="TrampillaGaleria" type="StaticBody2D" parent="SistemasMapa/ArenaColiseo/Puertas"]
+position = Vector2(664, 424)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_losa_izq")
+piece_middle = SubResource("AtlasTexture_losa_medio")
+piece_end = SubResource("AtlasTexture_losa_der")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/ArenaColiseo/Puertas/TrampillaGaleria"]
+shape = SubResource("RectangleShape2D_48x16")
+disabled = true
+
+[node name="TrampillaForja" type="StaticBody2D" parent="SistemasMapa/ArenaColiseo/Puertas"]
+position = Vector2(136, 728)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_losa_izq")
+piece_middle = SubResource("AtlasTexture_losa_medio")
+piece_end = SubResource("AtlasTexture_losa_der")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/ArenaColiseo/Puertas/TrampillaForja"]
+shape = SubResource("RectangleShape2D_48x16")
+disabled = true
+
+[node name="Oleadas" type="Node2D" parent="SistemasMapa/ArenaColiseo"]
+
+[node name="Oleada1" type="Node2D" parent="SistemasMapa/ArenaColiseo/Oleadas"]
+
+[node name="Oleada2" type="Node2D" parent="SistemasMapa/ArenaColiseo/Oleadas"]
+
+[node name="Oleada3" type="Node2D" parent="SistemasMapa/ArenaColiseo/Oleadas"]
+
+[node name="Diablillo1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada1" instance=ExtResource("10_diablillo")]
+position = Vector2(168, 558)
+
+[node name="Diablillo2" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada1" instance=ExtResource("10_diablillo")]
+position = Vector2(392, 526)
+
+[node name="Diablillo3" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada1" instance=ExtResource("10_diablillo")]
+position = Vector2(584, 558)
+
+[node name="Bestia1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada2" instance=ExtResource("11_bestia")]
+position = Vector2(168, 684)
+
+[node name="Bestia2" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada2" instance=ExtResource("11_bestia")]
+position = Vector2(584, 684)
+
+[node name="Diablillo1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada2" instance=ExtResource("10_diablillo")]
+position = Vector2(392, 526)
+
+[node name="PesadillaCeniza" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada3" instance=ExtResource("7_pesadilla_ceniza")]
+position = Vector2(552, 680)
+
+[node name="UI" type="CanvasLayer" parent="SistemasMapa/ArenaColiseo"]
+layer = 9
+
+[node name="Aviso" type="Label" parent="SistemasMapa/ArenaColiseo/UI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_type_variation = &"Encabezado"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SalaLago" type="Node2D" parent="SistemasMapa"]
+script = ExtResource("2_sala")
+encounter_id = "profundidades_altar_lago"
+boss_scene = ExtResource("8_diablillo_mayor")
+boss_message = "DIABLILLO MAYOR"
+victory_message = "EL ALTAR DESPIERTA"
+
+[node name="Activador" type="Area2D" parent="SistemasMapa/SalaLago"]
+position = Vector2(3064, 840)
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaLago/Activador"]
+shape = SubResource("RectangleShape2D_176x80")
+
+[node name="Puertas" type="Node2D" parent="SistemasMapa/SalaLago"]
+
+[node name="PuntosJefe" type="Node2D" parent="SistemasMapa/SalaLago"]
+
+[node name="JefeIslaEste" type="Marker2D" parent="SistemasMapa/SalaLago/PuntosJefe"]
+position = Vector2(3128, 776)
+
+[node name="JefeIslaOeste" type="Marker2D" parent="SistemasMapa/SalaLago/PuntosJefe"]
+position = Vector2(3000, 776)
+
+[node name="UI" type="CanvasLayer" parent="SistemasMapa/SalaLago"]
+layer = 9
+
+[node name="Aviso" type="Label" parent="SistemasMapa/SalaLago/UI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_type_variation = &"Encabezado"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SalaSantuario" type="Node2D" parent="SistemasMapa"]
+script = ExtResource("2_sala")
+encounter_id = "profundidades_altar_santuario"
+boss_scene = ExtResource("9_bestia_mayor")
+boss_message = "BESTIA INFERNAL MAYOR"
+victory_message = "EL ALTAR DESPIERTA"
+
+[node name="Activador" type="Area2D" parent="SistemasMapa/SalaSantuario"]
+position = Vector2(2616, 1232)
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaSantuario/Activador"]
+shape = SubResource("RectangleShape2D_48x64")
+
+[node name="Puertas" type="Node2D" parent="SistemasMapa/SalaSantuario"]
+
+[node name="PuntosJefe" type="Node2D" parent="SistemasMapa/SalaSantuario"]
+
+[node name="JefePasillo" type="Marker2D" parent="SistemasMapa/SalaSantuario/PuntosJefe"]
+position = Vector2(3080, 1224)
+
+[node name="JefePasilloOeste" type="Marker2D" parent="SistemasMapa/SalaSantuario/PuntosJefe"]
+position = Vector2(2952, 1224)
+
+[node name="UI" type="CanvasLayer" parent="SistemasMapa/SalaSantuario"]
+layer = 9
+
+[node name="Aviso" type="Label" parent="SistemasMapa/SalaSantuario/UI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_type_variation = &"Encabezado"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SalaDemonSlime" type="Node2D" parent="SistemasMapa"]
+script = ExtResource("2_sala")
+encounter_id = "profundidades_demon_slime"
+boss_scene = ExtResource("6_demon_slime")
+key_scene = ExtResource("14_llave")
+key_id = "profundidades_ascua"
+boss_message = "DEMON SLIME"
+
+[node name="Activador" type="Area2D" parent="SistemasMapa/SalaDemonSlime"]
+position = Vector2(1648, 1224)
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaDemonSlime/Activador"]
+shape = SubResource("RectangleShape2D_288x80")
+
+[node name="Puertas" type="Node2D" parent="SistemasMapa/SalaDemonSlime"]
+
+[node name="RejaEntrada" type="StaticBody2D" parent="SistemasMapa/SalaDemonSlime/Puertas"]
+position = Vector2(1448, 1224)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_columna_tope")
+piece_middle = SubResource("AtlasTexture_columna_medio")
+piece_end = SubResource("AtlasTexture_columna_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaDemonSlime/Puertas/RejaEntrada"]
+shape = SubResource("RectangleShape2D_16x80")
+disabled = true
+
+[node name="TrampillaPozo" type="StaticBody2D" parent="SistemasMapa/SalaDemonSlime/Puertas"]
+position = Vector2(1744, 1112)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_losa_izq")
+piece_middle = SubResource("AtlasTexture_losa_medio")
+piece_end = SubResource("AtlasTexture_losa_der")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaDemonSlime/Puertas/TrampillaPozo"]
+shape = SubResource("RectangleShape2D_96x16")
+disabled = true
+
+[node name="Atajos" type="Node2D" parent="SistemasMapa/SalaDemonSlime"]
+
+[node name="RejaSalida" type="StaticBody2D" parent="SistemasMapa/SalaDemonSlime/Atajos"]
+position = Vector2(1800, 1240)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_columna_tope")
+piece_middle = SubResource("AtlasTexture_columna_medio")
+piece_end = SubResource("AtlasTexture_columna_base")
+start_closed = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaDemonSlime/Atajos/RejaSalida"]
+shape = SubResource("RectangleShape2D_16x48")
+
+[node name="PuntosJefe" type="Node2D" parent="SistemasMapa/SalaDemonSlime"]
+
+[node name="JefeOeste" type="Marker2D" parent="SistemasMapa/SalaDemonSlime/PuntosJefe"]
+position = Vector2(1512, 1184)
+
+[node name="JefeEste" type="Marker2D" parent="SistemasMapa/SalaDemonSlime/PuntosJefe"]
+position = Vector2(1752, 1184)
+
+[node name="PuntoLlave" type="Marker2D" parent="SistemasMapa/SalaDemonSlime"]
+position = Vector2(1608, 1248)
+
+[node name="UI" type="CanvasLayer" parent="SistemasMapa/SalaDemonSlime"]
+layer = 9
+
+[node name="Aviso" type="Label" parent="SistemasMapa/SalaDemonSlime/UI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_type_variation = &"Encabezado"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SelloReja" type="StaticBody2D" parent="SistemasMapa"]
+position = Vector2(1448, 1224)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_columna_tope")
+piece_middle = SubResource("AtlasTexture_columna_medio")
+piece_end = SubResource("AtlasTexture_columna_base")
+start_closed = true
+open_on_seal_group = "profundidades_s7"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SelloReja"]
+shape = SubResource("RectangleShape2D_16x80")
+
+[node name="SelloTrampilla" type="StaticBody2D" parent="SistemasMapa"]
+position = Vector2(1744, 1112)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_losa_izq")
+piece_middle = SubResource("AtlasTexture_losa_medio")
+piece_end = SubResource("AtlasTexture_losa_der")
+start_closed = true
+open_on_seal_group = "profundidades_s7"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SelloTrampilla"]
+shape = SubResource("RectangleShape2D_96x16")
+
+[node name="TrampillaAtajo" type="StaticBody2D" parent="SistemasMapa"]
+position = Vector2(1096, 424)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_losa_izq")
+piece_middle = SubResource("AtlasTexture_losa_medio")
+piece_end = SubResource("AtlasTexture_losa_der")
+start_closed = true
+open_on_encounter = "profundidades_atajo_interno"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/TrampillaAtajo"]
+shape = SubResource("RectangleShape2D_48x16")
+
+[node name="TrampillaLago" type="StaticBody2D" parent="SistemasMapa"]
+position = Vector2(3112, 616)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_losa_izq")
+piece_middle = SubResource("AtlasTexture_losa_medio")
+piece_end = SubResource("AtlasTexture_losa_der")
+start_closed = true
+open_on_encounter = "profundidades_atajo_lago"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/TrampillaLago"]
+shape = SubResource("RectangleShape2D_48x16")
+
+[node name="RejillaJaula" type="StaticBody2D" parent="SistemasMapa"]
+position = Vector2(744, 328)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_losa_izq")
+piece_middle = SubResource("AtlasTexture_losa_medio")
+piece_end = SubResource("AtlasTexture_losa_der")
+start_closed = true
+open_on_encounter = "infierno_animas_liberadas"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/RejillaJaula"]
+shape = SubResource("RectangleShape2D_80x16")
+
+[node name="FuegoSantuarioOeste" parent="SistemasMapa" instance=ExtResource("13_fuego")]
+position = Vector2(2560, 1248)
+width_tiles = 3
+
+[node name="FuegoSantuario" parent="SistemasMapa" instance=ExtResource("13_fuego")]
+position = Vector2(2624, 1248)
+width_tiles = 35
+
+[node name="Transiciones" type="Node2D" parent="SistemasMapa"]
+
+[node name="SalidaP6" parent="SistemasMapa/Transiciones" instance=ExtResource("16_transicion")]
+position = Vector2(2920, 16)
+target_scene_path = "res://escenas/mapas/tiles_ruina_combate.tscn"
+target_spawn_id = &"DesdeProfundidades"
+
+[node name="CollisionShape2D" parent="SistemasMapa/Transiciones/SalidaP6" index="0"]
+shape = SubResource("RectangleShape2D_48x32")
+
+[node name="SalidaE" parent="SistemasMapa/Transiciones" instance=ExtResource("16_transicion")]
+position = Vector2(2040, 16)
+target_scene_path = "res://escenas/mapas/tiles_ruina_combate.tscn"
+target_spawn_id = &"DesdeProfundidadesAtajo"
+
+[node name="CollisionShape2D" parent="SistemasMapa/Transiciones/SalidaE" index="0"]
+shape = SubResource("RectangleShape2D_48x32")
+
+[node name="SalidaF" parent="SistemasMapa/Transiciones" instance=ExtResource("16_transicion")]
+position = Vector2(312, 16)
+target_scene_path = "res://escenas/mapas/tiles_mazmorra_combate.tscn"
+target_spawn_id = &"DesdeProfundidades"
+
+[node name="CollisionShape2D" parent="SistemasMapa/Transiciones/SalidaF" index="0"]
+shape = SubResource("RectangleShape2D_48x32")
+
+[node name="SalidaS7" parent="SistemasMapa/Transiciones" instance=ExtResource("16_transicion")]
+position = Vector2(1848, 1352)
+target_scene_path = "res://archivo/tiles_v1/escenas/tiles_jefe_combate.tscn"
+target_spawn_id = &"DesdeAnterior"
+
+[node name="CollisionShape2D" parent="SistemasMapa/Transiciones/SalidaS7" index="0"]
+shape = SubResource("RectangleShape2D_48x16")
+
+[node name="DesdeRuina" parent="SistemasMapa" instance=ExtResource("17_spawn")]
+position = Vector2(2968, 161)
+spawn_id = &"DesdeRuina"
+
+[node name="DesdeRuinaAtajo" parent="SistemasMapa" instance=ExtResource("17_spawn")]
+position = Vector2(1976, 161)
+spawn_id = &"DesdeRuinaAtajo"
+
+[node name="DesdeMazmorra" parent="SistemasMapa" instance=ExtResource("17_spawn")]
+position = Vector2(264, 353)
+spawn_id = &"DesdeMazmorra"
+
+[node name="DesdeInfierno" parent="SistemasMapa" instance=ExtResource("17_spawn")]
+position = Vector2(1896, 1201)
+spawn_id = &"DesdeInfierno"
+
+[node name="SelloColiseo" parent="Objetos" instance=ExtResource("12_sello")]
+position = Vector2(384, 688)
+seal_group = "profundidades_s7"
+seal_id = "coliseo"
+listen_encounter = "profundidades_altar_coliseo"
+
+[node name="SelloLago" parent="Objetos" instance=ExtResource("12_sello")]
+position = Vector2(3056, 848)
+seal_group = "profundidades_s7"
+seal_id = "lago"
+listen_encounter = "profundidades_altar_lago"
+
+[node name="SelloSantuario" parent="Objetos" instance=ExtResource("12_sello")]
+position = Vector2(2608, 1232)
+seal_group = "profundidades_s7"
+seal_id = "santuario"
+listen_encounter = "profundidades_altar_santuario"
+
+[node name="PalancaE" parent="Objetos" instance=ExtResource("15_palanca")]
+position = Vector2(1904, 192)
+encounter_id = "ruina_atajo_e_abierto"
+
+[node name="PalancaF" parent="Objetos" instance=ExtResource("15_palanca")]
+position = Vector2(368, 384)
+encounter_id = "mazmorra_atajo_f_abierto"
+
+[node name="PalancaAtajo" parent="Objetos" instance=ExtResource("15_palanca")]
+position = Vector2(1136, 1232)
+encounter_id = "profundidades_atajo_interno"
+
+[node name="PalancaLago" parent="Objetos" instance=ExtResource("15_palanca")]
+position = Vector2(3136, 848)
+encounter_id = "profundidades_atajo_lago"
+
+[node name="AtuendoFireKnight" parent="Objetos" instance=ExtResource("18_atuendo")]
+position = Vector2(488, 1254)
+outfit_id = "fire_knight"
+
+[node name="RestosCondenados" parent="Objetos" instance=ExtResource("19_lore")]
+position = Vector2(232, 406)
+dialogue_path = "res://dialogues/lore_restos_condenados.json"
+lore_id = "restos_condenados"
+
+[node name="DiarioReina2" parent="Objetos" instance=ExtResource("19_lore")]
+position = Vector2(200, 406)
+dialogue_path = "res://dialogues/lore_diario_reina_2.json"
+lore_id = "diario_reina_2"
+
+[node name="ParedAgrietada" parent="Objetos" instance=ExtResource("20_pared")]
+position = Vector2(128, 368)
+
+[node name="ReyEncadenado" type="AnimatedSprite2D" parent="Objetos"]
+position = Vector2(744, 269)
+sprite_frames = SubResource("SpriteFrames_rey")
+animation = &"idle"
+autoplay = "idle"
+offset = Vector2(0, 0.5)
+
+[node name="Visibilidad" type="Node" parent="Objetos/ReyEncadenado"]
+script = ExtResource("22_visibilidad")
+hide_when_encounter = "infierno_animas_liberadas"
+
+[node name="AlmaRey" parent="Objetos" instance=ExtResource("19_lore")]
+position = Vector2(744, 365)
+modulate = Color(0.6, 0.8, 1, 0.6)
+sprite_frames = SubResource("SpriteFrames_rey")
+autoplay = "idle"
+offset = Vector2(0, 0.5)
+dialogue_path = "res://dialogues/lore_alma_rey.json"
+interaction_radius = 40.0
+lore_id = "alma_rey_caido"
+
+[node name="Visibilidad" type="Node" parent="Objetos/AlmaRey"]
+script = ExtResource("22_visibilidad")
+show_when_encounter = "infierno_animas_liberadas"
+
+[node name="FragmentoVida1" parent="Objetos" instance=ExtResource("21_fragmento")]
+position = Vector2(712, 400)
+fragment_id = "profundidades_1"
+
+[node name="Visibilidad" type="Node" parent="Objetos/FragmentoVida1"]
+script = ExtResource("22_visibilidad")
+show_when_encounter = "infierno_animas_liberadas"

@@ -52,5 +52,5 @@ Escena temporal sin ventana (borrada), con el Player de la zona de pruebas invul
 
 - Montada (Fase 3): la antecámara del castillo (`ArenaAntecamara`, `castillo_antecamara`, 4 oleadas; P46 y `TASK.md`).
 
-- Fase 3: montar las dos arenas del infierno (coliseo con `encounter_id` `infierno_animas_liberadas`; salón de los verdugos) y la del coliseo de ceniza de las profundidades, y decidir sus oleadas.
+- Fase 3: montar las dos arenas del infierno (coliseo con `encounter_id` `infierno_animas_liberadas`; salón de los verdugos) y decidir sus oleadas. La del coliseo de ceniza de las profundidades ya está (2026-11-17, `ArenaColiseo` de `tiles_profundidades_combate.tscn`, `profundidades_altar_coliseo`: tres oleadas que acaban en la Pesadilla de ceniza).
 - Arte: la escalera y el suelo de la prueba son rectángulos; las rejas usan las piezas del tileset de cada nivel.

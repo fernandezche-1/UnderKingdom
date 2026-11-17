@@ -117,6 +117,7 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
   | Mazmorra | Reina | `reina_jefe.tscn` |
   | Ruina | Guardián de hielo | `guardian_hielo.tscn` |
   | Profundidades | Demon Slime | `demon_slime_jefe.tscn` |
+  | Profundidades (altares) | Pesadilla de ceniza, Diablillo mayor, Bestia infernal mayor | `pesadilla_ceniza.tscn`, `diablillo_mayor.tscn`, `bestia_mayor.tscn` (heredan de sus enemigos) |
   | Infierno | Cthulhu | `cthulhu_jefe.tscn` |
 
   Scripts:

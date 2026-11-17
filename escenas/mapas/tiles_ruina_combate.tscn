@@ -213,7 +213,7 @@ shape = SubResource("RectangleShape2D_salida_techo")
 
 [node name="SalidaP6" parent="SistemasMapa/Transiciones" instance=ExtResource("8_transicion")]
 position = Vector2(2344, 1272)
-target_scene_path = "res://escenas/mapas/tiles_profundidades.tscn"
+target_scene_path = "res://escenas/mapas/tiles_profundidades_combate.tscn"
 target_spawn_id = &"DesdeRuina"
 
 [node name="CollisionShape2D" parent="SistemasMapa/Transiciones/SalidaP6" index="0"]

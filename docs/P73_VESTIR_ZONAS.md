@@ -1137,7 +1137,7 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
 - La pieza vale también para las profundidades (ceniza: otro `color` y `wind` hacia arriba), cuando se haga su ficha.
 
 ### Profundidades
-- Parte de: tileset `mazmorra` con `bloques: oro`, `fondo: ninguno` y el parallax de `gothicvania/lava` (`fondo.png` y `rocas.png`) en toda la zona. En el ASCII, 22 diablillos `d`, todos en el aire; el Demon Slime en la `_combate`. Faltan los minijefes de los altares (P46, sección 7).
+- Parte de: tileset `mazmorra` con `bloques: oro`, `fondo: ninguno` y el parallax de `gothicvania/lava` (`fondo.png` y `rocas.png`) en toda la zona. En el ASCII, 22 diablillos `d`, todos en el aire; el Demon Slime en la `_combate`. Los minijefes de los altares se eligieron al montar la `_combate` (2026-11-17, P46 sección 7): la Pesadilla de ceniza, el Diablillo mayor y la Bestia infernal mayor, escenas heredadas de los demonios de la zona.
 - **Ficha aprobada el 2026-11-17**, con la base generada y sin la `_combate` (parte 2 de la estructura). TASK.md deja armar la ficha antes; para vestir hace falta la `_combate` montada y jugada.
 - **Por qué cambia** (capturas sin ventana de 12 sitios de la base):
   - los bloques `oro` son cuadros azul marino con un borde dorado punteado: la roca se lee como un hueco, como la `oliva` y la `madera`, y el azul no pega con la lava;

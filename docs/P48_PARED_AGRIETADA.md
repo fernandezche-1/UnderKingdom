@@ -45,7 +45,7 @@ Tres exportaciones nuevas. Su valor por defecto deja la caja y la estatua como e
 - La columna de ladrillo morado del tileset `castillo`: piezas (3, 16-18) de `assets/terceros/raou_castillo/tileset_castillo.png`, región `(48, 256, 16, 48)`, igual en los cuatro estados (intacta, dañada, crítica y rota).
 - **Pendiente:**
   - arte propio de ladrillo con grietas, en tres grados de daño más los escombros. Con los escombros, `hide_sprite_when_destroyed` pasa a `false`;
-  - para las profundidades (tileset `mazmorra`, bloques `oro`), una escena heredada `pared_agrietada_profundidades.tscn` que solo cambie el `SpriteFrames` (decidido el 2026-11-08). Se hace al montar esa zona en la Fase 3.
+  - para las profundidades (tileset `mazmorra`, bloques `oro`), una escena heredada `pared_agrietada_profundidades.tscn` que solo cambie el `SpriteFrames` (decidido el 2026-11-08). Al montar la `_combate` (2026-11-17) se dejó la de siempre: la heredada se hace al vestir la zona, con el tileset `profundidades`, que cambia el aspecto de la roca.
 - No hay sonido de derrumbe en el proyecto. Cuando lo haya, se añade aquí.
 
 ## 5. Zona de pruebas
