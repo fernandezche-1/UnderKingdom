@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" path="res://escenas/items/fragmento_vida.tscn" id="21_fragmento"]
 [ext_resource type="Script" path="res://scripts/environment/encounter_visibility.gd" id="22_visibilidad"]
 [ext_resource type="Texture2D" path="res://assets/terceros/Medieval King Pack 2/Sprites/Idle.png" id="23_rey_idle"]
+[ext_resource type="Script" path="res://scripts/environment/map_ambience.gd" id="24_ambiente"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_columna_tope"]
 atlas = ExtResource("5_tileset")
@@ -553,3 +554,9 @@ fragment_id = "profundidades_1"
 [node name="Visibilidad" type="Node" parent="Objetos/FragmentoVida1"]
 script = ExtResource("22_visibilidad")
 show_when_encounter = "infierno_animas_liberadas"
+
+[node name="Ambientacion" type="Node2D" parent="."]
+script = ExtResource("24_ambiente")
+ambient_color = Color(0.62, 0.5, 0.5, 1)
+player_light_color = Color(1, 0.9, 0.85, 1)
+vignette_strength = 0.55

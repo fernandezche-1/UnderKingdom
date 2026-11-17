@@ -1272,6 +1272,49 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
   - la pesadilla mide 64 px de largo: en el puente de huesos, entre pozas de 3, se para en el borde, y el tramo tiene que dejarle sitio para embestir;
   - en la `_combate` (la de la forja), la luz del horno junto a la de la lava.
 
+**Vestida (2026-11-17), falta jugarla a mano:**
+- `mapas_texto/tiles_profundidades.txt` pasa a `tileset: profundidades`, `bloques: profundidades` y `fondo: basalto`, con `fondo_sala`. El parallax de lava no cambia. Se regeneró la base `escenas/mapas/tiles_profundidades.tscn`.
+- **Paredes:**
+
+  | Pared | Rectángulos (x0 y0 x1 y1) |
+  |---|---|
+  | `basalto` (el `fondo:`) | lo demás: galería de los condenados, pie de `:E:`, llegada, paso de la chimenea, túnel, antesala, encrucijada, pasillo del fuego y los pozos (`:F:`, `[S7]`, el atajo, las escaleras 100 y 194 y el de la trampilla de la sala) |
+  | `ladrillo` | coliseo 4 30 44 44; forja 4 66 55 78; sala del Demon Slime 90 70 111 78; cámara del altar del fuego 160 69 167 78 |
+  | `ninguno` (el parallax) | puente de ceniza con su foso 141 6 167 16; gran caverna 95 19 198 37, con su salida este a la chimenea 199 21 200 25; lago de magma 126 46 196 60; chimenea de azufre con su boca 201 14 229 78 |
+
+  - El pasillo del fuego (x 168-200, filas 75-78) no sale en la tabla de la ficha: se queda con el basalto, y solo la cámara del altar lleva ladrillo.
+  - El puente de ceniza no tiene pared hacia la llegada ni hacia el pie de `:E:`: el parallax acaba en un corte recto en el aire, en las columnas 141 y 168, como el exterior de la ruina.
+- **Enemigos en el ASCII:**
+  - salen 9 diablillos y quedan 13, los de la ficha;
+  - bestias `I` en el suelo, bajo los diablillos que salen: galería (28, 25) y (72, 25), cornisa (108, 25) y (178, 25), sobre la roca, y encrucijada (93, 60) y (118, 60);
+  - pesadillas `Y` en el puente de huesos, en medio de cada tramo entre pozas (de 27, 27 y 15 piezas): (131, 37), (161, 37) y (185, 37).
+
+  Quedan 13 diablillos, 6 bestias y 3 pesadillas (22, como antes). Ninguno a menos de 8 piezas de la P, los checkpoints o los spawns.
+- **Decorados nuevos** (sitio de abajo a la izquierda, todos apoyados en el suelo):
+
+  | Letra | Sitios |
+  |---|---|
+  | `V` horno | forja (24, 78) y (33, 78), a los lados del yunque de E5 y sin pisar la plataforma de x 26-31 |
+  | `U` arco con cara de demonio | coliseo (15, 44) y (31, 44), bajo las plataformas de la fila 41; sala del Demon Slime (96, 78) y (104, 78), a los lados del `PuntoLlave`; cámara del altar del fuego (160, 78) y (166, 78), a los lados del altar |
+  | `n` calaveras | galería (33, 25), (58, 25) y (90, 25); puente de huesos (109, 37), (139, 37) y (169, 37); coliseo (5, 44) |
+
+  - Cumplen la regla de la cabecera del `.txt`, comprobada con un script sobre el ASCII: ninguno pisa una escalera, sus columnas vecinas ni sus tres filas de encima, un spawn, un cofre, una moneda, una poción, un enemigo, otro decorado ni los objetos de la `_combate` (altares, palancas, E5, restos, página II, alma, fragmento, puntos de los jefes, oleadas del coliseo y `PuntoLlave`), y todos se apoyan en roca.
+  - **Excepción:** el fuego infernal del santuario cubre todo el suelo de la cámara salvo el altar, así que los dos arcos de la cámara quedan detrás de él (el decorado va en z -1 y el fuego, en z 0). Se ve en la captura.
+- **Colisiones:** iguales antes y después, 10817 polígonos sólidos y 108 de una vía, con los mismos polígonos y la misma marca de una vía (`Terreno` y `Plataformas`; `Liquidos` no tiene colisión), volcadas de la base con una escena temporal.
+- **Luz (la `_combate`):** no tenía `MapAmbience`, así que el horno no daba luz. Se le añade el nodo `Ambientacion` (`map_ambience.gd`), como en la ruina: luz ambiente (0.62, 0.5, 0.5), luz del Player (1, 0.9, 0.85) y viñeta 0.55. Se eligió con capturas frente a una más oscura, (0.5, 0.4, 0.46), con la que el basalto de la galería y la llegada se perdía. `MapAmbience` pone 57 luces, entre ellas las 2 de los hornos y las de la lava.
+- **Prueba sin ventana** (20441 comprobaciones bien):
+  - sobre la base, contra el ASCII: cada celda lleva su pared (2434 sin bloque con basalto, 1565 con ladrillo y 4819 sin pared); los 10817 bloques son del juego `profundidades`; las 108 piezas de plataforma son de la repisa y de una vía; las 338 piezas de escalera y los 15 decorados nuevos están en su pieza del atlas; los 5 cofres son `cofre_madera.tscn`;
+  - en la `_combate`: 13 diablillos, 6 bestias y 3 pesadillas, en la capa 5 y con daño y contacto en múltiplos de 0.25; a los 3 s siguen en su sitio, dentro de su patrulla, y las bestias y las pesadillas, sobre el suelo; las luces de los dos hornos están en su llama.
+- Capturas con el juego abierto de 16 sitios: llegada, puente de ceniza, pie de `:E:`, galería (dos), coliseo, forja, caverna, cornisa este, encrucijada, lago, isla, chimenea, santuario, sala del Demon Slime y antesala.
+- Arrancan sin errores la `_combate` y el juego, y `verificar_mundo.py` da 0 errores. El Atlas se publicó de nuevo, con los nombres de `r`, `V`, `U` y `n` del tileset `profundidades`, los de `I` e `Y` y el color de los bloques `profundidades`.
+- **Al jugarla, mirar:**
+  - la luz ambiente, (0.62, 0.5, 0.5);
+  - las bestias de la cornisa, que disparan al puente colgante, y las dos de la encrucijada;
+  - las pesadillas del puente de huesos: cada tramo les deja sitio para embestir, pero el de (185, 37) es el más corto (15 piezas, entre la poza de x 175-177 y la escalera 194);
+  - el corte del parallax en el puente de ceniza;
+  - el diablillo del pasillo del fuego, (184, 76), que estaba antes que la `_combate`: queda sobre el sitio oeste de la Bestia infernal mayor, `JefePasilloOeste` (184, 76).
+- **Pendiente** (P48 y TASK.md lo dejaban para este paso): la pared agrietada del secreto sigue con el arte provisional de siempre. La heredada `pared_agrietada_profundidades.tscn` es una escena nueva y cambia la `_combate`, y su arte no está en la ficha: se decide aparte.
+
 ### Infierno
 - Parte de: tileset `mazmorra` con `bloques: ladrillo`, parallax de `gothicvania/lava`. La mezcla de los más duros (P46); Cthulhu. Faltan los enemigos definitivos.
 - Ficha: por armar.
