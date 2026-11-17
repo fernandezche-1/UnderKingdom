@@ -36,6 +36,7 @@
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_cementerio.tscn" id="37_muestra_cementerio"]
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_minas.tscn" id="38_muestra_minas"]
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_mazmorra_reina.tscn" id="39_muestra_mazmorra_reina"]
+[ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_ruina.tscn" id="40_muestra_ruina"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_losa_medio"]
 atlas = ExtResource("8_tileset")
@@ -467,6 +468,9 @@ position = Vector2(1216, 1696)
 
 [node name="MuestraMazmorraReina" parent="Objetos" instance=ExtResource("39_muestra_mazmorra_reina")]
 position = Vector2(160, 1696)
+
+[node name="MuestraRuina" parent="Objetos" instance=ExtResource("40_muestra_ruina")]
+position = Vector2(656, 2000)
 
 [node name="Carteles" type="Node2D" parent="."]
 
@@ -1285,6 +1289,60 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 text = "TILESET MAZMORRA (P73)
 Piedra verde, pasarela (=) y paredes del Old Dark Castle: sin pared, cloaca y piedra; cadena (g), arco del desagüe (U), reja de celda (w)."
+autowrap_mode = 3
+
+[node name="Zona31" type="Label" parent="Carteles"]
+offset_left = 114.0
+offset_top = 1905.0
+offset_right = 594.0
+offset_bottom = 1929.0
+theme_type_variation = &"Encabezado"
+text = "Ruina"
+
+[node name="Nombre31" type="Label" parent="Carteles"]
+offset_left = 114.0
+offset_top = 1934.0
+offset_right = 590.0
+offset_bottom = 1954.0
+theme_type_variation = &"TextoAcento"
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "LOBO Y AVE"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Texto31" type="Label" parent="Carteles"]
+offset_left = 116.0
+offset_top = 2002.0
+offset_right = 588.0
+offset_bottom = 2078.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "LOBO Y AVE (P73)
+Van en: ruina. El lobo corre, avisa y salta sobre ti (0.5); no se tira de la repisa. El ave vuela y embiste (0.5)."
+autowrap_mode = 3
+
+[node name="Nombre32" type="Label" parent="Carteles"]
+offset_left = 610.0
+offset_top = 1934.0
+offset_right = 1182.0
+offset_bottom = 1954.0
+theme_type_variation = &"TextoAcento"
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "TILESET RUINA"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Texto32" type="Label" parent="Carteles"]
+offset_left = 996.0
+offset_top = 2002.0
+offset_right = 1180.0
+offset_bottom = 2078.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "TILESET RUINA (P73)
+Cantos, repisa (=) y muro de Caverns, teñidos de frío: sin pared y pared ruina; hornacina (V), contrafuerte (U), pedruscos (n)."
 autowrap_mode = 3
 
 [node name="Inicio" type="Label" parent="Carteles"]

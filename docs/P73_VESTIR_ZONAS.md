@@ -926,7 +926,7 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
 - **Lo que no cuadraba** (hallado al armar la ficha):
   - los cuatro enemigos de la profundidad 4 de P33 ya salieron más arriba: `a`, `M` y `e` en la mazmorra y `q` en las minas. Con la regla de no repetir (P33) salen los 23;
   - no hay arte de hielo en ningún pack del repo, de `archivo/sin_uso/` ni de Descargas (Legacy, Super Grotto, Monsters Creatures Fantasy 2, PixelFantasy, crusher);
-  - no queda arte de esqueleto que sirva: el de Super Grotto ya se descartó (cabezón) y Monster Creatures Fantasy 1.3 solo trae `Attack3`. El esqueleto de la ruina sale de la IA.
+  - no queda arte de esqueleto que sirva: el de Super Grotto ya se descartó (cabezón) y Monster Creatures Fantasy 1.3 solo trae `Attack3`. La ficha pedía el esqueleto a la IA; en el paso de piezas se descartó la IA y el esqueleto salió de la ficha (abajo, "Piezas").
 
 **Ambientación** (tileset nuevo `ruina`, `herramientas/constructor_mapas/tilesets/ruina.gd`, como `minas` y `mazmorra_reina`: las filas 0-15 copian el atlas de mazmorra, por la antorcha, la fogata, el agua, los cristales, los hongos, la estantería, la caja y el barril, y debajo van piezas de `caverns-files-web/layers/tiles.png` de la Legacy, el pack del parallax de hoy (`cavernas/paredes.png` es su `back-walls.png`); un script `herramientas/constructor_mapas/atlas_ruina.py` arma el atlas):
 - **Escala:** el pack ya va en una rejilla de 16 px (512x288, 32x18 piezas) y se usa tal cual. Es una escena pintada, no un juego de piezas: se recortan las celdas que sirvan.
@@ -958,31 +958,26 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
   - una luz ambiente fría en la `_combate`, por ejemplo (0.40, 0.48, 0.62);
   - un tinte frío de las piezas del pack en `atlas_ruina.py` (un recoloreo, sin dibujar arte nuevo, como el 60 % de las paredes).
 
-  En el paso de piezas la galería enseña las piezas con y sin tinte, y se elige con capturas.
+  En el paso de piezas la galería enseña las piezas con y sin tinte, y se elige con capturas. **Elegido (2026-11-16): el tinte de las piezas**; la luz ambiente fría se decide al vestir y jugar.
 
 **Enemigos** (profundidad 4, criaturas y esqueletos):
 - **Salen los 23:** 6 Aprendis `a`, 2 mino `M`, 7 kolbo3 `q` y 8 esqueletos `e`, porque ya salieron en la mazmorra y las minas. El Guardián sigue en la `_combate`.
-- **Nuevos** (letras y colores nuevos en `COLORS`, la paleta, LEYENDA y P33; `J`, `Z` e `Y` están libres):
+- **Nuevos** (letras y colores nuevos en `COLORS`, la paleta, LEYENDA y P33; `J` y `Z` están libres):
 
-  | | Lobo de la escarcha `J` (criatura) | Ave de las nieves `Z` (criatura) | Esqueleto helado `Y` (esqueleto) |
-  |---|---|---|---|
-  | Arte | `WereWolf` de la Legacy, cuadros de 96x76 (la figura, unos 60x40): `idle` 5, `run` 6, `jump` 2 y `fall` 2. No trae golpe, daño ni muerte | `flying-bird` de la Legacy, la versión blanca: 7 cuadros de 32x32 (la figura, unos 25x25) | IA, con la receta de abajo |
-  | Script base | `lunge_enemy.gd` en el suelo: corre (`run`), avisa (`idle`) y salta sobre el Player (`jump` y `fall`). Muere con el efecto `muerte` | `lunge_enemy.gd`, sin gravedad, como el cuervo y el ojo volador. Muere con el efecto `muerte` | `enemy_base.gd`, con tajo de espada |
-  | Vida y daño | 3 de vida, 0.5 de daño y 0.25 de contacto. Rápido | 1.5 de vida, 0.5 de daño y 0.25 de contacto | 3 de vida, 0.75 de daño y 0.25 de contacto |
-  | Sitio | los 9 de suelo de los kolbo3 y los mino: exterior (49, 15) y (72, 15), bajo la repisa de la cumbre (84, 18), lago (64, 23), galería alta (80, 33) y (144, 33), galería baja (14, 47) y su tramo alto (100, 45), cripta oscura (58, 64) | los 6 del aire de los Aprendis: exterior (52, 9), cumbre (70, 6), torre (108, 13), galería alta (46, 30), galería baja (90, 44) y capilla (14, 59) | los 8 de los esqueletos: exterior (97, 21), cumbre (90, 5), pasillo (126, 17), galería alta (20, 33) y (98, 33), galería baja (52, 47) y (125, 47), cripta oscura (36, 64) |
+  | | Lobo de la escarcha `J` (criatura) | Ave de las nieves `Z` (criatura) |
+  |---|---|---|
+  | Arte | `WereWolf` de la Legacy, cuadros de 96x76 (la figura, unos 60x40): `idle` 5, `run` 6, `jump` 2 y `fall` 2. No trae golpe, daño ni muerte | `flying-bird` de la Legacy, la versión blanca: 7 cuadros de 32x32 (la figura, unos 25x25) |
+  | Script base | `lunge_enemy.gd` en el suelo: corre (`run`), avisa (`idle`) y salta sobre el Player (`jump` y `fall`). Muere con el efecto `muerte` | `lunge_enemy.gd`, sin gravedad, como el cuervo y el ojo volador. Muere con el efecto `muerte` |
+  | Vida y daño | 3 de vida, 0.5 de daño y 0.25 de contacto. Rápido | 1.5 de vida, 0.5 de daño y 0.25 de contacto |
+  | Sitio | los 9 de suelo de los kolbo3 y los mino: exterior (49, 15) y (72, 15), bajo la repisa de la cumbre (84, 18), lago (64, 23), galería alta (80, 33) y (144, 33), galería baja (14, 47) y su tramo alto (100, 45), cripta oscura (58, 64); y 4 de los esqueletos, en el suelo de las galerías: galería alta (20, 33) y (98, 33), galería baja (52, 47) y (125, 47) | los 6 del aire de los Aprendis: exterior (52, 9), cumbre (70, 6), torre (108, 13), galería alta (46, 30), galería baja (90, 44) y capilla (14, 59); y los otros 4 de los esqueletos, volando sobre su sitio: exterior (97, 21), cumbre (90, 5), pasillo (126, 17) y cripta oscura (36, 64) |
 
   - Los sitios exactos se fijan al vestir, con la regla de las escaleras. El lobo mide unas 2,5 piezas de alto: cabe en las galerías (6), el pasillo (5) y el lago (6).
   - Si `enemy_base.gd` o `lunge_enemy.gd` no sirven sin cambios, se pregunta antes de tocarlos o de hacer un script propio.
-- **Receta IA del esqueleto helado** (P73, sección 2, "Arte con IA para enemigos"; aprobada el 2026-11-16):
-  1. Figura de referencia, que se aprueba antes de pedir las tiras: un esqueleto con restos de armadura cubiertos de escarcha y una espada, de perfil mirando a la derecha, en pose `idle`.
-  2. Tiras `idle`, `walk`, `attack`, `hurt` y `death`, seguidas, con el mismo prompt base y la figura de referencia, sobre fondo magenta y sin salirse de su casilla.
-  3. Se procesan con `herramientas/sprites/tira_ia_a_hoja.py`, probando primero `--escala` y `--fila-pies`, para que mida unos 36-40 px de alto (el esqueleto de la mazmorra mide 32). Solo si no basta se le añade un modo para enemigos, sin cambiar lo que hace con el Player.
-  4. Una carpeta con cada `original_ia.png` y los prompts exactos, para poder regenerar.
-- Quedan 9 lobos, 6 aves y 8 esqueletos helados (23, como antes).
+- **Esqueleto helado `Y`: quitado** (2026-11-16, al pasar a piezas). La ficha lo pedía a la IA, con su receta; se descartó la IA y no queda arte de esqueleto que sirva (Super Grotto, descartado; Monster Creatures Fantasy 1.3, solo `Attack3`; el fantasma y la Muerte de la Legacy ya son el ánima y el Barquero). Sus 8 sitios pasan a 4 lobos y 4 aves (en la tabla).
+- Quedan 13 lobos y 10 aves (23, como antes).
 
 **Origen del arte:**
 - **Legacy Collection** (CC0, `Legacy Collection.zip` en Descargas): `caverns-files-web/layers/tiles.png` va a `assets/terceros/gothicvania/cavernas/`, junto a su fondo; `WereWolf` y `flying-bird`, a `assets/terceros/gothicvania/personajes/`. Se anotan en su `ORIGEN.txt`.
-- **Esqueleto helado:** IA.
 - **Escalera:** la del Dungeon Tile Set, ya en el repo.
 - **Licencias:** el Dungeon Tile Set sigue por confirmar antes de publicar (ver "Otros pendientes" de `TASK.md`). Se usa igual, como en las zonas de arriba.
 - **Mirado y descartado:**
@@ -1000,6 +995,65 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
 - Los enemigos nuevos van en los sitios de hoy: ninguno en la llegada, el pie del pozo, la antesala, la sala del Guardián, las cámaras del deshielo y del hielo negro ni los secretos.
 - Ningún reto obligatorio pide el dash, E4 ni una mejora de la tienda. Las zonas frías siguen sin mecánica: no son de esta ficha.
 - Vestir no cambia celdas sólidas y las plataformas siguen siendo de una vía; se comprueba en el paso D.
+
+**Piezas (hechas el 2026-11-16).** Decisiones aprobadas al pasar la ficha a piezas:
+- **Sin IA:** el esqueleto helado `Y` sale de la ficha y sus 8 sitios se reparten entre lobos y aves (arriba, "Enemigos").
+- **El salto del lobo es solo visual:** `lunge_enemy.gd` no cambia. Embiste a ras de suelo y su `attack` es el cuadro 0 de `idle` durante el aviso (0.3 s) y después `jump` y `fall`, durante la embestida (0.35 s). Así no se tira a un foso (`avoid_ledges`) ni se queda en una repisa.
+- **El tinte:** se probaron en la galería las piezas tal cual y teñidas, con y sin una luz ambiente fría (0.40, 0.48, 0.62). Se eligió el tinte, sin luz; la luz ambiente se decide al vestir y jugar.
+- **Lo que no cuadraba con la ficha** (hallado al mirar el arte):
+  - **el muro del pack** (filas 6-8) es casi todo el mismo color plano que el interior de la roca, (25,14,27): con el interior del pack, la roca sería igual que la pared. Como preveía la ficha, el interior se arma con los cantos del lateral, al 55 %;
+  - **las esquinas** de los cantos sobresalen a la celda vecina: toman el borde de arriba o el de abajo, como en las minas;
+  - **el contrafuerte** mide 4x3 (la ficha decía unas 3x4): la banda del muro solo tiene 3 filas;
+  - **los pedruscos** son lascas de roca de 1x2 que caen sobre el interior; la `n` junta dos, bajadas al borde de abajo, en 2x2.
+- **Atlas** `assets/terceros/gothicvania/cavernas/tileset_ruina.png` (512x320), que arma `herramientas/constructor_mapas/atlas_ruina.py`:
+  - filas 0-15: el atlas de mazmorra sin cambios. `t`, `f`, `b`, `x`, `h`, `r` y `E` conservan sus piezas, y `DECOR_LIGHTS` les da luz sin entradas nuevas;
+  - fila 16, con las piezas del pack teñidas de frío (la llama de la hornacina conserva su rosa):
+    - juego `ruina` (0,16), con las 16 piezas macizas;
+    - repisa (4,16): la banda de piedras del suelo del pack, sin el negro de debajo;
+    - escalera de madera del Dungeon Tile Set (7,16);
+    - pared `ruina` (8,16), de 7x3: el muro de ladrillo roto, sin la hornacina ni los contrafuertes;
+    - `V` hornacina con llama 2x2 (15,16), `U` contrafuerte 4x3 (17,16) y `n` pedruscos 2x2 (21,16), sin el color plano del muro.
+
+  El pack va tal cual en `cavernas/tiles.png`. Las coordenadas están en `assets/terceros/gothicvania/ORIGEN.txt`.
+- **Tileset** `herramientas/constructor_mapas/tilesets/ruina.gd`:
+  - `bloques_por_defecto: ruina` (sin rampas: quedan las de `ladrillo`; la ruina no tiene);
+  - `plataformas`, `escalera`, `cofre` (`cofre_madera.tscn`) y `fondos` (`cueva` y `ruina`).
+
+  El constructor no cambia, salvo las letras nuevas.
+- **Luz:** la hornacina (15,17) va en `ATLAS_DECOR_LIGHTS` de `scripts/environment/map_ambience.gd`, con una luz rosa que parpadea.
+- **Enemigos** (sin scripts nuevos; los dos en la capa 5, con `lunge_enemy.gd` y 0.25 de contacto; miran a la derecha y mueren con el efecto `muerte`):
+
+  | | Escena | Vida | Daño | Detalle |
+  |---|---|---|---|---|
+  | Lobo `J` | `escenas/enemigos/lobo_escarcha.tscn` | 3 | 0.5 | Patrulla a 45 y persigue a 110; avisa 0.3 s y embiste a 220 durante 0.35 s desde 64 px. Cuerpo de 36x28 con los pies en el borde; el dibujo está 8 px a la izquierda del centro del cuadro y se refleja alrededor del cuerpo (`mirror_sprite_on_flip`) |
+  | Ave `Z` | `escenas/enemigos/ave_nieves.tscn` | 1.5 | 0.5 | Sin gravedad, `fly_toward_target`; la misma animación en `idle`, `move` y `attack`. Avisa 0.3 s y embiste a 170 desde 48 px; la caja (32x26) es más ancha que el cuerpo (20x18), como en los otros voladores |
+
+  - Hojas: `assets/terceros/gothicvania/personajes/lobo_escarcha.png` y `ave_nieves.png`, anotadas en su `ORIGEN.txt`.
+  - Letras `J` (`587898`) y `Z` (`e8f4f8`) en `COLORS` y `ENEMIES`, la paleta, LEYENDA (sección 5) y P33.
+- **Galería, piso F nuevo** (filas 119-138), al que se baja por la izquierda del piso E (escalera de la columna 4), con su checkpoint en (6, 123). Zona "Ruina":
+  - cuarto "LOBO Y AVE": el lobo sobre una repisa de 3 de alto y el ave en el aire;
+  - cuarto "TILESET RUINA", con la muestra `zona_pruebas_muestra_ruina`: a la izquierda, sin pared, techo, una columna colgada, una tira, una pieza suelta, cristales y pedruscos; a la derecha, la pared `ruina` con la hornacina, el contrafuerte, la repisa, una antorcha, hongos, un barril, la escalera a una repisa y una caja.
+
+  `muestra_tileset` de `galeria.py` admite ahora los pisos que van hacia la derecha (la escalera, a la izquierda del cuarto). La zona de pruebas pasa de 120 a 139 filas.
+- **Probado:**
+  - capturas de los dos cuartos con el juego abierto, y de las cuatro variantes del tinte;
+  - prueba sin ventana con 620 comprobaciones bien:
+    - los 85 bloques de la muestra son macizos, del juego `ruina` y con colisión, y las 4 piezas de la repisa son de una vía;
+    - el Player se apoya en la repisa y en el suelo;
+    - los decorados y la escalera están en su pieza del atlas, y la pared `ruina` cubre la derecha y no la parte sin pared;
+    - `MapAmbience` pone 4 luces (antorcha, hongos, cristales y la hornacina rosa);
+    - el lobo y el ave siguen en su sitio a los 3 s y reciben golpes;
+    - el lobo persigue al Player hasta el borde de una repisa y no se tira;
+    - dañan en múltiplos de 0.25 (al Player sin espada, 0.75 por golpe: los 0.5 más su 0.25 de más);
+    - mueren y se borran;
+    - en la galería, los dos siguen en su sitio a los 3 s, y el lobo sobre su repisa;
+  - arrancan sin errores el juego, la zona de pruebas y las `_combate` del calabozo, el castillo, el cementerio, las minas, la mazmorra y la ruina; `verificar_mundo.py` da 0 errores.
+- **Al vestir, mirar:**
+  - la luz ambiente de la `_combate`: la fría (0.40, 0.48, 0.62) oscurecía mucho con el tinte; se prueba jugando;
+  - el muro `ruina` es muy oscuro y casi liso, con pocas grietas: en las salas grandes puede verse plano;
+  - la hornacina es pequeña y oscura fuera de su luz;
+  - el lobo mide unos 57 px de largo y 39 de alto: en el pasillo (5 de alto) cabe, pero se comprueba con la regla de las escaleras;
+  - las 4 aves nuevas van en el exterior, la cumbre, el pasillo y la cripta oscura: la de la cripta, dentro de la `dark_zone`.
 
 ### Profundidades
 - Parte de: tileset `mazmorra` con `bloques: oro`, parallax de `gothicvania/lava`. Diablillo; el Demon Slime. Faltan los minijefes de los altares (P46, sección 7).

@@ -62,6 +62,9 @@ const ATLAS_DECOR_LIGHTS := {
 	"res://assets/terceros/gothicvania_cementerio/tileset_cementerio.png": {
 		Vector2i(30, 22): [Color(1.0, 0.62, 0.3), 48, 0.85, true],  # nicho con llama (V)
 	},
+	"res://assets/terceros/gothicvania/cavernas/tileset_ruina.png": {
+		Vector2i(15, 17): [Color(1.0, 0.45, 0.7), 40, 0.8, true],   # hornacina con llama rosa (V)
+	},
 }
 const LAVA_SURFACE := Vector2i(12, 8)
 const LAVA_LIGHT := [Color(1.0, 0.35, 0.1), 48, 0.9, true]

@@ -84,3 +84,42 @@ Mazmorra (P73, ficha de la mazmorra), sin cambiar el arte:
   fire-skull.png tal cual (8 cuadros de 96x112). La calavera de fuego
   (escenas/enemigos/calavera_fuego.tscn). La versión sin fuego
   (fire-skull-no-fire, 4 cuadros de 54x70) no se copió.
+
+Ruina (P73, ficha de la ruina), sin cambiar el arte:
+- cavernas/tiles.png  Environments/caverns-files-web/layers/tiles.png tal cual
+  (512x288, piezas de 16), la capa de piezas del pack del parallax de la ruina.
+- cavernas/tileset_ruina.png  atlas del tileset "ruina" del constructor
+  (tilesets/ruina.gd), que arma herramientas/constructor_mapas/atlas_ruina.py.
+  512x320: filas 0-15, copia sin cambios del atlas de mazmorra
+  (dungeon_platformer/dungeontilesetfull.png); filas 16-19, recortes de
+  cavernas/tiles.png (piezas de 16, de arriba a la izquierda), teñidos de frío
+  (cada color se acerca a su luminancia teñida de azul, al 60 %; la llama de
+  la hornacina conserva su rosa):
+  - (0,16) juego de bloques 4x4, todas macizas: arriba el suelo con piedras
+    (2,15); a los lados los cantos de los laterales (7,2) y (23,2); abajo el
+    techo con flecos (12,5); las esquinas toman el borde de arriba o de
+    abajo; el interior, los cantos de (7,2) al 55 % (el interior del pack es
+    del mismo color plano que su muro); la columna une la mitad izquierda de
+    (7,2) con la derecha de (23,2); la fila de tiras, la mitad de arriba del
+    suelo con la de abajo del techo;
+  - (4,16)-(6,16) repisa de las plataformas "=": la banda de piedras de
+    (2,15), sin el negro de debajo, tres veces;
+  - (7,16) escalera: la (5,9) del Dungeon Tile Set (dungeon_tile_set/);
+  - (8,16) pared "ruina" 7x3: el muro de ladrillo roto del pasillo del pack,
+    columnas 11-14 y 17-19 de las filas 6-8;
+  - (15,16) hornacina con llama "V" 2x2: (15,6)-(16,7);
+  - (17,16) contrafuerte "U" 4x3: (7,6)-(10,8);
+  - (21,16) pedruscos "n" 2x2: las lascas (20,1)-(20,2) y (9,11)-(9,12),
+    bajadas al borde de abajo de su pieza;
+    a la hornacina, el contrafuerte, los pedruscos y la repisa se les quitó el
+    color plano del interior y del muro (25,14,27), que pasa a transparente.
+- personajes/lobo_escarcha.png  Characters/WereWolf/Spritesheets:
+  werewolf-idle (5), werewolf-run (6), werewolf-jump (2) y werewolf-fall (2),
+  una fila cada una, cuadros de 96x76. El lobo de la escarcha
+  (escenas/enemigos/lobo_escarcha.tscn): mira a la derecha; su "attack" es el
+  cuadro 0 de idle (el aviso) y después jump y fall. No trae golpe, daño ni
+  muerte: muere con el efecto "muerte".
+- personajes/ave_nieves.png  Characters/flying-bird/Sprites/white/frame1-7.png
+  en fila (7 cuadros de 32x32). El ave de las nieves
+  (escenas/enemigos/ave_nieves.tscn): mira a la derecha; muere con el efecto
+  "muerte".

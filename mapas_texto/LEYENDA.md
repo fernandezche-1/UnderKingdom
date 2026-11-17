@@ -135,6 +135,8 @@ El mapa original no se toca. El PNG es un punto de partida: faltan las salidas, 
 | `i` | #903020 | 144, 48, 32 | Mimic (minas, profundidad 2; duerme como un cofre cerrado y despierta al acercarse) |
 | `W` | #507050 | 80, 112, 80 | ogro (mazmorra, profundidad 3; golpe lento de maza) |
 | `X` | #ff5030 | 255, 80, 48 | calavera de fuego (mazmorra, profundidad 3; vuela y embiste; se dibuja donde flota) |
+| `J` | #587898 | 88, 120, 152 | lobo de la escarcha (ruina, profundidad 4; corre, avisa y se lanza a ras de suelo) |
+| `Z` | #e8f4f8 | 232, 244, 248 | ave de las nieves (ruina, profundidad 4; vuela y embiste; se dibuja donde flota) |
 | `t` | #ffc090 | 255, 192, 144 | antorcha |
 | `f` | #c03000 | 192, 48, 0 | fogata (decorado) |
 | `b` | #a08060 | 160, 128, 96 | barril |
@@ -151,11 +153,11 @@ El mapa original no se toca. El PNG es un punto de partida: faltan las salidas, 
 | `Q` | #d0a070 | 208, 160, 112 | cuadro (`castillo`, 2x2 piezas); lápida inclinada (`cementerio`, 2x3) |
 | `w` | #a0c0e0 | 160, 192, 224 | ventana de celosía (`castillo`, 3x3 piezas); reja de celda (`mazmorra_reina`, 2x2) |
 | `K` | #8080a0 | 128, 128, 160 | columna alta (`castillo`, 2x7 piezas); cruz de piedra (`cementerio`, 2x3); entibado (`minas`, 3x3) |
-| `U` | #b06080 | 176, 96, 128 | tapiz (`castillo`, 2x3 piezas); arco con calavera (`cementerio`, 2x3); boca de galería (`minas`, 3x4); arco del desagüe (`mazmorra_reina`, 6x3) |
+| `U` | #b06080 | 176, 96, 128 | tapiz (`castillo`, 2x3 piezas); arco con calavera (`cementerio`, 2x3); boca de galería (`minas`, 3x4); arco del desagüe (`mazmorra_reina`, 6x3); contrafuerte (`ruina`, 4x3) |
 | `l` | #805030 | 128, 80, 48 | estantería alta (solo `castillo`, 2x3 piezas) |
-| `n` | #a07040 | 160, 112, 64 | mesa con frascos (`castillo`, 2x1 piezas); calaveras en la pared (`cementerio`, 2x2) |
+| `n` | #a07040 | 160, 112, 64 | mesa con frascos (`castillo`, 2x1 piezas); calaveras en la pared (`cementerio`, 2x2); pedruscos caídos (`ruina`, 2x2) |
 | `y` | #ffe060 | 255, 224, 96 | lámpara colgante (`castillo`, 1x1; cuelga: su letra va justo debajo del techo); estalactita (`minas`, 3x4; cuelga: su letra va cuatro piezas debajo del techo) |
-| `V` | #60a0a0 | 96, 160, 160 | mostrador con frascos (`castillo`, 2x2 piezas); nicho con llama (`cementerio`, 2x4, da luz) |
+| `V` | #60a0a0 | 96, 160, 160 | mostrador con frascos (`castillo`, 2x2 piezas); nicho con llama (`cementerio`, 2x4, da luz); hornacina con llama rosa (`ruina`, 2x2, da luz) |
 
 ## 6. Si me pasan un boceto en vez del PNG
 Una foto de papel cuadriculado o una captura de un juego de referencia también sirve. Conviene que traiga:

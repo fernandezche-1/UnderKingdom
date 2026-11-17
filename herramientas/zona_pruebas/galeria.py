@@ -14,8 +14,8 @@ sin Player ni límites). galeria.py escribe su texto en
 mapas_texto/zona_pruebas_muestra_<tileset>.txt. Con el piso D lleno, las piezas
 de las minas (enemigos y tileset, P73) van en el piso E, debajo, y las de las
 zonas siguientes siguen allí: la mazmorra, a la izquierda de las minas. Con la
-mazmorra solo quedan 8 columnas libres en el piso E: la zona siguiente abre un
-piso F.
+mazmorra solo quedan 8 columnas libres en el piso E: la ruina abre el piso F,
+debajo, al que se baja por la izquierda del E.
 
 Uso, desde la raíz del proyecto:
   python3 herramientas/zona_pruebas/galeria.py [cabecera.txt]
@@ -25,6 +25,7 @@ Uso, desde la raíz del proyecto:
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_cementerio.txt
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_minas.txt
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_mazmorra_reina.txt
+  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_ruina.txt
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas.txt
 """
 import sys
@@ -35,7 +36,7 @@ TXT = ROOT / "mapas_texto/zona_pruebas.txt"
 TSCN = ROOT / "escenas/mapas/zona_pruebas_galeria.tscn"
 T = 16
 COLS = 146
-ROWS = 120
+ROWS = 139
 
 # ---------------------------------------------------------------- mapa viejo
 raw = TXT.read_text(encoding="utf-8")
@@ -57,6 +58,7 @@ PISOS = {
     "C": dict(corr=62, techo=67, suelo=80, dir=1),
     "D": dict(corr=81, techo=86, suelo=99, dir=-1),
     "E": dict(corr=100, techo=105, suelo=118, dir=-1),
+    "F": dict(corr=119, techo=124, suelo=137, dir=1),
 }
 for p in PISOS.values():
     for r in range(p["corr"], p["corr"] + 5):
@@ -85,16 +87,19 @@ ladder(4, 48, 66)
 ladder(139, 67, 85)
 # Del piso D al E, a la derecha (los cuartos del D llegan hasta la columna 2).
 ladder(143, 86, 104)
+# Del piso E al F, a la izquierda (los cuartos del E llegan hasta la columna 10).
+ladder(4, 105, 123)
 # Checkpoints de la galería.
 put(28, 6, "S")
 put(47, 141, "S")
 put(66, 6, "S")
 put(85, 141, "S")
 put(104, 141, "S")
+put(123, 6, "S")
 
 # ---------------------------------------------------------------- cuartos
 # Cada cuarto: zona, nombre corto (cartel del pasillo), texto, ancho y piezas.
-ROOMS = {"A": [], "B": [], "C": [], "D": [], "E": []}
+ROOMS = {"A": [], "B": [], "C": [], "D": [], "E": [], "F": []}
 
 
 def room(piso, zona, nombre, texto, ancho, build, **extra):
@@ -667,8 +672,8 @@ room("C", "Infierno", "ARENA CON OLEADAS",
 
 # ---- 9. Tilesets de las zonas vestidas (piso D, P73)
 # Muestra de cada tileset: la escribe este script y la genera el constructor.
-# Ocupa el cuarto menos las tres columnas de su escalera (a la derecha en el
-# piso D), del techo al suelo incluido; el cuarto queda hueco en el mapa base y
+# Ocupa el cuarto menos las tres columnas de su escalera (a la derecha en los
+# pisos D y E, a la izquierda en el F), del techo al suelo incluido; el cuarto queda hueco en el mapa base y
 # la muestra pone sus bloques, su fondo y sus decorados encima.
 MUESTRAS = []
 
@@ -677,14 +682,15 @@ def muestra_tileset(c, tileset, filas, ext_id, label_from, sufijo="", cabecera="
     """sufijo: para una segunda muestra del mismo tileset; cabecera: líneas
     más para su .txt (por ejemplo fondo_sala); fondo: la pared de la muestra,
     si el tileset no tiene una con su nombre."""
-    assert c.dir == -1 and len(filas) == c.F - c.techo, (tileset, len(filas))
+    assert len(filas) == c.F - c.techo, (tileset, len(filas))
     assert all(len(f) == c.W - 3 for f in filas), tileset
+    x0 = c.x0 if c.dir == -1 else c.x0 + 3
     nombre = f"zona_pruebas_muestra_{tileset}{sufijo}"
     MUESTRAS.append((tileset, nombre, filas, ext_id, cabecera, fondo or tileset))
     node(f'''
 [node name="Muestra{(tileset + sufijo).title().replace('_', '')}" parent="Objetos" instance=ExtResource("{ext_id}")]
-position = Vector2({c.x0 * T}, {(c.techo + 1) * T})''')
-    return {"label_from": c.x0 + label_from}
+position = Vector2({x0 * T}, {(c.techo + 1) * T})''')
+    return {"label_from": x0 + label_from}
 
 
 # Calabozo (ficha de P73): techo bajo a la izquierda con la telaraña (C), la
@@ -941,6 +947,58 @@ room("E", "Mazmorra", "TILESET MAZMORRA",
      "TILESET MAZMORRA (P73)\nPiedra verde, pasarela (=) y paredes del Old Dark Castle: sin pared, cloaca y "
      "piedra; cadena (g), arco del desagüe (U), reja de celda (w).",
      36, b_tileset_mazmorra)
+
+
+# ---- 12. Ruina (piso F, P73): los enemigos nuevos y el tileset.
+# El lobo patrulla sobre una repisa de 3 de alto y no se tira por su borde; el
+# ave vuela y embiste.
+def b_ruina_enemigos(c):
+    for u in range(4, 18):
+        for r in range(c.F - 3, c.F):
+            c.cell(u, r, "#")
+    c.cell(10, c.F - 4, "J")
+    c.cell(22, c.F - 6, "Z")
+
+
+room("F", "Ruina", "LOBO Y AVE",
+     "LOBO Y AVE (P73)\nVan en: ruina. El lobo corre, avisa y salta sobre ti (0.5); no se tira de la repisa. "
+     "El ave vuela y embiste (0.5).",
+     30, b_ruina_enemigos)
+
+
+# Ruina (ficha de P73): a la izquierda, sin pared (en el mapa, el parallax),
+# con techo, una columna colgada, una tira y una pieza suelta (macizas),
+# cristales (r) y pedruscos (n); a la derecha la pared "ruina" (el fondo de la
+# zona), con la hornacina con llama (V), el contrafuerte (U), la repisa de
+# piedras (=), una antorcha (t), hongos (h), un barril (b), la escalera (H) a
+# una repisa y una caja (x). Las piezas del pack van teñidas de frío.
+MUESTRA_RUINA = [
+    "####################.............",
+    "####################.............",
+    "........#........................",
+    "........#........................",
+    "........#........................",
+    ".................................",
+    "..####......................H####",
+    "............................H....",
+    "..................====......H....",
+    ".....#......................H....",
+    "............................H....",
+    "..r..n.....V....U...h.b.t...H..x.",
+    "#################################",
+]
+CABECERA_RUINA = "fondo_sala: ninguno 0 0 9 11\n"
+
+
+def b_tileset_ruina(c):
+    return muestra_tileset(c, "ruina", MUESTRA_RUINA, "40_muestra_ruina", 21,
+                           cabecera=CABECERA_RUINA)
+
+
+room("F", "Ruina", "TILESET RUINA",
+     "TILESET RUINA (P73)\nCantos, repisa (=) y muro de Caverns, teñidos de frío: sin pared y pared "
+     "ruina; hornacina (V), contrafuerte (U), pedruscos (n).",
+     36, b_tileset_ruina)
 
 
 # ---------------------------------------------------------------- colocar

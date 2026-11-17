@@ -64,6 +64,8 @@ const COLORS := {
     "i": ["903020", "Mimic"],
     "W": ["507050", "ogro"],
     "X": ["ff5030", "calavera de fuego"],
+    "J": ["587898", "lobo de la escarcha"],
+    "Z": ["e8f4f8", "ave de las nieves"],
     "t": ["ffc090", "antorcha"],
     "f": ["c03000", "fogata"],
     "b": ["a08060", "barril"],
@@ -127,6 +129,8 @@ const ENEMIES := {
     "i": "res://escenas/enemigos/mimic.tscn",
     "W": "res://escenas/enemigos/ogro.tscn",
     "X": "res://escenas/enemigos/calavera_fuego.tscn",
+    "J": "res://escenas/enemigos/lobo_escarcha.tscn",
+    "Z": "res://escenas/enemigos/ave_nieves.tscn",
 }
 
 var _grid: Array[String] = []
