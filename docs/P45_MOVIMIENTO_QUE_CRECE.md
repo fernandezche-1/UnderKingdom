@@ -9,9 +9,9 @@ En `player.gd`, categoría "Movimiento". Valen para `prisn.tscn` y `player.tscn`
 
 | Estado | Velocidad | Salto | Altura |
 |---|---|---|---|
-| Sin espada (`unarmed_*`, P42) | 130 | -380 | unos 50 px, 3 piezas |
-| Con espada (`move_speed`, `jump_velocity`) | 170 | -440 | 68 px, 4,3 piezas (hasta el 2026-11-10, -470: 78 px, 4,85) |
-| Con espada y Agilidad (`agility_move_speed`, `agility_jump_velocity`) | 230 | -540 | 102 px, 6,4 piezas (hasta el 2026-11-10, -560: 109 px, 6,8) |
+| Sin espada (`unarmed_*`, P42) | 115 (hasta el 2026-11-17, 130) | -380 | unos 50 px, 3 piezas |
+| Con espada (`move_speed`, `jump_velocity`) | 150 (hasta el 2026-11-17, 170) | -440 | 68 px, 4,3 piezas (hasta el 2026-11-10, -470: 78 px, 4,85) |
+| Con espada y Agilidad (`agility_move_speed`, `agility_jump_velocity`) | 200 (hasta el 2026-11-17, 230) | -540 | 102 px, 6,4 piezas (hasta el 2026-11-10, -560: 109 px, 6,8) |
 
 Las alturas con espada están medidas en el juego (sección 4). Las de antes de esa sección salían de la fórmula v²/2g, que da unos píxeles menos que la física real a 60 fotogramas por segundo.
 
@@ -62,3 +62,14 @@ Se simularon los saltos sobre los PNG con la física del Player. La simulación 
 
   Los huecos obligatorios son de 3 como mucho.
 - **Pendiente:** confirmar jugando, al generar cada zona en la Fase 3, que los escalones de 4 de la ruina, las profundidades y el infierno y los de 6 de la Agilidad se suben bien.
+
+## 5. Tercer ajuste (2026-11-17): menos velocidad
+
+- Jugando, el Player se sentía demasiado rápido. Las tres velocidades bajan un 12 %: 130 → 115 sin espada, 170 → 150 con espada y 230 → 200 con la Agilidad. El salto, la gravedad, la aceleración y el frenado no cambian.
+- **En horizontal**, con el tiempo en el aire de la sección 4 (2·v/g):
+  - sin espada, unas 3,6 piezas de salto con carrerilla (antes 4,1);
+  - con espada, unas 5,5 (antes 6,2);
+  - con la Agilidad, unas 9 (antes 10,4).
+
+  Los huecos obligatorios siguen siendo de 3 como mucho, así que todos se cruzan. El de menos margen es sin espada (unos 10 px).
+- El dash en el aire sigue recorriendo `air_dash_distance` (112 px); solo la velocidad con que sale al acabar, que es `get_move_speed()`, baja con las demás.

@@ -69,7 +69,7 @@ Exportados en `player.gd`, categoría "Combate". Valen en todo el juego mientras
 
 | Ajuste | Sin espada | Con espada |
 |---|---|---|
-| `unarmed_move_speed` | 130 | 170 (`move_speed`); 230 con Agilidad |
+| `unarmed_move_speed` | 115 | 150 (`move_speed`); 200 con Agilidad (P45, sección 5) |
 | `unarmed_jump_velocity` | -380, unos 50 px | -440, 68 px (`jump_velocity`); -540, 102 px, con Agilidad (P45, sección 4) |
 | `unarmed_extra_damage_taken` | +0.25 a cada golpe | nada |
 

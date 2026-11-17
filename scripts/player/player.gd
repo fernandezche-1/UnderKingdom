@@ -55,7 +55,7 @@ const ATTACK_PROFILES := {
 
 @export_category("Movimiento")
 ## Con espada.
-@export_range(20.0, 800.0, 5.0) var move_speed: float = 170.0
+@export_range(20.0, 800.0, 5.0) var move_speed: float = 150.0
 @export_range(100.0, 5000.0, 50.0) var acceleration: float = 1800.0
 @export_range(100.0, 5000.0, 50.0) var deceleration: float = 2200.0
 ## Con espada. -440 sube 68 px (4,3 piezas), medido en el juego: el mínimo,
@@ -65,7 +65,7 @@ const ATTACK_PROFILES := {
 ## Con la habilidad Agilidad ("agility"). -540 sube 102 px (6,4 piezas): el
 ## mínimo, porque los secretos de la Agilidad (minas, profundidades) piden
 ## saltos de 6 (96 px). Con -530 quedan 2 px de margen.
-@export_range(20.0, 800.0, 5.0) var agility_move_speed: float = 230.0
+@export_range(20.0, 800.0, 5.0) var agility_move_speed: float = 200.0
 @export_range(-1200.0, -100.0, 10.0) var agility_jump_velocity: float = -540.0
 @export_range(100.0, 5000.0, 50.0) var gravity: float = 1500.0
 @export_range(100.0, 3000.0, 50.0) var max_fall_speed: float = 1000.0
@@ -109,7 +109,7 @@ const ATTACK_PROFILES := {
 @export_range(0.1, 10.0, 0.05) var attack_1_damage: float = 0.50
 @export_range(0.05, 0.5, 0.05) var unarmed_attack_damage: float = 0.25
 ## Sin espada: se corre y se salta menos, y cada golpe quita esto de más.
-@export_range(20.0, 800.0, 5.0) var unarmed_move_speed: float = 130.0
+@export_range(20.0, 800.0, 5.0) var unarmed_move_speed: float = 115.0
 @export_range(-1200.0, -100.0, 10.0) var unarmed_jump_velocity: float = -380.0
 @export_range(0.0, 2.0, 0.25) var unarmed_extra_damage_taken: float = 0.25
 ## Tajo ascendente ("attack 2"); con el Golpe final hace attack_3_damage.
