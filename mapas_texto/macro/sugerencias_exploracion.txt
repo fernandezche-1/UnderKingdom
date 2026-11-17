@@ -206,8 +206,8 @@ Propuestas (coordenadas en piezas de cada ASCII, columna y fila):
    - Premio: el alma del Rey Caído (lore final antes de Cthulhu: "no fue ella
      sola") y fragmento de vida 4/4.
    - Vuelta: la escalera de [S7] y la escalera 68. Coste medio.
-   - HECHO (2026-11-08): dibujada en mapas_texto/macro/zonas/profundidades.txt
-     tal como se propone: jaula x 44-48, filas 16-19, abierta en el techo de
+   - HECHO (2026-11-08): dibujada en mapas_texto/tiles_profundidades.txt
+     (antes macro/zonas/profundidades.txt) tal como se propone: jaula x 44-48, filas 16-19, abierta en el techo de
      la galería. La rejilla de la fila 20 (la de arriba de la galería) vive
      en la _combate y en el ASCII queda abierta. No se entra en la jaula (no
      tiene suelo): antes, el rey encadenado, con el sprite del Rey Caído

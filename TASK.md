@@ -278,7 +278,7 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
   - `[P6]`:
     - `LlamaEterna` en el altar de la capilla, (5, 62);
     - `HieloP6` (`locked_door`, `antorcha`, E, MELT) en la columna 144, filas 70-72;
-    - `SalidaP6` (x 145-147, fila 79) va **por ahora a las profundidades de v1** (`archivo/tiles_v1/escenas/tiles_profundidades_combate.tscn#DesdeAnterior`), para no cortar la ruta; al montar las profundidades pasa a `tiles_profundidades_combate.tscn#DesdeRuina`;
+    - `SalidaP6` (x 145-147, fila 79) iba a las profundidades de v1; desde el 2026-11-17 va a la base nueva (`escenas/mapas/tiles_profundidades.tscn#DesdeRuina`: se llega al `SpawnInicio`, en la llegada) y, al montar su `_combate`, pasa a `tiles_profundidades_combate.tscn#DesdeRuina`;
     - spawn `DesdeProfundidades` en (149, 72).
   - Parte oscura: `ZonaOscura` (`dark_zone.gd`, x 32-62, filas 58-64) y `ZonaOscuraAlta` (x 55-70, filas 50-57: la parte alta y el refugio).
   - `:D:`: `PalancaD` (140, 17) con `ruina_atajo_d_abierto`, el que escucha `RejaD` de las minas; `SalidaD` (x 146-148, filas 0-1) a `tiles_mineria_combate.tscn#DesdeRuina`; spawn `DesdeMinas` en (144, 17). Si se sube sin tirar de la palanca, se llega a las minas por encima de la reja cerrada.
@@ -295,6 +295,13 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
   - la palanca de `:E:`, las trampillas del atajo, del lago y del coliseo, y las transiciones de `[P6]`, `:E:` y `[S7]`;
   - la palanca, la transición y el spawn de `:F:`, los restos de los condenados y la página II del diario;
   - la jaula del rey encadenado: rejilla, el rey (sprite del Rey Caído), su alma y el fragmento de vida 4/4, según `infierno_animas_liberadas`.
+  - Base generada (2026-11-17, `escenas/mapas/tiles_profundidades.tscn`, desde `mapas_texto/tiles_profundidades.txt`): 22 diablillos, 78 piezas de lava, 3 pinchos, 5 cofres, 15 monedas, 4 pociones y 4 checkpoints. Falta la `_combate` (parte 2). Hasta entonces se llega al `SpawnInicio` (la P de la llegada, en (186, 13)):
+    - `[P6]`: `SalidaP6` de `tiles_ruina_combate.tscn` va a la base (`#DesdeRuina`);
+    - la salida anterior del infierno de v1 (`anterior:` de `archivo/tiles_v1/mapas_texto/tiles_jefe.txt` y `SalidaAnterior1` de `tiles_jefe.tscn`, sin regenerar) va a la base (`#DesdeInfierno`);
+    - `SalidaE` de la ruina (`#DesdeRuinaAtajo`) y `SalidaF` de la mazmorra (`#DesdeMazmorra`) siguen apuntando a la `_combate`, que aún no existe: sus trampillas solo se abren con las palancas de las profundidades.
+    - La base no tiene salidas: quien entra por `[P6]` no pasa al infierno hasta montar la `_combate`.
+  - Sin salidas del constructor (ni `siguiente:` ni `anterior:`): `[P6]`, `:E:`, `:F:` y `[S7]` van en la `_combate`, con los spawns `DesdeRuina`, `DesdeRuinaAtajo`, `DesdeMazmorra` y `DesdeInfierno`.
+  - El fuego del santuario de las llamas (fila 78, x 160-162 y x 164-198) salió del ASCII, como el de la gruta de cristal: la `F` del constructor es la trampa de fuego normal, que quema también con E5. Va en la `_combate` (`fuego_infernal.tscn`); en la fila 78 quedan huecos.
 - [ ] **Infierno:**
   - decidir los enemigos definitivos de la prueba final;
   - las arenas con oleadas del coliseo y del salón, las rejas bajas del pasillo y el fuego infernal;

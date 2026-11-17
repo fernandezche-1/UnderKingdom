@@ -4,10 +4,19 @@
 ; Segunda pasada (enemigos, objetos y decorados) hecha. Pozo de :F: (puerta
 ; hacia atrás, idea 7) dibujado el 2026-11-06; jaula del rey encadenado
 ; (idea 9), el 2026-11-08.
-; NO GENERAR TODAVÍA: la escena de abajo es la de las profundidades que se
-; juegan hoy (mapas_texto/tiles_profundidades.txt) y el constructor la
-; reemplazaría. Al aprobarlo, este archivo pasa a
-; mapas_texto/tiles_profundidades.txt (sección 9).
+; Generado en la Fase 3 (2026-11-17): este archivo pasó de
+; mapas_texto/macro/zonas/profundidades.txt a mapas_texto/tiles_profundidades.txt
+; (P46, sección 9) y es la fuente de escenas/mapas/tiles_profundidades.tscn.
+; Generar:
+;   godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/tiles_profundidades.txt
+; - No hay salidas del constructor: [P6], :E:, :F: y [S7] van en la _combate,
+;   con los spawns DesdeRuina, DesdeRuinaAtajo, DesdeMazmorra y DesdeInfierno.
+; - El fuego del santuario de las llamas (fila 78, x 160-162 y x 164-198)
+;   salió del ASCII al generarlo: la F del constructor es la trampa de fuego
+;   normal, que quema también con E5. Va en la _combate (fuego_infernal.tscn),
+;   como el de la gruta de cristal de las minas. En la fila 78 quedan huecos.
+; - Las profundidades de v1 se quedan en archivo/tiles_v1/: no se toman como
+;   referencia.
 ;
 ; Coordenadas (columna, fila), desde 0. 231 x 85 piezas; en el mundo en
 ; (100, 303), justo debajo de la ruina, que acaba en la fila 302. Cubre de la
@@ -105,8 +114,8 @@
 ;     (46, 25), con su texto de marcador (lore final antes de Cthulhu: "no
 ;     fue ella sola"; P46 sección 6), y el FRAGMENTO DE VIDA 4/4 en (44, 25).
 ;     Los dos quedan fuera de las columnas 40-42 (escalera 41 y vecinas).
-;     Pieza: mostrar u ocultar según un encuentro superado (generalizar
-;     story_hidden_actor.gd), la misma de la idea 3.
+;     Pieza: mostrar u ocultar según un encuentro superado
+;     (encounter_visibility.gd, P53), la misma de la idea 3.
 ;   - Vuelta desde el infierno: escalera 115 de [S7], sala del Demon Slime
 ;     (reja de salida y reja 90, abiertas tras vencerlo), antesala y
 ;     escalera 68 (su trampilla se abre desde abajo).
@@ -161,10 +170,12 @@
 ;   en (212, 78).
 ; - ALTAR ESTE, SANTUARIO DE LAS LLAMAS (rodeado de fuego, pide E5): pasillo
 ;   x 160-200, filas 75-78 (4 de alto: no se salta por encima), y cámara del
-;   altar x 160-167, filas 69-78. FUEGO (F) en el suelo, x 168-198 y alrededor
-;   del altar (x 160-162 y x 164-167), fila 78. ALTAR en (163, 78). Las F de
-;   aquí son una pieza nueva, el fuego infernal: sin E5 no deja pasar (quema
-;   hasta matar o empuja hacia atrás); con E5 no hace daño.
+;   altar x 160-167, filas 69-78. FUEGO en el suelo, x 168-198 y alrededor
+;   del altar (x 160-162 y x 164-167), fila 78. ALTAR en (163, 78). El fuego
+;   es el fuego infernal (fuego_infernal.tscn, P61), en la _combate: sin E5
+;   no deja pasar (quema hasta matar o empuja hacia atrás); con E5 no hace
+;   daño. En el ASCII quedan huecos (se dibujaba con F, que es la trampa de
+;   fuego normal).
 ; - SALA DEL DEMON SLIME (jefe): x 90-111, filas 70-78 (22 x 9, suelo 79: la
 ;   medida de la sala de hoy, x 81-102, filas 43-51), en la parte más honda y
 ;   junto a [S7]. Dos entradas, como la de hoy:
@@ -190,7 +201,7 @@
 ;   Spawn DesdeInfierno hacia (118, 78). El hueco solo se alcanza con los tres
 ;   altares y el Demon Slime vencido.
 ;
-; Altares (sellos; el contador es el mismo de [S3] y todavía no existe):
+; Altares (sellos; el contador es el mismo de [S3], sello.tscn, P55):
 ; (24, 44), (191, 54) y (163, 78). Minijefes (pendiente; P46 no los dice),
 ; propuestos con escenas que ya existen, sin arte nuevo:
 ; - coliseo: oleadas de diablillos y, al final, el demonslime común
@@ -374,7 +385,7 @@ parallax: assets/terceros/gothicvania/lava/fondo.png 0.05 x2; assets/terceros/go
 ####....H.................======....................................H...t...........t..H........................#..H.....#######################################...................................................................H..#
 ####....H...........................................................H..................H...........................H.....#######################################........................d..........................................H..#
 ####....H...........................................................H..................H...........................H.....#######################################...................................................................H..#
-####....H...!.........f............f............x.b..c..............H.......S.....!....H...........................H.....#######################################FFF.FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF......r......S.......!.r....H..#
+####....H...!.........f............f............x.b..c..............H.......S.....!....H...........................H.....#######################################.............................................r......S.......!.r....H..#
 ################...#####################...#######################################################################.H.##################################################################################################################
 ################~~~#####################~~~#######################################################################.H.##################################################################################################################
 ##################################################################################################################.H.##################################################################################################################
