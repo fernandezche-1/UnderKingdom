@@ -4,9 +4,20 @@
 ; una de lo que el jugador aprendió al bajar, con los enemigos más duros del
 ; juego, y al final Cthulhu. Estructura, enemigos, objetos y decorados en una
 ; sola pasada.
-; NO GENERAR TODAVÍA: la escena de abajo es la del infierno que se juega hoy
-; (mapas_texto/tiles_jefe.txt) y el constructor la reemplazaría. Al
-; aprobarlo, este archivo pasa a mapas_texto/tiles_jefe.txt (sección 9).
+; Generado en la Fase 3 (2026-11-17): este archivo pasó de
+; mapas_texto/macro/zonas/infierno.txt a mapas_texto/tiles_infierno.txt
+; (P46, sección 9) y es la fuente de escenas/mapas/tiles_infierno.tscn. Deja
+; el nombre tiles_jefe de v1, que sigue en archivo/tiles_v1/.
+; Generar:
+;   godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/tiles_infierno.txt
+; - No hay salidas del constructor: [S7] va en la _combate, con el spawn
+;   DesdeProfundidades.
+; - El fuego infernal del paso de las cadenas (fila 12, x 41-44) salió del
+;   ASCII al generarlo: la F del constructor es la trampa de fuego normal, que
+;   quema también con E5. Va en la _combate (fuego_infernal.tscn), como el de
+;   las minas y las profundidades. En la fila 12 queda hueco.
+; - El infierno de v1 (tiles_jefe) se queda en archivo/tiles_v1/: no se toma
+;   como referencia.
 ;
 ; Coordenadas (columna, fila), desde 0. 111 x 120 piezas; en el mundo en
 ; (160, 388), justo debajo de las profundidades, que acaban en la fila 387.
@@ -43,8 +54,8 @@
 ; - LLEGADA: x 45-65, filas 6-12 (suelo 13). Segura y sin enemigos. P en
 ;   (50, 12); checkpoint en (60, 12). Spawn DesdeProfundidades hacia (52, 12).
 ; - 1. PASO DE LAS CADENAS (prueba del fuego): x 34-44, filas 8-12 (suelo
-;   13). Fuego infernal (F) en x 41-44, fila 12, la pieza nueva de las
-;   profundidades: con E5 no hace daño; marca el principio de las pruebas.
+;   13). Fuego infernal en x 41-44, fila 12 (fuego_infernal.tscn, P61, en
+;   la _combate): con E5 no hace daño; marca el principio de las pruebas.
 ;   Foso de lava x 37-39 (lava en la fila 14). Diablillo en (38, 9). Acaba en
 ;   la repisa de entrada de la sima, x 30-33 (suelo 13).
 ; - MIRADOR DE CENIZA (opcional): x 66-107, filas 8-12 (suelo 13), fosos de
@@ -91,7 +102,7 @@
 ; - 4. PASILLO DEL FILO (prueba de rodar): x 18-108, filas 72-75 (suelo 76),
 ;   4 de alto: no se saltan los enemigos, se ruedan. Checkpoint en (100, 75),
 ;   al pie de la escalera 97. Tres REJAS BAJAS que solo se pasan rodando (la
-;   pieza de [H2], que falta), en las columnas 85, 65 y 45, filas 72-75.
+;   pieza de [H2], roll_gate.gd, P52), en las columnas 85, 65 y 45, filas 72-75.
 ;   - x 66-84: Guardias (80, 75) y (74, 75), mino (70, 75).
 ;   - x 46-64, TRAMO ALTO (techo en la fila 66): fosos de lava x 50-52 y
 ;     x 58-60 (lava en la fila 77); Aprendis (55, 75) entre los dos,
@@ -136,13 +147,13 @@
 ; la 4). Con saltos de 3 se baja hasta el trono, pero no se vuelve a subir
 ; la sima, como en la primera versión.
 ;
-; Viven en tiles_jefe_combate.tscn: las rejas y trampillas del coliseo y del
+; Viven en tiles_infierno_combate.tscn: las rejas y trampillas del coliseo y del
 ; salón (arena_barrier) con sus oleadas, la marca infierno_animas_liberadas
 ; del coliseo, las rejas bajas del pasillo, el
 ; fuego infernal, la sala de Cthulhu (reja en Puertas, activador, PuntosJefe
 ; y el aviso del final) y la transición y el spawn de [S7].
 
-escena: res://escenas/mapas/tiles_jefe.tscn
+escena: res://escenas/mapas/tiles_infierno.tscn
 tileset: mazmorra
 bloques: ladrillo
 fondo: ninguno
@@ -160,7 +171,7 @@ parallax: assets/terceros/gothicvania/lava/fondo.png 0.05 x2; assets/terceros/go
 #.....................................d................H....................................................###
 #......................................................H..............d.......................d.............###
 #......................................................H....................................................###
-#.............d..........................FFFF...t.P....H....S.t..................a................M.......c.###
+#.............d.................................t.P....H....S.t..................a................M.......c.###
 #.............................#######...##################################...#########...###########.H.########
 #.................................###~~~##################################~~~#########~~~###########.H.########
 #.................................##################################################################.H.########

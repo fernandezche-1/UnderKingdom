@@ -318,7 +318,7 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
   - `:E:`: `PalancaE` (119, 13) con `ruina_atajo_e_abierto`, el que escucha `TrampillaE` de la ruina; `SalidaE` (x 126-128, filas 0-1) a `tiles_ruina_combate.tscn#DesdeProfundidadesAtajo`; spawn `DesdeRuinaAtajo` en (123, 13).
   - `:F:`: `PalancaF` (23, 25) con `mazmorra_atajo_f_abierto`, el que escucha `TrampillaF` de la mazmorra; `SalidaF` (x 18-20, filas 0-1) a `tiles_mazmorra_combate.tscn#DesdeProfundidades`; spawn `DesdeMazmorra` en (16, 25). Al pie del pozo: `RestosCondenados` (14, 25) y `DiarioReina2` (12, 25), con `dialogues/lore_restos_condenados.json` y `lore_diario_reina_2.json` (textos provisionales).
   - `[P6]`: `SalidaP6` (x 181-183, filas 0-1) a `tiles_ruina_combate.tscn#DesdeProfundidades`; spawn `DesdeRuina` en (185, 13).
-  - `[S7]`: `SalidaS7` (x 114-116, fila 84) va al infierno de v1 (`archivo/tiles_v1/escenas/tiles_jefe_combate.tscn#DesdeAnterior`) hasta rehacerlo; spawn `DesdeInfierno` en (118, 78).
+  - `[S7]`: `SalidaS7` (x 114-116, fila 84) iba al infierno de v1; desde el 2026-11-17 va a la base nueva (`escenas/mapas/tiles_infierno.tscn#DesdeProfundidades`) y, al montar su `_combate`, pasa a `tiles_infierno_combate.tscn`; spawn `DesdeInfierno` en (118, 78).
   - Jaula: `RejillaJaula` (x 44-48, fila 20, `open_on_encounter` `infierno_animas_liberadas`). `ReyEncadenado` (el `idle` del Rey Caído, en un AnimatedSprite2D) en (46, 19), que se oculta con esa marca. Con ella se muestran `AlmaRey` (`objeto_lore.tscn` con el Rey teñido de azul y semitransparente, `lore_alma_rey.json`, texto provisional) en (46, 25) y `FragmentoVida1` (`profundidades_1`) en (44, 25).
   - Secreto: `ParedAgrietada` (columna 8, filas 23-25) con la heredada `pared_agrietada_profundidades.tscn` (P48, sección 7), hecha al vestir el 2026-11-17 con la roca del tileset `profundidades`. Al montar la `_combate` llevaba el arte provisional de siempre.
   - E5: `AtuendoFireKnight` (`fire_knight`) en (30, 78), sobre el yunque.
@@ -328,6 +328,9 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
   - las arenas con oleadas del coliseo y del salón, las rejas bajas del pasillo y el fuego infernal;
   - Cthulhu en el trono, con la reja en `Puertas`, el activador, `PuntosJefe` y el aviso del final;
   - la transición y el spawn de `[S7]`, y la marca `infierno_animas_liberadas` del coliseo.
+  - Base generada (2026-11-17, `escenas/mapas/tiles_infierno.tscn`, desde `mapas_texto/tiles_infierno.txt`; deja el nombre `tiles_jefe` de v1, que sigue en `archivo/tiles_v1/`): 48 enemigos (5 mino, 6 Guardias, 3 Aprendis, 21 diablillos, 1 esqueleto, 1 kolbo2, 8 murciélagos y 3 kolbo3), 164 piezas de lava, 5 cofres, 19 monedas, 1 poción y 4 checkpoints. Sin salidas del constructor: `[S7]` va en la `_combate`.
+  - El fuego infernal del paso de las cadenas (x 41-44, fila 12) salió del ASCII: la `F` del constructor es la trampa de fuego normal, que quema también con E5. Va en la `_combate` (`fuego_infernal.tscn`, `width_tiles` 4).
+  - `[S7]` de las profundidades (`SalidaS7` de `tiles_profundidades_combate.tscn`) va a la base, `#DesdeProfundidades`: hasta montar la `_combate` se llega al `SpawnInicio`. Al montarla pasa a `tiles_infierno_combate.tscn`. El infierno de v1 sale de la ruta; su salida anterior sigue apuntando a las profundidades.
 
 **Plantillas de prompt de la estructura.** La estructura de cada zona se hace en dos sesiones, cada una con su commit:
 - parte 1, generar la base: modo normal;
