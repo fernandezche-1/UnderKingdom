@@ -1319,5 +1319,96 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
 - **Colisiones** tras mover el diablillo y añadir la pieza al atlas: las mismas que antes de vestir.
 
 ### Infierno
-- Parte de: tileset `mazmorra` con `bloques: ladrillo`, parallax de `gothicvania/lava`. La mezcla de los más duros (P46); Cthulhu. Faltan los enemigos definitivos.
-- Ficha: por armar.
+- Parte de: tileset `mazmorra` con `bloques: ladrillo`, `fondo: ninguno` y el parallax de `gothicvania/lava` en toda la zona (el mismo de las profundidades, justo encima). En el ASCII, 36 enemigos: 19 diablillos `d`, 7 murciélagos `m`, 3 mino `M`, 3 Guardias `G`, 2 Aprendis `a`, 1 kolbo2 `j` y 1 kolbo3 `q`; otros 12 en las oleadas del coliseo y del salón (`_combate`) y Cthulhu. Decorados: solo antorchas `t` y fogatas `f`. La `_combate` no tiene `MapAmbience`.
+- **Ficha aprobada el 2026-11-17**, con la estructura montada (base y `_combate`), sin jugar a mano todavía.
+- **Por qué cambia:**
+  - el tileset y el parallax son los de las profundidades de antes de vestirlas, y el parallax de lava ya sale en las profundidades: al bajar por `[S7]` se vería la misma zona;
+  - los enemigos son "los que ya existían" (TASK.md): casi todo diablillos, el enemigo de las profundidades, y murciélagos y un kolbo2, de los más flojos del juego;
+  - casi no hay decorados.
+- **Lo que no cuadraba** (hallado al armar la ficha):
+  - **los dos minos del pasillo del filo**, en (38, 75) y (70, 75), están atascados: el cuerpo del mino mide 80 px de alto y el pasillo, 4 piezas (64 px). Prueba sin ventana: a los 3 s no tocan el suelo y no patrullan. El del mirador (5 de alto) sí cabe. La ficha los cambia por ogros;
+  - la `_combate` no tiene `MapAmbience`: al vestir se le añade el nodo `Ambientacion`, como en las profundidades.
+
+**Ambientación** (tileset nuevo `infierno`, `herramientas/constructor_mapas/tilesets/infierno.gd`, como `profundidades`: las filas 0-15 copian el atlas de mazmorra, por la lava animada, la antorcha y la fogata, y debajo van piezas de **Living Tissue** de la Legacy, carne con colmillos y ojos, la que las profundidades guardaron para el infierno; un script `herramientas/constructor_mapas/atlas_infierno.py` arma el atlas):
+- **Carne en toda la zona**, de la llegada al trono: es lo que más lo separa de las profundidades, y el ojo verde del pack pega con Cthulhu.
+- **Bloques `carne`:** el pack trae un suelo de 12x4 piezas, (2,7)-(13,10) de `layers/tileset.png`, y un techo de 5x4, (12,1)-(16,4); **todas sus piezas tienen las cuatro esquinas opacas** (comprobado). El juego de 3x3 se arma con ellas: arriba, el canto del suelo; abajo, el del techo; los lados, sus bordes; el interior, el relleno liso. La cresta de la fila 6, que sobresale del suelo, no entra en los bloques.
+- **Plataformas `=`:** el pack no trae repisas. Una tira con la banda de arriba del suelo de carne, con la clave `plataformas`; la colisión de una vía no cambia. La forma exacta, en el paso de piezas.
+- **Escalera:** la de madera del Dungeon Tile Set, como en las zonas de arriba.
+- **Cofres `c`** (5): `cofre_madera.tscn`, con la clave `cofre` del tileset.
+- **Lava `~`:** la animada de hoy.
+- **Paredes**, con `fondo` y `fondo_sala` (los rectángulos exactos se fijan al vestir):
+
+  | Pared | Arte | Dónde |
+  |---|---|---|
+  | `carne` (nueva, el `fondo:` de la zona) | el fondo del pack, `layers/bakground.png`, 9x9 piezas; se repite sin costura (comprobado) | todo lo demás |
+  | `ladrillo` | el de las profundidades (Gothic Horror teñido de rojo) | lo construido: coliseo de los condenados y salón de los verdugos |
+
+  - **Sin parallax:** se quita el de lava de la cabecera, porque ya sale en las profundidades.
+- **Decorados** (reutilizan letras, así que no hay colores nuevos; los tamaños se miden en el paso de piezas):
+
+  | Letra | En `infierno` | Dónde |
+  |---|---|---|
+  | `t`, `f` | se quedan: antorchas y fogatas | |
+  | `y` | colmillos que cuelgan del techo, unas 3x2 (cuelga: va pegado arriba) | techo del trono, de la sima y de la caverna |
+  | `r` | ojo en la carne, 2x2, da luz verde | paredes de la sima, la caverna y el trono |
+  | `n` | pústula, 2x2, en el suelo | llegada, mirador, osario y umbral |
+  | `U` | herida o vena en la pared, unas 3x2 | pasillos y salón |
+
+  - Los colmillos de suelo del pack no entran: se leen como pinchos.
+  - Los decorados nuevos siguen la regla de la cabecera del `.txt`: ninguno pisa una escalera, sus columnas vecinas ni las tres filas de encima, un spawn ni otro decorado, ni los objetos de la `_combate` (rejas, trampillas, rejas bajas, fuego infernal, puntos del jefe y oleadas).
+- **Luces:** el ojo `r` va en `ATLAS_DECOR_LIGHTS`, con luz verde. `Ambientacion` nueva en la `_combate` (`map_ambience.gd`); la luz ambiente se elige al vestir, con capturas.
+
+**Enemigos** (excepción a P33, que se mantiene: el infierno reúne las ánimas de lo vencido al bajar):
+- Los más duros de cada profundidad, con el arte vestido de hoy; los más flojos (murciélago y kolbo2) y casi la mitad de los diablillos dejan su sitio.
+- Cada nuevo va en el sitio de otro, de suelo a suelo y de aire a aire: **no cambia ninguna posición del ASCII**.
+- **En el ASCII:**
+
+  | Prueba | Hoy | Queda |
+  |---|---|---|
+  | 1. Paso de las cadenas | diablillo (38, 9) | se queda |
+  | Mirador (opcional) | Aprendis (81, 12), mino (98, 12), diablillos (70, 10) y (94, 10) | el de (70, 10) pasa a calavera de fuego `X`; los demás se quedan |
+  | Osario (opcional) | kolbo3 (102, 27), diablillo (88, 24) | el kolbo3 pasa a Mimic `i`, junto al cofre de verdad de (105, 27); el diablillo se queda |
+  | 2. Sima de las ánimas | diablillos (14, 12), (24, 19), (6, 23), (28, 31), (12, 35), (24, 39), (5, 47) y (16, 51); murciélagos (20, 27), (14, 43) y (25, 55) | los 3 murciélagos pasan a alma condenada `z` (nueva); (12, 35) y (5, 47) a ánima `N`; (6, 23) y (24, 39) a calavera `X`; se quedan 4 diablillos |
+  | 4. Pasillo del filo | Guardias (80, 75), (74, 75) y (30, 75); minos (70, 75) y (38, 75); Aprendis (55, 75); diablillos (48, 68) y (62, 68); kolbo2 (26, 75) | los minos pasan a ogro `W` (50 px de alto: cabe); el kolbo2, a lobo de la escarcha `J` (se lanza a ras de suelo; se pasa rodando); los demás se quedan |
+  | 5. Caverna del vuelo | diablillos (28, 80), (38, 84), (25, 92), (12, 96) y (36, 100); murciélagos (10, 86), (30, 90), (18, 99) y (8, 101) | (25, 92) y (12, 96) pasan a ojo volador `p`; murciélagos: (10, 86) y (18, 99) a ave de las nieves `Z`, (30, 90) y (8, 101) a calavera `X` |
+
+  - Salen 18 (7 diablillos, 7 murciélagos, 2 mino, el kolbo2 y el kolbo3) y entran 18. Quedan 36: 12 diablillos, 5 calaveras, 3 almas condenadas, 3 Guardias, 2 ánimas, 2 ojos, 2 aves, 2 ogros, 2 Aprendis, 1 mino, 1 lobo y 1 Mimic.
+- **Oleadas** (en la `_combate`; aprobado tocarla al vestir para esto, porque esos enemigos solo existen allí). En el coliseo, una oleada por tramo de la bajada:
+
+  | Arena | Oleada | Hoy | Queda |
+  |---|---|---|---|
+  | Coliseo | 1 (profundidades 0-2) | esqueleto (52, 60), kolbo3 (75, 60), diablillos (64, 50) y (84, 46), murciélago (73, 44) | Guardia (52, 60), kolbo3 (75, 60), ánimas (64, 50) y (84, 46), ojo (73, 44) |
+  | Coliseo | 2 (profundidades 3-4) | mino (60, 60), Guardia (68, 60), Aprendis (86, 60), murciélagos (60, 44) y (86, 44) | mino (60, 60), lobo (68, 60), Aprendis (86, 60), calavera (60, 44), ave (86, 44) |
+  | Coliseo | 3 (profundidad 5) | minos (58, 60) y (84, 60), Guardias (64, 60) y (80, 60), Aprendis (72, 52) | pesadillas `Y` (58, 60) y (84, 60), bestias infernales `I` (64, 60) y (80, 60), diablillo (72, 52) |
+  | Salón | 1 | Guardias (12, 116) y (22, 116), mino (17, 116), kolbo3 (27, 116) | el kolbo3 pasa a ogro |
+  | Salón | 2 | Guardias (8, 116) y (26, 116), mino (17, 116) | los dos Guardias pasan a ogros |
+
+  - El ogro da golpes de maza lentos y fuertes, los del parry. `receive_parry` está en `enemy_base.gd`, así que el parry sirve con todos.
+- **Nuevo: alma condenada `z`** (profundidad 6, solo en el infierno: en la sima de las ánimas, por su nombre):
+
+  | | Alma condenada `z` |
+  |---|---|
+  | Arte | `enemy-ghost` de la Legacy (`Characters/enemy-ghost/Spritesheets/particles.png`): fantasma rosa con capucha y calavera, 6 cuadros de 64x64 (la figura, unos 30x33), una sola animación. Distinto del fantasma del ánima `N` (`Ghost-Files`) |
+  | Script base | `lunge_enemy.gd`, volador: avisa y embiste, como el murciélago. Muere con el efecto `muerte` |
+  | Vida y daño | 3 de vida, 0.5 de daño y 0.25 de contacto |
+  | Letra | `z`, la única letra del alfabeto libre en el constructor; color nuevo en `COLORS`, la paleta, LEYENDA y P33 |
+  | Sitio | los 3 murciélagos de la sima: (20, 27), (14, 43) y (25, 55) |
+
+  Si `lunge_enemy.gd` no sirve sin cambios, se pregunta antes de tocarlo.
+- **Sin tinte de "ánimas"** para los enemigos de arriba: haría falta un script nuevo y la mezcla ya lo cuenta.
+- **Demonslime común:** sale de P33 (lo que faltaba en la profundidad 6). Es el arte del Demon Slime, que ya se venció.
+
+**Origen del arte:**
+- **Legacy Collection** (CC0, `Legacy Collection.zip` en Descargas): Living Tissue (`Environments/Living-Tissue-Platform-Files/PNG/layers/tileset.png` y `bakground.png`) y `enemy-ghost` van a `assets/terceros/gothicvania/` y se anotan en su `ORIGEN.txt`. El ladrillo rojo y la escalera ya están en el repo, y los enemigos que se reutilizan, también.
+- Sin pack nuevo ni IA, y sin licencias nuevas por confirmar (el Dungeon Tile Set sigue pendiente, como en las zonas de arriba).
+- **Mirado y descartado:**
+  - Terrible Knight de la Legacy: se lee como un héroe (capa roja, sin muerte);
+  - el `demon` de la Legacy: del tamaño de un jefe;
+  - Hell-Hound de la Legacy: es casi el lobo de la ruina;
+  - el parallax de lava (ya está en las profundidades) y un tileset de roca en la mitad de arriba.
+
+**Reto obligatorio:** coincide con su fila de P46, sección 10.
+- Llega con E5, Rodar, la Ráfaga, el Golpe final, la Ultimate, el tajo aéreo, el parry, el dash y la llama eterna (E3 y E4 si los encontró), y no consigue nada; Cthulhu es el final.
+- Las pesadillas del coliseo y los ogros y el lobo del pasillo se pasan rodando; el Mimic solo está en el osario, que es opcional.
+- Ningún reto obligatorio pide la Agilidad, E4, el dash ni una mejora de la tienda.
+- Vestir no cambia celdas sólidas y las plataformas siguen siendo de una vía; se comprueba en el paso D.
