@@ -1055,6 +1055,49 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
   - el lobo mide unos 57 px de largo y 39 de alto: en el pasillo (5 de alto) cabe, pero se comprueba con la regla de las escaleras;
   - las 4 aves nuevas van en el exterior, la cumbre, el pasillo y la cripta oscura: la de la cripta, dentro de la `dark_zone`.
 
+**Vestida (2026-11-16), falta jugarla a mano:**
+- `mapas_texto/tiles_ruina.txt` pasa a `tileset: ruina`, `bloques: ruina` y `fondo: ruina`, con `fondo_sala`. El parallax de `cavernas` no cambia. Se regeneró la base `escenas/mapas/tiles_ruina.tscn`; la `_combate` no se tocó.
+- **Paredes:**
+
+  | Pared | Rectángulos (x0 y0 x1 y1) |
+  |---|---|
+  | `ruina` (el `fondo:`) | lo demás: llegada, torre caída, pasillo, galerías alta y baja, capilla, criptas, refugio, antesala, sala del Guardián, cámaras del deshielo y del hielo negro, secreto del dash y los pozos de `[!5]`, del atajo, de `:E:` y de `[P6]` |
+  | `ninguno` (el parallax) | exterior helado con la cumbre y el lago 24 2 103 24; pie del pozo `:D:` 136 10 152 17, con su pozo 146 0 148 9 y la bajada a la galería alta 150 18 152 27 |
+
+  - El pozo de `:D:` y la bajada van con el pie del pozo porque la cabecera del ASCII los cuenta como parte de él, como la boca de la gruta de las minas.
+  - Los pasos de la llegada al exterior (columna 23) y del exterior a la torre (columna 104) quedan con la pared `ruina`: están fuera del rectángulo del exterior de la cabecera.
+- **Decorados nuevos** (sitio de abajo a la izquierda, todos apoyados en el suelo):
+
+  | Letra | Sitios |
+  |---|---|
+  | `V` hornacina con llama | galería alta (14, 33), (52, 33) y (88, 33); galería baja (18, 47) y (64, 47); capilla (8, 64), junto al altar de la llama, y (27, 64) |
+  | `U` contrafuerte | galería alta (66, 33), pasados los escombros, (104, 33) y (128, 33); galería baja (40, 47), pasado el foso, y (84, 47); antesala (102, 58) |
+  | `n` pedruscos | galería alta (45, 33), pasado el foso, y (114, 33); galería baja (28, 47) y (112, 47); exterior (31, 12), (64, 15) y (95, 21) |
+
+  - El contrafuerte de la antesala se probó primero en (103, 58), pero pisaba la caja de (106, 58).
+  - Ninguno en la parte oscura (como las antorchas: la alumbra la llama) ni en el lago, la cumbre, los secretos o la sala del Guardián.
+  - Cumplen la regla de la cabecera del `.txt`, comprobada con un script sobre el ASCII: ninguno pisa una escalera, sus columnas vecinas ni sus tres filas de encima, un spawn, un cofre, una moneda, una poción, un enemigo, otro decorado ni los objetos de la `_combate`, y todos se apoyan en roca.
+- **Enemigos en el ASCII:**
+  - salen los 6 Aprendis, los 2 mino, los 7 kolbo3 y los 8 esqueletos;
+  - lobos `J` en el suelo, en los 9 sitios de los kolbo3 y los mino y en 4 de los esqueletos, los de la tabla de la ficha;
+  - aves `Z` en el aire: en los 6 sitios de los Aprendis y, volando sobre los otros 4 esqueletos, dos o tres filas más arriba: exterior (97, 18), cumbre (90, 3), pasillo (126, 15) y cripta oscura (36, 61).
+
+  Quedan 13 lobos y 10 aves (23, como antes). Ninguno a menos de 8 piezas de la P, los checkpoints o los spawns.
+- **Colisiones:** iguales antes y después, 7157 polígonos sólidos y 53 de una vía, con los mismos polígonos y la misma marca de una vía (`Terreno`, `Plataformas` y `Liquidos`), volcadas de la base con una escena temporal.
+- **Prueba sin ventana** (20377 comprobaciones bien):
+  - sobre la base, contra el ASCII: cada celda lleva su pared (3961 sin bloque con `ruina` y 1362 sin pared); los bloques son del juego `ruina` y las 53 piezas de plataforma, de la repisa; los 20 decorados nuevos y las 177 piezas de escalera están en su pieza del atlas; los 4 cofres son `cofre_madera.tscn`;
+  - en la `_combate`: solo hay lobos y aves (13 y 10), en la capa 5 y con daño y contacto en múltiplos de 0.25; a los 3 s siguen en su sitio (se mueven 1,5 px como mucho) y los lobos, sobre el suelo. `MapAmbience` pone 58 luces, 7 de ellas las rosas de las hornacinas.
+- Capturas con el juego abierto de 22 sitios: llegada, exterior (tres), cumbre, lago, torre, pasillo, pie de `:D:`, galería alta (cuatro) y baja (tres), capilla, cripta oscura, antesala, sala del Guardián, cámara del deshielo y secreto del dash.
+- Arrancan sin errores la `_combate`, el juego y la `_combate` de la mazmorra, y `verificar_mundo.py` da 0 errores. El Atlas se publicó de nuevo, con los nombres de `V`, `U` y `n` del tileset `ruina` y de `J` y `Z`, y el color de los bloques `ruina`.
+- La luz ambiente de la `_combate` no se tocó: se decide jugándola (la fría, (0.40, 0.48, 0.62), oscurecía mucho con el tinte en la galería).
+- **Al jugarla, mirar:**
+  - la luz ambiente, con el tinte de las piezas;
+  - los contrafuertes, oscuros sobre el muro: en las capturas se leen como siluetas;
+  - el muro `ruina`, oscuro y casi liso en las salas grandes;
+  - las aves del exterior, la cumbre y la torre, que ven al Player desde lejos a cielo abierto;
+  - el lobo de (144, 33), en el camino desde `:D:`, junto al foso de pinchos de x 135-137 (antes, el kolbo3).
+- **Falta, antes de marcarla vestida en `TASK.md`:** jugarla a mano.
+
 ### Profundidades
 - Parte de: tileset `mazmorra` con `bloques: oro`, parallax de `gothicvania/lava`. Diablillo; el Demon Slime. Faltan los minijefes de los altares (P46, sección 7).
 - Ficha: por armar.
