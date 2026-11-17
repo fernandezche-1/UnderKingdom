@@ -68,6 +68,7 @@ const COLORS := {
     "Z": ["e8f4f8", "ave de las nieves"],
     "I": ["e04020", "bestia infernal"],
     "Y": ["203040", "pesadilla"],
+    "z": ["e0407a", "alma condenada"],
     "t": ["ffc090", "antorcha"],
     "f": ["c03000", "fogata"],
     "b": ["a08060", "barril"],
@@ -135,6 +136,7 @@ const ENEMIES := {
     "Z": "res://escenas/enemigos/ave_nieves.tscn",
     "I": "res://escenas/enemigos/bestia_infernal.tscn",
     "Y": "res://escenas/enemigos/pesadilla.tscn",
+    "z": "res://escenas/enemigos/alma_condenada.tscn",
 }
 
 var _grid: Array[String] = []

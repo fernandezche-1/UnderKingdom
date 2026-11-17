@@ -17,7 +17,7 @@ zonas siguientes siguen allí: la mazmorra, a la izquierda de las minas. Con la
 mazmorra solo quedan 8 columnas libres en el piso E: la ruina abre el piso F,
 debajo, al que se baja por la izquierda del E. Con la ruina solo quedan 36
 columnas libres en el F: las profundidades abren el piso G, debajo, al que se
-baja por la derecha del F.
+baja por la derecha del F. El infierno ocupa lo que quedaba del G (48 columnas).
 
 Uso, desde la raíz del proyecto:
   python3 herramientas/zona_pruebas/galeria.py [cabecera.txt]
@@ -29,6 +29,7 @@ Uso, desde la raíz del proyecto:
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_mazmorra_reina.txt
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_ruina.txt
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_profundidades.txt
+  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_infierno.txt
   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas.txt
 """
 import sys
@@ -685,15 +686,17 @@ room("C", "Infierno", "ARENA CON OLEADAS",
 MUESTRAS = []
 
 
-def muestra_tileset(c, tileset, filas, ext_id, label_from, sufijo="", cabecera="", fondo=None):
+def muestra_tileset(c, tileset, filas, ext_id, label_from, sufijo="", cabecera="", fondo=None,
+                    bloques=None):
     """sufijo: para una segunda muestra del mismo tileset; cabecera: líneas
     más para su .txt (por ejemplo fondo_sala); fondo: la pared de la muestra,
-    si el tileset no tiene una con su nombre."""
+    si el tileset no tiene una con su nombre; bloques: lo mismo para el estilo
+    de bloques."""
     assert len(filas) == c.F - c.techo, (tileset, len(filas))
     assert all(len(f) == c.W - 3 for f in filas), tileset
     x0 = c.x0 if c.dir == -1 else c.x0 + 3
     nombre = f"zona_pruebas_muestra_{tileset}{sufijo}"
-    MUESTRAS.append((tileset, nombre, filas, ext_id, cabecera, fondo or tileset))
+    MUESTRAS.append((tileset, nombre, filas, ext_id, cabecera, fondo or tileset, bloques or tileset))
     node(f'''
 [node name="Muestra{(tileset + sufijo).title().replace('_', '')}" parent="Objetos" instance=ExtResource("{ext_id}")]
 position = Vector2({x0 * T}, {(c.techo + 1) * T})''')
@@ -1123,6 +1126,54 @@ room("G", "Profundidades", "PARED DE ROCA",
      14, b_pared_profundidades)
 
 
+# ---- 14. Infierno (piso G, P73): el alma condenada y el tileset. Las 48
+# columnas que quedaban en el G dan para los dos cuartos.
+# El alma condenada (solo del infierno) flota, avisa y embiste, como el
+# murciélago.
+def b_alma_condenada(c):
+    c.cell(5, c.F - 4, "z")
+
+
+room("G", "Infierno", "ALMA CONDENADA",
+     "ALMA CONDENADA (P73)\nVa en: infierno (sima de las ánimas). Flota, avisa y embiste (0.5).",
+     14, b_alma_condenada)
+
+
+# Infierno (ficha de P73): la carne de Living Tissue (el fondo de la zona), con
+# techo, una columna colgada, una pieza suelta (macizas), dos colmillos que
+# cuelgan (y, 3x3: la letra tres piezas bajo el techo), la herida (U), el ojo
+# (r, da luz verde), la repisa de carne (=), la pústula (n), una antorcha y una
+# fogata; a la derecha, la pared "ladrillo" (el coliseo y el salón), con una
+# antorcha y la escalera (H) a una repisa.
+MUESTRA_INFIERNO = [
+    "##################............",
+    "##################............",
+    "........#.....................",
+    "........#..U..................",
+    "..y.....#.....y...............",
+    "..............................",
+    "..####...................H####",
+    "..........r..............H....",
+    "..................===....H....",
+    ".....#...................H....",
+    ".........................H....",
+    "..n.......t....f.....t...H....",
+    "##############################",
+]
+CABECERA_INFIERNO = "fondo_sala: ladrillo 20 0 29 11\n"
+
+
+def b_tileset_infierno(c):
+    return muestra_tileset(c, "infierno", MUESTRA_INFIERNO, "42_muestra_infierno", 19,
+                           cabecera=CABECERA_INFIERNO, fondo="carne", bloques="carne")
+
+
+room("G", "Infierno", "TILESET INFIERNO",
+     "TILESET INFIERNO (P73)\nCarne de Living Tissue, repisa (=); pared carne y ladrillo rojo; "
+     "colmillos (y), herida (U), ojo (r), pústula (n).",
+     33, b_tileset_infierno)
+
+
 # ---------------------------------------------------------------- colocar
 def add_label(name, x, y, w, h, text, variation=None, align=0, header=False):
     carteles.append((name, x, y, w, h, text, variation, align, header))
@@ -1177,12 +1228,12 @@ for r in range(ROWS):
 mapa = "\n".join("".join(row) for row in g)
 header = Path(sys.argv[1]).read_text(encoding="utf-8") if len(sys.argv) > 1 else head + "\n"
 TXT.write_text(header + "---\n" + mapa + "\n", encoding="utf-8")
-for tileset, nombre, filas, _, cabecera, fondo in MUESTRAS:
+for tileset, nombre, filas, _, cabecera, fondo, bloques in MUESTRAS:
     (ROOT / f"mapas_texto/{nombre}.txt").write_text(
         f"; Muestra del tileset {tileset} para la galería de la zona de pruebas (P73).\n"
         "; La escribe herramientas/zona_pruebas/galeria.py: no se edita a mano.\n"
         f"escena: res://escenas/mapas/{nombre}.tscn\n"
-        f"tileset: {tileset}\nbloques: {tileset}\nfondo: {fondo}\n{cabecera}muestra: si\n---\n"
+        f"tileset: {tileset}\nbloques: {bloques}\nfondo: {fondo}\n{cabecera}muestra: si\n---\n"
         + "\n".join(filas) + "\n", encoding="utf-8")
 
 # ---------------------------------------------------------------- salida .tscn
@@ -1220,7 +1271,7 @@ ext = '''[ext_resource type="PackedScene" path="res://escenas/enemigos/rata.tscn
 [ext_resource type="PackedScene" path="res://escenas/objetos/pared_agrietada_profundidades.tscn" id="51_pared_profundidades"]
 ''' + "".join(
     f'[ext_resource type="PackedScene" path="res://escenas/mapas/{nombre}.tscn" id="{ext_id}"]\n'
-    for _, nombre, _, ext_id, _, _ in MUESTRAS)
+    for _, nombre, _, ext_id, _, _, _ in MUESTRAS)
 sub = '''[sub_resource type="AtlasTexture" id="AtlasTexture_losa_medio"]
 atlas = ExtResource("8_tileset")
 region = Rect2(16, 304, 16, 16)

@@ -139,13 +139,14 @@ El mapa original no se toca. El PNG es un punto de partida: faltan las salidas, 
 | `Z` | #e8f4f8 | 232, 244, 248 | ave de las nieves (ruina, profundidad 4; vuela y embiste; se dibuja donde flota) |
 | `I` | #e04020 | 224, 64, 32 | bestia infernal (profundidades, profundidad 5; casi quieta en el suelo, escupe una bola de fuego) |
 | `Y` | #203040 | 32, 48, 64 | pesadilla (profundidades, profundidad 5; patrulla el suelo, avisa y embiste lejos; se esquiva rodando) |
+| `z` | #e0407a | 224, 64, 122 | alma condenada (infierno, solo allí; flota, avisa y embiste; se dibuja donde flota) |
 | `t` | #ffc090 | 255, 192, 144 | antorcha |
 | `f` | #c03000 | 192, 48, 0 | fogata (decorado) |
 | `b` | #a08060 | 160, 128, 96 | barril |
 | `x` | #e0b060 | 224, 176, 96 | caja (decorado) |
 | `h` | #c0ffc0 | 192, 255, 192 | hongos |
 | `g` | #60c060 | 96, 192, 96 | pasto (en `mazmorra_reina`, cadena 1x4; cuelga: su letra va cuatro piezas debajo del techo) |
-| `r` | #c0c0ff | 192, 192, 255 | cristales |
+| `r` | #c0c0ff | 192, 192, 255 | cristales; ojo en la carne (`infierno`, 2x2, da luz verde) |
 | `T` | #206020 | 32, 96, 32 | árbol (2x3 piezas); estalagmita (`minas`, 3x4) |
 | `E` | #604080 | 96, 64, 128 | estantería (3x3 piezas; en `cementerio`, calaveras amontonadas 2x3) |
 | `C` | #e0e0a0 | 224, 224, 160 | tienda de campaña (3x2 piezas) |
@@ -155,10 +156,10 @@ El mapa original no se toca. El PNG es un punto de partida: faltan las salidas, 
 | `Q` | #d0a070 | 208, 160, 112 | cuadro (`castillo`, 2x2 piezas); lápida inclinada (`cementerio`, 2x3) |
 | `w` | #a0c0e0 | 160, 192, 224 | ventana de celosía (`castillo`, 3x3 piezas); reja de celda (`mazmorra_reina`, 2x2) |
 | `K` | #8080a0 | 128, 128, 160 | columna alta (`castillo`, 2x7 piezas); cruz de piedra (`cementerio`, 2x3); entibado (`minas`, 3x3) |
-| `U` | #b06080 | 176, 96, 128 | tapiz (`castillo`, 2x3 piezas); arco con calavera (`cementerio`, 2x3); boca de galería (`minas`, 3x4); arco del desagüe (`mazmorra_reina`, 6x3); contrafuerte (`ruina`, 4x3); arco con cara de demonio (`profundidades`, 2x3) |
+| `U` | #b06080 | 176, 96, 128 | tapiz (`castillo`, 2x3 piezas); arco con calavera (`cementerio`, 2x3); boca de galería (`minas`, 3x4); arco del desagüe (`mazmorra_reina`, 6x3); contrafuerte (`ruina`, 4x3); arco con cara de demonio (`profundidades`, 2x3); herida (`infierno`, 3x2) |
 | `l` | #805030 | 128, 80, 48 | estantería alta (solo `castillo`, 2x3 piezas) |
-| `n` | #a07040 | 160, 112, 64 | mesa con frascos (`castillo`, 2x1 piezas); calaveras en la pared (`cementerio`, 2x2); pedruscos caídos (`ruina`, 2x2); montón de calaveras (`profundidades`, 2x3) |
-| `y` | #ffe060 | 255, 224, 96 | lámpara colgante (`castillo`, 1x1; cuelga: su letra va justo debajo del techo); estalactita (`minas`, 3x4; cuelga: su letra va cuatro piezas debajo del techo) |
+| `n` | #a07040 | 160, 112, 64 | mesa con frascos (`castillo`, 2x1 piezas); calaveras en la pared (`cementerio`, 2x2); pedruscos caídos (`ruina`, 2x2); montón de calaveras (`profundidades`, 2x3); pústula (`infierno`, 2x2) |
+| `y` | #ffe060 | 255, 224, 96 | lámpara colgante (`castillo`, 1x1; cuelga: su letra va justo debajo del techo); estalactita (`minas`, 3x4; cuelga: su letra va cuatro piezas debajo del techo); colmillos (`infierno`, 3x3; cuelgan: su letra va tres piezas debajo del techo) |
 | `V` | #60a0a0 | 96, 160, 160 | mostrador con frascos (`castillo`, 2x2 piezas); nicho con llama (`cementerio`, 2x4, da luz); hornacina con llama rosa (`ruina`, 2x2, da luz); horno con chimenea (`profundidades`, 2x6, da luz) |
 
 ## 6. Si me pasan un boceto en vez del PNG

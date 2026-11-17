@@ -168,3 +168,37 @@ personajes:
   (escenas/enemigos/pesadilla.tscn): mira a la izquierda; su "attack" es el
   cuadro 0 de idle (el aviso) y después run dos veces. No trae golpe, daño ni
   muerte: muere con el efecto "muerte".
+
+Infierno (P73, ficha del infierno, paso de las piezas, 2026-11-17):
+- tejido_vivo/tiles.png  Environments/Living-Tissue-Platform-Files/PNG/layers/
+  tileset.png tal cual (288x192): la carne con colmillos y ojos.
+- tejido_vivo/fondo.png  Environments/Living-Tissue-Platform-Files/PNG/layers/
+  bakground.png tal cual (144x144, 9x9 piezas; se repite sin costura).
+- tejido_vivo/tileset_infierno.png  atlas del tileset "infierno" del
+  constructor, lo arma herramientas/constructor_mapas/atlas_infierno.py.
+  512x400: filas 0-15, copia sin cambios del atlas de mazmorra (dungeon_
+  platformer/dungeontilesetfull.png); filas 16-24, recortes de tejido_vivo/
+  tiles.png sin teñir (piezas de 16, de arriba a la izquierda):
+  - (0,16) juego de bloques "carne" 4x4: arriba el canto del suelo, (2,7),
+    (3,7) y (13,7); a los lados los bordes del suelo (2,10) y (13,10); abajo
+    el canto del techo, (12,4), (13,4) y (16,4); el interior, el relleno liso
+    (5,10). La columna y las tiras, con mitades de esas piezas. Todas macizas;
+  - (4,16)-(6,16) repisa de las plataformas "=": el canto del suelo, (2,7),
+    (3,7) y (13,7), sin el relleno liso (48,16,32) que toca el borde;
+  - (7,16) escalera: la (5,9) del Dungeon Tile Set (dungeon_tile_set/);
+  - (8,16) pared "carne" 9x9: tejido_vivo/fondo.png entero;
+  - (17,16) pared "ladrillo" 7x2: la de las profundidades, con las mismas
+    funciones de atlas_profundidades.py (igual píxel a píxel);
+  - (17,18) herida "U" 3x2: (2,1)-(4,2);
+  - (24,16) colmillos "y" 3x3: (6,1)-(8,3), la mandíbula y el colmillo largo,
+    pegados arriba;
+  - (27,16) ojo "r" 2x2: (3,4)-(4,5);
+  - (29,16) pústula "n" 2x2: (9,5)-(10,6), apoyada abajo.
+  La herida, los colmillos y el ojo traen un cuadro opaco del color del
+  relleno; se quita solo ese color, rellenando desde el borde de la pieza,
+  sin repintar.
+- personajes/alma_condenada.png  Characters/enemy-ghost/Spritesheets/
+  particles.png tal cual, 6 cuadros de 64x64 (la figura, unos 33x36). El alma
+  condenada (escenas/enemigos/alma_condenada.tscn): mira a la derecha; idle,
+  move y attack son los 6 cuadros. No trae muerte: muere con el efecto
+  "muerte".

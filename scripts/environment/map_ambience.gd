@@ -68,6 +68,9 @@ const ATLAS_DECOR_LIGHTS := {
 	"res://assets/terceros/gothicvania/lava/tileset_profundidades.png": {
 		Vector2i(17, 20): [Color(1.0, 0.55, 0.2), 56, 0.9, true],   # horno con llama (V)
 	},
+	"res://assets/terceros/gothicvania/tejido_vivo/tileset_infierno.png": {
+		Vector2i(27, 17): [Color(0.45, 1.0, 0.4), 40, 0.7, false],  # ojo verde (r)
+	},
 }
 const LAVA_SURFACE := Vector2i(12, 8)
 const LAVA_LIGHT := [Color(1.0, 0.35, 0.1), 48, 0.9, true]

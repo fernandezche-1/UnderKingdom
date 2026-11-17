@@ -40,6 +40,7 @@
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_mazmorra_reina.tscn" id="39_muestra_mazmorra_reina"]
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_ruina.tscn" id="40_muestra_ruina"]
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_profundidades.tscn" id="41_muestra_profundidades"]
+[ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_infierno.tscn" id="42_muestra_infierno"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_losa_medio"]
 atlas = ExtResource("8_tileset")
@@ -503,6 +504,9 @@ position = Vector2(1088, 2304)
 
 [node name="ParedAgrietadaProfundidades" parent="Objetos" instance=ExtResource("51_pared_profundidades")]
 position = Vector2(960, 2448)
+
+[node name="MuestraInfierno" parent="Objetos" instance=ExtResource("42_muestra_infierno")]
+position = Vector2(32, 2304)
 
 [node name="Carteles" type="Node2D" parent="."]
 
@@ -1475,6 +1479,60 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 text = "PARED AGRIETADA, PROFUNDIDADES (P48)
 Va en: el secreto de la galería de los condenados. La roca del tileset profundidades; se rompe a golpes, también a puños."
+autowrap_mode = 3
+
+[node name="Zona37" type="Label" parent="Carteles"]
+offset_left = 578.0
+offset_top = 2209.0
+offset_right = 802.0
+offset_bottom = 2233.0
+theme_type_variation = &"Encabezado"
+text = "Infierno"
+
+[node name="Nombre37" type="Label" parent="Carteles"]
+offset_left = 578.0
+offset_top = 2238.0
+offset_right = 798.0
+offset_bottom = 2258.0
+theme_type_variation = &"TextoAcento"
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "ALMA CONDENADA"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Texto37" type="Label" parent="Carteles"]
+offset_left = 580.0
+offset_top = 2306.0
+offset_right = 796.0
+offset_bottom = 2382.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "ALMA CONDENADA (P73)
+Va en: infierno (sima de las ánimas). Flota, avisa y embiste (0.5)."
+autowrap_mode = 3
+
+[node name="Nombre38" type="Label" parent="Carteles"]
+offset_left = 34.0
+offset_top = 2238.0
+offset_right = 558.0
+offset_bottom = 2258.0
+theme_type_variation = &"TextoAcento"
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "TILESET INFIERNO"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Texto38" type="Label" parent="Carteles"]
+offset_left = 340.0
+offset_top = 2306.0
+offset_right = 556.0
+offset_bottom = 2382.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "TILESET INFIERNO (P73)
+Carne de Living Tissue, repisa (=); pared carne y ladrillo rojo; colmillos (y), herida (U), ojo (r), pústula (n)."
 autowrap_mode = 3
 
 [node name="Inicio" type="Label" parent="Carteles"]

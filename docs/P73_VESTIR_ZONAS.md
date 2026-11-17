@@ -1412,3 +1412,51 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
 - Las pesadillas del coliseo y los ogros y el lobo del pasillo se pasan rodando; el Mimic solo está en el osario, que es opcional.
 - Ningún reto obligatorio pide la Agilidad, E4, el dash ni una mejora de la tienda.
 - Vestir no cambia celdas sólidas y las plataformas siguen siendo de una vía; se comprueba en el paso D.
+
+**Piezas (hechas el 2026-11-17).** Decisiones aprobadas al pasar la ficha a piezas:
+- **Colmillos `y`:** 3x3, no "unas 3x2", para no cortar el colmillo largo, que llega a la tercera fila. Cuelgan: van pegados arriba de su hueco y su letra va tres piezas debajo del techo.
+- **Fondo de los decorados:** el ojo, la herida y los colmillos traen un cuadro opaco del color del relleno de la carne, (48, 16, 32), que sobre la pared se veía como un parche. Se quita solo ese color, rellenando desde el borde de la pieza, sin repintar: el ojo queda como una cuenca en la pared y la herida, como una vena. La pústula ya viene sin fondo.
+- **Repisa `=`:** el canto del suelo de carne, (2,7), (3,7) y (13,7), sin el relleno liso de debajo. Mide unos 12 px de alto; la colisión de una vía no cambia.
+- **Lados de los bloques:** (2,10) y (13,10), que se repiten mejor en vertical que los de la fila 9.
+- **Galería:** en el piso G quedaban 48 columnas, justas para los dos cuartos del infierno (14 y 33).
+- **El alma condenada mira a la derecha** (la cuenca del ojo delante y la cola detrás), no a la izquierda como los enemigos de las profundidades.
+- **Atlas** `assets/terceros/gothicvania/tejido_vivo/tileset_infierno.png` (512x400), que arma `herramientas/constructor_mapas/atlas_infierno.py`:
+  - filas 0-15: el atlas de mazmorra sin cambios (lava animada, antorcha y fogata, con sus luces de `DECOR_LIGHTS`);
+  - filas 16-24:
+    - juego `carne` (0,16): arriba el canto del suelo (con sus esquinas redondas), a los lados los bordes del suelo, abajo el canto del techo y el relleno liso en el interior; la columna y las tiras, con mitades de esas piezas. Las 16 piezas son macizas;
+    - repisa (4,16) y escalera de madera (7,16);
+    - pared `carne` (8,16), 9x9: el fondo del pack entero;
+    - pared `ladrillo` (17,16), 7x2: la de las profundidades, con las mismas funciones de `atlas_profundidades.py` (igual píxel a píxel);
+    - `U` herida 3x2 (17,18), `y` colmillos 3x3 (24,16), `r` ojo 2x2 (27,16) y `n` pústula 2x2 (29,16).
+
+  Coordenadas y recortes en `assets/terceros/gothicvania/ORIGEN.txt`.
+- **Tileset** `herramientas/constructor_mapas/tilesets/infierno.gd`:
+  - `bloques_por_defecto: carne` (sin rampas: quedan las de `ladrillo`; el infierno no tiene);
+  - `plataformas`, `escalera`, `cofre` (`cofre_madera.tscn`) y `fondos` (`cueva`, `carne` y `ladrillo`);
+  - decorados `t` y `f` como en mazmorra, y `y`, `r`, `n` y `U` nuevos.
+
+  El constructor no cambia, salvo la letra nueva.
+- **Luz:** el ojo (27,17) va en `ATLAS_DECOR_LIGHTS` de `scripts/environment/map_ambience.gd`, con una luz verde fija (radio 40, energía 0.7).
+- **Alma condenada `z`:** `escenas/enemigos/alma_condenada.tscn`, con `lunge_enemy.gd` volando, como la calavera de fuego, sin scripts nuevos.
+  - `idle`, `move` y `attack` son los 6 cuadros de la hoja `assets/terceros/gothicvania/personajes/alma_condenada.png`, el `particles.png` del pack tal cual.
+  - 3 de vida, 0.5 de daño y 0.25 de contacto, en la capa 5. Avisa 0.3 s y embiste a 190 durante 0.35 s; detecta a 200 px. Cuerpo de 22x28. Muere con el efecto `muerte`.
+  - Letra `z` (`e0407a`) en `COLORS` y `ENEMIES`, la paleta, LEYENDA (sección 5) y P33.
+- **Galería, piso G**, zona "Infierno", a la izquierda de las profundidades. La zona de pruebas solo cambia en x 2-49, filas 143-155 (comprobado con las colisiones de las dos escenas: 576 piezas cambian dentro y ninguna fuera):
+  - cuarto "ALMA CONDENADA": el alma en el aire;
+  - cuarto "TILESET INFIERNO", con la muestra `zona_pruebas_muestra_infierno` (`galeria.py` aprendió a escribir otro estilo de bloques que el nombre del tileset, `bloques`):
+    - a la izquierda, la pared `carne`, con techo, una columna colgada, una pieza suelta, dos colmillos, la herida, el ojo, la repisa, la pústula, una antorcha y una fogata;
+    - a la derecha, el `ladrillo`, con una antorcha y la escalera a una repisa.
+- **Probado:**
+  - capturas con el juego abierto de la muestra (con `MapAmbience` y el alma) y del cuarto de la galería;
+  - prueba sin ventana con 923 comprobaciones bien:
+    - los 78 bloques de la muestra son macizos, del juego `carne` y con colisión, y las 3 piezas de la repisa son de una vía;
+    - el Player se apoya en la repisa y en el suelo, 64 px más abajo;
+    - los decorados y la escalera están en su pieza del atlas, y cada celda lleva su pared (`carne` o `ladrillo`);
+    - `MapAmbience` pone la luz verde del ojo;
+    - el alma sigue en su sitio a los 3 s, recibe golpes, toca con 0.25 y embiste con 0.5, y muere con 3 de daño;
+    - en la galería, el alma sigue en su sitio a los 3 s;
+  - arrancan sin errores el juego, la zona de pruebas y las `_combate` del calabozo, el castillo, el cementerio, las minas, la mazmorra, la ruina, las profundidades y el infierno; `verificar_mundo.py` da 0 errores.
+- **Al vestir, mirar:**
+  - la carne es clara y llamativa: en las salas grandes, la pared `carne` y la luz ambiente tienen que dejar leer a los enemigos;
+  - los colmillos solo donde haya 3 filas libres bajo el techo, y no sobre un enemigo del aire;
+  - la luz verde del ojo junto a la de la lava y las antorchas.
