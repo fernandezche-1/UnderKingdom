@@ -323,14 +323,32 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
   - Secreto: `ParedAgrietada` (columna 8, filas 23-25) con la heredada `pared_agrietada_profundidades.tscn` (P48, sección 7), hecha al vestir el 2026-11-17 con la roca del tileset `profundidades`. Al montar la `_combate` llevaba el arte provisional de siempre.
   - E5: `AtuendoFireKnight` (`fire_knight`) en (30, 78), sobre el yunque.
   - Rejas, trampillas y losas con piezas del atlas `dungeontilesetfull.png`, como en la ruina. La luz ambiente se ajusta al vestir.
-- [ ] **Infierno:**
-  - decidir los enemigos definitivos de la prueba final;
+- [x] **Infierno:**
+  - decidir los enemigos definitivos de la prueba final (decidido el 2026-11-17: la estructura va con los de hoy, los de la cabecera; los definitivos se deciden en su ficha de vestir, P73);
   - las arenas con oleadas del coliseo y del salón, las rejas bajas del pasillo y el fuego infernal;
   - Cthulhu en el trono, con la reja en `Puertas`, el activador, `PuntosJefe` y el aviso del final;
   - la transición y el spawn de `[S7]`, y la marca `infierno_animas_liberadas` del coliseo.
   - Base generada (2026-11-17, `escenas/mapas/tiles_infierno.tscn`, desde `mapas_texto/tiles_infierno.txt`; deja el nombre `tiles_jefe` de v1, que sigue en `archivo/tiles_v1/`): 48 enemigos (5 mino, 6 Guardias, 3 Aprendis, 21 diablillos, 1 esqueleto, 1 kolbo2, 8 murciélagos y 3 kolbo3), 164 piezas de lava, 5 cofres, 19 monedas, 1 poción y 4 checkpoints. Sin salidas del constructor: `[S7]` va en la `_combate`.
   - El fuego infernal del paso de las cadenas (x 41-44, fila 12) salió del ASCII: la `F` del constructor es la trampa de fuego normal, que quema también con E5. Va en la `_combate` (`fuego_infernal.tscn`, `width_tiles` 4).
-  - `[S7]` de las profundidades (`SalidaS7` de `tiles_profundidades_combate.tscn`) va a la base, `#DesdeProfundidades`: hasta montar la `_combate` se llega al `SpawnInicio`. Al montarla pasa a `tiles_infierno_combate.tscn`. El infierno de v1 sale de la ruta; su salida anterior sigue apuntando a las profundidades.
+  - `[S7]` de las profundidades (`SalidaS7` de `tiles_profundidades_combate.tscn`) iba a la base, `#DesdeProfundidades`; desde que se montó la `_combate` (2026-11-17) va a `tiles_infierno_combate.tscn#DesdeProfundidades`. El infierno de v1 sale de la ruta; su salida anterior sigue apuntando a las profundidades.
+  - `_combate` montada (2026-11-17, `escenas/mapas/tiles_infierno_combate.tscn`). Los 8 enemigos del coliseo y los 4 del salón salieron del ASCII, como en la antecámara del castillo, y la base se regeneró con las mismas piezas (48 enemigos pasan a 36: 3 mino, 3 Guardias, 2 Aprendis, 19 diablillos, 1 kolbo2, 1 kolbo3 (el del osario) y 7 murciélagos, sin esqueleto). Los de las oleadas son las escenas de siempre, sin cambiar valores.
+  - `FuegoCadenas` (`fuego_infernal.tscn`, origen en (41, 12), `width_tiles` 4).
+  - `ArenaColiseo` (`wave_arena.gd`, `encounter_id` `infierno_animas_liberadas`, el que escucha la jaula de las profundidades):
+    - activador x 47-94, filas 40-60;
+    - `RejaEntrada` (columna 44, filas 57-60) en `Puertas` y `TrampillaSalida` (x 96-98, fila 61, sobre la escalera 97) en `Atajos`;
+    - oleadas: 1, esqueleto (52, 60), kolbo3 (75, 60), diablillos (64, 50) y (84, 46) y murciélago (73, 44); 2, mino (60, 60), Guardia (68, 60), Aprendis (86, 60) y murciélagos (60, 44) y (86, 44); 3, minos (58, 60) y (84, 60), Guardias (64, 60) y (80, 60) y Aprendis (72, 52).
+  - Pasillo del filo: `RejaBaja1`, `RejaBaja2` y `RejaBaja3` (`roll_gate.gd`) en las columnas 85, 65 y 45, filas 72-75, en `RejasBajas`.
+  - `ArenaSalon` (`wave_arena.gd`, `infierno_salon_verdugos`):
+    - activador x 7-31, filas 108-116: empieza al bajar de la escalera 4, no en ella;
+    - `TrampillaEntrada` (x 3-5, fila 107) en `Puertas` y `RejaSalida` (columna 32, filas 113-116) en `Atajos`;
+    - oleadas: 1, Guardias (12, 116) y (22, 116), mino (17, 116) y kolbo3 (27, 116); 2, Guardias (8, 116) y (26, 116) y mino (17, 116).
+  - `SalaCthulhu` (`boss_arena.gd`, `encounter_id` `infierno_cthulhu`, el de v1; `cthulhu_jefe.tscn`, sin llave ni `ability_reward`, sin `PuntoLlave` ni `Atajos`):
+    - activador x 50-100, filas 96-116;
+    - `RejaTrono` (columna 44, filas 113-116) en `Puertas`;
+    - `JefeEste` (96, 116) y `JefeOeste` (49, 116), 2 piezas sobre el suelo: entrando por el oeste sale en el este;
+    - al vencerlo, "HAS VENCIDO A CTHULHU". No hay escena de final ni créditos.
+  - `[S7]`: `SalidaS7` (x 54-56, filas 0-1) a `tiles_profundidades_combate.tscn#DesdeInfierno`; spawn `DesdeProfundidades` en (52, 12).
+  - Rejas y losas con piezas del atlas `dungeontilesetfull.png`, como en las profundidades; las rejas bajas, también (falta su arte, P52).
 
 **Plantillas de prompt de la estructura.** La estructura de cada zona se hace en dos sesiones, cada una con su commit:
 - parte 1, generar la base: modo normal;
