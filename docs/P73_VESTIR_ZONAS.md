@@ -1137,8 +1137,79 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
 - La pieza vale también para las profundidades (ceniza: otro `color` y `wind` hacia arriba), cuando se haga su ficha.
 
 ### Profundidades
-- Parte de: tileset `mazmorra` con `bloques: oro`, parallax de `gothicvania/lava`. Diablillo; el Demon Slime. Faltan los minijefes de los altares (P46, sección 7).
-- Ficha: por armar.
+- Parte de: tileset `mazmorra` con `bloques: oro`, `fondo: ninguno` y el parallax de `gothicvania/lava` (`fondo.png` y `rocas.png`) en toda la zona. En el ASCII, 22 diablillos `d`, todos en el aire; el Demon Slime en la `_combate`. Faltan los minijefes de los altares (P46, sección 7).
+- **Ficha aprobada el 2026-11-17**, con la base generada y sin la `_combate` (parte 2 de la estructura). TASK.md deja armar la ficha antes; para vestir hace falta la `_combate` montada y jugada.
+- **Por qué cambia** (capturas sin ventana de 12 sitios de la base):
+  - los bloques `oro` son cuadros azul marino con un borde dorado punteado: la roca se lee como un hueco, como la `oliva` y la `madera`, y el azul no pega con la lava;
+  - el parallax de lava, con su cascada, sale igual en la forja, la sala del Demon Slime, la galería y los pasillos;
+  - las plataformas `=` son tiras del bloque y las escaleras `H` apenas se ven.
+- **Lo que no cuadraba** (hallado al armar la ficha):
+  - los minijefes que propone P46 (sección 7) para el coliseo y el santuario son el demonslime común (`demonslime.tscn`), el mismo arte que el Demon Slime, el jefe de la zona: se pelearía tres veces contra el mismo. No es de esta ficha (se eligen en la estructura); abajo, "Para los minijefes", queda el arte que hay;
+  - los 22 enemigos son diablillos que vuelan: no hay ninguno de suelo.
+
+**Ambientación** (tileset nuevo `profundidades`, `herramientas/constructor_mapas/tilesets/profundidades.gd`, como `ruina`: las filas 0-15 copian el atlas de mazmorra, por la lava animada, la antorcha, la fogata, los cristales, la caja y el barril, y debajo van piezas de `cavernas/tiles.png` de la Legacy, ya en el repo; un script `herramientas/constructor_mapas/atlas_profundidades.py` arma el atlas):
+- **Roca sin tinte:** los cantos de Caverns en su morado original, el mismo de las rocas del parallax de lava (maqueta sobre el parallax, con y sin un tinte de brasa: el tinte quedaba pardo y apagado). La ruina usa las mismas formas teñidas de frío; se distinguen por el color.
+  - **Living Tissue** de la Legacy (carne con colmillos) se miró y se guarda para el infierno (Cthulhu); se decide en su ficha.
+- **Bloques `profundidades`:** solo celdas macizas, con el interior armado con los cantos del lateral, como en la ruina.
+- **Plataformas `=`:** la repisa de piedras del pack, con la clave `plataformas`. La colisión de una vía no cambia.
+- **Escalera:** la de madera del Dungeon Tile Set, como en las zonas de arriba.
+- **Cofres `c`** (5): `cofre_madera.tscn`, con la clave `cofre` del tileset.
+- **Lava `~`:** la animada de hoy. El `lava-tile.png` de la Legacy casa con el parallax pero no está animado.
+- **Paredes**, con `fondo` y `fondo_sala` (los rectángulos exactos se fijan al vestir):
+
+  | Pared | Arte | Dónde |
+  |---|---|---|
+  | `basalto` (nueva, el `fondo:` de la zona) | el interior de los cantos, oscurecido | galería de los condenados, pie de `:E:`, llegada, paso de la chimenea, túnel, encrucijada, antesala y pozos |
+  | `ladrillo` (nueva) | el ladrillo de Gothic Horror, teñido de rojo oscuro | lo construido: forja, coliseo de ceniza, sala del Demon Slime y cámara del altar del fuego |
+  | `ninguno` | el parallax de lava | lo abierto: gran caverna, lago de magma, chimenea de azufre y puente de ceniza |
+
+- **Decorados** (reutilizan letras, así que no hay colores nuevos; los tamaños se miden en el paso de piezas):
+
+  | Letra | En `profundidades` | Dónde |
+  |---|---|---|
+  | `t`, `r`, `f`, `x`, `b` | se quedan: antorchas, cristales (las ascuas), fogatas, cajas y barriles | |
+  | `V` | horno: el nicho con llama y chimenea de Gothic Horror, teñido de rojo, unas 2x4, da luz | forja |
+  | `U` | arco con cara de demonio de Gothic Horror, teñido de rojo, unas 2x3 | coliseo, santuario de las llamas y sala del Demon Slime |
+  | `n` | montón de huesos de Gothic Horror, unas 2x2 | galería de los condenados, puente de huesos y coliseo |
+
+  - `V` y `U` ya salen en el cementerio; aquí van teñidos de rojo.
+  - Los decorados nuevos siguen la regla de la cabecera del `.txt`: ninguno pisa una escalera, sus columnas vecinas ni las tres filas de encima, un spawn ni otro decorado, ni los objetos de la `_combate` (altares, palancas, E5, restos y página II).
+- **Luces:** el horno `V` va en `ATLAS_DECOR_LIGHTS`, con luz naranja. La luz ambiente se ajusta al vestir, solo en la `_combate`.
+
+**Enemigos** (profundidad 5, demonios):
+- **Se queda el diablillo `d`**, que no sale en ninguna zona de arriba: 13, en el aire. Puente de ceniza (152, 9) y (163, 9); sobre la cornisa (147, 22); coliseo (16, 34) y (34, 34); forja (20, 71) y (46, 71), que guardan E5; lago (148, 49) y (170, 47); chimenea (208, 33), (216, 47) y (206, 60); pasillo del fuego (184, 76).
+- **Nuevos** (letras y colores nuevos en `COLORS`, la paleta, LEYENDA y P33; `I` e `Y` están libres, la `Y` desde que se quitó el esqueleto helado):
+
+  | | Bestia infernal `I` | Pesadilla `Y` |
+  |---|---|---|
+  | Arte | `Hell-Beast` de la Legacy, cuadros de 80x160 (la figura, unos 44x60): `idle` 6, `breath` 4 (escupe fuego) y `burn` 6 | `Nightmare` de la Legacy, caballo negro con llamas azules, cuadros de 160x96 (la figura, unos 112x71): `idle` 4 y `run` 4 |
+  | Script base | `ranged_demon.gd` con gravedad: una torreta en el suelo, casi quieta, que dispara la bola de fuego del diablillo. Muere con `burn` si se lee como muerte; si no, con el efecto `muerte` | `lunge_enemy.gd` en el suelo: patrulla al paso, avisa y embiste lejos y rápido. Es más alta de lo que se salta: se esquiva rodando (se comprueba en el paso de piezas). Muere con el efecto `muerte` |
+  | Vida y daño | 3 de vida, 0.5 por bola y 0.25 de contacto | 4 de vida, 0.75 de daño y 0.25 de contacto |
+  | Sitio | 6, bajados al suelo desde sitios de diablillos: galería de los condenados (28, 25) y (72, 25); cornisa de la caverna (108, 25) y (178, 25), sobre la roca, que disparan al puente colgante; encrucijada, 2 en el suelo (fila 60), bajo (93, 54) y (118, 54) | 3 en el suelo del puente de huesos (fila 37), por los diablillos de (130, 32), (160, 31) y (186, 33): en medio de los tramos entre las pozas de lava, lejos de las escaleras 100, 194 y 196 |
+
+  - Los sitios exactos se fijan al vestir, con la regla de las escaleras. Ninguno en la llegada, el pie de `:E:`, la antesala, la sala del Demon Slime, el pozo de `[S7]` ni el secreto, ni a menos de 8 piezas de la P, los checkpoints o los spawns.
+  - La pesadilla (71 px) no cabe en el pasillo del fuego (4 de alto), que se queda con su diablillo. Los enemigos no pisan plataformas `=`: en la chimenea siguen los diablillos.
+  - Si `ranged_demon.gd` o `lunge_enemy.gd` no sirven sin cambios, se pregunta antes de tocarlos o de hacer un script propio.
+- Quedan 13 diablillos, 6 bestias y 3 pesadillas (22, como antes).
+- **Para los minijefes** (no es de esta ficha; se eligen en la estructura): el demonio alado de la Legacy (`demon`, la figura de unos 134x124, con `idle` 6 y ataque con aliento de fuego) cabría con `simple_boss.gd`, y la bestia infernal a escala 2 podría ir en lugar del diablillo mayor del lago.
+
+**Origen del arte:**
+- **Legacy Collection** (CC0, `Legacy Collection.zip` en Descargas): `Hell-Beast` y `Nightmare` van a `assets/terceros/gothicvania/personajes/`; `cavernas/tiles.png` y `gothic_horror/tiles.png` ya están en el repo. Se anotan en su `ORIGEN.txt`.
+- **Escalera:** la del Dungeon Tile Set, ya en el repo.
+- Sin pack nuevo ni IA, y sin licencias nuevas por confirmar (el Dungeon Tile Set sigue pendiente, como en las zonas de arriba).
+- **Mirado y descartado:**
+  - Hell-Hound de la Legacy y el hell-gato del Cemetery: embisten a ras de suelo, como el lobo de la ruina;
+  - `flying-eye-demon` de la Legacy: es casi el ojo volador de las minas;
+  - el `demon` de la Legacy como enemigo común: es del tamaño de un jefe;
+  - Rocky Tileset (playa), Modular tileset (casa oriental) y Gothic Castle de la Legacy, y el tileset de Super Grotto (azul, de estilo tierno);
+  - el tinte de brasa sobre los cantos de Caverns: pardo y apagado frente al parallax.
+- **Fuera de la ficha:** `Red Fire Trap`, en `archivo/sin_uso/assets/`, podría servir de arte al fuego infernal (P61, falta su arte), que va en la `_combate`.
+
+**Reto obligatorio:** coincide con su fila de P46, sección 10.
+- Llega con la llama eterna y el dash, más la Ultimate, Rodar, la Ráfaga y el Golpe final (la Agilidad solo si encontró E3; E4 si lo encontró), y sale por `[S7]`, con los tres altares y el Demon Slime.
+- La pesadilla se esquiva rodando, que el jugador ya tiene; la bestia se vence a espada.
+- Ningún reto obligatorio pide el dash, la Agilidad, E4 ni una mejora de la tienda.
+- Vestir no cambia celdas sólidas y las plataformas siguen siendo de una vía; se comprueba en el paso D.
 
 ### Infierno
 - Parte de: tileset `mazmorra` con `bloques: ladrillo`, parallax de `gothicvania/lava`. La mezcla de los más duros (P46); Cthulhu. Faltan los enemigos definitivos.
