@@ -1098,6 +1098,44 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
   - el lobo de (144, 33), en el camino desde `:D:`, junto al foso de pinchos de x 135-137 (antes, el kolbo3).
 - **Falta, antes de marcarla vestida en `TASK.md`:** jugarla a mano.
 
+**Nieve y escarcha (aprobado el 2026-11-16, tras vestirla):**
+- **Por qué:** para que la ruina se sienta helada además de verse teñida de frío. Ningún pack del repo ni de Descargas trae nieve (solo un fondo de bosque con niebla en la Legacy), así que no hay arte: cada copo es un cuadrado de 1 o 2 px del juego. El usuario aprobó las tres propuestas y dejó elegir la forma que quedara mejor.
+- **El exterior helado tiene techo** (filas 0-1 de roca): es una caverna, no un cielo abierto. Por eso no hay nevada general, sino escarcha que flota, nieve que cae de las grietas del techo y ventisca en las zonas frías.
+- **Pieza:** `escenas/sistemas/clima_nieve.tscn`, con `scripts/environment/snow_area.gd` (`UnderkingdomSnowArea`). Es un rectángulo de piezas, como `dark_zone.gd`, sin letra en el constructor: va en la `_combate`, en el nodo `Clima`.
+  - Tres tipos (`kind`):
+    - `MOTES`, escarcha suspendida: nace en cualquier celda abierta, flota, baja unos 3 px/s y se apaga; las motas de 2 px brillan;
+    - `FLAKES`, nieve que cae: nace arriba del rectángulo y cae a `fall_speed` (24 px/s), meciéndose;
+    - `BLIZZARD`, ventisca: nace en el borde de donde sopla `wind` y cruza de lado; los copos pequeños son trazos de 2x1.
+  - **No usa `CPUParticles2D`:** con el stretch `canvas_items` a 3x podrían quedar a medio píxel del juego. Los copos se mueven por script y se dibujan con `draw_rect` en posiciones enteras.
+  - **No se pinta sobre la roca:** lee la capa `Terreno` del mapa, y un copo que entra en un bloque desaparece y renace. Así va delante del Player (`z_index` 4), bajo la oscuridad de `dark_zone` (50).
+  - **Sin sombreado** (`unshaded`): con la luz ambiente de la `_combate` los copos se perdían en el azul; se eligió con capturas de las dos versiones.
+  - **Fuera de pantalla** (`VisibleOnScreenNotifier2D`) no se mueve ni dibuja. El nodo no se oculta: oculto, el aviso de pantalla tampoco funcionaría.
+- **En la ruina** (`Clima` de `tiles_ruina_combate.tscn`; rectángulos x, fila, ancho x alto):
+
+  | Nodo | Tipo | Rectángulo | Copos |
+  |---|---|---|---|
+  | `EscarchaExterior` | escarcha | (24, 2), 80x23: exterior, cumbre y lago | 200 |
+  | `EscarchaGaleriaAlta` | escarcha | (4, 28), 150x6 | 150 |
+  | `EscarchaGaleriaBaja` | escarcha | (4, 36), 127x12, con el fondo este alto | 130 |
+  | `EscarchaAntesala` | escarcha | (76, 53), 37x6 | 40 |
+  | `NieveGrieta1`, `2` y `3` | nieve que cae | bajo los huecos del techo del exterior: (41, 2) 3x14, (48, 2) 4x14 y (56, 2) 4x22, que sigue por el hueco hasta el lago | 10, 12 y 16 |
+  | `VentiscaCumbre` | ventisca, 85 px/s hacia el este | (66, 2), 38x10 | 110 |
+  | `VentiscaLago` | ventisca, 45 px/s hacia el este | (50, 18), 21x6 | 45 |
+
+  - Sin nieve en la parte oscura, la capilla, la sala del Guardián ni las cámaras.
+- **Galería:** cuarto "NIEVE Y ESCARCHA" en el piso F, tras el del tileset (x 75-104, filas 124-136). Lleva los tres tipos y un pilar de roca de 3 de alto en la ventisca, para ver que los copos no se pintan sobre él. La zona de pruebas solo cambia en ese cuarto: 360 celdas que se vacían y las 3 del pilar.
+- **Probado:**
+  - prueba sin ventana, 17 comprobaciones bien en la galería y 47 en la ruina:
+    - cada rectángulo empieza en una esquina de pieza y va delante del Player;
+    - encuentra la roca de `Terreno`;
+    - en 240 cuadros ningún copo queda en una celda de roca ni fuera de su rectángulo;
+    - la escarcha baja a unos 3 px/s, la nieve cae a unos 24 y la ventisca cruza a 84 y 46;
+    - fuera de pantalla no se mueve ni dibuja;
+  - capturas con el juego abierto de la galería, el exterior con las grietas, la cumbre y la galería alta, con y sin sombreado;
+  - arrancan sin errores el juego, la zona de pruebas y las `_combate` de la ruina y la mazmorra.
+- **Al jugarla, mirar:** la densidad, sobre todo en el exterior (200 motas) y la cumbre (110 copos), y si la nieve delante del Player estorba en las peleas con los lobos y las aves. Si estorba, se baja `amount` o se pasa la pieza detrás (`z_index` -2).
+- La pieza vale también para las profundidades (ceniza: otro `color` y `wind` hacia arriba), cuando se haga su ficha.
+
 ### Profundidades
 - Parte de: tileset `mazmorra` con `bloques: oro`, parallax de `gothicvania/lava`. Diablillo; el Demon Slime. Faltan los minijefes de los altares (P46, sección 7).
 - Ficha: por armar.

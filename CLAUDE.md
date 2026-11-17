@@ -85,7 +85,8 @@ Plataformero de acción 2D en Godot 4.7 (GDScript), pixel art. Repo de Armando C
   - `scripts/environment/locked_door.gd`: puerta con llave; con `require_interact`, `open_effect` (`CANDLES`, `MELT`) y `piece_tint` sirve de velas o de hielo (P57).
   - `scripts/environment/encounter_visibility.gd`: muestra u oculta su nodo padre según un encuentro (P53).
   - `scripts/environment/collapse_sequence.gd`: suelo que se hunde y huida con escombros, para `[!5]` (P64).
-  - `scripts/environment/dark_zone.gd`: zona oscura que se ilumina con la llama eterna (P65). `scripts/environment/map_ambience.gd`: luz ambiente y luces de los decorados.
+  - `scripts/environment/dark_zone.gd`: zona oscura que se ilumina con la llama eterna (P65).
+  - `escenas/sistemas/clima_nieve.tscn` (`snow_area.gd`): escarcha, nieve que cae o ventisca en un rectángulo, sin arte y sin pintarse sobre la roca (P73, ruina). `scripts/environment/map_ambience.gd`: luz ambiente y luces de los decorados.
   - `escenas/objetos/palanca.tscn`: palanca que marca un `encounter_id` (P49).
   - `escenas/objetos/sello.tscn`: sello de un contador (`seal_group`, `seal_id`, `seal_total`) (P55).
   - `escenas/objetos/objeto_lore.tscn`: lore que se lee con E, con un diálogo en JSON (P50).

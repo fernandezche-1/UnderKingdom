@@ -1001,6 +1001,46 @@ room("F", "Ruina", "TILESET RUINA",
      36, b_tileset_ruina)
 
 
+# Nieve y escarcha de la ruina (P73): clima_nieve.tscn (snow_area.gd) en sus
+# tres tipos. Escarcha suspendida (MOTES) en todo el cuarto; nieve que cae
+# (FLAKES) por la izquierda, como bajo una grieta del techo; y ventisca
+# (BLIZZARD) a la derecha, que sopla hacia un pilar de roca: los copos se
+# apagan al tocarlo y no se pintan sobre él.
+def b_nieve(c):
+    for r in range(c.F - 3, c.F):
+        c.cell(21, r, "#")
+    alto = c.F - c.techo - 1
+    node(f'''
+[node name="NieveEscarcha" parent="Objetos" instance=ExtResource("50_clima_nieve")]
+position = Vector2({c.col(0) * T}, {(c.techo + 1) * T})
+width_tiles = {c.CW}
+height_tiles = {alto}
+amount = 80''')
+    node(f'''
+[node name="NieveGrieta" parent="Objetos" instance=ExtResource("50_clima_nieve")]
+position = Vector2({c.col(2) * T}, {(c.techo + 1) * T})
+kind = 1
+width_tiles = 3
+height_tiles = {alto}
+amount = 14
+sway = 10.0''')
+    node(f'''
+[node name="NieveVentisca" parent="Objetos" instance=ExtResource("50_clima_nieve")]
+position = Vector2({c.col(13) * T}, {(c.F - 6) * T})
+kind = 2
+width_tiles = {c.CW - 13}
+height_tiles = 6
+amount = 60
+wind = Vector2(85, 0)
+sway = 0.0''')
+
+
+room("F", "Ruina", "NIEVE Y ESCARCHA",
+     "NIEVE Y ESCARCHA (P73)\nVa en: ruina. Escarcha que flota, nieve que cae de una grieta (izquierda) "
+     "y ventisca (derecha). Sin arte: cuadrados de 1 y 2 px. No se pinta sobre la roca.",
+     30, b_nieve)
+
+
 # ---------------------------------------------------------------- colocar
 def add_label(name, x, y, w, h, text, variation=None, align=0, header=False):
     carteles.append((name, x, y, w, h, text, variation, align, header))
@@ -1094,6 +1134,7 @@ ext = '''[ext_resource type="PackedScene" path="res://escenas/enemigos/rata.tscn
 [ext_resource type="SpriteFrames" path="res://escenas/atuendos/fire_knight.tres" id="31_fire_knight"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/atuendo.tscn" id="32_atuendo"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/espada_oxidada.tscn" id="33_espada_oxidada"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/clima_nieve.tscn" id="50_clima_nieve"]
 ''' + "".join(
     f'[ext_resource type="PackedScene" path="res://escenas/mapas/{nombre}.tscn" id="{ext_id}"]\n'
     for _, nombre, _, ext_id, _, _ in MUESTRAS)

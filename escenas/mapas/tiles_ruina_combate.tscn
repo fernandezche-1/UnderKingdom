@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" path="res://escenas/items/fragmento_vida.tscn" id="13_fragmento"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/atuendo.tscn" id="14_atuendo"]
 [ext_resource type="Script" path="res://scripts/environment/map_ambience.gd" id="15_ambiente"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/clima_nieve.tscn" id="16_nieve"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_columna_tope"]
 atlas = ExtResource("5_tileset")
@@ -271,3 +272,71 @@ script = ExtResource("15_ambiente")
 ambient_color = Color(0.5, 0.6, 0.75, 1)
 player_light_color = Color(0.85, 0.95, 1, 1)
 vignette_strength = 0.55
+
+[node name="Clima" type="Node2D" parent="."]
+
+[node name="EscarchaExterior" parent="Clima" instance=ExtResource("16_nieve")]
+position = Vector2(384, 32)
+width_tiles = 80
+height_tiles = 23
+amount = 200
+
+[node name="EscarchaGaleriaAlta" parent="Clima" instance=ExtResource("16_nieve")]
+position = Vector2(64, 448)
+width_tiles = 150
+height_tiles = 6
+amount = 150
+
+[node name="EscarchaGaleriaBaja" parent="Clima" instance=ExtResource("16_nieve")]
+position = Vector2(64, 576)
+width_tiles = 127
+height_tiles = 12
+amount = 130
+
+[node name="EscarchaAntesala" parent="Clima" instance=ExtResource("16_nieve")]
+position = Vector2(1216, 848)
+width_tiles = 37
+height_tiles = 6
+amount = 40
+
+[node name="NieveGrieta1" parent="Clima" instance=ExtResource("16_nieve")]
+position = Vector2(656, 32)
+kind = 1
+width_tiles = 3
+height_tiles = 14
+amount = 10
+sway = 10.0
+
+[node name="NieveGrieta2" parent="Clima" instance=ExtResource("16_nieve")]
+position = Vector2(768, 32)
+kind = 1
+width_tiles = 4
+height_tiles = 14
+amount = 12
+sway = 10.0
+
+[node name="NieveGrieta3" parent="Clima" instance=ExtResource("16_nieve")]
+position = Vector2(896, 32)
+kind = 1
+width_tiles = 4
+height_tiles = 22
+amount = 16
+sway = 10.0
+
+[node name="VentiscaCumbre" parent="Clima" instance=ExtResource("16_nieve")]
+position = Vector2(1056, 32)
+kind = 2
+width_tiles = 38
+height_tiles = 10
+amount = 110
+wind = Vector2(85, 0)
+sway = 0.0
+
+[node name="VentiscaLago" parent="Clima" instance=ExtResource("16_nieve")]
+position = Vector2(800, 288)
+kind = 2
+width_tiles = 21
+height_tiles = 6
+amount = 45
+wind = Vector2(45, 0)
+sway = 0.0

@@ -30,6 +30,7 @@
 [ext_resource type="SpriteFrames" path="res://escenas/atuendos/fire_knight.tres" id="31_fire_knight"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/atuendo.tscn" id="32_atuendo"]
 [ext_resource type="PackedScene" path="res://escenas/objetos/espada_oxidada.tscn" id="33_espada_oxidada"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/clima_nieve.tscn" id="50_clima_nieve"]
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_calabozo.tscn" id="34_muestra_calabozo"]
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_castillo.tscn" id="35_muestra_castillo"]
 [ext_resource type="PackedScene" path="res://escenas/mapas/zona_pruebas_muestra_castillo_salas.tscn" id="36_muestra_castillo_salas"]
@@ -471,6 +472,29 @@ position = Vector2(160, 1696)
 
 [node name="MuestraRuina" parent="Objetos" instance=ExtResource("40_muestra_ruina")]
 position = Vector2(656, 2000)
+
+[node name="NieveEscarcha" parent="Objetos" instance=ExtResource("50_clima_nieve")]
+position = Vector2(1248, 2000)
+width_tiles = 27
+height_tiles = 12
+amount = 80
+
+[node name="NieveGrieta" parent="Objetos" instance=ExtResource("50_clima_nieve")]
+position = Vector2(1280, 2000)
+kind = 1
+width_tiles = 3
+height_tiles = 12
+amount = 14
+sway = 10.0
+
+[node name="NieveVentisca" parent="Objetos" instance=ExtResource("50_clima_nieve")]
+position = Vector2(1456, 2096)
+kind = 2
+width_tiles = 14
+height_tiles = 6
+amount = 60
+wind = Vector2(85, 0)
+sway = 0.0
 
 [node name="Carteles" type="Node2D" parent="."]
 
@@ -1343,6 +1367,29 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 text = "TILESET RUINA (P73)
 Cantos, repisa (=) y muro de Caverns, teñidos de frío: sin pared y pared ruina; hornacina (V), contrafuerte (U), pedruscos (n)."
+autowrap_mode = 3
+
+[node name="Nombre33" type="Label" parent="Carteles"]
+offset_left = 1202.0
+offset_top = 1934.0
+offset_right = 1678.0
+offset_bottom = 1954.0
+theme_type_variation = &"TextoAcento"
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "NIEVE Y ESCARCHA"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Texto33" type="Label" parent="Carteles"]
+offset_left = 1204.0
+offset_top = 2002.0
+offset_right = 1676.0
+offset_bottom = 2078.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "NIEVE Y ESCARCHA (P73)
+Va en: ruina. Escarcha que flota, nieve que cae de una grieta (izquierda) y ventisca (derecha). Sin arte: cuadrados de 1 y 2 px. No se pinta sobre la roca."
 autowrap_mode = 3
 
 [node name="Inicio" type="Label" parent="Carteles"]

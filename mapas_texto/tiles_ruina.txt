@@ -303,6 +303,7 @@
 ; puntos del jefe, reja de salida en Atajos, ability_reward air_dash), hielo de [P6] y llama eterna,
 ; luz de la parte oscura, palanca y reja de :D:, trampillas del atajo y de
 ; :E:, la puerta de hielo negro con la página III y el fragmento de vida 3/4,
+; la nieve y la escarcha (nodo Clima, clima_nieve.tscn; P73),
 ; y las transiciones y spawns de [!5], :D:, [P6] y :E:. No hay
 ; "siguiente" ni "anterior": todas las conexiones salen por arriba o por
 ; abajo.
