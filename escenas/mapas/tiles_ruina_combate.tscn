@@ -1,0 +1,273 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://escenas/mapas/tiles_ruina.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/combat/boss_arena.gd" id="2_sala"]
+[ext_resource type="PackedScene" path="res://escenas/jefes/guardian_hielo.tscn" id="3_guardian"]
+[ext_resource type="Script" path="res://scripts/environment/arena_barrier.gd" id="4_barrera"]
+[ext_resource type="Texture2D" path="res://assets/terceros/dungeon_platformer/dungeontilesetfull.png" id="5_tileset"]
+[ext_resource type="Script" path="res://scripts/environment/locked_door.gd" id="6_puerta"]
+[ext_resource type="Script" path="res://scripts/environment/dark_zone.gd" id="7_oscuridad"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/map_transition.tscn" id="8_transicion"]
+[ext_resource type="PackedScene" path="res://escenas/sistemas/spawn_point.tscn" id="9_spawn"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/palanca.tscn" id="10_palanca"]
+[ext_resource type="PackedScene" path="res://escenas/items/llama_eterna.tscn" id="11_llama"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/objeto_lore.tscn" id="12_lore"]
+[ext_resource type="PackedScene" path="res://escenas/items/fragmento_vida.tscn" id="13_fragmento"]
+[ext_resource type="PackedScene" path="res://escenas/objetos/atuendo.tscn" id="14_atuendo"]
+[ext_resource type="Script" path="res://scripts/environment/map_ambience.gd" id="15_ambiente"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna_tope"]
+atlas = ExtResource("5_tileset")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna_medio"]
+atlas = ExtResource("5_tileset")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna_base"]
+atlas = ExtResource("5_tileset")
+region = Rect2(48, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_losa_izq"]
+atlas = ExtResource("5_tileset")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_losa_medio"]
+atlas = ExtResource("5_tileset")
+region = Rect2(16, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_losa_der"]
+atlas = ExtResource("5_tileset")
+region = Rect2(32, 48, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_activador_guardian"]
+size = Vector2(496, 112)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trampilla"]
+size = Vector2(48, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_puerta"]
+size = Vector2(16, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_salida_techo"]
+size = Vector2(48, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_salida_suelo"]
+size = Vector2(48, 16)
+
+[node name="TilesRuinaCombate" instance=ExtResource("1_base")]
+
+[node name="SalaGuardian" type="Node2D" parent="SistemasMapa"]
+script = ExtResource("2_sala")
+encounter_id = "ruina_guardian"
+boss_scene = ExtResource("3_guardian")
+ability_reward = "air_dash"
+boss_message = "GUARDIÁN DE HIELO"
+
+[node name="Activador" type="Area2D" parent="SistemasMapa/SalaGuardian"]
+position = Vector2(1896, 1112)
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaGuardian/Activador"]
+shape = SubResource("RectangleShape2D_activador_guardian")
+
+[node name="Puertas" type="Node2D" parent="SistemasMapa/SalaGuardian"]
+
+[node name="TrampillaEntrada" type="StaticBody2D" parent="SistemasMapa/SalaGuardian/Puertas"]
+position = Vector2(1608, 984)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_losa_izq")
+piece_middle = SubResource("AtlasTexture_losa_medio")
+piece_end = SubResource("AtlasTexture_losa_der")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaGuardian/Puertas/TrampillaEntrada"]
+shape = SubResource("RectangleShape2D_trampilla")
+disabled = true
+
+[node name="Atajos" type="Node2D" parent="SistemasMapa/SalaGuardian"]
+
+[node name="RejaSalida" type="StaticBody2D" parent="SistemasMapa/SalaGuardian/Atajos"]
+position = Vector2(2152, 1144)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_columna_tope")
+piece_middle = SubResource("AtlasTexture_columna_medio")
+piece_end = SubResource("AtlasTexture_columna_base")
+start_closed = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaGuardian/Atajos/RejaSalida"]
+shape = SubResource("RectangleShape2D_puerta")
+
+[node name="PuntosJefe" type="Node2D" parent="SistemasMapa/SalaGuardian"]
+
+[node name="JefeOeste" type="Marker2D" parent="SistemasMapa/SalaGuardian/PuntosJefe"]
+position = Vector2(1576, 1104)
+
+[node name="JefeEste" type="Marker2D" parent="SistemasMapa/SalaGuardian/PuntosJefe"]
+position = Vector2(2104, 1104)
+
+[node name="PuntoLlave" type="Marker2D" parent="SistemasMapa/SalaGuardian"]
+position = Vector2(1864, 1152)
+
+[node name="UI" type="CanvasLayer" parent="SistemasMapa/SalaGuardian"]
+layer = 9
+
+[node name="Aviso" type="Label" parent="SistemasMapa/SalaGuardian/UI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_type_variation = &"Encabezado"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HieloP6" type="StaticBody2D" parent="SistemasMapa"]
+position = Vector2(2312, 1144)
+script = ExtResource("6_puerta")
+key_id = "antorcha"
+locked_message = "NECESITAS LA LLAMA ETERNA"
+opened_message = "EL HIELO SE DERRITE"
+require_interact = true
+prompt_text = "E  Derretir"
+open_effect = 2
+piece_tint = Color(0.6, 0.85, 1, 1)
+piece_start = SubResource("AtlasTexture_columna_tope")
+piece_middle = SubResource("AtlasTexture_columna_medio")
+piece_end = SubResource("AtlasTexture_columna_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/HieloP6"]
+shape = SubResource("RectangleShape2D_puerta")
+
+[node name="HieloNegro" type="StaticBody2D" parent="SistemasMapa"]
+position = Vector2(1816, 920)
+script = ExtResource("6_puerta")
+key_id = "profundidades_ascua"
+locked_message = "LA LLAMA NO BASTA"
+opened_message = "EL HIELO NEGRO SE DERRITE"
+require_interact = true
+prompt_text = "E  Derretir"
+open_effect = 2
+piece_tint = Color(0.25, 0.3, 0.45, 1)
+piece_start = SubResource("AtlasTexture_columna_tope")
+piece_middle = SubResource("AtlasTexture_columna_medio")
+piece_end = SubResource("AtlasTexture_columna_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/HieloNegro"]
+shape = SubResource("RectangleShape2D_puerta")
+
+[node name="ZonaOscura" type="Node2D" parent="SistemasMapa"]
+position = Vector2(512, 928)
+script = ExtResource("7_oscuridad")
+width_tiles = 31
+height_tiles = 7
+
+[node name="ZonaOscuraAlta" type="Node2D" parent="SistemasMapa"]
+position = Vector2(880, 800)
+script = ExtResource("7_oscuridad")
+width_tiles = 16
+height_tiles = 8
+
+[node name="TrampillaAtajo" type="StaticBody2D" parent="SistemasMapa"]
+position = Vector2(88, 216)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_losa_izq")
+piece_middle = SubResource("AtlasTexture_losa_medio")
+piece_end = SubResource("AtlasTexture_losa_der")
+start_closed = true
+open_on_encounter = "ruina_atajo_interno"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/TrampillaAtajo"]
+shape = SubResource("RectangleShape2D_trampilla")
+
+[node name="TrampillaE" type="StaticBody2D" parent="SistemasMapa"]
+position = Vector2(1464, 952)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_losa_izq")
+piece_middle = SubResource("AtlasTexture_losa_medio")
+piece_end = SubResource("AtlasTexture_losa_der")
+start_closed = true
+open_on_encounter = "ruina_atajo_e_abierto"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/TrampillaE"]
+shape = SubResource("RectangleShape2D_trampilla")
+
+[node name="Transiciones" type="Node2D" parent="SistemasMapa"]
+
+[node name="Salida5" parent="SistemasMapa/Transiciones" instance=ExtResource("8_transicion")]
+position = Vector2(168, 16)
+target_scene_path = "res://escenas/mapas/tiles_mazmorra_combate.tscn"
+target_spawn_id = &"DesdeRuina"
+
+[node name="CollisionShape2D" parent="SistemasMapa/Transiciones/Salida5" index="0"]
+shape = SubResource("RectangleShape2D_salida_techo")
+
+[node name="SalidaD" parent="SistemasMapa/Transiciones" instance=ExtResource("8_transicion")]
+position = Vector2(2360, 16)
+target_scene_path = "res://escenas/mapas/tiles_mineria_combate.tscn"
+target_spawn_id = &"DesdeRuina"
+
+[node name="CollisionShape2D" parent="SistemasMapa/Transiciones/SalidaD" index="0"]
+shape = SubResource("RectangleShape2D_salida_techo")
+
+[node name="SalidaP6" parent="SistemasMapa/Transiciones" instance=ExtResource("8_transicion")]
+position = Vector2(2344, 1272)
+target_scene_path = "res://archivo/tiles_v1/escenas/tiles_profundidades_combate.tscn"
+target_spawn_id = &"DesdeAnterior"
+
+[node name="CollisionShape2D" parent="SistemasMapa/Transiciones/SalidaP6" index="0"]
+shape = SubResource("RectangleShape2D_salida_suelo")
+
+[node name="SalidaE" parent="SistemasMapa/Transiciones" instance=ExtResource("8_transicion")]
+position = Vector2(1464, 1272)
+target_scene_path = "res://escenas/mapas/tiles_profundidades_combate.tscn"
+target_spawn_id = &"DesdeRuinaAtajo"
+
+[node name="CollisionShape2D" parent="SistemasMapa/Transiciones/SalidaE" index="0"]
+shape = SubResource("RectangleShape2D_salida_suelo")
+
+[node name="DesdeMazmorra" parent="SistemasMapa" instance=ExtResource("9_spawn")]
+position = Vector2(216, 145)
+spawn_id = &"DesdeMazmorra"
+
+[node name="DesdeMinas" parent="SistemasMapa" instance=ExtResource("9_spawn")]
+position = Vector2(2312, 225)
+spawn_id = &"DesdeMinas"
+
+[node name="DesdeProfundidades" parent="SistemasMapa" instance=ExtResource("9_spawn")]
+position = Vector2(2392, 1105)
+spawn_id = &"DesdeProfundidades"
+
+[node name="DesdeProfundidadesAtajo" parent="SistemasMapa" instance=ExtResource("9_spawn")]
+position = Vector2(1512, 881)
+spawn_id = &"DesdeProfundidadesAtajo"
+
+[node name="PalancaD" parent="Objetos" instance=ExtResource("10_palanca")]
+position = Vector2(2240, 256)
+encounter_id = "ruina_atajo_d_abierto"
+
+[node name="PalancaAtajo" parent="Objetos" instance=ExtResource("10_palanca")]
+position = Vector2(160, 512)
+encounter_id = "ruina_atajo_interno"
+
+[node name="LlamaEterna" parent="Objetos" instance=ExtResource("11_llama")]
+position = Vector2(88, 996)
+
+[node name="DiarioReina3" parent="Objetos" instance=ExtResource("12_lore")]
+position = Vector2(1880, 934)
+dialogue_path = "res://dialogues/lore_diario_reina_3.json"
+lore_id = "diario_reina_3"
+
+[node name="FragmentoVida1" parent="Objetos" instance=ExtResource("13_fragmento")]
+position = Vector2(2008, 880)
+fragment_id = "ruina_1"
+
+[node name="AtuendoAbrigo" parent="Objetos" instance=ExtResource("14_atuendo")]
+position = Vector2(1112, 902)
+outfit_id = "abrigo"
+
+[node name="Ambientacion" type="Node2D" parent="."]
+script = ExtResource("15_ambiente")
+ambient_color = Color(0.5, 0.6, 0.75, 1)
+player_light_color = Color(0.85, 0.95, 1, 1)
+vignette_strength = 0.55

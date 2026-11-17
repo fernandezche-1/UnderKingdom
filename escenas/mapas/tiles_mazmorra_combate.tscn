@@ -198,7 +198,7 @@ shape = SubResource("RectangleShape2D_salida_b")
 
 [node name="Salida5" parent="SistemasMapa/Transiciones" instance=ExtResource("8_transicion")]
 position = Vector2(1880, 1432)
-target_scene_path = "res://escenas/mapas/tiles_ruina.tscn"
+target_scene_path = "res://escenas/mapas/tiles_ruina_combate.tscn"
 target_spawn_id = &"DesdeMazmorra"
 
 [node name="CollisionShape2D" parent="SistemasMapa/Transiciones/Salida5" index="0"]

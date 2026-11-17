@@ -257,18 +257,37 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
     - interno: `Compuerta` (columna 37, filas 51-56), que abre `PalancaCompuerta` (34, 56) (`mazmorra_atajo_interno`);
     - colector: `TrampillaColector` (x 85-87, fila 69), que abre `PalancaColector` (84, 83), desde la huida (`mazmorra_colector`).
   - `:B:`: `PalancaB` (67, 21) (`mazmorra_atajo_b_abierto`), `LlaveAlcaide` (`llave_jefe_m1.tscn`, `key_id` `mazmorra_alcaide`) en (73, 21), `SalidaB` (x 70-72, filas 0-1) a `tiles_calabozo_combate.tscn#DesdeMazmorra` y spawn `DesdeCalabozo` en (69, 21). La llave aparece en el menú de pausa (`KEY_NAMES`).
-  - `[!5]`: `Salida5` (x 115-117, fila 89) y spawn `DesdeRuina` en (113, 87). Iba a la ruina de v1; desde el 2026-11-16 va a la base nueva (`escenas/mapas/tiles_ruina.tscn#DesdeMazmorra`: se llega al `SpawnInicio`, en la llegada) y, al montar su `_combate`, pasa a `tiles_ruina_combate.tscn#DesdeMazmorra`.
+  - `[!5]`: `Salida5` (x 115-117, fila 89) y spawn `DesdeRuina` en (113, 87). Iba a la ruina de v1; desde el 2026-11-16 va a `tiles_ruina_combate.tscn#DesdeMazmorra`.
   - `:F:`: `TrampillaF` (x 88-90, fila 84) escucha `mazmorra_atajo_f_abierto`: **la palanca de las profundidades, en (23, 25), lleva ese `encounter_id`**. `SalidaF` (fila 89) ya apunta a `tiles_profundidades_combate.tscn#DesdeMazmorra`, aún sin generar; spawn `DesdeProfundidades` en (92, 83).
   - Rejas y losas con piezas del atlas `dungeontilesetfull.png` (las de v1). La llave se dibuja a escala 1.5, como la de las minas, y el suelo que se hunde y los escombros son provisionales (P64).
-- [ ] **Ruina:**
+- [x] **Ruina:**
   - el Guardián, la reja de salida en `Atajos`, el hielo de `[P6]` y la llama eterna, la luz de la parte oscura;
   - la palanca y la reja de `:D:`, las trampillas del atajo y de `:E:`, y las transiciones de `[!5]`, `:D:`, `[P6]` y `:E:`;
   - el hielo negro (la misma pieza que el hielo de `[P6]`, con `key_id` `profundidades_ascua`), la página III y el fragmento de vida 3/4.
-  - Base generada (2026-11-16, `escenas/mapas/tiles_ruina.tscn`, desde `mapas_texto/tiles_ruina.txt`): 23 enemigos (6 Aprendis, 2 mino, 7 kolbo3 y 8 esqueletos), 24 pinchos, 4 cofres, 18 monedas, 3 pociones y 2 checkpoints. Falta la `_combate` (parte 2). Hasta entonces se llega al `SpawnInicio` (la P de la llegada, en (15, 12)):
-    - `[!5]`: `Salida5` de `tiles_mazmorra_combate.tscn` va a la base (`#DesdeMazmorra`);
-    - la salida anterior de las profundidades de v1 (`anterior:` de `archivo/tiles_v1/mapas_texto/tiles_profundidades.txt` y `SalidaAnterior1` de `tiles_profundidades.tscn`, sin regenerar) va a la base (`#DesdeProfundidades`);
-    - `SalidaD` de las minas sigue apuntando a la `_combate` (`#DesdeMinas`), que aún no existe: la reja de `:D:` solo se abre con la palanca de la ruina.
-  - Sin salidas del constructor (ni `siguiente:` ni `anterior:`): `[!5]`, `:D:`, `[P6]` y `:E:` van en la `_combate`, con los spawns `DesdeMazmorra`, `DesdeMinas`, `DesdeProfundidades` y `DesdeProfundidadesAtajo`.
+  - Base generada (2026-11-16, `escenas/mapas/tiles_ruina.tscn`, desde `mapas_texto/tiles_ruina.txt`): 23 enemigos (6 Aprendis, 2 mino, 7 kolbo3 y 8 esqueletos), 24 pinchos, 4 cofres, 18 monedas, 3 pociones y 2 checkpoints. Sin salidas del constructor (ni `siguiente:` ni `anterior:`): todas van en la `_combate`.
+  - `_combate` montada (2026-11-16, `escenas/mapas/tiles_ruina_combate.tscn`). Salidas que llegan a ella:
+    - `[!5]`: `Salida5` de `tiles_mazmorra_combate.tscn`, a `#DesdeMazmorra`;
+    - la salida anterior de las profundidades de v1 (`anterior:` de `archivo/tiles_v1/mapas_texto/tiles_profundidades.txt` y `SalidaAnterior1` de `tiles_profundidades.tscn`, sin regenerar), a `#DesdeProfundidades`;
+    - `SalidaD` de las minas, a `#DesdeMinas` (ya apuntaba).
+  - `SalaGuardian` (`boss_arena.gd`, `encounter_id` `ruina_guardian`, `guardian_hielo.tscn`, `ability_reward air_dash`, sin llave):
+    - activador en el suelo, x 103-133, filas 66-72;
+    - `TrampillaEntrada` (x 99-101, fila 61) en `Puertas`;
+    - `RejaSalida` (columna 134, filas 70-72) en `Atajos`;
+    - el Guardián sale en (98, 72) o (131, 72), 3 piezas por encima del suelo;
+    - `PuntoLlave` en (116, 72), solo para la reliquia.
+  - `[P6]`:
+    - `LlamaEterna` en el altar de la capilla, (5, 62);
+    - `HieloP6` (`locked_door`, `antorcha`, E, MELT) en la columna 144, filas 70-72;
+    - `SalidaP6` (x 145-147, fila 79) va **por ahora a las profundidades de v1** (`archivo/tiles_v1/escenas/tiles_profundidades_combate.tscn#DesdeAnterior`), para no cortar la ruta; al montar las profundidades pasa a `tiles_profundidades_combate.tscn#DesdeRuina`;
+    - spawn `DesdeProfundidades` en (149, 72).
+  - Parte oscura: `ZonaOscura` (`dark_zone.gd`, x 32-62, filas 58-64) y `ZonaOscuraAlta` (x 55-70, filas 50-57: la parte alta y el refugio).
+  - `:D:`: `PalancaD` (140, 17) con `ruina_atajo_d_abierto`, el que escucha `RejaD` de las minas; `SalidaD` (x 146-148, filas 0-1) a `tiles_mineria_combate.tscn#DesdeRuina`; spawn `DesdeMinas` en (144, 17). Si se sube sin tirar de la palanca, se llega a las minas por encima de la reja cerrada.
+  - `[!5]`: `Salida5` (x 9-11, filas 0-1) a `tiles_mazmorra_combate.tscn#DesdeRuina`; spawn `DesdeMazmorra` en (13, 12).
+  - `:E:`: `TrampillaE` (x 90-92, fila 59) escucha `ruina_atajo_e_abierto`: **la palanca de las profundidades, en (119, 13), lleva ese `encounter_id`**. `SalidaE` (fila 79) ya apunta a `tiles_profundidades_combate.tscn#DesdeRuinaAtajo`, aún sin generar; spawn `DesdeProfundidadesAtajo` en (94, 58).
+  - Atajo interno: `TrampillaAtajo` (x 4-6, fila 13, el suelo de la llegada) se abre con `PalancaAtajo` (10, 33), en la galería alta junto al pozo (`ruina_atajo_interno`).
+  - Hielo negro: `HieloNegro` (`locked_door`, `profundidades_ascua`, E, MELT, tinte oscuro, "LA LLAMA NO BASTA") en la columna 113, filas 56-58; `DiarioReina3` (`dialogues/lore_diario_reina_3.json`, texto provisional) en (117, 58) y `FragmentoVida1` (`ruina_1`) en (125, 55).
+  - E4: `AtuendoAbrigo` (`abrigo`) en el refugio, (69, 56). Las zonas frías no llevan nada: la mecánica del frío no existe.
+  - Rejas, hielos y losas con piezas del atlas `dungeontilesetfull.png`, teñidas en los hielos (falta su arte, P65). `profundidades_ascua` entra en `KEY_NAMES` al montar las profundidades.
 - [ ] **Profundidades:**
   - elegir los minijefes de los altares (P46, sección 7);
   - los tres altares y su contador, el fuego infernal y E5;
