@@ -1460,3 +1460,50 @@ El estado de partida sale de la cabecera de cada ASCII (`mapas_texto/macro/zonas
   - la carne es clara y llamativa: en las salas grandes, la pared `carne` y la luz ambiente tienen que dejar leer a los enemigos;
   - los colmillos solo donde haya 3 filas libres bajo el techo, y no sobre un enemigo del aire;
   - la luz verde del ojo junto a la de la lava y las antorchas.
+
+**Vestida (2026-11-17), falta jugarla a mano:**
+- `mapas_texto/tiles_infierno.txt` pasa a `tileset: infierno`, `bloques: carne` y `fondo: carne`, con `fondo_sala`, y sin el parallax de lava. Se regeneró la base `escenas/mapas/tiles_infierno.tscn`.
+- **Paredes:**
+
+  | Pared | Rectángulos (x0 y0 x1 y1) |
+  |---|---|
+  | `carne` (el `fondo:`) | lo demás: pozo de `[S7]`, llegada, paso de las cadenas, mirador, osario, sima, antesala, pozo de la trampilla, pasillo del filo, caverna, umbral y trono |
+  | `ladrillo` | coliseo de los condenados 44 40 100 60 (con la columna de la reja de entrada); salón de los verdugos 2 108 32 116 (con la de la reja de salida) |
+
+- **Enemigos en el ASCII:** los 18 cambios de la ficha, cada uno en la celda del que sale; ninguna posición cambió. Quedan 36: 12 diablillos, 5 calaveras de fuego, 3 almas condenadas, 3 Guardias, 2 ánimas, 2 ojos voladores, 2 aves de las nieves, 2 ogros, 2 Aprendis, 1 mino, 1 lobo de la escarcha y 1 Mimic.
+- **Oleadas** (la `_combate`, aprobado en la ficha), en los sitios de antes y con los pies donde los pondría el constructor:
+
+  | Arena | Oleada | Enemigos |
+  |---|---|---|
+  | Coliseo | 1 | Guardia (52, 60), kolbo3 (75, 60), ánimas (64, 50) y (84, 46), ojo volador (73, 44) |
+  | Coliseo | 2 | mino (60, 60), lobo de la escarcha (68, 60), Aprendis (86, 60), calavera de fuego (60, 44), ave de las nieves (86, 44) |
+  | Coliseo | 3 | pesadillas (58, 60) y (84, 60), bestias infernales (64, 60) y (80, 60), diablillo (72, 52) |
+  | Salón | 1 | Guardias (12, 116) y (22, 116), mino (17, 116), ogro (27, 116) |
+  | Salón | 2 | ogros (8, 116) y (26, 116), mino (17, 116) |
+
+  La `_combate` ya no usa el esqueleto ni el murciélago.
+- **Decorados nuevos** (sitio de abajo a la izquierda):
+
+  | Letra | Sitios |
+  |---|---|
+  | `y` colmillos | sima (8, 6), (18, 6) y (29, 6); caverna (6, 79), (14, 79) y (33, 79); trono (52, 98), (64, 98), (80, 98) y (92, 98) |
+  | `r` ojo | sima (28, 23), (4, 40) y (28, 50); caverna (4, 90) y (40, 96); trono (47, 102), (72, 101) y (97, 102) |
+  | `n` pústula | llegada (64, 12); mirador (68, 12) y (91, 12); osario (85, 27) y (96, 27) |
+  | `U` herida | pasillo del filo (33, 73), (54, 71) en el tramo alto, (77, 73) y (90, 73); salón (10, 111) y (22, 111) |
+
+  - Cumplen la regla de la cabecera del `.txt`, comprobada con un script sobre el ASCII: ninguno pisa una escalera, sus columnas vecinas ni sus tres filas de encima, un spawn, un checkpoint, un cofre, una moneda, una poción, un enemigo, otro decorado ni lo de la `_combate` (fuego infernal, rejas, trampillas, rejas bajas, puntos del jefe, `SalidaS7` y los sitios de las oleadas). Los colmillos cuelgan de roca y ningún enemigo del aire queda debajo de ellos en 12 filas; las pústulas se apoyan en roca.
+  - **Sin pústula en el umbral:** entre la fogata del checkpoint (36, 116) y los dos cofres (39 y 41) no quedan 2 piezas libres sin pegarse a ellos.
+- **Colisiones:** iguales antes y después, 6265 polígonos sólidos y 145 de una vía, en las mismas celdas, con los mismos puntos y la misma marca de una vía (`Terreno` y `Plataformas`), volcadas de la base con un script.
+- **Luz (la `_combate`):** nodo `Ambientacion` nuevo (`map_ambience.gd`), como en las profundidades: luz ambiente (0.62, 0.5, 0.5), luz del Player (1, 0.9, 0.85) y viñeta 0.55. Se eligió con capturas de 16 sitios frente a una más oscura, (0.5, 0.4, 0.46), con la que la pared de carne se perdía y costaría leer a los enemigos. `MapAmbience` pone 100 luces, entre ellas las 8 verdes de los ojos.
+- **Prueba sin ventana** (13479 comprobaciones bien):
+  - contra el ASCII: cada celda lleva su pared (11844 de carne y 1476 de ladrillo); los bloques son del juego `carne` y tienen colisión; las repisas son de carne y de una vía; las escaleras y los 29 decorados nuevos (190 celdas) están en su pieza del atlas, y solo quedan sin arte las 20 celdas de la fila de abajo de los colmillos que el atlas deja vacías (solo el colmillo largo llega a ella); no queda parallax; hay una luz verde por ojo;
+  - los 36 enemigos del ASCII, cada uno de la escena de su letra, en la capa 5 (el Mimic y las ánimas la quitan mientras duermen) y con daño en múltiplos de 0.25; a los 3 s siguen a 22 px de su sitio como mucho, y los de suelo (ogros, lobo, Guardias, mino, Aprendis y Mimic) lo pisan;
+  - las cinco oleadas, jugadas una a una (empieza el combate, 3 s de física y mueren todos): cada una con sus enemigos, los de suelo sobre el suelo (pesadillas, bestias, ogros y el resto) y las dos arenas se completan y marcan `infierno_animas_liberadas` e `infierno_salon_verdugos`.
+- Capturas con el juego abierto de 16 sitios: llegada, mirador, osario, sima (arriba, en medio y abajo), coliseo, pasillo del filo (oeste, tramo alto y este), caverna (arriba y abajo), salón, umbral y trono (suelo y arriba).
+- Arrancan sin errores la `_combate` y el juego, y `verificar_mundo.py` da 0 errores. El Atlas se publicó de nuevo, con el color de los bloques `carne`, los nombres de `y`, `r`, `n` y `U` del tileset `infierno` y la letra `z`.
+- **Al jugarla, mirar:**
+  - la luz ambiente, (0.62, 0.5, 0.5), con la carne y los enemigos;
+  - el umbral: los dos cofres del Mimic, en (39, 116) y (41, 116), se tocan, y la poción de (40, 116) queda delante de ellos. Antes de vestir eran los cofres pequeños de la mazmorra;
+  - las pesadillas y las bestias de la última oleada del coliseo, juntas en el suelo;
+  - los ogros y el lobo del pasillo del filo, de 4 de alto: se pasan rodando;
+  - las rejas bajas, el fuego infernal y las rejas de las arenas siguen con su arte provisional (P52, P61).

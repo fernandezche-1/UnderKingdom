@@ -10,13 +10,20 @@
 [ext_resource type="PackedScene" path="res://escenas/sistemas/fuego_infernal.tscn" id="8_fuego"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/map_transition.tscn" id="9_transicion"]
 [ext_resource type="PackedScene" path="res://escenas/sistemas/spawn_point.tscn" id="10_spawn"]
-[ext_resource type="PackedScene" path="res://escenas/enemigos/esqueleto.tscn" id="11_esqueleto"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/mino.tscn" id="12_mino"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/guardia.tscn" id="13_guardia"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/kolbo3.tscn" id="14_kolbo3"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/aprendis.tscn" id="15_aprendis"]
 [ext_resource type="PackedScene" path="res://escenas/enemigos/diablillo.tscn" id="16_diablillo"]
-[ext_resource type="PackedScene" path="res://escenas/enemigos/murcielago.tscn" id="17_murcielago"]
+[ext_resource type="PackedScene" path="res://escenas/enemigos/anima.tscn" id="17_anima"]
+[ext_resource type="PackedScene" path="res://escenas/enemigos/ojo_volador.tscn" id="18_ojo"]
+[ext_resource type="PackedScene" path="res://escenas/enemigos/lobo_escarcha.tscn" id="19_lobo"]
+[ext_resource type="PackedScene" path="res://escenas/enemigos/calavera_fuego.tscn" id="20_calavera"]
+[ext_resource type="PackedScene" path="res://escenas/enemigos/ave_nieves.tscn" id="21_ave"]
+[ext_resource type="PackedScene" path="res://escenas/enemigos/pesadilla.tscn" id="22_pesadilla"]
+[ext_resource type="PackedScene" path="res://escenas/enemigos/bestia_infernal.tscn" id="23_bestia"]
+[ext_resource type="PackedScene" path="res://escenas/enemigos/ogro.tscn" id="24_ogro"]
+[ext_resource type="Script" path="res://scripts/environment/map_ambience.gd" id="25_ambiente"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_columna_tope"]
 atlas = ExtResource("6_tileset")
@@ -112,50 +119,50 @@ shape = SubResource("RectangleShape2D_48x16")
 
 [node name="Oleada3" type="Node2D" parent="SistemasMapa/ArenaColiseo/Oleadas"]
 
-[node name="Esqueleto1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada1" instance=ExtResource("11_esqueleto")]
+[node name="Guardia1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada1" instance=ExtResource("13_guardia")]
 position = Vector2(840, 957)
 
 [node name="Kolbo3" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada1" instance=ExtResource("14_kolbo3")]
 position = Vector2(1208, 934)
 
-[node name="Diablillo1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada1" instance=ExtResource("16_diablillo")]
-position = Vector2(1032, 798)
+[node name="Anima1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada1" instance=ExtResource("17_anima")]
+position = Vector2(1032, 794)
 
-[node name="Diablillo2" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada1" instance=ExtResource("16_diablillo")]
-position = Vector2(1352, 734)
+[node name="Anima2" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada1" instance=ExtResource("17_anima")]
+position = Vector2(1352, 730)
 
-[node name="Murcielago1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada1" instance=ExtResource("17_murcielago")]
-position = Vector2(1176, 704)
+[node name="OjoVolador1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada1" instance=ExtResource("18_ojo")]
+position = Vector2(1176, 710)
 
 [node name="Mino1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada2" instance=ExtResource("12_mino")]
 position = Vector2(968, 912)
 
-[node name="Guardia1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada2" instance=ExtResource("13_guardia")]
-position = Vector2(1096, 957)
+[node name="LoboEscarcha1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada2" instance=ExtResource("19_lobo")]
+position = Vector2(1096, 938)
 
 [node name="Aprendis1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada2" instance=ExtResource("15_aprendis")]
 position = Vector2(1384, 952)
 
-[node name="Murcielago1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada2" instance=ExtResource("17_murcielago")]
+[node name="CalaveraFuego1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada2" instance=ExtResource("20_calavera")]
 position = Vector2(968, 704)
 
-[node name="Murcielago2" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada2" instance=ExtResource("17_murcielago")]
-position = Vector2(1384, 704)
+[node name="AveNieves1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada2" instance=ExtResource("21_ave")]
+position = Vector2(1384, 709)
 
-[node name="Mino1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada3" instance=ExtResource("12_mino")]
-position = Vector2(936, 912)
+[node name="Pesadilla1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada3" instance=ExtResource("22_pesadilla")]
+position = Vector2(936, 936)
 
-[node name="Mino2" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada3" instance=ExtResource("12_mino")]
-position = Vector2(1352, 912)
+[node name="Pesadilla2" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada3" instance=ExtResource("22_pesadilla")]
+position = Vector2(1352, 936)
 
-[node name="Guardia1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada3" instance=ExtResource("13_guardia")]
-position = Vector2(1032, 957)
+[node name="BestiaInfernal1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada3" instance=ExtResource("23_bestia")]
+position = Vector2(1032, 940)
 
-[node name="Guardia2" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada3" instance=ExtResource("13_guardia")]
-position = Vector2(1288, 957)
+[node name="BestiaInfernal2" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada3" instance=ExtResource("23_bestia")]
+position = Vector2(1288, 940)
 
-[node name="Aprendis1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada3" instance=ExtResource("15_aprendis")]
-position = Vector2(1160, 824)
+[node name="Diablillo1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada3" instance=ExtResource("16_diablillo")]
+position = Vector2(1160, 830)
 
 [node name="UI" type="CanvasLayer" parent="SistemasMapa/ArenaColiseo"]
 layer = 9
@@ -255,17 +262,17 @@ position = Vector2(280, 1808)
 [node name="Guardia2" parent="SistemasMapa/ArenaSalon/Oleadas/Oleada1" instance=ExtResource("13_guardia")]
 position = Vector2(360, 1853)
 
-[node name="Kolbo3" parent="SistemasMapa/ArenaSalon/Oleadas/Oleada1" instance=ExtResource("14_kolbo3")]
-position = Vector2(440, 1830)
+[node name="Ogro1" parent="SistemasMapa/ArenaSalon/Oleadas/Oleada1" instance=ExtResource("24_ogro")]
+position = Vector2(440, 1832)
 
-[node name="Guardia1" parent="SistemasMapa/ArenaSalon/Oleadas/Oleada2" instance=ExtResource("13_guardia")]
-position = Vector2(136, 1853)
+[node name="Ogro1" parent="SistemasMapa/ArenaSalon/Oleadas/Oleada2" instance=ExtResource("24_ogro")]
+position = Vector2(136, 1832)
 
 [node name="Mino1" parent="SistemasMapa/ArenaSalon/Oleadas/Oleada2" instance=ExtResource("12_mino")]
 position = Vector2(280, 1808)
 
-[node name="Guardia2" parent="SistemasMapa/ArenaSalon/Oleadas/Oleada2" instance=ExtResource("13_guardia")]
-position = Vector2(424, 1853)
+[node name="Ogro2" parent="SistemasMapa/ArenaSalon/Oleadas/Oleada2" instance=ExtResource("24_ogro")]
+position = Vector2(424, 1832)
 
 [node name="UI" type="CanvasLayer" parent="SistemasMapa/ArenaSalon"]
 layer = 9
@@ -342,3 +349,9 @@ shape = SubResource("RectangleShape2D_48x32")
 [node name="DesdeProfundidades" parent="SistemasMapa" instance=ExtResource("10_spawn")]
 position = Vector2(840, 145)
 spawn_id = &"DesdeProfundidades"
+
+[node name="Ambientacion" type="Node2D" parent="."]
+script = ExtResource("25_ambiente")
+ambient_color = Color(0.62, 0.5, 0.5, 1)
+player_light_color = Color(1, 0.9, 0.85, 1)
+vignette_strength = 0.55
