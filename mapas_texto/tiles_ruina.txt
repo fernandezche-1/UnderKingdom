@@ -3,9 +3,14 @@
 ; llama eterna, parte oscura, hielo de [P6], sala del Guardián, pozo de :E:,
 ; secretos y zonas frías. Segunda pasada (enemigos, objetos y decorados)
 ; hecha. Secreto del dash (punto 4 de las sugerencias), 2026-11-08.
-; NO GENERAR TODAVÍA: la escena de abajo es la de la ruina que se juega hoy
-; (mapas_texto/tiles_ruina.txt) y el constructor la reemplazaría. Al
-; aprobarlo, este archivo pasa a mapas_texto/tiles_ruina.txt (sección 9).
+; Generado en la Fase 3 (2026-11-16): este archivo pasó de
+; mapas_texto/macro/zonas/ruina.txt a mapas_texto/tiles_ruina.txt (P46,
+; sección 9) y es la fuente de escenas/mapas/tiles_ruina.tscn. Generar:
+;   godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/tiles_ruina.txt
+; - No hay salidas del constructor: [!5], :D:, [P6] y :E: van en la _combate,
+;   con los spawns DesdeMazmorra, DesdeMinas, DesdeProfundidades y
+;   DesdeProfundidadesAtajo.
+; - La ruina de v1 se queda en archivo/tiles_v1/: no se toma como referencia.
 ;
 ; Coordenadas (columna, fila), desde 0. 156 x 80 piezas; en el mundo en
 ; (136, 223), justo debajo de la mazmorra y de las minas, que acaban en la fila
