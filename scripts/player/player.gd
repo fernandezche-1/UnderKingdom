@@ -68,6 +68,11 @@ const ATTACK_PROFILES := {
 @export_range(20.0, 800.0, 5.0) var agility_move_speed: float = 200.0
 @export_range(-1200.0, -100.0, 10.0) var agility_jump_velocity: float = -540.0
 @export_range(100.0, 5000.0, 50.0) var gravity: float = 1500.0
+## Salto variable: al soltar el salto mientras sube, la velocidad de subida se
+## multiplica por esto. Mantenido sube lo de siempre (jump_velocity y los demás
+## siguen siendo el máximo); un toque corto con 0.4 sube unos 16 px (1 pieza).
+## 1.0 lo desactiva.
+@export_range(0.0, 1.0, 0.05) var jump_cut_multiplier: float = 0.4
 @export_range(100.0, 3000.0, 50.0) var max_fall_speed: float = 1000.0
 
 @export_category("Escaleras y rampas")
@@ -219,6 +224,9 @@ var cinematic_invulnerable: bool = false
 var _cinematic_velocity: Vector2 = Vector2.ZERO
 
 var _jump_requested: bool = false
+## true desde que el Player salta hasta que suelta el salto o empieza a caer.
+## Solo lo enciende un salto: el empuje de un golpe o la reja no se recortan.
+var _jump_rising: bool = false
 var _hurt_time_left: float = 0.0
 var _invulnerability_left: float = 0.0
 var _blink_accumulator: float = 0.0
@@ -738,6 +746,7 @@ func set_controls_locked(locked: bool) -> void:
     controls_locked = locked
     _cinematic_velocity = Vector2.ZERO
     _jump_requested = false
+    _jump_rising = false
     _climbing = false
     if locked:
         if GameManager.has_sword and is_instance_valid(sprite):
@@ -1345,7 +1354,21 @@ func _process_normal_movement(delta: float) -> void:
 
     if _jump_requested and is_on_floor():
         velocity.y = get_jump_velocity()
+        _jump_rising = true
     _jump_requested = false
+    _apply_jump_cut()
+
+
+## Salto variable: soltar el salto mientras se sube corta la subida una vez.
+func _apply_jump_cut() -> void:
+    if not _jump_rising:
+        return
+    if velocity.y >= 0.0:
+        _jump_rising = false
+        return
+    if not Input.is_action_pressed("jump"):
+        velocity.y *= jump_cut_multiplier
+        _jump_rising = false
 
 
 func _process_attack_movement(delta: float) -> void:
@@ -1365,6 +1388,7 @@ func _process_air_attack_movement(delta: float) -> void:
     # Conserva el impulso horizontal del salto; solo la caída se suaviza un poco.
     velocity.y = minf(velocity.y + gravity * 0.65 * delta, max_fall_speed)
     _jump_requested = false
+    _apply_jump_cut()
 
 
 func _process_roll(delta: float) -> void:
@@ -1445,6 +1469,7 @@ func _restore_terrain_collision_if_needed() -> void:
 
 
 func _process_climbing() -> void:
+    _jump_rising = false
     _apply_climb_collision_mode()
     var horizontal := _get_horizontal_input()
     var vertical := 0.0
@@ -2142,6 +2167,7 @@ func _apply_knockback(source_global_position: Vector2) -> void:
 
     velocity.x = horizontal_direction * knockback_horizontal
     velocity.y = knockback_vertical
+    _jump_rising = false
 
 
 func is_invulnerable() -> bool:
