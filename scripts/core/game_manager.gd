@@ -24,6 +24,7 @@ signal sword_mission_changed(started: bool, completed: bool)
 signal sword_equipment_changed(has_sword: bool)
 
 var pending_spawn_id: StringName = &""
+var pending_transition_player_state: Dictionary = {}
 var previous_scene_path: String = ""
 var current_scene_path: String = ""
 var player_name: String = "Guerrero"
@@ -227,10 +228,20 @@ func _process(delta: float) -> void:
 
 func set_transition(target_spawn_id: StringName) -> void:
 	pending_spawn_id = target_spawn_id
+	pending_transition_player_state.clear()
+	var player := get_tree().get_first_node_in_group("player")
+	if is_instance_valid(player) and player.get("current_health") != null:
+		pending_transition_player_state["health"] = float(player.get("current_health"))
 
 	var current_scene := get_tree().current_scene
 	if current_scene != null:
 		previous_scene_path = current_scene.scene_file_path
+
+
+func consume_transition_player_state() -> Dictionary:
+	var result := pending_transition_player_state.duplicate(true)
+	pending_transition_player_state.clear()
+	return result
 
 
 func normalize_player_name(raw_name: String) -> String:
@@ -382,6 +393,7 @@ func load_save_slot(slot_id: int) -> bool:
 		last_save_error = "La escena guardada ya no existe."
 		return false
 	active_save_slot = slot_id
+	pending_transition_player_state.clear()
 	player_name = String(data.profile.player_name)
 	_restore_game_state(state)
 	pending_spawn_id = StringName(String(state.spawn_id))
@@ -1351,6 +1363,7 @@ func reset_cinematics_for_new_game() -> void:
 ## variable de progreso nueva se reinicia aquí.
 func reset_for_new_game() -> void:
 	pending_spawn_id = &""
+	pending_transition_player_state.clear()
 	previous_scene_path = ""
 	current_scene_path = ""
 	world1_boss_defeated = false

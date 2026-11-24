@@ -22,7 +22,7 @@
 [ext_resource type="PackedScene" path="res://escenas/objetos/cofre.tscn" id="20_rn5wf"]
 [ext_resource type="Texture2D" path="res://assets/terceros/dungeon_tile_set/Dungeon Tile Set.png" id="21_h30h6"]
 [ext_resource type="Script" path="res://scripts/environment/chest_interactable.gd" id="22_sv8iv"]
-[ext_resource type="PackedScene" path="res://escenas/prisn.tscn" id="23_h3815"]
+[ext_resource type="PackedScene" path="res://escenas/player.tscn" id="23_h3815"]
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="24_onctt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rcwrs"]
@@ -4158,6 +4158,7 @@ shape = SubResource("RectangleShape2D_jg0ta")
 [node name="Escalera2" parent="SistemasMapa/Escaleras" unique_id=654413690 groups=["climb_zone"] instance=ExtResource("2_ja5dn")]
 position = Vector2(1304, 448)
 collision_layer = 0
+ignore_normal_terrain_while_climbing = true
 script = ExtResource("3_61vr8")
 metadata/_edit_group_ = true
 

@@ -64,6 +64,8 @@
 [ext_resource type="Texture2D" uid="uid://b7prdnahhj0q5" path="res://assets/terceros/Elementals_fire_knight_FREE_v1.1/png/fire_knight/04_roll/roll_6.png" id="147_anf5i"]
 [ext_resource type="Texture2D" uid="uid://cdwexn5larp17" path="res://assets/terceros/Elementals_fire_knight_FREE_v1.1/png/fire_knight/04_roll/roll_7.png" id="148_m5fv3"]
 [ext_resource type="Texture2D" uid="uid://d21erib0mmca3" path="res://assets/terceros/Elementals_fire_knight_FREE_v1.1/png/fire_knight/04_roll/roll_8.png" id="149_me2p2"]
+[ext_resource type="Texture2D" path="res://assets/personajes/espada/roll.png" id="150_roll_harapos"]
+[ext_resource type="Texture2D" path="res://assets/personajes/espada/defense.png" id="151_defense_harapos"]
 [ext_resource type="Script" uid="uid://iuqkl2w2cf3s" path="res://scripts/player/player.gd" id="p2_player_script"]
 [ext_resource type="Script" uid="uid://ouv81xqammtp" path="res://scripts/camera/bounded_camera.gd" id="p3_camera_script"]
 [ext_resource type="PackedScene" path="res://escenas/ui/player_hud.tscn" id="p31_player_hud"]
@@ -276,8 +278,68 @@ region = Rect2(5184, 0, 864, 384)
 atlas = ExtResource("109_run_espada")
 region = Rect2(6048, 0, 864, 384)
 
+[sub_resource type="AtlasTexture" id="Atlas_roll_harapos_0"]
+atlas = ExtResource("150_roll_harapos")
+region = Rect2(0, 0, 245, 724)
+[sub_resource type="AtlasTexture" id="Atlas_roll_harapos_1"]
+atlas = ExtResource("150_roll_harapos")
+region = Rect2(245, 0, 254, 724)
+[sub_resource type="AtlasTexture" id="Atlas_roll_harapos_2"]
+atlas = ExtResource("150_roll_harapos")
+region = Rect2(499, 0, 311, 724)
+[sub_resource type="AtlasTexture" id="Atlas_roll_harapos_3"]
+atlas = ExtResource("150_roll_harapos")
+region = Rect2(810, 0, 258, 724)
+[sub_resource type="AtlasTexture" id="Atlas_roll_harapos_4"]
+atlas = ExtResource("150_roll_harapos")
+region = Rect2(1068, 0, 276, 724)
+[sub_resource type="AtlasTexture" id="Atlas_roll_harapos_5"]
+atlas = ExtResource("150_roll_harapos")
+region = Rect2(1344, 0, 303, 724)
+[sub_resource type="AtlasTexture" id="Atlas_roll_harapos_6"]
+atlas = ExtResource("150_roll_harapos")
+region = Rect2(1647, 0, 254, 724)
+[sub_resource type="AtlasTexture" id="Atlas_roll_harapos_7"]
+atlas = ExtResource("150_roll_harapos")
+region = Rect2(1901, 0, 271, 724)
+
+[sub_resource type="AtlasTexture" id="Atlas_defense_harapos_0"]
+atlas = ExtResource("151_defense_harapos")
+region = Rect2(0, 0, 256, 724)
+[sub_resource type="AtlasTexture" id="Atlas_defense_harapos_1"]
+atlas = ExtResource("151_defense_harapos")
+region = Rect2(256, 0, 310, 724)
+[sub_resource type="AtlasTexture" id="Atlas_defense_harapos_2"]
+atlas = ExtResource("151_defense_harapos")
+region = Rect2(566, 0, 257, 724)
+[sub_resource type="AtlasTexture" id="Atlas_defense_harapos_3"]
+atlas = ExtResource("151_defense_harapos")
+region = Rect2(823, 0, 244, 724)
+[sub_resource type="AtlasTexture" id="Atlas_defense_harapos_4"]
+atlas = ExtResource("151_defense_harapos")
+region = Rect2(1067, 0, 266, 724)
+[sub_resource type="AtlasTexture" id="Atlas_defense_harapos_5"]
+atlas = ExtResource("151_defense_harapos")
+region = Rect2(1333, 0, 276, 724)
+[sub_resource type="AtlasTexture" id="Atlas_defense_harapos_6"]
+atlas = ExtResource("151_defense_harapos")
+region = Rect2(1609, 0, 263, 724)
+[sub_resource type="AtlasTexture" id="Atlas_defense_harapos_7"]
+atlas = ExtResource("151_defense_harapos")
+region = Rect2(1872, 0, 300, 724)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_br1p4"]
 animations = [{
+"frames": [{"duration": 1.0, "texture": SubResource("Atlas_roll_harapos_0")}, {"duration": 1.0, "texture": SubResource("Atlas_roll_harapos_1")}, {"duration": 1.0, "texture": SubResource("Atlas_roll_harapos_2")}, {"duration": 1.0, "texture": SubResource("Atlas_roll_harapos_3")}, {"duration": 1.0, "texture": SubResource("Atlas_roll_harapos_4")}, {"duration": 1.0, "texture": SubResource("Atlas_roll_harapos_5")}, {"duration": 1.0, "texture": SubResource("Atlas_roll_harapos_6")}, {"duration": 1.0, "texture": SubResource("Atlas_roll_harapos_7")}],
+"loop": false,
+"name": &"roll_1",
+"speed": 12.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("Atlas_defense_harapos_0")}, {"duration": 1.0, "texture": SubResource("Atlas_defense_harapos_1")}, {"duration": 1.0, "texture": SubResource("Atlas_defense_harapos_2")}, {"duration": 1.0, "texture": SubResource("Atlas_defense_harapos_3")}, {"duration": 1.0, "texture": SubResource("Atlas_defense_harapos_4")}, {"duration": 1.0, "texture": SubResource("Atlas_defense_harapos_5")}, {"duration": 1.0, "texture": SubResource("Atlas_defense_harapos_6")}, {"duration": 1.0, "texture": SubResource("Atlas_defense_harapos_7")}],
+"loop": true,
+"name": &"defense",
+"speed": 11.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_air_attack_espada_1")

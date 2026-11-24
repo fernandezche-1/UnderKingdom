@@ -74,6 +74,7 @@ func _place_player() -> void:
 
 	# Reaparición después de morir.
 	if GameManager.consume_death_respawn():
+		GameManager.consume_transition_player_state()
 		var death_position: Vector2 = GameManager.respawn_position
 
 		if not _is_safe_landing(player, death_position):
@@ -113,9 +114,12 @@ func _place_player() -> void:
 			saved_state,
 			false
 		)
-
 		if _is_safe_landing(player, saved_position):
 			spawn_position = saved_position
+	else:
+		var transition_state := GameManager.consume_transition_player_state()
+		if not transition_state.is_empty():
+			GameManager.restore_saved_player(player, transition_state, false)
 
 	_set_player_spawn(player, spawn_position)
 	_ensure_player_camera(player)

@@ -313,6 +313,8 @@ const ARMED_ANIMATION_SCALES: Dictionary = {
     &"escaleras": 1.0 / 3.0,
     &"jump up": 1.0 / 3.0,
     &"jump down": 1.0 / 3.0,
+    &"roll_1": 1.0 / 3.0,
+    &"defense": 1.0 / 3.0,
 }
 const UNARMED_IDLE_SHEET: Texture2D = preload("res://assets/personajes/idle_8_frames_288x128.png")
 const UNARMED_PUNCH_SHEET: Texture2D = preload("res://assets/personajes/Right_Punch_6_frames_1728x128_alineado.png")
@@ -845,11 +847,53 @@ func request_roll() -> void:
         _roll_direction = -1.0 if sprite.flip_h else 1.0
 
     _action = PlayerAction.ROLL
-    _action_total_time = _animation_duration(&"roll")
+    var roll_animation := _roll_animation_for_current_look()
+    _action_total_time = _animation_duration(roll_animation)
     _action_time_left = _action_total_time
     _invulnerability_left = maxf(_invulnerability_left, _action_total_time * 0.82)
     _enable_roll_enemy_passthrough()
-    sprite.play(&"roll")
+    sprite.play(roll_animation)
+
+
+## Conserva la rodada antigua para otras apariencias; los harapos con espada
+## recuperada usan la hoja nueva integrada en sus SpriteFrames.
+func _roll_animation_for_current_look() -> StringName:
+    if (
+        _uses_harapos_action_animations()
+        and sprite.sprite_frames.has_animation(&"roll_1")
+    ):
+        return &"roll_1"
+    return &"roll"
+
+
+func _defense_animation_for_current_look() -> StringName:
+    if (
+        _uses_harapos_action_animations()
+        and sprite.sprite_frames.has_animation(&"defense")
+    ):
+        return &"defense"
+    return &"defende"
+
+
+## Identifica los harapos por el idle que se dibuja realmente. El id devuelto
+## por GameManager puede ser un atuendo encontrado aunque su capa no cambie
+## el aspecto; comparar el recurso completo también falla con SpriteFrames
+## derivados que copian los mismos frames de idle.
+func _uses_harapos_action_animations() -> bool:
+    if not GameManager.has_sword or _harapos_sprite_frames == null:
+        return false
+    var active_frames := sprite.sprite_frames
+    if active_frames == null or not active_frames.has_animation(&"idle"):
+        return false
+    if not _harapos_sprite_frames.has_animation(&"idle"):
+        return false
+    var frame_count := _harapos_sprite_frames.get_frame_count(&"idle")
+    if active_frames.get_frame_count(&"idle") != frame_count:
+        return false
+    for frame_index in frame_count:
+        if active_frames.get_frame_texture(&"idle", frame_index) != _harapos_sprite_frames.get_frame_texture(&"idle", frame_index):
+            return false
+    return true
 
 
 ## Rodar pulsado en el aire. Solo con la habilidad, sin acción en curso y una
@@ -870,8 +914,9 @@ func _request_air_dash() -> void:
     _action_total_time = air_dash_time
     _action_time_left = air_dash_time
     # Arte provisional (R5): la animación de rodar, apretada al tiempo del dash.
-    sprite.play(&"roll")
-    sprite.speed_scale = maxf(_animation_duration(&"roll") / air_dash_time, 1.0)
+    var roll_animation := _roll_animation_for_current_look()
+    sprite.play(roll_animation)
+    sprite.speed_scale = maxf(_animation_duration(roll_animation) / air_dash_time, 1.0)
 
 
 func _process_air_dash() -> void:
@@ -2221,14 +2266,15 @@ func _leave_guard_for_action() -> void:
 
 
 func _set_static_defense_pose() -> void:
-    if not sprite.sprite_frames.has_animation(&"defende"):
+    var defense_animation := _defense_animation_for_current_look()
+    if not sprite.sprite_frames.has_animation(defense_animation):
         return
     sprite.speed_scale = 1.0
-    if sprite.animation != &"defende":
-        sprite.play(&"defende")
+    if sprite.animation != defense_animation:
+        sprite.play(defense_animation)
     # La pose mostrada por el usuario corresponde al frame 5. La dejamos
     # completamente estática mientras Q/clic derecho permanezcan presionados.
-    var frame_count := sprite.sprite_frames.get_frame_count(&"defende")
+    var frame_count := sprite.sprite_frames.get_frame_count(defense_animation)
     sprite.frame = clampi(5, 0, maxi(frame_count - 1, 0))
     sprite.frame_progress = 0.0
     sprite.pause()
