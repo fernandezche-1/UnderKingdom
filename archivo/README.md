@@ -1,22 +1,17 @@
-# archivo/
+# Archivo histórico
 
-Lo que el juego ya no usa para avanzar, apartado en P72 (`docs/P72_ORGANIZACION_REPO.md`) antes de la Fase 3. No se borró nada. Cada archivo, con su ruta de antes y quién lo usaba, está en `INVENTARIO_P72.tsv`.
+El inventario `INVENTARIO_P72.tsv` conserva las rutas y referencias registradas en P72. El [inventario de traslados de la reorganización](../documentacion/inventario_traslados.tsv) indica dónde está cada archivo actualmente.
 
-| Carpeta | Qué hay | ¿Godot lo abre? |
-|---|---|---|
-| `tiles_v1/` | Los niveles con tiles de antes de la Fase 3: las 16 escenas `tiles_*` y `_combate` (`escenas/`), sus fuentes `.txt`/`.png` (`mapas_texto/`) y la armería con llave del castillo viejo (`scripts/`, `escenas/items/`). La ruta de hoy pasa por aquí: prisión → `tiles_v1/escenas/tiles_calabozo_combate.tscn` → … | Sí |
-| `mapas_viejos/` | Los mapas hechos a mano (`mundo_1`, `mundo_2`, `mundo_3`, `primer_boss_mundo_1`, `ruina`, `profundidades`, `jefe_final`), los ejemplos y arenas de prueba (`ejemplo_*`, `arena_enemigos`, `prueba_tileset`, `antorhca`) y `tiles_casa`. Con ellos van sus fondos, sus `.txt`, las piezas y scripts que solo usan ellos (`world1_*`, `story_hidden_actor`, `world_test_route`, caja y estatua rompibles, jefes viejos) y los assets exclusivos (`assets/<pack>/`). | Sí |
-| `herramientas/` | `fase2_auto.sh`, el modo autónomo de la Fase 2 (ya cerrada; sus decisiones están en `docs/historial/FASE2_DECISIONES.md`). | — |
-| `sin_uso/` | Packs de arte y archivos que nada referencia. Cada parte de un pack lleva una copia de su licencia. | No (`.gdignore`) |
+| Ruta actual | Contenido |
+| --- | --- |
+| `mapas/tng/historicos/tiles_v1/` | Escenas de las zonas con tiles de la primera versión. |
+| `mapas/tng/historicos/mapas_viejos/` | Escena histórica `tiles_casa.tscn`. |
+| `mapas/tog/historicos/mapas_viejos/` | Mundos hechos a mano, ejemplos y arenas anteriores. |
+| `mapas/fuentes/tng/historicos/` y `mapas/fuentes/tog/historicos/` | ASCII e imágenes de autoría correlacionados con los mapas históricos. |
+| `archivo/tiles_v1/` y `archivo/mapas_viejos/` | Código, objetos, jefes y arte específicos de los mapas anteriores. |
+| `archivo/herramientas/` | Herramienta histórica de la Fase 2. |
+| `rd/` | Reserva con `.gdignore`. Incluye paquetes y archivos comprobados como ajenos a las referencias de ejecución actuales. |
 
-## Por qué
+La campaña usa los mapas de Fase 3 en `mapas/tng/`. Las escenas históricas siguen importándose para consultar versiones anteriores y abrir partidas existentes de formato 5. El constructor excluye el directorio `historicos/` de cada familia.
 
-- **`tiles_v1/` y `mapas_viejos/` no llevan `.gdignore`:** algo los referencia y tienen que seguir abriendo, porque la ruta actual corre por `tiles_v1/` y los mapas viejos se conservan por si se quieren consultar (desde 2026-11-10 `mundo_1` ya no se comprueba al tocar scripts compartidos). No se toman como referencia de diseño ni se arreglan (TASK.md).
-- **Los `.txt` de `tiles_v1/mapas_texto/` y `mapas_viejos/mapas_texto/` ya no se regeneran en su sitio:** el constructor solo escribe en `res://escenas/mapas/`. Son la fuente de lo que hay, no de lo que vendrá.
-- **`sin_uso/` lleva `.gdignore`:** así Godot no importa sus ~2 900 archivos.
-
-## Cómo recuperar algo
-
-1. Moverlo de vuelta con `git mv`, junto con su `.import` y su `.uid`. La ruta de origen está en `INVENTARIO_P72.tsv`.
-2. Si viene de `sin_uso/`, el destino debe quedar fuera de esa carpeta, o Godot no lo verá. Un asset de terceros va a `assets/terceros/<pack>/`.
-3. Corregir las rutas `res://` que lo nombren y correr `godot --headless --import`.
+Para recuperar un recurso de `rd/`, mueve con él su archivo `.import` o `.uid`, actualiza sus rutas `res://` y vuelve a importar el proyecto en Godot. Conserva la licencia y el archivo `ORIGEN.txt` cuando correspondan.

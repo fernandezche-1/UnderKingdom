@@ -1,14 +1,14 @@
 """Arma las filas 20-23 del atlas del tileset "castillo" (P73, ficha del castillo).
 
-assets/terceros/raou_castillo/tileset_castillo.png, 512x384, piezas de 16:
+graficos/terceros/raou_castillo/tileset_castillo.png, 512x384, piezas de 16:
 - filas 0-19: no se tocan (atlas de mazmorra en 0-15 y piezas de Raou en
-  16-19, ver assets/terceros/raou_castillo/ORIGEN.txt); las escenas que ya
+  16-19, ver graficos/terceros/raou_castillo/ORIGEN.txt); las escenas que ya
   usan el atlas se ven igual. Solo se borra el estandarte viejo de
   (10,16)-(10,17), de origen sin anotar, que la letra h ya no usa desde que
   se vistió el castillo;
 - filas 20-31: se borran y se vuelven a poner con las piezas de LAYOUT,
   recortadas de Tilesetv3.png de Raou y del pack de craftpix sin repintar.
-  herramientas/constructor_mapas/tilesets/castillo.gd las usa. Las 24-31
+  herramientas/constructor_mapas/baldosas/castillo.gd las usa. Las 24-31
   (paredes de fondo de cada sala) agrandaron el atlas de 512x384 a 512x512.
 
 Se puede correr las veces que haga falta: el resultado es el mismo.
@@ -22,9 +22,9 @@ from pathlib import Path
 from PIL import Image, ImageEnhance
 
 ROOT = Path(__file__).resolve().parents[2]
-OUT = ROOT / "assets/terceros/raou_castillo/tileset_castillo.png"
-RAOU = ROOT / "assets/terceros/dungeon_sidescroller-Raou/Tilesetv3.png"
-CRAFTPIX = ROOT / "assets/terceros/craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/PNG"
+OUT = ROOT / "graficos/terceros/raou_castillo/tileset_castillo.png"
+RAOU = ROOT / "graficos/terceros/raou_mazmorra_lateral/Tilesetv3.png"
+CRAFTPIX = ROOT / "graficos/terceros/craftpix_objetos_mazmorra_218281/png"
 OTHER = CRAFTPIX / "Other_objects.png"
 SUPPLIES = CRAFTPIX / "supplies_objects.png"
 T = 16

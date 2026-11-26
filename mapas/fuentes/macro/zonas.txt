@@ -1,0 +1,21 @@
+; ZONAS DEL MACRO MAPA (documentacion/desarrollo/P46_MACRO_MAPA.md, sección 9).
+; Una línea por zona:
+;   zona   ruta de escena desde la raíz del proyecto   fuente del ASCII   x   y
+; - fuente: archivo con el mapa de letras (cabecera del constructor, línea ---
+;   y el mapa; un carácter = una pieza de 16 px). Mientras se dibuja va en
+;   mapas/fuentes/macro/zonas/<zona>.txt; al generar el nivel pasa a
+;   mapas/fuentes/tng/tiles_<zona>.txt y aquí se cambia la ruta, para que haya una
+;   sola fuente. "-" = la zona no es de tiles y no se verifica.
+; - x, y: esquina de arriba a la izquierda de la zona en la cuadrícula del
+;   mundo, en piezas. "?" mientras no se haya colocado.
+; Verificar: python3 herramientas/macro_mapa/verificar_mundo.py
+
+prision        mapas/tog/prologo_prision/camara_sellado_alma.tscn  -                                      -  -
+calabozo       mapas/tng/tiles_calabozo_combate.tscn               mapas/fuentes/tng/tiles_calabozo.txt         36  36
+castillo       mapas/tng/tiles_castillo_combate.tscn               mapas/fuentes/tng/tiles_castillo.txt         136  0
+cementerio     mapas/tng/tiles_cementerio_combate.tscn             mapas/fuentes/tng/tiles_cementerio.txt       246  43
+minas          mapas/tng/tiles_mineria_combate.tscn                mapas/fuentes/tng/tiles_mineria.txt          150  133
+mazmorra       mapas/tng/tiles_mazmorra_combate.tscn               mapas/fuentes/tng/tiles_mazmorra.txt         30  133
+ruina          mapas/tng/tiles_ruina_combate.tscn                  mapas/fuentes/tng/tiles_ruina.txt            136  223
+profundidades  mapas/tng/tiles_profundidades_combate.tscn          mapas/fuentes/tng/tiles_profundidades.txt    100  303
+infierno       mapas/tng/tiles_infierno_combate.tscn               mapas/fuentes/tng/tiles_infierno.txt         160  388

@@ -1,0 +1,10 @@
+imagem vidas
+
+Antes en: imagem vidas/ (raíz del repo), movido en P72 (documentacion/desarrollo/P72_ORGANIZACION_REPO.md).
+Licencia: el pack no trae archivo de licencia. Procedencia y licencia por confirmar (TASK.md, "Otros pendientes").
+
+Aquí solo está lo que usa el juego:
+- interfaces/hud/player_hud.tscn
+
+El resto del pack se apartó sin borrar nada:
+- rd/graficos/barras_vida/

@@ -1,13 +1,13 @@
-# Verifica que los ASCII de cada zona encajen con mapas_texto/macro/conexiones.txt
-# y, con --unir, los pega en un solo mapa del mundo (docs/P46_MACRO_MAPA.md, sección 9).
+# Verifica que los ASCII de cada zona encajen con mapas/fuentes/macro/conexiones.txt
+# y, con --unir, los pega en un solo mapa del mundo (documentacion/desarrollo/P46_MACRO_MAPA.md, sección 9).
 #   python3 herramientas/macro_mapa/verificar_mundo.py [--unir archivo.txt]
 # Sale con código 1 si hay errores.
 import os
 import sys
 
 RAIZ = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', '..'))
-ZONAS = os.path.join(RAIZ, 'mapas_texto', 'macro', 'zonas.txt')
-CONEXIONES = os.path.join(RAIZ, 'mapas_texto', 'macro', 'conexiones.txt')
+ZONAS = os.path.join(RAIZ, 'mapas', 'fuentes', 'macro', 'zonas.txt')
+CONEXIONES = os.path.join(RAIZ, 'mapas', 'fuentes', 'macro', 'conexiones.txt')
 SOLIDO = set('#/\\')
 LADOS = ('arriba', 'abajo', 'izq', 'der')
 OPUESTO = {'arriba': 'abajo', 'abajo': 'arriba', 'izq': 'der', 'der': 'izq'}

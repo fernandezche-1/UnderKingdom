@@ -1,0 +1,12 @@
+elementals_wind_hashashin_FREE_v1.1
+
+Antes en: elementals_wind_hashashin_FREE_v1.1/ (raíz del repo), movido en P72 (documentacion/desarrollo/P72_ORGANIZACION_REPO.md).
+Licencia: el pack no trae archivo de licencia. Procedencia y licencia por confirmar (TASK.md, "Otros pendientes").
+
+Aquí solo está lo que usa el juego:
+- personajes/jefes/capitan.tscn
+- interfaces/dialogos/dialogue_ui.gd
+
+El resto del pack se apartó sin borrar nada:
+- archivo/mapas_viejos/graficos/elementales_hashashin_viento_v1_1/
+- rd/graficos/elementales_hashashin_viento_v1_1/

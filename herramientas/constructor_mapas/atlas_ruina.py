@@ -1,15 +1,15 @@
 """Arma el atlas del tileset "ruina" (P73, ficha de la ruina).
 
-assets/terceros/gothicvania/cavernas/tileset_ruina.png, 512x320, piezas de 16:
+graficos/terceros/gothicvania/cavernas/tileset_ruina.png, 512x320, piezas de 16:
 - filas 0-15: copia del atlas de mazmorra
-  (assets/terceros/dungeon_platformer/dungeontilesetfull.png), por la antorcha,
+  (graficos/terceros/plataformas_mazmorra/dungeontilesetfull.png), por la antorcha,
   la fogata, el agua, los cristales, los hongos, la estantería, la caja y el
   barril; sus coordenadas no cambian, así que DECOR_LIGHTS de
-  scripts/environment/map_ambience.gd sigue valiendo;
+  sistemas/entorno/map_ambience.gd sigue valiendo;
 - filas 16-19: piezas de Caverns de la Legacy (cavernas/tiles.png, el pack del
   parallax de la ruina) a su escala, teñidas de frío, y la escalera de madera
   del Dungeon Tile Set. Coordenadas en LAYOUT, abajo;
-  herramientas/constructor_mapas/tilesets/ruina.gd las usa.
+  herramientas/constructor_mapas/baldosas/ruina.gd las usa.
 
 El frío (sin arte de hielo en ningún pack): TINTE recolorea las piezas del pack
 hacia un azul frío, sin dibujar nada (elegido en la galería el 2026-11-16,
@@ -26,10 +26,10 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
-MAZMORRA = ROOT / "assets/terceros/dungeon_platformer/dungeontilesetfull.png"
-CAVERNS = ROOT / "assets/terceros/gothicvania/cavernas/tiles.png"
-DTS = ROOT / "assets/terceros/dungeon_tile_set/Dungeon Tile Set.png"
-OUT = ROOT / "assets/terceros/gothicvania/cavernas/tileset_ruina.png"
+MAZMORRA = ROOT / "graficos/terceros/plataformas_mazmorra/dungeontilesetfull.png"
+CAVERNS = ROOT / "graficos/terceros/gothicvania/cavernas/tiles.png"
+DTS = ROOT / "graficos/terceros/baldosas_mazmorra/Dungeon Tile Set.png"
+OUT = ROOT / "graficos/terceros/gothicvania/cavernas/tileset_ruina.png"
 T = 16
 
 # Destino en el atlas (pieza de arriba a la izquierda) de cada grupo.

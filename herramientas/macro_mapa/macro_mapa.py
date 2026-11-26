@@ -1,4 +1,4 @@
-# Macro mapa ASCII de UnderKingdom (docs/P46_MACRO_MAPA.md). Para mover zonas o
+# Macro mapa ASCII de UnderKingdom (documentacion/desarrollo/P46_MACRO_MAPA.md). Para mover zonas o
 # atajos, cambia las coordenadas y ejecuta: python3 herramientas/macro_mapa/macro_mapa.py
 W, H = 74, 54
 g = [[' '] * W for _ in range(H)]

@@ -1,13 +1,13 @@
 """Arma las filas 20-31 del atlas del tileset "cementerio" (P73, ficha del cementerio).
 
-assets/terceros/gothicvania_cementerio/tileset_cementerio.png, piezas de 16:
+graficos/terceros/gothicvania_cementerio/tileset_cementerio.png, piezas de 16:
 - filas 0-19: no se tocan (atlas de mazmorra en 0-15 y piezas de Gothicvania
-  Cemetery en 16-19, ver assets/terceros/gothicvania_cementerio/ORIGEN.txt);
+  Cemetery en 16-19, ver graficos/terceros/gothicvania_cementerio/ORIGEN.txt);
   las escenas que ya usan el atlas se ven igual;
 - filas 20-31: se borran y se vuelven a poner con las piezas de LAYOUT, de
   Gothicvania Cemetery y de Gothic Horror (Legacy Collection), todo CC0 de
   Ansimuz, sin repintar. Agrandan el atlas de 512x320 a 512x512.
-  herramientas/constructor_mapas/tilesets/cementerio.gd las usa.
+  herramientas/constructor_mapas/baldosas/cementerio.gd las usa.
 
 Se puede correr las veces que haga falta: el resultado es el mismo.
 
@@ -19,10 +19,10 @@ from pathlib import Path
 from PIL import Image, ImageEnhance
 
 ROOT = Path(__file__).resolve().parents[2]
-OUT = ROOT / "assets/terceros/gothicvania_cementerio/tileset_cementerio.png"
-CEM = ROOT / "assets/terceros/gothicvania_cementerio/tileset_original.png"
-OBJ = ROOT / "assets/terceros/gothicvania_cementerio/objetos"
-HORROR = ROOT / "assets/terceros/gothicvania/gothic_horror/tiles.png"
+OUT = ROOT / "graficos/terceros/gothicvania_cementerio/tileset_cementerio.png"
+CEM = ROOT / "graficos/terceros/gothicvania_cementerio/tileset_original.png"
+OBJ = ROOT / "graficos/terceros/gothicvania_cementerio/objetos"
+HORROR = ROOT / "graficos/terceros/gothicvania/gothic_horror/tiles.png"
 T = 16
 FIRST_ROW = 20
 

@@ -1,15 +1,15 @@
 """Arma el atlas del tileset "infierno" (P73, ficha del infierno).
 
-assets/terceros/gothicvania/tejido_vivo/tileset_infierno.png, 512x400, piezas de 16:
+graficos/terceros/gothicvania/tejido_vivo/tileset_infierno.png, 512x400, piezas de 16:
 - filas 0-15: copia del atlas de mazmorra
-  (assets/terceros/dungeon_platformer/dungeontilesetfull.png), por la lava
+  (graficos/terceros/plataformas_mazmorra/dungeontilesetfull.png), por la lava
   animada, la antorcha y la fogata; sus coordenadas no cambian, así que
-  DECOR_LIGHTS de scripts/environment/map_ambience.gd sigue valiendo;
+  DECOR_LIGHTS de sistemas/entorno/map_ambience.gd sigue valiendo;
 - filas 16-24: piezas de Living Tissue de la Legacy (tejido_vivo/tiles.png y
   tejido_vivo/fondo.png), la carne con colmillos y ojos, sin teñir; el
   ladrillo rojo de las profundidades (el mismo de atlas_profundidades.py, píxel
   a píxel), y la escalera de madera del Dungeon Tile Set. Coordenadas en
-  LAYOUT, abajo; herramientas/constructor_mapas/tilesets/infierno.gd las usa.
+  LAYOUT, abajo; herramientas/constructor_mapas/baldosas/infierno.gd las usa.
 
 Se puede correr las veces que haga falta: el resultado es el mismo.
 
@@ -26,11 +26,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import atlas_profundidades as prof  # noqa: E402  (el ladrillo rojo, igual)
 
 ROOT = Path(__file__).resolve().parents[2]
-MAZMORRA = ROOT / "assets/terceros/dungeon_platformer/dungeontilesetfull.png"
-TISSUE = ROOT / "assets/terceros/gothicvania/tejido_vivo/tiles.png"
-TISSUE_BG = ROOT / "assets/terceros/gothicvania/tejido_vivo/fondo.png"
-DTS = ROOT / "assets/terceros/dungeon_tile_set/Dungeon Tile Set.png"
-OUT = ROOT / "assets/terceros/gothicvania/tejido_vivo/tileset_infierno.png"
+MAZMORRA = ROOT / "graficos/terceros/plataformas_mazmorra/dungeontilesetfull.png"
+TISSUE = ROOT / "graficos/terceros/gothicvania/tejido_vivo/tiles.png"
+TISSUE_BG = ROOT / "graficos/terceros/gothicvania/tejido_vivo/fondo.png"
+DTS = ROOT / "graficos/terceros/baldosas_mazmorra/Dungeon Tile Set.png"
+OUT = ROOT / "graficos/terceros/gothicvania/tejido_vivo/tileset_infierno.png"
 T = 16
 
 # Destino en el atlas (pieza de arriba a la izquierda) de cada grupo.

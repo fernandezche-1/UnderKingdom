@@ -1,6 +1,6 @@
 # Genera los datos del Atlas de UnderKingdom (el artefacto con el mapa del mundo
 # unido) desde el repo: zonas.txt, conexiones.txt, el ASCII de cada zona y el
-# mundo que saca verificar_mundo.py --unir (docs/P46_MACRO_MAPA.md, sección 9).
+# mundo que saca verificar_mundo.py --unir (documentacion/desarrollo/P46_MACRO_MAPA.md, sección 9).
 #   python3 herramientas/macro_mapa/datos_atlas.py atlas.html
 # Sustituye la línea "const D = {...};" del HTML del atlas por los datos de hoy.
 # Sin archivo, escribe la línea por la salida estándar.
@@ -11,8 +11,8 @@ import sys
 import tempfile
 
 RAIZ = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', '..'))
-ZONAS = os.path.join(RAIZ, 'mapas_texto', 'macro', 'zonas.txt')
-CONEXIONES = os.path.join(RAIZ, 'mapas_texto', 'macro', 'conexiones.txt')
+ZONAS = os.path.join(RAIZ, 'mapas', 'fuentes', 'macro', 'zonas.txt')
+CONEXIONES = os.path.join(RAIZ, 'mapas', 'fuentes', 'macro', 'conexiones.txt')
 VERIFICADOR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'verificar_mundo.py')
 PREFIJO = 'const D = '
 

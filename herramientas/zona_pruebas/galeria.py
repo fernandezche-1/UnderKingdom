@@ -1,8 +1,8 @@
 """Galería de piezas de la zona de pruebas (P71).
 
-Escribe el mapa de letras de mapas_texto/zona_pruebas.txt (deja igual el tramo
+Escribe el mapa de letras de mapas/fuentes/tog/pruebas/zona_pruebas.txt (deja igual el tramo
 de arriba, filas 0-23, y su cabecera) y reescribe ENTERA
-escenas/mapas/zona_pruebas_galeria.tscn: un cuarto por pieza de la Fase 2, con
+mapas/tog/pruebas/zona_pruebas_galeria.tscn: un cuarto por pieza de la Fase 2, con
 sus nodos y sus carteles. zona_pruebas_combate.tscn la instancia en `Objetos`
 y no se toca: lo que se ponga a mano allí para probar se conserva.
 Para añadir o cambiar un cuarto, se edita este script (lista de room(...)) y
@@ -11,7 +11,7 @@ se vuelve a correr; no se edita la escena de la galería a mano.
 El piso D tiene un cuarto por tileset nuevo (P73, paso de las piezas): cada uno
 instancia una muestra que el constructor genera con ese tileset ("muestra: si",
 sin Player ni límites). galeria.py escribe su texto en
-mapas_texto/zona_pruebas_muestra_<tileset>.txt. Con el piso D lleno, las piezas
+mapas/fuentes/tog/pruebas/zona_pruebas_muestra_<tileset>.txt. Con el piso D lleno, las piezas
 de las minas (enemigos y tileset, P73) van en el piso E, debajo, y las de las
 zonas siguientes siguen allí: la mazmorra, a la izquierda de las minas. Con la
 mazmorra solo quedan 8 columnas libres en el piso E: la ruina abre el piso F,
@@ -21,23 +21,23 @@ baja por la derecha del F. El infierno ocupa lo que quedaba del G (48 columnas).
 
 Uso, desde la raíz del proyecto:
   python3 herramientas/zona_pruebas/galeria.py [cabecera.txt]
-  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_calabozo.txt
-  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_castillo.txt
-  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_castillo_salas.txt
-  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_cementerio.txt
-  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_minas.txt
-  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_mazmorra_reina.txt
-  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_ruina.txt
-  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_profundidades.txt
-  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas_muestra_infierno.txt
-  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/zona_pruebas.txt
+  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas/fuentes/tog/pruebas/zona_pruebas_muestra_calabozo.txt
+  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas/fuentes/tog/pruebas/zona_pruebas_muestra_castillo.txt
+  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas/fuentes/tog/pruebas/zona_pruebas_muestra_castillo_salas.txt
+  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas/fuentes/tog/pruebas/zona_pruebas_muestra_cementerio.txt
+  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas/fuentes/tog/pruebas/zona_pruebas_muestra_minas.txt
+  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas/fuentes/tog/pruebas/zona_pruebas_muestra_mazmorra_reina.txt
+  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas/fuentes/tog/pruebas/zona_pruebas_muestra_ruina.txt
+  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas/fuentes/tog/pruebas/zona_pruebas_muestra_profundidades.txt
+  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas/fuentes/tog/pruebas/zona_pruebas_muestra_infierno.txt
+  ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas/fuentes/tog/pruebas/zona_pruebas.txt
 """
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-TXT = ROOT / "mapas_texto/zona_pruebas.txt"
-TSCN = ROOT / "escenas/mapas/zona_pruebas_galeria.tscn"
+TXT = ROOT / "mapas/fuentes/tog/pruebas/zona_pruebas.txt"
+TSCN = ROOT / "mapas/tog/pruebas/zona_pruebas_galeria.tscn"
 T = 16
 COLS = 146
 ROWS = 158
@@ -400,7 +400,7 @@ def b_ascensor(c):
     node(f'''
 [node name="AscensorAbajo" parent="Objetos" instance=ExtResource("20_ascensor")]
 position = Vector2({c.cx(4)}, {c.fy()})
-target_scene_path = "res://escenas/mapas/zona_pruebas_combate.tscn"
+target_scene_path = "res://mapas/tog/pruebas/zona_pruebas_combate.tscn"
 target_spawn_id = &"AscensorArriba"
 arrival_spawn_id = &"AscensorAbajo"
 requires_encounter = "pruebas_ascensor_corriente"
@@ -408,7 +408,7 @@ prompt_text = "E  Subir"''')
     node(f'''
 [node name="AscensorArriba" parent="Objetos" instance=ExtResource("20_ascensor")]
 position = Vector2({c.cx(9)}, {c.fy(ledge)})
-target_scene_path = "res://escenas/mapas/zona_pruebas_combate.tscn"
+target_scene_path = "res://mapas/tog/pruebas/zona_pruebas_combate.tscn"
 target_spawn_id = &"AscensorAbajo"
 arrival_spawn_id = &"AscensorArriba"
 prompt_text = "E  Bajar"''')
@@ -1229,48 +1229,48 @@ mapa = "\n".join("".join(row) for row in g)
 header = Path(sys.argv[1]).read_text(encoding="utf-8") if len(sys.argv) > 1 else head + "\n"
 TXT.write_text(header + "---\n" + mapa + "\n", encoding="utf-8")
 for tileset, nombre, filas, _, cabecera, fondo, bloques in MUESTRAS:
-    (ROOT / f"mapas_texto/{nombre}.txt").write_text(
+    (ROOT / f"mapas/fuentes/tog/pruebas/{nombre}.txt").write_text(
         f"; Muestra del tileset {tileset} para la galería de la zona de pruebas (P73).\n"
         "; La escribe herramientas/zona_pruebas/galeria.py: no se edita a mano.\n"
-        f"escena: res://escenas/mapas/{nombre}.tscn\n"
+        f"escena: res://mapas/tog/pruebas/{nombre}.tscn\n"
         f"tileset: {tileset}\nbloques: {bloques}\nfondo: {fondo}\n{cabecera}muestra: si\n---\n"
         + "\n".join(filas) + "\n", encoding="utf-8")
 
 # ---------------------------------------------------------------- salida .tscn
-ext = '''[ext_resource type="PackedScene" path="res://escenas/enemigos/rata.tscn" id="2_rata"]
-[ext_resource type="PackedScene" path="res://escenas/enemigos/slime.tscn" id="3_slime"]
-[ext_resource type="PackedScene" path="res://escenas/enemigos/esqueleto_lanza.tscn" id="4_esqueleto_lanza"]
-[ext_resource type="PackedScene" path="res://escenas/objetos/pared_agrietada.tscn" id="5_pared_agrietada"]
-[ext_resource type="PackedScene" path="res://escenas/objetos/palanca.tscn" id="6_palanca"]
-[ext_resource type="Script" path="res://scripts/environment/arena_barrier.gd" id="7_barrera"]
-[ext_resource type="Texture2D" path="res://assets/terceros/raou_castillo/tileset_castillo.png" id="8_tileset"]
-[ext_resource type="PackedScene" path="res://escenas/objetos/objeto_lore.tscn" id="9_lore"]
-[ext_resource type="PackedScene" path="res://escenas/items/mejora_encontrada.tscn" id="10_mejora"]
-[ext_resource type="Script" path="res://scripts/environment/roll_gate.gd" id="11_reja"]
-[ext_resource type="PackedScene" path="res://escenas/npc/anciano.tscn" id="12_anciano"]
-[ext_resource type="PackedScene" path="res://escenas/npc/barquero.tscn" id="13_barquero"]
-[ext_resource type="Script" path="res://scripts/environment/encounter_visibility.gd" id="14_visibilidad"]
-[ext_resource type="PackedScene" path="res://escenas/items/fragmento_vida.tscn" id="15_fragmento"]
-[ext_resource type="PackedScene" path="res://escenas/objetos/sello.tscn" id="16_sello"]
-[ext_resource type="PackedScene" path="res://escenas/objetos/rompible_selectivo.tscn" id="17_selectivo"]
-[ext_resource type="Script" path="res://scripts/environment/locked_door.gd" id="18_puerta"]
-[ext_resource type="PackedScene" path="res://escenas/items/llave_jefe_m1.tscn" id="19_llave"]
-[ext_resource type="PackedScene" path="res://escenas/objetos/ascensor.tscn" id="20_ascensor"]
-[ext_resource type="PackedScene" path="res://escenas/sistemas/fuego_infernal.tscn" id="21_fuego_infernal"]
-[ext_resource type="PackedScene" path="res://escenas/jefes/crystal_mauler.tscn" id="22_mauler"]
-[ext_resource type="Script" path="res://scripts/combat/boss_arena.gd" id="23_sala"]
-[ext_resource type="Script" path="res://scripts/environment/collapse_sequence.gd" id="24_derrumbe"]
-[ext_resource type="PackedScene" path="res://escenas/items/llama_eterna.tscn" id="25_llama"]
-[ext_resource type="Script" path="res://scripts/environment/dark_zone.gd" id="26_oscuridad"]
-[ext_resource type="PackedScene" path="res://escenas/items/reliquia_habilidad.tscn" id="27_reliquia"]
-[ext_resource type="Script" path="res://scripts/combat/wave_arena.gd" id="29_oleadas"]
-[ext_resource type="SpriteFrames" path="res://escenas/atuendos/fire_knight.tres" id="31_fire_knight"]
-[ext_resource type="PackedScene" path="res://escenas/objetos/atuendo.tscn" id="32_atuendo"]
-[ext_resource type="PackedScene" path="res://escenas/objetos/espada_oxidada.tscn" id="33_espada_oxidada"]
-[ext_resource type="PackedScene" path="res://escenas/sistemas/clima_nieve.tscn" id="50_clima_nieve"]
-[ext_resource type="PackedScene" path="res://escenas/objetos/pared_agrietada_profundidades.tscn" id="51_pared_profundidades"]
+ext = '''[ext_resource type="PackedScene" path="res://personajes/enemigos/rata.tscn" id="2_rata"]
+[ext_resource type="PackedScene" path="res://personajes/enemigos/slime.tscn" id="3_slime"]
+[ext_resource type="PackedScene" path="res://personajes/enemigos/esqueleto_lanza.tscn" id="4_esqueleto_lanza"]
+[ext_resource type="PackedScene" path="res://objetos/entorno/pared_agrietada.tscn" id="5_pared_agrietada"]
+[ext_resource type="PackedScene" path="res://objetos/entorno/palanca.tscn" id="6_palanca"]
+[ext_resource type="Script" path="res://sistemas/entorno/arena_barrier.gd" id="7_barrera"]
+[ext_resource type="Texture2D" path="res://graficos/terceros/raou_castillo/tileset_castillo.png" id="8_tileset"]
+[ext_resource type="PackedScene" path="res://objetos/entorno/objeto_lore.tscn" id="9_lore"]
+[ext_resource type="PackedScene" path="res://objetos/recogibles/mejora_encontrada.tscn" id="10_mejora"]
+[ext_resource type="Script" path="res://sistemas/entorno/roll_gate.gd" id="11_reja"]
+[ext_resource type="PackedScene" path="res://personajes/npc/anciano.tscn" id="12_anciano"]
+[ext_resource type="PackedScene" path="res://personajes/npc/barquero.tscn" id="13_barquero"]
+[ext_resource type="Script" path="res://sistemas/entorno/encounter_visibility.gd" id="14_visibilidad"]
+[ext_resource type="PackedScene" path="res://objetos/recogibles/fragmento_vida.tscn" id="15_fragmento"]
+[ext_resource type="PackedScene" path="res://objetos/entorno/sello.tscn" id="16_sello"]
+[ext_resource type="PackedScene" path="res://objetos/entorno/rompible_selectivo.tscn" id="17_selectivo"]
+[ext_resource type="Script" path="res://sistemas/entorno/locked_door.gd" id="18_puerta"]
+[ext_resource type="PackedScene" path="res://objetos/recogibles/llave_jefe_m1.tscn" id="19_llave"]
+[ext_resource type="PackedScene" path="res://objetos/entorno/ascensor.tscn" id="20_ascensor"]
+[ext_resource type="PackedScene" path="res://sistemas/entorno/fuego_infernal.tscn" id="21_fuego_infernal"]
+[ext_resource type="PackedScene" path="res://personajes/jefes/crystal_mauler.tscn" id="22_mauler"]
+[ext_resource type="Script" path="res://sistemas/combate/boss_arena.gd" id="23_sala"]
+[ext_resource type="Script" path="res://sistemas/entorno/collapse_sequence.gd" id="24_derrumbe"]
+[ext_resource type="PackedScene" path="res://objetos/recogibles/llama_eterna.tscn" id="25_llama"]
+[ext_resource type="Script" path="res://sistemas/entorno/dark_zone.gd" id="26_oscuridad"]
+[ext_resource type="PackedScene" path="res://objetos/recogibles/reliquia_habilidad.tscn" id="27_reliquia"]
+[ext_resource type="Script" path="res://sistemas/combate/wave_arena.gd" id="29_oleadas"]
+[ext_resource type="SpriteFrames" path="res://objetos/equipo/fire_knight.tres" id="31_fire_knight"]
+[ext_resource type="PackedScene" path="res://objetos/entorno/atuendo.tscn" id="32_atuendo"]
+[ext_resource type="PackedScene" path="res://objetos/entorno/espada_oxidada.tscn" id="33_espada_oxidada"]
+[ext_resource type="PackedScene" path="res://sistemas/entorno/clima_nieve.tscn" id="50_clima_nieve"]
+[ext_resource type="PackedScene" path="res://objetos/entorno/pared_agrietada_profundidades.tscn" id="51_pared_profundidades"]
 ''' + "".join(
-    f'[ext_resource type="PackedScene" path="res://escenas/mapas/{nombre}.tscn" id="{ext_id}"]\n'
+    f'[ext_resource type="PackedScene" path="res://mapas/tog/pruebas/{nombre}.tscn" id="{ext_id}"]\n'
     for _, nombre, _, ext_id, _, _, _ in MUESTRAS)
 sub = '''[sub_resource type="AtlasTexture" id="AtlasTexture_losa_medio"]
 atlas = ExtResource("8_tileset")

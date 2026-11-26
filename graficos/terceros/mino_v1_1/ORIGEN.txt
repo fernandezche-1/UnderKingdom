@@ -1,0 +1,11 @@
+mino_v1.1_free
+
+Antes en: mino_v1.1_free/ (raíz del repo), movido en P72 (documentacion/desarrollo/P72_ORGANIZACION_REPO.md).
+Licencia: el pack no trae archivo de licencia. Procedencia y licencia por confirmar (TASK.md, "Otros pendientes").
+
+Aquí solo está lo que usa el juego:
+- personajes/enemigos/mino.tscn
+- interfaces/hud/boss_health_bar.tscn
+
+El resto del pack se apartó sin borrar nada:
+- rd/graficos/mino_v1_1/

@@ -1,0 +1,34 @@
+Pixel Fantasy - Caves 1.0
+
+Recibido como "PixelFantasy_Caves_1.0.zip" el 2026-10-15 para los niveles con tiles.
+Licencia: el ZIP no trae archivo de licencia. Confirmar de dónde se descargó y
+sus condiciones antes de usarlo fuera de pruebas.
+
+Se copiaron los fondos (fondo1..fondo4a = background1..background4a.png), el
+parallax de las minas.
+
+Tileset de las minas (P73, ficha de las minas, 2026-11-15): mainlev_build.png y
+props1.png vuelven de rd/graficos/pixelfantasy_cavernas_v1_0/, tal cual.
+herramientas/constructor_mapas/atlas_minas.py arma con ellos
+tileset_minas.png (las filas 0-15 son el atlas de mazmorra), sin repintar y a
+su escala (el arte está dibujado 1:1 sobre una rejilla de 16 px). Toma
+(piezas de 16 px, columna y fila, salvo donde dice px):
+- de mainlev_build.png:
+  - bloques "minas": la roca marrón. El pack dibuja sus remates sobresaliendo
+    a la celda vecina; solo se usan celdas macizas. Arriba (21,40) y, en la
+    columna, (9,40); abajo (21,58) y (9,58); a los lados (26,44) y (4,44);
+    dentro (8,46). Las tiras de una pieza de alto y la pieza suelta unen la
+    mitad de arriba de la pieza de arriba con la de abajo de la de abajo;
+  - la viga de las plataformas: fila 1, px 755-771 (tapa izquierda), 787-803
+    (tramo sin herraje) y 909-925 (tapa derecha);
+  - pared "galeria": el relleno de roca de 6x4 (14,46)-(19,49), que se repite
+    sin costura, con el marco abierto de postes y viga (px 960-1008 x
+    112-176) a la izquierda, al 60 % de brillo;
+  - pared "ladrillo": (54,33)-(55,34) del muro, al 60 %;
+  - K, entibado: el marco con aspa, px 880-928 x 96-144 (48x48);
+  - U, boca de galería: el marco con el fondo oscuro, px 960-1008 x 16-80
+    (48x64);
+- de props1.png: T, la estalagmita, px 656-704 x 105-160 (48x55), e y, la
+  estalactita, su otra mitad, px 656-704 x 176-231.
+El resto del pack (background4b, props2 y los PSD) sigue en
+rd/graficos/pixelfantasy_cavernas_v1_0/.

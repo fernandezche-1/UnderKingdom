@@ -1,0 +1,13 @@
+dungeon_sidescroller-Raou
+
+Antes en: prueba/dungeon_sidescroller-Raou/ (raíz del repo), movido en P72 (documentacion/desarrollo/P72_ORGANIZACION_REPO.md).
+Licencia: el pack no trae archivo de licencia. Procedencia y licencia por confirmar (TASK.md, "Otros pendientes").
+
+Aquí solo está lo que usa el juego:
+- mapas/tog/historicos/mapas_viejos/antorhca.tscn
+- archivo/mapas_viejos/animaciones/animated_sprite_2d.gd
+- mapas/tog/prologo_prision/camara_sellado_alma.tscn
+
+spr_torch.png también se copia en graficos/terceros/baldosas_mazmorra/
+tileset_calabozo.png (antorcha del tileset calabozo), con
+herramientas/constructor_mapas/atlas_calabozo.py.

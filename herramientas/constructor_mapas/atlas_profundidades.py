@@ -1,17 +1,17 @@
 """Arma el atlas del tileset "profundidades" (P73, ficha de las profundidades).
 
-assets/terceros/gothicvania/lava/tileset_profundidades.png, 512x352, piezas de 16:
+graficos/terceros/gothicvania/lava/tileset_profundidades.png, 512x352, piezas de 16:
 - filas 0-15: copia del atlas de mazmorra
-  (assets/terceros/dungeon_platformer/dungeontilesetfull.png), por la lava
+  (graficos/terceros/plataformas_mazmorra/dungeontilesetfull.png), por la lava
   animada, la antorcha, la fogata, los cristales (las ascuas), la caja y el
   barril; sus coordenadas no cambian, así que DECOR_LIGHTS de
-  scripts/environment/map_ambience.gd sigue valiendo;
+  sistemas/entorno/map_ambience.gd sigue valiendo;
 - filas 16-21: piezas de Caverns de la Legacy (cavernas/tiles.png) en su
   morado original, el de las rocas del parallax de lava (la ruina usa las
   mismas formas teñidas de frío); el ladrillo, el horno y el arco de Gothic
   Horror (gothic_horror/tiles.png) teñidos de rojo; el montón de calaveras de
   Gothic Horror tal cual, y la escalera de madera del Dungeon Tile Set.
-  Coordenadas en LAYOUT, abajo; herramientas/constructor_mapas/tilesets/
+  Coordenadas en LAYOUT, abajo; herramientas/constructor_mapas/baldosas/
   profundidades.gd las usa.
 
 Se puede correr las veces que haga falta: el resultado es el mismo.
@@ -24,11 +24,11 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
-MAZMORRA = ROOT / "assets/terceros/dungeon_platformer/dungeontilesetfull.png"
-CAVERNS = ROOT / "assets/terceros/gothicvania/cavernas/tiles.png"
-HORROR = ROOT / "assets/terceros/gothicvania/gothic_horror/tiles.png"
-DTS = ROOT / "assets/terceros/dungeon_tile_set/Dungeon Tile Set.png"
-OUT = ROOT / "assets/terceros/gothicvania/lava/tileset_profundidades.png"
+MAZMORRA = ROOT / "graficos/terceros/plataformas_mazmorra/dungeontilesetfull.png"
+CAVERNS = ROOT / "graficos/terceros/gothicvania/cavernas/tiles.png"
+HORROR = ROOT / "graficos/terceros/gothicvania/gothic_horror/tiles.png"
+DTS = ROOT / "graficos/terceros/baldosas_mazmorra/Dungeon Tile Set.png"
+OUT = ROOT / "graficos/terceros/gothicvania/lava/tileset_profundidades.png"
 T = 16
 
 # Destino en el atlas (pieza de arriba a la izquierda) de cada grupo.
@@ -42,7 +42,7 @@ LAYOUT = {
     "arco": (19, 16),        # U, 2x3
     "calaveras": (21, 16),   # n, 2x3
     # Pared agrietada del secreto (P48): la columna del juego de bloques tres
-    # veces, 1x3, para escenas/objetos/pared_agrietada_profundidades.tscn.
+    # veces, 1x3, para objetos/entorno/pared_agrietada_profundidades.tscn.
     "pared_agrietada": (23, 16),
 }
 

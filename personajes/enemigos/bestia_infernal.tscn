@@ -1,0 +1,171 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://sistemas/combate/ranged_demon.gd" id="script"]
+[ext_resource type="Texture2D" path="res://graficos/terceros/gothicvania/personajes/bestia_infernal.png" id="tex_0"]
+
+[sub_resource type="AtlasTexture" id="Atlas_0_0"]
+atlas = ExtResource("tex_0")
+region = Rect2(0, 0, 80, 72)
+
+[sub_resource type="AtlasTexture" id="Atlas_0_1"]
+atlas = ExtResource("tex_0")
+region = Rect2(80, 0, 80, 72)
+
+[sub_resource type="AtlasTexture" id="Atlas_0_2"]
+atlas = ExtResource("tex_0")
+region = Rect2(160, 0, 80, 72)
+
+[sub_resource type="AtlasTexture" id="Atlas_0_3"]
+atlas = ExtResource("tex_0")
+region = Rect2(240, 0, 80, 72)
+
+[sub_resource type="AtlasTexture" id="Atlas_0_4"]
+atlas = ExtResource("tex_0")
+region = Rect2(320, 0, 80, 72)
+
+[sub_resource type="AtlasTexture" id="Atlas_0_5"]
+atlas = ExtResource("tex_0")
+region = Rect2(400, 0, 80, 72)
+
+[sub_resource type="AtlasTexture" id="Atlas_1_0"]
+atlas = ExtResource("tex_0")
+region = Rect2(0, 72, 80, 72)
+
+[sub_resource type="AtlasTexture" id="Atlas_1_1"]
+atlas = ExtResource("tex_0")
+region = Rect2(80, 72, 80, 72)
+
+[sub_resource type="AtlasTexture" id="Atlas_1_2"]
+atlas = ExtResource("tex_0")
+region = Rect2(160, 72, 80, 72)
+
+[sub_resource type="AtlasTexture" id="Atlas_1_3"]
+atlas = ExtResource("tex_0")
+region = Rect2(240, 72, 80, 72)
+
+[sub_resource type="AtlasTexture" id="Atlas_2_0"]
+atlas = ExtResource("tex_0")
+region = Rect2(0, 144, 80, 72)
+
+[sub_resource type="AtlasTexture" id="Atlas_2_1"]
+atlas = ExtResource("tex_0")
+region = Rect2(80, 144, 80, 72)
+
+[sub_resource type="AtlasTexture" id="Atlas_2_2"]
+atlas = ExtResource("tex_0")
+region = Rect2(160, 144, 80, 72)
+
+[sub_resource type="AtlasTexture" id="Atlas_2_3"]
+atlas = ExtResource("tex_0")
+region = Rect2(240, 144, 80, 72)
+
+[sub_resource type="SpriteFrames" id="Frames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_0_0")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_0_1")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_0_2")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_0_3")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_0_4")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_0_5")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_1_0")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_1_1")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_1_2")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_1_3")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_2_0")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_2_1")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_2_2")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_2_3")
+}],
+"loop": false,
+"name": &"death",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="Body"]
+size = Vector2(28, 52)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+collision_layer = 5
+script = ExtResource("script")
+projectile_release_frame = 3
+projectile_speed = 180.0
+projectile_damage = 0.5
+projectile_spawn_offset = Vector2(24, 2)
+projectile_target_offset = Vector2(0, 30)
+max_health = 3.0
+knockback_horizontal = 60.0
+patrol_distance = 16.0
+patrol_speed = 15.0
+chase_speed = 20.0
+detection_range = 220.0
+detection_vertical_range = 120.0
+lose_aggro_range = 300.0
+lose_aggro_vertical_range = 160.0
+attack_range = 170.0
+attack_stop_margin = 0.0
+minimum_player_distance = 40.0
+separation_speed = 30.0
+attack_damage = 0.5
+attack_cooldown = 2.0
+contact_damage = 0.25
+ledge_check_forward = 16.0
+sprite_faces_right = false
+mirror_sprite_on_flip = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("Frames")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 10)
+shape = SubResource("Body")

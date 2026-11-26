@@ -1,14 +1,14 @@
 """Arma el atlas del tileset "calabozo" (P73, ficha del calabozo).
 
-assets/terceros/dungeon_tile_set/tileset_calabozo.png, 512x384, piezas de 16:
+graficos/terceros/baldosas_mazmorra/tileset_calabozo.png, 512x384, piezas de 16:
 - filas 0-19: copia de las filas 0-19 de
-  assets/terceros/raou_castillo/tileset_castillo.png (atlas de mazmorra en
+  graficos/terceros/raou_castillo/tileset_castillo.png (atlas de mazmorra en
   0-15 y piezas de Raou en 16-19: rejas, estantería, armadura, pared
   "castillo"), para que las letras sigan valiendo; las 20-23 del castillo, que
   arma atlas_castillo.py, no se copian;
 - filas 20-23: piezas del Dungeon Tile Set (el pack de la prisión) y la
   antorcha de Raou, recortadas sin repintar. Coordenadas en LAYOUT, abajo;
-  herramientas/constructor_mapas/tilesets/calabozo.gd las usa.
+  herramientas/constructor_mapas/baldosas/calabozo.gd las usa.
 
 Uso, desde la raíz del proyecto:
   python3 herramientas/constructor_mapas/atlas_calabozo.py
@@ -18,10 +18,10 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
-CASTILLO = ROOT / "assets/terceros/raou_castillo/tileset_castillo.png"
-DTS = ROOT / "assets/terceros/dungeon_tile_set/Dungeon Tile Set.png"
-TORCH = ROOT / "assets/terceros/dungeon_sidescroller-Raou/spr_torch.png"
-OUT = ROOT / "assets/terceros/dungeon_tile_set/tileset_calabozo.png"
+CASTILLO = ROOT / "graficos/terceros/raou_castillo/tileset_castillo.png"
+DTS = ROOT / "graficos/terceros/baldosas_mazmorra/Dungeon Tile Set.png"
+TORCH = ROOT / "graficos/terceros/raou_mazmorra_lateral/spr_torch.png"
+OUT = ROOT / "graficos/terceros/baldosas_mazmorra/tileset_calabozo.png"
 T = 16
 
 # Destino en el atlas (pieza de arriba a la izquierda) de cada grupo.

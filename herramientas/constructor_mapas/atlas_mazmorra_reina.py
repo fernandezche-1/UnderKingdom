@@ -1,17 +1,17 @@
 """Arma el atlas del tileset "mazmorra_reina" (P73, ficha de la mazmorra).
 
-assets/terceros/gothicvania/castillo_viejo/tileset_mazmorra_reina.png, 512x320,
+graficos/terceros/gothicvania/castillo_viejo/tileset_mazmorra_reina.png, 512x320,
 piezas de 16:
 - filas 0-15: copia del atlas de mazmorra
-  (assets/terceros/dungeon_platformer/dungeontilesetfull.png), por la antorcha,
+  (graficos/terceros/plataformas_mazmorra/dungeontilesetfull.png), por la antorcha,
   la fogata, la lava, el agua, la estantería, la caja, el barril, los cristales
   y los hongos; sus coordenadas no cambian, así que DECOR_LIGHTS de
-  scripts/environment/map_ambience.gd sigue valiendo;
+  sistemas/entorno/map_ambience.gd sigue valiendo;
 - filas 16-19: piezas del tileset Old Dark Castle interior de la Legacy
   (castillo_viejo/tileset.png, el pack del parallax de la mazmorra) a su escala,
   sin repintar, la escalera de madera del Dungeon Tile Set y la reja de celda
   de Raou (la "f" del castillo). Coordenadas en LAYOUT, abajo;
-  herramientas/constructor_mapas/tilesets/mazmorra_reina.gd las usa.
+  herramientas/constructor_mapas/baldosas/mazmorra_reina.gd las usa.
 
 Se puede correr las veces que haga falta: el resultado es el mismo.
 
@@ -23,11 +23,11 @@ from pathlib import Path
 from PIL import Image, ImageEnhance
 
 ROOT = Path(__file__).resolve().parents[2]
-MAZMORRA = ROOT / "assets/terceros/dungeon_platformer/dungeontilesetfull.png"
-CASTLE = ROOT / "assets/terceros/gothicvania/castillo_viejo/tileset.png"
-DTS = ROOT / "assets/terceros/dungeon_tile_set/Dungeon Tile Set.png"
-RAOU = ROOT / "assets/terceros/raou_castillo/tileset_castillo.png"
-OUT = ROOT / "assets/terceros/gothicvania/castillo_viejo/tileset_mazmorra_reina.png"
+MAZMORRA = ROOT / "graficos/terceros/plataformas_mazmorra/dungeontilesetfull.png"
+CASTLE = ROOT / "graficos/terceros/gothicvania/castillo_viejo/tileset.png"
+DTS = ROOT / "graficos/terceros/baldosas_mazmorra/Dungeon Tile Set.png"
+RAOU = ROOT / "graficos/terceros/raou_castillo/tileset_castillo.png"
+OUT = ROOT / "graficos/terceros/gothicvania/castillo_viejo/tileset_mazmorra_reina.png"
 T = 16
 
 # Destino en el atlas (pieza de arriba a la izquierda) de cada grupo.

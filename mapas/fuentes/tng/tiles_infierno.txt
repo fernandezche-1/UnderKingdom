@@ -1,0 +1,313 @@
+; INFIERNO (macro mapa, documentacion/desarrollo/P46_MACRO_MAPA.md): ASCII de la zona. Segunda
+; versión (2026-11-06): LA PRUEBA FINAL. Rehace la primera pasada (corta y
+; sin bucles) para que sea la zona más difícil: una sucesión de pruebas, cada
+; una de lo que el jugador aprendió al bajar, con los enemigos más duros del
+; juego, y al final Cthulhu. Estructura, enemigos, objetos y decorados en una
+; sola pasada.
+; Generado en la Fase 3 (2026-11-17): este archivo pasó de
+; mapas/fuentes/macro/zonas/infierno.txt a mapas/fuentes/tng/tiles_infierno.txt
+; (P46, sección 9) y es la fuente de escenas/mapas/tiles_infierno.tscn. Deja
+; el nombre tiles_jefe de v1, que sigue en archivo/tiles_v1/.
+; Generar:
+;   godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas/fuentes/tng/tiles_infierno.txt
+; - No hay salidas del constructor: [S7] va en la _combate, con el spawn
+;   DesdeProfundidades.
+; - El fuego infernal del paso de las cadenas (fila 12, x 41-44) salió del
+;   ASCII al generarlo: la F del constructor es la trampa de fuego normal, que
+;   quema también con E5. Va en la _combate (fuego_infernal.tscn), como el de
+;   las minas y las profundidades. En la fila 12 queda hueco.
+; - Los enemigos del coliseo (8) y del salón (4) salieron del ASCII al montar
+;   la _combate (2026-11-17), como en la antecámara del castillo: van en las
+;   oleadas de wave_arena.gd, en sus mismos sitios. La base se regeneró con
+;   las mismas piezas (48 enemigos pasan a 36).
+; - El infierno de v1 (tiles_jefe) se queda en archivo/tiles_v1/: no se toma
+;   como referencia.
+;
+; Coordenadas (columna, fila), desde 0. 111 x 120 piezas; en el mundo en
+; (160, 388), justo debajo de las profundidades, que acaban en la fila 387.
+; Mismo ancho y misma posición que la primera versión: crece solo hacia
+; abajo, donde no hay nada. Su centro, la columna 55, es la 215 del mundo, y
+; [S7] cae en las columnas 54-56 (214-216 del mundo), sin túnel.
+; Es la última zona: sin salida ni más aperturas que [S7].
+; Llega con E5 (salto de unas 4,3 piezas), Rodar, la Ráfaga, el Golpe final,
+; la Ultimate, el tajo aéreo y el parry. No se consigue nada. Ninguna prueba
+; obligatoria pide la Agilidad (E3) ni el Abrigo (E4): escalones de 4 piezas
+; como mucho y huecos de 3.
+;
+; ENEMIGOS: excepción a la tabla de P33. El infierno reúne las ánimas de todo
+; lo que el jugador venció al bajar, así que aquí se mezclan los más duros de
+; todas las profundidades. Vestido el 2026-11-17 (P73, ficha del infierno):
+; en el ASCII, 12 diablillos (d), 5 calaveras de fuego (X), 3 almas
+; condenadas (z, solo del infierno, en la sima), 3 Guardias (G), 2 ánimas
+; (N), 2 ojos voladores (p), 2 aves de las nieves (Z), 2 ogros (W), 2
+; Aprendis (a), 1 mino (M), 1 lobo de la escarcha (J) y 1 Mimic (i, en el
+; osario, junto al cofre de verdad). Cada uno en el sitio de un enemigo de
+; antes (de suelo a suelo y de aire a aire): ninguna posición cambió. Las
+; oleadas del coliseo y del salón están en la _combate.
+;
+; VESTIDO (P73): tileset infierno (Living Tissue de la Legacy), bloques
+; carne, pared carne en toda la zona y ladrillo (el rojo de las profundidades)
+; en el coliseo (x 44-100, filas 40-60) y el salón (x 2-32, filas 108-116).
+; Sin parallax: el de lava ya sale en las profundidades. Decorados nuevos
+; (abajo a la izquierda): colmillos y (3x3, cuelgan: la letra, tres piezas
+; bajo el techo) en el techo del trono, la sima y la caverna; ojos r (2x2,
+; luz verde) en la sima, la caverna y el trono; pústulas n (2x2) en el suelo
+; de la llegada, el mirador y el osario; heridas U (3x2) en el pasillo del
+; filo y el salón. Ningún decorado pisa una escalera, sus columnas vecinas ni
+; las tres filas de encima, un spawn, otro decorado, un enemigo, un objeto ni
+; lo de la _combate (rejas, trampillas, rejas bajas, fuego, puntos del jefe y
+; oleadas), y ningún colmillo cuelga sobre un enemigo del aire.
+;
+; PRUEBAS (en orden):
+;   1. Fuego: el paso de las cadenas, con fuego infernal (E5).
+;   2. Salto: la sima de las ánimas.
+;   3. Combate: el coliseo de los condenados (cerrado, oleadas).
+;   4. Rodar: el pasillo del filo (rejas bajas y enemigos en un pasillo bajo).
+;   5. Aire: la caverna del vuelo (repisas sobre lava y enemigos voladores).
+;   6. Parry: el salón de los verdugos (cerrado, Guardias, ogros y mino).
+;   Después, el umbral (descanso) y el trono de Cthulhu.
+; Checkpoints: llegada (60, 12), antesala del coliseo (37, 60), tras el
+; coliseo (100, 75) y umbral (36, 116). Entre el último y el anterior van
+; tres pruebas seguidas (rodar, aire y parry): es la prueba final.
+;
+; ARRIBA (sin cambios de trazado respecto a la primera versión):
+; - POZO [S7]: x 54-56, filas 0-5. Escalera de la columna 55 (filas 0-12),
+;   que sigue la de la columna 115 de las profundidades: la vuelta.
+; - LLEGADA: x 45-65, filas 6-12 (suelo 13). Segura y sin enemigos. P en
+;   (50, 12); checkpoint en (60, 12). Spawn DesdeProfundidades hacia (52, 12).
+; - 1. PASO DE LAS CADENAS (prueba del fuego): x 34-44, filas 8-12 (suelo
+;   13). Fuego infernal en x 41-44, fila 12 (fuego_infernal.tscn, P61, en
+;   la _combate): con E5 no hace daño; marca el principio de las pruebas.
+;   Foso de lava x 37-39 (lava en la fila 14). Diablillo en (38, 9). Acaba en
+;   la repisa de entrada de la sima, x 30-33 (suelo 13).
+; - MIRADOR DE CENIZA (opcional): x 66-107, filas 8-12 (suelo 13), fosos de
+;   lava x 74-76 y x 86-88. Aprendis (81, 12), mino (98, 12), calavera de
+;   fuego (70, 10) y diablillo (94, 10). Cofre (106, 12). Escalera de la columna 101 (filas
+;   13-27) al osario.
+; - OSARIO (opcional): x 84-107, filas 22-27 (suelo 28), poza de lava
+;   x 92-94. Mimic (102, 27), diablillo (88, 24), cofre (105, 27).
+;
+; EN MEDIO:
+; - 2. SIMA DE LAS ÁNIMAS (prueba del salto): x 1-33, filas 4-60, sobre el
+;   lago de lava x 1-26, filas 61-63. 11 repisas en zigzag, 4 filas más abajo
+;   cada una y a un hueco de 3 (las mismas de la primera versión):
+;     L1 17, x 21-26   L2 21, x 11-17   L3 25, x 1-7 (pared oeste)
+;     L4 29, x 11-16   L5 33, x 20-25   L6 37, x 29-33 (pared este)
+;     L7 41, x 19-25   L8 45, x 9-15    L9 49, x 1-5 (pared oeste)
+;     L10 53, x 9-14   L11 57, x 18-23
+;   Repisa del fondo x 27-33 (suelo 61). Caer al lago mata. Diablillos en
+;   (14, 12), (24, 19), (28, 31) y (16, 51); calaveras de fuego en (6, 23) y
+;   (24, 39); ánimas en (12, 35) y (5, 47); almas condenadas en (20, 27),
+;   (14, 43) y (25, 55).
+; - ANTESALA DEL COLISEO: x 34-43, filas 55-60 (suelo 61). Checkpoint en
+;   (37, 60). Sin enemigos.
+; - 3. COLISEO DE LOS CONDENADOS (prueba del combate): x 45-100, filas
+;   40-60 (suelo 61), la antigua sala de Cthulhu, con sus plataformas de una
+;   vía (filas 57, 53 y 49). Arena cerrada (arena_barrier):
+;   - ENTRADA: reja en la columna 44, filas 57-60, que se cierra al entrar.
+;   - SALIDA: trampilla x 96-98, fila 61, en el suelo, que se abre al vencer
+;     la última oleada. Debajo, el pozo x 96-98 (filas 61-71) con la
+;     escalera de la columna 97 (filas 61-75) hasta el pasillo del filo.
+;   - Oleadas, en la _combate (ArenaColiseo, wave_arena.gd), una por tramo
+;     de la bajada (P73): 1 (profundidades 0-2), Guardia (52, 60), kolbo3
+;     (75, 60), ánimas (64, 50) y (84, 46) y ojo volador (73, 44); 2
+;     (profundidades 3-4), mino (60, 60), lobo de la escarcha (68, 60),
+;     Aprendis (86, 60), calavera de fuego (60, 44) y ave de las nieves
+;     (86, 44); 3 (profundidad 5), pesadillas (58, 60) y (84, 60), bestias
+;     infernales (64, 60) y (80, 60) y diablillo (72, 52). Fuera del ASCII
+;     desde el 2026-11-17.
+;   Las dos rejas y la trampilla quedan abiertas en el ASCII.
+;   - ÁNIMAS LIBERADAS: al vencer la última oleada se marca
+;     infierno_animas_liberadas en completed_encounters. Abre la jaula del
+;     rey encadenado de las profundidades (puerta hacia atrás, idea 9): su
+;     alma y el fragmento de vida 4/4 aparecen en la galería de los
+;     condenados. Vuelta opcional, antes de Cthulhu: sima arriba, escalera 55
+;     de [S7] y, en las profundidades, la sala del Demon Slime y la escalera
+;     68.
+;
+; ABAJO:
+; - 4. PASILLO DEL FILO (prueba de rodar): x 18-108, filas 72-75 (suelo 76),
+;   4 de alto: no se saltan los enemigos, se ruedan. Checkpoint en (100, 75),
+;   al pie de la escalera 97. Tres REJAS BAJAS que solo se pasan rodando (la
+;   pieza de [H2], roll_gate.gd, P52), en las columnas 85, 65 y 45, filas 72-75.
+;   - x 66-84: Guardias (80, 75) y (74, 75), ogro (70, 75).
+;   - x 46-64, TRAMO ALTO (techo en la fila 66): fosos de lava x 50-52 y
+;     x 58-60 (lava en la fila 77); Aprendis (55, 75) entre los dos,
+;     diablillos (48, 68) y (62, 68).
+;   - x 18-44: ogro (38, 75), Guardia (30, 75), lobo de la escarcha (26, 75).
+;   - Rincón opcional al este de la escalera, x 101-108: cofre (107, 75) y
+;     monedas.
+;   Al fondo oeste, hueco x 21-23 en el suelo con la escalera de la columna
+;   22 (filas 76-81), que baja a la caverna y sirve para volver.
+; - 5. CAVERNA DEL VUELO (prueba del aire): x 2-43, filas 77-104, sobre un
+;   lago de lava x 10-43, filas 105-106. Se baja en zigzag (fila del suelo,
+;   x): A 82, x 17-27 (roca, al pie de la escalera 22); B 86, x 31-36 (=);
+;   C 90, x 40-43 (roca, pared este); D 94, x 31-36 (=); E 98, x 21-27 (=);
+;   F 102, x 11-17 (=); G 104, x 2-9 (roca, pared oeste). Diablillos en
+;   (28, 80), (38, 84) y (36, 100); ojos voladores en (25, 92) y (12, 96);
+;   aves de las nieves en (10, 86) y (18, 99); calaveras de fuego en
+;   (30, 90) y (8, 101): se pelea en el aire (tajo aéreo). En G, hueco x 3-5 (filas 104-107) con la escalera de la columna
+;   4 (filas 104-116) al salón.
+; - 6. SALÓN DE LOS VERDUGOS (prueba del parry): x 2-31, filas 108-116
+;   (suelo 117). Arena cerrada (arena_barrier): trampilla x 3-5, fila 107,
+;   arriba, y reja de salida en la columna 32, filas 113-116; se cierran al
+;   bajar y se abren al vencer a todos. Oleadas, en la _combate (ArenaSalon,
+;   wave_arena.gd, fuera del ASCII desde el 2026-11-17): 1, Guardias
+;   (12, 116) y (22, 116), mino (17, 116) y ogro (27, 116); 2, ogros
+;   (8, 116) y (26, 116) y mino (17, 116): golpes lentos y fuertes, para el
+;   parry. Activador en x 7-31, filas 108-116: empieza al bajar de la
+;   escalera 4, no en ella.
+; - UMBRAL (descanso): x 33-43, filas 111-116 (suelo 117). Checkpoint en
+;   (36, 116); cofres en (39, 116) y (41, 116) y la poción de reserva en
+;   (40, 116). Sin enemigos.
+; - TRONO DE CTHULHU (jefe final): x 45-100, filas 96-116 (56 x 21, suelo
+;   117), la medida de la primera versión, en lo más hondo.
+;   - ENTRADA: reja en la columna 44, filas 113-116, la única. Va en Puertas
+;     de boss_arena y se cierra al entrar. En el ASCII queda abierta.
+;   - Activador: x 50-100, filas 96-116.
+;   - PuntosJefe: JefeEste (96, 116), donde aparece Cthulhu, y JefeOeste
+;     (49, 116).
+;   - Plataformas de una vía a escalones de 4: fila 113 (x 51-56 y x 89-94),
+;     fila 109 (x 60-65 y x 80-85) y fila 105 (x 68-77).
+;   - Sin llave ni PuntoLlave: al vencerlo sale "HAS VENCIDO A CTHULHU"
+;     (documentacion/desarrollo/P34, sección 6). No hay Atajos: no hay salida.
+;
+; Comprobado con una simulación de saltos sobre la cuadrícula (escalones de
+; 4 y huecos de 3, rejas y trampillas abiertas): desde la P se llega a todo y
+; desde todo se vuelve a la P (la caverna, por la escalera 22; el salón, por
+; la 4). Con saltos de 3 se baja hasta el trono, pero no se vuelve a subir
+; la sima, como en la primera versión.
+;
+; Viven en tiles_infierno_combate.tscn: las rejas y trampillas del coliseo y del
+; salón (arena_barrier) con sus oleadas, la marca infierno_animas_liberadas
+; del coliseo, las rejas bajas del pasillo, el
+; fuego infernal, la sala de Cthulhu (reja en Puertas, activador, PuntosJefe
+; y el aviso del final) y la transición y el spawn de [S7].
+
+escena: res://mapas/tng/tiles_infierno.tscn
+tileset: infierno
+bloques: carne
+fondo: carne
+fondo_sala: ladrillo 44 40 100 60
+fondo_sala: ladrillo 2 108 32 116
+---
+######################################################.H.######################################################
+######################################################.H.######################################################
+######################################################.H.######################################################
+######################################################.H.######################################################
+#....##.......##........###.......####################.H.######################################################
+#....#........##.........#........####################.H.######################################################
+#.......y.....#...y..........y....###########..........H..........#############################################
+#.................................###########..........H..........#############################################
+#......................................................H....................................................###
+#.....................................d................H....................................................###
+#......................................................H..............X.......................d.............###
+#......................................................H....................................................###
+#.............d.................................t.P....H....S.t.n...n............a.........n......M.......c.###
+#.............................#######...##################################...#########...###########.H.########
+#.................................###~~~##################################~~~#########~~~###########.H.########
+#.................................##################################################################.H.########
+#......................$$.........##################################################################.H.########
+#....................======.......##################################################################.H.########
+#.................................##################################################################.H.########
+#.......................d.........##################################################################.H.########
+#............$$...................##################################################################.H.########
+#..........=======................##################################################################.H.########
+#.................................##################################################.................H......###
+#.....X.....................r.....##################################################.................H......###
+#.................................##################################################....d............H......###
+########..........................##################################################.................H......###
+#.................................##################################################.................H......###
+#...................z.............##################################################.n..........n....Hi..c..###
+#.................................##########################################################...################
+#..........======.................##########################################################~~~################
+#.................................#############################################################################
+#...........................d.....#############################################################################
+#.....................$$..........#############################################################################
+#...................======........#############################################################################
+#.................................#############################################################################
+#...........N.....................#############################################################################
+#.................................#############################################################################
+#............................##################################################################################
+#.................................#############################################################################
+#.......................X.........#############################################################################
+#...r.............................###########........................................................##########
+#..................=======........###########........................................................##########
+#.................................###########........................................................##########
+#.............z...................###########........................................................##########
+#..........$$.....................###########........................................................##########
+#........=======..................###########........................................................##########
+#.................................###########........................................................##########
+#....N............................###########........................................................##########
+#.................................###########........................................................##########
+######............................###########.......................==========.......................##########
+#...........................r.....###########........................................................##########
+#...............d.................###########........................................................##########
+#.................................###########........................................................##########
+#........======...................###########...............======..............======...............##########
+#.................................###########........................................................##########
+#........................z..................#........................................................##########
+#...................$$......................#........................................................##########
+#.................======...........................======................................======......##########
+#....................................................................................................##########
+#....................................................................................................##########
+#..................................t.Sf....t.........................................................##########
+#~~~~~~~~~~~~~~~~~~~~~~~~~~#####################################################################.H.############
+#~~~~~~~~~~~~~~~~~~~~~~~~~~#####################################################################.H.############
+#~~~~~~~~~~~~~~~~~~~~~~~~~~#####################################################################.H.############
+################################################################################################.H.############
+################################################################################################.H.############
+##############################################...................###############################.H.############
+##############################################...................###############################.H.############
+##############################################..d.............d..###############################.H.############
+##############################################...................###############################.H.############
+##############################################...................###############################.H.############
+##############################################........U..........###############################.H.############
+##################...............................................................................H...........##
+##################...............U...........................................U............U......H...........##
+##################...............................................................................H......$$$..##
+##################........J...G.......W................a..............W...G.....G................H..S......c.##
+#####################.H.##########################...#####...##################################################
+##....................H.....................######~~~#####~~~##################################################
+##....................H.....................###################################################################
+##....y.......y.......H..........y..........###################################################################
+##....................H.....d...............###################################################################
+##....................H.....................###################################################################
+##...............###########................###################################################################
+##...............###########................###################################################################
+##....................................d.....###################################################################
+##...............................$$.........###################################################################
+##........Z....................======.......###################################################################
+##..........................................###################################################################
+##..........................................###################################################################
+##..........................................###################################################################
+##..r.........................X.........#######################################################################
+##......................................#######################################################################
+##.......................p..................###################################################################
+##..........................................###################################################################
+##.............................======.......###################################################################
+##..........................................###################################################################
+##..........p...........................r...#........................................................##########
+##.....................$$...................#........................................................##########
+##...................=======................#.......y...........y...............y...........y........##########
+##................Z.........................#........................................................##########
+##..................................d.......#........................................................##########
+##......X....$$.............................#...........................r............................##########
+##.........=======..........................#..r.................................................r...##########
+##..........................................#........................................................##########
+###.H.####..................................#........................................................##########
+###.H.####~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#.......................==========.......................##########
+###.H.####~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#........................................................##########
+###.H.#######################################........................................................##########
+##..H...........................#############........................................................##########
+##..H...........................#############...............======..............======...............##########
+##..H...........................#############........................................................##########
+##..H.....U...........U.........#...........#........................................................##########
+##..H...........................#...........#........................................................##########
+##..H..............................................======................................======......##########
+##..H................................................................................................##########
+##..H................................................................................................##########
+##..H............................tf.S..c!c.t..tf..................................................ft.##########
+###############################################################################################################
+###############################################################################################################
+###############################################################################################################

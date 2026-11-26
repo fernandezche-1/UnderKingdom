@@ -1,0 +1,177 @@
+[gd_scene load_steps=14 format=3]
+
+[ext_resource type="Texture2D" path="res://graficos/terceros/barras_vida/tipo3/3 tipo barra de vida .png" id="1_barras"]
+[ext_resource type="Texture2D" path="res://graficos/terceros/plataformas_cuatro_estaciones_v2_0/objetos/items_.png" id="2_items"]
+[ext_resource type="Script" path="res://interfaces/hud/player_hud.gd" id="3_script"]
+[ext_resource type="Texture2D" path="res://graficos/objetos/Coin Sheet.png" id="4_coins"]
+[ext_resource type="Texture2D" path="res://graficos/objetos/Potion 1.png" id="5_potions"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vida_fondo"]
+atlas = ExtResource("1_barras")
+region = Rect2(0, 84, 32, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vida_relleno"]
+atlas = ExtResource("1_barras")
+region = Rect2(2, 4, 28, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ult_fondo"]
+atlas = ExtResource("1_barras")
+region = Rect2(32, 84, 32, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ult_relleno"]
+atlas = ExtResource("1_barras")
+region = Rect2(34, 4, 28, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_llave"]
+atlas = ExtResource("2_items")
+region = Rect2(48, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hud_coin"]
+atlas = ExtResource("4_coins")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hud_potion"]
+atlas = ExtResource("5_potions")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inventory"]
+bg_color = Color(0.025, 0.036, 0.07, 0.82)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.37, 0.48, 0.65, 0.85)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="PlayerHUD" type="CanvasLayer"]
+layer = 10
+script = ExtResource("3_script")
+
+[node name="Raiz" type="Control" parent="."]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 5.0
+offset_bottom = 5.0
+mouse_filter = 2
+
+[node name="BarraVida" type="TextureProgressBar" parent="Raiz"]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 8.0
+mouse_filter = 2
+max_value = 4.0
+step = 0.25
+value = 4.0
+texture_under = SubResource("AtlasTexture_vida_fondo")
+texture_progress = SubResource("AtlasTexture_vida_relleno")
+texture_progress_offset = Vector2(2, 0)
+
+[node name="DivisionCorazon1" type="ColorRect" parent="Raiz/BarraVida"]
+layout_mode = 0
+offset_left = 8.6667
+offset_top = 1.0
+offset_right = 9.3333
+offset_bottom = 7.0
+mouse_filter = 2
+color = Color(0.024, 0.024, 0.031, 0.85)
+
+[node name="DivisionCorazon2" type="ColorRect" parent="Raiz/BarraVida"]
+layout_mode = 0
+offset_left = 15.6667
+offset_top = 1.0
+offset_right = 16.3333
+offset_bottom = 7.0
+mouse_filter = 2
+color = Color(0.024, 0.024, 0.031, 0.85)
+
+[node name="DivisionCorazon3" type="ColorRect" parent="Raiz/BarraVida"]
+layout_mode = 0
+offset_left = 22.6667
+offset_top = 1.0
+offset_right = 23.3333
+offset_bottom = 7.0
+mouse_filter = 2
+color = Color(0.024, 0.024, 0.031, 0.85)
+
+[node name="BarraUltimate" type="TextureProgressBar" parent="Raiz"]
+layout_mode = 0
+offset_top = 10.0
+offset_right = 32.0
+offset_bottom = 18.0
+mouse_filter = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+texture_under = SubResource("AtlasTexture_ult_fondo")
+texture_progress = SubResource("AtlasTexture_ult_relleno")
+texture_progress_offset = Vector2(2, 0)
+
+[node name="IconoLlave" type="TextureRect" parent="Raiz"]
+visible = false
+layout_mode = 0
+offset_left = 36.0
+offset_top = -4.0
+offset_right = 52.0
+offset_bottom = 12.0
+mouse_filter = 2
+texture = SubResource("AtlasTexture_llave")
+
+[node name="Inventario" type="Panel" parent="."]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -76.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 45.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_inventory")
+
+[node name="MonedasIcono" type="TextureRect" parent="Inventario"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 2.0
+offset_right = 21.0
+offset_bottom = 18.0
+mouse_filter = 2
+texture = SubResource("AtlasTexture_hud_coin")
+
+[node name="MonedasTexto" type="Label" parent="Inventario"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 2.0
+offset_right = 68.0
+offset_bottom = 18.0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 8
+text = "0"
+vertical_alignment = 1
+
+[node name="PocionesIcono" type="TextureRect" parent="Inventario"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 21.0
+offset_right = 21.0
+offset_bottom = 37.0
+mouse_filter = 2
+texture = SubResource("AtlasTexture_hud_potion")
+
+[node name="PocionesTexto" type="Label" parent="Inventario"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 21.0
+offset_right = 68.0
+offset_bottom = 37.0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 8
+text = "0  [C]"
+vertical_alignment = 1

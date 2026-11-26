@@ -1,8 +1,8 @@
 # Macro mapa: rehacer el mundo desde cero
 
-- **Plan:** `docs/P46_MACRO_MAPA.md` (dibujo, ruta, atajos, decisiones y desbloqueos por zona). La forma de trabajo está en su sección 9.
-- **Puertas hacia atrás:** el punto 1 de `mapas_texto/macro/sugerencias_exploracion.txt`, ideas 1 a 9, con sitio, llave, premio, vuelta y coste de cada una.
-- **Lo que hay hoy en Godot no cuenta:** los niveles `tiles_*` y sus escenas `_combate` se descartan mientras dure la fase ASCII. No se usan como referencia ni se arreglan; cada zona se genera de nuevo desde su ASCII en la Fase 3. Desde P72 están apartados en `archivo/tiles_v1/` (la ruta aún corre por ahí) y `escenas/mapas/` queda libre para la Fase 3.
+- **Plan:** `documentacion/desarrollo/P46_MACRO_MAPA.md` (dibujo, ruta, atajos, decisiones y desbloqueos por zona). La forma de trabajo está en su sección 9.
+- **Puertas hacia atrás:** el punto 1 de `mapas/fuentes/macro/sugerencias_exploracion.txt`, ideas 1 a 9, con sitio, llave, premio, vuelta y coste de cada una.
+- **Lo que hay hoy en Godot no cuenta:** los niveles `tiles_*` y sus escenas `_combate` se descartan mientras dure la fase ASCII. No se usan como referencia ni se arreglan; cada zona se genera de nuevo desde su ASCII en la Fase 3. La campaña actual usa las escenas de la Fase 3 en `mapas/tng/`. Las escenas de v1 se conservan en `mapas/tng/historicos/tiles_v1/`.
 
 Las tres fases:
 1. **Fase 1, los ASCII:** cada zona dibujada a escala real, con sus puertas hacia atrás. Hecha (2026-11-08): las puertas y, tras el cierre, el dash y los secretos variados (pasos 8 a 11).
@@ -28,19 +28,19 @@ Las tres fases:
 
 ```
 Tarea: Fase 1 de TASK.md, paso de <zona>. Dibuja en su ASCII las puertas
-hacia atrás <ideas> del punto 1 de mapas_texto/macro/sugerencias_exploracion.txt.
+hacia atrás <ideas> del punto 1 de mapas/fuentes/macro/sugerencias_exploracion.txt.
 
 Antes de dibujar, lee:
-- docs/P46_MACRO_MAPA.md, secciones 6, 9 y 10;
-- mapas_texto/macro/conexiones.txt y zonas.txt;
-- el ASCII de la zona (mapas_texto/macro/zonas/<zona>.txt), sobre todo su
+- documentacion/desarrollo/P46_MACRO_MAPA.md, secciones 6, 9 y 10;
+- mapas/fuentes/macro/conexiones.txt y zonas.txt;
+- el ASCII de la zona (mapas/fuentes/macro/zonas/<zona>.txt), sobre todo su
   cabecera de comentarios;
 - las ideas por su número en las sugerencias (sitio, llave, premio, vuelta).
 
 Cómo trabajar:
 - Enséñame primero un recorte del ASCII con regla de columnas, antes y
   después, y espera a que lo apruebe.
-- Respeta las reglas de escaleras de mapas_texto/LEYENDA.md y no rompas
+- Respeta las reglas de escaleras de mapas/fuentes/LEYENDA.md y no rompas
   nada del camino obligatorio.
 - No toques escenas ni .tscn: lo que vive en la _combate (puertas, objetos,
   NPC) solo se describe en los comentarios.
@@ -54,7 +54,7 @@ Responde en español.
 ```
 
 **Pasos, en orden** (una sesión cada uno):
-- [x] 0. Decisiones de las puertas (P46, sección 6), atajo `:B:` (columnas 100-102 del mundo) y calabozo rehecho como zona tutorial (`mapas_texto/macro/zonas/calabozo.txt`, 100 x 52). Incluye la idea 1, el depósito del alcaide, y la llave del alcaide en la torre de la mazmorra.
+- [x] 0. Decisiones de las puertas (P46, sección 6), atajo `:B:` (columnas 100-102 del mundo) y calabozo rehecho como zona tutorial (`mapas/fuentes/macro/zonas/calabozo.txt`, 100 x 52). Incluye la idea 1, el depósito del alcaide, y la llave del alcaide en la torre de la mazmorra.
 - [x] 1. **Castillo:** ideas 2 (aposentos de la Reina, x 62-74, filas 11-18, al este de la capilla) y 3 (el castillo sin hechizo). La 3 no cambia el trazado: los sitios de los soldados y del Capitán, en (68, 62), van en los comentarios.
 - [x] 2. **Cementerio:** ideas 4 (estatua de la Reina, cueva x 112-118, filas 12-17, tras el hueco de la columna 111) y 5 (cripta de la primera reina, x 62-74, filas 29-34, con escalera nueva en la columna 68, losa en la fila 35 y puerta de velas en la columna 65).
 - [x] 3. **Minas:** idea 6 (gruta de cristal, x 132-147, filas 64-77, tras la boca de la columna 131 y el pasillo del fuego, con checkpoint en (142, 55) y salida por la escalera 139). El Crystal Mauler cabe en 16 x 14 a escala 1, justo.
@@ -80,14 +80,14 @@ Responde en español.
 
 ## Fase 2: piezas en Godot
 
-Cada pieza se prueba en la zona de pruebas (`escenas/mapas/zona_pruebas_combate.tscn`) y se documenta en una etapa nueva de `docs/`. Si toca el Player o el `GameManager`, se comprueban también las zonas ya generadas en la Fase 3.
+Cada pieza se prueba en la zona de pruebas (`mapas/tog/pruebas/zona_pruebas_combate.tscn`) y se documenta en una etapa nueva de `documentacion/desarrollo/`. Si toca el Player o el `GameManager`, se comprueban también las zonas ya generadas en la Fase 3.
 
 **Una pieza está hecha cuando:**
 - funciona en la zona de pruebas, montada en `zona_pruebas_combate.tscn` (o en el `.txt` si lleva letra), con un caso que muestre que cierra y otro que muestre que abre;
 - se probó sin ventana con una escena temporal que simula entradas e imprime el resultado, y esa escena se borró;
 - arrancan sin errores el juego (`godot --headless --quit-after 120`) y la zona de pruebas, y también las zonas ya generadas en la Fase 3 si se tocó el Player, un enemigo, el `GameManager` o un jefe;
 - si guarda estado, se reinicia en `reset_for_new_game`, se guarda en `_make_save_data` / `_restore_game_state` y se sube `SAVE_FORMAT_VERSION`;
-- hay una etapa nueva en `docs/` (la siguiente libre es P74), con el formato de las demás, y está al día lo que la nombra: P46 (secciones 5 y 10), CLAUDE.md si cambia una regla o una pieza a reutilizar, y esta lista;
+- hay una etapa nueva en `documentacion/desarrollo/` (la siguiente libre es P74), con el formato de las demás, y está al día lo que la nombra: P46 (secciones 5 y 10), CLAUDE.md si cambia una regla o una pieza a reutilizar, y esta lista;
 - hay un commit, sin push.
 
 **Plantilla de prompt** (cambiar `<pieza>`, `<zona>` y lo que se quiera añadir en `<notas>`):
@@ -98,9 +98,9 @@ Tarea: Fase 2 de TASK.md, paso de <zona>: la pieza "<pieza>".
 Antes de escribir código, lee:
 - CLAUDE.md (reglas del proyecto, combate, validar cambios);
 - en TASK.md, la línea de la pieza y el criterio de "hecho" de la Fase 2;
-- docs/P46_MACRO_MAPA.md, secciones 5, 6 y 10, y lo que diga de la pieza
-  la cabecera del ASCII de cada zona que la usa (mapas_texto/macro/zonas/);
-- docs/P43_ZONA_DE_PRUEBAS.md;
+- documentacion/desarrollo/P46_MACRO_MAPA.md, secciones 5, 6 y 10, y lo que diga de la pieza
+  la cabecera del ASCII de cada zona que la usa (mapas/fuentes/macro/zonas/);
+- documentacion/desarrollo/P43_ZONA_DE_PRUEBAS.md;
 - los scripts y escenas que ya hacen algo parecido, para reutilizarlos en
   vez de duplicarlos (por ejemplo locked_door.gd, arena_barrier.gd,
   boss_arena.gd, breakable_object.gd, story_hidden_actor.gd, GameManager).
@@ -124,96 +124,96 @@ Cómo trabajar:
 
 Al terminar, cumple el criterio de "hecho" de la Fase 2 de TASK.md:
 prueba en la zona de pruebas, prueba sin ventana, arranques sin errores,
-guardado si aplica, etapa en docs/, P46, TASK.md y un commit sin push.
+guardado si aplica, etapa en documentacion/desarrollo/, P46, TASK.md y un commit sin push.
 Si algo no cuadra con lo que encuentres en los archivos, dímelo antes de
 seguir. Responde en español.
 ```
 
 **Orden (fijado el 2026-11-08):** por la primera zona de la ruta que pide cada pieza. Así la Fase 3 puede empezar por el calabozo en cuanto estén las suyas, sin esperar a tenerlo todo. Una pieza que sirve a varias zonas va en la primera que la pide; las demás la reutilizan.
 
-**Modo autónomo:** `archivo/herramientas/fase2_auto.sh` hace las piezas una tras otra, con una sesión de Claude Code por pieza y un commit cada una, sin pedir aprobación. Las decisiones de diseño que los documentos no fijaban están en `docs/historial/FASE2_DECISIONES.md`: el script no arranca hasta que ese archivo diga "Estado: APROBADO". Una pieza que no se puede terminar se marca `- [~]` y su motivo va a ese archivo.
+**Modo autónomo:** `archivo/herramientas/fase2_auto.sh` hace las piezas una tras otra, con una sesión de Claude Code por pieza y un commit cada una, sin pedir aprobación. Las decisiones de diseño que los documentos no fijaban están en `documentacion/historial/FASE2_DECISIONES.md`: el script no arranca hasta que ese archivo diga "Estado: APROBADO". Una pieza que no se puede terminar se marca `- [~]` y su motivo va a ese archivo.
 
 **0. Ajuste previo:**
 - [x] La tienda vende un solo nivel de vida máxima (`max_level` 1 en `UPGRADE_DEFINITIONS`, 10 monedas; P46, sección 6). La vida máxima ya no se lee del guardado: sale de las mejoras (P47).
 
 **1. Calabozo** (con estas cuatro piezas ya se puede generar en la Fase 3):
-- [x] Pared agrietada que se rompe a golpes, también a puños (secretos del calabozo y de las profundidades): `escenas/objetos/pared_agrietada.tscn` (P48). Falta su arte; la caja y la estatua rompibles no reciben golpes (P48, sección 3).
-- [x] Palanca y barrera que se abre según `completed_encounters` (atajos `:B:` a `:F:`, compuerta de la mazmorra, rejilla de la jaula del rey encadenado): `escenas/objetos/palanca.tscn` y `open_on_encounter` de `arena_barrier.gd` (P49). Falta el arte de la palanca.
-- [x] Objeto de lore que abre un diálogo (`npc.gd` y `dialogue_ui`): el acta del prisionero y, después, el resto del lore de marcador: `escenas/objetos/objeto_lore.tscn` (P50). Falta su arte y los textos definitivos.
-- [x] Mejora de +0.25 de daño en todos los tajos (la empuñadura del depósito del alcaide): `escenas/items/mejora_encontrada.tscn` y `FOUND_UPGRADE_DEFINITIONS` de `GameManager` (P51). `SAVE_FORMAT_VERSION` pasa a 3. Falta su arte.
+- [x] Pared agrietada que se rompe a golpes, también a puños (secretos del calabozo y de las profundidades): `objetos/entorno/pared_agrietada.tscn` (P48). Falta su arte; la caja y la estatua rompibles no reciben golpes (P48, sección 3).
+- [x] Palanca y barrera que se abre según `completed_encounters` (atajos `:B:` a `:F:`, compuerta de la mazmorra, rejilla de la jaula del rey encadenado): `objetos/entorno/palanca.tscn` y `open_on_encounter` de `arena_barrier.gd` (P49). Falta el arte de la palanca.
+- [x] Objeto de lore que abre un diálogo (`npc.gd` y `dialogue_ui`): el acta del prisionero y, después, el resto del lore de marcador: `objetos/entorno/objeto_lore.tscn` (P50). Falta su arte y los textos definitivos.
+- [x] Mejora de +0.25 de daño en todos los tajos (la empuñadura del depósito del alcaide): `objetos/recogibles/mejora_encontrada.tscn` y `FOUND_UPGRADE_DEFINITIONS` de `GameManager` (P51). `SAVE_FORMAT_VERSION` pasa a 3. Falta su arte.
 
 **2. Castillo:**
-- [x] Reja baja que solo se pasa rodando (`[H2]` y el pasillo del filo del infierno): `scripts/environment/roll_gate.gd` (P52). Sin escena propia: es una `arena_barrier.gd` con otro script; falta su arte.
-- [x] Mostrar u ocultar según un encuentro superado (el castillo sin hechizo y el rey encadenado): `scripts/environment/encounter_visibility.gd`, componente hijo del nodo (P53). `story_hidden_actor.gd` no cambia.
-- [x] Fragmento de vida: 4 dan 1 corazón: `escenas/items/fragmento_vida.tscn` y `grant_life_fragment` de `GameManager` (P54). `SAVE_FORMAT_VERSION` pasa a 4. Falta su arte.
+- [x] Reja baja que solo se pasa rodando (`[H2]` y el pasillo del filo del infierno): `sistemas/entorno/roll_gate.gd` (P52). Sin escena propia: es una `arena_barrier.gd` con otro script; falta su arte.
+- [x] Mostrar u ocultar según un encuentro superado (el castillo sin hechizo y el rey encadenado): `sistemas/entorno/encounter_visibility.gd`, componente hijo del nodo (P53). `story_hidden_actor.gd` no cambia.
+- [x] Fragmento de vida: 4 dan 1 corazón: `objetos/recogibles/fragmento_vida.tscn` y `grant_life_fragment` de `GameManager` (P54). `SAVE_FORMAT_VERSION` pasa a 4. Falta su arte.
 
 **3. Cementerio:**
-- [x] Contador de sellos que abre una puerta (`[S3]`, `[S7]`): `escenas/objetos/sello.tscn` y `open_on_seal_group` de `arena_barrier.gd` (P55). No cambia el formato de guardado. Falta su arte.
-- [x] Rompible que solo acepta un tipo de golpe: el ascendente con Golpe final (losa de la cripta) o la Ultimate (estatua de la Reina): `escenas/objetos/rompible_selectivo.tscn` (P56). No cambia el guardado. Falta su arte.
+- [x] Contador de sellos que abre una puerta (`[S3]`, `[S7]`): `objetos/entorno/sello.tscn` y `open_on_seal_group` de `arena_barrier.gd` (P55). No cambia el formato de guardado. Falta su arte.
+- [x] Rompible que solo acepta un tipo de golpe: el ascendente con Golpe final (losa de la cripta) o la Ultimate (estatua de la Reina): `objetos/entorno/rompible_selectivo.tscn` (P56). No cambia el guardado. Falta su arte.
 - [x] `locked_door` con otro dibujo: velas, y después hielo negro y el hielo de `[P6]`: `locked_door.gd` con `require_interact`, `open_effect` y `piece_tint` (P57). No cambia el guardado. Falta su arte.
 - [x] Mejora de +0.25 en pociones (el amuleto de la guardia): fila `amuleto_guardia` de `FOUND_UPGRADE_DEFINITIONS` y `get_potion_heal_amount()` del Player, con `mejora_encontrada.tscn` (P58). No cambia el guardado. Falta su arte.
 
 **4. Minas:**
-- [x] Ascensor minero (`:C:`): `escenas/objetos/ascensor.tscn` (P60). Una cabina por escena; sin guardado nuevo. Falta su arte.
-- [x] Fuego infernal que solo se pasa con E5 (gruta de cristal, santuario de las profundidades, infierno): `escenas/sistemas/fuego_infernal.tscn` (P61). Sin guardado nuevo. Falta su arte.
-- [x] IA del Crystal Mauler: `escenas/jefes/crystal_mauler.tscn`, con `simple_boss.gd` (P62). `boss_mina.tscn` no se toca (lo usa `mundo_2`). Su sala, la gruta de cristal, mide 16 x 14. Sin guardado nuevo.
+- [x] Ascensor minero (`:C:`): `objetos/entorno/ascensor.tscn` (P60). Una cabina por escena; sin guardado nuevo. Falta su arte.
+- [x] Fuego infernal que solo se pasa con E5 (gruta de cristal, santuario de las profundidades, infierno): `sistemas/entorno/fuego_infernal.tscn` (P61). Sin guardado nuevo. Falta su arte.
+- [x] IA del Crystal Mauler: `personajes/jefes/crystal_mauler.tscn`, con `simple_boss.gd` (P62). `boss_mina.tscn` no se toca (lo usa `mundo_2`). Su sala, la gruta de cristal, mide 16 x 14. Sin guardado nuevo.
 - [x] La Adrenalina sale de `STARTING_ABILITIES` y la da el Mauler (`ability_reward adrenaline`): `SalaMauler` en la zona de pruebas (P63). `SAVE_FORMAT_VERSION` sigue en 5. Falta el arte de la reliquia (la de siempre).
 
 **5. Mazmorra:**
-- [x] Suelo que se hunde y secuencia de derrumbe y huida (`[!5]`): `scripts/environment/collapse_sequence.gd` y `falling_rubble.gd` (P64). Sin guardado nuevo. Falta su arte.
+- [x] Suelo que se hunde y secuencia de derrumbe y huida (`[!5]`): `sistemas/entorno/collapse_sequence.gd` y `falling_rubble.gd` (P64). Sin guardado nuevo. Falta su arte.
 
 **6. Ruina:**
-- [x] Hielo que se derrite con la llama eterna, y la luz de la antorcha (`[P6]`), sobre la `locked_door` con otro dibujo del paso 3: `escenas/items/llama_eterna.tscn` y `scripts/environment/dark_zone.gd` (P65). Sin guardado nuevo. Falta su arte.
+- [x] Hielo que se derrite con la llama eterna, y la luz de la antorcha (`[P6]`), sobre la `locked_door` con otro dibujo del paso 3: `objetos/recogibles/llama_eterna.tscn` y `sistemas/entorno/dark_zone.gd` (P65). Sin guardado nuevo. Falta su arte.
 - [x] Dash en el aire (`air_dash`, premio del Guardián con `ability_reward`): unas 7 piezas en horizontal, sin gravedad, una vez por salto. Probar en la zona de pruebas que el pasillo de 4 de alto con foso de 6 no se cruza sin él, ni con la Agilidad: `PlayerAction.AIR_DASH` y `PasilloDash` en la zona de pruebas (P66). Sin guardado nuevo. Falta su arte.
 
 **7. Infierno:**
-- [x] Arenas con oleadas (coliseo y salón de los verdugos): `scripts/combat/wave_arena.gd` y `ArenaOleadas` en la zona de pruebas (P67). Sin guardado nuevo (solo `completed_encounters`). Sin arte propio.
+- [x] Arenas con oleadas (coliseo y salón de los verdugos): `sistemas/combate/wave_arena.gd` y `ArenaOleadas` en la zona de pruebas (P67). Sin guardado nuevo (solo `completed_encounters`). Sin arte propio.
 
 Las profundidades no piden piezas nuevas: reutilizan el contador de sellos, el fuego infernal, la barrera, la pared agrietada y el mostrar u ocultar.
 
 **En paralelo: atuendos** (P46, sección 10). Dependen sobre todo del arte, así que no frenan el orden de arriba:
 - [x] Atuendo actual y `OUTFIT_DEFINITIONS` en `GameManager` (guardado, reinicio, `SAVE_FORMAT_VERSION`): `outfits_found`, `grant_outfit` y rasgos en el Player (P59). `SAVE_FORMAT_VERSION` pasa a 5. Opción "Siguiente atuendo" en el modo dev; faltan su objeto, su aspecto y su menú.
-- [x] Un `SpriteFrames` por atuendo; separar el Fire Knight (E5) de los harapos (E1): `escenas/atuendos/fire_knight.tres` (generado con `herramientas/sprites/generar_atuendo_fire_knight.tscn`) y `ManiquiFireKnight` en la zona de pruebas (P68). Sin guardado nuevo. Faltan el arte de E2-E4 y las tiras propias de E1.
-- [x] Escena de atuendo para recoger, generalizando `espada_oxidada.tscn`: `escenas/objetos/atuendo.tscn` (`outfit_pickup.gd`, `outfit_id` exportado), del que hereda `espada_oxidada.tscn` con `harapos`; `EspadaOxidada` y `AtuendoSoldado` en la zona de pruebas (P69). Sin guardado nuevo. Falta su arte.
-- [x] Sección "Equipo" en el menú de pausa: pestaña `TabEquipo` / `PaginaEquipo` de `escenas/menu/menu_pausa.tscn`, rellenada por `pause_menu_overlay.gd`; se prueba con `EspadaOxidada` y `AtuendoSoldado` de la zona de pruebas (P70). Sin guardado nuevo. Sin arte propio (falta un retrato por atuendo).
+- [x] Un `SpriteFrames` por atuendo; separar el Fire Knight (E5) de los harapos (E1): `objetos/equipo/fire_knight.tres` (generado con `herramientas/fotogramas/generar_atuendo_fire_knight.tscn`) y `ManiquiFireKnight` en la zona de pruebas (P68). Sin guardado nuevo. Faltan el arte de E2-E4 y las tiras propias de E1.
+- [x] Escena de atuendo para recoger, generalizando `espada_oxidada.tscn`: `objetos/entorno/atuendo.tscn` (`outfit_pickup.gd`, `outfit_id` exportado), del que hereda `espada_oxidada.tscn` con `harapos`; `EspadaOxidada` y `AtuendoSoldado` en la zona de pruebas (P69). Sin guardado nuevo. Falta su arte.
+- [x] Sección "Equipo" en el menú de pausa: pestaña `TabEquipo` / `PaginaEquipo` de `interfaces/menu/menu_pausa.tscn`, rellenada por `pause_menu_overlay.gd`; se prueba con `EspadaOxidada` y `AtuendoSoldado` de la zona de pruebas (P70). Sin guardado nuevo. Sin arte propio (falta un retrato por atuendo).
 - [ ] Arte con IA de E2 (soldado), E3 (caballero de la cripta) y E4 (abrigo); terminar las tiras que faltan de E1.
 
 ---
 
 ## Fase 3: generar cada zona y montar su `_combate`
 
-Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambia su ruta en `zonas.txt` (P46, sección 9). Después hay que jugarla.
+Al generar una zona, su archivo pasa a `mapas/fuentes/tng/tiles_<zona>.txt` y se cambia su ruta en `zonas.txt` (P46, sección 9). Después hay que jugarla.
 
 **Al generar cada zona, además** (P72):
-- la escena nueva va a `escenas/mapas/tiles_<zona>.tscn` y `_combate`, el nombre que ya llevan las salidas de los ASCII y `zonas.txt`;
-- las salidas que llegan a ella desde zonas todavía viejas apuntan hoy a `archivo/tiles_v1/escenas/`. Hay que cambiarlas a la nueva: la de la prisión (`camara_sellado_alma.tscn`) para el calabozo, y las de los `_combate` de `archivo/tiles_v1/` vecinos;
-- castillo y cementerio: `GameManager.CASTLE_SCENE_PATH` / `CEMETERY_SCENE_PATH` (autoguardado) y la lista de `player.gd` (`debug_slide_collisions`) vuelven a `escenas/mapas/`;
+- la escena nueva va a `mapas/tng/tiles_<zona>.tscn` y `_combate`, el nombre que ya llevan las salidas de los ASCII y `zonas.txt`;
+- las salidas que llegan a ella desde zonas todavía viejas apuntan hoy a `mapas/tng/historicos/tiles_v1/`. Hay que cambiarlas a la nueva: la de la prisión (`camara_sellado_alma.tscn`) para el calabozo, y las de los `_combate` de `archivo/tiles_v1/` vecinos;
+- castillo y cementerio: `GameManager.CASTLE_SCENE_PATH` / `CEMETERY_SCENE_PATH` (autoguardado) y la lista de `player.gd` (`debug_slide_collisions`) vuelven a `mapas/tng/`;
 - la versión vieja de la zona se queda en `archivo/tiles_v1/`: no se borra ni se toma como referencia.
 
 **Estructura primero, vestir después** (P73): cada zona se genera y se juega con el arte y los enemigos de hoy (lista de abajo), y después se viste con arte y enemigos nuevos (lista "Vestir cada zona"). Lo que se pone en la `_combate` no se pierde al regenerar la base.
 
 **Estructura de cada zona:**
-- [x] **Calabozo:** cinco rejas, las dos cinemáticas y sus puntos, enemigos y carcelero, espada y preso, pared agrietada, depósito del alcaide con el acta y la empuñadura, trampilla, transición y spawn de `:B:`. Base generada y `_combate` montada (2026-11-10, `escenas/mapas/tiles_calabozo_combate.tscn`); la salida de la prisión ya apunta a la `_combate`.
+- [x] **Calabozo:** cinco rejas, las dos cinemáticas y sus puntos, enemigos y carcelero, espada y preso, pared agrietada, depósito del alcaide con el acta y la empuñadura, trampilla, transición y spawn de `:B:`. Base generada y `_combate` montada (2026-11-10, `mapas/tng/tiles_calabozo_combate.tscn`); la salida de la prisión ya apunta a la `_combate`.
   - La reja del depósito pide la llave `mazmorra_alcaide`: la mazmorra la da con ese id y añade su nombre a `KEY_NAMES` (`pause_menu_overlay.gd`).
-  - Sin pieza de arcón: el acta y la empuñadura están sueltas en el suelo, en (14, 26) y (15, 26). Las marcas del secreto usan `dialogues/lore_marcas_preso.json` (texto provisional).
+  - Sin pieza de arcón: el acta y la empuñadura están sueltas en el suelo, en (14, 26) y (15, 26). Las marcas del secreto usan `narrativa/dialogos/lore_marcas_preso.json` (texto provisional).
   - `SalidaAtajoB` apunta a `tiles_mazmorra_combate.tscn#DesdeCalabozo` (montada el 2026-11-15). `[L1]` apunta a `tiles_castillo_combate.tscn#SpawnInicio`.
 - [x] **Castillo:**
   - el Rey con `ability_reward` de Rodar, la reja de `[H2]`, las trampillas y la trampilla de `:C:`;
   - los aposentos de la Reina y el castillo sin hechizo (soldados NPC y el Capitán).
-  - Base generada y `_combate` montada (2026-11-11, `escenas/mapas/tiles_castillo_combate.tscn`); `[L1]` del calabozo ya apunta a la `_combate` (`tiles_calabozo.txt` y `target_scene_path` de `tiles_calabozo.tscn`, sin regenerar). `CASTLE_SCENE_PATH` y `debug_slide_collisions` apuntan a `escenas/mapas/`. `[H2]` apunta al cementerio nuevo, aún sin generar.
+  - Base generada y `_combate` montada (2026-11-11, `mapas/tng/tiles_castillo_combate.tscn`); `[L1]` del calabozo ya apunta a la `_combate` (`tiles_calabozo.txt` y `target_scene_path` de `tiles_calabozo.tscn`, sin regenerar). `CASTLE_SCENE_PATH` y `debug_slide_collisions` apuntan a `mapas/tng/`. `[H2]` apunta al cementerio nuevo, aún sin generar.
   - `SalaRey` (`boss_arena.gd`, `encounter_id` `castillo_rey`, `ability_reward roll`, sin llave): puerta en la columna 102 y trampilla de x 70-72 en `Atajos`; la reliquia cae en (86, 62). La llave `castillo_rey` sale de `KEY_NAMES` y de `BOSS_KEY_IDS` (P46, sección 6).
   - Cerrojo del gran salón: barrera en la columna 68 con `open_on_encounter` `castillo_cerrojo_salon`, la palanca en la repisa de la antecámara, (70, 36).
   - `ArenaAntecamara` (`wave_arena.gd`, `encounter_id` `castillo_antecamara`, 2026-11-11): activador en x 76-97, filas 34-40 (se entra al caer de la armería; al reaparecer en el checkpoint de (100, 40) no empieza hasta andar hacia el centro). `Puertas`: `PuertaSalon`, reja en la columna 67, junto al cerrojo, para no huir por la palanca. `Atajos`: `TrampillaVestibulo`, losa en x 104-106, fila 41, sobre la escalera. Oleadas: 1, dos Guardias; 2, una Vanguardia y dos murciélagos; 3, dos Guardias y un murciélago; 4, un Guardia, una Vanguardia y dos murciélagos. Los enemigos de la antecámara salieron del ASCII y la base se regeneró con las mismas colisiones; las `Visibilidad` de los Guardias se renombraron (`Guardia11`, `Guardia12`, `Guardia15`) y la del `Guardia16` se quitó. Falta jugarla y ajustar las oleadas.
   - `:C:`: trampilla en la fila 76 y cabina (`AscensorC`) en el pozo, filas 76-78, sobre una barrera fija en la fila 79 que hace de suelo (el pozo llega al borde de abajo y la cabina no tiene colisión). Las dos escuchan `minas_atajo_c_abierto`: **la palanca de las minas lleva ese `encounter_id`**, y su cabina apunta a `tiles_castillo_combate.tscn#DesdeMinas`; la del castillo va a `tiles_mineria_combate.tscn#DesdeCastillo`.
   - El castillo sin hechizo escucha `mazmorra_reina`, el id con el que la sala de la Reina ya se marca en v1: **la mazmorra nueva lo conserva**. Los Guardias (6 desde la arena de la antecámara) se ocultan y aparecen `Soldado1`…`Soldado7` y `CapitanTrono` (`npc.gd`, cuadro `idle` de la Guardia y del Capitán, de pie: falta el arte de rodillas), con `encounter_visibility.gd`.
   - Aposentos: `PuertaAposentos` (`minas_caballero`), el diario I (`diario_reina_1`) y el fragmento `castillo_1`. E2 (`AtuendoSoldado`) en el nicho de la armería, (105, 10).
-  - Textos provisionales: `dialogues/lore_diario_reina_1.json`, `castillo_soldado_1.json` a `_7.json` y `castillo_capitan_trono.json`.
+  - Textos provisionales: `narrativa/dialogos/lore_diario_reina_1.json`, `castillo_soldado_1.json` a `_7.json` y `castillo_capitan_trono.json`.
   - La repisa de la palanca (fila 37, x 69-74) queda 4 piezas sobre el suelo de la antecámara: se sube con E1 (4,3), pero la cabecera dice que ningún escalón pasa de 3. Revisarlo al jugarla.
 - [x] **Cementerio:**
   - el Capitán sin llave, las tres tumbas sello y su contador, la losa de `[S3]`, las trampillas del atajo y de la fosa, la casa del sepulturero y E3;
   - la estatua de la Reina, con las notas y el amuleto; la losa, la puerta de velas, la corona con la carta y el fragmento de vida 2/4 de la cripta de la primera reina.
-  - Base generada y `_combate` montada (2026-11-12, `escenas/mapas/tiles_cementerio_combate.tscn`). `[H2]` del castillo (`siguiente:` de `tiles_castillo.txt` y `target_scene_path` de `tiles_castillo.tscn`, sin regenerar) y la salida anterior de las minas de v1 (`anterior:` de `archivo/tiles_v1/mapas_texto/tiles_mineria.txt` y `SalidaAnterior1` de `tiles_mineria.tscn`, a `#DesdeMinas`) ya apuntan a la `_combate`. `CEMETERY_SCENE_PATH` apunta a ella; `debug_slide_collisions` no cambia (solo lista el castillo).
-  - Sellos (`sello.tscn`, grupo `cementerio_s3`): `SelloFosa` (38, 35) escucha `cementerio_fosa`, `SelloPanteon` (115, 8) se activa con E y `SelloTumbaReal` (39, 86) escucha `cementerio_capitan`. `LosaS3` (x 10-12, fila 87, `open_on_seal_group`) tapa `[S3]`; `SalidaS3` (fila 89) va a la base de las minas nuevas (`escenas/mapas/tiles_mineria.tscn#DesdeCementerio`, desde el 2026-11-12; antes, a las de v1) hasta montar su `_combate`, y se vuelve al spawn `DesdeMinas`, en (8, 86).
+  - Base generada y `_combate` montada (2026-11-12, `mapas/tng/tiles_cementerio_combate.tscn`). `[H2]` del castillo (`siguiente:` de `tiles_castillo.txt` y `target_scene_path` de `tiles_castillo.tscn`, sin regenerar) y la salida anterior de las minas de v1 (`anterior:` de `mapas/fuentes/tng/historicos/tiles_v1/tiles_mineria.txt` y `SalidaAnterior1` de `tiles_mineria.tscn`, a `#DesdeMinas`) ya apuntan a la `_combate`. `CEMETERY_SCENE_PATH` apunta a ella; `debug_slide_collisions` no cambia (solo lista el castillo).
+  - Sellos (`sello.tscn`, grupo `cementerio_s3`): `SelloFosa` (38, 35) escucha `cementerio_fosa`, `SelloPanteon` (115, 8) se activa con E y `SelloTumbaReal` (39, 86) escucha `cementerio_capitan`. `LosaS3` (x 10-12, fila 87, `open_on_seal_group`) tapa `[S3]`; `SalidaS3` (fila 89) va a la base de las minas nuevas (`mapas/tng/tiles_mineria.tscn#DesdeCementerio`, desde el 2026-11-12; antes, a las de v1) hasta montar su `_combate`, y se vuelve al spawn `DesdeMinas`, en (8, 86).
   - `ArenaFosa` (`wave_arena.gd`, `encounter_id` `cementerio_fosa`): activador en el fondo de la fosa (x 26-53, filas 34-35) y `TapaFosa` (x 31-45, fila 27) en `Puertas`. Oleadas: 1, tres esqueletos de tumba; 2, dos esqueletos y un murciélago. Los tres esqueletos de la fosa salieron del ASCII y la base se regeneró con las mismas capas de piezas. Al jugarla se quedaba chica (15 × 6): se agrandó con forma de botella (2026-11-12), con la boca de siempre (x 31-45, filas 27-28) y una cueva de x 26-53, filas 29-35 (suelo 36); `SelloFosa` baja a (38, 35) y los enemigos se reparten por la cueva. Falta volver a jugarla y ajustar las oleadas.
   - `SalaCapitan` (`boss_arena.gd`, `encounter_id` `cementerio_capitan`, `counts_as_world1_boss = false` en `boss_overrides`, `ability_reward combo_2`, sin llave): `PuertaEntrada` en la columna 55, `PuertaOeste` en la columna 23 (`Atajos`), el Capitán sale en (29, 86) y la reliquia cae junto a (46, 86). `cementerio_capitan` salió de `KEY_NAMES` y `BOSS_KEY_IDS` (P46, sección 6).
   - `TrampillaAtajo` (x 21-23, fila 27) se abre con `PalancaAtajo` (20, 60), al pie de la escalera 22 (`cementerio_atajo_escalera`). Casa: el Barquero (tienda) en (61, 26). E3: `AtuendoCaballero` (`caballero_cripta`) en (91, 83).
@@ -221,7 +221,7 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
 - [x] **Minas:**
   - el Caballero en su sala nueva, la puerta con llave de `[L4]`, el ascensor y la palanca de `:C:`, la trampilla del atajo, la reja de `:D:` y las transiciones de `[S3]` y `:C:`;
   - la gruta de cristal: fuego infernal, checkpoint y el Mauler con su `boss_arena` (trampilla de entrada en `Puertas`, la del suelo en `Atajos`, `ability_reward adrenaline`).
-  - Base generada y `_combate` montada (2026-11-12, `escenas/mapas/tiles_mineria_combate.tscn`): 26 enemigos, 4 trampas de fuego, 5 cofres, 17 monedas, 3 pociones y 3 checkpoints en la base. `SalidaS3` del cementerio (`#DesdeCementerio`) y la salida anterior de la mazmorra de v1 (`anterior:` de `archivo/tiles_v1/mapas_texto/tiles_mazmorra.txt` y `target_scene_path` de `tiles_mazmorra.tscn`, sin regenerar; spawn `DesdeSiguiente`, el de `[L4]`) ya apuntan a la `_combate`. `AscensorC` del castillo va a `tiles_mineria_combate.tscn#DesdeCastillo`. Rejas y losas con piezas del atlas `dungeontilesetfull.png` (las de v1).
+  - Base generada y `_combate` montada (2026-11-12, `mapas/tng/tiles_mineria_combate.tscn`): 26 enemigos, 4 trampas de fuego, 5 cofres, 17 monedas, 3 pociones y 3 checkpoints en la base. `SalidaS3` del cementerio (`#DesdeCementerio`) y la salida anterior de la mazmorra de v1 (`anterior:` de `mapas/fuentes/tng/historicos/tiles_v1/tiles_mazmorra.txt` y `target_scene_path` de `tiles_mazmorra.tscn`, sin regenerar; spawn `DesdeSiguiente`, el de `[L4]`) ya apuntan a la `_combate`. `AscensorC` del castillo va a `tiles_mineria_combate.tscn#DesdeCastillo`. Rejas y losas con piezas del atlas `dungeontilesetfull.png` (las de v1).
   - `SalaCaballero` (`boss_arena.gd`, `encounter_id` `minas_caballero`, `key_scene` `llave_jefe_m1.tscn` con `key_id` `minas_caballero`, `ability_reward combo_3`): `PuertaEntrada` en la columna 35 (filas 82-86), sin `Atajos`; el Caballero sale en (7, 82) o (31, 82) y la llave cae en (19, 85), con la reliquia al lado. `PuertaL4` (`locked_door`, `minas_caballero`) en la columna 28, filas 66-68.
   - Atajo interno: `TrampillaAtajo` (x 47-49, fila 41) se abre con `PalancaAtajo` (45, 86), al pie de la escalera 48 (`minas_atajo_interno`).
   - `:C:`: `AscensorC` en (21, 40), con su spawn `DesdeCastillo`, y `PalancaC` (12, 40), las dos con `minas_atajo_c_abierto`.
@@ -229,16 +229,16 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
   - `:D:`: `RejaD` (x 132-134, fila 87) escucha `ruina_atajo_d_abierto`: **la palanca de la ruina, en (140, 17), lleva ese `encounter_id`**. `SalidaD` (fila 89) ya apunta a `tiles_ruina_combate.tscn#DesdeMinas`, aún sin generar; spawn `DesdeRuina` en (131, 86).
   - Gruta: `FuegoInfernal` (x 133-141, fila 55, `width_tiles` 9) y `SalaMauler` (`encounter_id` `minas_mauler`, `ability_reward adrenaline`, sin llave): activador al pie de la bajada (x 144-146, filas 74-77), `TrampillaEntrada` (fila 63) en `Puertas`, `TrampillaSuelo` (x 138-140, fila 78) en `Atajos`, el Mauler sale en (134, 77). Lleva `PuntoLlave` en (137, 77) solo para la reliquia: sin él caería en el origen del nodo.
   - La llave (`llave_jefe_m1.tscn`) se dibuja a escala 1.5, no entera: queda pendiente.
-  - `[L4]` (`siguiente:`) iba a la mazmorra de v1; desde el 2026-11-15 va a la base nueva (`siguiente:` de `tiles_mineria.txt` y `target_scene_path` de `tiles_mineria.tscn`, sin regenerar: `escenas/mapas/tiles_mazmorra.tscn#DesdeAnterior`) y, al montar su `_combate`, pasa a `tiles_mazmorra_combate.tscn`.
+  - `[L4]` (`siguiente:`) iba a la mazmorra de v1; desde el 2026-11-15 va a la base nueva (`siguiente:` de `tiles_mineria.txt` y `target_scene_path` de `tiles_mineria.tscn`, sin regenerar: `mapas/tng/tiles_mazmorra.tscn#DesdeAnterior`) y, al montar su `_combate`, pasa a `tiles_mazmorra_combate.tscn`.
   - El fuego infernal (x 133-141, fila 55) salió del ASCII: la `F` del constructor es la trampa de fuego normal, que quema también con E5. Va en la `_combate` (`fuego_infernal.tscn`, `width_tiles` 9). Ojo al hacer las profundidades: su santuario lo marca igual con `F`.
 - [x] **Mazmorra:**
   - la Reina con `ability_reward` del Ultimate y sin llave, el suelo que se hunde y el derrumbe, la compuerta y la palanca del atajo, la trampilla del colector y la transición de `[!5]`;
   - la palanca, la transición y el spawn de `:B:` (el calabozo sale a `#DesdeCalabozo` y espera llegar a `#DesdeMazmorra`), y la llave del alcaide (`mazmorra_alcaide`);
   - la trampilla, la transición y el spawn del pozo de los condenados (`:F:`).
-  - Base generada y `_combate` montada (2026-11-15, `escenas/mapas/tiles_mazmorra_combate.tscn`): 20 enemigos (5 Aprendis, 2 mino, 7 kolbo3 y 6 esqueletos), 18 pinchos, 3 cofres, 14 monedas, 3 pociones y 2 checkpoints en la base.
+  - Base generada y `_combate` montada (2026-11-15, `mapas/tng/tiles_mazmorra_combate.tscn`): 20 enemigos (5 Aprendis, 2 mino, 7 kolbo3 y 6 esqueletos), 18 pinchos, 3 cofres, 14 monedas, 3 pociones y 2 checkpoints en la base.
   - Salidas que llegan a la `_combate`:
     - `[L4]` de las minas (`siguiente:` de `tiles_mineria.txt` y `target_scene_path` de `tiles_mineria.tscn`, sin regenerar), a `#DesdeAnterior`, el spawn de la `<`;
-    - la salida anterior de la ruina de v1 (`anterior:` de `archivo/tiles_v1/mapas_texto/tiles_ruina.txt` y `SalidaAnterior1` de `tiles_ruina.tscn`), a `#DesdeRuina`;
+    - la salida anterior de la ruina de v1 (`anterior:` de `mapas/fuentes/tng/historicos/tiles_v1/tiles_ruina.txt` y `SalidaAnterior1` de `tiles_ruina.tscn`), a `#DesdeRuina`;
     - `SalidaAtajoB` del calabozo, a `#DesdeCalabozo`.
   - La `<` de `[L4]` la pone el constructor y va a `tiles_mineria_combate.tscn#DesdeSiguiente`; la cabecera no tiene `siguiente:` (`[!5]` sale por abajo, en la `_combate`).
   - Suelo de la sala de la Reina: `collapse_sequence.gd` pone su propio suelo y no quita celdas de `Terreno`. Por eso la fila 75, x 8-22, del `.txt` pasó de bloque a hueco y la base se regeneró; solo hay 15 celdas sólidas menos y las plataformas no cambian.
@@ -264,10 +264,10 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
   - el Guardián, la reja de salida en `Atajos`, el hielo de `[P6]` y la llama eterna, la luz de la parte oscura;
   - la palanca y la reja de `:D:`, las trampillas del atajo y de `:E:`, y las transiciones de `[!5]`, `:D:`, `[P6]` y `:E:`;
   - el hielo negro (la misma pieza que el hielo de `[P6]`, con `key_id` `profundidades_ascua`), la página III y el fragmento de vida 3/4.
-  - Base generada (2026-11-16, `escenas/mapas/tiles_ruina.tscn`, desde `mapas_texto/tiles_ruina.txt`): 23 enemigos (6 Aprendis, 2 mino, 7 kolbo3 y 8 esqueletos), 24 pinchos, 4 cofres, 18 monedas, 3 pociones y 2 checkpoints. Sin salidas del constructor (ni `siguiente:` ni `anterior:`): todas van en la `_combate`.
-  - `_combate` montada (2026-11-16, `escenas/mapas/tiles_ruina_combate.tscn`). Salidas que llegan a ella:
+  - Base generada (2026-11-16, `mapas/tng/tiles_ruina.tscn`, desde `mapas/fuentes/tng/tiles_ruina.txt`): 23 enemigos (6 Aprendis, 2 mino, 7 kolbo3 y 8 esqueletos), 24 pinchos, 4 cofres, 18 monedas, 3 pociones y 2 checkpoints. Sin salidas del constructor (ni `siguiente:` ni `anterior:`): todas van en la `_combate`.
+  - `_combate` montada (2026-11-16, `mapas/tng/tiles_ruina_combate.tscn`). Salidas que llegan a ella:
     - `[!5]`: `Salida5` de `tiles_mazmorra_combate.tscn`, a `#DesdeMazmorra`;
-    - la salida anterior de las profundidades de v1 (`anterior:` de `archivo/tiles_v1/mapas_texto/tiles_profundidades.txt` y `SalidaAnterior1` de `tiles_profundidades.tscn`, sin regenerar), a `#DesdeProfundidades`;
+    - la salida anterior de las profundidades de v1 (`anterior:` de `mapas/fuentes/tng/historicos/tiles_v1/tiles_profundidades.txt` y `SalidaAnterior1` de `tiles_profundidades.tscn`, sin regenerar), a `#DesdeProfundidades`;
     - `SalidaD` de las minas, a `#DesdeMinas` (ya apuntaba).
   - `SalaGuardian` (`boss_arena.gd`, `encounter_id` `ruina_guardian`, `guardian_hielo.tscn`, `ability_reward air_dash`, sin llave):
     - activador en el suelo, x 103-133, filas 66-72;
@@ -278,14 +278,14 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
   - `[P6]`:
     - `LlamaEterna` en el altar de la capilla, (5, 62);
     - `HieloP6` (`locked_door`, `antorcha`, E, MELT) en la columna 144, filas 70-72;
-    - `SalidaP6` (x 145-147, fila 79) iba a las profundidades de v1; desde el 2026-11-17 va a la base nueva (`escenas/mapas/tiles_profundidades.tscn#DesdeRuina`) y, desde que se montó su `_combate` (2026-11-17), a `tiles_profundidades_combate.tscn#DesdeRuina`;
+    - `SalidaP6` (x 145-147, fila 79) iba a las profundidades de v1; desde el 2026-11-17 va a la base nueva (`mapas/tng/tiles_profundidades.tscn#DesdeRuina`) y, desde que se montó su `_combate` (2026-11-17), a `tiles_profundidades_combate.tscn#DesdeRuina`;
     - spawn `DesdeProfundidades` en (149, 72).
   - Parte oscura: `ZonaOscura` (`dark_zone.gd`, x 32-62, filas 58-64) y `ZonaOscuraAlta` (x 55-70, filas 50-57: la parte alta y el refugio).
   - `:D:`: `PalancaD` (140, 17) con `ruina_atajo_d_abierto`, el que escucha `RejaD` de las minas; `SalidaD` (x 146-148, filas 0-1) a `tiles_mineria_combate.tscn#DesdeRuina`; spawn `DesdeMinas` en (144, 17). Si se sube sin tirar de la palanca, se llega a las minas por encima de la reja cerrada.
   - `[!5]`: `Salida5` (x 9-11, filas 0-1) a `tiles_mazmorra_combate.tscn#DesdeRuina`; spawn `DesdeMazmorra` en (13, 12).
   - `:E:`: `TrampillaE` (x 90-92, fila 59) escucha `ruina_atajo_e_abierto`: **la palanca de las profundidades, en (119, 13), lleva ese `encounter_id`**. `SalidaE` (fila 79) apunta a `tiles_profundidades_combate.tscn#DesdeRuinaAtajo` (montada el 2026-11-17); spawn `DesdeProfundidadesAtajo` en (94, 58).
   - Atajo interno: `TrampillaAtajo` (x 4-6, fila 13, el suelo de la llegada) se abre con `PalancaAtajo` (10, 33), en la galería alta junto al pozo (`ruina_atajo_interno`).
-  - Hielo negro: `HieloNegro` (`locked_door`, `profundidades_ascua`, E, MELT, tinte oscuro, "LA LLAMA NO BASTA") en la columna 113, filas 56-58; `DiarioReina3` (`dialogues/lore_diario_reina_3.json`, texto provisional) en (117, 58) y `FragmentoVida1` (`ruina_1`) en (125, 55).
+  - Hielo negro: `HieloNegro` (`locked_door`, `profundidades_ascua`, E, MELT, tinte oscuro, "LA LLAMA NO BASTA") en la columna 113, filas 56-58; `DiarioReina3` (`narrativa/dialogos/lore_diario_reina_3.json`, texto provisional) en (117, 58) y `FragmentoVida1` (`ruina_1`) en (125, 55).
   - E4: `AtuendoAbrigo` (`abrigo`) en el refugio, (69, 56). Las zonas frías no llevan nada: la mecánica del frío no existe.
   - Rejas, hielos y losas con piezas del atlas `dungeontilesetfull.png`, teñidas en los hielos (falta su arte, P65). `profundidades_ascua` entró en `KEY_NAMES` al montar las profundidades (2026-11-17).
 - [x] **Profundidades:**
@@ -294,12 +294,12 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
   - la palanca de `:E:`, las trampillas del atajo, del lago y del coliseo, y las transiciones de `[P6]`, `:E:` y `[S7]`;
   - la palanca, la transición y el spawn de `:F:`, los restos de los condenados y la página II del diario;
   - la jaula del rey encadenado: rejilla, el rey (sprite del Rey Caído), su alma y el fragmento de vida 4/4, según `infierno_animas_liberadas`.
-  - Base generada (2026-11-17, `escenas/mapas/tiles_profundidades.tscn`, desde `mapas_texto/tiles_profundidades.txt`): 22 diablillos, 78 piezas de lava, 3 pinchos, 5 cofres, 15 monedas, 4 pociones y 4 checkpoints. Sin salidas del constructor (ni `siguiente:` ni `anterior:`): todas van en la `_combate`.
-  - `_combate` montada (2026-11-17, `escenas/mapas/tiles_profundidades_combate.tscn`). Salidas que llegan a ella:
+  - Base generada (2026-11-17, `mapas/tng/tiles_profundidades.tscn`, desde `mapas/fuentes/tng/tiles_profundidades.txt`): 22 diablillos, 78 piezas de lava, 3 pinchos, 5 cofres, 15 monedas, 4 pociones y 4 checkpoints. Sin salidas del constructor (ni `siguiente:` ni `anterior:`): todas van en la `_combate`.
+  - `_combate` montada (2026-11-17, `mapas/tng/tiles_profundidades_combate.tscn`). Salidas que llegan a ella:
     - `[P6]`: `SalidaP6` de `tiles_ruina_combate.tscn`, a `#DesdeRuina`;
-    - la salida anterior del infierno de v1 (`anterior:` de `archivo/tiles_v1/mapas_texto/tiles_jefe.txt` y `SalidaAnterior1` de `tiles_jefe.tscn`, sin regenerar), a `#DesdeInfierno`;
+    - la salida anterior del infierno de v1 (`anterior:` de `mapas/fuentes/tng/historicos/tiles_v1/tiles_jefe.txt` y `SalidaAnterior1` de `tiles_jefe.tscn`, sin regenerar), a `#DesdeInfierno`;
     - `SalidaE` de la ruina (`#DesdeRuinaAtajo`) y `SalidaF` de la mazmorra (`#DesdeMazmorra`), que ya apuntaban.
-  - Minijefes (decididos el 2026-11-17, sin arte nuevo ni repetir al Demon Slime): escenas heredadas en `escenas/jefes/` con más vida y `BossHealthBar`, como `caballero_reina.tscn`:
+  - Minijefes (decididos el 2026-11-17, sin arte nuevo ni repetir al Demon Slime): escenas heredadas en `personajes/jefes/` con más vida y `BossHealthBar`, como `caballero_reina.tscn`:
     - `pesadilla_ceniza.tscn` (10 de vida, 1.0 de daño, 0.5 de contacto);
     - `diablillo_mayor.tscn` (sprite a escala 2 y colisión de 52x52, 8 de vida, bola de 0.75; `attack_range` 72 y `minimum_player_distance` 40, para que se acerque: con los 175 del diablillo se quedaba fuera del alcance de la espada);
     - `bestia_mayor.tscn` (8 de vida, bola de 0.75, `attack_range` 260).
@@ -316,9 +316,9 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
     - La ascua entra en `KEY_NAMES` (`pause_menu_overlay.gd`). Usa el dibujo de la llave, a escala 1.5 (pendiente, como en las minas).
   - Atajos internos (la cabecera solo dice que se abren desde abajo): `TrampillaAtajo` (x 67-69, fila 26) se abre con `PalancaAtajo` (71, 78), en la antesala, al pie de la escalera 68 (`profundidades_atajo_interno`); `TrampillaLago` (x 193-195, fila 38) se abre con `PalancaLago` (196, 54), en la isla, junto a la escalera 194 (`profundidades_atajo_lago`).
   - `:E:`: `PalancaE` (119, 13) con `ruina_atajo_e_abierto`, el que escucha `TrampillaE` de la ruina; `SalidaE` (x 126-128, filas 0-1) a `tiles_ruina_combate.tscn#DesdeProfundidadesAtajo`; spawn `DesdeRuinaAtajo` en (123, 13).
-  - `:F:`: `PalancaF` (23, 25) con `mazmorra_atajo_f_abierto`, el que escucha `TrampillaF` de la mazmorra; `SalidaF` (x 18-20, filas 0-1) a `tiles_mazmorra_combate.tscn#DesdeProfundidades`; spawn `DesdeMazmorra` en (16, 25). Al pie del pozo: `RestosCondenados` (14, 25) y `DiarioReina2` (12, 25), con `dialogues/lore_restos_condenados.json` y `lore_diario_reina_2.json` (textos provisionales).
+  - `:F:`: `PalancaF` (23, 25) con `mazmorra_atajo_f_abierto`, el que escucha `TrampillaF` de la mazmorra; `SalidaF` (x 18-20, filas 0-1) a `tiles_mazmorra_combate.tscn#DesdeProfundidades`; spawn `DesdeMazmorra` en (16, 25). Al pie del pozo: `RestosCondenados` (14, 25) y `DiarioReina2` (12, 25), con `narrativa/dialogos/lore_restos_condenados.json` y `lore_diario_reina_2.json` (textos provisionales).
   - `[P6]`: `SalidaP6` (x 181-183, filas 0-1) a `tiles_ruina_combate.tscn#DesdeProfundidades`; spawn `DesdeRuina` en (185, 13).
-  - `[S7]`: `SalidaS7` (x 114-116, fila 84) iba al infierno de v1; desde el 2026-11-17 va a la base nueva (`escenas/mapas/tiles_infierno.tscn#DesdeProfundidades`) y, al montar su `_combate`, pasa a `tiles_infierno_combate.tscn`; spawn `DesdeInfierno` en (118, 78).
+  - `[S7]`: `SalidaS7` (x 114-116, fila 84) iba al infierno de v1; desde el 2026-11-17 va a la base nueva (`mapas/tng/tiles_infierno.tscn#DesdeProfundidades`) y, al montar su `_combate`, pasa a `tiles_infierno_combate.tscn`; spawn `DesdeInfierno` en (118, 78).
   - Jaula: `RejillaJaula` (x 44-48, fila 20, `open_on_encounter` `infierno_animas_liberadas`). `ReyEncadenado` (el `idle` del Rey Caído, en un AnimatedSprite2D) en (46, 19), que se oculta con esa marca. Con ella se muestran `AlmaRey` (`objeto_lore.tscn` con el Rey teñido de azul y semitransparente, `lore_alma_rey.json`, texto provisional) en (46, 25) y `FragmentoVida1` (`profundidades_1`) en (44, 25).
   - Secreto: `ParedAgrietada` (columna 8, filas 23-25) con la heredada `pared_agrietada_profundidades.tscn` (P48, sección 7), hecha al vestir el 2026-11-17 con la roca del tileset `profundidades`. Al montar la `_combate` llevaba el arte provisional de siempre.
   - E5: `AtuendoFireKnight` (`fire_knight`) en (30, 78), sobre el yunque.
@@ -328,10 +328,10 @@ Al generar una zona, su archivo pasa a `mapas_texto/tiles_<zona>.txt` y se cambi
   - las arenas con oleadas del coliseo y del salón, las rejas bajas del pasillo y el fuego infernal;
   - Cthulhu en el trono, con la reja en `Puertas`, el activador, `PuntosJefe` y el aviso del final;
   - la transición y el spawn de `[S7]`, y la marca `infierno_animas_liberadas` del coliseo.
-  - Base generada (2026-11-17, `escenas/mapas/tiles_infierno.tscn`, desde `mapas_texto/tiles_infierno.txt`; deja el nombre `tiles_jefe` de v1, que sigue en `archivo/tiles_v1/`): 48 enemigos (5 mino, 6 Guardias, 3 Aprendis, 21 diablillos, 1 esqueleto, 1 kolbo2, 8 murciélagos y 3 kolbo3), 164 piezas de lava, 5 cofres, 19 monedas, 1 poción y 4 checkpoints. Sin salidas del constructor: `[S7]` va en la `_combate`.
+  - Base generada (2026-11-17, `mapas/tng/tiles_infierno.tscn`, desde `mapas/fuentes/tng/tiles_infierno.txt`; deja el nombre `tiles_jefe` de v1, que sigue en `archivo/tiles_v1/`): 48 enemigos (5 mino, 6 Guardias, 3 Aprendis, 21 diablillos, 1 esqueleto, 1 kolbo2, 8 murciélagos y 3 kolbo3), 164 piezas de lava, 5 cofres, 19 monedas, 1 poción y 4 checkpoints. Sin salidas del constructor: `[S7]` va en la `_combate`.
   - El fuego infernal del paso de las cadenas (x 41-44, fila 12) salió del ASCII: la `F` del constructor es la trampa de fuego normal, que quema también con E5. Va en la `_combate` (`fuego_infernal.tscn`, `width_tiles` 4).
   - `[S7]` de las profundidades (`SalidaS7` de `tiles_profundidades_combate.tscn`) iba a la base, `#DesdeProfundidades`; desde que se montó la `_combate` (2026-11-17) va a `tiles_infierno_combate.tscn#DesdeProfundidades`. El infierno de v1 sale de la ruta; su salida anterior sigue apuntando a las profundidades.
-  - `_combate` montada (2026-11-17, `escenas/mapas/tiles_infierno_combate.tscn`). Los 8 enemigos del coliseo y los 4 del salón salieron del ASCII, como en la antecámara del castillo, y la base se regeneró con las mismas piezas (48 enemigos pasan a 36: 3 mino, 3 Guardias, 2 Aprendis, 19 diablillos, 1 kolbo2, 1 kolbo3 (el del osario) y 7 murciélagos, sin esqueleto). Los de las oleadas son las escenas de siempre, sin cambiar valores.
+  - `_combate` montada (2026-11-17, `mapas/tng/tiles_infierno_combate.tscn`). Los 8 enemigos del coliseo y los 4 del salón salieron del ASCII, como en la antecámara del castillo, y la base se regeneró con las mismas piezas (48 enemigos pasan a 36: 3 mino, 3 Guardias, 2 Aprendis, 19 diablillos, 1 kolbo2, 1 kolbo3 (el del osario) y 7 murciélagos, sin esqueleto). Los de las oleadas son las escenas de siempre, sin cambiar valores.
   - `FuegoCadenas` (`fuego_infernal.tscn`, origen en (41, 12), `width_tiles` 4).
   - `ArenaColiseo` (`wave_arena.gd`, `encounter_id` `infierno_animas_liberadas`, el que escucha la jaula de las profundidades):
     - activador x 47-94, filas 40-60;
@@ -365,15 +365,15 @@ Antes de nada, lee:
 - CLAUDE.md (mapas en uso, cómo se monta un mundo, validar cambios);
 - en TASK.md, la Fase 3: el bloque "Al generar cada zona, además" y la
   línea de <zona>;
-- docs/P46_MACRO_MAPA.md, secciones 9 y 10 (la fila de <zona> en
+- documentacion/desarrollo/P46_MACRO_MAPA.md, secciones 9 y 10 (la fila de <zona> en
   "Desbloqueos por zona");
-- mapas_texto/macro/conexiones.txt, zonas.txt y el ASCII
-  mapas_texto/macro/zonas/<zona>.txt, sobre todo su cabecera;
-- mapas_texto/LEYENDA.md (cómo se usa el constructor).
+- mapas/fuentes/macro/conexiones.txt, zonas.txt y el ASCII
+  mapas/fuentes/macro/zonas/<zona>.txt, sobre todo su cabecera;
+- mapas/fuentes/LEYENDA.md (cómo se usa el constructor).
 
 Qué hacer:
-- Mueve el ASCII a mapas_texto/tiles_<zona>.txt y cambia su ruta en zonas.txt.
-- Genera escenas/mapas/tiles_<zona>.tscn con el constructor. Todavía no
+- Mueve el ASCII a mapas/fuentes/tng/tiles_<zona>.txt y cambia su ruta en zonas.txt.
+- Genera mapas/tng/tiles_<zona>.tscn con el constructor. Todavía no
   hagas la _combate.
 - Cambia a la escena nueva las salidas que llegan a <zona> desde zonas aún
   viejas (archivo/tiles_v1/ o la prisión) y, si es el castillo o el
@@ -393,17 +393,17 @@ Parte 2, montar la `_combate`:
 
 ```
 Tarea: Fase 3 de TASK.md, estructura de <zona>, parte 2: montar
-escenas/mapas/tiles_<zona>_combate.tscn, que hereda de tiles_<zona>.tscn.
+mapas/tng/tiles_<zona>_combate.tscn, que hereda de tiles_<zona>.tscn.
 
 Antes de nada, lee:
 - CLAUDE.md, sobre todo "Cómo se monta un mundo" y las piezas a reutilizar;
 - en TASK.md, la lista de <zona> en la Fase 3: es lo que hay que montar;
-- la cabecera de mapas_texto/tiles_<zona>.txt (sitios, coordenadas,
+- la cabecera de mapas/fuentes/tng/tiles_<zona>.txt (sitios, coordenadas,
   encuentros, llaves);
-- docs/P46_MACRO_MAPA.md, sección 10 (con qué llega el jugador y qué
+- documentacion/desarrollo/P46_MACRO_MAPA.md, sección 10 (con qué llega el jugador y qué
   consigue aquí);
 - las etapas de las piezas que usa (P48-P70) y
-  docs/P33_ENEMIGOS_POR_PROFUNDIDAD.md.
+  documentacion/desarrollo/P33_ENEMIGOS_POR_PROFUNDIDAD.md.
 
 Cómo trabajar:
 - Antes de montar nada, pásame una lista: cada nodo, su escena o script, su
@@ -449,20 +449,20 @@ Modo de cada paso: la ficha y vestir, en modo normal; las piezas, en modo plan s
 
 ```
 Tarea: vestir <zona>, paso "<paso>" (TASK.md, Fase 3, "Vestir cada zona";
-método en docs/P73_VESTIR_ZONAS.md).
+método en documentacion/desarrollo/P73_VESTIR_ZONAS.md).
 
 Antes de nada, lee:
-- docs/P73_VESTIR_ZONAS.md entero, sobre todo la ficha de <zona>;
+- documentacion/desarrollo/P73_VESTIR_ZONAS.md entero, sobre todo la ficha de <zona>;
 - la cabecera del ASCII o del .txt de la zona (tileset, fondo, enemigos,
   decorados);
-- docs/P33_ENEMIGOS_POR_PROFUNDIDAD.md y la fila de <zona> en "Desbloqueos
-  por zona" de docs/P46_MACRO_MAPA.md, sección 10;
-- mapas_texto/LEYENDA.md, secciones 5, 8 y 9, y docs/P34_ENEMIGOS_DE_LOS_PAQUETES.md
+- documentacion/desarrollo/P33_ENEMIGOS_POR_PROFUNDIDAD.md y la fila de <zona> en "Desbloqueos
+  por zona" de documentacion/desarrollo/P46_MACRO_MAPA.md, sección 10;
+- mapas/fuentes/LEYENDA.md, secciones 5, 8 y 9, y documentacion/desarrollo/P34_ENEMIGOS_DE_LOS_PAQUETES.md
   (cómo se integra un pack y un enemigo).
 
 Cómo trabajar:
 - Ficha: proponme la ambientación, los enemigos (profundidad, script base,
-  vida, daño, letra, sitio) y de dónde sale el arte (pack de assets/terceros/,
+  vida, daño, letra, sitio) y de dónde sale el arte (pack de graficos/terceros/,
   pack nuevo o receta para la IA). Espera a que la apruebe.
 - Piezas: antes de programar, dime qué escenas, scripts y letras nuevas hay.
   Prueba en la galería (herramientas/zona_pruebas/galeria.py). Solo piezas
@@ -484,13 +484,13 @@ lo que encuentres en los archivos, dímelo antes de seguir. Responde en español
 ## Otros pendientes del proyecto
 
 - **Licencias:**
-  - Pixel Fantasy Caves: el ZIP no trae licencia; confirmar de dónde se bajó (`assets/terceros/pixelfantasy_caves/ORIGEN.txt`);
+  - Pixel Fantasy Caves: el ZIP no trae licencia; confirmar de dónde se bajó (`graficos/terceros/pixelfantasy_cavernas/ORIGEN.txt`);
   - `Final.zip` (Anokolisa): su nota pide no dar crédito si se cambia el arte; anotarlo en un `ORIGEN.txt` cuando se use.
-  - los packs de `assets/terceros/` cuyo `ORIGEN.txt` dice "por confirmar" (los Elementals, Demon Slime, Cthulhu, Frost Guardian, mino, Lively NPCs, Raou, el Dungeon Tile Set, el esqueleto de Jesse M y las barras de vida): procedencia y licencia (P72).
-- **Duplicado:** `assets/terceros/dungeon_tile_set/Dungeon Tile Set.png` y `copia_prueba/Dungeon Tile Set.png` son el mismo PNG con dos uids. Unificarlos pide cambiar uids en escenas, no solo rutas (P72).
+  - los packs de `graficos/terceros/` cuyo `ORIGEN.txt` dice "por confirmar" (los Elementals, Demon Slime, Cthulhu, Frost Guardian, mino, Lively NPCs, Raou, el Dungeon Tile Set, el esqueleto de Jesse M y las barras de vida): procedencia y licencia (P72).
+- **Duplicado:** `graficos/terceros/baldosas_mazmorra/Dungeon Tile Set.png` y `copia_prueba/Dungeon Tile Set.png` son el mismo PNG con dos uids. Unificarlos pide cambiar uids en escenas, no solo rutas (P72).
 - **Arte:**
   - escala del diablillo, que a escala 1 se ve más grande que el Player;
   - enemigos y decorados de Gothicvania (`Legacy Collection/Assets/Gothicvania/`);
-  - un tileset propio por tema. Pasos en `mapas_texto/LEYENDA.md`, sección 8.
+  - un tileset propio por tema. Pasos en `mapas/fuentes/LEYENDA.md`, sección 8.
 - **Jefes:** jugar a mano los jefes nuevos y ajustar su dificultad.
 - **Ramas:** fusionar esta rama en `main` cuando el equipo lo apruebe, y decidir qué hacer con la rama `v5`.

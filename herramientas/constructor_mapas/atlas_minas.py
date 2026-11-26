@@ -1,15 +1,15 @@
 """Arma el atlas del tileset "minas" (P73, ficha de las minas).
 
-assets/terceros/pixelfantasy_caves/tileset_minas.png, 512x320, piezas de 16:
+graficos/terceros/pixelfantasy_cavernas/tileset_minas.png, 512x320, piezas de 16:
 - filas 0-15: copia del atlas de mazmorra
-  (assets/terceros/dungeon_platformer/dungeontilesetfull.png), por la antorcha,
+  (graficos/terceros/plataformas_mazmorra/dungeontilesetfull.png), por la antorcha,
   la fogata, la lava, los cristales, los hongos, la tienda, la caja y el
   barril; sus coordenadas no cambian, así que DECOR_LIGHTS de
-  scripts/environment/map_ambience.gd sigue valiendo;
+  sistemas/entorno/map_ambience.gd sigue valiendo;
 - filas 16-19: piezas de PixelFantasy Caves (mainlev_build.png y props1.png,
   el pack del parallax de las minas) a su escala, sin repintar, y la escalera
   de madera del Dungeon Tile Set. Coordenadas en LAYOUT, abajo;
-  herramientas/constructor_mapas/tilesets/minas.gd las usa.
+  herramientas/constructor_mapas/baldosas/minas.gd las usa.
 
 Se puede correr las veces que haga falta: el resultado es el mismo.
 
@@ -21,11 +21,11 @@ from pathlib import Path
 from PIL import Image, ImageEnhance
 
 ROOT = Path(__file__).resolve().parents[2]
-MAZMORRA = ROOT / "assets/terceros/dungeon_platformer/dungeontilesetfull.png"
-CAVES = ROOT / "assets/terceros/pixelfantasy_caves/mainlev_build.png"
-PROPS = ROOT / "assets/terceros/pixelfantasy_caves/props1.png"
-DTS = ROOT / "assets/terceros/dungeon_tile_set/Dungeon Tile Set.png"
-OUT = ROOT / "assets/terceros/pixelfantasy_caves/tileset_minas.png"
+MAZMORRA = ROOT / "graficos/terceros/plataformas_mazmorra/dungeontilesetfull.png"
+CAVES = ROOT / "graficos/terceros/pixelfantasy_cavernas/mainlev_build.png"
+PROPS = ROOT / "graficos/terceros/pixelfantasy_cavernas/props1.png"
+DTS = ROOT / "graficos/terceros/baldosas_mazmorra/Dungeon Tile Set.png"
+OUT = ROOT / "graficos/terceros/pixelfantasy_cavernas/tileset_minas.png"
 T = 16
 
 # Destino en el atlas (pieza de arriba a la izquierda) de cada grupo.

@@ -1,0 +1,140 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://sistemas/combate/lunge_enemy.gd" id="script"]
+[ext_resource type="Texture2D" path="res://graficos/terceros/gothicvania/personajes/pesadilla.png" id="tex_0"]
+
+[sub_resource type="AtlasTexture" id="Atlas_0_0"]
+atlas = ExtResource("tex_0")
+region = Rect2(0, 0, 160, 96)
+
+[sub_resource type="AtlasTexture" id="Atlas_0_1"]
+atlas = ExtResource("tex_0")
+region = Rect2(160, 0, 160, 96)
+
+[sub_resource type="AtlasTexture" id="Atlas_0_2"]
+atlas = ExtResource("tex_0")
+region = Rect2(320, 0, 160, 96)
+
+[sub_resource type="AtlasTexture" id="Atlas_0_3"]
+atlas = ExtResource("tex_0")
+region = Rect2(480, 0, 160, 96)
+
+[sub_resource type="AtlasTexture" id="Atlas_1_0"]
+atlas = ExtResource("tex_0")
+region = Rect2(0, 96, 160, 96)
+
+[sub_resource type="AtlasTexture" id="Atlas_1_1"]
+atlas = ExtResource("tex_0")
+region = Rect2(160, 96, 160, 96)
+
+[sub_resource type="AtlasTexture" id="Atlas_1_2"]
+atlas = ExtResource("tex_0")
+region = Rect2(320, 96, 160, 96)
+
+[sub_resource type="SpriteFrames" id="Frames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_0_0")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_0_1")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_0_2")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_0_3")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_1_0")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_1_1")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_1_2")
+}],
+"loop": true,
+"name": &"run",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 4.5,
+"texture": SubResource("Atlas_0_0")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_1_0")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_1_1")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_1_2")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_1_0")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_1_1")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_1_2")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="Body"]
+size = Vector2(64, 52)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+collision_layer = 5
+script = ExtResource("script")
+lunge_windup = 0.45
+lunge_duration = 0.5
+lunge_speed = 260.0
+max_health = 4.0
+knockback_horizontal = 70.0
+patrol_distance = 80.0
+patrol_speed = 40.0
+chase_speed = 90.0
+detection_range = 220.0
+detection_vertical_range = 80.0
+attack_range = 110.0
+minimum_player_distance = 40.0
+attack_damage = 0.75
+attack_cooldown = 1.8
+attack_hitbox_size = Vector2(72, 44)
+attack_hitbox_offset = Vector2(14, 14)
+contact_damage = 0.25
+ledge_check_forward = 34.0
+sprite_faces_right = false
+mirror_sprite_on_flip = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(2, -8)
+sprite_frames = SubResource("Frames")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 14)
+shape = SubResource("Body")

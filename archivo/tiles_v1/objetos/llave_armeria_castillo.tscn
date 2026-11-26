@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://objetos/recogibles/llave_jefe_m1.tscn" id="1_key"]
+[ext_resource type="Script" path="res://archivo/tiles_v1/codigo/recogibles/castle_key_pickup.gd" id="2_script"]
+
+[node name="LlaveArmeriaCastillo" instance=ExtResource("1_key") groups=["castle_armory_key"]]
+script = ExtResource("2_script")
+key_id = "llave_armeria_castillo"

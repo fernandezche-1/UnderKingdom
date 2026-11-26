@@ -1,0 +1,204 @@
+Gothicvania - Legacy Collection de Luis Zuno (Ansimuz)
+
+Recibido como "Legacy Collection.zip" el 2026-10-15 para los niveles con tiles.
+Licencia: CC0 (public-license.pdf del paquete): uso libre, personal o
+comercial, sin crédito obligatorio; se puede modificar y redistribuir.
+Página del autor: https://ansimuz.itch.io
+
+Solo se copiaron los fondos que usan los niveles:
+- castillo_viejo/fondo.png   Old-dark-Castle-tileset-Files/PNG/old-dark-castle-interior-background.png
+- cavernas/fondo.png         caverns-files-web/layers/background.png
+- cavernas/paredes.png       caverns-files-web/layers/back-walls.png
+- lava/fondo.png             lava-background/PNG/background.png
+- lava/rocas.png             lava-background/PNG/middle-rocks.png
+- pueblo_noche/*.png         night-town-background-files/layers: cada capa se
+  armó a 224 px de alto, alineada abajo y repetida a lo ancho, sin cambiar el
+  arte (cielo = sky; nubes = clouds; montes = mountains + mountains-lights;
+  pueblo = town).
+
+Efectos (Legacy Collection/Assets/Explosions and Magic/), sin cambiar el arte;
+los usa sistemas/efectos/combat_fx.gd:
+- efectos/impacto.png         Hit/hit.png (3 cuadros de 31x32): golpe del Player
+- efectos/muerte_enemigo.png  EnemyDeath/spritesheet.png (8 cuadros de 48x48):
+                              muerte de enemigos sin animación de muerte
+- efectos/explosion_suelo.png Ground Explosion/spritesheet/explosion-animation.png
+                              (9 cuadros de 112x128): golpes fuertes de los jefes
+
+Personajes (Legacy Collection/Assets/Gothicvania/Characters/), sin cambiar el arte:
+- personajes/barquero_lampara.png  death/Spritesheets/death-lamp-walk.png (6 cuadros de 32x48)
+- personajes/barquero_sale.png     death/Spritesheets/death-lamp-rise.png (11 cuadros de 32x48)
+  El Barquero, mercader de mejoras (personajes/npc/barquero.tscn).
+
+Cementerio (P73, ficha del cementerio), sin cambiar el arte:
+- gothic_horror/tiles.png  Environments/Gothic-Horror-Files/PNG/layers/tiles.png
+  tal cual. herramientas/constructor_mapas/atlas_cementerio.py toma de aquí la
+  repisa de piedra (2,1)-(6,1), la fachada de ladrillo con musgo (34,8)-(40,10),
+  las calaveras amontonadas (8,6), el arco con calavera cornuda (14,7), la
+  gárgola (28,2), las calaveras en la pared (2,7) y el nicho con llama (17,6)
+  (piezas de 16 px, de arriba a la izquierda).
+- personajes/cuervo.png    Characters/crow/Spritesheets: crow-front (3) y
+  crow-fly (2), una fila cada una, cuadros de 48x48. El cuervo
+  (personajes/enemigos/cuervo.tscn); crow-idle (posado) no se usa.
+- personajes/anima.png     Characters/Ghost-Files/Spritesheets: ghost-Appear
+  (6), ghost-Idle (7), ghost-Chase (4), ghost-Shriek (4) y ghost-Vanish (7), una
+  fila cada una, cuadros de 64x80. El ánima (personajes/enemigos/anima.tscn).
+
+Minas (P73, ficha de las minas), sin cambiar el arte:
+- personajes/sapo.png      Characters/mutant-toad/Spritesheets:
+  mutant-toad-idle (4), mutant-toad-jump (4) y mutant-toad-attack (3), una fila
+  cada una, cuadros de 80x64. El sapo de la cueva (personajes/enemigos/sapo.tscn):
+  jump es su andar y el lengüetazo golpea en el tercer cuadro de attack. No
+  trae daño ni muerte: muere con el efecto "muerte".
+
+Mazmorra (P73, ficha de la mazmorra), sin cambiar el arte:
+- castillo_viejo/tileset.png  Environments/Old-dark-Castle-tileset-Files/PNG/
+  old-dark-castle-interior-tileset.png tal cual (832x240, piezas de 16).
+- castillo_viejo/tileset_mazmorra_reina.png  atlas del tileset
+  "mazmorra_reina" del constructor (tilesets/mazmorra_reina.gd), que arma
+  herramientas/constructor_mapas/atlas_mazmorra_reina.py. 512x320:
+  filas 0-15, copia sin cambios del atlas de mazmorra
+  (dungeon_platformer/dungeontilesetfull.png); filas 16-19, recortes de
+  castillo_viejo/tileset.png (piezas de 16, de arriba a la izquierda):
+  - (0,16) juego de bloques 4x4: arriba el remate de musgo de los pilares,
+    (32,10) y en la esquina derecha (33,10); el resto, la piedra verde
+    (10,6). Todas macizas. La fila de tiras une la mitad de arriba del remate
+    con la de abajo de la piedra;
+  - (4,16)-(6,16) pasarela de las plataformas "=": píxeles (144,90)-(160,106),
+    las tablas del puente con su viga, tres veces;
+  - (7,16) escalera: la (5,9) del Dungeon Tile Set (dungeon_tile_set/);
+  - (8,16) pared "piedra" 6x4: la pilastra (19,3)-(20,4), dos veces en alto,
+    y la pared lisa con su hilada de ladrillo (21,2)-(24,5);
+  - (14,16) pared "cloaca" 6x4: la misma, al 60 % de brillo;
+  - (20,16) cadena "g" 1x4: (45,3)-(45,6);
+  - (21,16) arco del desagüe "U" 6x3: (5,9)-(10,11);
+    a la cadena y al arco se les quitó el color plano de la pared lisa
+    (12,29,28), que pasa a transparente, para que sirvan sobre "cloaca";
+  - (27,16) reja de celda "w" 2x2: las piezas (17,16)-(18,17) del atlas del
+    castillo (raou_castillo/tileset_castillo.png), la "f" del castillo.
+- personajes/ogro.png  Characters/Ogre/Spritesheets: ogre-idle (4),
+  ogre-walk (6) y ogre-attack (7), una fila cada una, cuadros de 144x80. El
+  ogro (personajes/enemigos/ogro.tscn): mira a la izquierda y la maza baja en
+  los cuadros 4-5 de attack. No trae daño ni muerte: muere con el efecto
+  "muerte".
+- personajes/calavera_fuego.png  Characters/Fire-Skull-Files/Spritesheets/
+  fire-skull.png tal cual (8 cuadros de 96x112). La calavera de fuego
+  (personajes/enemigos/calavera_fuego.tscn). La versión sin fuego
+  (fire-skull-no-fire, 4 cuadros de 54x70) no se copió.
+
+Ruina (P73, ficha de la ruina), sin cambiar el arte:
+- cavernas/tiles.png  Environments/caverns-files-web/layers/tiles.png tal cual
+  (512x288, piezas de 16), la capa de piezas del pack del parallax de la ruina.
+- cavernas/tileset_ruina.png  atlas del tileset "ruina" del constructor
+  (tilesets/ruina.gd), que arma herramientas/constructor_mapas/atlas_ruina.py.
+  512x320: filas 0-15, copia sin cambios del atlas de mazmorra
+  (dungeon_platformer/dungeontilesetfull.png); filas 16-19, recortes de
+  cavernas/tiles.png (piezas de 16, de arriba a la izquierda), teñidos de frío
+  (cada color se acerca a su luminancia teñida de azul, al 60 %; la llama de
+  la hornacina conserva su rosa):
+  - (0,16) juego de bloques 4x4, todas macizas: arriba el suelo con piedras
+    (2,15); a los lados los cantos de los laterales (7,2) y (23,2); abajo el
+    techo con flecos (12,5); las esquinas toman el borde de arriba o de
+    abajo; el interior, los cantos de (7,2) al 55 % (el interior del pack es
+    del mismo color plano que su muro); la columna une la mitad izquierda de
+    (7,2) con la derecha de (23,2); la fila de tiras, la mitad de arriba del
+    suelo con la de abajo del techo;
+  - (4,16)-(6,16) repisa de las plataformas "=": la banda de piedras de
+    (2,15), sin el negro de debajo, tres veces;
+  - (7,16) escalera: la (5,9) del Dungeon Tile Set (dungeon_tile_set/);
+  - (8,16) pared "ruina" 7x3: el muro de ladrillo roto del pasillo del pack,
+    columnas 11-14 y 17-19 de las filas 6-8;
+  - (15,16) hornacina con llama "V" 2x2: (15,6)-(16,7);
+  - (17,16) contrafuerte "U" 4x3: (7,6)-(10,8);
+  - (21,16) pedruscos "n" 2x2: las lascas (20,1)-(20,2) y (9,11)-(9,12),
+    bajadas al borde de abajo de su pieza;
+    a la hornacina, el contrafuerte, los pedruscos y la repisa se les quitó el
+    color plano del interior y del muro (25,14,27), que pasa a transparente.
+- personajes/lobo_escarcha.png  Characters/WereWolf/Spritesheets:
+  werewolf-idle (5), werewolf-run (6), werewolf-jump (2) y werewolf-fall (2),
+  una fila cada una, cuadros de 96x76. El lobo de la escarcha
+  (personajes/enemigos/lobo_escarcha.tscn): mira a la derecha; su "attack" es el
+  cuadro 0 de idle (el aviso) y después jump y fall. No trae golpe, daño ni
+  muerte: muere con el efecto "muerte".
+- personajes/ave_nieves.png  Characters/flying-bird/Sprites/white/frame1-7.png
+  en fila (7 cuadros de 32x32). El ave de las nieves
+  (personajes/enemigos/ave_nieves.tscn): mira a la derecha; muere con el efecto
+  "muerte".
+
+Profundidades (P73, ficha de las profundidades), sin cambiar el arte de los
+personajes:
+- lava/tileset_profundidades.png  atlas del tileset "profundidades" del
+  constructor (tilesets/profundidades.gd), que arma
+  herramientas/constructor_mapas/atlas_profundidades.py. 512x352: filas 0-15,
+  copia sin cambios del atlas de mazmorra (dungeon_platformer/
+  dungeontilesetfull.png); filas 16-21, recortes de cavernas/tiles.png (en su
+  morado, sin tinte) y de gothic_horror/tiles.png (piezas de 16, de arriba a
+  la izquierda):
+  - (0,16) juego de bloques 4x4, el mismo armado que el de la ruina (ver
+    arriba) sin el tinte frío; todas macizas;
+  - (4,16)-(6,16) repisa de las plataformas "=": la banda de piedras de
+    cavernas (2,15), sin el negro de debajo, tres veces;
+  - (7,16) escalera: la (5,9) del Dungeon Tile Set (dungeon_tile_set/);
+  - (8,16) pared "basalto" 2x4: los cantos de los laterales de cavernas, las
+    columnas 7 y 23 de las filas 1-4, al 32 % de brillo;
+  - (10,16) pared "ladrillo" 7x2: la fachada de gothic_horror, solo la fila 7
+    (la única entera sin musgo), en las columnas 31, 32, 34, 35, 36, 41 y 42
+    (sin los postes de la 33 y la 44 ni el revoque claro de la 37-40), en dos
+    órdenes; teñida de rojo (cada color se acerca a su luminancia teñida de
+    rojo, al 85 %) y al 60 % de brillo;
+  - (17,16) horno "V" 2x6: el nicho con llama y chimenea de gothic_horror,
+    píxeles (272,64)-(304,160), teñido de rojo; la llama (amarilla y verdosa
+    en el pack) pasa a una rampa naranja;
+  - (19,16) arco con cara de demonio "U" 2x3: (224,112)-(256,160), teñido de
+    rojo;
+  - (21,16) montón de calaveras "n" 2x3: (128,96)-(160,144) tal cual, recortado
+    por su borde y apoyado abajo;
+  - (23,16) pared agrietada 1x3 (P48, 2026-11-17): la pieza de columna del
+    juego de bloques (3,17) tres veces, para
+    objetos/entorno/pared_agrietada_profundidades.tscn.
+- personajes/bestia_infernal.png  Characters/Hell-Beast-Files: Idle/Sprites
+  hell-beast-idle1-6, Breath/Sprites hell-beast-breath1-4 y Burn/Sprites
+  hell-beast-burn1-4, una fila cada una, en cuadros de 80x72 (las filas 88-160
+  de cada cuadro de 80x160, que encima solo tienen aire). La bestia infernal
+  (personajes/enemigos/bestia_infernal.tscn): mira a la izquierda; "attack" es
+  breath, que suelta la bola de fuego del diablillo en el cuadro 3, y "death"
+  es burn 1-4. No se copiaron burn5-6 (la columna de fuego de 160 px) ni su
+  Fireball.
+- personajes/pesadilla.png  Characters/Nightmare-Files/Sprites: Idle/frame1-4
+  y Run/frame1-3, una fila cada una, cuadros de 160x96 tal cual. La pesadilla
+  (personajes/enemigos/pesadilla.tscn): mira a la izquierda; su "attack" es el
+  cuadro 0 de idle (el aviso) y después run dos veces. No trae golpe, daño ni
+  muerte: muere con el efecto "muerte".
+
+Infierno (P73, ficha del infierno, paso de las piezas, 2026-11-17):
+- tejido_vivo/tiles.png  Environments/Living-Tissue-Platform-Files/PNG/layers/
+  tileset.png tal cual (288x192): la carne con colmillos y ojos.
+- tejido_vivo/fondo.png  Environments/Living-Tissue-Platform-Files/PNG/layers/
+  bakground.png tal cual (144x144, 9x9 piezas; se repite sin costura).
+- tejido_vivo/tileset_infierno.png  atlas del tileset "infierno" del
+  constructor, lo arma herramientas/constructor_mapas/atlas_infierno.py.
+  512x400: filas 0-15, copia sin cambios del atlas de mazmorra (dungeon_
+  platformer/dungeontilesetfull.png); filas 16-24, recortes de tejido_vivo/
+  tiles.png sin teñir (piezas de 16, de arriba a la izquierda):
+  - (0,16) juego de bloques "carne" 4x4: arriba el canto del suelo, (2,7),
+    (3,7) y (13,7); a los lados los bordes del suelo (2,10) y (13,10); abajo
+    el canto del techo, (12,4), (13,4) y (16,4); el interior, el relleno liso
+    (5,10). La columna y las tiras, con mitades de esas piezas. Todas macizas;
+  - (4,16)-(6,16) repisa de las plataformas "=": el canto del suelo, (2,7),
+    (3,7) y (13,7), sin el relleno liso (48,16,32) que toca el borde;
+  - (7,16) escalera: la (5,9) del Dungeon Tile Set (dungeon_tile_set/);
+  - (8,16) pared "carne" 9x9: tejido_vivo/fondo.png entero;
+  - (17,16) pared "ladrillo" 7x2: la de las profundidades, con las mismas
+    funciones de atlas_profundidades.py (igual píxel a píxel);
+  - (17,18) herida "U" 3x2: (2,1)-(4,2);
+  - (24,16) colmillos "y" 3x3: (6,1)-(8,3), la mandíbula y el colmillo largo,
+    pegados arriba;
+  - (27,16) ojo "r" 2x2: (3,4)-(4,5);
+  - (29,16) pústula "n" 2x2: (9,5)-(10,6), apoyada abajo.
+  La herida, los colmillos y el ojo traen un cuadro opaco del color del
+  relleno; se quita solo ese color, rellenando desde el borde de la pieza,
+  sin repintar.
+- personajes/alma_condenada.png  Characters/enemy-ghost/Spritesheets/
+  particles.png tal cual, 6 cuadros de 64x64 (la figura, unos 33x36). El alma
+  condenada (personajes/enemigos/alma_condenada.tscn): mira a la derecha; idle,
+  move y attack son los 6 cuadros. No trae muerte: muere con el efecto
+  "muerte".

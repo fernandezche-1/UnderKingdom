@@ -1,0 +1,16 @@
+craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack
+
+Antes en: craftpix-net-218281-free-pixel-art-dungeon-objects-asset-pack/ (raíz del repo), movido en P72 (documentacion/desarrollo/P72_ORGANIZACION_REPO.md).
+Licencia: ver License.txt, readme.txt
+
+Aquí solo está lo que usa el juego:
+- mapas/tng/historicos/tiles_v1/tiles_castillo.tscn
+- objetos/entorno/objeto_lore.tscn
+- herramientas/constructor_mapas/atlas_castillo.py (P73, castillo): copia al
+  atlas del castillo el estandarte rojo pequeño y el cráneo de dragón de
+  Other_objects.png y el armero con espadas y el estante con provisiones de
+  supplies_objects.png (coordenadas en
+  graficos/terceros/raou_castillo/ORIGEN.txt).
+
+El resto del pack se apartó sin borrar nada:
+- rd/graficos/craftpix_objetos_mazmorra_218281/

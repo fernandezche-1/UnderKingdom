@@ -1,7 +1,0 @@
-[gd_scene format=3]
-
-[ext_resource type="Script" path="res://scripts/environment/snow_area.gd" id="1_nieve"]
-
-[node name="ClimaNieve" type="Node2D"]
-z_index = 4
-script = ExtResource("1_nieve")

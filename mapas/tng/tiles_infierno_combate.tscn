@@ -1,0 +1,357 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://mapas/tng/tiles_infierno.tscn" id="1_base"]
+[ext_resource type="Script" path="res://sistemas/combate/boss_arena.gd" id="2_sala"]
+[ext_resource type="Script" path="res://sistemas/combate/wave_arena.gd" id="3_oleadas"]
+[ext_resource type="Script" path="res://sistemas/entorno/arena_barrier.gd" id="4_barrera"]
+[ext_resource type="Script" path="res://sistemas/entorno/roll_gate.gd" id="5_reja_baja"]
+[ext_resource type="Texture2D" path="res://graficos/terceros/plataformas_mazmorra/dungeontilesetfull.png" id="6_tileset"]
+[ext_resource type="PackedScene" path="res://personajes/jefes/cthulhu_jefe.tscn" id="7_cthulhu"]
+[ext_resource type="PackedScene" path="res://sistemas/entorno/fuego_infernal.tscn" id="8_fuego"]
+[ext_resource type="PackedScene" path="res://sistemas/transiciones/map_transition.tscn" id="9_transicion"]
+[ext_resource type="PackedScene" path="res://sistemas/transiciones/spawn_point.tscn" id="10_spawn"]
+[ext_resource type="PackedScene" path="res://personajes/enemigos/mino.tscn" id="12_mino"]
+[ext_resource type="PackedScene" path="res://personajes/enemigos/guardia.tscn" id="13_guardia"]
+[ext_resource type="PackedScene" path="res://personajes/enemigos/kolbo3.tscn" id="14_kolbo3"]
+[ext_resource type="PackedScene" path="res://personajes/enemigos/aprendis.tscn" id="15_aprendis"]
+[ext_resource type="PackedScene" path="res://personajes/enemigos/diablillo.tscn" id="16_diablillo"]
+[ext_resource type="PackedScene" path="res://personajes/enemigos/anima.tscn" id="17_anima"]
+[ext_resource type="PackedScene" path="res://personajes/enemigos/ojo_volador.tscn" id="18_ojo"]
+[ext_resource type="PackedScene" path="res://personajes/enemigos/lobo_escarcha.tscn" id="19_lobo"]
+[ext_resource type="PackedScene" path="res://personajes/enemigos/calavera_fuego.tscn" id="20_calavera"]
+[ext_resource type="PackedScene" path="res://personajes/enemigos/ave_nieves.tscn" id="21_ave"]
+[ext_resource type="PackedScene" path="res://personajes/enemigos/pesadilla.tscn" id="22_pesadilla"]
+[ext_resource type="PackedScene" path="res://personajes/enemigos/bestia_infernal.tscn" id="23_bestia"]
+[ext_resource type="PackedScene" path="res://personajes/enemigos/ogro.tscn" id="24_ogro"]
+[ext_resource type="Script" path="res://sistemas/entorno/map_ambience.gd" id="25_ambiente"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna_tope"]
+atlas = ExtResource("6_tileset")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna_medio"]
+atlas = ExtResource("6_tileset")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_columna_base"]
+atlas = ExtResource("6_tileset")
+region = Rect2(48, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_losa_izq"]
+atlas = ExtResource("6_tileset")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_losa_medio"]
+atlas = ExtResource("6_tileset")
+region = Rect2(16, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_losa_der"]
+atlas = ExtResource("6_tileset")
+region = Rect2(32, 48, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_768x336"]
+size = Vector2(768, 336)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_16x64"]
+size = Vector2(16, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_48x16"]
+size = Vector2(48, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_400x144"]
+size = Vector2(400, 144)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_816x336"]
+size = Vector2(816, 336)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_48x32"]
+size = Vector2(48, 32)
+
+[node name="TilesInfiernoCombate" instance=ExtResource("1_base")]
+
+[node name="FuegoCadenas" parent="SistemasMapa" instance=ExtResource("8_fuego")]
+position = Vector2(656, 192)
+width_tiles = 4
+
+[node name="ArenaColiseo" type="Node2D" parent="SistemasMapa"]
+script = ExtResource("3_oleadas")
+encounter_id = "infierno_animas_liberadas"
+
+[node name="Activador" type="Area2D" parent="SistemasMapa/ArenaColiseo"]
+position = Vector2(1136, 808)
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/ArenaColiseo/Activador"]
+shape = SubResource("RectangleShape2D_768x336")
+
+[node name="Puertas" type="Node2D" parent="SistemasMapa/ArenaColiseo"]
+
+[node name="RejaEntrada" type="StaticBody2D" parent="SistemasMapa/ArenaColiseo/Puertas"]
+position = Vector2(712, 944)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_columna_tope")
+piece_middle = SubResource("AtlasTexture_columna_medio")
+piece_end = SubResource("AtlasTexture_columna_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/ArenaColiseo/Puertas/RejaEntrada"]
+shape = SubResource("RectangleShape2D_16x64")
+disabled = true
+
+[node name="Atajos" type="Node2D" parent="SistemasMapa/ArenaColiseo"]
+
+[node name="TrampillaSalida" type="StaticBody2D" parent="SistemasMapa/ArenaColiseo/Atajos"]
+position = Vector2(1560, 984)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_losa_izq")
+piece_middle = SubResource("AtlasTexture_losa_medio")
+piece_end = SubResource("AtlasTexture_losa_der")
+start_closed = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/ArenaColiseo/Atajos/TrampillaSalida"]
+shape = SubResource("RectangleShape2D_48x16")
+
+[node name="Oleadas" type="Node2D" parent="SistemasMapa/ArenaColiseo"]
+
+[node name="Oleada1" type="Node2D" parent="SistemasMapa/ArenaColiseo/Oleadas"]
+
+[node name="Oleada2" type="Node2D" parent="SistemasMapa/ArenaColiseo/Oleadas"]
+
+[node name="Oleada3" type="Node2D" parent="SistemasMapa/ArenaColiseo/Oleadas"]
+
+[node name="Guardia1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada1" instance=ExtResource("13_guardia")]
+position = Vector2(840, 957)
+
+[node name="Kolbo3" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada1" instance=ExtResource("14_kolbo3")]
+position = Vector2(1208, 934)
+
+[node name="Anima1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada1" instance=ExtResource("17_anima")]
+position = Vector2(1032, 794)
+
+[node name="Anima2" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada1" instance=ExtResource("17_anima")]
+position = Vector2(1352, 730)
+
+[node name="OjoVolador1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada1" instance=ExtResource("18_ojo")]
+position = Vector2(1176, 710)
+
+[node name="Mino1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada2" instance=ExtResource("12_mino")]
+position = Vector2(968, 912)
+
+[node name="LoboEscarcha1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada2" instance=ExtResource("19_lobo")]
+position = Vector2(1096, 938)
+
+[node name="Aprendis1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada2" instance=ExtResource("15_aprendis")]
+position = Vector2(1384, 952)
+
+[node name="CalaveraFuego1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada2" instance=ExtResource("20_calavera")]
+position = Vector2(968, 704)
+
+[node name="AveNieves1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada2" instance=ExtResource("21_ave")]
+position = Vector2(1384, 709)
+
+[node name="Pesadilla1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada3" instance=ExtResource("22_pesadilla")]
+position = Vector2(936, 936)
+
+[node name="Pesadilla2" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada3" instance=ExtResource("22_pesadilla")]
+position = Vector2(1352, 936)
+
+[node name="BestiaInfernal1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada3" instance=ExtResource("23_bestia")]
+position = Vector2(1032, 940)
+
+[node name="BestiaInfernal2" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada3" instance=ExtResource("23_bestia")]
+position = Vector2(1288, 940)
+
+[node name="Diablillo1" parent="SistemasMapa/ArenaColiseo/Oleadas/Oleada3" instance=ExtResource("16_diablillo")]
+position = Vector2(1160, 830)
+
+[node name="UI" type="CanvasLayer" parent="SistemasMapa/ArenaColiseo"]
+layer = 9
+
+[node name="Aviso" type="Label" parent="SistemasMapa/ArenaColiseo/UI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_type_variation = &"Encabezado"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RejasBajas" type="Node2D" parent="SistemasMapa"]
+
+[node name="RejaBaja1" type="StaticBody2D" parent="SistemasMapa/RejasBajas"]
+position = Vector2(1368, 1184)
+script = ExtResource("5_reja_baja")
+piece_start = SubResource("AtlasTexture_columna_tope")
+piece_middle = SubResource("AtlasTexture_columna_medio")
+piece_end = SubResource("AtlasTexture_columna_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/RejasBajas/RejaBaja1"]
+shape = SubResource("RectangleShape2D_16x64")
+
+[node name="RejaBaja2" type="StaticBody2D" parent="SistemasMapa/RejasBajas"]
+position = Vector2(1048, 1184)
+script = ExtResource("5_reja_baja")
+piece_start = SubResource("AtlasTexture_columna_tope")
+piece_middle = SubResource("AtlasTexture_columna_medio")
+piece_end = SubResource("AtlasTexture_columna_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/RejasBajas/RejaBaja2"]
+shape = SubResource("RectangleShape2D_16x64")
+
+[node name="RejaBaja3" type="StaticBody2D" parent="SistemasMapa/RejasBajas"]
+position = Vector2(728, 1184)
+script = ExtResource("5_reja_baja")
+piece_start = SubResource("AtlasTexture_columna_tope")
+piece_middle = SubResource("AtlasTexture_columna_medio")
+piece_end = SubResource("AtlasTexture_columna_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/RejasBajas/RejaBaja3"]
+shape = SubResource("RectangleShape2D_16x64")
+
+[node name="ArenaSalon" type="Node2D" parent="SistemasMapa"]
+script = ExtResource("3_oleadas")
+encounter_id = "infierno_salon_verdugos"
+
+[node name="Activador" type="Area2D" parent="SistemasMapa/ArenaSalon"]
+position = Vector2(312, 1800)
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/ArenaSalon/Activador"]
+shape = SubResource("RectangleShape2D_400x144")
+
+[node name="Puertas" type="Node2D" parent="SistemasMapa/ArenaSalon"]
+
+[node name="TrampillaEntrada" type="StaticBody2D" parent="SistemasMapa/ArenaSalon/Puertas"]
+position = Vector2(72, 1720)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_losa_izq")
+piece_middle = SubResource("AtlasTexture_losa_medio")
+piece_end = SubResource("AtlasTexture_losa_der")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/ArenaSalon/Puertas/TrampillaEntrada"]
+shape = SubResource("RectangleShape2D_48x16")
+disabled = true
+
+[node name="Atajos" type="Node2D" parent="SistemasMapa/ArenaSalon"]
+
+[node name="RejaSalida" type="StaticBody2D" parent="SistemasMapa/ArenaSalon/Atajos"]
+position = Vector2(520, 1840)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_columna_tope")
+piece_middle = SubResource("AtlasTexture_columna_medio")
+piece_end = SubResource("AtlasTexture_columna_base")
+start_closed = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/ArenaSalon/Atajos/RejaSalida"]
+shape = SubResource("RectangleShape2D_16x64")
+
+[node name="Oleadas" type="Node2D" parent="SistemasMapa/ArenaSalon"]
+
+[node name="Oleada1" type="Node2D" parent="SistemasMapa/ArenaSalon/Oleadas"]
+
+[node name="Oleada2" type="Node2D" parent="SistemasMapa/ArenaSalon/Oleadas"]
+
+[node name="Guardia1" parent="SistemasMapa/ArenaSalon/Oleadas/Oleada1" instance=ExtResource("13_guardia")]
+position = Vector2(200, 1853)
+
+[node name="Mino1" parent="SistemasMapa/ArenaSalon/Oleadas/Oleada1" instance=ExtResource("12_mino")]
+position = Vector2(280, 1808)
+
+[node name="Guardia2" parent="SistemasMapa/ArenaSalon/Oleadas/Oleada1" instance=ExtResource("13_guardia")]
+position = Vector2(360, 1853)
+
+[node name="Ogro1" parent="SistemasMapa/ArenaSalon/Oleadas/Oleada1" instance=ExtResource("24_ogro")]
+position = Vector2(440, 1832)
+
+[node name="Ogro1" parent="SistemasMapa/ArenaSalon/Oleadas/Oleada2" instance=ExtResource("24_ogro")]
+position = Vector2(136, 1832)
+
+[node name="Mino1" parent="SistemasMapa/ArenaSalon/Oleadas/Oleada2" instance=ExtResource("12_mino")]
+position = Vector2(280, 1808)
+
+[node name="Ogro2" parent="SistemasMapa/ArenaSalon/Oleadas/Oleada2" instance=ExtResource("24_ogro")]
+position = Vector2(424, 1832)
+
+[node name="UI" type="CanvasLayer" parent="SistemasMapa/ArenaSalon"]
+layer = 9
+
+[node name="Aviso" type="Label" parent="SistemasMapa/ArenaSalon/UI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_type_variation = &"Encabezado"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SalaCthulhu" type="Node2D" parent="SistemasMapa"]
+script = ExtResource("2_sala")
+encounter_id = "infierno_cthulhu"
+boss_scene = ExtResource("7_cthulhu")
+boss_message = "CTHULHU"
+victory_message = "HAS VENCIDO A CTHULHU"
+
+[node name="Activador" type="Area2D" parent="SistemasMapa/SalaCthulhu"]
+position = Vector2(1208, 1704)
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaCthulhu/Activador"]
+shape = SubResource("RectangleShape2D_816x336")
+
+[node name="Puertas" type="Node2D" parent="SistemasMapa/SalaCthulhu"]
+
+[node name="RejaTrono" type="StaticBody2D" parent="SistemasMapa/SalaCthulhu/Puertas"]
+position = Vector2(712, 1840)
+script = ExtResource("4_barrera")
+piece_start = SubResource("AtlasTexture_columna_tope")
+piece_middle = SubResource("AtlasTexture_columna_medio")
+piece_end = SubResource("AtlasTexture_columna_base")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SistemasMapa/SalaCthulhu/Puertas/RejaTrono"]
+shape = SubResource("RectangleShape2D_16x64")
+disabled = true
+
+[node name="PuntosJefe" type="Node2D" parent="SistemasMapa/SalaCthulhu"]
+
+[node name="JefeEste" type="Marker2D" parent="SistemasMapa/SalaCthulhu/PuntosJefe"]
+position = Vector2(1544, 1840)
+
+[node name="JefeOeste" type="Marker2D" parent="SistemasMapa/SalaCthulhu/PuntosJefe"]
+position = Vector2(792, 1840)
+
+[node name="UI" type="CanvasLayer" parent="SistemasMapa/SalaCthulhu"]
+layer = 9
+
+[node name="Aviso" type="Label" parent="SistemasMapa/SalaCthulhu/UI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_type_variation = &"Encabezado"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Transiciones" type="Node2D" parent="SistemasMapa"]
+
+[node name="SalidaS7" parent="SistemasMapa/Transiciones" instance=ExtResource("9_transicion")]
+position = Vector2(880, 16)
+target_scene_path = "res://mapas/tng/tiles_profundidades_combate.tscn"
+target_spawn_id = &"DesdeInfierno"
+
+[node name="CollisionShape2D" parent="SistemasMapa/Transiciones/SalidaS7" index="0"]
+shape = SubResource("RectangleShape2D_48x32")
+
+[node name="DesdeProfundidades" parent="SistemasMapa" instance=ExtResource("10_spawn")]
+position = Vector2(840, 145)
+spawn_id = &"DesdeProfundidades"
+
+[node name="Ambientacion" type="Node2D" parent="."]
+script = ExtResource("25_ambiente")
+ambient_color = Color(0.62, 0.5, 0.5, 1)
+player_light_color = Color(1, 0.9, 0.85, 1)
+vignette_strength = 0.55

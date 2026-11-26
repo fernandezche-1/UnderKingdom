@@ -4,22 +4,22 @@ extends Node
 ## imagen (un píxel = una pieza) en una escena de Godot hecha con tiles.
 ##
 ## Uso, desde la carpeta del proyecto:
-##   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas_texto/ejemplo_cueva.txt
+##   ~/.local/bin/godot --headless res://herramientas/constructor_mapas/construir_mapa.tscn -- mapas/fuentes/tog/pruebas/zona_pruebas_muestra_calabozo.txt
 ## Otras órdenes (en lugar del archivo):
-##   -- --paleta              escribe la paleta de colores en mapas_texto/
+##   -- --paleta              escribe la paleta de colores en mapas/fuentes/
 ##   -- --a-png <mapa.txt>    convierte el mapa de texto en un PNG para dibujarlo
 ##   -- --desde-mapa <escena.tscn> <salida.png>
 ##                            calca un mapa hecho a mano (fondo y colisiones)
 ##                            como PNG de piezas, para rehacerlo con tiles
 ##
-## La leyenda está en mapas_texto/LEYENDA.md. Las piezas de cada tileset
+## La leyenda está en mapas/fuentes/LEYENDA.md. Las piezas de cada tileset
 ## (bloques, decorados, líquidos...) se definen en
-## herramientas/constructor_mapas/tilesets/<nombre>.gd.
+## herramientas/constructor_mapas/baldosas/<nombre>.gd.
 ## Solo sobrescribe escenas que haya creado este mismo constructor.
 
-const TILESETS_DIR := "res://herramientas/constructor_mapas/tilesets/"
+const TILESETS_DIR := "res://herramientas/constructor_mapas/baldosas/"
 const GENERATED_META := &"generado_por_constructor"
-const PALETTE_PATH := "res://mapas_texto/paleta_niveles"
+const PALETTE_PATH := "res://mapas/fuentes/paleta_niveles"
 ## Muestras por lado al calcar cada pieza de un mapa hecho a mano.
 const TRACE_SAMPLES := 4
 
@@ -92,16 +92,16 @@ const COLORS := {
     "V": ["60a0a0", "mostrador con frascos (castillo, 2x2)"],
 }
 
-const PLAYER_SCENE := "res://escenas/player.tscn"
-const CHECKPOINT_SCENE := "res://escenas/sistemas/checkpoint.tscn"
-const FIRE_TRAP_SCENE := "res://escenas/sistemas/trampa_fuego.tscn"
-const TRANSITION_SCENE := "res://escenas/sistemas/map_transition.tscn"
-const SPAWN_SCENE := "res://escenas/sistemas/spawn_point.tscn"
-const CHEST_SCENE := "res://escenas/objetos/cofre.tscn"
-const SPIKES_TEXTURE := "res://sprites/trampas/pinchos.png"
+const PLAYER_SCENE := "res://personajes/jugador/player.tscn"
+const CHECKPOINT_SCENE := "res://sistemas/entorno/checkpoint.tscn"
+const FIRE_TRAP_SCENE := "res://sistemas/entorno/trampa_fuego.tscn"
+const TRANSITION_SCENE := "res://sistemas/transiciones/map_transition.tscn"
+const SPAWN_SCENE := "res://sistemas/transiciones/spawn_point.tscn"
+const CHEST_SCENE := "res://objetos/entorno/cofre.tscn"
+const SPIKES_TEXTURE := "res://graficos/trampas/pinchos.png"
 const PICKUPS := {
-    "$": "res://escenas/objetos/coin_pickup.tscn",
-    "!": "res://escenas/objetos/potion_pickup.tscn",
+    "$": "res://objetos/entorno/coin_pickup.tscn",
+    "!": "res://objetos/entorno/potion_pickup.tscn",
 }
 ## Salidas: letra -> [opción con el mapa destino, spawn de llegada en el
 ## destino, spawn que se crea aquí para volver desde ese mapa].
@@ -111,32 +111,32 @@ const EXITS := {
 }
 
 const ENEMIES := {
-    "v": "res://escenas/enemigos/vanguardia.tscn",
-    "a": "res://escenas/enemigos/aprendis.tscn",
-    "k": "res://escenas/enemigos/kolbo.tscn",
-    "j": "res://escenas/enemigos/kolbo2.tscn",
-    "q": "res://escenas/enemigos/kolbo3.tscn",
-    "d": "res://escenas/enemigos/diablillo.tscn",
-    "M": "res://escenas/enemigos/mino.tscn",
-    "m": "res://escenas/enemigos/murcielago.tscn",
-    "e": "res://escenas/enemigos/esqueleto.tscn",
-    "u": "res://escenas/enemigos/esqueleto_tumba.tscn",
-    "G": "res://escenas/enemigos/guardia.tscn",
-    "R": "res://escenas/enemigos/rata.tscn",
-    "L": "res://escenas/enemigos/slime.tscn",
-    "B": "res://escenas/enemigos/murcielago_grande.tscn",
-    "o": "res://escenas/enemigos/cuervo.tscn",
-    "N": "res://escenas/enemigos/anima.tscn",
-    "p": "res://escenas/enemigos/ojo_volador.tscn",
-    "s": "res://escenas/enemigos/sapo.tscn",
-    "i": "res://escenas/enemigos/mimic.tscn",
-    "W": "res://escenas/enemigos/ogro.tscn",
-    "X": "res://escenas/enemigos/calavera_fuego.tscn",
-    "J": "res://escenas/enemigos/lobo_escarcha.tscn",
-    "Z": "res://escenas/enemigos/ave_nieves.tscn",
-    "I": "res://escenas/enemigos/bestia_infernal.tscn",
-    "Y": "res://escenas/enemigos/pesadilla.tscn",
-    "z": "res://escenas/enemigos/alma_condenada.tscn",
+    "v": "res://personajes/enemigos/vanguardia.tscn",
+    "a": "res://personajes/enemigos/aprendis.tscn",
+    "k": "res://personajes/enemigos/kolbo.tscn",
+    "j": "res://personajes/enemigos/kolbo2.tscn",
+    "q": "res://personajes/enemigos/kolbo3.tscn",
+    "d": "res://personajes/enemigos/diablillo.tscn",
+    "M": "res://personajes/enemigos/mino.tscn",
+    "m": "res://personajes/enemigos/murcielago.tscn",
+    "e": "res://personajes/enemigos/esqueleto.tscn",
+    "u": "res://personajes/enemigos/esqueleto_tumba.tscn",
+    "G": "res://personajes/enemigos/guardia.tscn",
+    "R": "res://personajes/enemigos/rata.tscn",
+    "L": "res://personajes/enemigos/slime.tscn",
+    "B": "res://personajes/enemigos/murcielago_grande.tscn",
+    "o": "res://personajes/enemigos/cuervo.tscn",
+    "N": "res://personajes/enemigos/anima.tscn",
+    "p": "res://personajes/enemigos/ojo_volador.tscn",
+    "s": "res://personajes/enemigos/sapo.tscn",
+    "i": "res://personajes/enemigos/mimic.tscn",
+    "W": "res://personajes/enemigos/ogro.tscn",
+    "X": "res://personajes/enemigos/calavera_fuego.tscn",
+    "J": "res://personajes/enemigos/lobo_escarcha.tscn",
+    "Z": "res://personajes/enemigos/ave_nieves.tscn",
+    "I": "res://personajes/enemigos/bestia_infernal.tscn",
+    "Y": "res://personajes/enemigos/pesadilla.tscn",
+    "z": "res://personajes/enemigos/alma_condenada.tscn",
 }
 
 var _grid: Array[String] = []
@@ -144,7 +144,7 @@ var _w := 0
 var _h := 0
 ## Tamaño de pieza en píxeles, según el tileset elegido.
 var T := 16
-## Datos del tileset elegido (ver tilesets/mazmorra.gd).
+## Datos del tileset elegido (ver baldosas/mazmorra.gd).
 var _ts: Dictionary = {}
 ## Rectángulos de bloques_sala: [estilo, Rect2i en piezas].
 var _block_rooms: Array = []
@@ -153,7 +153,7 @@ var _block_rooms: Array = []
 func _ready() -> void:
     var args := OS.get_cmdline_user_args()
     if args.is_empty():
-        _fail("Falta el archivo de texto. Uso: ... construir_mapa.tscn -- mapas_texto/mi_mapa.txt")
+        _fail("Falta el archivo de texto. Uso: ... construir_mapa.tscn -- mapas/fuentes/tng/tiles_calabozo.txt")
         return
     var error := ""
     if args[0] == "--paleta":
@@ -266,7 +266,7 @@ func _write_palette() -> String:
 ## seguir editándolo como dibujo. Escribe <mapa>.png junto al .txt.
 func _text_to_png(text_path: String) -> String:
     if text_path == "":
-        return "Uso: -- --a-png mapas_texto/mi_mapa.txt"
+        return "Uso: -- --a-png mapas/fuentes/tng/tiles_calabozo.txt"
     var error := _read_map_file(text_path, {})
     if error != "":
         return error
@@ -297,7 +297,7 @@ func _text_to_png(text_path: String) -> String:
 ## trampas y decorados se dibujan después sobre el PNG.
 func _scene_to_png(scene_path: String, out_path: String) -> String:
     if scene_path == "" or out_path == "":
-        return "Uso: -- --desde-mapa res://escenas/mapas/<mapa>.tscn mapas_texto/<nivel>.png"
+        return "Uso: -- --desde-mapa res://mapas/tng/<mapa>.tscn mapas/fuentes/tog/<nivel>.png"
     scene_path = _res(scene_path)
     if not ResourceLoader.exists(scene_path):
         return "No existe %s" % scene_path
@@ -587,8 +587,13 @@ func _build(text_path: String) -> String:
             return "bloques_sala: '%s' no existe. Opciones: %s" % [room[0], ", ".join(_ts.bloques.keys())]
         _block_rooms.append(room)
     var out_path: String = options.escena
-    if not out_path.begins_with("res://escenas/mapas/") or not out_path.ends_with(".tscn"):
-        return "escena: debe ser res://escenas/mapas/<nombre>.tscn"
+    var output_folder := "res://mapas/tng/" if out_path.get_file().begins_with("tiles_") else "res://mapas/tog/"
+    if (
+        not out_path.begins_with(output_folder)
+        or out_path.begins_with(output_folder + "historicos/")
+        or not out_path.ends_with(".tscn")
+    ):
+        return "escena: debe estar en res://mapas/tng/ o res://mapas/tog/, fuera de historicos/"
     if ResourceLoader.exists(out_path):
         var existing: Node = (load(out_path) as PackedScene).instantiate()
         var ours := existing.has_meta(GENERATED_META)
@@ -602,7 +607,7 @@ func _build(text_path: String) -> String:
     for letter in EXITS:
         var option: String = EXITS[letter][0]
         if _count(letter) > 0 and options[option] == "":
-            return "El mapa tiene salidas '%s' pero falta \"%s: res://escenas/mapas/<mapa>.tscn\"." % [letter, option]
+            return "El mapa tiene salidas '%s' pero falta \"%s: res://mapas/tng/<mapa>.tscn\"." % [letter, option]
         var target := String(options[option]).get_slice("#", 0)
         if target != "" and not ResourceLoader.exists(target):
             print("CONSTRUCTOR: aviso, %s todavía no existe; la salida funcionará cuando se cree." % target)
@@ -753,9 +758,9 @@ func _build(text_path: String) -> String:
                         pickup.position = Vector2((x + 0.5) * T, (y + 0.5) * T)
 
     # Zonas de muerte sobre cada tramo horizontal de lava.
-    _add_runs(kill_zones, "~", true, "res://escenas/sistemas/kill_zone.tscn", "Lava", Vector2(0, 6))
+    _add_runs(kill_zones, "~", true, "res://sistemas/entorno/kill_zone.tscn", "Lava", Vector2(0, 6))
     # Pinchos: zona de muerte en la parte baja de la pieza y el dibujo repetido.
-    for run in _add_runs(kill_zones, "^", true, "res://escenas/sistemas/kill_zone.tscn", "Pinchos", Vector2(1, T - 8)):
+    for run in _add_runs(kill_zones, "^", true, "res://sistemas/entorno/kill_zone.tscn", "Pinchos", Vector2(1, T - 8)):
         var spikes_tex: Texture2D = load(SPIKES_TEXTURE)
         var zone: Node2D = run[0]
         var rect: Rect2 = run[1]
@@ -768,7 +773,7 @@ func _build(text_path: String) -> String:
         sprite.position = Vector2(rect.position.x - 1, rect.end.y - spikes_tex.get_height()) - zone.position
         _child(zone, sprite, "Dibujo")
     # Zonas para trepar en cada columna de escalera (una pieza extra arriba).
-    _add_runs(climb_zones, "H", false, "res://escenas/sistemas/climb_zone.tscn", "Escalera", Vector2.ZERO)
+    _add_runs(climb_zones, "H", false, "res://sistemas/entorno/climb_zone.tscn", "Escalera", Vector2.ZERO)
     # Salidas: una transición por columna y un spawn dos piezas hacia dentro
     # para llegar desde ese mapa sin volver a tocar la salida.
     for letter in EXITS:
@@ -793,11 +798,11 @@ func _build(text_path: String) -> String:
         return _save_scene(root, out_path, counts)
 
     var bounds := _child(sistemas, Node2D.new(), "MapBounds")
-    bounds.set_script(load("res://scripts/camera/map_bounds.gd"))
+    bounds.set_script(load("res://sistemas/camara/map_bounds.gd"))
     bounds.set("right", _w * T)
     bounds.set("bottom", _h * T)
     var controller := _child(sistemas, Node.new(), "SpawnController")
-    controller.set_script(load("res://scripts/transitions/map_spawn_controller.gd"))
+    controller.set_script(load("res://sistemas/transiciones/map_spawn_controller.gd"))
 
     if spawn.x < 0:
         root.free()
